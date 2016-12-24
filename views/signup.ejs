@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/angular-toastr.css">
+    <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+    <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
+    <script type="text/javascript">
+        window.SAILS_LOCALS = {_csrf: "<%= _csrf %>"};
+    </script>
+</head>
+<body data-ng-app="SignupModule" data-ng-controller="SignupController" ng-cloak>
+<div class="container-fluid">
+    <!-- Creates the navbar -->
+    <nav class="navbar navbar-default navbar-inverse">
+        <!-- This creates the mechanism for the collapse button -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" ng-init="navCollapsed = true"  ng-click="navCollapsed = !navCollapsed">
+            <!-- This controls the number of lines in the image when the nav collapse -->
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <!-- This is the brand on the left-hand side. -->
+        <a class="navbar-brand" href="/#"> КАДР</a>
+        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+            <!-- LOGIN FORM -->
+            <!-- LOGIN FORM -->
+            <form ng-submit="submitLoginForm()" class="navbar-form navbar-right">
+
+                <!-- E M A I L -->
+                <div class="form-group">
+                    <input ng-model="loginForm.email" type="text" placeholder="Email" name="email" class="form-control">
+                </div>
+
+                <!-- P A S S W O R D -->
+                <div class="form-group">
+                    <input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">
+                </div>
+
+                <!-- S U B M I T -->
+                <button type="submit" class="btn btn-success">
+                    <span ng-show="!loginForm.loading">Sign in</span>
+                    <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
+                    <span ng-show="loginForm.loading">Signing up...</span>
+                </button>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            </form>
+        </div>
+    </nav>
+</div>
+<div class="container">
+<!-- S I G N U P  F O R M -->
+<form data-ng-submit="submitSignupForm()" class="form-signup" name="signup" id="sign-up-form">
+    <h2>Регистрация
+        <small>добавить сотрудника в базу данных компании</small>
+    </h2>
+    <hr class="colorgraph">
+    <div class="row">
+
+        <!-- L O G I N -->
+
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group"
+                 data-ng-class="{'has-error':signup.login.$invalid && signup.login.$dirty}">
+                <input data-ng-model="signupForm.login" required data-ng-maxlength="25"
+                       data-ng-minlength="3" type="text" name="login"
+                       id="login" class="form-control input-lg" placeholder="Login" tabindex="1">
+                            <span class="help-block has-error" ng-if="signup.login.$dirty">
+                                <span ng-show="signup.login.$error.required">Поле обязательно к заполнению.</span>
+                                <span ng-show="signup.login.$error.maxlength">Login не может быть более 25 знаков.</span>
+                                <span ng-show="signup.login.$error.minlength">Login не может быть менее 3 знаков.</span>
+                            </span>
+            </div>
+        </div>
+
+        <!-- E M A I L -->
+
+        <div class=" control-group col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group"
+                 data-ng-class="{'has-error':signup.email.$invalid && signup.email.$dirty}">
+                <input data-ng-model="signupForm.email" required type="email" name="email" id="email"
+                       class="form-control input-lg"
+                       placeholder="nikola@tesla.com" tabindex="2">
+                            <span class="help-block has-error" ng-if="signup.email.$dirty">
+                                <span ng-show="signup.email.$error.required">Email address is required.</span>
+                                <span ng-show="signup.email.$error.email">Not a valid email address.</span>
+                            </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <!-- L A S T  N A M E -->
+
+        <div class="control-group  col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group"
+                 data-ng-class="{'has-error':signup.last_name.$invalid && signup.last_name.$dirty}">
+                <input data-ng-model="signupForm.last_name" data-ng-maxlength="25" data-ng-minlength="2"
+                       required type="text"
+                       name="last_name" id="last_name" class="form-control input-lg" placeholder="Фамилия"
+                       tabindex="3">
+
+                            <span class="help-block has-error" data-ng-if="signup.last_name.$dirty">
+                                <span data-ng--show="signup.last_name.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng--show="signup.last_name.$error.maxlength">Фамилия не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.last_name.$error.minlength">Фамилия не должна быть менее 2 знаков.</span>
+                            </span>
+            </div>
+        </div>
+
+        <!-- F I R S T  N A M E -->
+
+        <div class="control-group col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group"
+                 data-ng-class="{'has-error':signup.first_name.$invalid && signup.first_name.$dirty}">
+                <input data-ng-model="signupForm.first_name" data-ng-maxlength="25" data-ng-minlength="2"
+                       required type="text" name="first_name" class="form-control input-lg"
+                       placeholder="Имя" tabindex="4">
+
+                            <span class="help-block has-error" data-ng-if="signup.first_name.$dirty">
+                                <span data-ng--show="signup.first_name.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng--show="signup.first_name.$error.maxlength">Имя не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.first_name.$error.minlength">Имя не должно быть менее 2 знаков.</span>
+                            </span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- P A T R O N Y M I C -->
+
+    <div class="form-group"
+         data-ng-class="{'has-error':signup.patronymic_name.$invalid && signup.patronymic_name.$dirty}">
+        <input data-ng-model="signupForm.patronymic_name" data-ng-maxlength="25" data-ng-minlength="2"
+               required type="text" name="patronymic_name" id="patronymic_name"
+               class="form-control input-lg" placeholder="Отчество" tabindex="5">
+
+                     <span class="help-block has-error" data-ng-if="signup.first_name.$dirty">
+                                <span data-ng--show="signup.patronymic_name.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng--show="signup.patronymic_name.$error.maxlength">Отчество не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.patronymic_name.$error.minlength">Отчество не должно быть менее 2 знаков.</span>
+                            </span>
+    </div>
+
+
+    <div class="row">
+
+        <!-- P A S S W O R D -->
+
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="control-group form-group"
+                 data-ng-class="{'has-error':signup.password.$invalid && signup.password.$dirty}">
+                <input data-ng-model="signupForm.password" required data-ng-minlength="6"
+                       compare-to="signupForm.confirmPassword" type="password" name="password" id="password"
+                       class="form-control input-lg" placeholder="Пароль" tabindex="5">
+                            <span class="help-block has-error" data-ng-if="signup.password.$dirty">
+                            <span data-ng-show="signup.password.$error.required">Поле обязательно к заполнению.</span>
+                            <span data-ng-show="signup.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>
+                            </span>
+            </div>
+        </div>
+
+        <!-- C O N F I R M  P A S S W O R D -->
+
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="control-group form-group">
+                <input data-ng-model="signupForm.confirmPassword" required type="password"
+                       name="confirmation"
+                       class="form-control input-lg"
+                       placeholder="Повторить пароль" tabindex="6">
+                            <span class="help-block has-error" data-ng-if="signup.confirmation.$dirty">
+                            <span data-ng-show="signup.password.$error.compareTo">Пароли должны совпадать.</span>
+                            <span data-ng-show="signup.password.$error.required">Требуется повторить пароль.</span>
+                            </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- C O N F I R M E D  C O N D I T I O N S  -->
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+					<span class="button-checkbox">
+						<button data-ng-click="signupForm.confirmAacceptTerms=true" type="button" class="btn"
+                                data-color="info"
+                                tabindex="7">Я согласен(а)
+                        </button>
+                        <input data-ng-model="signupForm.confirmAacceptTerms" required type="checkbox"
+                               name="confirmAacceptTerms" id="confirmAacceptTerms" class="hidden">
+					</span>
+        </div>
+        <div class="col-xs-9 col-sm-9 col-md-9">
+            Нажатием на кнопку <strong class="label label-primary">Регистрация</strong>, вы соглашаетесь с
+            <a href="#" data-toggle="modal" data-target="#t_and_c_m">Условиями</a>, установленными на данном
+            сайте.
+
+        </div>
+    </div>
+
+    <hr class="colorgraph">
+
+    <!-- S U B M I T -->
+
+    <div class="row">
+        <!-- Disable signup button until the form has no errors -->
+        <div class="col-xs-12 col-md-12">
+            <button type="submit" class="btn btn-primary btn-block btn-lg"
+                    data-ng-disabled="signup.$invalid" tabindex="7">
+                <span ng-show="!signupForm.loading">Регистрация</span>
+                <span ng-show="signupForm.loading" class="overlord-loading-spinner fa fa-spinner"></span>
+                <span ng-show="signupForm.loading">Preparing your new account...</span>
+            </button>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+        </div>
+        <!--<div class="col-xs-6 col-md-6">-->
+        <!--<a href="#" class="btn btn-success btn-block btn-lg">Войти</a>-->
+        <!--</div>-->
+    </div>
+</form>
+    <hr>
+    <footer class="footer pull-right">
+        <div>
+            <a href="http://landata.ru/">Landata.ru</a>
+            <div>система управления кадрами и отпусками </div>
+        </div>
+    </footer>
+</div>
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/dependencies/angular.js"></script>
+<script src="/js/dependencies/angular-toastr.js"></script>
+<script src="/js/dependencies/compareTo.module.js"></script>
+<script src="/js/public/signup/SignupModule.js"></script>
+<script src="/js/private/dashboard/DashboardModule.js"></script>
+<script src="/js/public/homepage/HomepageModule.js"></script>
+<script src="/js/private/dashboard/DashboardController.js"></script>
+<script src="/js/public/homepage/HomepageController.js"></script>
+<script src="/js/public/signup/SignupController.js"></script>
+<!--SCRIPTS END-->
+</body>
+</html>
