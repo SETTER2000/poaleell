@@ -5,6 +5,7 @@
   "description": "The system of personnel management and holidays.",
   "keywords": [],
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "ejs": "2.3.4",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",
@@ -21,9 +22,12 @@
     "include-all": "^1.0.0",
     "machinepack-gravatar": "^1.2.0",
     "machinepack-passwords": "^2.3.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "rc": "1.0.1",
     "sails": "~0.12.11",
-    "sails-disk": "~0.10.9"
+    "sails-disk": "~0.10.9",
+    "sails-mongo": "^0.12.2"
   },
   "scripts": {
     "debug": "node debug app.js",

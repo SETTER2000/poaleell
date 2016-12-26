@@ -36,7 +36,7 @@ module.exports.routes = {
     // Server-rendered HTML webpages
     /////////////////////////////////////////////////////////////
     'GET /signup': {view: 'signup'},
-    'GET /file': {view: 'file'},
+    //'GET /file': {view: 'file'},
     'GET /': 'PageController.showHomePage',
     /////////////////////////////////////////////////////////////
     // JSON API
