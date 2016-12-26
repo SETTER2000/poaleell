@@ -36,7 +36,7 @@ module.exports = {
         });
     },
     /**
-     * Ргистрация нового пользователя.
+     * Регистрация нового пользователя.
      */
     signup: function (req, res) {
         var Passwords = require('machinepack-passwords');

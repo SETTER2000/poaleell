@@ -81,8 +81,8 @@
                        class="form-control input-lg"
                        placeholder="nikola@tesla.com" tabindex="2">
                             <span class="help-block has-error" ng-if="signup.email.$dirty">
-                                <span ng-show="signup.email.$error.required">Email address is required.</span>
-                                <span ng-show="signup.email.$error.email">Not a valid email address.</span>
+                                <span ng-show="signup.email.$error.required">Поле обязательно к заполнению.</span>
+                                <span ng-show="signup.email.$error.email">Неверный формат email.</span>
                             </span>
             </div>
         </div>
@@ -134,7 +134,7 @@
                required type="text" name="patronymic_name" id="patronymic_name"
                class="form-control input-lg" placeholder="Отчество" tabindex="5">
 
-                     <span class="help-block has-error" data-ng-if="signup.first_name.$dirty">
+                     <span class="help-block has-error" data-ng-if="signup.patronymic_name.$dirty">
                                 <span data-ng--show="signup.patronymic_name.$error.required">Поле обязательно к заполнению.</span>
                                 <span data-ng--show="signup.patronymic_name.$error.maxlength">Отчество не может быть более 25 знаков.</span>
                                 <span data-ng-show="signup.patronymic_name.$error.minlength">Отчество не должно быть менее 2 знаков.</span>
