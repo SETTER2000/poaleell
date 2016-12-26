@@ -29,33 +29,24 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
                     $scope.signupForm.loading = false;
                 })
         };
-
+        $scope.loginForm = {
+            loading: false
+        };
         $scope.submitLoginForm = function () {
-            // Set the loading state (i.e. show loading spinner)
-            $scope.loginForm.loading = true;
-
-            // Submit request to Sails.
+            $scope.loginForm.loading =true;
             $http.put('/login', {
                 email: $scope.loginForm.email,
                 password: $scope.loginForm.password
-            })
-                .then(function onSuccess() {
-                    // Refresh the page now that we've been logged in.
+            }).then(function onSuccess(sailsResponse) {
                     window.location = '/';
-                })
-                .catch(function onError(sailsResponse) {
-
-                    // Handle known error type(s).
-                    // Invalid username / password combination.
+                }).catch(function onError(sailsResponse) {
                     if (sailsResponse.status === 400 || 404) {
-                        // $scope.loginForm.topLevelErrorMessage = 'Invalid email/password combination.';
-                        toastr.error('Invalid email/password combination.', 'Error', {closeButton: true});
+                       toastr.error('Не правильный логин/пароль.', 'Ошибка авторизации!', {closeButton: true});
                         return;
                     }
-                    toastr.error('An unexpected error occurred, please try again.', 'Error', {closeButton: true});
+                    toastr.error('Неожиданная ошибка, пожалуйста попробуйте еще раз.', 'Ошибка!', {closeButton: true});
                     return;
-                })
-                .finally(function eitherWay() {
+                }).finally(function eitherWay() {
                     $scope.loginForm.loading = false;
                 });
         };

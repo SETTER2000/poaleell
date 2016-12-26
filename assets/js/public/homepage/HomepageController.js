@@ -16,10 +16,10 @@ angular.module('HomepageModule').controller('HomepageController', ['$scope', '$h
                 })
                 .catch(function onError(sailsResponse) {
                     if(sailsResponse.status === 400 || 404){
-                        toastr.error('Invalid email/password combination.', 'Error', {closeButton:true});
+                        toastr.error('Не правильный логин/пароль.', 'Ошибка авторизации!', {closeButton:true});
                         return;
                     }
-                    toastr.error('An unexpected error occurred, please try again.', 'Error', {closeButton:true});
+                    toastr.error('Неожиданная ошибка, пожалуйста попробуйте еще раз..', 'Error', {closeButton:true});
                     return;
                 })
                 .finally(function eitherWay() {

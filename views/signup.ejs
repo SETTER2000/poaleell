@@ -10,10 +10,10 @@
     <!--STYLES END-->
     <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
     <script type="text/javascript">
-        window.SAILS_LOCALS = {_csrf: "<%= _csrf %>"};
+        window.SAILS_LOCALS = { _csrf: "<%= _csrf %>" };
     </script>
 </head>
-<body data-ng-app="SignupModule" data-ng-controller="SignupController" ng-cloak>
+<body ng-app="SignupModule" ng-controller="SignupController" ng-cloak>
 <div class="container-fluid">
     <!-- Creates the navbar -->
     <nav class="navbar navbar-default navbar-inverse">
@@ -31,21 +31,16 @@
             <!-- LOGIN FORM -->
             <form ng-submit="submitLoginForm()" class="navbar-form navbar-right">
 
-                <!-- E M A I L -->
                 <div class="form-group">
                     <input ng-model="loginForm.email" type="text" placeholder="Email" name="email" class="form-control">
                 </div>
-
-                <!-- P A S S W O R D -->
                 <div class="form-group">
                     <input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">
                 </div>
-
-                <!-- S U B M I T -->
                 <button type="submit" class="btn btn-success">
-                    <span ng-show="!loginForm.loading">Sign in</span>
+                    <span ng-show="!loginForm.loading">Войти</span>
                     <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
-                    <span ng-show="loginForm.loading">Signing up...</span>
+                    <span ng-show="loginForm.loading">Секунду...</span>
                 </button>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
             </form>
