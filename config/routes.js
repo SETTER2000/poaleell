@@ -36,11 +36,13 @@ module.exports.routes = {
     // Server-rendered HTML webpages
     /////////////////////////////////////////////////////////////
     'GET /signup': {view: 'signup'},
+    'GET /file': {view: 'file'},
     'GET /': 'PageController.showHomePage',
     /////////////////////////////////////////////////////////////
     // JSON API
     /////////////////////////////////////////////////////////////
     'POST /signup': 'UserController.signup',
+    'POST /file': 'FileController.upload',
     'PUT /login': 'UserController.login',
     'GET /logout':'UserController.logout'
 

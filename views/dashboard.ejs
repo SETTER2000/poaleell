@@ -51,8 +51,11 @@
         </div>
       </nav>
 
-      <h1>Административная панель</h1>
-
+      <h3>Административная панель</h3>
+      <form action="/file/upload" enctype="multipart/form-data" method="post">
+        <input type="file" name="avatar" multiple="multiple"><br>
+        <input type="submit" value="Загрузить">
+      </form>
     </div>
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
@@ -61,8 +64,10 @@
     <script src="/js/dependencies/compareTo.module.js"></script>
     <script src="/js/public/signup/SignupModule.js"></script>
     <script src="/js/private/dashboard/DashboardModule.js"></script>
+    <script src="/js/private/dashboard/UploadModule.js"></script>
     <script src="/js/public/homepage/HomepageModule.js"></script>
     <script src="/js/private/dashboard/DashboardController.js"></script>
+    <script src="/js/private/dashboard/UploadController.js"></script>
     <script src="/js/public/homepage/HomepageController.js"></script>
     <script src="/js/public/signup/SignupController.js"></script>
     <!--SCRIPTS END-->

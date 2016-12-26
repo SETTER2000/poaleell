@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Загрузка</title>
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/angular-toastr.css">
+    <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+    <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
+
+</head>
+<body ng-app="UploadModule" ng-controller="UploadController" ng-cloak>
+
+<!--<form action="upload" enctype="multipart/form-data" method="post">-->
+    <!--<input type="file" name="avatar" multiple="multiple"><br>-->
+    <!--<input type="submit" value="Загрузить">-->
+<!--</form>-->
+<form action="" method="post"> <input type="submit" value="Отправить"></form>
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/dependencies/angular.js"></script>
+<script src="/js/dependencies/angular-toastr.js"></script>
+<script src="/js/dependencies/compareTo.module.js"></script>
+<script src="/js/public/signup/SignupModule.js"></script>
+<script src="/js/private/dashboard/DashboardModule.js"></script>
+<script src="/js/private/dashboard/UploadModule.js"></script>
+<script src="/js/public/homepage/HomepageModule.js"></script>
+<script src="/js/private/dashboard/DashboardController.js"></script>
+<script src="/js/private/dashboard/UploadController.js"></script>
+<script src="/js/public/homepage/HomepageController.js"></script>
+<script src="/js/public/signup/SignupController.js"></script>
+<!--SCRIPTS END-->
+</body>
+</html>
