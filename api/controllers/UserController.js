@@ -19,45 +19,41 @@ module.exports = {
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
             require('machinepack-passwords').checkPassword({
-                passwordAttempt: req.param('password'),
-                encryptedPassword: user.encryptedPassword
+                passwordAttempt: req.param('password'), encryptedPassword: user.encryptedPassword
             }).exec({
                 error: function (err) {
                     return res.negotiate(err);
-                },
-                incorrect: function () {
+                }, incorrect: function () {
                     return res.notFound();
-                },
-                success: function () {
+                }, success: function () {
                     req.session.me = user.id;
                     return res.ok();
                 }
             });
         });
-    },
-    /**
+    }, /**
      * Регистрация нового пользователя.
      */
     signup: function (req, res) {
+        var Email = require('machinepack-email');
         var Passwords = require('machinepack-passwords');
+
+
         // Encrypt a string using the BCrypt algorithm.
         Passwords.encryptPassword({
-            password: req.param('password'),
-            difficulty: 10
+            password: req.param('password'), difficulty: 10
         }).exec({
             // An unexpected error occurred.
             error: function (err) {
                 return res.negotiate(err);
-            },
-            // OK.
+            }, // OK.
             success: function (encryptedPassword) {
                 require('machinepack-gravatar').getImageUrl({
                     emailAddress: req.param('email')
                 }).exec({
                     error: function (err) {
                         return res.negotiate(err);
-                    },
-                    success: function (gravatarUrl) {
+                    }, success: function (gravatarUrl) {
                         User.create({
                             login: req.param('login'),
                             email: req.param('email'),
@@ -77,6 +73,24 @@ module.exports = {
                                 return res.negotiate(err);
                             }
                             req.session.me = newUser.id;
+                            // Отправка на email данных о регистрации
+                            Email.send({
+                                service: 'gmail', auth: {
+                                    user: 'apptest387@gmail.com', pass: 'Code:-123000'
+                                }, mail: {
+                                    from: 'tester@gmail.com',
+                                    to: ['lphp@mail.ru', 'apetrov@landata.ru'],
+                                    subject: 'Регистрация',
+                                    text: "Email: " + req.param('email') + " Login: " + req.param('login')
+                                }
+                            }).exec({
+                                error: function (err) {
+                                    console.log(err);
+
+                                }, success: function () {
+                                    console.log('GOOD');
+                                }
+                            });
                             return res.json({
                                 id: newUser.id
                             });
@@ -85,6 +99,9 @@ module.exports = {
                 });
             }
         });
+
+        // Send an email, either in plaintext or from an HTML template.
+
     },
 
     logout: function (req, res) {
