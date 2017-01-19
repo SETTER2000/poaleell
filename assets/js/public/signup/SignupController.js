@@ -14,7 +14,7 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
             patronymic_name: $scope.signupForm.patronymic_name,
             password: $scope.signupForm.password
         }).then(function onSuccess(sailsResponse) {
-            window.location = '/user';
+            window.location = '/';
             console.log(sailsResponse);
         }).catch(function onError(sailsResponse) {
             var emailAddressAlreadyInUse = sailsResponse.status == 409;

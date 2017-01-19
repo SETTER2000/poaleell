@@ -74,26 +74,18 @@ module.exports = {
                             }
                             req.session.me = newUser.id;
                             // Отправка на email данных о регистрации
-                            Email.send({
-                                service: 'gmail', auth: {
-                                    user: 'apptest387@gmail.com', pass: 'Code:-123000'
-                                }, mail: {
-                                    from: 'tester@gmail.com',
-                                    to: ['lphp@mail.ru', 'apetrov@landata.ru'],
-                                    subject: 'Регистрация',
-                                    text: "Email: " + req.param('email') + " Login: " + req.param('login')
-                                }
-                            }).exec({
+                            Email.send(sails.config.custom.sendMail).exec({
                                 error: function (err) {
                                     console.log(err);
 
                                 }, success: function () {
-                                    console.log('GOOD');
+                                    console.log('Ok! Send mail.');
                                 }
                             });
-                            return res.json({
-                                id: newUser.id
-                            });
+                            //return res.json({
+                            //    id: newUser.id
+                            //});
+                            res.redirect('/user/show/' + newUser.id);
                         });
                     }
                 });
@@ -102,6 +94,58 @@ module.exports = {
 
         // Send an email, either in plaintext or from an HTML template.
 
+    },
+    index: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.find(function foundUsers(err, users) {
+            if (err)return next(err);
+            res.view({
+                users: users, me: req.session.me
+            });
+        });
+    },
+
+    show: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne(req.param('id'), function foundUser(err, user) {
+            if (err) return next(err);
+            if (!user) return next();
+
+            res.view({
+                user: user, me: req.session.me
+            });
+        });
+    },
+
+    edit: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne(req.param('id'), function foundUser(err, user) {
+            if (err)return next(err);
+            if (!user)return next('User doesn\'t exists.');
+            res.view({
+                user: user, me: req.session.me
+            });
+        });
+    },
+
+    update: function (req, res, next) {
+        User.update(req.param('id'), req.params.all(), function userUpdate(err) {
+            if (err) {
+                return res.redirect('/user/edit/' + req.param('id'));
+            }
+            res.redirect('/user/show/' + req.param('id'));
+        });
+    },
+
+    destroy: function (req, res, next) {
+        User.findOne(req.param('id'), function foundUser(err, user) {
+            if (err)return next(err);
+            if (!user)return next('User doesn\'t exists.');
+            User.destroy(req.param('id'), function userDestroyed(err) {
+                if (err)return next(err);
+            });
+            res.redirect('/user');
+        });
     },
 
     logout: function (req, res) {

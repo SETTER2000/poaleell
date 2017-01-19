@@ -74,8 +74,9 @@ module.exports.views = {
   * layout: 'layouts/internal'                                                *
   *                                                                           *
   ****************************************************************************/
-
-  layout: false,
+  //layout: 'user',
+  layout: 'dashboard',
+  //layout: false,
 
   /****************************************************************************
   *                                                                           *
@@ -89,7 +90,7 @@ module.exports.views = {
   *                                                                           *
   ****************************************************************************/
 
-  partials: false
+  partials: 'partials'
 
 
 };

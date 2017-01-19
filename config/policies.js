@@ -26,8 +26,32 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+   '*': true,
+  /**
+   * Вставляем для нашего контроллера
+   * Admin политику admin.js, которая
+   * ограничивает доступ.
+   */
 
+  AdminController: {
+    '*': 'admin'
+  },
+
+  UserController: {
+    create: 'admin'
+  },
+
+  PostController: {
+    // То что могут видеть все
+    index  : true,
+    page   : true,
+    watch  : true,
+
+    // То что может только админ
+    create : 'admin',
+    update : 'admin',
+    delete : 'admin'
+  }
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

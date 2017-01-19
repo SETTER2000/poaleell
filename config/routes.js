@@ -35,16 +35,21 @@ module.exports.routes = {
     /////////////////////////////////////////////////////////////
     // Server-rendered HTML webpages
     /////////////////////////////////////////////////////////////
-    'GET /signup': {view: 'signup'},
-    //'GET /file': {view: 'file'},
     'GET /': 'PageController.showHomePage',
-    /////////////////////////////////////////////////////////////
-    // JSON API
-    /////////////////////////////////////////////////////////////
-    'POST /signup': 'UserController.signup',
-    'POST /file': 'FileController.upload',
+
+    'GET /signup': {
+        view: 'public/signup',
+        locals: {layout: 'signup'}
+    },
+
+    //'GET /user':'UserController.getUsers',
+    //'GET /user': {
+    //    view: 'users/private'
+    //},
+
+    'POST /signup': 'UserController.signup', //'POST /file': 'FileController.upload',
     'PUT /login': 'UserController.login',
-    'GET /logout':'UserController.logout'
+    'GET /logout': 'UserController.logout' //'/admin': 'AdminController'
 
     /***************************************************************************
      *                                                                          *

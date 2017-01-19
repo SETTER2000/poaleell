@@ -7,7 +7,8 @@
  * Date: 24.12.2016
  * Time: 2:28
  */
-angular.module('DashboardModule').controller('DashboardController', ['$scope', '$http', 'toastr',
-    function($scope, $http, toastr){
+angular.module('DashboardModule').controller('DashboardController', ['$scope', '$http', 'toastr', function ($scope, $http, toastr) {
+    $scope.data = window.SAILS_LOCALS.me;
 
-    }]);
+
+}]);
