@@ -6,6 +6,7 @@
             <th>Фамилия</th>
             <th>Имя</th>
             <th>Отчество</th>
+            <th>ДР</th>
             <th>Логин</th>
             <th>Email</th>
             <th></th>
@@ -17,6 +18,7 @@
             <td><%= user.last_name %></td>
             <td><%= user.first_name %></td>
             <td><%= user.patronymic_name %></td>
+            <td><%= user.birthday.getDate() %>.<%= user.birthday.getMonth()+1 %>.<%= user.birthday.getUTCFullYear() %></td>
             <td><%= user.login %></td>
             <td><%= user.email %></td>
             <td>

@@ -24,8 +24,10 @@ module.exports = {
                      first_name:user.first_name,
                      last_name:user.last_name,
                      patronymic_name:user.patronymic_name,
+                     birthday:user.birthday,
                      email:user.email,
                      login:user.login,
+                     subdivision:user.subdivision,
                      isAdmin:!!user.admin,
                      gravatarUrl:user.gravatarUrl,
                      lastLoggedIn:user.lastLoggedIn

@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
+var Sugar = require('sugar');
 module.exports = {
     /**
      * Авторизация. Проверка логина и пароля.
@@ -38,7 +38,6 @@ module.exports = {
         var Email = require('machinepack-email');
         var Passwords = require('machinepack-passwords');
 
-
         // Encrypt a string using the BCrypt algorithm.
         Passwords.encryptPassword({
             password: req.param('password'), difficulty: 10
@@ -54,6 +53,7 @@ module.exports = {
                     error: function (err) {
                         return res.negotiate(err);
                     }, success: function (gravatarUrl) {
+
                         User.create({
                             login: req.param('login'),
                             email: req.param('email'),
@@ -61,6 +61,7 @@ module.exports = {
                             last_name: req.param('last_name'),
                             patronymic_name: req.param('patronymic_name'),
                             encryptedPassword: encryptedPassword,
+                            birthday: req.param('birthday'),
                             lastLoggedIn: new Date(),
                             gravatarUrl: gravatarUrl
                         }, function userCreated(err, newUser) {
@@ -94,8 +95,7 @@ module.exports = {
 
         // Send an email, either in plaintext or from an HTML template.
 
-    },
-    index: function (req, res, next) {
+    }, index: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.find(function foundUsers(err, users) {
             if (err)return next(err);
@@ -122,6 +122,7 @@ module.exports = {
         User.findOne(req.param('id'), function foundUser(err, user) {
             if (err)return next(err);
             if (!user)return next('User doesn\'t exists.');
+            //user.birthday = Sugar.Date.format(user.birthday, '%d.%m.%Y');
             res.view({
                 user: user, me: req.session.me
             });
@@ -129,7 +130,16 @@ module.exports = {
     },
 
     update: function (req, res, next) {
-        User.update(req.param('id'), req.params.all(), function userUpdate(err) {
+        //req.params.all()
+        User.update(req.param('id'), {
+            login: req.param('login'),
+            email: req.param('email'),
+            first_name: req.param('first_name'),
+            last_name: req.param('last_name'),
+            patronymic_name: req.param('patronymic_name'),
+            subdivision: req.param('subdivision'),
+            birthday: req.param('birthday')
+        }, function userUpdate(err) {
             if (err) {
                 return res.redirect('/user/edit/' + req.param('id'));
             }

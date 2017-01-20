@@ -15,43 +15,14 @@
 </head>
 <body ng-app="SignupModule" ng-controller="SignupController" ng-cloak>
 <div class="container-fluid">
-    <!-- Creates the navbar -->
-    <!--<nav class="navbar navbar-default navbar-inverse">-->
-    <!--&lt;!&ndash; This creates the mechanism for the collapse button &ndash;&gt;-->
-    <!--<button type="button" class="navbar-toggle" data-toggle="collapse" ng-init="navCollapsed = true"  ng-click="navCollapsed = !navCollapsed">-->
-    <!--&lt;!&ndash; This controls the number of lines in the image when the nav collapse &ndash;&gt;-->
-    <!--<span class="icon-bar"></span>-->
-    <!--<span class="icon-bar"></span>-->
-    <!--<span class="icon-bar"></span>-->
-    <!--</button>-->
-    <!--&lt;!&ndash; This is the brand on the left-hand side. &ndash;&gt;-->
-    <!--<a class="navbar-brand" href="/#"> КАДР</a>-->
-    <!--<div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">-->
-    <!--&lt;!&ndash; LOGIN FORM &ndash;&gt;-->
-    <!--&lt;!&ndash; LOGIN FORM &ndash;&gt;-->
-    <!--<form ng-submit="submitLoginForm()" class="navbar-form navbar-right">-->
-
-    <!--<div class="form-group">-->
-    <!--<input ng-model="loginForm.email" type="text" placeholder="Email" name="email" class="form-control">-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-    <!--<input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">-->
-    <!--</div>-->
-    <!--<button type="submit" class="btn btn-success">-->
-    <!--<span ng-show="!loginForm.loading">Войти</span>-->
-    <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
-    <!--<span ng-show="loginForm.loading">Секунду...</span>-->
-    <!--</button>-->
-    <!--<input type="hidden" name="_csrf" value="<%= _csrf %>" />-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--</nav>-->
     <%- partial('./partials/navbarPub.ejs') %>
 </div>
 <div class="container">
+
     <!-- S I G N U P  F O R M -->
+
     <div class=" col-md-12">
-        <form data-ng-submit="submitSignupForm()" class="form-signup" name="signup" id="sign-up-form">
+        <form data-ng-submit="submitSignupForm()" class="form-signup" novalidate name="signup" id="sign-up-form">
             <h2>Регистрация
                 <small>добавить сотрудника в базу данных компании</small>
             </h2>
@@ -102,8 +73,8 @@
                                tabindex="3">
 
                             <span class="help-block has-error" data-ng-if="signup.last_name.$dirty">
-                                <span data-ng--show="signup.last_name.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng--show="signup.last_name.$error.maxlength">Фамилия не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.last_name.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng-show="signup.last_name.$error.maxlength">Фамилия не может быть более 25 знаков.</span>
                                 <span data-ng-show="signup.last_name.$error.minlength">Фамилия не должна быть менее 2 знаков.</span>
                             </span>
                     </div>
@@ -119,28 +90,51 @@
                                placeholder="Имя" tabindex="4">
 
                             <span class="help-block has-error" data-ng-if="signup.first_name.$dirty">
-                                <span data-ng--show="signup.first_name.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng--show="signup.first_name.$error.maxlength">Имя не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.first_name.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng-show="signup.first_name.$error.maxlength">Имя не может быть более 25 знаков.</span>
                                 <span data-ng-show="signup.first_name.$error.minlength">Имя не должно быть менее 2 знаков.</span>
                             </span>
                     </div>
                 </div>
 
             </div>
+            <div class="row">
 
-            <!-- P A T R O N Y M I C -->
+                <!-- P A T R O N Y M I C  N A M E-->
 
-            <div class="form-group"
-                 data-ng-class="{'has-error':signup.patronymic_name.$invalid && signup.patronymic_name.$dirty}">
-                <input data-ng-model="signupForm.patronymic_name" data-ng-maxlength="25" data-ng-minlength="2"
-                       required type="text" name="patronymic_name" id="patronymic_name"
-                       class="form-control input-lg" placeholder="Отчество" tabindex="5">
+                <div class="control-group col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group"
+                         data-ng-class="{'has-error':signup.patronymic_name.$invalid && signup.patronymic_name.$dirty}">
+                        <input data-ng-model="signupForm.patronymic_name" data-ng-maxlength="25" data-ng-minlength="2"
+                               required type="text" name="patronymic_name" id="patronymic_name"
+                               class="form-control input-lg" placeholder="Отчество" tabindex="5">
 
                      <span class="help-block has-error" data-ng-if="signup.patronymic_name.$dirty">
-                                <span data-ng--show="signup.patronymic_name.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng--show="signup.patronymic_name.$error.maxlength">Отчество не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.patronymic_name.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng-show="signup.patronymic_name.$error.maxlength">Отчество не может быть более 25 знаков.</span>
                                 <span data-ng-show="signup.patronymic_name.$error.minlength">Отчество не должно быть менее 2 знаков.</span>
                             </span>
+                    </div>
+                </div>
+
+                <!--B I R T H D A Y-->
+
+                <div class="control-group col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group" data-ng-class="{'has-error':signup.birthday.$invalid && signup.birthday.$dirty}">
+                        <!--<input data-ng-model="signupForm.birthday"-->
+                               <!--required ng-required="1" type="date" name="birthday" id="birthday"-->
+                               <!--class="form-control input-lg" placeholder="Дата рождения" tabindex="6" min="1950-01-01" max="2000-12-31">-->
+
+
+                        <input type="date" class="form-control input-lg" id="birthday" name="birthday" ng-model="signupForm.birthday"
+                               placeholder="Дата рождения" tabindex="6" min="1950-01-01" max="2000-12-31" required />
+                     <span class="help-block has-error" data-ng-if="signup.birthday.$dirty">
+                                <!--<span data-ng&#45;&#45;show="signup.birthday.$error.required">Поле обязательно к заполнению.</span>-->
+                                <span data-ng-show="signupForm.input.$error.required">Дата рождения не может быть более 10 знаков.</span>
+                                <span data-ng-show="signupForm.input.$error.date">Дата рождения не должно быть менее 2 знаков.</span>
+                            </span>
+                    </div>
+                </div>
             </div>
 
 
@@ -153,7 +147,7 @@
                          data-ng-class="{'has-error':signup.password.$invalid && signup.password.$dirty}">
                         <input data-ng-model="signupForm.password" required data-ng-minlength="6"
                                compare-to="signupForm.confirmPassword" type="password" name="password" id="password"
-                               class="form-control input-lg" placeholder="Пароль" tabindex="5">
+                               class="form-control input-lg" placeholder="Пароль" tabindex="7">
                             <span class="help-block has-error" data-ng-if="signup.password.$dirty">
                             <span data-ng-show="signup.password.$error.required">Поле обязательно к заполнению.</span>
                             <span data-ng-show="signup.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>
@@ -168,7 +162,7 @@
                         <input data-ng-model="signupForm.confirmPassword" required type="password"
                                name="confirmation"
                                class="form-control input-lg"
-                               placeholder="Повторить пароль" tabindex="6">
+                               placeholder="Повторить пароль" tabindex="8">
                             <span class="help-block has-error" data-ng-if="signup.confirmation.$dirty">
                             <span data-ng-show="signup.password.$error.compareTo">Пароли должны совпадать.</span>
                             <span data-ng-show="signup.password.$error.required">Требуется повторить пароль.</span>
@@ -184,7 +178,7 @@
 					<span class="button-checkbox">
 						<button data-ng-click="signupForm.confirmAacceptTerms=true" type="button" class="btn"
                                 data-color="info"
-                                tabindex="7">Я согласен(а)
+                                tabindex="9">Я согласен(а)
                         </button>
                         <input data-ng-model="signupForm.confirmAacceptTerms" required type="checkbox"
                                name="confirmAacceptTerms" id="confirmAacceptTerms" class="hidden">
@@ -206,7 +200,7 @@
                 <!-- Disable signup button until the form has no errors -->
                 <div class="col-xs-12 col-md-12">
                     <button type="submit" class="btn btn-primary btn-block btn-lg"
-                            data-ng-disabled="signup.$invalid" tabindex="7">
+                            data-ng-disabled="signup.$invalid" tabindex="10">
                         <span ng-show="!signupForm.loading">Регистрация</span>
                         <span ng-show="signupForm.loading" class="overlord-loading-spinner fa fa-spinner"></span>
                         <span ng-show="signupForm.loading">Preparing your new account...</span>

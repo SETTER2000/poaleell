@@ -11,4 +11,5 @@ angular.module('DashboardModule').controller('DashboardController', ['$scope', '
     $scope.data = window.SAILS_LOCALS.me;
 
 
+
 }]);
