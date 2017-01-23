@@ -1,1 +1,1 @@
-angular.module('DashboardModule', ['toastr']);
+angular.module('DashboardModule', ['toastr','ngResource']);

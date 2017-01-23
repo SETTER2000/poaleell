@@ -42,10 +42,6 @@ module.exports.routes = {
         locals: {layout: 'signup'}
     },
 
-    //'GET /user':'UserController.getUsers',
-    //'GET /user': {
-    //    view: 'users/private'
-    //},
 
     'POST /signup': 'UserController.signup', //'POST /file': 'FileController.upload',
     'PUT /login': 'UserController.login',

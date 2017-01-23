@@ -27,7 +27,7 @@
     "passport-local": "^1.0.0",
     "rc": "1.0.1",
     "sails": "~0.12.11",
-    "sails-disk": "~0.10.9",
+    "sails-disk": "^0.10.10",
     "sails-mongo": "^0.12.2",
     "sugar": "^2.0.4",
     "sugar-date": "^2.0.4"

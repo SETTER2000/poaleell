@@ -95,11 +95,12 @@ module.exports = {
 
         // Send an email, either in plaintext or from an HTML template.
 
-    }, index: function (req, res, next) {
+    },
+    index: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.find(function foundUsers(err, users) {
             if (err)return next(err);
-            res.view({
+            res.json({
                 users: users, me: req.session.me
             });
         });
