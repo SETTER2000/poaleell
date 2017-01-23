@@ -2,7 +2,6 @@
     <h3>Сотрудники</h3>
     <table class="table">
         <tr>
-            <th>ID</th>
             <th>Фамилия</th>
             <th>Имя</th>
             <th>Отчество</th>
@@ -14,7 +13,6 @@
         </tr>
         <% _.each(users, function (user) {%>
         <tr data-id="<%= user.id %>" data-model="user">
-            <td><%= user.id %></td>
             <td><%= user.last_name %></td>
             <td><%= user.first_name %></td>
             <td><%= user.patronymic_name %></td>
@@ -30,7 +28,6 @@
                 </a>
             </td>
             <td>
-
                 <form action="/user/destroy/<%= user.id %>" method="post">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit" class="btn btn-sm btn-danger" >
