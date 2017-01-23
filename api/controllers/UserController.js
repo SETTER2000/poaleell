@@ -100,9 +100,8 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.find(function foundUsers(err, users) {
             if (err)return next(err);
-            res.json({
-                users: users, me: req.session.me
-            });
+
+            res.ok();
         });
     },
 
