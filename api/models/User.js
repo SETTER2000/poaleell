@@ -7,15 +7,15 @@
 
 module.exports = {
     connection: 'userMongodbServer', schema: true, attributes: {
-        first_name: {
+        firstName: {
             type: 'string', required: true
         },
 
-        last_name: {
+        lastName: {
             type: 'string', required: true
         },
 
-        patronymic_name: {
+        patronymicName: {
             type: 'string', required: true
         },
 

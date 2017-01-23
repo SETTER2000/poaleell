@@ -57,9 +57,9 @@ module.exports = {
                         User.create({
                             login: req.param('login'),
                             email: req.param('email'),
-                            first_name: req.param('first_name'),
-                            last_name: req.param('last_name'),
-                            patronymic_name: req.param('patronymic_name'),
+                            firstName: req.param('firstName'),
+                            lastName: req.param('lastName'),
+                            patronymicName: req.param('patronymicName'),
                             encryptedPassword: encryptedPassword,
                             birthday: req.param('birthday'),
                             lastLoggedIn: new Date(),
@@ -75,7 +75,7 @@ module.exports = {
                             }
                             req.session.me = newUser.id;
                             // Отправка на email данных о регистрации
-                            Email.send(sails.config.custom.sendMail).exec({
+                            Email.send(sails.config.conf.sendMail).exec({
                                 error: function (err) {
                                     console.log(err);
 
@@ -98,11 +98,7 @@ module.exports = {
     },
     index: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.find(function foundUsers(err, users) {
-            if (err)return next(err);
-
-            res.ok();
-        });
+        next();
     },
 
     show: function (req, res, next) {
@@ -134,9 +130,9 @@ module.exports = {
         User.update(req.param('id'), {
             login: req.param('login'),
             email: req.param('email'),
-            first_name: req.param('first_name'),
-            last_name: req.param('last_name'),
-            patronymic_name: req.param('patronymic_name'),
+            firstName: req.param('firstName'),
+            lastName: req.param('lastName'),
+            patronymicName: req.param('patronymicName'),
             subdivision: req.param('subdivision'),
             birthday: req.param('birthday')
         }, function userUpdate(err) {

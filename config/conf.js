@@ -1,4 +1,4 @@
-module.exports.custom = {
+module.exports.conf = {
     sendMail: {
         service: 'gmail',
         auth: {

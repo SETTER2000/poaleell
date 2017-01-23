@@ -66,16 +66,16 @@
 
                 <div class="control-group  col-xs-6 col-sm-6 col-md-6">
                     <div class="form-group"
-                         data-ng-class="{'has-error':signup.last_name.$invalid && signup.last_name.$dirty}">
-                        <input data-ng-model="signupForm.last_name" data-ng-maxlength="25" data-ng-minlength="2"
+                         data-ng-class="{'has-error':signup.lastName.$invalid && signup.lastName.$dirty}">
+                        <input data-ng-model="signupForm.lastName" data-ng-maxlength="25" data-ng-minlength="2"
                                required type="text"
-                               name="last_name" id="last_name" class="form-control input-lg" placeholder="Фамилия"
+                               name="lastName" id="lastName" class="form-control input-lg" placeholder="Фамилия"
                                tabindex="3">
 
-                            <span class="help-block has-error" data-ng-if="signup.last_name.$dirty">
-                                <span data-ng-show="signup.last_name.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng-show="signup.last_name.$error.maxlength">Фамилия не может быть более 25 знаков.</span>
-                                <span data-ng-show="signup.last_name.$error.minlength">Фамилия не должна быть менее 2 знаков.</span>
+                            <span class="help-block has-error" data-ng-if="signup.lastName.$dirty">
+                                <span data-ng-show="signup.lastName.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng-show="signup.lastName.$error.maxlength">Фамилия не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.lastName.$error.minlength">Фамилия не должна быть менее 2 знаков.</span>
                             </span>
                     </div>
                 </div>
@@ -84,15 +84,15 @@
 
                 <div class="control-group col-xs-6 col-sm-6 col-md-6">
                     <div class="form-group"
-                         data-ng-class="{'has-error':signup.first_name.$invalid && signup.first_name.$dirty}">
-                        <input data-ng-model="signupForm.first_name" data-ng-maxlength="25" data-ng-minlength="2"
-                               required type="text" name="first_name" class="form-control input-lg"
+                         data-ng-class="{'has-error':signup.firstName.$invalid && signup.firstName.$dirty}">
+                        <input data-ng-model="signupForm.firstName" data-ng-maxlength="25" data-ng-minlength="2"
+                               required type="text" name="firstName" class="form-control input-lg"
                                placeholder="Имя" tabindex="4">
 
-                            <span class="help-block has-error" data-ng-if="signup.first_name.$dirty">
-                                <span data-ng-show="signup.first_name.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng-show="signup.first_name.$error.maxlength">Имя не может быть более 25 знаков.</span>
-                                <span data-ng-show="signup.first_name.$error.minlength">Имя не должно быть менее 2 знаков.</span>
+                            <span class="help-block has-error" data-ng-if="signup.firstName.$dirty">
+                                <span data-ng-show="signup.firstName.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng-show="signup.firstName.$error.maxlength">Имя не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.firstName.$error.minlength">Имя не должно быть менее 2 знаков.</span>
                             </span>
                     </div>
                 </div>
@@ -104,15 +104,15 @@
 
                 <div class="control-group col-xs-6 col-sm-6 col-md-6">
                     <div class="form-group"
-                         data-ng-class="{'has-error':signup.patronymic_name.$invalid && signup.patronymic_name.$dirty}">
-                        <input data-ng-model="signupForm.patronymic_name" data-ng-maxlength="25" data-ng-minlength="2"
-                               required type="text" name="patronymic_name" id="patronymic_name"
+                         data-ng-class="{'has-error':signup.patronymicName.$invalid && signup.patronymicName.$dirty}">
+                        <input data-ng-model="signupForm.patronymicName" data-ng-maxlength="25" data-ng-minlength="2"
+                               required type="text" name="patronymicName" id="patronymicName"
                                class="form-control input-lg" placeholder="Отчество" tabindex="5">
 
-                     <span class="help-block has-error" data-ng-if="signup.patronymic_name.$dirty">
-                                <span data-ng-show="signup.patronymic_name.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng-show="signup.patronymic_name.$error.maxlength">Отчество не может быть более 25 знаков.</span>
-                                <span data-ng-show="signup.patronymic_name.$error.minlength">Отчество не должно быть менее 2 знаков.</span>
+                     <span class="help-block has-error" data-ng-if="signup.patronymicName.$dirty">
+                                <span data-ng-show="signup.patronymicName.$error.required">Поле обязательно к заполнению.</span>
+                                <span data-ng-show="signup.patronymicName.$error.maxlength">Отчество не может быть более 25 знаков.</span>
+                                <span data-ng-show="signup.patronymicName.$error.minlength">Отчество не должно быть менее 2 знаков.</span>
                             </span>
                     </div>
                 </div>

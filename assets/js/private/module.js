@@ -1,5 +1,4 @@
-(function () {
-    'use strict';
+
     //angular.module('HomepageModule', []);
     //angular.module('SignupModule', []);
     //angular.module('DashboardModule', []);
@@ -8,8 +7,8 @@
     //    'SignupModule', 'HomepageModule', 'DashboardModule']).config(HolidayConfig);
 
 
-    angular.module('Holiday', ['ngRoute',  'DashboardModule','UserModule'])
-    //.constant("baseUrl", "http://localhost:1337")
+    angular.module('Holiday', ['ngRoute', 'ngResource' ,'DashboardModule','UserModule'])
+    // .constant("baseUrl", "http://localhost\\:1337")
     .config(HolidayConfig);
 
     HolidayConfig.$inject = ['$routeProvider', '$locationProvider'];
@@ -25,6 +24,10 @@
         $routeProvider.when('/user', {
             templateUrl: 'view/user.html', controller: 'UserController'
         });
+        
+        // $routeProvider.when('/logout', {
+        //      controller: 'UserController'
+        // });
 
         $routeProvider.when('/', {
             templateUrl: 'view/home.html', controller: 'DashboardController'
@@ -40,4 +43,3 @@
         //});
         $locationProvider.html5Mode({enabled: true, requireBase: false});
     }
-})();

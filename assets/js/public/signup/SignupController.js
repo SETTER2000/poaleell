@@ -9,9 +9,9 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
         $http.post('/signup', {
             login: $scope.signupForm.login,
             email: $scope.signupForm.email,
-            first_name: $scope.signupForm.first_name,
-            last_name: $scope.signupForm.last_name,
-            patronymic_name: $scope.signupForm.patronymic_name,
+            firstName: $scope.signupForm.firstName,
+            lastName: $scope.signupForm.lastName,
+            patronymicName: $scope.signupForm.patronymicName,
             birthday: $scope.signupForm.birthday,
             password: $scope.signupForm.password
         }).then(function onSuccess(sailsResponse) {

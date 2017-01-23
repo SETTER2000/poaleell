@@ -45,7 +45,7 @@ module.exports.routes = {
 
     'POST /signup': 'UserController.signup', //'POST /file': 'FileController.upload',
     'PUT /login': 'UserController.login',
-    'GET /logout': 'UserController.logout' //'/admin': 'AdminController'
+    '/logout': 'UserController.logout' //'/admin': 'AdminController'
 
     /***************************************************************************
      *                                                                          *

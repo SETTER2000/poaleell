@@ -21,9 +21,9 @@ module.exports = {
             return   res.view({
                  me:{
                      id:user.id,
-                     first_name:user.first_name,
-                     last_name:user.last_name,
-                     patronymic_name:user.patronymic_name,
+                     firstName:user.firstName,
+                     lastName:user.lastName,
+                     patronymicName:user.patronymicName,
                      birthday:user.birthday,
                      email:user.email,
                      login:user.login,
@@ -42,9 +42,9 @@ module.exports = {
 {
     me:{
         id:user.id,
-            first_name:user.first_name,
-            last_name:user.last_name,
-            patronymic_name:user.patronymic_name,
+            firstName:user.firstName,
+            lastName:user.lastName,
+            patronymicName:user.patronymicName,
             email:user.email,
             login:user.login,
             isAdmin:!!user.admin,
