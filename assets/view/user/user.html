@@ -2,11 +2,10 @@
     <div class=" col-md-12">
         <h3>Сотрудники</h3>
 
+
         <table class="table">
             <tr>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Отчество</th>
+                <th>ФИО</th>
                 <th>ДР</th>
                 <th>Логин</th>
                 <th>Email</th>
@@ -14,10 +13,8 @@
                 <th></th>
             </tr>
             <tr ng-repeat="item in items" ng-cloak>
-                <td>{{item.lastName}}</td>
-                <td>{{item.firstName}}</td>
-                <td>{{item.patronymicName}}</td>
-                <td>{{item.birthday}}</td>
+                <td>{{item.getFullName()}}</td>
+                <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                 <td>{{item.login}}</td>
                 <td>{{item.email}}</td>
                 <td>

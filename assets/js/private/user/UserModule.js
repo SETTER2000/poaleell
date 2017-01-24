@@ -10,7 +10,7 @@ angular.module('UserModule', ['toastr', 'ngResource'])
             // }
         );
         Users.prototype.getFullName = function () {
-            return this.firstName + ' ' + this.lastName;
+            return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
         return Users;
     });

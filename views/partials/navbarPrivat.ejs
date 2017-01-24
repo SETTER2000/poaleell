@@ -13,22 +13,9 @@
         <li><a  href="/user">Сотрудники</a></li>
     </ul>
 
-    <!--<a class="navbar-brand" href="/signup">Добавить пользователя</a>-->
-    <!-- This is what is the above collapse button points to when the mark-up below is collapsed -->
     <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-        <!-- This is what "styles" the li's as navbar items -->
-        <ul class="nav navbar-nav navbar-right">
-            <!-- navbar-right pulls this element right -->
-            <!-- Using ng-show instead of ng-if because we need this mark-up to be in the dom when signup controller
-            fires.  If it's not there (which it wouldn't be in the case of ng-if) then the scope of the signup
-            controller will not be tied to this element. -->
-            <li>
-                <a href="/logout">Выход</a>
-            </li>
-            <!-- <a ng-controller="signinController" class="btn btn-default navbar-btn navbar-right" href="#" ng-if="!isAuthenticated">sign-in</a> -->
-            <!-- Using ng-show instead of ng-if because we need this mark-up to be in the dom when signup controller
-            fires.  If it's not there (which it wouldn't be in the case of ng-if) then the scope of the signup
-            controller will not be tied to this element. -->
-        </ul>
+                <form action="/logout" class="navbar-form navbar-right">
+                    <button class="btn btn-default" type="submit" >Выход</button>
+                </form>
     </div>
 </nav>

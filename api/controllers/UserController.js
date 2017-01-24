@@ -100,7 +100,6 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         next();
     },
-
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -158,7 +157,7 @@ module.exports = {
         User.findOne(req.session.me, function foundUser(err, user) {
             if (err)return res.negotiate(err);
             if (!user) {
-                sails.log.verbose('Session refers to a user who no longer exists/');
+                sails.log.verbose('Сессия относится к пользователю, который больше не существует/');
                 return res.backToHomePage();
             }
             req.session.me = null;

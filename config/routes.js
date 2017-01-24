@@ -32,20 +32,17 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-    /////////////////////////////////////////////////////////////
-    // Server-rendered HTML webpages
-    /////////////////////////////////////////////////////////////
     'GET /': 'PageController.showHomePage',
+    //'POST /user': {response: 'notFound'},
 
     'GET /signup': {
         view: 'public/signup',
         locals: {layout: 'signup'}
     },
 
-
-    'POST /signup': 'UserController.signup', //'POST /file': 'FileController.upload',
+    'POST /signup': 'UserController.signup',
     'PUT /login': 'UserController.login',
-    '/logout': 'UserController.logout' //'/admin': 'AdminController'
+    'GET /logout': 'UserController.logout'
 
     /***************************************************************************
      *                                                                          *
