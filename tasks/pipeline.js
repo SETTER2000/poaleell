@@ -28,13 +28,13 @@ var jsFilesToInject = [
     'js/dependencies/angular.js', // Dependencies like jQuery, or Angular are brought in here
     'js/dependencies/angular-resource.js',
     'js/dependencies/angular-route.js',
+    'js/dependencies/angular-ui-router.js',
     'js/dependencies/**/*.js',
 
 
     'js/public/signup/SignupModule.js',
-
     'js/private/dashboard/DashboardModule.js',
-    'js/private/user/UserModule.js',
+    'js/private/admin/users/UserModule.js',
     'js/public/homepage/HomepageModule.js',
     'js/private/module.js',
     // All of the rest of your client-side js files

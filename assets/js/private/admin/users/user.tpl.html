@@ -1,0 +1,45 @@
+<h1>Сотрудники</h1>
+<div class=" col-md-12">
+
+    <table class="table">
+        <tr>
+            <th>ФИО</th>
+            <th>ДР</th>
+            <th>Логин</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr  ng-cloak>
+            <td>{{items.getFullName()}}</td>
+            <td>{{items.birthday | date:'dd.MM.yyyy'}}</td>
+            <td>{{items.login}}</td>
+            <td>{{items.email}}</td>
+            <td>
+                <a href="/user/show/{{item}}" class="btn btn-sm btn-primary">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                </a>
+                <button ng-click="editOrCreate(item)" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <a href="/user/{{item.id}}" class="btn btn-sm btn-primary">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+            </td>
+            <td>
+                <form action="/user/destroy" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                    <input type="hidden" name="id" value="{{item.id}}">
+                </form>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+

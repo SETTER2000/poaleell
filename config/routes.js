@@ -33,6 +33,11 @@ module.exports.routes = {
      ***************************************************************************/
 
     'GET /': 'PageController.showHomePage',
+    'GET /account': 'PageController.showHomePage',
+    //'GET /user': 'PageController.showHomePage',
+    'GET /admin': 'PageController.showHomePage',
+    //'GET /admin/users': 'PageController.showHomePage',
+    'GET /admin/users/list': 'PageController.showHomePage',
     //'POST /user': {response: 'notFound'},
 
     'GET /signup': {

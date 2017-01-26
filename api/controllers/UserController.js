@@ -99,6 +99,18 @@ module.exports = {
     index: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         next();
+        //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
+    },
+    findOne: function (req, res) {
+        User.findOne(req.param('id'), function foundUser(err, user) {
+            if (err) return next(err);
+            if (!user) return next();
+
+            res.view({
+                user: user, me: req.session.me
+            });
+        });
+
     },
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
