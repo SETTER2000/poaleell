@@ -16,10 +16,10 @@
                 <td>{{item.login}}</td>
                 <td>{{item.email}}</td>
                 <td>
-                    <a href="/user/show/{{item}}" class="btn btn-sm btn-primary">
+                    <a href="/admin/users/show/{{item.id}}" class="btn btn-sm btn-primary">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </a>
-                    <a href="/admin/users/{{item.id}}" class="btn btn-sm btn-warning">
+                    <a href="/admin/users/edit/{{item.id}}" class="btn btn-sm btn-warning">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                     <!--<a href="/user/{{item.id}}" class="btn btn-sm btn-primary">-->

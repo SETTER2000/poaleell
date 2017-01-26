@@ -1,12 +1,3 @@
-/**
- * Created by PhpStorm.
- * Company: Appalachian Ltd.
- * Developer: SETTER
- * Suite: appalachi.ru
- * Email: info@appalachi.ru
- * Date: 24.12.2016
- * Time: 2:28
- */
 angular.module('DashboardModule')
 //.constant('baseUrl', 'http://localhost:1337')
 .controller('DashboardController', ['$scope', '$http', 'toastr','$resource', function ($scope, $http, toastr, $resource) {
@@ -36,6 +27,4 @@ angular.module('DashboardModule')
     function rejected(error){
         console.log(error);
     }
-
-
 }]);

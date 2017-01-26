@@ -142,10 +142,10 @@ module.exports = {
             login: req.param('login'),
             email: req.param('email'),
             firstName: req.param('firstName'),
-            lastName: req.param('lastName'),
-            patronymicName: req.param('patronymicName'),
-            subdivision: req.param('subdivision'),
-            birthday: req.param('birthday')
+            lastName: req.param('lastName')
+            // patronymicName: req.param('patronymicName'),
+            // subdivision: req.param('subdivision'),
+            // birthday: req.param('birthday')
         }, function userUpdate(err) {
             if (err) {
                 return res.redirect('/user/edit/' + req.param('id'));

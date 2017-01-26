@@ -36,10 +36,12 @@ module.exports.routes = {
     'GET /account': 'PageController.showHomePage',
     //'GET /user': 'PageController.showHomePage',
     'GET /admin': 'PageController.showHomePage',
-    //'GET /admin/users': 'PageController.showHomePage',
+    'GET /admin/users': 'PageController.showHomePage',
     'GET /admin/users/list': 'PageController.showHomePage',
+    'GET /admin/users/show/:id': 'UserController.findOne',
+    'GET /admin/users/edit/:id': 'UserController.findOne',
     //'POST /user': {response: 'notFound'},
-
+    // 'PUT /user/:id': 'UserController.update',
     'GET /signup': {
         view: 'public/signup',
         locals: {layout: 'signup'}

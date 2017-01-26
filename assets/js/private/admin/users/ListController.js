@@ -9,7 +9,7 @@ angular.module('UserModule')
             $scope.items = Users.query(function (users) {
                 $scope.users = users;
                 // кол-во пользователей
-                console.log($scope.users.length);
+                // console.log($scope.users.length);
                 console.log($scope.users);
             });
         };

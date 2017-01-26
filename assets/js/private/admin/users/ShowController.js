@@ -1,6 +1,6 @@
 angular.module('UserModule')
-    .controller('UserController', ['$scope', 'toastr', '$routeParams', 'Users',
-        function ($scope, toastr, $routeParams, Users) {
+    .controller('ShowController', ['$scope', '$routeParams', 'Users',
+        function ($scope, $routeParams, Users) {
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -10,13 +10,13 @@ angular.module('UserModule')
              * В данном конструкторе добавлен метод Users.getFullName()
              */
 
-                // Получение всех данных из модели
+
             $scope.refresh = function () {
                 $scope.items = Users.get({id: $routeParams.id}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
-                    console.log($scope.users.length);
-                    console.log($scope.users);
+                    // console.log($scope.users.length);
+                    // console.log($scope.users);
                 }, function (err) {
                     if (err) console.log(err.message);
                 });

@@ -1,0 +1,51 @@
+<h1>Сотрудники</h1>
+<div class=" col-md-12">
+
+    <table class="table">
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <!--<th>ДР</th>-->
+            <th>Логин</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr ng-cloak>
+            <td><input class="form-control" ng-model="item.lastName"></td>
+            <td><input class="form-control" ng-model="item.firstName"></td>
+            <td><input class="form-control" ng-model="item.patronymicName"></td>
+            <!--<td><input class="form-control" ng-model="item.birthday "></td>-->
+            <td><input class="form-control" ng-model="item.login"></td>
+            <td><input class="form-control" ng-model="item.email"></td>
+            <td>
+
+                <a href="/admin/users" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-list"></span>
+                </a>
+
+            </td>
+            <td>
+                <form action="/user/destroy" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                    <input type="hidden" name="id" value="{{item.id}}">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10">  <a ng-click="saveEdit(item)" class="btn btn-md btn-success">
+                <span class="glyphicon glyphicon-check"> Сохранить</span>
+            </a>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
