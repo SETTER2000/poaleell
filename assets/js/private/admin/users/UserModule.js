@@ -1,20 +1,29 @@
 angular.module('UserModule', ['toastr', 'ngResource', 'ngRoute'])
     .config(moduleConfig)
-    .constant('CONF_MODULE', {baseUrl: 'http://localhost\\:1337/user/'})
+    .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
     .factory('Users', function ($resource, CONF_MODULE) {
         var Users = $resource(
             CONF_MODULE.baseUrl,
-            {id: '@_id'},
+            {userId: '@id'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
             {
-                update: {method: 'PUT'}
+                update: {
+                    method: 'PUT'
+                }
             }
         );
+
         Users.prototype.getFullName = function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
+
+        Users.prototype.ok = function () {
+            return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
+        };
+
         return Users;
-    });
+    })
+;
 
 moduleConfig.$inject = ['$routeProvider', '$locationProvider', 'CONF_MODULE'];
 function moduleConfig($routeProvider, $locationProvider, CONF_MODULE) {
@@ -33,6 +42,11 @@ function moduleConfig($routeProvider, $locationProvider, CONF_MODULE) {
         .when('/admin/users/edit/:id', {
             templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
             controller: 'EditController'
+        })
+
+        .when('/admin/users/delete/:id', {
+            templateUrl: '/js/private/admin/users/tpl/delete.tpl.html',
+            controller: 'DeleteController'
         })
 
         .otherwise({redirectTo: '/admin/users/list'});

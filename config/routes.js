@@ -41,7 +41,7 @@ module.exports.routes = {
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit/:id': 'UserController.findOne',
     //'POST /user': {response: 'notFound'},
-    // 'PUT /user/:id': 'UserController.update',
+     'PUT /user/:id': 'UserController.update',
     'GET /signup': {
         view: 'public/signup',
         locals: {layout: 'signup'}
@@ -49,7 +49,8 @@ module.exports.routes = {
 
     'POST /signup': 'UserController.signup',
     'PUT /login': 'UserController.login',
-    'GET /logout': 'UserController.logout'
+    'GET /logout': 'UserController.logout',
+    'DELETE /user/:id': 'UserController.destroy'
 
     /***************************************************************************
      *                                                                          *

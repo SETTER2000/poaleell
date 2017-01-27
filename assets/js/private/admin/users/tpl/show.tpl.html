@@ -1,4 +1,6 @@
+<div class="container">
 <h1>Сотрудники</h1>
+<div class="row">
 <div class=" col-md-12">
 
     <table class="table">
@@ -11,16 +13,18 @@
             <th></th>
         </tr>
         <tr  ng-cloak>
-            <td>{{items.getFullName()}}</td>
-            <td>{{items.birthday | date:'dd.MM.yyyy'}}</td>
-            <td>{{items.login}}</td>
-            <td>{{items.email}}</td>
+            <td>{{item.getFullName()}}</td>
+            <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
+            <td>{{item.login}}</td>
+            <td>{{item.email}}</td>
             <td>
 
                 <a href="/admin/users" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
-
+                <a href="/admin/users/edit/{{item.id}}" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
             </td>
             <td>
                 <form action="/user/destroy" method="post">
@@ -37,5 +41,6 @@
 
     </table>
 </div>
-
+</div>
+</div>
 

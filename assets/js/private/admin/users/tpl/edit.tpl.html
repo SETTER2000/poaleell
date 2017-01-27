@@ -1,51 +1,150 @@
-<h1>Сотрудники</h1>
-<div class=" col-md-12">
-
-    <table class="table">
-        <tr>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <!--<th>ДР</th>-->
-            <th>Логин</th>
-            <th>Email</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr ng-cloak>
-            <td><input class="form-control" ng-model="item.lastName"></td>
-            <td><input class="form-control" ng-model="item.firstName"></td>
-            <td><input class="form-control" ng-model="item.patronymicName"></td>
-            <!--<td><input class="form-control" ng-model="item.birthday "></td>-->
-            <td><input class="form-control" ng-model="item.login"></td>
-            <td><input class="form-control" ng-model="item.email"></td>
-            <td>
-
-                <a href="/admin/users" class="btn btn-sm btn-warning">
-                    <span class="glyphicon glyphicon-list"></span>
-                </a>
-
-            </td>
-            <td>
-                <form action="/user/destroy" method="post">
-                    <input type="hidden" name="_method" value="delete">
-                    <button type="submit" class="btn btn-sm btn-danger">
+<h3>{{item.getFullName()}}
+    <span class="label label-success pull-right">Работает</span>
+</h3>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-warning">
+            <div class="panel-heading">Редактировать</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label" for="inputSuccess1">Фамилия</label>
+                    <input type="text" class="form-control" ng-model="item.lastName">
+                    <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="inputSuccess1">Имя</label>
+                    <input type="text" class="form-control" ng-model="item.firstName">
+                    <!--<span id="helpBlock2" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="inputSuccess1">Отчество</label>
+                    <input type="text" class="form-control" ng-model="item.patronymicName">
+                    <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label class="control-label" for="inputSuccess1">Дата рождения</label>
+                            <input type="date" class="form-control" ng-model="item.birthday">
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label class="control-label" for="inputSuccess1">Дата рождения</label>
+                            <input class="form-control " disabled value="{{item.birthday | date:'dd.MM.yyyy'}}">
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label" for="inputSuccess1">Логин</label>
+                    <input type="text" class="form-control" ng-model="item.login">
+                    <!--<span id="helpBlock5" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="form-group ">
+                    <label class="control-label" for="inputSuccess1">Email</label>
+                    <input type="text" class="form-control" ng-model="item.email">
+                    <!--<span id="helpBlock9" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="form-group ">
+                    <label class="control-label" for="inputSuccess1">Отдел</label>
+                    <input type="text" class="form-control" ng-model="item.subdivision">
+                    <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group ">
+                            <label class="control-label" for="inputSuccess1">Gravatar</label>
+                            <input class="form-control " disabled value="{{item.gravatarUrl}}">
+                            <!--<input type="text" class="form-control" ng-model="item.gravatarUrl">-->
+                            <!--<span id="helpBlock8" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{item.gravatarUrl}}" alt="">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label" for="inputSuccess1">Зарегистрирован</label>
+                    <input class="form-control " disabled value="{{item.lastLoggedIn | date:'dd.MM.yyyy'}}">
+                    <!--<span id="helpBlock7" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                </div>
+                <div class="form-group">
+                    <a ng-click="saveEdit(item)" class="btn btn-md btn-success">
+                        <span class="glyphicon glyphicon-check"></span>
+                        Сохранить
+                    </a>
+                    <a href="/admin/users" class="btn btn-md btn-warning">
+                        <span class="glyphicon glyphicon-list"> </span>
+                        Список
+                    </a>
+                    <a href="/admin/users/edit/{{data.id}}"
+                       class="btn btn-default btn-md pull-right" role="button">
                         <span class="glyphicon glyphicon-trash"></span>
-                    </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">Информация</div>
+            <table class="table table-hover">
+                <tr ng-repeat="(key, value) in item">
+                    <th>{{key}}</th>
+                    <td>{{value | date:'dd.MM.yyyy' }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
-                    <input type="hidden" name="id" value="{{item.id}}">
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="10">  <a ng-click="saveEdit(item)" class="btn btn-md btn-success">
-                <span class="glyphicon glyphicon-check"> Сохранить</span>
-            </a>
-            </td>
-        </tr>
-
-    </table>
 </div>
+<!--<div class="row">-->
+<!--<div class=" col-md-12">-->
+<!--<table class="table">-->
+<!--<tr>-->
+<!--<th>Фамилия</th>-->
+<!--<th>Имя</th>-->
+<!--<th>Отчество</th>-->
+<!--<th>ДР</th>-->
+<!--<th>Логин</th>-->
+<!--<th>Email</th>-->
+<!--<th></th>-->
+<!--<th></th>-->
+<!--</tr>-->
+<!--<tr ng-cloak>-->
+<!--<td><input class="form-control" ng-model="item.lastName"></td>-->
+<!--<td><input class="form-control" ng-model="item.firstName"></td>-->
+<!--<td><input class="form-control" ng-model="item.patronymicName"></td>-->
+<!--<td><input class="form-control" type="date" ng-model="item.birthday"></td>-->
+<!--<td><input class="form-control" ng-model="item.login"></td>-->
+<!--<td><input class="form-control" ng-model="item.email"></td>-->
+<!--<td>-->
+
+
+<!--</td>-->
+<!--<td>-->
+
+<!--</td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td colspan="50">-->
+<!--<a ng-click="saveEdit(item)" class="btn btn-md btn-success">-->
+<!--<span class="glyphicon glyphicon-check"></span>-->
+<!--Сохранить-->
+<!--</a>-->
+<!--<a href="/admin/users" class="btn btn-md btn-warning">-->
+<!--<span class="glyphicon glyphicon-list"> </span>-->
+<!--Список-->
+<!--</a>-->
+
+<!--</td>-->
+<!--</tr>-->
+
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+
 
 

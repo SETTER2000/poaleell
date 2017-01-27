@@ -101,7 +101,8 @@ module.exports = {
         next();
         //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
     },
-    findOne: function (req, res) {
+    findOne: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
             if (err) return next(err);
             if (!user) return next();
@@ -142,15 +143,16 @@ module.exports = {
             login: req.param('login'),
             email: req.param('email'),
             firstName: req.param('firstName'),
-            lastName: req.param('lastName')
-            // patronymicName: req.param('patronymicName'),
-            // subdivision: req.param('subdivision'),
-            // birthday: req.param('birthday')
+            lastName: req.param('lastName'),
+            patronymicName: req.param('patronymicName'),
+            subdivision: req.param('subdivision'),
+            birthday: req.param('birthday')
         }, function userUpdate(err) {
             if (err) {
-                return res.redirect('/user/edit/' + req.param('id'));
+                return res.redirect('/admin/users/edit/' + req.param('id'));
             }
-            res.redirect('/user/show/' + req.param('id'));
+            //res.redirect('/admin/users/show/' + req.param('id'));
+            res.ok();
         });
     },
 
@@ -167,7 +169,7 @@ module.exports = {
 
     logout: function (req, res) {
         User.findOne(req.session.me, function foundUser(err, user) {
-            if (err)return res.negotiate(err);
+            if (err) return res.view('public/header', {layout: 'homepage'});
             if (!user) {
                 sails.log.verbose('Сессия относится к пользователю, который больше не существует/');
                 return res.backToHomePage();

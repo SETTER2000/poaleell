@@ -12,7 +12,7 @@ angular.module('UserModule')
 
 
             $scope.refresh = function () {
-                $scope.items = Users.get({id: $routeParams.id}, function (users) {
+                $scope.item = Users.get({id: $routeParams.id}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     // console.log($scope.users.length);
