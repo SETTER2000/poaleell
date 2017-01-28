@@ -146,7 +146,14 @@ module.exports = {
             lastName: req.param('lastName'),
             patronymicName: req.param('patronymicName'),
             subdivision: req.param('subdivision'),
-            birthday: req.param('birthday')
+            birthday: req.param('birthday'),
+            // fired: req.param('fired'),
+            dateInWork: req.param('dateInWork'),
+            position: req.param('position'),
+            contacts: req.param('contacts'),
+            firedDate: req.param('firedDate'),
+            pfr: req.param('pfr')
+            
         }, function userUpdate(err) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));

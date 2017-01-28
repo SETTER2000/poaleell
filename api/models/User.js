@@ -32,13 +32,32 @@ module.exports = {
         },
 
         subdivision: {
-            type: 'string',  defaultsTo: 'нет данных'
+            type: 'string', defaultsTo: 'нет данных'
         },
-
+        position: {
+            type: 'string', defaultsTo: 'нет данных',
+            size: 50
+        },
         encryptedPassword: {
             type: 'string', required: true
         },
-
+        contacts: {
+            type: 'array',
+            defaultsTo: "{type:'телефон', value:'+7(000) 000-00-00'}"
+        },
+        // fired: {
+        //     type: 'boolean', defaultsTo: false
+        // },
+        firedDate: {
+            type: 'date'
+        },
+        dateInWork: {
+            type: 'date'
+        },
+        pfr: {
+            type: 'string',
+            size: 15
+        },
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)
         },

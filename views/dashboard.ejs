@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="Holiday">
-  <head>
-    <title>DASH LAYOUT <%= me%></title>
+<head>
+    <title>DASH LAYOUT <%= me %></title>
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--STYLES-->
@@ -9,55 +9,50 @@
     <link rel="stylesheet" href="/styles/animate.css">
     <link rel="stylesheet" href="/styles/bootstrap.css">
     <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/navbar_sticky-footer-navbar.css">
     <!--STYLES END-->
     <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
     <script type="text/javascript">
-    window.SAILS_LOCALS = {
-      _csrf: '<%= _csrf %>',
-      me: <%- JSON.stringify(me) %>
-    };
+        window.SAILS_LOCALS = {
+            _csrf: '<%= _csrf %>',
+            me: <%- JSON.stringify(me) %>
+        };
     </script>
-  </head>
-  <body >
+</head>
+<body>
+<%- partial('./partials/navbarPrivat.ejs') %>
 
-    <!-- container = Fixed-width container container-fluid = full-width -->
-    <div class="container-fluid">
-      <!-- Creates the navbar -->
-      <%- partial('./partials/navbarPrivat.ejs') %>
-      <!--<h3>Административная панель</h3>-->
-      <!--<form action="/file/upload" enctype="multipart/form-data" method="post">-->
-        <!--<input type="file" name="avatar" multiple="multiple"><br>-->
-        <!--<input type="submit" value="Загрузить">-->
-      <!--</form>-->
-    </div>
-    <div class="container-fluid">
-      <%- body %>
-      <%- partial('./partials/footer.ejs') %>
-    </div>
-    <!--SCRIPTS-->
-    <script src="/js/dependencies/sails.io.js"></script>
-    <script src="/js/dependencies/angular.js"></script>
-    <script src="/js/dependencies/angular-resource.js"></script>
-    <script src="/js/dependencies/angular-route.js"></script>
-    <script src="/js/dependencies/angular-ui-router.js"></script>
-    <script src="/js/dependencies/angular-animate.min.js"></script>
-    <script src="/js/dependencies/angular-toastr.js"></script>
-    <script src="/js/dependencies/compareTo.module.js"></script>
-    <script src="/js/public/signup/SignupModule.js"></script>
-    <script src="/js/private/dashboard/DashboardModule.js"></script>
-    <script src="/js/private/admin/users/UserModule.js"></script>
-    <script src="/js/public/homepage/HomepageModule.js"></script>
-    <script src="/js/private/admin/users/DeleteController.js"></script>
-    <script src="/js/private/admin/users/EditController.js"></script>
-    <script src="/js/private/admin/users/ListController.js"></script>
-    <script src="/js/private/admin/users/ShowController.js"></script>
-    <script src="/js/private/dashboard/AccountController.js"></script>
-    <script src="/js/private/dashboard/DashboardController.js"></script>
-    <script src="/js/private/HolidayModule.js"></script>
-    <script src="/js/private/mongodb/mongodbResource.js"></script>
-    <script src="/js/public/homepage/HomepageController.js"></script>
-    <script src="/js/public/signup/SignupController.js"></script>
-    <!--SCRIPTS END-->
+<div class="container-fluid">
+    <%- body %>
+</div>
+<%- partial('./partials/footer.ejs') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/dependencies/angular.js"></script>
+<script src="/js/dependencies/angular-resource.js"></script>
+<script src="/js/dependencies/angular-route.js"></script>
+<script src="/js/dependencies/angular-ui-router.js"></script>
+<script src="/js/dependencies/angular-animate.min.js"></script>
+<script src="/js/dependencies/angular-toastr.js"></script>
+<script src="/js/dependencies/angular-ui-router.min.js"></script>
+<script src="/js/dependencies/compareTo.module.js"></script>
+<script src="/js/public/signup/SignupModule.js"></script>
+<script src="/js/private/dashboard/DashboardModule.js"></script>
+<script src="/js/private/admin/users/UserModule.js"></script>
+<script src="/js/public/homepage/HomepageModule.js"></script>
+<script src="/js/private/admin/users/ctrl/DeleteController.js"></script>
+<script src="/js/private/admin/users/ctrl/EditController.js"></script>
+<script src="/js/private/admin/users/ctrl/ListController.js"></script>
+<script src="/js/private/admin/users/ctrl/ShowController.js"></script>
+<script src="/js/private/dashboard/account/ctrl/AccountController.js"></script>
+<script src="/js/private/dashboard/ctrl/DashboardController.js"></script>
+<script src="/js/private/HolidayModule.js"></script>
+<script src="/js/private/mongodb/mongodbResource.js"></script>
+<script src="/js/public/homepage/HomepageController.js"></script>
+<script src="/js/public/signup/SignupController.js"></script>
+<!--SCRIPTS END-->
 
-  </body>
+</body>
 </html>
