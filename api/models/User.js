@@ -45,9 +45,9 @@ module.exports = {
             type: 'array',
             defaultsTo: "{type:'телефон', value:'+7(000) 000-00-00'}"
         },
-        // fired: {
-        //     type: 'boolean', defaultsTo: false
-        // },
+        fired: {
+            type: 'boolean', defaultsTo: false
+        },
         firedDate: {
             type: 'date'
         },

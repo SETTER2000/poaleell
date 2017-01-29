@@ -1,6 +1,7 @@
 angular.module('UserModule')
-    .controller('ShowController', ['$scope', '$routeParams', 'Users',
-        function ($scope, $routeParams, Users) {
+    .controller('ShowController', ['$scope', 'Users', '$stateParams',
+        function ($scope, Users, $stateParams) {
+          
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -12,7 +13,7 @@ angular.module('UserModule')
 
 
             $scope.refresh = function () {
-                $scope.item = Users.get({id: $routeParams.id}, function (users) {
+                $scope.item = Users.get({id: $stateParams.id}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     // console.log($scope.users.length);
@@ -22,7 +23,12 @@ angular.module('UserModule')
                 });
             };
 
-
+            // $scope.toggleSelected = function () {
+            //     $scope.selected = !$scope.selected;
+            // };
+            // $scope.isSelected = function () {
+            //     return $scope.selected;
+            // };
             //console.log($scope.items.login);
 
 

@@ -1,7 +1,7 @@
 angular.module('DashboardModule')
 //.constant('baseUrl', 'http://localhost:1337')
-    .controller('DashboardController', ['$scope', '$http', '$routeParams', 'Users', 'toastr', '$resource',
-        function ($scope, $http, $routeParams, Users, toastr, $resource) {
+    .controller('DashboardController', ['$scope', '$http', '$stateParams', 'Users', 'toastr', '$resource',
+        function ($scope, $http, $stateParams, Users, toastr, $resource) {
 
             //$scope.itemsResource = $resource(baseUrl);
 

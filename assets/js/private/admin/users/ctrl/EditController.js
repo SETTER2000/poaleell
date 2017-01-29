@@ -1,9 +1,9 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', 'Users', '$routeParams', 'CONF_MODULE',
-        function ($scope, $http, Users, $routeParams) {
-
+    .controller('EditController', ['$scope', '$http','$state', 'Users', '$stateParams', 'CONF_MODULE',
+        function ($scope, $http,$state, Users, $stateParams) {
+            // $state.transitionTo('admin.users.show.id');
            // $scope.refresh = function () {
-               var item =   $scope.item = Users.get({id: $routeParams.id}, function (users) {
+               var item =   $scope.item = Users.get({id: $stateParams.id}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     console.log($scope.users.length);

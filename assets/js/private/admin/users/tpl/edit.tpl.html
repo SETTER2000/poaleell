@@ -1,10 +1,10 @@
 <div class="container">
     <div class="page-header">
         <h1>
-            <p ng-class="{'fired':item.firedDate}">{{item.getFullName()}}</p>
-            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.firedDate" role="button">работает c {{item.dateInWork |
+            <p ng-class="{'fired':item.fired}">{{item.getFullName()}}</p>
+            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }}</a>
-            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.firedDate" role="button">сотрудник уволен</a>
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен</a>
 
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel" ng-class="{'panel-warning':!item.firedDate, 'panel-default':item.firedDate}">
+            <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать</h3>
                 </div>
@@ -82,6 +82,8 @@
                     </div>
 
 
+
+
                     <div class="form-group ">
                         <label>Телефон:</label>
                         [ <a href="#" ng-click="addContact()">добавить</a> ]
@@ -134,18 +136,29 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group ">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="item.fired" > Уволен
+                        </label>
+                        <label class="control-label" for="inputSuccess10"></label>
+
+                        <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess8">Уволен</label>
+                                <label class="control-label" for="inputSuccess8">Редактировать дату увольнения</label>
                                 <input type="date" class="form-control" ng-model="item.firedDate">
+
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess9">Уволен</label>
+                                <label class="control-label" for="inputSuccess9">Дата увольнения</label>
                                 <input class="form-control " disabled value="{{item.firedDate | date:'dd.MM.yyyy'}}">
+
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
@@ -177,7 +190,7 @@
                             <span class="glyphicon glyphicon-check"></span>
                             Сохранить
                         </a>
-                        <a href="/admin/users" class="btn btn-md btn-warning">
+                        <a href="/admin/users/list" class="btn btn-md btn-warning">
                             <span class="glyphicon glyphicon-list"> </span>
                             Список
                         </a>
