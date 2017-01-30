@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope','$state', 'Users', function ($scope,$state, Users) {
+        .controller('ListController', ['$scope', '$state', 'Users', function ($scope, $state, Users) {
             console.log('NAVIGABLE-N: ' + $state.$current.navigable);
             console.log('NAVIGABLE-P: ' + $state.$current.path);
             $scope.refresh = function () {
@@ -31,7 +31,7 @@
             $scope.msd = ['settings', 'home', 'options', 'other'];
             $scope.selectionMode = $scope.msd[0];
 
-            
+
             // конструктор хлебных крошек
             function BreadCrumb() {
                 var name;
@@ -57,8 +57,6 @@
             breadcrumb.set('List', '/admin/users' + $state.current.url);
 
             $scope.breadcrumbs = breadcrumb;
-
-            
 
 
             $scope.refresh();

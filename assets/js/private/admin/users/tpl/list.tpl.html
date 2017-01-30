@@ -1,23 +1,23 @@
-<div class="container">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>Сотрудники ({{items.length}})
             <span class="pull-right">
                 <small>
-                <small>
+                    <small>
 
-                 <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="debug" value="option1"> отладка
-                    </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" ng-model="mode" value="option2"> режимы
-                    </label>
-                 <label class="checkbox-inline">
-                    <a ui-sref="admin.users.list.settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                </label>
-            </small>
-            </small></span>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="debug" value="option1"> отладка
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="mode" value="option2"> режимы
+                        </label>
+                        <label class="checkbox-inline">
+                            <a ui-sref="admin.users.list.settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                        </label>
+                    </small>
+                </small></span>
         </h1>
         <ul class="list-inline">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
@@ -116,7 +116,7 @@
                             <td>
                                 <form ng-if="mode" action="/user/destroy" method="post">
                                     <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="btn btn-sm btn-danger">
+                                    <button type="submit" class="btn btn-sm btn-default">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>
 
@@ -134,5 +134,6 @@
             </div>
         </div>
     </div>
+
+    <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
 </div>
-<pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
