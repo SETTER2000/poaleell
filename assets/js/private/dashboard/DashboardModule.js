@@ -1,18 +1,101 @@
-angular.module('DashboardModule', ['toastr', 'ngRoute', 'ngResource', 'UserModule'])
-    .config(function ($routeProvider, $locationProvider) {
-        $routeProvider
+angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
+    //.config(function ($routeProvider, $locationProvider) {
+    //    $routeProvider
+    //
+    //        .when('/', {
+    //            templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html',
+    //            controller: 'DashboardController'
+    //        })
+    //
+    //        .when('/account', {
+    //            templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html',
+    //            controller: 'AccountController'
+    //        })
+    //    ;
+    //    $locationProvider.html5Mode({enabled: true, requireBase: false});
+    //})
 
-            .when('/', {
-                templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html',
-                controller: 'DashboardController'
-            })
 
-            .when('/account', {
-                templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html',
-                controller: 'AccountController'
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+
+
+        $stateProvider
+            .state('index', {
+                url: '/',
+                views: {
+                    'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
+                    'body@': {templateUrl: '/js/private/tpl/workspace.tpl.html'}
+                }
             })
+        //    .state('account', {
+        //        url: '/account',
+        //        templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html'
+        //    })
+        //    .state('contact', {
+        //        url: '/contact',
+        //        // Будет автоматически вложен в безымянный ui-view
+        //        // родительского шаблона. Начиная с состояния верхнего уровня,
+        //        // шаблоном этого родительского состояния является index.html.
+        //        templateUrl: '/js/private/contacts.html'
+        //    })
+        //
+        //    .state('contact.detail', {
+        //        views: {
+        //            /////////////////////////////////////////////////////
+        //            // Относительное позиционирование                  //
+        //            // позиционируется родительское состояние в ui-view//
+        //            /////////////////////////////////////////////////////
+        //
+        //            // Относительное позиционирование вида 'detail' в родительском
+        //            // состоянии 'contacts'.
+        //            // <div ui-view='detail'/> внутри contacts.html
+        //            // "detail": {},
+        //
+        //            // Относительное поциционирование безымянного вида в родительском
+        //            // состояния 'contacts'.
+        //            // <div ui-view/> внутри contacts.html
+        //            // "": {}
+        //
+        //            ////////////////////////////////////////////////////////////////////////////
+        //            // Абсолютное позиционирование '@'                                        //
+        //            // Позиционирование любых видов внутри этого состояния илипредшествующего //
+        //            ////////////////////////////////////////////////////////////////////////////
+        //
+        //            // Абсолютное позиционирование вида 'info' в состоянии 'contacts.detail'.
+        //            // <div ui-view='info'/> внутри contacts.detail.html
+        //            //"info@contacts.detail" : { }
+        //
+        //            // Абсолютное позиционирование вида 'detail' в состоянии 'contacts'.
+        //            // <div ui-view='detail'/> внутри contacts.html
+        //            "detail@contact": {templateUrl: '/js/private/contact.detail.tpl.html'}
+        //
+        //            // Абсолютное позиционирование безымянного вида в родительском
+        //            // состоянии 'contacts'.
+        //            // <div ui-view/> внутри contacts.html
+        //            // "@contacts" : { }
+        //
+        //            // Абсолютное позиционирование вида 'status' в корневом безымянном состоянии.
+        //            // <div ui-view='status'/> внутри index.html
+        //            // "status@" : { }
+        //
+        //            // Абсолютное позиционирование безымянного вида в корневом безымянном состоянии.
+        //            // <div ui-view/> внутри index.html
+        //            // "@" : { }
+        //        }
+        //        // .state('route1.viewC', {
+        //        //     url: "/route1",
+        //        //     views: {
+        //        //         "viewC": { template: "route1.viewA" }
+        //        //     }
+        //        // })
+        //        // .state('route2', {
+        //        //     url: "/route2",
+        //        //     views: {
+        //        //         "viewA": { template: "route2.viewA" },
+        //        //         "viewB": { template: "route2.viewB" }
+        //        //     }
+        //        // })
+        //    })
         ;
-        $locationProvider.html5Mode({enabled: true, requireBase: false});
     })
-
 ;

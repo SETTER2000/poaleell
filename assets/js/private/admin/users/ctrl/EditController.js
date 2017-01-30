@@ -3,7 +3,8 @@ angular.module('UserModule')
         function ($scope, $http,$state, Users, $stateParams) {
             // $state.transitionTo('admin.users.show.id');
            // $scope.refresh = function () {
-               var item =   $scope.item = Users.get({id: $stateParams.id}, function (users) {
+           // return console.log($stateParams.id);
+               var item =   $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     console.log($scope.users.length);

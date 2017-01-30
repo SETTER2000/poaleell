@@ -102,18 +102,16 @@ module.exports = {
         //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
     },
     findOne: function (req, res, next) {
-       
-        if (!req.session.me) return res.backToHomePage();
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
-            if (err) return res.backToHomePage();
-            if (!user) return res.backToHomePage();
+            if (err) return next(err);
+            if (!user) return next();
 
             // return res.redirect('/admin/users/edit/' + req.param('id'));
             // return res.backToHomePage();
-            next();
+            //return res.redirect('/admin/users/edit/' + req.param('id'));
             res.view({
-                user: user, 
-                me: req.session.me
+                user: user, me: req.session.me
             });
         });
     

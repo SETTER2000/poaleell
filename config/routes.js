@@ -34,27 +34,28 @@ module.exports.routes = {
 
     'GET /': 'PageController.showHomePage',
     'GET /account': 'PageController.showHomePage',
-    'GET /contact': 'PageController.showHomePage',
+
     'GET /admin': 'PageController.showHomePage',
     'GET /admin/users': 'PageController.showHomePage',
-    
-    
     'GET /admin/users/list': 'PageController.showHomePage',
-
-    'GET /admin/users/show': 'PageController.showHomePage',
     'GET /admin/users/show/:id': 'UserController.findOne',
-
-
     'GET /admin/users/edit': 'PageController.showHomePage',
     'GET /admin/users/edit/:id': 'UserController.findOne',
-    
-    
-    //'POST /user': {response: 'notFound'},
+    'GET /admin/users/:id': 'UserController.findOne',
+    'GET /admin/:id': 'UserController.findOne',
+
     'PUT /user/:id': 'UserController.update',
-    'GET /signup': {
-        view: 'public/signup',
-        locals: {layout: 'signup'}
-    },
+
+    'GET /signup': {view: 'public/signup', locals: {layout: 'signup'}},
+
+
+    //'GET /admin/users/show': 'PageController.showHomePage',
+    //'GET /admin/users/edit': 'PageController.showHomePage',
+
+
+    'GET /contact': 'PageController.showHomePage',
+    //'POST /user': {response: 'notFound'},
+
 
     'POST /signup': 'UserController.signup',
     'PUT /login': 'UserController.login',
