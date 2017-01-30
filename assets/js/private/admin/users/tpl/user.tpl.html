@@ -4,7 +4,6 @@
     </div>
     <div class="row">
         <div class=" col-md-12">
-
             <table class="table">
                 <tr>
                     <th>ФИО</th>
@@ -21,10 +20,10 @@
                     <td>{{item.email}}</td>
                     <td>
 
-                        <a href="/admin/users/list" class="btn btn-sm btn-warning">
+                        <a ui-sref="admin.users" class="btn btn-sm btn-warning">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>
-                        <a href="/admin/users/edit/{{item.id}}" class="btn btn-sm btn-warning">
+                        <a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>

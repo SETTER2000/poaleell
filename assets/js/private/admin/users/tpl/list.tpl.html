@@ -103,7 +103,7 @@
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>
-                                <a ui-sref="/admin/users/show/{{item.id}}" class="btn btn-sm"
+                                <a ui-sref="admin.users.user({userId:item.id})" class="btn btn-sm"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
@@ -113,7 +113,7 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                     <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a href="/admin/users/edit/{{item.id}}" class="btn btn-sm btn-warning">
+                                <a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>

@@ -53,8 +53,8 @@
 
             var breadcrumb = new BreadCrumb();
             breadcrumb.set('Admin', '/admin');
-            breadcrumb.set('Users', '/admin/users');
-            breadcrumb.set('List', '/admin/users' + $state.current.url);
+            breadcrumb.set('Users', '/admin/'+ $state.current.url);
+            
 
             $scope.breadcrumbs = breadcrumb;
 

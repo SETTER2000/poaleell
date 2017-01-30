@@ -1,29 +1,15 @@
 angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
     .config(function ($stateProvider) {
-
         $stateProvider
-
-            .state('admin',{
-                url:'/admin',
-                template:'<h1>Admin</h1>'
-                //controller: function () {
-                //
-                //}
-                //views:{
-                //    '@':{
-                //        templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
-                //        controller: 'EditController'
-                //    }
-                //}
-            })
-            .state('admin.users',{
-                url:'/users',
+           
+            .state('admin.users', {
+                url: '/users',
                 //template:'<h1>Users</h1>'
                 //controller: function () {
                 //
                 //}
-                views:{
-                    '@':{
+                views: {
+                    '@': {
                         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
                         controller: 'ListController'
                     }
@@ -38,51 +24,51 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 //    }
                 //}
             })
-            .state('admin.users.edit',{
-                url:'/edit/:userId',
+            .state('admin.users.edit', {
+                url: '/edit/:userId',
                 //template:'<h1>Users</h1>',
                 //controller: function () {
                 //
                 //}
-                views:{
-                    '@':{
+                views: {
+                    '@': {
                         templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
                         controller: 'EditController'
                     }
                 }
             })
-            .state('admin.users.show',{
-                url:'/show/:userId',
+            .state('admin.users.user', {
+                url: '/user/:userId',
                 //template:'<h1>Users</h1>',
                 //controller: function () {
                 //
                 //}
-                views:{
-                    '@':{
-                        templateUrl: '/js/private/admin/users/tpl/show.tpl.html',
-                        controller: 'ShowController'
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/tpl/user.tpl.html',
+                        controller: 'UserController'
                     }
                 }
             })
 
-    //        .state('admin.users.edit',{
-    //            url:'/:id',
-    //            views:{
-    //                '@':{
-    //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
-    //                },
-    //                controller:'EditController'
-    //            }
-    //        })
-    //        .state('admin.users.list', {
-    //            url: '/:id',
-    //            views: {
-    //                '@': {
-    //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
-    //                },
-    //                controller:'ListController'
-    //            }
-    //        })
+        //        .state('admin.users.edit',{
+        //            url:'/:id',
+        //            views:{
+        //                '@':{
+        //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
+        //                },
+        //                controller:'EditController'
+        //            }
+        //        })
+        //        .state('admin.users.list', {
+        //            url: '/:id',
+        //            views: {
+        //                '@': {
+        //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
+        //                },
+        //                controller:'ListController'
+        //            }
+        //        })
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
@@ -102,8 +88,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
 
+        // Users.prototype.dt = function () {
+        //     return new Date(this.birthday);
+        // };
+
         Users.prototype.ok = function () {
             return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
+        };
+        Users.prototype.er = function () {
+            return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
         Users.prototype.lastDateSetting = function () {
             return new Date();

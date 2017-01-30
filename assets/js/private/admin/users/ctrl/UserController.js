@@ -1,5 +1,5 @@
 angular.module('UserModule')
-    .controller('ShowController', ['$scope', 'Users', '$stateParams',
+    .controller('UserController', ['$scope', 'Users', '$stateParams',
         function ($scope, Users, $stateParams) {
           
             /**

@@ -1,4 +1,4 @@
-angular.module('Holiday', ['ui.router', 'ngResource','ngAnimate','DashboardModule','UserModule'])
+angular.module('Holiday', ['ui.router', 'ngResource','ngAnimate','DashboardModule','UserModule','AdminModule'])
 // .constant("baseUrl", "http://localhost\\:1337")
 
 //.config(function ($routeProvider, $locationProvider) {
