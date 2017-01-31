@@ -1,10 +1,9 @@
-<div class="container">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{item.getFullName()}}</h1>
     </div>
     <div class="row">
         <div class=" col-md-12">
-
             <table class="table">
                 <tr>
                     <th>ФИО</th>
@@ -21,23 +20,23 @@
                     <td>{{item.email}}</td>
                     <td>
 
-                        <a href="/admin/users" class="btn btn-sm btn-warning">
+                        <a ui-sref="admin.users" class="btn btn-sm btn-warning">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>
-                        <a href="/admin/users/edit/{{item.id}}" class="btn btn-sm btn-warning">
+                        <a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>
                     <td>
-                        <form action="/user/destroy" method="post">
-                            <input type="hidden" name="_method" value="delete">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
+                        <!--<form action="/user/destroy" method="post">-->
+                            <!--<input type="hidden" name="_method" value="delete">-->
+                            <!--<button type="submit" class="btn btn-sm btn-danger">-->
+                                <!--<span class="glyphicon glyphicon-trash"></span>-->
+                            <!--</button>-->
 
-                            <input type="hidden" name="_csrf" value="<%= _csrf %>">
-                            <input type="hidden" name="id" value="{{item.id}}">
-                        </form>
+                            <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
+                            <!--<input type="hidden" name="id" value="{{item.id}}">-->
+                        <!--</form>-->
                     </td>
                 </tr>
 

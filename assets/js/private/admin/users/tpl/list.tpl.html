@@ -1,7 +1,44 @@
-<div class="container">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>Сотрудники</h1>
+        <h1>Сотрудники ({{items.length}})
+            <span class="pull-right">
+                <small>
+                    <small>
+
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="debug" value="option1"> отладка
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="mode" value="option2"> режимы
+                        </label>
+                        <label class="checkbox-inline">
+                            <a ui-sref="admin.users.list.settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                        </label>
+                    </small>
+                </small></span>
+        </h1>
+        <ul class="list-inline">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <span class="divider">|&nbsp; </span>
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                        <span ng-switch-default>
+                                <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                        </span>
+                </ng-switch>
+            </li>
+        </ul>
+
+
+        <div ui-view></div>
+        <div ui-view="settings"></div>
+
+
     </div>
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">
@@ -28,41 +65,72 @@
                 <div class="panel-body">
                     <table class="table table-hover">
                         <tr>
-                            <th>ФИО</th>
-                            <th>ДР</th>
-                            <th>Логин</th>
-                            <th>Email</th>
+                            <th>#</th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('lastName')">ФИО
+                                <span class="sortOrder" ng-show="propertyName === 'lastName'"
+                                      ng-class="{reverse: reverse}"></span>
+                                </button>
+                            </th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('birthday')">ДР
+                                <span class="sortOrder" ng-show="propertyName === 'birthday'"
+                                      ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('login')">Логин
+                                 <span class="sortOrder" ng-show="propertyName === 'login'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('email')">Email
+                                 <span class="sortOrder" ng-show="propertyName === 'email'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
                             <th></th>
                             <th></th>
                         </tr>
-                        <tr ng-repeat="item in items | filter:searchText" ng-cloak>
+                        <tr ng-repeat="item in items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse ">
+                            <td>{{$index+1}}</td>
                             <td>{{item.getFullName()}}</td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>
-                                <a href="/admin/users/show/{{item.id}}" class="btn btn-sm" ng-class="{'btn-primary': !item.firedDate, ' btn-danger':item.firedDate}">
-                                    <span class="glyphicon " ng-class="{'glyphicon-eye-open': !item.firedDate, 'glyphicon-eye-close':item.firedDate}" aria-hidden="true"></span>
+                                <a ui-sref="admin.users.user({userId:item.id})" class="btn btn-sm"
+                                   ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
+                                    <span class="glyphicon "
+                                          ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
+                                          aria-hidden="true"></span>
                                 </a>
-                                <a href="/admin/users/edit/{{item.id}}" class="btn btn-sm btn-warning">
+                                <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
+                                <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
+                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                <!--</a>-->
+                                <a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-                                <!--<a href="/user/{{item.id}}" class="btn btn-sm btn-primary">-->
-                                <!--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>-->
-                                <!--</a>-->
                             </td>
                             <td>
-                                <form action="/user/destroy" method="post">
+                                <form ng-if="mode" action="/user/destroy" method="post">
                                     <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="btn btn-sm btn-danger">
+                                    <button type="submit" class="btn btn-sm btn-default">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>
 
                                     <input type="hidden" name="_csrf" value="<%= _csrf %>">
                                     <input type="hidden" name="id" value="{{item.id}}">
+
                                 </form>
                             </td>
                         </tr>
+
 
                     </table>
 
@@ -70,6 +138,6 @@
             </div>
         </div>
     </div>
+
+    <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
 </div>
-<!--<ng-include src="'./table.html'" ng-show="currentView == 'table'"></ng-include>-->
-<!--<ng-include src="'views/edit.html'" ng-show="currentView == 'edit'"></ng-include>-->

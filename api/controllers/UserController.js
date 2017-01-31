@@ -107,11 +107,14 @@ module.exports = {
             if (err) return next(err);
             if (!user) return next();
 
+            // return res.redirect('/admin/users/edit/' + req.param('id'));
+            // return res.backToHomePage();
+            //return res.redirect('/admin/users/edit/' + req.param('id'));
             res.view({
                 user: user, me: req.session.me
             });
         });
-
+    
     },
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
@@ -128,6 +131,7 @@ module.exports = {
     edit: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
+          
             if (err)return next(err);
             if (!user)return next('User doesn\'t exists.');
             //user.birthday = Sugar.Date.format(user.birthday, '%d.%m.%Y');
@@ -147,7 +151,7 @@ module.exports = {
             patronymicName: req.param('patronymicName'),
             subdivision: req.param('subdivision'),
             birthday: req.param('birthday'),
-            // fired: req.param('fired'),
+            fired: req.param('fired'),
             dateInWork: req.param('dateInWork'),
             position: req.param('position'),
             contacts: req.param('contacts'),

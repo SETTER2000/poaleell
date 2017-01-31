@@ -5,6 +5,7 @@
   "description": "The system of personnel management and holidays.",
   "keywords": [],
   "dependencies": {
+    "angular-animate": "^1.6.1",
     "angular-ui-router": "^0.4.2",
     "bcrypt-nodejs": "0.0.3",
     "ejs": "2.3.4",

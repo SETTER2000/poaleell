@@ -1,16 +1,16 @@
-<div class="container">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>
-            <p ng-class="{'fired':item.firedDate}">{{item.getFullName()}}</p>
-            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.firedDate" role="button">работает c {{item.dateInWork |
+            <p ng-class="{'fired':item.fired}">{{item.getFullName()}}</p>
+            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }}</a>
-            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.firedDate" role="button">сотрудник уволен</a>
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен</a>
 
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
                 </button>
-                <a href="/admin/users/list" type="button" class="btn btn-warning">
+                <a ui-sref="admin.users" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
             </div>
@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel" ng-class="{'panel-warning':!item.firedDate, 'panel-default':item.firedDate}">
+            <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать</h3>
                 </div>
@@ -42,15 +42,23 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess4">Дата рождения</label>
-                                <input type="date" class="form-control" ng-model="item.birthday">
+                                <label class="control-label" for="inputSuccess4">Редактировать дату рождения</label>
+
+                                <input required value="1999-12-31" type="date" min="1950-10-10" max="2000-10-10" class="form-control" ng-model="item.newBirthday">
+
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="control-label" for="inputSuccess5">Дата рождения</label>
-                                <input class="form-control " disabled value="{{item.birthday | date:'dd.MM.yyyy'}}">
+                            <div class="form-group " ng-if="item.birthday">
+                                <label class="control-label" for="inputSuccess5">Дата рождения   </label>
+
+                              <div> <a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"
+                                           aria-hidden="true"></span>
+                                    {{item.birthday | date:'dd.MM.yyyy'}}
+                                </a></div>
+
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
@@ -66,12 +74,12 @@
                         <!--<span id="helpBlock9" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
                     <div class="form-group ">
-                        <label class="control-label" for="inputSuccess10">Отдел</label>
+                        <label class="control-label" for="inputSuccess8">Отдел</label>
                         <input type="text" class="form-control" ng-model="item.subdivision">
                         <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
                     <div class="form-group ">
-                        <label class="control-label" for="inputSuccess10">Должность</label>
+                        <label class="control-label" for="inputSuccess9">Должность</label>
                         <input type="text" class="form-control" ng-model="item.position">
                         <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
@@ -121,31 +129,53 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess8">Принят на работу</label>
-                                <input type="date" class="form-control" ng-model="item.dateInWork">
+                                <label class="control-label" for="inputSuccess11"></label>
+                                <label ng-if="!item.firedDate" class="control-label" for="inputSuccess12">Установить дату приёма на работу</label>
+                                <label ng-if="item.firedDate" class="control-label" for="inputSuccess13">Редактировать дату приёма на работу</label>
+
+                                <input type="date" class="form-control" ng-model="dt" ng-init="item.firedDate">
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="control-label" for="inputSuccess9">Принят на работу</label>
-                                <input class="form-control " disabled value="{{item.dateInWork | date:'dd.MM.yyyy'}}">
+                            <div class="form-group " ng-if="item.dateInWork">
+                                <label class="control-label" for="inputSuccess14">Дата приёма на работу</label>
+                                <div> <a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-hourglass':item.dateInWork}"
+                                           aria-hidden="true"></span>
+                                    {{item.dateInWork | date:'dd.MM.yyyy'}}
+                                </a></div>
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group ">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="item.fired"> Уволен
+                        </label>
+                        <label class="control-label" for="inputSuccess15"></label>
+
+                        <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess8">Уволен</label>
+                                <label ng-if="!item.firedDate" class="control-label" for="inputSuccess16">Установить дату увольнения</label>
+                                <label ng-if="item.firedDate" class="control-label" for="inputSuccess17">Редактировать дату увольнения</label>
                                 <input type="date" class="form-control" ng-model="item.firedDate">
+
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="control-label" for="inputSuccess9">Уволен</label>
-                                <input class="form-control " disabled value="{{item.firedDate | date:'dd.MM.yyyy'}}">
+                            <div class="form-group " ng-if="item.firedDate">
+                                <label class="control-label" for="inputSuccess18">Дата увольнения</label>
+                                <div> <a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-hourglass':item.firedDate}"
+                                           aria-hidden="true"></span>
+                                    {{item.firedDate | date:'dd.MM.yyyy'}}
+                                </a></div>
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
@@ -155,7 +185,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess11">Gravatar</label>
+                                <label class="control-label" for="inputSuccess19">Gravatar</label>
                                 <input class="form-control " disabled value="{{item.gravatarUrl}}">
                                 <!--<input type="text" class="form-control" ng-model="item.gravatarUrl">-->
                                 <!--<span id="helpBlock8" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
@@ -166,10 +196,16 @@
                         </div>
                     </div>
                     <div class="form-group ">
-                        <label class="control-label" for="inputSuccess12">Зарегистрирован</label>
-                        <input class="form-control " disabled value="{{item.lastLoggedIn | date:'dd.MM.yyyy'}}">
-                        <!--<span id="helpBlock7" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                    </div>
+
+                        <div class="form-group " ng-if="item.lastLoggedIn">
+                            <label class="control-label" for="inputSuccess18">Зарегистрирован в системе</label>
+                            <div> <a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.lastLoggedIn}"
+                                           aria-hidden="true"></span>
+                                {{item.lastLoggedIn | date:'dd.MM.yyyy'}}
+                            </a></div>
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>    </div>
 
 
                     <div class="form-group">
@@ -177,7 +213,7 @@
                             <span class="glyphicon glyphicon-check"></span>
                             Сохранить
                         </a>
-                        <a href="/admin/users" class="btn btn-md btn-warning">
+                        <a href="/admin/users/list" class="btn btn-md btn-warning">
                             <span class="glyphicon glyphicon-list"> </span>
                             Список
                         </a>
@@ -190,7 +226,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel" ng-class="{'panel-success':!item.firedDate, 'panel-default':item.firedDate}">
+            <div class="panel" ng-class="{'panel-success':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Информация</h3>
                 </div>
@@ -210,5 +246,6 @@
 </div>
 
 
-
+<!--<div ui-view></div>-->
+<!--<div ui-view="users"></div>-->
 

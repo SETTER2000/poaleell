@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="Holiday">
 <head>
+    <meta charset="utf-8">
     <title>DASH LAYOUT <%= me %></title>
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -8,8 +9,10 @@
     <link rel="stylesheet" href="/styles/angular-toastr.css">
     <link rel="stylesheet" href="/styles/animate.css">
     <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/ie10-viewport-bug-workaround.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/navbar_sticky-footer-navbar.css">
+    <link rel="stylesheet" href="/styles/y-dashboard.css">
     <!--STYLES END-->
     <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
     <script type="text/javascript">
@@ -32,22 +35,23 @@
 <script src="/js/dependencies/sails.io.js"></script>
 <script src="/js/dependencies/angular.js"></script>
 <script src="/js/dependencies/angular-resource.js"></script>
-<script src="/js/dependencies/angular-route.js"></script>
 <script src="/js/dependencies/angular-animate.min.js"></script>
 <script src="/js/dependencies/angular-toastr.js"></script>
 <script src="/js/dependencies/angular-ui-router.min.js"></script>
 <script src="/js/dependencies/compareTo.module.js"></script>
 <script src="/js/public/signup/SignupModule.js"></script>
-<script src="/js/private/dashboard/DashboardModule.js"></script>
 <script src="/js/private/admin/users/UserModule.js"></script>
 <script src="/js/public/homepage/HomepageModule.js"></script>
+<script src="/js/private/dashboard/DashboardModule.js"></script>
+<script src="/js/private/HolidayModule.js"></script>
+<script src="/js/private/admin/AdminModule.js"></script>
+<script src="/js/private/admin/ctrl/AdminController.js"></script>
 <script src="/js/private/admin/users/ctrl/DeleteController.js"></script>
 <script src="/js/private/admin/users/ctrl/EditController.js"></script>
 <script src="/js/private/admin/users/ctrl/ListController.js"></script>
-<script src="/js/private/admin/users/ctrl/ShowController.js"></script>
+<script src="/js/private/admin/users/ctrl/UserController.js"></script>
 <script src="/js/private/dashboard/account/ctrl/AccountController.js"></script>
 <script src="/js/private/dashboard/ctrl/DashboardController.js"></script>
-<script src="/js/private/HolidayModule.js"></script>
 <script src="/js/private/mongodb/mongodbResource.js"></script>
 <script src="/js/public/homepage/HomepageController.js"></script>
 <script src="/js/public/signup/SignupController.js"></script>

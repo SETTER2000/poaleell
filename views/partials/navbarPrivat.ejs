@@ -1,26 +1,3 @@
-<nav class="navbar navbar-default navbar-inverse">
-    <!-- This creates the mechanism for collapse button -->
-    <button type="button" class="navbar-toggle" data-toggle="collapse"
-            ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-        <!-- This controls the number of lines in the image when the nav collapse -->
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-    <!-- This is the brand on the left-hand side. -->
-    <a class="navbar-brand" href="/"> КС</a>
-    <ul class="nav navbar-nav ">
-        <li><a href="/account">Аккаунт</a></li>
-        <li><a href="/admin/users/list">Сотрудники</a></li>
-    </ul>
-
-    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-        <form action="/logout" class="navbar-form navbar-right">
-            <button class="btn btn-success btn-md" type="submit">Выход</button>
-        </form>
-    </div>
-</nav>
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -35,16 +12,24 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li ><a href="/">Home</a></li>
-                <li><a href="/account">Аккаунт</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a ui-sref="account">Аккаунт</a></li>
+                <li><a ui-sref="contact.detail">Detail</a></li>
+                <li><a ui-sref="admin">Admin</a></li>
+                <li><a ui-sref="admin.users">Users</a></li>
+                <!--<li><a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a></li>-->
+                <li><a ui-sref="contact">Contact</a>
+
+                    <!-- Also a way to navigate -->
+
+
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">
                         Admin
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/admin/users/list">Сотрудники</a></li>
+                        <!--<li><a ui-sref="admin.users.list">Сотрудники</a></li>-->
+                        <li><a ui-sref="admin.users">Сотрудники</a></li>
                         <li><a href="#">По отделам</a></li>
                         <li><a href="#">Руководство</a></li>
 
