@@ -60,35 +60,29 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Список сотрудников компании</h3>
+                    <h3 class="panel-title">Список отделов компании</h3>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover">
                         <tr>
                             <th>#</th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('lastName')">ФИО
-                                <span class="sortOrder" ng-show="propertyName === 'lastName'"
+                                <button class="btn btn-default" ng-click="sortBy('name')">Наименование
+                                <span class="sortOrder" ng-show="propertyName === 'name'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('birthday')">ДР
-                                <span class="sortOrder" ng-show="propertyName === 'birthday'"
+                                <button class="btn btn-default" ng-click="sortBy('birthday')">Тип
+                                <span class="sortOrder" ng-show="propertyName === 'type'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
-                            <th>
-                                <button class="btn btn-default" ng-click="sortBy('login')">Логин
-                                 <span class="sortOrder" ng-show="propertyName === 'login'"
-                                       ng-class="{reverse: reverse}"></span>
-                                </button>
 
-                            </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('email')">Email
-                                 <span class="sortOrder" ng-show="propertyName === 'email'"
+                                <button class="btn btn-default" ng-click="sortBy('email')">Местоположение
+                                 <span class="sortOrder" ng-show="propertyName === 'location'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
 
@@ -98,10 +92,10 @@
                         </tr>
                         <tr ng-repeat="item in items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse ">
                             <td>{{$index+1}}</td>
-                            <td>{{item.getFullName()}}</td>
-                            <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
-                            <td>{{item.login}}</td>
-                            <td>{{item.email}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.type }}</td>
+                            <td>{{item.location}}</td>
+
                             <td>
                                 <a ui-sref="admin.users.user({userId:item.id})" class="btn btn-sm"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
@@ -113,7 +107,7 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                     <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                                <a ui-sref="admin.departments.edit({depId:item.id})" class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>

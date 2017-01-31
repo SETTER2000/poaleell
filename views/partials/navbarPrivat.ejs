@@ -18,7 +18,7 @@
                 <li><a ui-sref="admin">Admin</a></li>
                 <li><a ui-sref="admin.users">Users</a></li>
                 <!--<li><a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a></li>-->
-                <li><a ui-sref="contact">Contact</a>
+                <!--<li><a ui-sref="contact">Contact</a>-->
 
                     <!-- Also a way to navigate -->
 
@@ -28,13 +28,15 @@
                         Admin
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li class="dropdown-header">Редактирование</li>
                         <!--<li><a ui-sref="admin.users.list">Сотрудники</a></li>-->
                         <li><a ui-sref="admin.users">Сотрудники</a></li>
-                        <li><a href="#">По отделам</a></li>
-                        <li><a href="#">Руководство</a></li>
+                        <li><a ui-sref="admin.departments">Отделы</a></li>
+
 
                         <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Подразделения</li>
+                        <li class="dropdown-header">Просмотр</li>
+                        <li><a href="#">Структура компании</a></li>
                         <li><a href="#">Отделы</a></li>
                         <li><a href="#">Склад</a></li>
                     </ul>

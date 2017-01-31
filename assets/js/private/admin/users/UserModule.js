@@ -88,9 +88,12 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
 
-        // Users.prototype.dt = function () {
-        //     return new Date(this.birthday);
-        // };
+        Users.prototype.sc = function () {
+            return this.section;
+        };
+        Users.prototype.scs = function () {
+            return this.sections;
+        };
 
         Users.prototype.ok = function () {
             return alert('Сотрудник: ' + this.getFullName() + ' изменён!');

@@ -1,14 +1,14 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', '$state', 'Users', '$stateParams', 'CONF_MODULE',
-        function ($scope, $http, $state, Users, $stateParams) {
+    .controller('EditDepartmentController', ['$scope', '$http', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
+        function ($scope, $http, $state, Departments, $stateParams) {
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
-            var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                $scope.users = users;
+            var item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                $scope.departments = departments;
                 // кол-во пользователей
-                console.log($scope.users.length);
-                console.log($scope.users);
+                console.log($scope.departments.length);
+                console.log($scope.departments);
                 // console.log('USSS1: ' +  $scope.newBirthday);
                 // console.log('USSS2: ' + $scope.item.dt());
                 // // $scope.item.birthday = $scope.newBirthday;
@@ -21,14 +21,7 @@ angular.module('UserModule')
 
             $scope.saveEdit = function (item) {
                 console.log('New Object from save: ' + item.newBirthday);
-
-                if(item.newBirthday){
-                    item.birthday = item.newBirthday;
-                }
-                if(item.newDateInWork){
-                    item.dateInWork = item.newDateInWork;
-                }
-
+                item.birthday = item.newBirthday;
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);
                     item.$update(item, function (success) {

@@ -6,7 +6,17 @@
  */
 
 module.exports = {
-    connection: 'userMongodbServer', schema: true, attributes: {
+    connection: 'userMongodbServer',
+    schema: true,
+    attributes: {
+        section:{
+            type:'string',
+            defaultsTo:'Сотрудник'
+        },
+        sections:{
+            type:'string',
+            defaultsTo:'Сотрудники'
+        },
         firstName: {
             type: 'string', required: true
         },
@@ -28,7 +38,7 @@ module.exports = {
         },
 
         birthday: {
-            type: 'date', required: true
+            type: 'date'
         },
 
         subdivision: {
@@ -64,6 +74,12 @@ module.exports = {
 
         gravatarUrl: {
             type: 'string'
+        },
+
+        departments:{
+            collection:'department',
+            via:'users',
+            dominant:true
         }
     }
 };

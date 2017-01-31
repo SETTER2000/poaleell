@@ -42,9 +42,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label" for="inputSuccess4">Редактировать дату рождения</label>
+                                <label ng-if="!item.birthday" class="control-label" for="inputSuccess12">Установить дату рождения</label>
 
-                                <input required value="1999-12-31" type="date" min="1950-10-10" max="2000-10-10" class="form-control" ng-model="item.newBirthday">
+                                <label ng-if="item.birthday" class="control-label" for="inputSuccess4">Редактировать дату рождения</label>
+
+                                <input value="1999-12-31" type="date" min="1950-10-10" max="2000-10-10" class="form-control" ng-model="item.newBirthday">
 
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
@@ -130,10 +132,10 @@
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label class="control-label" for="inputSuccess11"></label>
-                                <label ng-if="!item.firedDate" class="control-label" for="inputSuccess12">Установить дату приёма на работу</label>
-                                <label ng-if="item.firedDate" class="control-label" for="inputSuccess13">Редактировать дату приёма на работу</label>
+                                <label ng-if="!item.dateInWork" class="control-label" for="inputSuccess12">Установить дату приёма на работу</label>
+                                <label ng-if="item.dateInWork" class="control-label" for="inputSuccess13">Редактировать дату приёма на работу</label>
 
-                                <input type="date" class="form-control" ng-model="dt" ng-init="item.firedDate">
+                                <input type="date" class="form-control" ng-model="item.newDateInWork" >
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
                         </div>
@@ -213,7 +215,7 @@
                             <span class="glyphicon glyphicon-check"></span>
                             Сохранить
                         </a>
-                        <a href="/admin/users/list" class="btn btn-md btn-warning">
+                        <a ui-sref="admin.users" class="btn btn-md btn-warning">
                             <span class="glyphicon glyphicon-list"> </span>
                             Список
                         </a>
