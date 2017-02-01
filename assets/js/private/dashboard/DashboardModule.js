@@ -15,16 +15,13 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
     //    $locationProvider.html5Mode({enabled: true, requireBase: false});
     //})
 
-
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-
-
         $stateProvider
-            .state('index', {
+            .state('home', {
                 url: '/',
                 views: {
                     'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
-                    'body@': {templateUrl: '/js/private/tpl/workspace.tpl.html'}
+                    '@': {templateUrl: '/js/private/tpl/workspace.tpl.html'}
                 }
             })
         //    .state('account', {

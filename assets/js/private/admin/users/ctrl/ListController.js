@@ -52,11 +52,15 @@
             };
 
             var breadcrumb = new BreadCrumb();
+            breadcrumb.set('Home', '/');
             breadcrumb.set('Admin', '/admin');
-            breadcrumb.set('Users', '/admin/'+ $state.current.url);
-            
-
+            breadcrumb.set('Users', '/admin/' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
+
+
+            $scope.resetForm = function () {
+                return $scope.item = {};
+            };
 
 
             $scope.refresh();

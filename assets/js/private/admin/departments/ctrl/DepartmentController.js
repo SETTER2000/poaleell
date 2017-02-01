@@ -1,6 +1,6 @@
-angular.module('UserModule')
-    .controller('UserController', ['$scope', 'Users', '$stateParams',
-        function ($scope, Users, $stateParams) {
+angular.module('DepartmentModule')
+    .controller('DepartmentController', ['$scope', 'Departments', '$stateParams',
+        function ($scope, Departments, $stateParams) {
           
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
@@ -13,8 +13,8 @@ angular.module('UserModule')
 
 
             $scope.refresh = function () {
-                $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                    $scope.users = users;
+                $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                    $scope.departments = departments;
                     // кол-во пользователей
                     // console.log($scope.users.length);
                     // console.log($scope.users);
@@ -22,28 +22,7 @@ angular.module('UserModule')
                     if (err) console.log(err.message);
                 });
             };
-            $scope.saveEdit = function (item) {
-                //item.birthday   =  $scope.newBirthday;
-                //item.dateInWork =  $scope.newDateInWork;
-                //item.firedDate  =  $scope.newFiredDate;
 
-                if (angular.isDefined(item.id)) {
-                    item.$update(item, function (success) {
-                            console.log('SUCCESS: OK!');
-                            item.ok();
-                        },
-                        function (err) {
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
-                            item.er();
-                        }
-                    );
-                } else {
-                    console.log(item);
-                    
-                    item.$save()
-                }
-            };
             // $scope.toggleSelected = function () {
             //     $scope.selected = !$scope.selected;
             // };

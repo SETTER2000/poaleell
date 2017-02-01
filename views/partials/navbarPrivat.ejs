@@ -15,10 +15,10 @@
                 <li><a href="/">Home</a></li>
                 <li><a ui-sref="account">Аккаунт</a></li>
                 <li><a ui-sref="contact.detail">Detail</a></li>
-                <li><a ui-sref="admin">Admin</a></li>
-                <li><a ui-sref="admin.users">Users</a></li>
+                <li><a ui-sref="home.admin">Admin</a></li>
+                <li><a ui-sref="home.admin.users">Users</a></li>
                 <!--<li><a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a></li>-->
-                <li><a ui-sref="contact">Contact</a>
+                <!--<li><a ui-sref="contact">Contact</a>-->
 
                     <!-- Also a way to navigate -->
 
@@ -28,13 +28,15 @@
                         Admin
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li class="dropdown-header">Редактирование</li>
                         <!--<li><a ui-sref="admin.users.list">Сотрудники</a></li>-->
-                        <li><a ui-sref="admin.users">Сотрудники</a></li>
-                        <li><a href="#">По отделам</a></li>
-                        <li><a href="#">Руководство</a></li>
+                        <li><a ui-sref="home.admin.users">Сотрудники</a></li>
+                        <li><a ui-sref="home.admin.departments">Отделы</a></li>
+
 
                         <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Подразделения</li>
+                        <li class="dropdown-header">Просмотр</li>
+                        <li><a href="#">Структура компании</a></li>
                         <li><a href="#">Отделы</a></li>
                         <li><a href="#">Склад</a></li>
                     </ul>
@@ -42,7 +44,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">
                 <li><a href="../navbar/">Default</a></li>
-                <li><a href="../navbar-static-top/">Static top</a></li>
+                <li><%= me.firstName %> <%= me.patronymicName %> (<%= me.login %>)</li>
                 <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
                 <li>
                     <form action="/logout" class="navbar-form navbar-right">

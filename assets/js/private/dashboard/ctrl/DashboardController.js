@@ -1,11 +1,11 @@
 angular.module('DashboardModule')
 //.constant('baseUrl', 'http://localhost:1337')
-    .controller('DashboardController', ['$scope', '$http', '$stateParams', 'Users', 'toastr', '$resource',
-        function ($scope, $http, $stateParams, Users, toastr, $resource) {
+    .controller('DashboardController', ['$scope', '$window', '$stateParams', 'Users', 'toastr', '$resource',
+        function ($scope, $window, $stateParams, Users, toastr, $resource) {
 
             //$scope.itemsResource = $resource(baseUrl);
-
-            $scope.data = window.SAILS_LOCALS.me;
+            console.log('ERRRR::');
+            console.log($window);
 
             $scope.sendRequest = function () {
 

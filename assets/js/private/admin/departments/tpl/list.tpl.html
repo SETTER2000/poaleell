@@ -1,8 +1,9 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{items[0].scs()}} ({{items.length}})
-            <div class="btn-group-xs pull-right">
+            <span class="pull-right">
                 <small>
+                    <small>
 
                         <label class="checkbox-inline">
                             <input type="checkbox" ng-model="debug" value="option1"> отладка
@@ -10,19 +11,17 @@
                         <label class="checkbox-inline">
                             <input type="checkbox" ng-model="mode" value="option2"> режимы
                         </label>
-
-                </small>
-                <button ui-sref="home.admin.users.settings" type="button" class="btn btn-success">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </button>
-                <button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
-
+                        <label class="checkbox-inline">
+                            <a ui-sref="admin.users.list.settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                        </label>
+                    </small>
+                </small></span>
         </h1>
-        <ul class="breadcrumb">
+        <ul class="list-inline">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <span class="divider">|&nbsp; </span>
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
                         <span ng-switch-default>
@@ -31,12 +30,6 @@
                 </ng-switch>
             </li>
         </ul>
-
-        <!--<ol class="breadcrumb">-->
-        <!--<li><a href="#">Home</a></li>-->
-        <!--<li><a href="#">Library</a></li>-->
-        <!--<li class="active">Data</li>-->
-        <!--</ol>-->
 
 
         <div ui-view></div>
@@ -67,35 +60,29 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Список сотрудников компании</h3>
+                    <h3 class="panel-title">Список отделов компании</h3>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover">
                         <tr>
                             <th>#</th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('lastName')">ФИО
-                                <span class="sortOrder" ng-show="propertyName === 'lastName'"
+                                <button class="btn btn-default" ng-click="sortBy('name')">Наименование
+                                <span class="sortOrder" ng-show="propertyName === 'name'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('birthday')">ДР
-                                <span class="sortOrder" ng-show="propertyName === 'birthday'"
+                                <button class="btn btn-default" ng-click="sortBy('birthday')">Тип
+                                <span class="sortOrder" ng-show="propertyName === 'type'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
-                            <th>
-                                <button class="btn btn-default" ng-click="sortBy('login')">Логин
-                                 <span class="sortOrder" ng-show="propertyName === 'login'"
-                                       ng-class="{reverse: reverse}"></span>
-                                </button>
 
-                            </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('email')">Email
-                                 <span class="sortOrder" ng-show="propertyName === 'email'"
+                                <button class="btn btn-default" ng-click="sortBy('email')">Местоположение
+                                 <span class="sortOrder" ng-show="propertyName === 'location'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
 
@@ -105,12 +92,12 @@
                         </tr>
                         <tr ng-repeat="item in items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse ">
                             <td>{{$index+1}}</td>
-                            <td>{{item.getFullName()}}</td>
-                            <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
-                            <td>{{item.login}}</td>
-                            <td>{{item.email}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.type }}</td>
+                            <td>{{item.location}}</td>
+
                             <td>
-                                <a ui-sref="home.admin.users.user({userId:item.id})" class="btn btn-sm"
+                                <a ui-sref="home.admin.department({depId:item.id})" class="btn btn-sm"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
@@ -118,9 +105,9 @@
                                 </a>
                                 <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                                <a ui-sref="home.admin.departments.edit({depId:item.id})" class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>

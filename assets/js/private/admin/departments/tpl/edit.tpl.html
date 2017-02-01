@@ -1,0 +1,265 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
+    <div class="page-header">
+        <h1>
+            <p>{{item.sc()}} {{item.name}}</p>
+            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
+                сотрудников: {{item.dateInWork |
+                date:'dd.MM.yyyy' }}</a>
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен</a>
+
+            <div class="btn-group-xs pull-right">
+                <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-check"></span>
+                </button>
+                <a ui-sref="home.admin.departments" type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-list"></span>
+                </a>
+            </div>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Редактировать</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess1">Наименование</label>
+                        <input type="text" class="form-control" ng-model="item.name">
+                        <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess2">Тип</label>
+                        <input type="text" class="form-control" ng-model="item.type">
+                        <!--<span id="helpBlock2" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">Местоположения</label>
+                        <input type="text" class="form-control" ng-model="item.location">
+                        <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    </div>
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess4">Редактировать дату рождения</label>-->
+
+                    <!--<input required value="1999-12-31" type="date" min="1950-10-10" max="2000-10-10" class="form-control" ng-model="item.newBirthday">-->
+
+                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group " ng-if="item.birthday">-->
+                    <!--<label class="control-label" for="inputSuccess5">Дата рождения   </label>-->
+
+                    <!--<div> <a href="#" class="btn btn-default  disabled" role="button">-->
+                    <!--<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"-->
+                    <!--aria-hidden="true"></span>-->
+                    <!--{{item.birthday | date:'dd.MM.yyyy'}}-->
+                    <!--</a></div>-->
+
+                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess6">Логин</label>-->
+                    <!--<input type="text" class="form-control" ng-model="item.login">-->
+                    <!--&lt;!&ndash;<span id="helpBlock5" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess7">Email</label>-->
+                    <!--<input type="text" class="form-control" ng-model="item.email">-->
+                    <!--&lt;!&ndash;<span id="helpBlock9" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess8">Отдел</label>-->
+                    <!--<input type="text" class="form-control" ng-model="item.subdivision">-->
+                    <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess9">Должность</label>-->
+                    <!--<input type="text" class="form-control" ng-model="item.position">-->
+                    <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess10">ПФР</label>-->
+                    <!--<input type="text" class="form-control" ng-model="item.pfr">-->
+                    <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+
+
+                    <!--<div class="form-group ">-->
+                    <!--<label>Телефон:</label>-->
+                    <!--[ <a href="#" ng-click="addContact()">добавить</a> ]-->
+
+
+                    <!--<form class="form-inline" ng-repeat="contact in item.contacts">-->
+                    <!--<div class="form-group">-->
+                    <!--<select class="form-control" ng-model="contact.type">-->
+                    <!--<option>Email</option>-->
+                    <!--<option>телефон</option>-->
+                    <!--<option>пейджер</option>-->
+                    <!--<option>IM</option>-->
+                    <!--<option>facebook</option>-->
+                    <!--</select>-->
+                    <!--&lt;!&ndash;<label class="sr-only" for="exampleInputEmail3">Email address</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="sr-only" for="exampleInputPassword3">Password</label>-->
+                    <!--<input class="form-control" type="text" id="exampleInputPassword3" ng-model="contact.value" required>-->
+                    <!--</div>-->
+
+                    <!--<button type="submit" class="btn btn-default" ng-click="removeContact(contact)">x</button>-->
+                    <!--</form>-->
+
+                    <!--&lt;!&ndash;<select class="form-control" ng-model="contact.type">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option>Email</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option>телефон</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option>пейджер</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option>IM</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option>facebook</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input class="form-control" type="text" ng-model="contact.value" required>&ndash;&gt;-->
+                    <!--&lt;!&ndash;[ <a href="#" ng-click="removeContact(contact)">×</a> ]&ndash;&gt;-->
+                    <!--</div>-->
+
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess11"></label>-->
+                    <!--<label ng-if="!item.firedDate" class="control-label" for="inputSuccess12">Установить дату приёма на работу</label>-->
+                    <!--<label ng-if="item.firedDate" class="control-label" for="inputSuccess13">Редактировать дату приёма на работу</label>-->
+
+                    <!--<input type="date" class="form-control" ng-model="dt" ng-init="item.firedDate">-->
+                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group " ng-if="item.dateInWork">-->
+                    <!--<label class="control-label" for="inputSuccess14">Дата приёма на работу</label>-->
+                    <!--<div> <a href="#" class="btn btn-default  disabled" role="button">-->
+                    <!--<span class="glyphicon " ng-class="{ 'glyphicon-hourglass':item.dateInWork}"-->
+                    <!--aria-hidden="true"></span>-->
+                    <!--{{item.dateInWork | date:'dd.MM.yyyy'}}-->
+                    <!--</a></div>-->
+                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group ">-->
+                    <!--<label class="checkbox-inline">-->
+                    <!--<input type="checkbox" ng-model="item.fired"> Уволен-->
+                    <!--</label>-->
+                    <!--<label class="control-label" for="inputSuccess15"></label>-->
+
+                    <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group ">-->
+                    <!--<label ng-if="!item.firedDate" class="control-label" for="inputSuccess16">Установить дату увольнения</label>-->
+                    <!--<label ng-if="item.firedDate" class="control-label" for="inputSuccess17">Редактировать дату увольнения</label>-->
+                    <!--<input type="date" class="form-control" ng-model="item.firedDate">-->
+
+                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group " ng-if="item.firedDate">-->
+                    <!--<label class="control-label" for="inputSuccess18">Дата увольнения</label>-->
+                    <!--<div> <a href="#" class="btn btn-default  disabled" role="button">-->
+                    <!--<span class="glyphicon " ng-class="{ 'glyphicon-hourglass':item.firedDate}"-->
+                    <!--aria-hidden="true"></span>-->
+                    <!--{{item.firedDate | date:'dd.MM.yyyy'}}-->
+                    <!--</a></div>-->
+                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-9">-->
+                    <!--<div class="form-group ">-->
+                    <!--<label class="control-label" for="inputSuccess19">Gravatar</label>-->
+                    <!--<input class="form-control " disabled value="{{item.gravatarUrl}}">-->
+                    <!--&lt;!&ndash;<input type="text" class="form-control" ng-model="item.gravatarUrl">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span id="helpBlock8" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-3">-->
+                    <!--<img src="{{item.gravatarUrl}}" alt="">-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+
+                    <div class="form-group ">
+                        <div class="form-group " ng-if="item.createdAt">
+                            <label class="control-label" for="inputSuccess18">Зарегистрирован в системе</label>
+                            <div><a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.createdAt}"
+                                           aria-hidden="true"></span>
+                                {{item.createdAt | date:'dd.MM.yyyy HH:mm'}}
+                            </a></div>
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="form-group " ng-if="item.updatedAt">
+                            <label class="control-label" for="inputSuccess18">Последний раз редактировалось</label>
+                            <div><a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-ok':item.updatedAt}"
+                                           aria-hidden="true"></span>
+                                {{item.updatedAt | date:'dd.MM.yyyy HH:mm'}}
+                            </a></div>
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <a ng-click="saveEdit(item)" class="btn  btn-success">
+                            <span class="glyphicon glyphicon-check"></span>
+                            Сохранить
+                        </a>
+                        <a ui-sref="home.admin.departments" class="btn  btn-warning">
+                            <span class="glyphicon glyphicon-list"> </span>
+                            Список
+                        </a>
+
+                        <a href="/admin/departments/edit/{{data.id}}"
+                           class="btn btn-default btn-sm pull-right" role="button">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel" ng-class="{'panel-success':!item.fired, 'panel-default':item.fired}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Информация</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr ng-repeat="(key, value) in item">
+                                <th>{{key}}</th>
+                                <td>{{value | date:'dd.MM.yyyy' }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div ui-view></div>-->
+<!--<div ui-view="users"></div>-->
+

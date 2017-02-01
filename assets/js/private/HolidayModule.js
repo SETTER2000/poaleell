@@ -1,15 +1,23 @@
-angular.module('Holiday', ['ui.router', 'ngResource','ngAnimate','DashboardModule','UserModule','AdminModule'])
-// .constant("baseUrl", "http://localhost\\:1337")
+angular.module('Holiday', [
+        'ui.router',
+        'ngResource',
+        'ngAnimate',
+        'DashboardModule',
+        'DepartmentModule',
+        'UserModule',
+        'AdminModule'
+    ])
+    // .constant("baseUrl", "http://localhost\\:1337")
 
-//.config(function ($routeProvider, $locationProvider) {
-//$routeProvider
-//        .when('/', {
-//            templateUrl: '/js/private/holiday.tpl.html',
-//            controller: 'HolidayController'
-//        })
-//        ;
-//    $locationProvider.html5Mode({enabled: true, requireBase: false});
-//})
+    //.config(function ($routeProvider, $locationProvider) {
+    //$routeProvider
+    //        .when('/', {
+    //            templateUrl: '/js/private/holiday.tpl.html',
+    //            controller: 'HolidayController'
+    //        })
+    //        ;
+    //    $locationProvider.html5Mode({enabled: true, requireBase: false});
+    //})
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $locationProvider.html5Mode({enabled: true, requireBase: false});
         $urlRouterProvider.otherwise('/');
@@ -91,16 +99,17 @@ angular.module('Holiday', ['ui.router', 'ngResource','ngAnimate','DashboardModul
 //                // })
 //            })
     })
-            .controller('HolidayController', ['$scope', '$http', function ($scope, $http) {
-                //$scope.logout = function () {
-                //    window.SAILS_LOCALS = {me:null};
-                //    $http.get('/logout');
-                //}
-                $scope.firstName = 'Петя';
-                $scope.header = function () {
-                    return 'Привет, ' + $scope.firstName;
-                };
+    .controller('HolidayController', ['$scope', '$window', function ($scope) {
+        //$scope.logout = function () {
+        //    window.SAILS_LOCALS = {me:null};
+        //    $http.get('/logout');
+        //}
 
-            }]);
+        $scope.firstName = 'Петя';
+        $scope.header = function () {
+            return 'Привет, ' + $scope.firstName;
+        };
+
+    }]);
 
 

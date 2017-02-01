@@ -1,8 +1,8 @@
 angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
-           
-            .state('admin.users', {
+
+            .state('home.admin.users', {
                 url: '/users',
                 //template:'<h1>Users</h1>'
                 //controller: function () {
@@ -24,7 +24,30 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 //    }
                 //}
             })
-            .state('admin.users.edit', {
+            .state('home.admin.users.settings', {
+                url: '/settings',
+                //template:'<h1>Users</h1>'
+                //controller: function () {
+                //
+                //}
+                templateUrl: '/js/private/admin/users/views/home.admin.users.settings.html',
+                controller: 'ListController'
+                //views: {
+                //    'settings@': {
+                //
+                //    }
+                //}
+                //views: {
+                //    '@': {
+                //        template: function($stateParams) {
+                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
+                //        },
+                //        controller: function() {}
+                //
+                //    }
+                //}
+            })
+            .state('home.admin.users.edit', {
                 url: '/edit/:userId',
                 //template:'<h1>Users</h1>',
                 //controller: function () {
@@ -37,7 +60,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
-            .state('admin.users.user', {
+            .state('home.admin.users.user', {
                 url: '/user/:userId',
                 //template:'<h1>Users</h1>',
                 //controller: function () {
@@ -50,25 +73,38 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
+            .state('home.admin.users.create', {
+                url: '/create/:userId',
+                //template:'<h1>Users</h1>',
+                //controller: function () {
+                //
+                //}
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
+                        controller: 'UserController'
+                    }
+                }
+            })
 
-        //        .state('admin.users.edit',{
-        //            url:'/:id',
-        //            views:{
-        //                '@':{
-        //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
-        //                },
-        //                controller:'EditController'
-        //            }
-        //        })
-        //        .state('admin.users.list', {
-        //            url: '/:id',
-        //            views: {
-        //                '@': {
-        //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
-        //                },
-        //                controller:'ListController'
-        //            }
-        //        })
+            //        .state('admin.users.edit',{
+            //            url:'/:id',
+            //            views:{
+            //                '@':{
+            //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
+            //                },
+            //                controller:'EditController'
+            //            }
+            //        })
+            //        .state('admin.users.list', {
+            //            url: '/:id',
+            //            views: {
+            //                '@': {
+            //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
+            //                },
+            //                controller:'ListController'
+            //            }
+            //        })
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
@@ -88,9 +124,12 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
 
-        // Users.prototype.dt = function () {
-        //     return new Date(this.birthday);
-        // };
+        Users.prototype.sc = function () {
+            return this.section;
+        };
+        Users.prototype.scs = function () {
+            return this.sections;
+        };
 
         Users.prototype.ok = function () {
             return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
@@ -102,8 +141,52 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return new Date();
         };
 
+        Users.prototype.getBirthday = function () {
+            if(this.birthday){
+                var tm;
+                tm = new Date(this.birthday);
+                this.birthday = tm;
+            }
+        };
+
+        Users.prototype.getDateInWork = function () {
+            if(this.birthday){
+                var tm;
+                tm = new Date(this.birthday);
+                this.birthday = tm;
+            }
+        };
+
+        Users.prototype.getFiredDate = function () {
+            if(this.birthday){
+                var tm;
+                tm = new Date(this.birthday);
+                this.birthday = tm;
+            }
+        };
+
         return Users;
     })
+    //.directive(
+    //    'dateInput',
+    //    function(dateFilter) {
+    //        return {
+    //            require: 'ngModel',
+    //            template: '<input type="date" class="form-control"></input>',
+    //            replace: true,
+    //            link: function(scope, elm, attrs, ngModelCtrl) {
+    //                ngModelCtrl.$formatters.unshift(function (modelValue) {
+    //                    return dateFilter(modelValue, 'yyyy-MM-dd');
+    //                });
+    //
+    //                ngModelCtrl.$parsers.push(function(modelValue){
+    //                    return angular.toJson(modelValue,true)
+    //                        .substring(1,angular.toJson(modelValue).length-1);
+    //                })
+    //
+    //            }
+    //        };
+    //    })
 ;
 
 

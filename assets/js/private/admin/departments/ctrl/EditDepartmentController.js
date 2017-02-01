@@ -1,21 +1,14 @@
-angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', '$state', 'Users', '$stateParams', 'CONF_MODULE',
-        function ($scope, $http, $state, Users, $stateParams) {
+angular.module('DepartmentModule')
+    .controller('EditDepartmentController', ['$scope', '$http', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
+        function ($scope, $http, $state, Departments, $stateParams) {
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
-            //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-            var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                $scope.users = users;
+            var item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                $scope.departments = departments;
                 // кол-во пользователей
-                console.log(users);
-                //if (users.birthday) {
-                //    item.birthday = new Date(users.birthday);
-                //}
-                item.getBirthday();
-                item.getDateInWork();
-                item.getFiredDate();
-                //console.log(item);
+                console.log($scope.departments.length);
+                console.log($scope.departments);
                 // console.log('USSS1: ' +  $scope.newBirthday);
                 // console.log('USSS2: ' + $scope.item.dt());
                 // // $scope.item.birthday = $scope.newBirthday;
@@ -26,25 +19,17 @@ angular.module('UserModule')
                 if (err) console.log(err.message);
             });
 
-            //$scope.newBirthday = item.birthday;
-            //$scope.newFiredDate = item.dateInWork;
-            //$scope.newDateInWork = item.firedDate;
-            //
-            //console.log($scope.newBirthday  );
-            //console.log($scope.newFiredDate );
-            //console.log($scope.newDateInWork);
-
             $scope.saveEdit = function (item) {
-                //item.birthday   =  $scope.newBirthday;
-                //item.dateInWork =  $scope.newDateInWork;
-                //item.firedDate  =  $scope.newFiredDate;
-
+                console.log('New Object from save: ' + item.newBirthday);
+                item.birthday = item.newBirthday;
                 if (angular.isDefined(item.id)) {
+                    //item.$update(item);
                     item.$update(item, function (success) {
                             console.log('SUCCESS: OK!');
                             item.ok();
                         },
                         function (err) {
+
                             console.log('ERROR: ' + err.status);
                             console.log(err);
                             item.er();
@@ -55,11 +40,13 @@ angular.module('UserModule')
                 }
             };
 
+            // $scope.item.contacts = [{type:'phone', value:'1(234) 555-1212'}];
+
             $scope.state = /^\w\w$/;
             $scope.zip = /^\d\d\d\d\d$/;
 
             $scope.addContact = function () {
-                item.contacts.push({type: "", value: ""});
+                item.contacts.push({type: 'телефон', value: ''});
             };
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
