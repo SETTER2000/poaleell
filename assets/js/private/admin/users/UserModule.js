@@ -128,8 +128,34 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return new Date();
         };
 
+        Users.prototype.tim = function () {
+            var tm;
+            tm = new Date(this.birthday);
+            this.birthday = tm;
+        };
+
         return Users;
     })
+    //.directive(
+    //    'dateInput',
+    //    function(dateFilter) {
+    //        return {
+    //            require: 'ngModel',
+    //            template: '<input type="date" class="form-control"></input>',
+    //            replace: true,
+    //            link: function(scope, elm, attrs, ngModelCtrl) {
+    //                ngModelCtrl.$formatters.unshift(function (modelValue) {
+    //                    return dateFilter(modelValue, 'yyyy-MM-dd');
+    //                });
+    //
+    //                ngModelCtrl.$parsers.push(function(modelValue){
+    //                    return angular.toJson(modelValue,true)
+    //                        .substring(1,angular.toJson(modelValue).length-1);
+    //                })
+    //
+    //            }
+    //        };
+    //    })
 ;
 
 

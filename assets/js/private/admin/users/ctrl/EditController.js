@@ -4,11 +4,16 @@ angular.module('UserModule')
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
+            //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
                 // кол-во пользователей
-                //console.log($scope.users.length);
-                console.log($scope.users);
+
+
+                item.birthday = new Date(users.birthday);
+                item.dateInWork = new Date(users.dateInWork);
+                item.firedDate = new Date(users.firedDate);
+                //console.log(item);
                 // console.log('USSS1: ' +  $scope.newBirthday);
                 // console.log('USSS2: ' + $scope.item.dt());
                 // // $scope.item.birthday = $scope.newBirthday;
@@ -19,27 +24,25 @@ angular.module('UserModule')
                 if (err) console.log(err.message);
             });
 
-            $scope.saveEdit = function (item) {
-                //console.log('New Object from save: ' + item.newBirthday);
+            //$scope.newBirthday = item.birthday;
+            //$scope.newFiredDate = item.dateInWork;
+            //$scope.newDateInWork = item.firedDate;
+            //
+            //console.log($scope.newBirthday  );
+            //console.log($scope.newFiredDate );
+            //console.log($scope.newDateInWork);
 
-                if(item.newBirthday){
-                    item.birthday = item.newBirthday;
-                }
-                if(item.newDateInWork){
-                    item.dateInWork = item.newDateInWork;
-                }
-                if(item.newFiredDate){
-                    item.firedDate = item.newFiredDate;
-                }
+            $scope.saveEdit = function (item) {
+                //item.birthday   =  $scope.newBirthday;
+                //item.dateInWork =  $scope.newDateInWork;
+                //item.firedDate  =  $scope.newFiredDate;
 
                 if (angular.isDefined(item.id)) {
-                    //item.$update(item);
                     item.$update(item, function (success) {
                             console.log('SUCCESS: OK!');
                             item.ok();
                         },
                         function (err) {
-
                             console.log('ERROR: ' + err.status);
                             console.log(err);
                             item.er();
@@ -49,8 +52,6 @@ angular.module('UserModule')
                     item.$save(item)
                 }
             };
-
-            // $scope.item.contacts = [{type:'phone', value:'1(234) 555-1212'}];
 
             $scope.state = /^\w\w$/;
             $scope.zip = /^\d\d\d\d\d$/;
