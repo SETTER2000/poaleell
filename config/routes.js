@@ -50,6 +50,7 @@ module.exports.routes = {
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
     'GET /admin/department/:id': 'DepartmentController.findOne',
+    'GET /admin/depart/:id': 'DepartmentController.addDepartment',
 
     'GET /admin/users/create': 'PageController.showHomePage',
 
