@@ -52,6 +52,7 @@
             };
 
             var breadcrumb = new BreadCrumb();
+            breadcrumb.set('Home', '/');
             breadcrumb.set('Admin', '/admin');
             breadcrumb.set('Users', '/admin/'+ $state.current.url);
             

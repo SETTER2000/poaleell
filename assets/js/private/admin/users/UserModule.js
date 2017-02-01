@@ -1,8 +1,8 @@
 angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
-           
-            .state('admin.users', {
+
+            .state('home.admin.users', {
                 url: '/users',
                 //template:'<h1>Users</h1>'
                 //controller: function () {
@@ -24,7 +24,30 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 //    }
                 //}
             })
-            .state('admin.users.edit', {
+            .state('home.admin.users.settings', {
+                url: '/settings',
+                //template:'<h1>Users</h1>'
+                //controller: function () {
+                //
+                //}
+                templateUrl: '/js/private/admin/users/views/home.admin.users.settings.html',
+                controller: 'ListController'
+                //views: {
+                //    'settings@': {
+                //
+                //    }
+                //}
+                //views: {
+                //    '@': {
+                //        template: function($stateParams) {
+                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
+                //        },
+                //        controller: function() {}
+                //
+                //    }
+                //}
+            })
+            .state('home.admin.users.edit', {
                 url: '/edit/:userId',
                 //template:'<h1>Users</h1>',
                 //controller: function () {
@@ -37,7 +60,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
-            .state('admin.users.user', {
+            .state('home.admin.users.user', {
                 url: '/user/:userId',
                 //template:'<h1>Users</h1>',
                 //controller: function () {
@@ -51,24 +74,24 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 }
             })
 
-        //        .state('admin.users.edit',{
-        //            url:'/:id',
-        //            views:{
-        //                '@':{
-        //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
-        //                },
-        //                controller:'EditController'
-        //            }
-        //        })
-        //        .state('admin.users.list', {
-        //            url: '/:id',
-        //            views: {
-        //                '@': {
-        //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
-        //                },
-        //                controller:'ListController'
-        //            }
-        //        })
+            //        .state('admin.users.edit',{
+            //            url:'/:id',
+            //            views:{
+            //                '@':{
+            //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
+            //                },
+            //                controller:'EditController'
+            //            }
+            //        })
+            //        .state('admin.users.list', {
+            //            url: '/:id',
+            //            views: {
+            //                '@': {
+            //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
+            //                },
+            //                controller:'ListController'
+            //            }
+            //        })
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})

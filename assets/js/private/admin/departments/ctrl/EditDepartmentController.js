@@ -1,4 +1,4 @@
-angular.module('UserModule')
+angular.module('DepartmentModule')
     .controller('EditDepartmentController', ['$scope', '$http', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
         function ($scope, $http, $state, Departments, $stateParams) {
             // $state.transitionTo('admin.users.show.id');

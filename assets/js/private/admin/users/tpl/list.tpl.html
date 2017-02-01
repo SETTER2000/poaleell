@@ -12,7 +12,7 @@
                             <input type="checkbox" ng-model="mode" value="option2"> режимы
                         </label>
                         <label class="checkbox-inline">
-                            <a ui-sref="admin.users.list.settings">
+                            <a ui-sref="home.admin.users.settings">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </a>
                         </label>
@@ -103,7 +103,7 @@
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>
-                                <a ui-sref="admin.users.user({userId:item.id})" class="btn btn-sm"
+                                <a ui-sref="home.admin.users.user({userId:item.id})" class="btn btn-sm"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
@@ -113,7 +113,7 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                     <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                                <a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>

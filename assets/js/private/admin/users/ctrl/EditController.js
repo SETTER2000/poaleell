@@ -7,7 +7,7 @@ angular.module('UserModule')
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
                 // кол-во пользователей
-                console.log($scope.users.length);
+                //console.log($scope.users.length);
                 console.log($scope.users);
                 // console.log('USSS1: ' +  $scope.newBirthday);
                 // console.log('USSS2: ' + $scope.item.dt());
@@ -20,13 +20,16 @@ angular.module('UserModule')
             });
 
             $scope.saveEdit = function (item) {
-                console.log('New Object from save: ' + item.newBirthday);
+                //console.log('New Object from save: ' + item.newBirthday);
 
                 if(item.newBirthday){
                     item.birthday = item.newBirthday;
                 }
                 if(item.newDateInWork){
                     item.dateInWork = item.newDateInWork;
+                }
+                if(item.newFiredDate){
+                    item.firedDate = item.newFiredDate;
                 }
 
                 if (angular.isDefined(item.id)) {

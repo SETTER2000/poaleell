@@ -1,29 +1,28 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{item.getFullName()}}</h1>
+        <h1>{{item.sc()}} {{item.name}}</h1>
     </div>
     <div class="row">
         <div class=" col-md-12">
             <table class="table">
                 <tr>
-                    <th>ФИО</th>
-                    <th>ДР</th>
-                    <th>Логин</th>
-                    <th>Email</th>
+                    <th>Наименование</th>
+                    <th>Тип</th>
+                    <th>Местоположение</th>
                     <th></th>
                     <th></th>
                 </tr>
                 <tr ng-cloak>
-                    <td>{{item.getFullName()}}</td>
-                    <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
-                    <td>{{item.login}}</td>
-                    <td>{{item.email}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.type | date:'dd.MM.yyyy'}}</td>
+                    <td>{{item.location}}</td>
+
                     <td>
 
-                        <a ui-sref="home.admin.users" class="btn btn-sm btn-warning">
+                        <a ui-sref="home.admin.departments" type="button" class="btn btn-sm btn-warning ">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>
-                        <a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                        <a ui-sref="home.admin.departments.edit({depId:item.id})" class="btn btn-sm btn-warning">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>

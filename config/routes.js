@@ -38,6 +38,7 @@ module.exports.routes = {
     'GET /admin': 'PageController.showHomePage',
 
     'GET /admin/users': 'PageController.showHomePage',
+    'GET /admin/users/settings': 'PageController.showHomePage',
     'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit': 'PageController.showHomePage',
@@ -48,6 +49,7 @@ module.exports.routes = {
     'GET /admin/departments': 'PageController.showHomePage',
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
+    'GET /admin/department/:id': 'DepartmentController.findOne',
 
 
     'PUT /user/:id': 'UserController.update',

@@ -1,34 +1,54 @@
-(function (angular) {
-    'use strict';
-    angular.module('DepartmentModule')
-        .controller('DepartmentController', ['$scope', 'Departments',
-            function ($scope, Departments) {
-                $scope.refresh = function () {
-                    /**
-                     * При обращении к службе $resource возвращается сгенерированный конструктор,
-                     * дополненный методами для взаимодействия с конечной точкой
-                     * RESTful: query, get, save и delete.
-                     */
-                    $scope.items = Departments.query(function (departments) {
-                        $scope.departments = departments;
+angular.module('DepartmentModule')
+    .controller('DepartmentController', ['$scope', 'Departments', '$stateParams',
+        function ($scope, Departments, $stateParams) {
+          
+            /**
+             * Метод query выполняет запрос на сервер и возвращает коллекцию,
+             * которая содержит объекты с данными и дополнительными методами
+             * которые используются для взаимодействия с данными на сервере $delete, $get, $remove, $save
+             *
+             * Так же можно определять свои методы для конструктора в фабрике модуля.
+             * В данном конструкторе добавлен метод Users.getFullName()
+             */
 
-                        // кол-во пользователей
-                        // console.log($scope.departments.length);
-                        //console.log(departments.scs());
-                    });
-                };
-                //$scope.sections =   $scope.departments.sections();
-                $scope.propertyName = 'name';
-                $scope.reverse = false;
-                // $scope.friends = friends;
 
-                $scope.sortBy = function (propertyName) {
-                    $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-                    $scope.propertyName = propertyName;
-                };
+            $scope.refresh = function () {
+                $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                    $scope.departments = departments;
+                    // кол-во пользователей
+                    // console.log($scope.users.length);
+                    // console.log($scope.users);
+                }, function (err) {
+                    if (err) console.log(err.message);
+                });
+            };
 
-                $scope.refresh();
+            // $scope.toggleSelected = function () {
+            //     $scope.selected = !$scope.selected;
+            // };
+            // $scope.isSelected = function () {
+            //     return $scope.selected;
+            // };
+            //console.log($scope.items.login);
 
-            }])
-    ;
-})(window.angular);
+
+            // Обновление элемента
+            //$scope.update = function (item) {
+            //    item.$save();
+            //    //$scope.currentView = 'table';
+            //};
+
+
+            //$scope.currentItem = ;
+            // редеактирование существующего или создание нового элемента
+            //$scope.editOrCreate = function (item) {
+            //    $scope.currentItem = 'GOOOOOO';
+            //    $location.path("/user/edit");
+            //
+            //};
+            //$scope.goToViewEdit = function () {
+            //    $location.path("/user/edit");
+            //};
+
+            $scope.refresh();
+        }]);

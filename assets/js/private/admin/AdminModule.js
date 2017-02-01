@@ -1,8 +1,8 @@
 angular.module('AdminModule', ['ui.router', 'ngResource', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('admin', {
-            url: '/admin',
+            .state('home.admin', {
+            url: 'admin',
             // templateUrl: '/js/private/admin/tpl/admin.tpl.html'
             //controller: function () {
             //
@@ -10,10 +10,10 @@ angular.module('AdminModule', ['ui.router', 'ngResource', 'ngAnimate'])
             views: {
                 '@': {
                     templateUrl: '/js/private/admin/tpl/admin.tpl.html'
-                },
-                'sidebar@': {
-                    templateUrl: '/js/private/tpl/sidebar.tpl.html'
                 }
+                //'sidebar@': {
+                //    templateUrl: '/js/private/tpl/sidebar.tpl.html'
+                //}
             }
         })
         ;

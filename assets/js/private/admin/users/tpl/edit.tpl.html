@@ -10,7 +10,7 @@
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
                 </button>
-                <a ui-sref="admin.users" type="button" class="btn btn-warning">
+                <a ui-sref="home.admin.users" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
             </div>
@@ -165,7 +165,7 @@
                             <div class="form-group ">
                                 <label ng-if="!item.firedDate" class="control-label" for="inputSuccess16">Установить дату увольнения</label>
                                 <label ng-if="item.firedDate" class="control-label" for="inputSuccess17">Редактировать дату увольнения</label>
-                                <input type="date" class="form-control" ng-model="item.firedDate">
+                                <input type="date" class="form-control" ng-model="item.newFiredDate">
 
                                 <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                             </div>
@@ -215,11 +215,11 @@
                             <span class="glyphicon glyphicon-check"></span>
                             Сохранить
                         </a>
-                        <a ui-sref="admin.users" class="btn btn-md btn-warning">
+                        <a ui-sref="home.admin.users" class="btn btn-md btn-warning">
                             <span class="glyphicon glyphicon-list"> </span>
                             Список
                         </a>
-                        <a href="/admin/users/edit/{{data.id}}"
+                        <a ui-sref="home.admin.users.edit(data.id)"
                            class="btn btn-default btn-md pull-right" role="button">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>

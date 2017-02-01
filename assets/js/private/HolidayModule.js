@@ -99,11 +99,12 @@ angular.module('Holiday', [
 //                // })
 //            })
     })
-    .controller('HolidayController', ['$scope', '$http', function ($scope, $http) {
+    .controller('HolidayController', ['$scope', '$window', function ($scope) {
         //$scope.logout = function () {
         //    window.SAILS_LOCALS = {me:null};
         //    $http.get('/logout');
         //}
+
         $scope.firstName = 'Петя';
         $scope.header = function () {
             return 'Привет, ' + $scope.firstName;

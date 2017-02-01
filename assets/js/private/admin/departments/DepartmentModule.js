@@ -1,7 +1,7 @@
 angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('admin.departments', {
+            .state('home.admin.departments', {
                 url: '/departments',
                 //template:'<h1>Departments</h1>'
                 //controller: function () {
@@ -10,7 +10,7 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/departments/tpl/list.tpl.html',
-                        controller: 'DepartmentController'
+                        controller: 'ListDepartmentController'
                         //template:'<h1>DEPARTAMENT</h1>'
                     }
                 }
@@ -24,16 +24,21 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                 //    }
                 //}
             })
-            .state('admin.departments.edit', {
+            .state('home.admin.departments.edit', {
                 url: '/edit/:depId',
-                //template:'<h1>Users</h1>',
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/departments/tpl/edit.tpl.html',
                         controller: 'EditDepartmentController'
+                    }
+                }
+            })
+            .state('home.admin.department', {
+                url: '/department/:depId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/departments/tpl/department.tpl.html',
+                        controller: 'DepartmentController'
                     }
                 }
             })

@@ -11,7 +11,7 @@
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
                 </button>
-                <a ui-sref="admin.departments" type="button" class="btn btn-warning">
+                <a ui-sref="home.admin.departments" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
             </div>
@@ -222,16 +222,17 @@
 
 
                     <div class="form-group">
-                        <a ng-click="saveEdit(item)" class="btn btn-md btn-success">
+                        <a ng-click="saveEdit(item)" class="btn  btn-success">
                             <span class="glyphicon glyphicon-check"></span>
                             Сохранить
                         </a>
-                        <a ui-sref="admin.departments" class="btn btn-md btn-warning">
+                        <a ui-sref="home.admin.departments" class="btn  btn-warning">
                             <span class="glyphicon glyphicon-list"> </span>
                             Список
                         </a>
+
                         <a href="/admin/departments/edit/{{data.id}}"
-                           class="btn btn-default btn-md pull-right" role="button">
+                           class="btn btn-default btn-sm pull-right" role="button">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </div>
