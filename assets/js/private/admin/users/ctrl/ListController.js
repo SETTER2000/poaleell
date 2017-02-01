@@ -1,7 +1,17 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', '$state', 'Users', '$window',function ($scope, $state, Users,$window) {
+        .controller('ListController', ['$scope', '$state', 'Users', '$window', function ($scope, $state, Users) {
+
+            // // обработка события deleteUser на текущем scope
+            // $scope.$on("deleteUser", function (event, args) {
+            //     //event.stopPropagation(); // останавливаем распространение события
+            //     // $scope.info = args.message;
+            //     // $scope.delete(args);
+            //     $scope.info = args.message;
+            // });
+
+
             console.log('NAVIGABLE-N: ' + $state.$current.navigable);
             console.log('NAVIGABLE-P: ' + $state.$current.path);
             $scope.refresh = function () {
@@ -28,6 +38,8 @@
                     // alert();
                 })
             };
+
+
             $scope.propertyName = 'lastName';
             $scope.reverse = false;
             // $scope.friends = friends;

@@ -1,9 +1,25 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', '$state', 'Users', '$stateParams', 'CONF_MODULE',
-        function ($scope, $http, $state, Users, $stateParams) {
-            // $state.transitionTo('admin.users.show.id');
-            // $scope.refresh = function () {
-            // return console.log($stateParams.id);
+    .controller('EditController', ['$scope',  '$state', 'Users', '$stateParams', '$rootScope',
+        function ($scope,  $state, Users, $stateParams,$rootScope) {
+            // $scope.deleteEdit = function (item) {
+            //     // $emit - отправка события от текущего scope к родительским scope
+            //     // $scope.$emit("deleteUser", item);
+            //     // $broadcast - отправка события всем scope от rootScope
+            //     // $rootScope.$broadcast("deleteUser", {
+            //     //     message: 'GOOOO'
+            //     // });
+            //     $rootScope.$broadcast("deleteUser", {
+            //         message: 'GOOOO'
+            //     });
+            // };
+            //
+            // $scope.$on("deleteUser", function (event, args) {
+            //     //event.stopPropagation(); // останавливаем распространение события
+            //     // $scope.info = args.message;
+            //     // $scope.delete(args);
+            //     $scope.info = args.message;
+            // });
+
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
@@ -34,6 +50,30 @@ angular.module('UserModule')
             //console.log($scope.newFiredDate );
             //console.log($scope.newDateInWork);
 
+            // $scope.deleteEdit = function (item) {
+            //     // console.log(item);
+            //     item.$delete(item, function (success) {
+            //         console.log(success);
+            //         $scope.refresh();
+            //         // $scope.items.splice($scope.items.indexOf(item), 1);
+            //     }, function (err) {
+            //         console.log(err);
+            //         alert(err);
+            //     })
+            // };
+
+            $scope.delete2 = function (item) {
+                console.log(item);
+                item.$delete(item, function (success) {
+                    console.log(success);
+                    alert('OK! Объект удалён.');
+                 $scope.redirect('/admin/users');
+                    // $scope.items.splice($scope.items.indexOf(item), 1);
+                }, function (err) {
+                    console.log(err);
+                    // alert();
+                })
+            };
             $scope.saveEdit = function (item) {
                 //item.birthday   =  $scope.newBirthday;
                 //item.dateInWork =  $scope.newDateInWork;
@@ -59,7 +99,13 @@ angular.module('UserModule')
             $scope.zip = /^\d\d\d\d\d$/;
 
             $scope.addContact = function () {
-                item.contacts.push({type: "", value: ""});
+                if(angular.isArray(item.contacts)){
+                    item.contacts.push({type: "телефон", value: ""});
+                } else{
+                    item.contacts = [{type: "телефон", value: ""}]; 
+                } 
+                // item.contacts = [{type: "телефон", value: ""}];
+                // item.contacts.push({type: "телефон", value: ""});
             };
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
@@ -76,5 +122,17 @@ angular.module('UserModule')
             $scope.isSaveDisabled = function () {
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
+
+
+            var original = angular.copy($scope.item);
+            $scope.revert = function () {
+                $scope.item = angular.copy(original);
+                $scope.passwordRepeat = $scope.item.password;
+                $scope.userInfoForm.$setPristine();
+            };
+            $scope.canRevert = function () {
+                return !angular.equals($scope.item, original);
+            };
+
             // $scope.refresh();
         }]);

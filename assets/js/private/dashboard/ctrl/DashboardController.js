@@ -1,8 +1,18 @@
 angular.module('DashboardModule')
 //.constant('baseUrl', 'http://localhost:1337')
-    .controller('DashboardController', ['$scope', '$window', '$stateParams', 'Users', 'toastr', '$resource',
-        function ($scope, $window, $stateParams, Users, toastr, $resource) {
-
+    .controller('DashboardController', ['$scope', '$window', '$stateParams', 'Users', 'toastr', '$resource','$rootScope',
+        function ($scope, $window, $stateParams, Users, toastr, $resource,$rootScope) {
+            // $scope.deleteEdit = function () {
+            //     // $emit - отправка события от текущего scope к родительским scope
+            //     // $scope.$emit("deleteUser", item);
+            //     // $broadcast - отправка события всем scope от rootScope
+            //     // $rootScope.$broadcast("deleteUser", {
+            //     //     message: 'GOOOO'
+            //     // });
+            //     $rootScope.$broadcast("deleteUser", {
+            //         message: 'GOOOO'
+            //     });
+            // };
             //$scope.itemsResource = $resource(baseUrl);
             console.log($window.SAILS_LOCALS.me);
             $scope.data = $window.SAILS_LOCALS.me;
