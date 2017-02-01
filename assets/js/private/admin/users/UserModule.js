@@ -128,10 +128,28 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return new Date();
         };
 
-        Users.prototype.tim = function () {
-            var tm;
-            tm = new Date(this.birthday);
-            this.birthday = tm;
+        Users.prototype.getBirthday = function () {
+            if(this.birthday){
+                var tm;
+                tm = new Date(this.birthday);
+                this.birthday = tm;
+            }
+        };
+
+        Users.prototype.getDateInWork = function () {
+            if(this.birthday){
+                var tm;
+                tm = new Date(this.birthday);
+                this.birthday = tm;
+            }
+        };
+
+        Users.prototype.getFiredDate = function () {
+            if(this.birthday){
+                var tm;
+                tm = new Date(this.birthday);
+                this.birthday = tm;
+            }
         };
 
         return Users;

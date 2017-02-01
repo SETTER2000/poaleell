@@ -102,7 +102,7 @@
                  data-ng-class="{'has-error':signup.password.$invalid && signup.password.$dirty}">
                 <input data-ng-model="signupForm.password" required data-ng-minlength="6"
                        compare-to="signupForm.confirmPassword" type="password" name="password" id="password"
-                       class="form-control input-lg" placeholder="Пароль" tabindex="5">
+                       class="form-control input-lg" placeholder="Пароль" tabindex="6">
                             <span class="help-block has-error" data-ng-if="signup.password.$dirty">
                             <span data-ng-show="signup.password.$error.required">Поле обязательно к заполнению.</span>
                             <span data-ng-show="signup.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>
@@ -117,7 +117,7 @@
                 <input data-ng-model="signupForm.confirmPassword" required type="password"
                        name="confirmation"
                        class="form-control input-lg"
-                       placeholder="Повторить пароль" tabindex="6">
+                       placeholder="Повторить пароль" tabindex="7">
                             <span class="help-block has-error" data-ng-if="signup.confirmation.$dirty">
                             <span data-ng-show="signup.password.$error.compareTo">Пароли должны совпадать.</span>
                             <span data-ng-show="signup.password.$error.required">Требуется повторить пароль.</span>
@@ -133,15 +133,15 @@
 					<span class="button-checkbox">
 						<button data-ng-click="signupForm.confirmAacceptTerms=true" type="button" class="btn"
                                 data-color="info"
-                                tabindex="7">Я согласен(а)
+                                tabindex="9">Я согласен(а)
                         </button>
                         <input data-ng-model="signupForm.confirmAacceptTerms" required type="checkbox"
-                               name="confirmAacceptTerms" id="confirmAacceptTerms" class="hidden">
+                               name="confirmAacceptTerms" id="confirmAacceptTerms" class="hidden" tabindex="8">
 					</span>
         </div>
         <div class="col-xs-9 col-sm-9 col-md-9">
             Нажатием на кнопку <strong class="label label-primary">Регистрация</strong>, вы соглашаетесь с
-            <a href="#" data-toggle="modal" data-target="#t_and_c_m">Условиями</a>, установленными на данном
+            <a href="#"  data-toggle="modal" data-target="#t_and_c_m">Условиями</a>, установленными на данном
             сайте.
 
         </div>
@@ -154,8 +154,8 @@
     <div class="row">
         <!-- Disable signup button until the form has no errors -->
         <div class="col-xs-12 col-md-12">
-            <button type="submit" class="btn btn-primary btn-block btn-lg"
-                    data-ng-disabled="signup.$invalid" tabindex="7">
+            <button tabindex="10" type="submit" class="btn btn-primary btn-block btn-lg"
+                    data-ng-disabled="signup.$invalid" >
                 <span ng-show="!signupForm.loading">Регистрация</span>
                 <span ng-show="signupForm.loading" class="overlord-loading-spinner fa fa-spinner"></span>
                 <span ng-show="signupForm.loading">Подготовка новой учетной записи...</span>

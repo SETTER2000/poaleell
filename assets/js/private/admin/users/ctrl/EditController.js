@@ -9,10 +9,12 @@ angular.module('UserModule')
                 $scope.users = users;
                 // кол-во пользователей
 
-
-                item.birthday = new Date(users.birthday);
-                item.dateInWork = new Date(users.dateInWork);
-                item.firedDate = new Date(users.firedDate);
+                //if (users.birthday) {
+                //    item.birthday = new Date(users.birthday);
+                //}
+                item.getBirthday();
+                item.getDateInWork();
+                item.getFiredDate();
                 //console.log(item);
                 // console.log('USSS1: ' +  $scope.newBirthday);
                 // console.log('USSS2: ' + $scope.item.dt());
@@ -57,7 +59,7 @@ angular.module('UserModule')
             $scope.zip = /^\d\d\d\d\d$/;
 
             $scope.addContact = function () {
-                item.contacts.push({type: 'телефон', value: ''});
+                item.contacts.push({type: "", value: ""});
             };
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;

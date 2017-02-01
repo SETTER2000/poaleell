@@ -53,7 +53,7 @@ module.exports = {
         },
         contacts: {
             type: 'array',
-            defaultsTo: "{type:'телефон', value:'+7(000) 000-00-00'}"
+            defaultsTo:[{"type":"","value":""}]
         },
         fired: {
             type: 'boolean', defaultsTo: false
