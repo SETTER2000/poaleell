@@ -4,12 +4,10 @@ angular.module('DashboardModule')
         function ($scope, $window, $stateParams, Users, toastr, $resource) {
 
             //$scope.itemsResource = $resource(baseUrl);
-            console.log('ERRRR::');
-            console.log($window);
+            console.log($window.SAILS_LOCALS.me);
+            $scope.data = $window.SAILS_LOCALS.me;
 
             $scope.sendRequest = function () {
-
-                //console.log($http.get('/user'));
                 var promise = $http.post('/user');
                 //console.log(promise);
                 promise.then(fullfilled, rejected);
@@ -26,7 +24,7 @@ angular.module('DashboardModule')
                     if (err) console.log(err.message);
                 });
             };
-
+            
             function fullfilled(response) {
                 console.log('Status: ' + response.status);
                 console.log('Type: ' + response.headers('content-type'));

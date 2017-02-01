@@ -22,28 +22,28 @@ angular.module('UserModule')
                     if (err) console.log(err.message);
                 });
             };
-            $scope.saveEdit = function (item) {
-                //item.birthday   =  $scope.newBirthday;
-                //item.dateInWork =  $scope.newDateInWork;
-                //item.firedDate  =  $scope.newFiredDate;
-
-                if (angular.isDefined(item.id)) {
-                    item.$update(item, function (success) {
-                            console.log('SUCCESS: OK!');
-                            item.ok();
-                        },
-                        function (err) {
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
-                            item.er();
-                        }
-                    );
-                } else {
-                    console.log(item);
-                    
-                    item.$save()
-                }
-            };
+            // $SCOPE.SAVEeDIT = FUNCTION (ITEM) {
+            //     //ITEM.BIRTHDAY   =  $SCOPE.NEWbIRTHDAY;
+            //     //ITEM.DATEiNwORK =  $SCOPE.NEWdATEiNwORK;
+            //     //ITEM.FIREDdATE  =  $SCOPE.NEWfIREDdATE;
+            //
+            //     IF (ANGULAR.ISdEFINED(ITEM.ID)) {
+            //         ITEM.$UPDATE(ITEM, FUNCTION (SUCCESS) {
+            //                 CONSOLE.LOG('success: ok!');
+            //                 ITEM.OK();
+            //             },
+            //             FUNCTION (ERR) {
+            //                 CONSOLE.LOG('error: ' + ERR.STATUS);
+            //                 CONSOLE.LOG(ERR);
+            //                 ITEM.ER();
+            //             }
+            //         );
+            //     } ELSE {
+            //         CONSOLE.LOG(ITEM);
+            //        
+            //         ITEM.$SAVE()
+            //     }
+            // };
             // $scope.toggleSelected = function () {
             //     $scope.selected = !$scope.selected;
             // };

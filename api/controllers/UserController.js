@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var Sugar = require('sugar');
+// var Sugar = require('sugar');
 module.exports = {
     /**
      * Авторизация. Проверка логина и пароля.
@@ -73,20 +73,23 @@ module.exports = {
                                 }
                                 return res.negotiate(err);
                             }
+                           
                             req.session.me = newUser.id;
+                            // res.redirect('/admin/users/edit/' + newUser.id);
                             // Отправка на email данных о регистрации
                             Email.send(sails.config.conf.sendMail).exec({
                                 error: function (err) {
                                     console.log(err);
 
                                 }, success: function () {
+                                   
                                     console.log('Ok! Send mail.');
                                 }
                             });
                             //return res.json({
                             //    id: newUser.id
                             //});
-                            res.redirect('/user/show/' + newUser.id);
+                           
                         });
                     }
                 });
@@ -174,7 +177,8 @@ module.exports = {
             User.destroy(req.param('id'), function userDestroyed(err) {
                 if (err)return next(err);
             });
-            res.redirect('/user');
+            // res.redirect('/admin/users');
+            res.ok();
         });
     },
 

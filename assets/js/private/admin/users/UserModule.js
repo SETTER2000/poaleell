@@ -82,7 +82,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
-                        controller: 'UserController'
+                        controller: 'EditController'
                     }
                 }
             })

@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', '$state', 'Users', function ($scope, $state, Users) {
+        .controller('ListController', ['$scope', '$state', 'Users', '$window',function ($scope, $state, Users,$window) {
             console.log('NAVIGABLE-N: ' + $state.$current.navigable);
             console.log('NAVIGABLE-P: ' + $state.$current.path);
             $scope.refresh = function () {
@@ -17,7 +17,17 @@
                     console.log($scope.users);
                 });
             };
-
+            $scope.delete = function (item) {
+                console.log(item);
+                item.$delete(item, function (success) {
+                    console.log(success);
+                    $scope.refresh();
+                    // $scope.items.splice($scope.items.indexOf(item), 1);
+                }, function (err) {
+                    console.log(err);
+                    // alert();
+                })
+            };
             $scope.propertyName = 'lastName';
             $scope.reverse = false;
             // $scope.friends = friends;
@@ -58,9 +68,9 @@
             $scope.breadcrumbs = breadcrumb;
 
 
-            $scope.resetForm = function () {
-                return $scope.item = {};
-            };
+            // $scope.resetForm = function () {
+            //     return $scope.item = {};
+            // };
 
 
             $scope.refresh();

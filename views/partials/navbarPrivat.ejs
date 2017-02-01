@@ -43,9 +43,9 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">
-                <li><a href="../navbar/">Default</a></li>
-                <li><%= me.firstName %> <%= me.patronymicName %> (<%= me.login %>)</li>
-                <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+
+                <li><a href="./"><%= me.firstName %> <%= me.patronymicName %> (<%= me.login %>)</a></li>
+
                 <li>
                     <form action="/logout" class="navbar-form navbar-right">
                         <button class="btn btn-success btn-md" type="submit">Выход</button>

@@ -125,16 +125,20 @@
                                 </a>
                             </td>
                             <td>
-                                <form ng-if="mode" action="/user/destroy" method="post">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="btn btn-sm btn-default">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
+                                <!--<form ng-if="mode" action="/user/destroy" method="post">-->
+                                    <!--<input type="hidden" name="_method" value="delete">-->
+                                    <!--<button type="submit" class="btn btn-sm btn-default">-->
+                                        <!--<span class="glyphicon glyphicon-trash"></span>-->
+                                    <!--</button>-->
 
-                                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
-                                    <input type="hidden" name="id" value="{{item.id}}">
+                                    <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
+                                    <!--<input type="hidden" name="id" value="{{item.id}}">-->
 
-                                </form>
+                                <!--</form>-->
+                                <a ng-if="mode" ng-click="delete(item)" class="btn btn-sm btn-default">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+
                             </td>
                         </tr>
 
