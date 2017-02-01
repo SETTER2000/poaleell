@@ -8,7 +8,7 @@ angular.module('UserModule')
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
                 // кол-во пользователей
-
+                console.log(users);
                 //if (users.birthday) {
                 //    item.birthday = new Date(users.birthday);
                 //}

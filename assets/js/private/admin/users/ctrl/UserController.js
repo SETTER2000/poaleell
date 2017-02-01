@@ -22,7 +22,27 @@ angular.module('UserModule')
                     if (err) console.log(err.message);
                 });
             };
+            $scope.saveEdit = function (item) {
+                //item.birthday   =  $scope.newBirthday;
+                //item.dateInWork =  $scope.newDateInWork;
+                //item.firedDate  =  $scope.newFiredDate;
 
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            console.log('SUCCESS: OK!');
+                            item.ok();
+                        },
+                        function (err) {
+                            console.log('ERROR: ' + err.status);
+                            console.log(err);
+                            item.er();
+                        }
+                    );
+                } else {
+                    //alert('HHH');
+                    item.$save(item)
+                }
+            };
             // $scope.toggleSelected = function () {
             //     $scope.selected = !$scope.selected;
             // };

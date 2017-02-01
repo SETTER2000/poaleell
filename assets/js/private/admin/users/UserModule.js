@@ -73,6 +73,19 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
+            .state('home.admin.users.create', {
+                url: '/create/:userId',
+                //template:'<h1>Users</h1>',
+                //controller: function () {
+                //
+                //}
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
+                        controller: 'UserController'
+                    }
+                }
+            })
 
             //        .state('admin.users.edit',{
             //            url:'/:id',
