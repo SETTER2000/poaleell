@@ -39,8 +39,9 @@ angular.module('UserModule')
                         }
                     );
                 } else {
-                    //alert('HHH');
-                    item.$save(item)
+                    console.log(item);
+                    
+                    item.$save()
                 }
             };
             // $scope.toggleSelected = function () {
