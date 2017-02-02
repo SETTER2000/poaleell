@@ -34,7 +34,7 @@ module.exports = {
         },
 
         email: {
-            type: 'string', email: true, required: true, unique: true
+            type: 'string', email: true, required: true
         },
 
         birthday: {
