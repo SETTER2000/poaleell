@@ -119,6 +119,21 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 }
             }
         );
+        Users.prototype.formatDate = function (date) {
+
+            var dd = date.getDate();
+            if (dd < 10) dd = '0' + dd;
+
+            var mm = date.getMonth() + 1;
+            if (mm < 10) mm = '0' + mm;
+
+            var yy = date.getFullYear();
+            //var yy = date.getFullYear() % 100;
+            if (yy < 10) yy = '0' + yy;
+
+            return yy + '-' + mm + '-' + dd;
+            //return dd + '.' + mm + '.' + yy;
+        };
 
         Users.prototype.getFullName = function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
@@ -142,7 +157,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
         };
 
         Users.prototype.getBirthday = function () {
-            if(this.birthday){
+            if (this.birthday) {
                 var tm;
                 tm = new Date(this.birthday);
                 this.birthday = tm;
@@ -150,19 +165,31 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
         };
 
         Users.prototype.getDateInWork = function () {
-            if(this.birthday){
+            if (this.dateInWork) {
                 var tm;
-                tm = new Date(this.birthday);
-                this.birthday = tm;
+                tm = new Date(this.dateInWork);
+                this.dateInWork = tm;
             }
         };
 
         Users.prototype.getFiredDate = function () {
-            if(this.birthday){
+            if (this.firedDate) {
                 var tm;
-                tm = new Date(this.birthday);
-                this.birthday = tm;
+                tm = new Date(this.firedDate);
+                this.firedDate = tm;
             }
+        };
+
+        Users.prototype.getCreatedAt = function () {
+            if (!this.createdAt) {
+                return 'Mongo import';
+            }
+            return this.createdAt;
+        };
+
+        Users.prototype.getCurrentDate = function () {
+            var t = this.formatDate(new Date());
+            return t;
         };
 
         return Users;

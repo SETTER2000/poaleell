@@ -50,11 +50,13 @@ module.exports.routes = {
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
     'GET /admin/department/:id': 'DepartmentController.findOne',
+    'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
 
     'GET /admin/users/create': 'PageController.showHomePage',
-
+    //home/admin/departments/edit
     'PUT /user/:id': 'UserController.update',
+    'PUT /department/:id': 'DepartmentController.update',
 
     'GET /signup': {view: 'public/signup', locals: {layout: 'signup'}},
 

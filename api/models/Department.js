@@ -9,35 +9,34 @@ module.exports = {
     connection: 'userMongodbServer',
     schema: true,
     attributes: {
-        section:{
-          type:'string',
-            defaultsTo:'Отдел'
+        section: {
+            type: 'string',
+            defaultsTo:  'Отдел'
         },
-        sections:{
-          type:'string',
+        sections: {
+            type: 'string',
             defaultsTo:'Отделы'
         },
         name: {
-            type: 'string'
+            type: 'string',
+            unique: true
         },
-        //name: {
-        //    type: 'string', unique: true, require:true
-        //},
-        type:{
-            type:'string'
+        type: {
+            type: 'string',
+            defaultsTo:''
         },
-        location:{
-            type:'string'
+        location: {
+            type: 'string',
+            defaultsTo:''
         },
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)
         },
 
-
         // Добавить ссылку на пользователя
-       users:{
-            collection:'user',
-            via:'departments'
+        users: {
+            collection: 'user',
+            via: 'departments'
         }
 
     }

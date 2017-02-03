@@ -20,8 +20,9 @@ angular.module('DepartmentModule')
             });
 
             $scope.saveEdit = function (item) {
-                console.log('New Object from save: ' + item.newBirthday);
-                item.birthday = item.newBirthday;
+                console.log('OBJECT DEPART:');
+                console.log(item);
+
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);
                     item.$update(item, function (success) {
@@ -62,6 +63,19 @@ angular.module('DepartmentModule')
 
             $scope.isSaveDisabled = function () {
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
+            };
+
+            $scope.delete = function (item) {
+                console.log(item);
+                item.$delete(item, function (success) {
+                    console.log(success);
+                    alert('OK! Объект удалён.');
+                    $scope.redirect('/admin/departments');
+                    // $scope.items.splice($scope.items.indexOf(item), 1);
+                }, function (err) {
+                    console.log(err);
+                    // alert();
+                })
             };
             // $scope.refresh();
         }]);

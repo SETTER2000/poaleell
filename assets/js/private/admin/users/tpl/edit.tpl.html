@@ -2,6 +2,9 @@
     <div class="page-header">
         <h1>
             <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}</p>
+
+            <p ng-if="!item.lastName">Новый сотрудник</p>
+
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }}</a>
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен</a>
@@ -24,7 +27,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form name="userInfoForm">
+                    <!--<form name="userInfoForm">-->
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess1">Фамилия</label>
                             <input type="text" class="form-control" ng-model="item.lastName">
@@ -44,10 +47,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label ng-if="!item.birthday" class="control-label" for="inputSuccess12">Установить дату
-                                        рождения</label>
-                                    <label ng-if="item.birthday" class="control-label" for="inputSuccess4">Редактировать дату
-                                        рождения</label>
+                                    <label ng-if="!item.birthday" class="control-label" for="inputSuccess12">
+                                        Установить дату рождения
+                                    </label>
+                                    <label ng-if="item.birthday" class="control-label" for="inputSuccess4">
+                                        Редактировать дату рождения
+                                    </label>
                                     <input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">
 
                                     <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
@@ -133,12 +138,13 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="control-label" for="inputSuccess11"></label>
-                                    <label ng-if="!item.dateInWork" class="control-label" for="inputSuccess12">Установить дату приёма на
-                                        работу</label>
-                                    <label ng-if="item.dateInWork" class="control-label" for="inputSuccess13">Редактировать дату приёма на
-                                        работу</label>
-
-                                    <input type="date" class="form-control" ng-model="item.dateInWork">
+                                    <label ng-if="!item.dateInWork" class="control-label" for="inputSuccess12">
+                                        Установить дату приёма на работу
+                                    </label>
+                                    <label ng-if="item.dateInWork" class="control-label" for="inputSuccess13">
+                                        Редактировать дату приёма на работу
+                                    </label>
+                                    <input type="date" class="form-control" min="1995-01-01" max="{{item.getCurrentDate()}}" ng-model="item.dateInWork">
                                     <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                 </div>
                             </div>
@@ -166,10 +172,12 @@
                         <div ng-if="item.id" class="row">
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label ng-if="!item.firedDate" class="control-label" for="inputSuccess16">Установить дату
-                                        увольнения</label>
-                                    <label ng-if="item.firedDate" class="control-label" for="inputSuccess17">Редактировать дату
-                                        увольнения</label>
+                                    <label ng-if="!item.firedDate" class="control-label" for="inputSuccess16">
+                                        Установить дату увольнения
+                                    </label>
+                                    <label ng-if="item.firedDate" class="control-label" for="inputSuccess17">
+                                        Редактировать дату увольнения
+                                    </label>
                                     <input type="date" class="form-control" ng-model="item.firedDate">
 
                                     <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
@@ -189,7 +197,7 @@
                         </div>
 
 
-                        <div ng-if="item.id" class="row">
+                        <div ng-if="item.id && item.gravatarUrl" class="row">
                             <div class="col-md-9">
                                 <div class="form-group ">
                                     <label class="control-label" for="inputSuccess19">Gravatar</label>
@@ -203,28 +211,28 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row" ng-if="item.id">
+                            <div class="col-md-5">
                                 <div class="form-group ">
-                                    <div class="form-group " ng-if="item.createdAt">
+                                    <div class="form-group " >
                                         <label class="control-label" for="inputSuccess18">Зарегистрирован в системе</label>
                                         <div><a href="#" class="btn btn-default  disabled" role="button">
                                      <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.createdAt}"
                                            aria-hidden="true"></span>
-                                            {{item.createdAt | date:'dd.MM.yyyy'}}
+                                            {{item.getCreatedAt() |  date:'dd.MM.yyyy HH:mm'}}
                                         </a></div>
                                         <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <div class="form-group ">
                                     <div class="form-group " ng-if="item.updatedAt">
                                         <label class="control-label" for="inputSuccess18">Последнее обновление</label>
                                         <div><a href="#" class="btn btn-default  disabled" role="button">
                                      <span class="glyphicon " ng-class="{ 'glyphicon-ok':item.updatedAt}"
                                            aria-hidden="true"></span>
-                                            {{item.updatedAt | date:'dd.MM.yyyy'}}
+                                            {{item.updatedAt | date:'dd.MM.yyyy HH:mm'}}
                                         </a></div>
                                         <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                     </div>
@@ -251,7 +259,7 @@
 
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="control-group form-group">
-                                    <input data-ng-model="item.confirmPassword" required type="password"
+                                    <input data-ng-model="item.encryptedPassword" required type="password"
                                            name="confirmation"
                                            class="form-control"
                                            placeholder="Повторить пароль" tabindex="7">
@@ -285,9 +293,9 @@
                             <!--</button>-->
                             <button ng-if="item.id" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right" >
                                 <span class="glyphicon glyphicon-trash"></span>
-                            </button>{{info}}
+                            </button>
                         </div>
-                    </form>
+                    <!--</form>-->
                 </div>
             </div>
 

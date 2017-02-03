@@ -22,19 +22,36 @@ module.exports = {
 
     },
     addDepartment: function (req, res, next) {
-        User.findOne(req.param('id')).exec(function(err, user) {
-            if(err) return next(err);
+        User.findOne(req.param('id')).exec(function (err, user) {
+            if (err) return next(err);
 
             // Queue up a new pet to be added and a record to be created in the join table
-                user.departments.add({ name: 'Программисты', type: 'IT', location: '2 этаж' });
+            user.departments.add({name: 'Программисты', type: 'IT', location: '2 этаж'});
 
             // Save the user, creating the new pet and associations in the join table
-            user.save(function(err) {
-                if(err) return next(err);
+            user.save(function (err) {
+                if (err) return next(err);
 
                 res.send('OK!!!!!');
             });
 
+        })
+    },
+
+    update: function (req, res, next) {
+        //req.params.all()
+        Department.update(req.param('id'), {
+            name: req.param('name'),
+            type: req.param('type'),
+            location: req.param('location')
+
+        }, function departmentUpdate(err) {
+            if (err)return next(err);
+            //if (err) {
+            //    return res.redirect('/admin/departments/edit/' + req.param('id'));
+            //}
+            //res.redirect('/admin/users/show/' + req.param('id'));
+            res.ok();
         });
     }
 
