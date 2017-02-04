@@ -11,11 +11,17 @@ module.exports = {
     attributes: {
         section: {
             type: 'string',
-            defaultsTo:  'Отдел'
+            defaultsTo: 'Отдел'
         },
         sections: {
             type: 'string',
-            defaultsTo:'Отделы'
+            defaultsTo: 'Отделы'
+        },
+        action: {
+            type: 'boolean',
+            defaultsTo: true,
+            required: true
+            
         },
         name: {
             type: 'string',
@@ -23,11 +29,11 @@ module.exports = {
         },
         type: {
             type: 'string',
-            defaultsTo:''
+            defaultsTo: ''
         },
         location: {
             type: 'string',
-            defaultsTo:''
+            defaultsTo: ''
         },
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)

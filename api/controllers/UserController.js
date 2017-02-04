@@ -77,7 +77,7 @@ module.exports = {
                             req.session.me = newUser.id;
                             // res.redirect('/admin/users/edit/' + newUser.id);
                             // Отправка на email данных о регистрации
-                            Email.send(sails.config.conf.sendMail).exec({
+                            Email.send(sails.config.sendMail).exec({
                                 error: function (err) {
                                     console.log(err);
 

@@ -40,20 +40,42 @@ module.exports = {
 
     update: function (req, res, next) {
         //req.params.all()
-        Department.update(req.param('id'), {
-            name: req.param('name'),
-            type: req.param('type'),
-            location: req.param('location')
-
-        }, function departmentUpdate(err) {
-            if (err)return next(err);
-            //if (err) {
-            //    return res.redirect('/admin/departments/edit/' + req.param('id'));
-            //}
-            //res.redirect('/admin/users/show/' + req.param('id'));
-            res.ok();
-        });
+        Department.update(req.param('id'))
+            .set(
+                // {
+                //     name: req.param('name'),
+                //     type: req.param('type'),
+                //     location: req.param('location')
+                //
+                // }
+                req.body
+            )
+            .exec(function (err) {
+                if (err)return res.negotiate(err);
+                //if (err) {
+                //    return res.redirect('/admin/departments/edit/' + req.param('id'));
+                //}
+                //res.redirect('/admin/users/show/' + req.param('id'));
+                // res.location('/home/admin/departments');
+                res.ok();
+            }) 
     }
+        // update: function (req, res, next) {
+    //     //req.params.all()
+    //     Department.update(req.param('id'), {
+    //         name: req.param('name'),
+    //         type: req.param('type'),
+    //         location: req.param('location')
+    //
+    //     }, function departmentUpdate(err) {
+    //         if (err)return res.negotiate(err);
+    //         //if (err) {
+    //         //    return res.redirect('/admin/departments/edit/' + req.param('id'));
+    //         //}
+    //         //res.redirect('/admin/users/show/' + req.param('id'));
+    //         res.ok();
+    //     });
+    // }
 
 };
 

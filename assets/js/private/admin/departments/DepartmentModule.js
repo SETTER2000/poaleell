@@ -83,9 +83,9 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
         Departments.prototype.er = function () {
             return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты!');
         };
-        //Departments.prototype.lastDateSetting = function () {
-        //    return new Date();
-        //};
+        // Departments.prototype.action = function () {
+        //  return 
+        // };
 
         return Departments;
     })
