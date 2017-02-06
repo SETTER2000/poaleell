@@ -73,7 +73,7 @@ module.exports = {
                                 }
                                 return res.negotiate(err);
                             }
-                           
+
                             req.session.me = newUser.id;
                             // res.redirect('/admin/users/edit/' + newUser.id);
                             // Отправка на email данных о регистрации
@@ -89,7 +89,7 @@ module.exports = {
                             return res.json({
                                 id: newUser.id
                             });
-                           
+
                         });
                     }
                 });
@@ -99,8 +99,30 @@ module.exports = {
         // Send an email, either in plaintext or from an HTML template.
 
     },
+    //find: function (req, res) {
+    //    User.find({
+    //        where: {},
+    //        skip: 20,
+    //        limit: 10
+    //    }).exec(function found(err, users) {
+    //        if (err)  return res.negotiate(err);
+    //        if (!users)  return res.negotiate(err);
+    //
+    //        // return res.redirect('/admin/users/edit/' + req.param('id'));
+    //        // return res.backToHomePage();
+    //        //return res.redirect('/admin/users/edit/' + req.param('id'));
+    //        //res.view({
+    //        //    users: users, me: req.session.me
+    //        //});
+    //        res.ok(users);
+    //    });
+    //
+    //
+    //    //return res.json(403, 'Single model lookup is denied.');
+    //},
     index: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+
         next();
         //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
     },
@@ -117,7 +139,7 @@ module.exports = {
                 user: user, me: req.session.me
             });
         });
-    
+
     },
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
@@ -134,7 +156,7 @@ module.exports = {
     edit: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
-          
+
             if (err)return next(err);
             if (!user)return next('User doesn\'t exists.');
             //user.birthday = Sugar.Date.format(user.birthday, '%d.%m.%Y');
@@ -160,7 +182,7 @@ module.exports = {
             contacts: req.param('contacts'),
             firedDate: req.param('firedDate'),
             pfr: req.param('pfr')
-            
+
         }, function userUpdate(err) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));

@@ -66,6 +66,8 @@ module.exports.routes = {
 
 
     'GET /contact': 'PageController.showHomePage',
+
+    //'GET /find/:id': 'UserController.find',
     //'POST /user': {response: 'notFound'},
 
 
