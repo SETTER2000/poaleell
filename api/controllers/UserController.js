@@ -77,18 +77,18 @@ module.exports = {
                             req.session.me = newUser.id;
                             // res.redirect('/admin/users/edit/' + newUser.id);
                             // Отправка на email данных о регистрации
-                            Email.send(sails.config.sendMail).exec({
-                                error: function (err) {
-                                    console.log(err);
-
-                                }, success: function () {
-                                   
-                                    console.log('Ok! Send mail.');
-                                }
-                            });
-                            //return res.json({
-                            //    id: newUser.id
+                            //Email.send(sails.config.sendMail).exec({
+                            //    error: function (err) {
+                            //        console.log(err);
+                            //
+                            //    }, success: function () {
+                            //
+                            //        console.log('Ok! Send mail.');
+                            //    }
                             //});
+                            return res.json({
+                                id: newUser.id
+                            });
                            
                         });
                     }

@@ -77,10 +77,9 @@
 
     </div>
 
-    <!-- P A T R O N Y M I C -->
 
-    <div class="form-group"
-         data-ng-class="{'has-error':signup.patronymicName.$invalid && signup.patronymicName.$dirty}">
+
+    <div class="form-group" ng-class="{'has-error':signup.patronymicName.$invalid && signup.patronymicName.$dirty}">
         <input data-ng-model="signupForm.patronymicName" data-ng-maxlength="25" data-ng-minlength="2"
                required type="text" name="patronymicName" id="patronymicName"
                class="form-control input-lg" placeholder="Отчество" tabindex="5">
@@ -126,7 +125,6 @@
         </div>
     </div>
 
-    <!-- C O N F I R M E D  C O N D I T I O N S  -->
 
     <div class="row">
         <div class="col-xs-3 col-sm-3 col-md-3">
@@ -149,7 +147,7 @@
 
     <hr class="colorgraph">
 
-    <!-- S U B M I T -->
+
 
     <div class="row">
         <!-- Disable signup button until the form has no errors -->

@@ -17,6 +17,12 @@ module.exports = {
             type:'string',
             defaultsTo:'Сотрудники'
         },
+        action: {
+            type: 'boolean',
+            defaultsTo: true,
+            required: true
+
+        },
         firstName: {
             type: 'string', required: true
         },

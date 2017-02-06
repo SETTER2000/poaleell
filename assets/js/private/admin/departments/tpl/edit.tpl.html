@@ -1,7 +1,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>
-            <p>{{item.sc()}}: {{item.name}}</p>
+            <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}}</p>
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 сотрудников: </a>
 
@@ -17,7 +17,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
+            <div class="panel" ng-class="{'panel-warning':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать</h3>
                 </div>
@@ -247,7 +247,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel" ng-class="{'panel-success':!item.fired, 'panel-default':item.fired}">
+            <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Информация</h3>
                 </div>

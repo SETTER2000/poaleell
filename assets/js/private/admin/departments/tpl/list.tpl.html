@@ -98,7 +98,7 @@
 
                             <td>
                                 <a ui-sref="home.admin.department({depId:item.id})" class="btn btn-sm"
-                                   ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
+                                   ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
                                           aria-hidden="true"></span>
