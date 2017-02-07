@@ -82,10 +82,43 @@
                             <input type="text" class="form-control" ng-model="item.email">
                             <!--<span id="helpBlock9" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-                        <div class="form-group ">
+                        <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" for="inputSuccess8">Отдел</label>
-                            <input type="text" class="form-control" ng-model="item.subdivision">
-                            <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                            <!--<input type="text" class="form-control" ng-model="item.subdivision">-->
+
+                            <!--<ul ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">-->
+                                <!--<li>{{$index+1}}</li>-->
+                                <!--<li>{{item.name}}</li>-->
+                            <!--</ul>-->
+
+
+                                <!--[ <a href="#" ng-click="addContact()">добавить</a> ]-->
+                                [ <a href="#" ng-click="addDepartment()">добавить</a> ]
+
+                                <div class="form-inline" ng-repeat="department in item.departments">
+                                    <div class="form-group">
+                                        <!--<select class="form-control" ng-model="contact.type">-->
+                                            <!--<option>email</option>-->
+                                            <!--<option>мобильный</option>-->
+                                            <!--<option>телефон</option>-->
+                                            <!--<option>IM</option>-->
+                                            <!--<option>facebook</option>-->
+                                        <!--</select>-->
+                                        <select class="form-control" name="repeatSelect" id="repeatSelect2" ng-model="department.id">
+                                            <option ng-repeat="option in items" value="{{option.id}}">{{option.name}}</option>
+                                        </select>
+                                   </div>
+                                    <!--<div class="form-group">-->
+                                        <!--<label class="sr-only" for="exampassword3">Password</label>-->
+                                        <!--<input class="form-control" type="text" id="exampassword3" ng-model="department.name" required>-->
+                                    <!--</div>-->
+                                    <button type="submit" class="btn btn-default" ng-click="removeDepartment(department)">x</button>
+                             </div>
+
+
+                            <!--<select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="item.subdivision">-->
+                                <!--<option ng-repeat="option in items" value="{{option.id}}">{{option.name}}</option>-->
+                            <!--</select>-->
                         </div>
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess9">Должность</label>
@@ -197,19 +230,19 @@
                         </div>
 
 
-                        <div ng-if="item.id && item.gravatarUrl" class="row">
-                            <div class="col-md-9">
-                                <div class="form-group ">
-                                    <label class="control-label" for="inputSuccess19">Gravatar</label>
-                                    <input class="form-control " disabled value="{{item.gravatarUrl}}">
-                                    <!--<input type="text" class="form-control" ng-model="item.gravatarUrl">-->
-                                    <!--<span id="helpBlock8" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <img src="{{item.gravatarUrl}}" alt="">
-                            </div>
-                        </div>
+                        <!--<div ng-if="item.id && item.gravatarUrl" class="row">-->
+                            <!--<div class="col-md-9">-->
+                                <!--<div class="form-group ">-->
+                                    <!--<label class="control-label" for="inputSuccess19">Gravatar</label>-->
+                                    <!--<input class="form-control " disabled value="{{item.gravatarUrl}}">-->
+                                    <!--&lt;!&ndash;<input type="text" class="form-control" ng-model="item.gravatarUrl">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span id="helpBlock8" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-3">-->
+                                <!--<img src="{{item.gravatarUrl}}" alt="">-->
+                            <!--</div>-->
+                        <!--</div>-->
 
                         <div class="row" ng-if="item.id">
                             <div class="col-md-5">

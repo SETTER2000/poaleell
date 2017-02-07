@@ -7,8 +7,8 @@ angular.module('DepartmentModule')
             var item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
                 $scope.departments = departments;
                 // кол-во пользователей
-                console.log($scope.departments.length);
-                console.log($scope.departments);
+                //console.log($scope.departments.length);
+                //console.log($scope.departments);
                 // console.log('USSS1: ' +  $scope.newBirthday);
                 // console.log('USSS2: ' + $scope.item.dt());
                 // // $scope.item.birthday = $scope.newBirthday;
@@ -20,8 +20,8 @@ angular.module('DepartmentModule')
             });
 
             $scope.saveEdit = function (item) {
-                console.log('OBJECT DEPART:');
-                console.log(item);
+                //console.log('OBJECT DEPART:');
+                //console.log(item);
 
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);

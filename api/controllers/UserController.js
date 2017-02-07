@@ -179,7 +179,18 @@ module.exports = {
     },
 
     update: function (req, res, next) {
-        //req.params.all()
+
+        //User.findOne(req.param('id')).exec(function (err, user) {
+        //    if (err)  return res.negotiate(err);
+        //
+        //    // Queue up a record to be inserted into the join table
+        //    user.departments.add(req.param('subdivision'));
+        //
+        //    // Save the user, creating the new associations in the join table
+        //    user.save(function (err) {
+        //        return res.negotiate(err);
+        //    });
+        //});
         User.update(req.param('id'), {
             login: req.param('login'),
             email: req.param('email'),
@@ -195,12 +206,18 @@ module.exports = {
             firedDate: req.param('firedDate'),
             pfr: req.param('pfr')
 
-        }, function userUpdate(err) {
+        }).exec(function (err) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
-            //res.redirect('/admin/users/show/' + req.param('id'));
-            res.ok();
+            User.findOne(req.param('id')).exec(function (err, user) {
+                //user.departments.remove(req.param('subdivision'));
+                user.departments.add(req.param('subdivision'));
+                user.save(function (err) {
+                    if (err) return res.negotiate(err);
+                    res.ok();
+                });
+            });
         });
     },
 

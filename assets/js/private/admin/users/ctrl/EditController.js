@@ -91,13 +91,22 @@ angular.module('UserModule')
                         }
                     );
                 } else {
+                    //$scope.item.subdivision= $scope.department;
                     item.$save(item)
                 }
             };
 
-            $scope.state = /^\w\w$/;
-            $scope.zip = /^\d\d\d\d\d$/;
-
+            //$scope.state = /^\w\w$/;
+            //$scope.zip = /^\d\d\d\d\d$/;
+            $scope.addDepartment = function () {
+                if(angular.isArray(item.departments)){
+                    item.departments.push({});
+                } else{
+                    item.departments = [{}];
+                }
+                // item.contacts = [{type: "телефон", value: ""}];
+                // item.contacts.push({type: "телефон", value: ""});
+            };
             $scope.addContact = function () {
                 if(angular.isArray(item.contacts)){
                     item.contacts.push({type: "телефон", value: ""});
@@ -114,6 +123,14 @@ angular.module('UserModule')
                         contacts.splice(i, 1);
                     }
                 }
+            };
+            $scope.removeDepartment = function (department) {
+                //var contacts = $scope.item.contacts;
+                //for (var i = 0, ii = contacts.length; i < ii; i++) {
+                //    if (contact === contacts[i]) {
+                //        contacts.splice(i, 1);
+                //    }
+                //}
             };
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);
