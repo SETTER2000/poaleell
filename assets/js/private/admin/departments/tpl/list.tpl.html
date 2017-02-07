@@ -1,6 +1,6 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{items.length}})
+        <h1>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{filtered.length}})
             <span class="pull-right">
                 <small>
                     <small>
@@ -19,9 +19,9 @@
                     </small>
                 </small></span>
         </h1>
-        <ul class="list-inline">
+       
+        <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
-                <span class="divider">|&nbsp; </span>
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
                         <span ng-switch-default>
@@ -30,7 +30,6 @@
                 </ng-switch>
             </li>
         </ul>
-
 
         <div ui-view></div>
         <div ui-view="settings"></div>
@@ -90,7 +89,7 @@
                             <th></th>
                             <th></th>
                         </tr>
-                        <tr ng-repeat="item in items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse ">
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                             <td>{{$index+1}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.type }}</td>

@@ -30,7 +30,7 @@
                      * дополненный методами для взаимодействия с конечной точкой
                      * RESTful: query, get, save и delete.
                      */
-                    $scope.items = Departments.query(function (departments) {
+                    $scope.items = Departments.query({limit:300},function (departments) {
                         $scope.departments = departments;
                         // console.log('SUCCCE: ');
                         // console.log( $scope.departments);

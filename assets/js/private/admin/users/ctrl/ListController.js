@@ -10,7 +10,7 @@
             //     // $scope.delete(args);
             //     $scope.info = args.message;
             // });
-
+            console.log(Users);
 
             console.log('NAVIGABLE-N: ' + $state.$current.navigable);
             console.log('NAVIGABLE-P: ' + $state.$current.path);
@@ -20,7 +20,7 @@
                  * дополненный методами для взаимодействия с конечной точкой
                  * RESTful: query, get, save и delete.
                  */
-                $scope.items = Users.query(function (users) {
+                $scope.items = Users.query({limit:300},function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     // console.log($scope.users.length);

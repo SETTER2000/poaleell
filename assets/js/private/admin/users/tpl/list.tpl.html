@@ -1,15 +1,15 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{items[0].scs()}} ({{items.length}})
+        <h1>{{items[0].scs()}} ({{filtered.length}})
             <div class="btn-group-xs pull-right">
                 <small>
 
-                        <label class="checkbox-inline">
-                            <input type="checkbox" ng-model="debug" value="option1"> отладка
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" ng-model="mode" value="option2"> режимы
-                        </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="debug" value="option1"> отладка
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="mode" value="option2"> режимы
+                    </label>
 
                 </small>
                 <button ui-sref="home.admin.users.settings" type="button" class="btn btn-success">
@@ -103,7 +103,7 @@
                             <th></th>
                             <th></th>
                         </tr>
-                        <tr ng-repeat="item in items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse ">
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse )">
                             <td>{{$index+1}}</td>
                             <td>{{item.getFullName()}}</td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
@@ -126,13 +126,13 @@
                             </td>
                             <td>
                                 <!--<form ng-if="mode" action="/user/destroy" method="post">-->
-                                    <!--<input type="hidden" name="_method" value="delete">-->
-                                    <!--<button type="submit" class="btn btn-sm btn-default">-->
-                                        <!--<span class="glyphicon glyphicon-trash"></span>-->
-                                    <!--</button>-->
+                                <!--<input type="hidden" name="_method" value="delete">-->
+                                <!--<button type="submit" class="btn btn-sm btn-default">-->
+                                <!--<span class="glyphicon glyphicon-trash"></span>-->
+                                <!--</button>-->
 
-                                    <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
-                                    <!--<input type="hidden" name="id" value="{{item.id}}">-->
+                                <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
+                                <!--<input type="hidden" name="id" value="{{item.id}}">-->
 
                                 <!--</form>-->
                                 <a ng-if="mode" ng-click="delete(item)" class="btn btn-sm btn-default">

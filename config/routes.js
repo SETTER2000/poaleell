@@ -37,6 +37,7 @@ module.exports.routes = {
 
     'GET /admin': 'PageController.showHomePage',
 
+
     'GET /admin/users': 'PageController.showHomePage',
     'GET /admin/users/settings': 'PageController.showHomePage',
     'GET /admin/users/list': 'PageController.showHomePage',
@@ -56,6 +57,7 @@ module.exports.routes = {
     'GET /admin/users/create': 'PageController.showHomePage',
     //home/admin/departments/edit
     'PUT /user/:id': 'UserController.update',
+    'POST /user': 'UserController.signup',
     'PUT /department/:id': 'DepartmentController.update',
 
     'GET /signup': {view: 'public/signup', locals: {layout: 'signup'}},

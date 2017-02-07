@@ -62,6 +62,11 @@ module.exports = {
                             patronymicName: req.param('patronymicName'),
                             encryptedPassword: encryptedPassword,
                             birthday: req.param('birthday'),
+                            contacts: req.param('contacts'),
+                            subdivision: req.param('subdivision'),
+                            position: req.param('position'),
+                            pfr: req.param('pfr'),
+                            dateInWork: req.param('dateInWork'),
                             lastLoggedIn: new Date(),
                             gravatarUrl: gravatarUrl
                         }, function userCreated(err, newUser) {
@@ -97,49 +102,56 @@ module.exports = {
         });
 
         // Send an email, either in plaintext or from an HTML template.
-
+        //.where( actionUtil.parseCriteria(req) )
     },
     //find: function (req, res) {
-    //    User.find({
-    //        where: {},
-    //        skip: 20,
-    //        limit: 10
-    //    }).exec(function found(err, users) {
-    //        if (err)  return res.negotiate(err);
-    //        if (!users)  return res.negotiate(err);
+
+    //    User.find()
+    //        .limit(200)
+    //        .where(req.allParams())
+    //        .exec(function found(err, users) {
+    //            console.log(users);
+    //            console.log('METHOD FIND req.allParams():');
+    //            console.log(req.allParams());
+    //            console.log('METHOD FIND req.param("id"):');
+    //            console.log(req.param('id'));
     //
-    //        // return res.redirect('/admin/users/edit/' + req.param('id'));
-    //        // return res.backToHomePage();
-    //        //return res.redirect('/admin/users/edit/' + req.param('id'));
-    //        //res.view({
-    //        //    users: users, me: req.session.me
-    //        //});
-    //        res.ok(users);
-    //    });
+    //            if (err)  return res.negotiate(err);
+    //            if (!users)  return res.negotiate(err);
+    //
+    //            // return res.redirect('/admin/users/edit/' + req.param('id'));
+    //            // return res.backToHomePage();
+    //            //return res.redirect('/admin/users/edit/' + req.param('id'));
+    //            //res.view({
+    //            //    users: users, me: req.session.me
+    //            //});
+    //            //users.me=req.session.me;
+    //            res.ok(users);
+    //            //    res.view({
+    //            //        user: user, me: req.session.me
+    //            //    });
+    //        });
     //
     //
     //    //return res.json(403, 'Single model lookup is denied.');
     //},
-    index: function (req, res, next) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-
-        next();
-        //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
-    },
+    //index: function (req, res, next) {
+    //    if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //
+    //    next();
+    //    //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
+    //},
     findOne: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne(req.param('id'), function foundUser(err, user) {
-            if (err) return next(err);
-            if (!user) return next();
+        User.findOne(req.param('id'))
+            .exec(function foundUser(err, user) {
+                if (err) return next(err);
+                if (!user) return next();
 
-            // return res.redirect('/admin/users/edit/' + req.param('id'));
-            // return res.backToHomePage();
-            //return res.redirect('/admin/users/edit/' + req.param('id'));
-            res.view({
-                user: user, me: req.session.me
+                res.view({
+                    user: user, me: req.session.me
+                });
             });
-        });
-
     },
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});

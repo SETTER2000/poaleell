@@ -19,7 +19,7 @@ angular.module('UserModule')
             //     // $scope.delete(args);
             //     $scope.info = args.message;
             // });
-
+            //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
