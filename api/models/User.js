@@ -48,7 +48,7 @@ module.exports = {
         },
 
         subdivision: {
-            type: 'string', defaultsTo: 'нет данных'
+            type: 'array', defaultsTo: '[]'
         },
         position: {
             type: 'string', defaultsTo: 'нет данных',
@@ -62,7 +62,7 @@ module.exports = {
             defaultsTo:[{"type":"","value":""}]
         },
         fired: {
-            type: 'boolean', defaultsTo: false, required: true
+            type: 'boolean', defaultsTo: false
         },
         firedDate: {
             type: 'date'

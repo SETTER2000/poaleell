@@ -1,6 +1,6 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope',  '$state', 'Users', '$stateParams', '$rootScope',
-        function ($scope,  $state, Users, $stateParams,$rootScope) {
+    .controller('EditController', ['$scope', '$state', 'Users', '$stateParams', '$rootScope',
+        function ($scope, $state, Users, $stateParams, $rootScope) {
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);
@@ -23,6 +23,7 @@ angular.module('UserModule')
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
+
                 // кол-во пользователей
                 console.log(users);
                 //if (users.birthday) {
@@ -61,25 +62,29 @@ angular.module('UserModule')
             //         alert(err);
             //     })
             // };
-
+            //$scope.item.subdivision = $scope.department.id;
             $scope.delete2 = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
                     console.log(success);
                     alert('OK! Объект удалён.');
-                 $scope.redirect('/admin/users');
+                    $scope.redirect('/admin/users');
                     // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {
                     console.log(err);
                     // alert();
                 })
             };
-            $scope.saveEdit = function (item) {
-                //item.birthday   =  $scope.newBirthday;
-                //item.dateInWork =  $scope.newDateInWork;
-                //item.firedDate  =  $scope.newFiredDate;
 
+
+            $scope.item.subdivision = [];
+            $scope.saveEdit = function (item) {
                 if (angular.isDefined(item.id)) {
+                    for (var i = 0; i < item.departments.length; i++) {
+                        $scope.item.subdivision.push(item.departments[i].id);
+                    }
+
+
                     item.$update(item, function (success) {
                             console.log('SUCCESS: OK!');
                             item.ok();
@@ -91,28 +96,37 @@ angular.module('UserModule')
                         }
                     );
                 } else {
-                    //$scope.item.subdivision= $scope.department;
-                    item.$save(item)
+                    if (angular.isDefined(item) &&
+                        angular.isDefined(item.firstName) &&
+                        angular.isDefined(item.lastName) &&
+                        angular.isDefined(item.patronymicName) &&
+                        angular.isDefined(item.login) &&
+                        angular.isDefined(item.fired) &&
+                        angular.isDefined(item.birthday) &&
+                        angular.isDefined(item.email)
+                    ) {
+                        item.$save(item)
+                    }
                 }
             };
 
             //$scope.state = /^\w\w$/;
             //$scope.zip = /^\d\d\d\d\d$/;
             $scope.addDepartment = function () {
-                if(angular.isArray(item.departments)){
+                if (angular.isArray(item.departments)) {
                     item.departments.push({});
-                } else{
+                } else {
                     item.departments = [{}];
                 }
                 // item.contacts = [{type: "телефон", value: ""}];
                 // item.contacts.push({type: "телефон", value: ""});
             };
             $scope.addContact = function () {
-                if(angular.isArray(item.contacts)){
+                if (angular.isArray(item.contacts)) {
                     item.contacts.push({type: "телефон", value: ""});
-                } else{
-                    item.contacts = [{type: "телефон", value: ""}]; 
-                } 
+                } else {
+                    item.contacts = [{type: "телефон", value: ""}];
+                }
                 // item.contacts = [{type: "телефон", value: ""}];
                 // item.contacts.push({type: "телефон", value: ""});
             };
