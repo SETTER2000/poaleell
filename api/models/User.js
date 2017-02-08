@@ -62,7 +62,7 @@ module.exports = {
             defaultsTo:[{"type":"","value":""}]
         },
         fired: {
-            type: 'boolean', defaultsTo: false
+            type: 'boolean', defaultsTo: false, required: true
         },
         firedDate: {
             type: 'date'
