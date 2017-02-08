@@ -210,18 +210,20 @@ module.exports = {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
-            if(req.param('subdivision')){
+            if (req.param('subdivision')) {
                 User.findOne(req.param('id')).exec(function (err, user) {
-                    //user.departments.remove(req.param('subdivision'));
                     user.departments.add(req.param('subdivision'));
+                    if (req.param('removeDivision')) {
+                        user.departments.remove(req.param('removeDivision'));
+                    }
+
+
                     user.save(function (err) {
                         if (err) return res.negotiate(err);
                         res.ok();
                     });
                 });
             }
-
-
         });
     },
 

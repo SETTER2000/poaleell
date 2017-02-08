@@ -24,45 +24,17 @@ angular.module('UserModule')
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                 $scope.users = users;
 
-                // кол-во пользователей
                 console.log(users);
-                //if (users.birthday) {
-                //    item.birthday = new Date(users.birthday);
-                //}
+
                 item.getBirthday();
                 item.getDateInWork();
                 item.getFiredDate();
-                //console.log(item);
-                // console.log('USSS1: ' +  $scope.newBirthday);
-                // console.log('USSS2: ' + $scope.item.dt());
-                // // $scope.item.birthday = $scope.newBirthday;
-                // console.log('USSS3: ' + item.birthday);
-                // console.log('USSS4: ' + $scope.item.birthday);
+
 
             }, function (err) {
                 if (err) console.log(err.message);
             });
 
-            //$scope.newBirthday = item.birthday;
-            //$scope.newFiredDate = item.dateInWork;
-            //$scope.newDateInWork = item.firedDate;
-            //
-            //console.log($scope.newBirthday  );
-            //console.log($scope.newFiredDate );
-            //console.log($scope.newDateInWork);
-
-            // $scope.deleteEdit = function (item) {
-            //     // console.log(item);
-            //     item.$delete(item, function (success) {
-            //         console.log(success);
-            //         $scope.refresh();
-            //         // $scope.items.splice($scope.items.indexOf(item), 1);
-            //     }, function (err) {
-            //         console.log(err);
-            //         alert(err);
-            //     })
-            // };
-            //$scope.item.subdivision = $scope.department.id;
             $scope.delete2 = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
@@ -77,14 +49,13 @@ angular.module('UserModule')
             };
 
 
-            $scope.item.subdivision = [];
             $scope.saveEdit = function (item) {
+                $scope.item.subdivision = [];
+                //$scope.item.removeDivision = '589b22e8789b83a241b56056';
                 if (angular.isDefined(item.id)) {
                     for (var i = 0; i < item.departments.length; i++) {
                         $scope.item.subdivision.push(item.departments[i].id);
                     }
-
-
                     item.$update(item, function (success) {
                             console.log('SUCCESS: OK!');
                             item.ok();
@@ -118,8 +89,6 @@ angular.module('UserModule')
                 } else {
                     item.departments = [{}];
                 }
-                // item.contacts = [{type: "телефон", value: ""}];
-                // item.contacts.push({type: "телефон", value: ""});
             };
             $scope.addContact = function () {
                 if (angular.isArray(item.contacts)) {
@@ -127,8 +96,6 @@ angular.module('UserModule')
                 } else {
                     item.contacts = [{type: "телефон", value: ""}];
                 }
-                // item.contacts = [{type: "телефон", value: ""}];
-                // item.contacts.push({type: "телефон", value: ""});
             };
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
@@ -138,14 +105,31 @@ angular.module('UserModule')
                     }
                 }
             };
+            var t = [];
             $scope.removeDepartment = function (department) {
-                //var contacts = $scope.item.contacts;
-                //for (var i = 0, ii = contacts.length; i < ii; i++) {
-                //    if (contact === contacts[i]) {
-                //        contacts.splice(i, 1);
-                //    }
-                //}
+                t.push(department.id);
+                var departments = $scope.item.departments;
+                for (var i = 0, ii = departments.length; i < ii; i++) {
+                    if (department === departments[i]) {
+                        departments.splice(i, 1);
+                    }
+                }
+                $scope.item.removeDivision = t;
             };
+
+
+            //$scope.removeDepartment = function (department) {
+            //    $scope.item.removeDivision = [];
+            //    $scope.removeDepart(department);
+            //    var subdivision = $scope.item.subdivision;
+            //    for (var i = 0, ii = subdivision.length; i < ii; i++) {
+            //        if (department.id === subdivision[i]) {
+            //            subdivision.splice(i, 1);
+            //        }
+            //    }
+            //    $scope.item.removeDivision = $scope.item.subdivision;
+            //};
+
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);
             };

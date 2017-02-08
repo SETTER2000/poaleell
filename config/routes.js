@@ -41,6 +41,7 @@ module.exports.routes = {
     'GET /admin/users': 'PageController.showHomePage',
     'GET /admin/users/settings': 'PageController.showHomePage',
     'GET /admin/users/list': 'PageController.showHomePage',
+    'GET /admin/users/user/:id': 'UserController.findOne',
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit': 'PageController.showHomePage',
     'GET /admin/users/edit/:id': 'UserController.findOne',
