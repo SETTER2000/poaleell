@@ -1,0 +1,12 @@
+<div class=" col-md-12">
+    <h1><%= user.lastName+' '+ user.firstName +' '+user.patronymicName%></h1>
+    <h3><%= user.login %></h3>
+    <hr>
+    <h3>Email: <%= user.email %></h3>
+    <h3>Дата рожд.: <%= user.birthday.getDate() %>.<%= user.birthday.getMonth()+1 %>.<%= user.birthday.getUTCFullYear() %></h3>
+
+    <h3>Отдел: <%= user.subdivision %></h3>
+
+
+    <a href="/user/edit/<%= user.id %>" class="btn btn-medium btn-primary">Edit</a>
+</div>

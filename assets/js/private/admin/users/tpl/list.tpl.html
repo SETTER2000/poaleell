@@ -1,0 +1,154 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
+    <div class="page-header">
+        <h1>{{items[0].scs()}} ({{filtered.length}})
+            <div class="btn-group-xs pull-right">
+                <small>
+
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="debug" value="option1"> отладка
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="mode" value="option2"> режимы
+                    </label>
+
+                </small>
+                <button ui-sref="home.admin.users.settings" type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+                <button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+
+        </h1>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                        <span ng-switch-default>
+                                <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                        </span>
+                </ng-switch>
+            </li>
+        </ul>
+
+        <!--<ol class="breadcrumb">-->
+        <!--<li><a href="#">Home</a></li>-->
+        <!--<li><a href="#">Library</a></li>-->
+        <!--<li class="active">Data</li>-->
+        <!--</ol>-->
+
+
+        <div ui-view></div>
+        <div ui-view="settings"></div>
+
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchText" placeholder="Поиск ...">
+                     <span class="input-group-btn">
+                       <button ng-click="searchText=''" class="btn btn-default" type="button">
+                           <span class="glyphicon glyphicon-remove"></span>
+                       </button>
+                     </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Список сотрудников компании</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('lastName')">ФИО
+                                <span class="sortOrder" ng-show="propertyName === 'lastName'"
+                                      ng-class="{reverse: reverse}"></span>
+                                </button>
+                            </th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('birthday')">ДР
+                                <span class="sortOrder" ng-show="propertyName === 'birthday'"
+                                      ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('login')">Логин
+                                 <span class="sortOrder" ng-show="propertyName === 'login'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('email')">Email
+                                 <span class="sortOrder" ng-show="propertyName === 'email'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse )">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.getFullName()}}</td>
+                            <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
+                            <td>{{item.login}}</td>
+                            <td>{{item.email}}</td>
+                            <td>
+                                <a ui-sref="home.admin.users.user({userId:item.id})" class="btn btn-sm"
+                                   ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
+                                    <span class="glyphicon "
+                                          ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
+                                          aria-hidden="true"></span>
+                                </a>
+                                <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
+                                <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
+                                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                <!--</a>-->
+                                <a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <!--<form ng-if="mode" action="/user/destroy" method="post">-->
+                                <!--<input type="hidden" name="_method" value="delete">-->
+                                <!--<button type="submit" class="btn btn-sm btn-default">-->
+                                <!--<span class="glyphicon glyphicon-trash"></span>-->
+                                <!--</button>-->
+
+                                <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
+                                <!--<input type="hidden" name="id" value="{{item.id}}">-->
+
+                                <!--</form>-->
+                                <a ng-if="mode" ng-click="delete(item)" class="btn btn-sm btn-default">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+
+                            </td>
+                        </tr>
+
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
+</div>
