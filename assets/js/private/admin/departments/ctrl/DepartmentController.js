@@ -1,7 +1,7 @@
 angular.module('DepartmentModule')
     .controller('DepartmentController', ['$scope', 'Departments', '$stateParams',
         function ($scope, Departments, $stateParams) {
-          
+
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами

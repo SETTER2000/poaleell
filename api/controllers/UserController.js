@@ -145,9 +145,11 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
             .exec(function foundUser(err, user) {
-                if (err) return next(err);
-                if (!user) return next();
+                if (err) return res.serverError(err);
+                if (!user) return res.notFound();
 
+                //User.message(user.id, {count: 12, hairColor: 'red'});
+                //sails.sockets.broadcast('artsAndEntertainment', { greeting: 'Hola!' });
                 res.view({
                     user: user, me: req.session.me
                 });
@@ -206,7 +208,7 @@ module.exports = {
             firedDate: req.param('firedDate'),
             pfr: req.param('pfr')
 
-        }).exec(function (err) {
+        }).exec(function (err,bobs) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
@@ -216,14 +218,20 @@ module.exports = {
                     if (req.param('removeDivision')) {
                         user.departments.remove(req.param('removeDivision'));
                     }
-
-
                     user.save(function (err) {
                         if (err) return res.negotiate(err);
                         res.ok();
                     });
                 });
             }
+
+            User.publishUpdate(bobs[0].id, {
+                hairColor: 'red'
+            }, req, {
+                previous: {
+                    hairColor: bobs[0].hairColor
+                }
+            });
         });
     },
 
@@ -248,6 +256,48 @@ module.exports = {
             }
             req.session.me = null;
             return res.backToHomePage();
+        });
+    },
+    subscribeToFunRoom: function(req, res) {
+        if (!req.isSocket) {
+            return res.badRequest('Только сокет клиент может подписаться на Louies. Вы, сэр или мадам, используете запрос HTTP');
+        }
+
+        var roomName = req.param('roomName');
+        sails.sockets.join(req, roomName, function(err) {
+            if (err) {
+                return res.serverError(err);
+            }
+
+            return res.json({
+                message: 'Subscribed to a fun room called '+roomName+'!'
+            });
+        });
+    },
+    subscribeToLouies: function (req, res) {
+        if (!req.isSocket) {
+            return res.badRequest('Only a client socket can subscribe to Louies.  You, sir or madame, appear to be an HTTP request.');
+        }
+
+        // Let's say our client socket has a problem with people named "louie".
+
+        // First we'll find all users named "louie" (or "louis" even-- we should be thorough)
+        User.find({ or: [{lastName: 'Петров'},{lastName: 'Абрамов'}] }).exec(function(err, usersNamedLouie){
+            if (err) {
+                return res.serverError(err);
+            }
+
+            // Now we'll use the ids we found to subscribe our client socket to each of these records.
+            User.subscribe(req, _.pluck(usersNamedLouie, 'id'));
+
+            // Now any time a user named "louie" or "louis" is modified or destroyed, our client socket
+            // will receive a notification (as long as it stays connected anyways).
+
+            // All done!  We could send down some data, but instead we send an empty response.
+            // (although we're ok telling this vengeful client socket when our users get
+            //  destroyed, it seems ill-advised to send him our Louies' sensitive user data.
+            //  We don't want to help this guy to hunt them down in real life.)
+            return res.ok();
         });
     }
 };

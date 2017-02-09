@@ -1,7 +1,7 @@
 angular.module('UserModule')
     .controller('UserController', ['$scope', 'Users', '$stateParams',
         function ($scope, Users, $stateParams) {
-          
+
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -10,7 +10,39 @@ angular.module('UserModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Users.getFullName()
              */
+            //io.socket.on('purchase', function (event) {
+            //    console.log('EVENT:');
+            //    console.log(event.data);
+            //    $scope.$apply();
+            //});
+            //
+            //io.socket.on('user', function (event) {
+            //    console.log('EVENT:');
+            //    console.log(event.data);
+            //    //$scope.$apply();
+            //});
+            //io.socket.get('/user', function (resData, jwres) {
+            //    console.log(resData);
+            //    $scope.$apply();
+            //});
+            console.log('EEEE:');
+            io.socket.on('User', function (event){
+                console.log(event);
+                // => see below
+            });
 
+            io.socket.on('user', function (event) {
+                console.log('EVA:');
+                console.log(event);
+            });
+            //io.socket.on('message', function (data){
+            //    console.log(data.greeting);
+            //});
+
+            io.socket.on('user', function (event) {
+                console.log('DEPAR:');
+                console.log(event);
+            });
 
             $scope.refresh = function () {
                 $scope.item = Users.get({id: $stateParams.userId}, function (users) {

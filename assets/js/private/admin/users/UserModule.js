@@ -4,25 +4,12 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
 
             .state('home.admin.users', {
                 url: '/users',
-                //template:'<h1>Users</h1>'
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
                         controller: 'ListController'
                     }
                 }
-                //views: {
-                //    '@': {
-                //        template: function($stateParams) {
-                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
-                //        },
-                //        controller: function() {}
-                //
-                //    }
-                //}
             })
             .state('home.admin.users.settings', {
                 url: '/settings',
@@ -49,10 +36,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             })
             .state('home.admin.users.edit', {
                 url: '/edit/:userId',
-                //template:'<h1>Users</h1>',
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',
@@ -62,10 +45,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             })
             .state('home.admin.users.user', {
                 url: '/user/:userId',
-                //template:'<h1>Users</h1>',
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/user.tpl.html',
@@ -75,10 +54,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             })
             .state('home.admin.users.create', {
                 url: '/create/:userId',
-                //template:'<h1>Users</h1>',
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/edit.tpl.html',

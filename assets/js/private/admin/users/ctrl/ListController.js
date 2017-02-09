@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', '$state', 'Users', '$window', function ($scope, $state, Users) {
+        .controller('ListController', ['$scope', "$rootScope", '$state', 'Users', '$window', function ($scope, $rootScope, $state, Users) {
 
             // // обработка события deleteUser на текущем scope
             // $scope.$on("deleteUser", function (event, args) {
@@ -10,6 +10,45 @@
             //     // $scope.delete(args);
             //     $scope.info = args.message;
             // });
+            // $scope.deleteEdit = function () {
+            //     // $emit - отправка события от текущего scope к родительским scope
+            //     // $scope.$emit("deleteUser", item);
+            //     // $broadcast - отправка события всем scope от rootScope
+            //     // $rootScope.$broadcast("deleteUser", {
+            //     //     message: 'GOOOO'
+            //     // });
+            //     $rootScope.$broadcast("deleteUser", {
+            //         message: 'GOOOO'
+            //     });
+            // };
+            $scope.data = {counter: 1};
+
+            $scope.$on('foo', function (event, args) {
+                $scope.data = args;
+            });
+
+            $scope.increment = function (val) {
+                $scope.data.counter += val;
+            };
+            //$rootScope.$broadcast('foo',$scope.data);
+
+            //$scope.$emit("countUser", $scope.data);
+
+            $scope.$watch("data.counter", function (newValue, oldValue) {
+                var data = {counter: 0};
+                console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
+                data.counter = newValue;
+                console.log(data);
+                $rootScope.$broadcast('foo2', data);
+            });
+
+            console.log($scope.$$watchers);
+            //$scope.$watch("items.length", function (newValue, oldValue) {
+            //    console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
+            //});
+            //console.log('COUNTER: ');
+            //console.log($scope.data.counter );
+
             console.log(Users);
 
             console.log('NAVIGABLE-N: ' + $state.$current.navigable);
@@ -20,7 +59,7 @@
                  * дополненный методами для взаимодействия с конечной точкой
                  * RESTful: query, get, save и delete.
                  */
-                $scope.items = Users.query({limit:300},function (users) {
+                $scope.items = Users.query({limit: 300}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     // console.log($scope.users.length);

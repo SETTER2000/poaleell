@@ -19,6 +19,31 @@ angular.module('UserModule')
             //     // $scope.delete(args);
             //     $scope.info = args.message;
             // });
+
+            console.log('EEEE:');
+            io.socket.on('User', function (event){
+                console.log(event);
+                // => see below
+            });
+
+            io.socket.on('user', function (event) {
+                console.log('EVA:');
+                console.log(event);
+            });
+            //io.socket.on('message', function (data){
+            //    console.log(data.greeting);
+            //});
+
+            io.socket.on('user', function (event) {
+                console.log('DEPAR:');
+                console.log(event);
+            });
+
+
+
+
+
+
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
@@ -107,7 +132,11 @@ angular.module('UserModule')
             };
             var t = [];
             $scope.removeDepartment = function (department) {
-                t.push(department.id);
+               if( angular.isDefined(department) &&
+                angular.isDefined(department.id)){
+                   t.push(department.id);
+               }
+
                 var departments = $scope.item.departments;
                 for (var i = 0, ii = departments.length; i < ii; i++) {
                     if (department === departments[i]) {

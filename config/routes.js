@@ -55,6 +55,9 @@ module.exports.routes = {
     'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
 
+    'GET /subscribeToLouies': 'UserController.subscribeToLouies',
+    'GET /subscribeToFunRoom': 'UserController.subscribeToFunRoom',
+
     'GET /admin/users/create': 'PageController.showHomePage',
     //home/admin/departments/edit
     'PUT /user/:id': 'UserController.update',

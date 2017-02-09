@@ -7,15 +7,16 @@
 
 module.exports = {
     connection: 'userMongodbServer',
-    schema: true,
+    //schema: true,
     attributes: {
-        section:{
-            type:'string',
-            defaultsTo:'Сотрудник'
+
+        section: {
+            type: 'string',
+            defaultsTo: 'Сотрудник'
         },
-        sections:{
-            type:'string',
-            defaultsTo:'Сотрудники'
+        sections: {
+            type: 'string',
+            defaultsTo: 'Сотрудники'
         },
         action: {
             type: 'boolean',
@@ -30,7 +31,10 @@ module.exports = {
         lastName: {
             type: 'string', required: true
         },
-
+        onLine: {
+            type: 'boolean',
+            defaultsTo: false
+        },
         patronymicName: {
             type: 'string', required: true
         },
@@ -59,7 +63,7 @@ module.exports = {
         },
         contacts: {
             type: 'array',
-            defaultsTo:[{"type":"","value":""}]
+            defaultsTo: [{"type": "", "value": ""}]
         },
         fired: {
             type: 'boolean', defaultsTo: false
@@ -82,10 +86,10 @@ module.exports = {
             type: 'string'
         },
 
-        departments:{
-            collection:'department',
-            via:'users',
-            dominant:true
+        departments: {
+            collection: 'department',
+            via: 'users',
+            dominant: true
         }
     }
 };
