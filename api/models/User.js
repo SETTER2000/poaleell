@@ -7,21 +7,21 @@
 
 module.exports = {
     connection: 'userMongodbServer',
-    schema: true,
+    //schema: true,
     attributes: {
-        section:{
-            type:'string',
-            defaultsTo:'Сотрудник'
+
+        section: {
+            type: 'string',
+            defaultsTo: 'Сотрудник'
         },
-        sections:{
-            type:'string',
-            defaultsTo:'Сотрудники'
+        sections: {
+            type: 'string',
+            defaultsTo: 'Сотрудники'
         },
         action: {
             type: 'boolean',
             defaultsTo: true,
             required: true
-
         },
         firstName: {
             type: 'string', required: true
@@ -30,7 +30,10 @@ module.exports = {
         lastName: {
             type: 'string', required: true
         },
-
+        onLine: {
+            type: 'boolean',
+            defaultsTo: false
+        },
         patronymicName: {
             type: 'string', required: true
         },
@@ -48,7 +51,7 @@ module.exports = {
         },
 
         subdivision: {
-            type: 'string', defaultsTo: 'нет данных'
+            type: 'array', defaultsTo: '[]'
         },
         position: {
             type: 'string', defaultsTo: 'нет данных',
@@ -57,23 +60,29 @@ module.exports = {
         encryptedPassword: {
             type: 'string', required: true
         },
+
         contacts: {
             type: 'array',
-            defaultsTo:[{"type":"","value":""}]
+            defaultsTo: [{"type": "", "value": ""}]
         },
+
         fired: {
             type: 'boolean', defaultsTo: false
         },
+
         firedDate: {
             type: 'date'
         },
+
         dateInWork: {
             type: 'date'
         },
+
         pfr: {
             type: 'string',
             size: 15
         },
+
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)
         },
@@ -82,10 +91,15 @@ module.exports = {
             type: 'string'
         },
 
-        departments:{
-            collection:'department',
-            via:'users',
-            dominant:true
+        departments: {
+            collection: 'department',
+            via: 'users',
+            dominant: true
+        },
+        positions: {
+            collection: 'position',
+            via: 'users',
+            dominant: true
         }
     }
 };

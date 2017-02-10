@@ -1,0 +1,116 @@
+<div class=" col-md-12">
+
+    <!--E D I T  F O R M-->
+
+    <form  novalidate action="/user/update/<%= user.id %>" method="post" class="form-signin">
+        <h3>Редактировать</h3>
+        <div class="row">
+
+            <!-- L A S T  N A M E -->
+
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input value="<%= user.lastName %>" type="text" name="lastName" class="form-control"
+                               placeholder="Фамилия">
+                        <span class="input-group-addon" id="basic-addon2">Фамилия</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F I R S T  N A M E -->
+
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input value="<%= user.firstName %>" type="text" name="firstName" class="form-control"
+                               placeholder="Имя">
+                        <span class="input-group-addon" id="basic-addon3">Имя</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P A T R O N Y M I C  N A M E-->
+
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input value="<%= user.patronymicName %>" type="text" name="patronymicName" class="form-control"
+                               placeholder="Отчество">
+                        <span class="input-group-addon" id="basic-addon4">Отчество</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B I R T H D A Y -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" value="<%= user.birthday.getDate() %>.<%= user.birthday.getMonth()+1 %>.<%= user.birthday.getUTCFullYear() %>" disabled>
+                        <span class="input-group-addon" id="basic-addon5">ДР</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input type="date"  name="birthday" class="form-control" id="birthday"
+                               min="1950-01-01" max="2000-12-31" placeholder="1980-10-31" value="<%= user.birthday %>">
+                    </div>
+                </div>
+            </div>
+
+            <!-- L O G I N -->
+
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input value="<%= user.login %>" type="text" name="login" class="form-control" placeholder="Логин">
+                        <span class="input-group-addon" id="basic-addon6">Логин</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E M A I L -->
+
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input value="<%= user.email %>" type="text" name="email" class="form-control" placeholder="Email">
+                        <span class="input-group-addon" id="basic-addon7">Email</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- S U B D I V I S I O N -->
+
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <input value="<%= user.subdivision %>" type="text" name="subdivision" class="form-control"
+                               placeholder="Отдел">
+                        <span class="input-group-addon" id="basic-addon8">Отдел</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <hr>
+            <!--B U T T O N  S A V E-->
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <a class="btn btn-primary btn-block btn-lg" href="/user">Сотрудники</a>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input value="Сохранить" type="submit"class="btn btn-lg btn-success btn-block">
+                </div>
+            </div>
+            <input value="<%= _csrf %>" type="hidden" name="_csrf">
+        </div>
+    </form>
+</div>

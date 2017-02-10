@@ -12,7 +12,7 @@
                             <input type="checkbox" ng-model="mode" value="option2"> режимы
                         </label>
                         <label class="checkbox-inline">
-                            <a  ui-sref="admin.users.list.settings">
+                            <a ui-sref="home.admin.positions.settings">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </a>
                         </label>
@@ -106,12 +106,12 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                     <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
+                                <a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>
                             <td>
-                                <form ng-if="mode" action="/user/destroy" method="post">
+                                <form ng-if="mode" action="/positions/destroy" method="post">
                                     <input type="hidden" name="_method" value="delete">
                                     <button type="submit" class="btn btn-sm btn-default">
                                         <span class="glyphicon glyphicon-trash"></span>

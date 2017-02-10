@@ -145,9 +145,11 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
             .exec(function foundUser(err, user) {
-                if (err) return next(err);
-                if (!user) return next();
+                if (err) return res.serverError(err);
+                if (!user) return res.notFound();
 
+                //User.message(user.id, {count: 12, hairColor: 'red'});
+                //sails.sockets.broadcast('artsAndEntertainment', { greeting: 'Hola!' });
                 res.view({
                     user: user, me: req.session.me
                 });
@@ -206,17 +208,29 @@ module.exports = {
             firedDate: req.param('firedDate'),
             pfr: req.param('pfr')
 
-        }).exec(function (err) {
+        }).exec(function (err,bobs) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
-            User.findOne(req.param('id')).exec(function (err, user) {
-                //user.departments.remove(req.param('subdivision'));
-                user.departments.add(req.param('subdivision'));
-                user.save(function (err) {
-                    if (err) return res.negotiate(err);
-                    res.ok();
+            if (req.param('subdivision')) {
+                User.findOne(req.param('id')).exec(function (err, user) {
+                    user.departments.add(req.param('subdivision'));
+                    if (req.param('removeDivision')) {
+                        user.departments.remove(req.param('removeDivision'));
+                    }
+                    user.save(function (err) {
+                        if (err) return res.negotiate(err);
+                        res.ok();
+                    });
                 });
+            }
+
+            User.publishUpdate(bobs[0].id, {
+                hairColor: 'red'
+            }, req, {
+                previous: {
+                    hairColor: bobs[0].hairColor
+                }
             });
         });
     },
@@ -243,6 +257,7 @@ module.exports = {
             req.session.me = null;
             return res.backToHomePage();
         });
-    }
+    },
+
 };
 

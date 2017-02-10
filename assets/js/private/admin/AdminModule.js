@@ -9,7 +9,8 @@ angular.module('AdminModule', ['ui.router', 'ngResource', 'ngAnimate'])
             //}
             views: {
                 '@': {
-                    templateUrl: '/js/private/admin/tpl/admin.tpl.html'
+                    templateUrl: '/js/private/admin/tpl/admin.tpl.html',
+                    controller:'AdminController'
                 }
                 //'sidebar@': {
                 //    templateUrl: '/js/private/tpl/sidebar.tpl.html'

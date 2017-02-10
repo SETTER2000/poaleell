@@ -31,6 +31,7 @@
     "sails": "~0.12.11",
     "sails-disk": "^0.10.10",
     "sails-mongo": "^0.12.2",
+    "sails.io.js": "^1.1.4",
     "sugar": "^2.0.4",
     "sugar-date": "^2.0.4"
   },

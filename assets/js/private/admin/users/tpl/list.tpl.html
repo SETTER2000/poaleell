@@ -1,4 +1,4 @@
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
+<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{items[0].scs()}} ({{filtered.length}})
             <div class="btn-group-xs pull-right">
@@ -110,7 +110,7 @@
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>
-                                <a ui-sref="home.admin.users.user({userId:item.id})" class="btn btn-sm"
+                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn btn-sm"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
@@ -120,7 +120,7 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                 <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>

@@ -1,6 +1,6 @@
-angular.module('UserModule')
-    .controller('UserController', ['$scope', 'Users', '$stateParams',
-        function ($scope, Users, $stateParams) {
+angular.module('PositionModule')
+    .controller('PositionController', ['$scope', 'Positions', '$stateParams',
+        function ($scope, Positions, $stateParams) {
 
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
@@ -26,12 +26,12 @@ angular.module('UserModule')
             //    $scope.$apply();
             //});
             console.log('EEEE:');
-            io.socket.on('User', function (event){
+            io.socket.on('Position', function (event){
                 console.log(event);
                 // => see below
             });
 
-            io.socket.on('user', function (event) {
+            io.socket.on('position', function (event) {
                 console.log('EVA:');
                 console.log(event);
             });
@@ -39,14 +39,14 @@ angular.module('UserModule')
             //    console.log(data.greeting);
             //});
 
-            io.socket.on('user', function (event) {
+            io.socket.on('position', function (event) {
                 console.log('DEPAR:');
                 console.log(event);
             });
 
             $scope.refresh = function () {
-                $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                    $scope.users = users;
+                $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
+                    $scope.users = positions;
                     // кол-во пользователей
                     // console.log($scope.users.length);
                     // console.log($scope.users);

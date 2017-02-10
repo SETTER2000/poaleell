@@ -1,6 +1,6 @@
-angular.module('UserModule')
-    .controller('EditController', ['$scope', '$state', 'Users', '$stateParams', '$rootScope',
-        function ($scope, $state, Users, $stateParams, $rootScope) {
+angular.module('PositionModule')
+    .controller('EditPositionController', ['$scope', '$state', 'Positions', '$stateParams', '$rootScope',
+        function ($scope, $state, Positions, $stateParams, $rootScope) {
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);
@@ -20,36 +20,36 @@ angular.module('UserModule')
             //     $scope.info = args.message;
             // });
 
-            console.log('EEEE:');
-            io.socket.on('User', function (event){
-                console.log(event);
-                // => see below
-            });
-
-            io.socket.on('user', function (event) {
-                console.log('EVA:');
-                console.log(event);
-            });
-            //io.socket.on('message', function (data){
-            //    console.log(data.greeting);
+            //console.log('EEEE:');
+            //io.socket.on('User', function (event){
+            //    console.log(event);
+            //    // => see below
             //});
-
-            io.socket.on('user', function (event) {
-                console.log('DEPAR:');
-                console.log(event);
-            });
-
-
-
-
-
+            //
+            //io.socket.on('user', function (event) {
+            //    console.log('EVA:');
+            //    console.log(event);
+            //});
+            ////io.socket.on('message', function (data){
+            ////    console.log(data.greeting);
+            ////});
+            //
+            //io.socket.on('user', function (event) {
+            //    console.log('DEPAR:');
+            //    console.log(event);
+            //});
+            //
+            //
+            //
+            //
+            //
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-            var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                $scope.users = users;
+            var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
+                $scope.positions = positions;
 
-                console.log(users);
+                console.log(positions);
 
                 item.getBirthday();
                 item.getDateInWork();
@@ -65,7 +65,7 @@ angular.module('UserModule')
                 item.$delete(item, function (success) {
                     console.log(success);
                     alert('OK! Объект удалён.');
-                    $scope.redirect('/admin/users');
+                    $scope.redirect('/admin/positions');
                     // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {
                     console.log(err);
@@ -75,44 +75,66 @@ angular.module('UserModule')
 
 
             $scope.saveEdit = function (item) {
-                $scope.item.subdivision = [];
-                //$scope.item.removeDivision = '589b22e8789b83a241b56056';
+                //console.log('OBJECT DEPART:');
+                //console.log(item);
+
                 if (angular.isDefined(item.id)) {
-                    for (var i = 0; i < item.departments.length; i++) {
-                        $scope.item.subdivision.push(item.departments[i].id);
-                    }
+                    //item.$update(item);
                     item.$update(item, function (success) {
                             console.log('SUCCESS: OK!');
                             item.ok();
                         },
                         function (err) {
+
                             console.log('ERROR: ' + err.status);
                             console.log(err);
                             item.er();
                         }
                     );
                 } else {
-                    if (angular.isDefined(item) &&
-                        angular.isDefined(item.firstName) &&
-                        angular.isDefined(item.lastName) &&
-                        angular.isDefined(item.patronymicName) &&
-                        angular.isDefined(item.login) &&
-                        angular.isDefined(item.fired) &&
-                        angular.isDefined(item.birthday) &&
-                        angular.isDefined(item.email)
-                    ) {
-                        item.$save(item)
-                    }
+                    item.$save(item)
                 }
             };
 
+            //$scope.saveEdit = function (item) {
+            //    $scope.item.subdivision = [];
+            //    //$scope.item.removeDivision = '589b22e8789b83a241b56056';
+            //    if (angular.isDefined(item.id)) {
+            //        for (var i = 0; i < item.positions.length; i++) {
+            //            $scope.item.subdivision.push(item.positions[i].id);
+            //        }
+            //        item.$update(item, function (success) {
+            //                console.log('SUCCESS: OK!');
+            //                item.ok();
+            //            },
+            //            function (err) {
+            //                console.log('ERROR: ' + err.status);
+            //                console.log(err);
+            //                item.er();
+            //            }
+            //        );
+            //    } else {
+            //        if (angular.isDefined(item) &&
+            //            angular.isDefined(item.firstName) &&
+            //            angular.isDefined(item.lastName) &&
+            //            angular.isDefined(item.patronymicName) &&
+            //            angular.isDefined(item.login) &&
+            //            angular.isDefined(item.fired) &&
+            //            angular.isDefined(item.birthday) &&
+            //            angular.isDefined(item.email)
+            //        ) {
+            //            item.$save(item)
+            //        }
+            //    }
+            //};
+
             //$scope.state = /^\w\w$/;
             //$scope.zip = /^\d\d\d\d\d$/;
-            $scope.addDepartment = function () {
-                if (angular.isArray(item.departments)) {
-                    item.departments.push({});
+            $scope.addPosition = function () {
+                if (angular.isArray(item.positions)) {
+                    item.positions.push({});
                 } else {
-                    item.departments = [{}];
+                    item.positions = [{}];
                 }
             };
             $scope.addContact = function () {
@@ -131,11 +153,11 @@ angular.module('UserModule')
                 }
             };
             var t = [];
-            $scope.removeDepartment = function (department) {
-               if( angular.isDefined(department) &&
-                angular.isDefined(department.id)){
-                   t.push(department.id);
-               }
+            $scope.removepositions = function (department) {
+                if (angular.isDefined(department) &&
+                    angular.isDefined(department.id)) {
+                    t.push(department.id);
+                }
 
                 var departments = $scope.item.departments;
                 for (var i = 0, ii = departments.length; i < ii; i++) {

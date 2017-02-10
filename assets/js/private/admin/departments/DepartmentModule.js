@@ -46,17 +46,17 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                 url: '/department/:depId',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/departments/tpl/department.tpl.html',
+                        templateUrl: '/js/private/admin/departments/tpl/show.tpl.html',
                         controller: 'DepartmentController'
                     }
                 }
             })
         ;
     })
-    .constant('CONF_MODULE2', {baseUrl: '/department/:depId'})
-    .factory('Departments', function ($resource, CONF_MODULE2) {
+    .constant('CONF_MODULE_DEPARTMENT', {baseUrl: '/department/:depId'})
+    .factory('Departments', function ($resource, CONF_MODULE_DEPARTMENT) {
         var Departments = $resource(
-            CONF_MODULE2.baseUrl,
+            CONF_MODULE_DEPARTMENT.baseUrl,
             {depId: '@id'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
             {
@@ -83,9 +83,15 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
         Departments.prototype.er = function () {
             return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты!');
         };
-        // Departments.prototype.action = function () {
-        //  return 
-        // };
+        Departments.prototype.getListUrl = function () {
+            return '/admin/departments';
+        };
+        Departments.prototype.getEditUrl = function (id) {
+            return '/admin/departments/edit/'+id;
+        };
+        Departments.prototype.getShowUrl = function (id) {
+            return '/admin/department/'+id;
+        };
 
         return Departments;
     })
