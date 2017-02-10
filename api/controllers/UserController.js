@@ -206,6 +206,7 @@ module.exports = {
             position: req.param('position'),
             contacts: req.param('contacts'),
             firedDate: req.param('firedDate'),
+            action: req.param('action'),
             pfr: req.param('pfr')
 
         }).exec(function (err,bobs) {

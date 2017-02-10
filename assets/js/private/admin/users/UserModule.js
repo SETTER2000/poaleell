@@ -175,8 +175,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
         Users.prototype.getShowUrl = function (id) {
             return '/admin/users/user/'+id;
         };
-
-
+        Users.prototype.deactivation = function () {
+            return  ' - деактивирован';
+        };
 
 
         return Users;
