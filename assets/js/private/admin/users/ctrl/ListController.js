@@ -21,26 +21,26 @@
             //         message: 'GOOOO'
             //     });
             // };
-            $scope.data = {counter: 1};
-
-            $scope.$on('foo', function (event, args) {
-                $scope.data = args;
-            });
-
-            $scope.increment = function (val) {
-                $scope.data.counter += val;
-            };
+            //$scope.data = {counter: 1};
+            //
+            //$scope.$on('foo', function (event, args) {
+            //    $scope.data = args;
+            //});
+            //
+            //$scope.increment = function (val) {
+            //    $scope.data.counter += val;
+            //};
             //$rootScope.$broadcast('foo',$scope.data);
 
             //$scope.$emit("countUser", $scope.data);
 
-            $scope.$watch("data.counter", function (newValue, oldValue) {
-                var data = {counter: 0};
-                console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
-                data.counter = newValue;
-                console.log(data);
-                $rootScope.$broadcast('foo2', data);
-            });
+            //$scope.$watch("data.counter", function (newValue, oldValue) {
+            //    var data = {counter: 0};
+            //    console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
+            //    data.counter = newValue;
+            //    console.log(data);
+            //    $rootScope.$broadcast('foo2', data);
+            //});
 
             console.log($scope.$$watchers);
             //$scope.$watch("items.length", function (newValue, oldValue) {

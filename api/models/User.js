@@ -22,7 +22,6 @@ module.exports = {
             type: 'boolean',
             defaultsTo: true,
             required: true
-
         },
         firstName: {
             type: 'string', required: true
@@ -61,23 +60,29 @@ module.exports = {
         encryptedPassword: {
             type: 'string', required: true
         },
+
         contacts: {
             type: 'array',
             defaultsTo: [{"type": "", "value": ""}]
         },
+
         fired: {
             type: 'boolean', defaultsTo: false
         },
+
         firedDate: {
             type: 'date'
         },
+
         dateInWork: {
             type: 'date'
         },
+
         pfr: {
             type: 'string',
             size: 15
         },
+
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)
         },
@@ -88,6 +93,11 @@ module.exports = {
 
         departments: {
             collection: 'department',
+            via: 'users',
+            dominant: true
+        },
+        positions: {
+            collection: 'position',
             via: 'users',
             dominant: true
         }

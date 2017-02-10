@@ -1,32 +1,14 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{item.getFullName()}}
-
             <div class="btn-group-xs pull-right">
-                <!--<small>-->
-
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
-                    <!--</label>-->
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
-                    <!--</label>-->
-
-                <!--</small>-->
-                <button ui-sref="home.admin.users" class="btn btn-sm btn-warning">
+                <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
-                </button>
-                <button ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">
+                </a>
+                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-                <!--<button ui-sref="home.admin.users.settings" type="button" class="btn btn-success">-->
-                    <!--<span class="glyphicon glyphicon-cog"></span>-->
-                <!--</button>-->
-                <!--<button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
-                <!--</button>-->
+                </a>
             </div>
-
         </h1>
     </div>
     <div class="row">

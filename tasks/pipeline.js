@@ -30,10 +30,11 @@ var jsFilesToInject = [
     'js/dependencies/angular-resource.js',
     'js/dependencies/**/*.js',
 
-
+    'js/private/admin/departments/DepartmentModule.js',
+    'js/private/admin/positions/PositionModule.js',
     'js/public/signup/SignupModule.js',
     'js/private/admin/users/UserModule.js',
-    'js/private/admin/departments/DepartmentModule.js',
+
     'js/private/admin/AdminModule.js',
 
     'js/public/homepage/HomepageModule.js',

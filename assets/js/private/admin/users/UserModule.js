@@ -47,7 +47,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 url: '/user/:userId',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/users/tpl/user.tpl.html',
+                        templateUrl: '/js/private/admin/users/tpl/show.tpl.html',
                         controller: 'UserController'
                     }
                 }
@@ -166,6 +166,18 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             var t = this.formatDate(new Date());
             return t;
         };
+        Users.prototype.getListUrl = function () {
+            return '/admin/users';
+        };
+        Users.prototype.getEditUrl = function (id) {
+            return '/admin/users/edit/'+id;
+        };
+        Users.prototype.getShowUrl = function (id) {
+            return '/admin/users/user/'+id;
+        };
+
+
+
 
         return Users;
     })
