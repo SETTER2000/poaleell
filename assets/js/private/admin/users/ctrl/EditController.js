@@ -1,6 +1,6 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$state', 'Users', '$stateParams', '$rootScope',
-        function ($scope, $state, Users, $stateParams, $rootScope) {
+    .controller('EditController', ['$scope', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
+        function ($scope, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);
@@ -20,29 +20,35 @@ angular.module('UserModule')
             //     $scope.info = args.message;
             // });
 
-            console.log('EEEE:');
-            io.socket.on('User', function (event){
-                console.log(event);
-                // => see below
-            });
+            // console.log('EEEE:');
+            // io.socket.on('User', function (event){
+            //     console.log(event);
+            //     // => see below
+            // });
+            //
+            // io.socket.on('user', function (event) {
+            //     console.log('EVA:');
+            //     console.log(event);
+            // });
+            // //io.socket.on('message', function (data){
+            // //    console.log(data.greeting);
+            // //});
+            //
+            // io.socket.on('user', function (event) {
+            //     console.log('DEPAR:');
+            //     console.log(event);
+            // });
+            //
+            //
 
-            io.socket.on('user', function (event) {
-                console.log('EVA:');
-                console.log(event);
-            });
-            //io.socket.on('message', function (data){
-            //    console.log(data.greeting);
-            //});
 
-            io.socket.on('user', function (event) {
-                console.log('DEPAR:');
-                console.log(event);
-            });
-
-
-
-
-          
+            // $scope.items = Departments.query({limit: 300}, function (posts) {
+            //     $scope.posts = posts;
+            //     console.log(posts);
+            // }, function (err) {
+            //     if (err) console.log(err.message);
+            // });
+           
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
@@ -76,10 +82,15 @@ angular.module('UserModule')
 
             $scope.saveEdit = function (item) {
                 $scope.item.subdivision = [];
+                $scope.item.position = [];
                 //$scope.item.removeDivision = '589b22e8789b83a241b56056';
                 if (angular.isDefined(item.id)) {
                     for (var i = 0; i < item.departments.length; i++) {
                         $scope.item.subdivision.push(item.departments[i].id);
+                    } 
+                    
+                    for (var z = 0; z < item.positions.length; z++) {
+                        $scope.item.position.push(item.positions[z].id);
                     }
                     item.$update(item, function (success) {
                             console.log('SUCCESS: OK!');
@@ -132,10 +143,10 @@ angular.module('UserModule')
             };
             var t = [];
             $scope.removeDepartment = function (department) {
-               if( angular.isDefined(department) &&
-                angular.isDefined(department.id)){
-                   t.push(department.id);
-               }
+                if (angular.isDefined(department) &&
+                    angular.isDefined(department.id)) {
+                    t.push(department.id);
+                }
 
                 var departments = $scope.item.departments;
                 for (var i = 0, ii = departments.length; i < ii; i++) {
@@ -147,17 +158,7 @@ angular.module('UserModule')
             };
 
 
-            //$scope.removeDepartment = function (department) {
-            //    $scope.item.removeDivision = [];
-            //    $scope.removeDepart(department);
-            //    var subdivision = $scope.item.subdivision;
-            //    for (var i = 0, ii = subdivision.length; i < ii; i++) {
-            //        if (department.id === subdivision[i]) {
-            //            subdivision.splice(i, 1);
-            //        }
-            //    }
-            //    $scope.item.removeDivision = $scope.item.subdivision;
-            //};
+           
 
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);

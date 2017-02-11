@@ -18,7 +18,7 @@ angular.module('DepartmentModule')
             }, function (err) {
                 if (err) console.log(err.message);
             });
-            
+
             $scope.saveEdit = function (item) {
                 //console.log('OBJECT DEPART:');
                 //console.log(item);
@@ -43,8 +43,8 @@ angular.module('DepartmentModule')
 
             // $scope.item.contacts = [{type:'phone', value:'1(234) 555-1212'}];
 
-            $scope.state = /^\w\w$/;
-            $scope.zip = /^\d\d\d\d\d$/;
+            // $scope.state = /^\w\w$/;
+            // $scope.zip = /^\d\d\d\d\d$/;
 
             $scope.addContact = function () {
                 item.contacts.push({type: 'телефон', value: ''});

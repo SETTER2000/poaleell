@@ -37,6 +37,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
     })
     .constant('CONF_MODULE_POSITION', {baseUrl: '/position/:positionId'})
     .factory('Positions', function ($resource, CONF_MODULE_POSITION) {
+       
         var Positions = $resource(
             CONF_MODULE_POSITION.baseUrl,
             {positionId: '@id'},
@@ -47,6 +48,8 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                 }
             }
         );
+      
+        
         Positions.prototype.formatDate = function (date) {
 
             var dd = date.getDate();
@@ -84,72 +87,61 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return '/admin/positions';
         };
         Positions.prototype.getEditUrl = function (id) {
-            return '/admin/positions/edit/'+id;
+            return '/admin/positions/edit/' + id;
         };
         Positions.prototype.getShowUrl = function (id) {
-            return '/admin/position/'+id;
+            return '/admin/position/' + id;
         };
         Positions.prototype.deactivation = function () {
-            return  ' - деактивирован';
+            return ' - деактивирован';
         };
-        //Positions.prototype.getBirthday = function () {
-        //    if (this.birthday) {
-        //        var tm;
-        //        tm = new Date(this.birthday);
-        //        this.birthday = tm;
-        //    }
-        //};
-        //
-        //Positions.prototype.getDateInWork = function () {
-        //    if (this.dateInWork) {
-        //        var tm;
-        //        tm = new Date(this.dateInWork);
-        //        this.dateInWork = tm;
-        //    }
-        //};
-        //
-        //Positions.prototype.getFiredDate = function () {
-        //    if (this.firedDate) {
-        //        var tm;
-        //        tm = new Date(this.firedDate);
-        //        this.firedDate = tm;
-        //    }
-        //};
-        //
-        //Positions.prototype.getCreatedAt = function () {
-        //    if (!this.createdAt) {
-        //        return 'Mongo import';
-        //    }
-        //    return this.createdAt;
-        //};
-        //
-        //Positions.prototype.getCurrentDate = function () {
-        //    var t = this.formatDate(new Date());
-        //    return t;
-        //};
 
+        Positions.prototype.addPosition = function (item) {
+            if (angular.isArray(item.positions)) {
+                item.positions.push({});
+            } else {
+                item.positions = [{}];
+            }
+            return item;
+        };
+
+        Positions.prototype.arr = [];
+
+        Positions.prototype.removePosition = function (position,item) {
+            if (angular.isDefined(position) &&
+                angular.isDefined(position.id)) {
+                this.arr.push(position.id);
+            }
+            var positions = item.positions;
+            for (var i = 0, ii = positions.length; i < ii; i++) {
+                if (position === positions[i]) {
+                    positions.splice(i, 1);
+                }
+            }
+            return item.removePosition = this.arr;
+        };
         return Positions;
-    })
-    //.directive(
-    //    'dateInput',
-    //    function(dateFilter) {
-    //        return {
-    //            require: 'ngModel',
-    //            template: '<input type="date" class="form-control"></input>',
-    //            replace: true,
-    //            link: function(scope, elm, attrs, ngModelCtrl) {
-    //                ngModelCtrl.$formatters.unshift(function (modelValue) {
-    //                    return dateFilter(modelValue, 'yyyy-MM-dd');
-    //                });
-    //
-    //                ngModelCtrl.$parsers.push(function(modelValue){
-    //                    return angular.toJson(modelValue,true)
-    //                        .substring(1,angular.toJson(modelValue).length-1);
-    //                })
-    //
-    //            }
-    //        };
-    //    })
+    });
+//.directive(
+//    'dateInput',
+//    function(dateFilter) {
+//        return {
+//            require: 'ngModel',
+//            template: '<input type="date" class="form-control"></input>',
+//            replace: true,
+//            link: function(scope, elm, attrs, ngModelCtrl) {
+//                ngModelCtrl.$formatters.unshift(function (modelValue) {
+//                    return dateFilter(modelValue, 'yyyy-MM-dd');
+//                });
+//
+//                ngModelCtrl.$parsers.push(function(modelValue){
+//                    return angular.toJson(modelValue,true)
+//                        .substring(1,angular.toJson(modelValue).length-1);
+//                })
+//
+//            }
+//        };
+//    })
 ;
 
 
