@@ -18,7 +18,7 @@ angular.module('DepartmentModule')
             }, function (err) {
                 if (err) console.log(err.message);
             });
-
+            
             $scope.saveEdit = function (item) {
                 //console.log('OBJECT DEPART:');
                 //console.log(item);

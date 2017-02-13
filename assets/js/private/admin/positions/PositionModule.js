@@ -89,6 +89,9 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
         Positions.prototype.getShowUrl = function (id) {
             return '/admin/position/'+id;
         };
+        Positions.prototype.deactivation = function () {
+            return  ' - деактивирован';
+        };
         //Positions.prototype.getBirthday = function () {
         //    if (this.birthday) {
         //        var tm;

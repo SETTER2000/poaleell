@@ -92,6 +92,9 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
         Departments.prototype.getShowUrl = function (id) {
             return '/admin/department/'+id;
         };
+        Departments.prototype.deactivation = function () {
+            return  ' - деактивирован';
+        };
 
         return Departments;
     })

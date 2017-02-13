@@ -42,7 +42,7 @@ angular.module('UserModule')
 
 
 
-
+          
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
