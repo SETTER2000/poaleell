@@ -48,7 +48,6 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                 }
             }
         );
-      
         
         Positions.prototype.formatDate = function (date) {
 
@@ -93,9 +92,8 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return '/admin/position/' + id;
         };
         Positions.prototype.deactivation = function () {
-            return ' - деактивирован';
+            return  ' - деактивирован';
         };
-
         Positions.prototype.addPosition = function (item) {
             if (angular.isArray(item.positions)) {
                 item.positions.push({});
@@ -104,9 +102,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             }
             return item;
         };
-
         Positions.prototype.arr = [];
-
         Positions.prototype.removePosition = function (position,item) {
             if (angular.isDefined(position) &&
                 angular.isDefined(position.id)) {
@@ -121,7 +117,8 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return item.removePosition = this.arr;
         };
         return Positions;
-    });
+    })
+;
 //.directive(
 //    'dateInput',
 //    function(dateFilter) {
@@ -142,7 +139,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
 //            }
 //        };
 //    })
-;
+
 
 
 // moduleConfig.$inject = ['$stateProvider','$urlRouterProvider','$locationProvider'];

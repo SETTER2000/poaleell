@@ -48,7 +48,12 @@ angular.module('UserModule')
             // }, function (err) {
             //     if (err) console.log(err.message);
             // });
-           
+
+            console.log('STATE2: ');
+            console.log($state);
+            console.log($state.$current.url.source);
+
+
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {

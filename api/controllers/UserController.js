@@ -143,6 +143,8 @@ module.exports = {
     //},
     findOne: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        console.log('REGSESSIONME:');
+        console.log(req.session.me);
         User.findOne(req.param('id'))
             .exec(function foundUser(err, user) {
                 if (err) return res.serverError(err);
@@ -150,8 +152,13 @@ module.exports = {
 
                 //User.message(user.id, {count: 12, hairColor: 'red'});
                 //sails.sockets.broadcast('artsAndEntertainment', { greeting: 'Hola!' });
+                //res.view({
+                //    user: user, me: req.session.me
+                //});
+
                 res.view({
-                    user: user, me: req.session.me
+                    user: user,
+                    me: req.session.me
                 });
             });
     },
@@ -181,7 +188,7 @@ module.exports = {
     },
 
     update: function (req, res, next) {
-
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //User.findOne(req.param('id')).exec(function (err, user) {
         //    if (err)  return res.negotiate(err);
         //
@@ -193,7 +200,7 @@ module.exports = {
         //        return res.negotiate(err);
         //    });
         //});
-        User.update(req.param('id'), {
+        var usr = {
             login: req.param('login'),
             email: req.param('email'),
             firstName: req.param('firstName'),
@@ -209,7 +216,8 @@ module.exports = {
             action: req.param('action'),
             pfr: req.param('pfr')
 
-        }).exec(function (err,bobs) {
+        };
+        User.update(req.param('id'),usr).exec(function updateUser(err,usrEdit) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
@@ -238,6 +246,10 @@ module.exports = {
                 });
             }
 
+            res.ok();
+            //res.view({
+            //    user: user, me: req.session.me
+            //});
             // User.publishUpdate(bobs[0].id, {
             //     hairColor: 'red'
             // }, req, {

@@ -45,17 +45,21 @@ module.exports.routes = {
     'GET /admin/positions/settings': 'PageController.showHomePage',
 
     'GET /admin/users/list': 'PageController.showHomePage',
-    'GET /admin/users/user/:id': 'UserController.findOne',
+    'GET /admin/user/:id': 'PageController.showHomePage',
+    //'GET /admin/user/:id': 'UserController.findOne',
+    //'GET /admin/users/user/:id': 'UserController.findOne',
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit': 'PageController.showHomePage',
-    'GET /admin/users/edit/:id': 'UserController.findOne',
+    'GET /admin/users/edit/:id': 'PageController.showHomePage',
+    //'GET /admin/users/edit/:id': 'UserController.findOne',
     'GET /admin/users/:id': 'UserController.findOne',
     //'GET /admin/:id': 'UserController.findOne',
 
 
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
-    'GET /admin/department/:id': 'DepartmentController.findOne',
+    'GET /admin/department/:id': 'PageController.showHomePage',
+    //'GET /admin/department/:id': 'DepartmentController.findOne',
     'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
 

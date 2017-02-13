@@ -50,9 +50,13 @@
             //console.log($scope.data.counter );
 
             console.log(Users);
-
-            console.log('NAVIGABLE-N: ' + $state.$current.navigable);
-            console.log('NAVIGABLE-P: ' + $state.$current.path);
+            console.log('STATE: ');
+            //console.log( $state.get());
+            //console.log($state);
+            console.log($state.get('home.admin.user'));
+            //console.log($state.$current.path);
+            //console.log('NAVIGABLE-N: ' + $state.$current.navigable);
+            //console.log('NAVIGABLE-P: ' + $state.$current.path);
             $scope.refresh = function () {
                 /**
                  * При обращении к службе $resource возвращается сгенерированный конструктор,
