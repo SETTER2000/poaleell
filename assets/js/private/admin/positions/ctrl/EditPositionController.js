@@ -128,15 +128,10 @@ angular.module('PositionModule')
             //    }
             //};
 
-            //$scope.state = /^\w\w$/;
-            //$scope.zip = /^\d\d\d\d\d$/;
-            $scope.addPosition = function () {
-                if (angular.isArray(item.positions)) {
-                    item.positions.push({});
-                } else {
-                    item.positions = [{}];
-                }
-            };
+           
+
+           
+            
             $scope.addContact = function () {
                 if (angular.isArray(item.contacts)) {
                     item.contacts.push({type: "телефон", value: ""});
@@ -152,21 +147,7 @@ angular.module('PositionModule')
                     }
                 }
             };
-            var t = [];
-            $scope.removepositions = function (department) {
-                if (angular.isDefined(department) &&
-                    angular.isDefined(department.id)) {
-                    t.push(department.id);
-                }
-
-                var departments = $scope.item.departments;
-                for (var i = 0, ii = departments.length; i < ii; i++) {
-                    if (department === departments[i]) {
-                        departments.splice(i, 1);
-                    }
-                }
-                $scope.item.removeDivision = t;
-            };
+           
 
 
             //$scope.removeDepartment = function (department) {

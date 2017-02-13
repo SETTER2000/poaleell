@@ -206,6 +206,7 @@ module.exports = {
             position: req.param('position'),
             contacts: req.param('contacts'),
             firedDate: req.param('firedDate'),
+            action: req.param('action'),
             pfr: req.param('pfr')
 
         }).exec(function (err,bobs) {
@@ -224,14 +225,26 @@ module.exports = {
                     });
                 });
             }
+            if (req.param('position')) {
+                User.findOne(req.param('id')).exec(function (err, user) {
+                    user.positions.add(req.param('position'));
+                    if (req.param('removePosition')) {
+                        user.positions.remove(req.param('removePosition'));
+                    }
+                    user.save(function (err) {
+                        if (err) return res.negotiate(err);
+                        res.ok();
+                    });
+                });
+            }
 
-            User.publishUpdate(bobs[0].id, {
-                hairColor: 'red'
-            }, req, {
-                previous: {
-                    hairColor: bobs[0].hairColor
-                }
-            });
+            // User.publishUpdate(bobs[0].id, {
+            //     hairColor: 'red'
+            // }, req, {
+            //     previous: {
+            //         hairColor: bobs[0].hairColor
+            //     }
+            // });
         });
     },
 

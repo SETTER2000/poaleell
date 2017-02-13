@@ -9,7 +9,6 @@ module.exports = {
     connection: 'userMongodbServer',
     //schema: true,
     attributes: {
-
         section: {
             type: 'string',
             defaultsTo: 'Сотрудник'
@@ -19,9 +18,7 @@ module.exports = {
             defaultsTo: 'Сотрудники'
         },
         action: {
-            type: 'boolean',
-            defaultsTo: true,
-            required: true
+            type: 'boolean', defaultsTo: true
         },
         firstName: {
             type: 'string', required: true
