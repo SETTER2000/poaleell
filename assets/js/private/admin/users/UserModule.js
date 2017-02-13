@@ -43,7 +43,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
-            .state('home.admin.users.user', {
+            //.state('home.admin.users.user', {
+            .state('home.admin.user', {
                 url: '/user/:userId',
                 views: {
                     '@': {
@@ -83,7 +84,11 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
-    .factory('Users', function ($resource, CONF_MODULE) {
+    .run(function ($rootScope, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    })
+    .factory('Users', function ($resource,$state, CONF_MODULE) {
         var Users = $resource(
             CONF_MODULE.baseUrl,
             {userId: '@id'},
@@ -173,7 +178,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return '/admin/users/edit/'+id;
         };
         Users.prototype.getShowUrl = function (id) {
-            return '/admin/users/user/'+id;
+            return '/admin/user/'+id;
         };
         Users.prototype.deactivation = function () {
             return  ' - деактивирован';

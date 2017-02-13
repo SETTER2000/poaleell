@@ -48,7 +48,6 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                 }
             }
         );
-      
         
         Positions.prototype.formatDate = function (date) {
 
@@ -93,48 +92,8 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return '/admin/position/' + id;
         };
         Positions.prototype.deactivation = function () {
-<<<<<<< HEAD
             return  ' - деактивирован';
         };
-        //Positions.prototype.getBirthday = function () {
-        //    if (this.birthday) {
-        //        var tm;
-        //        tm = new Date(this.birthday);
-        //        this.birthday = tm;
-        //    }
-        //};
-        //
-        //Positions.prototype.getDateInWork = function () {
-        //    if (this.dateInWork) {
-        //        var tm;
-        //        tm = new Date(this.dateInWork);
-        //        this.dateInWork = tm;
-        //    }
-        //};
-        //
-        //Positions.prototype.getFiredDate = function () {
-        //    if (this.firedDate) {
-        //        var tm;
-        //        tm = new Date(this.firedDate);
-        //        this.firedDate = tm;
-        //    }
-        //};
-        //
-        //Positions.prototype.getCreatedAt = function () {
-        //    if (!this.createdAt) {
-        //        return 'Mongo import';
-        //    }
-        //    return this.createdAt;
-        //};
-        //
-        //Positions.prototype.getCurrentDate = function () {
-        //    var t = this.formatDate(new Date());
-        //    return t;
-        //};
-=======
-            return ' - деактивирован';
-        };
-
         Positions.prototype.addPosition = function (item) {
             if (angular.isArray(item.positions)) {
                 item.positions.push({});
@@ -143,10 +102,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             }
             return item;
         };
-
         Positions.prototype.arr = [];
->>>>>>> dc5bdb0d828f3cbb6f42b98ccc7757272b114438
-
         Positions.prototype.removePosition = function (position,item) {
             if (angular.isDefined(position) &&
                 angular.isDefined(position.id)) {
@@ -161,7 +117,8 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return item.removePosition = this.arr;
         };
         return Positions;
-    });
+    })
+;
 //.directive(
 //    'dateInput',
 //    function(dateFilter) {
@@ -182,7 +139,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
 //            }
 //        };
 //    })
-;
+
 
 
 // moduleConfig.$inject = ['$stateProvider','$urlRouterProvider','$locationProvider'];

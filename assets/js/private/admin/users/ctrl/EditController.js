@@ -41,9 +41,6 @@ angular.module('UserModule')
             //
             //
 
-<<<<<<< HEAD
-          
-=======
 
             // $scope.items = Departments.query({limit: 300}, function (posts) {
             //     $scope.posts = posts;
@@ -51,8 +48,12 @@ angular.module('UserModule')
             // }, function (err) {
             //     if (err) console.log(err.message);
             // });
-           
->>>>>>> dc5bdb0d828f3cbb6f42b98ccc7757272b114438
+
+            console.log('STATE2: ');
+            console.log($state);
+            console.log($state.$current.url.source);
+
+
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
