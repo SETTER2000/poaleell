@@ -35,9 +35,14 @@ module.exports.routes = {
     'GET /': 'PageController.showHomePage',
     'GET /admin': 'PageController.showHomePage',
 
+    //'/employee/find':'PageController.showHomePage',
+    //'/attendance/get':'AttendanceController.get',
+
+
     'GET /admin/users': 'PageController.showHomePage',
     'GET /admin/departments': 'PageController.showHomePage',
     'GET /admin/positions': 'PageController.showHomePage',
+    'GET /admin/employees': 'PageController.showHomePage',
 
 
     'GET /admin/users/create': 'PageController.showHomePage',
@@ -66,6 +71,12 @@ module.exports.routes = {
     'GET /admin/positions/:id': 'PositionController.findOne',
     'GET /admin/positions/edit/:id': 'PositionController.findOne',
     'GET /admin/position/:id': 'PositionController.findOne',
+
+
+
+    'GET /admin/employees/:id': 'PageController.showHomePage',
+    'GET /admin/employees/edit/:id': 'PageController.showHomePage',
+    'GET /admin/employee/:id': 'PageController.showHomePage',
 
 
 

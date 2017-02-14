@@ -2,9 +2,9 @@ angular.module('Holiday', [
         'ui.router',
         'ngResource',
         'ngAnimate',
-    'PositionModule',
+        'PositionModule',
         'DepartmentModule',
-
+        'EmployeeModule',
         'DashboardModule',
         'UserModule',
         'AdminModule'

@@ -2,7 +2,16 @@
     'use strict';
     angular.module('UserModule')
         .controller('ListController', ['$scope', "$rootScope", '$state', 'Users', '$window', function ($scope, $rootScope, $state, Users) {
+            /**
+             * Поле сортировки объекта по умолчанию.
+             * @type {string}
+             */
+            $scope.sort = 'lastName';
 
+            /**
+             * Кол-во строу, по умолчанию, выбраных в объект
+             */
+            $scope.limit = 1000;
             // // обработка события deleteUser на текущем scope
             // $scope.$on("deleteUser", function (event, args) {
             //     //event.stopPropagation(); // останавливаем распространение события
@@ -63,7 +72,7 @@
                  * дополненный методами для взаимодействия с конечной точкой
                  * RESTful: query, get, save и delete.
                  */
-                $scope.items = Users.query({limit: 300}, function (users) {
+                $scope.items = Users.query({limit: $scope.limit, sort:$scope.sort}, function (users) {
                     $scope.users = users;
                     // кол-во пользователей
                     // console.log($scope.users.length);

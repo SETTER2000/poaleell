@@ -282,7 +282,7 @@ module.exports = {
             req.session.me = null;
             return res.backToHomePage();
         });
-    },
+    }
 
 };
 
