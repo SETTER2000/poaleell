@@ -46,33 +46,33 @@ angular.module('PositionModule')
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-            var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
-                $scope.positions = positions;
+            $scope.refresh = function () {
+                var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
+                    $scope.positions = positions;
 
-                console.log(positions);
+                    console.log(positions);
 
-                item.getBirthday();
-                item.getDateInWork();
-                item.getFiredDate();
+                    item.getBirthday();
+                    item.getDateInWork();
+                    item.getFiredDate();
 
 
-            }, function (err) {
-                if (err) console.log(err.message);
-            });
-
-            $scope.delete2 = function (item) {
+                }, function (err) {
+                    if (err) console.log(err.message);
+                });
+            };
+            $scope.delete = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
-                    console.log(success);
-                    alert('OK! Объект удалён.');
-                    $scope.redirect('/admin/positions');
-                    // $scope.items.splice($scope.items.indexOf(item), 1);
+                    $scope.refresh();
+                    console.log('SUCCESS: OK!');
+                    item.ok();
                 }, function (err) {
+                    console.log('ERROR: ' + err.status);
                     console.log(err);
-                    // alert();
+                    item.er();
                 })
             };
-
 
             $scope.saveEdit = function (item) {
                 //console.log('OBJECT DEPART:');
@@ -81,6 +81,7 @@ angular.module('PositionModule')
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);
                     item.$update(item, function (success) {
+                            $scope.refresh();
                             console.log('SUCCESS: OK!');
                             item.ok();
                         },
@@ -92,7 +93,17 @@ angular.module('PositionModule')
                         }
                     );
                 } else {
-                    item.$save(item)
+                    item.$save(item,function (success) {
+                        $scope.refresh();
+                        console.log('SUCCESS: OK!');
+                        item.ok();
+                    },
+                    function (err) {
+
+                        console.log('ERROR: ' + err.status);
+                        console.log(err);
+                        item.er();
+                    });
                 }
             };
 
@@ -181,5 +192,5 @@ angular.module('PositionModule')
                 return !angular.equals($scope.item, original);
             };
 
-            // $scope.refresh();
+            $scope.refresh();
         }]);

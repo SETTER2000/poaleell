@@ -187,7 +187,7 @@ module.exports = {
         });
     },
 
-    update: function (req, res, next) {
+    update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //User.findOne(req.param('id')).exec(function (err, user) {
         //    if (err)  return res.negotiate(err);
@@ -200,7 +200,7 @@ module.exports = {
         //        return res.negotiate(err);
         //    });
         //});
-        var usr = {
+        var obj = {
             login: req.param('login'),
             email: req.param('email'),
             firstName: req.param('firstName'),
@@ -217,7 +217,7 @@ module.exports = {
             pfr: req.param('pfr')
 
         };
-        User.update(req.param('id'),usr).exec(function updateUser(err,usrEdit) {
+        User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }

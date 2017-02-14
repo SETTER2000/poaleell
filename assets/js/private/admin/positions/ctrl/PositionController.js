@@ -25,24 +25,24 @@ angular.module('PositionModule')
             //    console.log(resData);
             //    $scope.$apply();
             //});
-            console.log('EEEE:');
-            io.socket.on('Position', function (event){
-                console.log(event);
-                // => see below
-            });
+            // console.log('EEEE:');
+            // io.socket.on('Position', function (event){
+            //     console.log(event);
+            //     // => see below
+            // });
 
-            io.socket.on('position', function (event) {
-                console.log('EVA:');
-                console.log(event);
-            });
-            //io.socket.on('message', function (data){
-            //    console.log(data.greeting);
-            //});
-
-            io.socket.on('position', function (event) {
-                console.log('DEPAR:');
-                console.log(event);
-            });
+            // io.socket.on('position', function (event) {
+            //     console.log('EVA:');
+            //     console.log(event);
+            // });
+            // //io.socket.on('message', function (data){
+            // //    console.log(data.greeting);
+            // //});
+            //
+            // io.socket.on('position', function (event) {
+            //     console.log('DEPAR:');
+            //     console.log(event);
+            // });
 
             $scope.refresh = function () {
                 $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {

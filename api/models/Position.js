@@ -26,6 +26,14 @@ module.exports = {
             type: 'string',
             unique:true
         },
+        type: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        location: {
+            type: 'string',
+            defaultsTo: ''
+        },
         // Добавить ссылку на пользователя
         users: {
             collection: 'user',

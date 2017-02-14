@@ -4,8 +4,18 @@
         .controller('ListPositionController', ['$scope', 'Positions', '$state',
             function ($scope, Positions, $state) {
 
-                console.log('EXX:');
-                console.log(Positions);
+                /**
+                 * Поле сортировки объекта по умолчанию.
+                 * @type {string}
+                 */
+                $scope.sort = 'name';
+
+                /**
+                 * Кол-во строу, по умолчанию, выбраных в объект
+                 */
+                $scope.limit = 300;
+                
+                
                 // var ups = $scope.ups =  Departments.query();
                 //  console.log('UPS1: ');
                 //  console.log(ups);
@@ -32,7 +42,7 @@
                      * RESTful: query, get, save и delete.
                      */
                     // Сортировка наоборот sort: 'name DESC'
-                    $scope.items = Positions.query({limit:300, sort: 'name'},function (positions) {
+                    $scope.items = Positions.query({limit:$scope.limit, sort: $scope.sort},function (positions) {
                         $scope.positions = positions;
                          console.log('SUCCCEpp: ');
                          console.log( $scope.positions);
@@ -95,6 +105,17 @@
                 breadcrumb.set('Positions', '/positions/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
 
+                $scope.delete = function (item) {
+                    console.log(item);
+                    item.$delete(item, function (success) {
+                        console.log(success);
+                        $scope.refresh();
+                        // $scope.items.splice($scope.items.indexOf(item), 1);
+                    }, function (err) {
+                        console.log(err);
+                        // alert();
+                    })
+                };
 
                 $scope.refresh();
 

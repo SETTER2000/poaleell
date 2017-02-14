@@ -84,9 +84,12 @@
                            <!--class="btn btn-default btn-sm pull-right" role="button">-->
                             <!--<span class="glyphicon glyphicon-trash"></span>-->
                         <!--</a>-->
-                        <button ng-if="item.id" ng-click="delete(item)" class="btn btn-sm btn-default pull-right" >
+                        <!--<button ng-if="item.id" ng-click="delete(item)" class="btn btn-sm btn-default pull-right" >-->
+                            <!--<span class="glyphicon glyphicon-trash"></span>-->
+                        <!--</button>-->
+                        <a ng-if="!item.action" ng-click="delete(item)" class="btn  btn-default pull-right">
                             <span class="glyphicon glyphicon-trash"></span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -48,6 +48,8 @@ module.exports.routes = {
     'GET /admin/users/create': 'PageController.showHomePage',
     'GET /admin/users/settings': 'PageController.showHomePage',
     'GET /admin/positions/settings': 'PageController.showHomePage',
+    'GET /admin/positions/create': 'PageController.showHomePage',
+    'GET /admin/departments/create': 'PageController.showHomePage',
 
     'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
@@ -103,7 +105,8 @@ module.exports.routes = {
     'POST /signup': 'UserController.signup',
     'PUT /login': 'UserController.login',
     'GET /logout': 'UserController.logout',
-    'DELETE /user/:id': 'UserController.destroy'
+    'DELETE /user/:id': 'UserController.destroy',
+    'DELETE /position/:id': 'PositionController.destroy'
 
     /***************************************************************************
      *                                                                          *

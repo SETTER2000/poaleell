@@ -57,20 +57,21 @@ angular.module('UserModule')
 
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-            var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                $scope.users = users;
+            $scope.refresh = function () {
+                var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
+                    $scope.users = users;
 
-                console.log(users);
+                    console.log(users);
 
-                item.getBirthday();
-                item.getDateInWork();
-                item.getFiredDate();
+                    item.getBirthday();
+                    item.getDateInWork();
+                    item.getFiredDate();
 
 
-            }, function (err) {
-                if (err) console.log(err.message);
-            });
-
+                }, function (err) {
+                    if (err) console.log(err.message);
+                });
+            };
             $scope.delete2 = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
@@ -98,6 +99,7 @@ angular.module('UserModule')
                         $scope.item.position.push(item.positions[z].id);
                     }
                     item.$update(item, function (success) {
+                            $scope.refresh();
                             console.log('SUCCESS: OK!');
                             item.ok();
                         },
@@ -117,7 +119,8 @@ angular.module('UserModule')
                         angular.isDefined(item.birthday) &&
                         angular.isDefined(item.email)
                     ) {
-                        item.$save(item)
+                        item.$save(item);
+                        $scope.refresh();
                     }
                 }
             };
@@ -184,5 +187,5 @@ angular.module('UserModule')
                 return !angular.equals($scope.item, original);
             };
 
-            // $scope.refresh();
+            $scope.refresh();
         }]);

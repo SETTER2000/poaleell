@@ -33,11 +33,21 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                     }
                 }
             })
+            .state('home.admin.positions.create', {
+                url: '/create/:positionId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/departments/tpl/edit.tpl.html',
+                        controller: 'EditPositionController'
+                    }
+                }
+            })
+
         ;
     })
     .constant('CONF_MODULE_POSITION', {baseUrl: '/position/:positionId'})
     .factory('Positions', function ($resource, CONF_MODULE_POSITION) {
-       
+
         var Positions = $resource(
             CONF_MODULE_POSITION.baseUrl,
             {positionId: '@id'},
@@ -48,7 +58,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                 }
             }
         );
-        
+
         Positions.prototype.formatDate = function (date) {
 
             var dd = date.getDate();
@@ -77,10 +87,10 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
         };
 
         Positions.prototype.ok = function () {
-            return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
+            return alert(this.sc() + ': ' + this.name + ' изменёна!');
         };
         Positions.prototype.er = function () {
-            return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
+            return alert('ОШИБКА!!! ' + this.sc() + ': ' + this.name + ' - изменения не приняты!');
         };
         Positions.prototype.getListUrl = function () {
             return '/admin/positions';
@@ -92,7 +102,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return '/admin/position/' + id;
         };
         Positions.prototype.deactivation = function () {
-            return  ' - деактивирован';
+            return ' - деактивирована';
         };
         Positions.prototype.addPosition = function (item) {
             if (angular.isArray(item.positions)) {
@@ -103,7 +113,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
             return item;
         };
         Positions.prototype.arr = [];
-        Positions.prototype.removePosition = function (position,item) {
+        Positions.prototype.removePosition = function (position, item) {
             if (angular.isDefined(position) &&
                 angular.isDefined(position.id)) {
                 this.arr.push(position.id);
@@ -139,7 +149,6 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
 //            }
 //        };
 //    })
-
 
 
 // moduleConfig.$inject = ['$stateProvider','$urlRouterProvider','$locationProvider'];

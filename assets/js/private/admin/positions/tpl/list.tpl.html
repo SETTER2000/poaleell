@@ -1,23 +1,23 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{filtered.length}})
-            <span class="pull-right">
-                <small>
+            <div class="btn-group-xs pull-right">
                     <small>
-
                         <label class="checkbox-inline">
                             <input type="checkbox" ng-model="debug" value="option1"> отладка
                         </label>
                         <label class="checkbox-inline">
                             <input type="checkbox" ng-model="mode" value="option2"> режимы
                         </label>
-                        <label class="checkbox-inline">
-                            <a ui-sref="home.admin.positions.settings">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                            </a>
-                        </label>
+
                     </small>
-                </small></span>
+                <button ui-sref="home.admin.positions.settings" type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+                <button ui-sref="home.admin.positions.create" type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                </div>
         </h1>
 
         <ul class="breadcrumb">
@@ -30,14 +30,9 @@
                 </ng-switch>
             </li>
         </ul>
-
         <div ui-view></div>
         <div ui-view="settings"></div>
-
-
     </div>
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">
@@ -94,7 +89,6 @@
                             <td>{{item.name}}</td>
                             <td>{{item.type }}</td>
                             <td>{{item.location}}</td>
-
                             <td>
                                 <a ng-href="{{item.getShowUrl(item.id)}}" class="btn btn-sm"
                                    ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
@@ -102,25 +96,24 @@
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
                                           aria-hidden="true"></span>
                                 </a>
-                                <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
-                                <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
-                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                                <!--</a>-->
                                 <a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-sm btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>
                             <td>
-                                <form ng-if="mode" action="/positions/destroy" method="post">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="btn btn-sm btn-default">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
+                                <a ng-if="mode" ng-click="delete(item)" class="btn btn-sm btn-default">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                                <!--<form ng-if="mode" action="/positions/destroy" method="post">-->
+                                    <!--<input type="hidden" name="_method" value="delete">-->
+                                    <!--<button type="submit" class="btn btn-sm btn-default">-->
+                                        <!--<span class="glyphicon glyphicon-trash"></span>-->
+                                    <!--</button>-->
 
-                                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
-                                    <input type="hidden" name="id" value="{{item.id}}">
+                                    <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
+                                    <!--<input type="hidden" name="id" value="{{item.id}}">-->
 
-                                </form>
+                                <!--</form>-->
                             </td>
                         </tr>
 

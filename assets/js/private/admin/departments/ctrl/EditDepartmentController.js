@@ -4,43 +4,43 @@ angular.module('DepartmentModule')
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
-            var item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
-                $scope.departments = departments;
-                // кол-во пользователей
-                //console.log($scope.departments.length);
-                //console.log($scope.departments);
-                // console.log('USSS1: ' +  $scope.newBirthday);
-                // console.log('USSS2: ' + $scope.item.dt());
-                // // $scope.item.birthday = $scope.newBirthday;
-                // console.log('USSS3: ' + item.birthday);
-                // console.log('USSS4: ' + $scope.item.birthday);
+            $scope.refresh = function () {
+                var item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                    $scope.departments = departments;
+                    // кол-во пользователей
+                    //console.log($scope.departments.length);
+                    //console.log($scope.departments);
+                    // console.log('USSS1: ' +  $scope.newBirthday);
+                    // console.log('USSS2: ' + $scope.item.dt());
+                    // // $scope.item.birthday = $scope.newBirthday;
+                    // console.log('USSS3: ' + item.birthday);
+                    // console.log('USSS4: ' + $scope.item.birthday);
 
-            }, function (err) {
-                if (err) console.log(err.message);
-            });
-            
-            $scope.saveEdit = function (item) {
-                //console.log('OBJECT DEPART:');
-                //console.log(item);
-
-                if (angular.isDefined(item.id)) {
-                    //item.$update(item);
-                    item.$update(item, function (success) {
-                            console.log('SUCCESS: OK!');
-                            item.ok();
-                        },
-                        function (err) {
-
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
-                            item.er();
-                        }
-                    );
-                } else {
-                    item.$save(item)
-                }
+                }, function (err) {
+                    if (err) console.log(err.message);
+                });
             };
+                $scope.saveEdit = function (item) {
+                    if (angular.isDefined(item.id)) {
+                        //item.$update(item);
+                        item.$update(item, function (success) {
+                                $scope.refresh();
+                                console.log('SUCCESS: OK!');
+                                item.ok();
+                            },
+                            function (err) {
 
+                                console.log('ERROR: ' + err.status);
+                                console.log(err);
+                                item.er();
+                            }
+                        );
+                    } else {
+                        $scope.refresh();
+                        item.$save(item)
+                    }
+                };
+            
             // $scope.item.contacts = [{type:'phone', value:'1(234) 555-1212'}];
 
             // $scope.state = /^\w\w$/;
@@ -68,14 +68,14 @@ angular.module('DepartmentModule')
             $scope.delete = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
-                    console.log(success);
-                    alert('OK! Объект удалён.');
-                    $scope.redirect('/admin/departments');
-                    // $scope.items.splice($scope.items.indexOf(item), 1);
+                    $scope.refresh();
+                    console.log('SUCCESS: OK!');
+                    item.ok();
                 }, function (err) {
+                    console.log('ERROR: ' + err.status);
                     console.log(err);
-                    // alert();
+                    item.er();
                 })
             };
-            // $scope.refresh();
+            $scope.refresh();
         }]);
