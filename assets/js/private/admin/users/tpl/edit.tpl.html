@@ -309,11 +309,12 @@
                                     <!--class="btn btn-default btn-md pull-right" role="button">-->
                                 <!--<span class="glyphicon glyphicon-trash"></span>-->
                             <!--</button>-->
-                            <button ng-if="item.id" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right" >
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
+
                         </div>
                     </form>
+                    <button ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right" >
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
                 </div>
             </div>
 

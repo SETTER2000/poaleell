@@ -32,8 +32,8 @@
             </li>
         </ul>
         <!--<ul class="nav">-->
-            <!--<li ng-class="{ active: $state.includes('users') }"><a href="#/users">Contacts</a></li>-->
-            <!--<li ng-class="{ active: $state.includes('about') }"><a href="/about">About</a></li>-->
+        <!--<li ng-class="{ active: $state.includes('users') }"><a href="#/users">Contacts</a></li>-->
+        <!--<li ng-class="{ active: $state.includes('about') }"><a href="/about">About</a></li>-->
         <!--</ul>-->
         <!--<ol class="breadcrumb">-->
         <!--<li><a href="#">Home</a></li>-->
@@ -47,8 +47,54 @@
 
 
     </div>
-
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-toolbar" role="toolbar" aria-label="0">
+                <div class="btn-group btn-group-sm " role="group" aria-label="1">
+                    <button ng-click="char='А'" type="button" class="btn btn-default">А</button>
+                    <button ng-click="char='Б'" type="button" class="btn btn-default">Б</button>
+                    <button ng-click="char='В'" type="button" class="btn btn-default">В</button>
+                    <button ng-click="char='Г'" type="button" class="btn btn-default">Г</button>
+                    <button ng-click="char='Д'" type="button" class="btn btn-default">Д</button>
+                    <button ng-click="char='Е'" type="button" class="btn btn-default">Е</button>
+                    <button ng-click="char='Ж'" type="button" class="btn btn-default">Ж</button>
+                    <button ng-click="char='З'" type="button" class="btn btn-default">З</button>
+                    <button ng-click="char='И'" type="button" class="btn btn-default">И</button>
+                    <button ng-click="char='К'" type="button" class="btn btn-default">К</button>
+                </div>
+                <div class="btn-group btn-group-sm" role="group" aria-label="2">
+                    <button ng-click="char='Л'" type="button" class="btn btn-default">Л</button>
+                    <button ng-click="char='М'" type="button" class="btn btn-default">М</button>
+                    <button ng-click="char='Н'" type="button" class="btn btn-default">Н</button>
+                    <button ng-click="char='О'" type="button" class="btn btn-default">О</button>
+                    <button ng-click="char='П'" type="button" class="btn btn-default">П</button>
+                    <button ng-click="char='Р'" type="button" class="btn btn-default">Р</button>
+                    <button ng-click="char='С'" type="button" class="btn btn-default">С</button>
+                    <button ng-click="char='Т'" type="button" class="btn btn-default">Т</button>
+                    <button ng-click="char='У'" type="button" class="btn btn-default">У</button>
+                    <button ng-click="char='Ф'" type="button" class="btn btn-default">Ф</button>
+                </div>
+                <div class="btn-group btn-group-sm" role="group" aria-label="3">
+                    <button ng-click="char='Х'" type="button" class="btn btn-default">Х</button>
+                    <button ng-click="char='Ц'" type="button" class="btn btn-default">Ц</button>
+                    <button ng-click="char='Ч'" type="button" class="btn btn-default">Ч</button>
+                    <button ng-click="char='Ш'" type="button" class="btn btn-default">Ш</button>
+                    <button ng-click="char='Щ'" type="button" class="btn btn-default">Щ</button>
+                    <button ng-click="char='Э'" type="button" class="btn btn-default">Э</button>
+                    <button ng-click="char='Ю'" type="button" class="btn btn-default">Ю</button>
+                    <button ng-click="char='Я'" type="button" class="btn btn-default">Я</button>
+                    <button ng-click="char=''" class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">
@@ -77,27 +123,27 @@
                         <tr>
                             <th>#</th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('lastName')">ФИО
+                                <button class="btn btn-sm btn-default" ng-click="sortBy('lastName')">ФИО
                                 <span class="sortOrder" ng-show="propertyName === 'lastName'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('birthday')">ДР
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('birthday')">ДР
                                 <span class="sortOrder" ng-show="propertyName === 'birthday'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('login')">Логин
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('login')">Логин
                                  <span class="sortOrder" ng-show="propertyName === 'login'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('email')">Email
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Email
                                  <span class="sortOrder" ng-show="propertyName === 'email'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
@@ -106,7 +152,7 @@
                             <th></th>
                             <th></th>
                         </tr>
-                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse )">
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| filter:{lastName:char}| orderBy:propertyName:reverse )">
                             <td>{{$index+1}}</td>
                             <td>{{item.getFullName()}}</td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>

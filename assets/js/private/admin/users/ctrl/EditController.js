@@ -77,7 +77,8 @@ angular.module('UserModule')
                 item.$delete(item, function (success) {
                     console.log(success);
                     alert('OK! Объект удалён.');
-                    $scope.redirect('/admin/users');
+                    $scope.refresh();
+               
                     // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {
                     console.log(err);
@@ -113,14 +114,23 @@ angular.module('UserModule')
                     if (angular.isDefined(item) &&
                         angular.isDefined(item.firstName) &&
                         angular.isDefined(item.lastName) &&
-                        angular.isDefined(item.patronymicName) &&
+                        angular.isDefined(item.patronymicName)  /*  &&
                         angular.isDefined(item.login) &&
                         angular.isDefined(item.fired) &&
                         angular.isDefined(item.birthday) &&
-                        angular.isDefined(item.email)
+                        angular.isDefined(item.email)*/
                     ) {
-                        item.$save(item);
-                        $scope.refresh();
+                        item.$save(item, function (success) {
+                                console.log('SUCCESS: OK!');
+                                item.ok();
+                                $scope.refresh();
+                            },
+                            function (err) {
+                                console.log('ERROR: ' + err.status);
+                                console.log(err);
+                                item.er();
+                            });
+                   
                     }
                 }
             };
@@ -128,17 +138,17 @@ angular.module('UserModule')
             //$scope.state = /^\w\w$/;
             //$scope.zip = /^\d\d\d\d\d$/;
             $scope.addDepartment = function () {
-                if (angular.isArray(item.departments)) {
-                    item.departments.push({});
+                if (angular.isArray($scope.item.departments)) {
+                    $scope.item.departments.push({});
                 } else {
-                    item.departments = [{}];
+                    $scope.item.departments = [{}];
                 }
             };
             $scope.addContact = function () {
-                if (angular.isArray(item.contacts)) {
-                    item.contacts.push({type: "телефон", value: ""});
+                if (angular.isArray($scope.item.contacts)) {
+                    $scope.item.contacts.push({type: "телефон", value: ""});
                 } else {
-                    item.contacts = [{type: "телефон", value: ""}];
+                    $scope.item.contacts = [{type: "телефон", value: ""}];
                 }
             };
             $scope.removeContact = function (contact) {
