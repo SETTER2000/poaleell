@@ -17,12 +17,16 @@
         </h1>
     </div>
     <div class="row">
-        <div  class="fx-fade-up fx-ease-sine" ng-class="{'col-md-6':close, 'col-md-12':!close}">
+        <div  ng-class="{'col-md-6':close, 'col-md-12':!close, 'fx-fade-left':!close, 'fx-fade-right':close}">
+        <!--<div  class="fx-fade-right" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+        <!--<div  class="fx-fade-down" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+        <!--<div  class="fx-fade-up fx-ease-sine" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+        <!--<div  class="fx-fade-normal" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
             <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать
                         <a href="#" ng-click="closed()" class="pull-right">
-                            <span class="glyphicon glyphicon-menu-right"></span>
+                            <span class="glyphicon" ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
                         </a>
                     </h3>
                 </div>
