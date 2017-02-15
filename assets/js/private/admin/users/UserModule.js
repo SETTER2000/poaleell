@@ -88,7 +88,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
     })
-    .factory('Users', function ($resource,$state, CONF_MODULE) {
+    .factory('Users', function ($resource, $state, CONF_MODULE) {
         var Users = $resource(
             CONF_MODULE.baseUrl,
             {userId: '@id'},
@@ -175,17 +175,49 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return '/admin/users';
         };
         Users.prototype.getEditUrl = function (id) {
-            return '/admin/users/edit/'+id;
+            return '/admin/users/edit/' + id;
         };
         Users.prototype.getShowUrl = function (id) {
-            return '/admin/user/'+id;
+            return '/admin/user/' + id;
         };
         Users.prototype.deactivation = function () {
-            return  ' - деактивирован';
+            return ' - деактивирован';
+        };
+        Users.prototype.getContact = function (type) {
+
+            for (var i in this.contacts) {
+               if(this.contacts[i].type === type){
+                   return this.contacts[i].value;
+                   //return this.contacts[i].type + ': ' + this.contacts[i].value;
+               }
+            }
+
+        };
+        Users.prototype.deactivation = function () {
+            return  ' - уволены';
         };
 
-
         return Users;
+    })
+    /**
+     * Выборка фамилий по первой букве
+     */
+    .filter('firstChar', function () {
+        return function (value, param, char) {
+            if(char.length > 0){
+                if (angular.isArray(value) && angular.isString(param)) {
+                    var arr = [];
+                    for (var i = 0, ii = value.length; i < ii; i++) {
+
+                        if (value[i].getFullName()[0] === char) {
+                            arr.push(value[i]);
+                        }
+                    }
+                    return arr;
+                }
+            }
+            return value;
+        }
     })
     //.directive(
     //    'dateInput',

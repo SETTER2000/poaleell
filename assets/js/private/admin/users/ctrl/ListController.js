@@ -7,6 +7,9 @@
              * @type {string}
              */
             $scope.sort = 'lastName';
+            $scope.param = 'lastName';
+            $scope.fieldName = 'Внутренний телефон';
+            $scope.char = '';
 
             /**
              * Кол-во строу, по умолчанию, выбраных в объект

@@ -1,6 +1,6 @@
 <div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{items[0].scs()}} ({{filtered.length}})
+        <h1>{{items[0].scs()}} ({{filtered.length}})  <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">
                 <small>
 
@@ -149,15 +149,23 @@
                                 </button>
 
                             </th>
+                            <th>
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}
+                                 <span class="sortOrder" ng-show="propertyName === 'contacts'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
+
+                            </th>
                             <th></th>
                             <th></th>
                         </tr>
-                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| filter:{lastName:char}| orderBy:propertyName:reverse )">
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| firstChar:param:char| orderBy:propertyName:reverse )">
                             <td>{{$index+1}}</td>
                             <td>{{item.getFullName()}}</td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
+                            <td>{{item.getContact(fieldName)}}</td>
                             <td>
                                 <a ng-href="{{item.getShowUrl(item.id)}}" class="btn btn-sm"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
