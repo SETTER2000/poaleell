@@ -2,13 +2,10 @@
     <div class="page-header">
         <h1>
             <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action" >{{item.deactivation()}}</span></p>
-
             <p ng-if="!item.lastName">Новый сотрудник</p>
-
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }}</a>
-            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен</a>
-
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate | date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
@@ -20,17 +17,17 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div  class="fx-fade-up fx-ease-sine" ng-class="{'col-md-6':close, 'col-md-12':!close}">
             <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Редактировать</h3>
+                    <h3 class="panel-title">Редактировать
+                        <a href="#" ng-click="closed()" class="pull-right">
+                            <span class="glyphicon glyphicon-menu-right"></span>
+                        </a>
+                    </h3>
                 </div>
-
                 <div class="panel-body">
                     <form name="userForm" novalidate  ng-submit="saveEdit(item)">
-
-
-
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
@@ -319,10 +316,12 @@
             </div>
 
         </div>
-        <div class="col-md-6">
-            <div class="panel" ng-class="{'panel-success':!item.fired, 'panel-default':item.fired}">
+        <div class="col-md-6" ng-if="close">
+            <div class="panel"  ng-class="{'panel-success':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Информация</h3>
+                    <h3 class="panel-title">Информация
+
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">

@@ -1,4 +1,4 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','ng-fx'])
     .config(function ($stateProvider) {
         $stateProvider
 
@@ -208,7 +208,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
                 if (angular.isArray(value) && angular.isString(param)) {
                     var arr = [];
                     for (var i = 0, ii = value.length; i < ii; i++) {
-
+                        // console.log(value[i].getFullName()[0]);
                         if (value[i].getFullName()[0] === char) {
                             arr.push(value[i]);
                         }
@@ -219,6 +219,19 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
             return value;
         }
     })
+    .animation('.slide', ['$animateCss', function($animateCss) {
+        return {
+            enter: function(element) {
+                return $animateCss(element, {
+                    event: 'enter',
+                    structural: true,
+                    addClass: 'maroon-setting',
+                    from: { height:0 },
+                    to: { height: 2000 }
+                });
+            }
+        }
+    }])
     //.directive(
     //    'dateInput',
     //    function(dateFilter) {

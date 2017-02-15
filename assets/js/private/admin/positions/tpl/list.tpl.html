@@ -89,19 +89,19 @@
                             <td>{{item.name}}</td>
                             <td>{{item.type }}</td>
                             <td>{{item.location}}</td>
-                            <td>
-                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn btn-sm"
+                            <td class="btn-group-xs">
+                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                                    ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
                                           aria-hidden="true"></span>
                                 </a>
-                                <a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-sm btn-warning">
+                                <a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>
-                            <td>
-                                <a ng-if="mode" ng-click="delete(item)" class="btn btn-sm btn-default">
+                            <td class="btn-group-xs">
+                                <a ng-if="mode" ng-click="delete(item)" class="btn btn-default">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                                 <!--<form ng-if="mode" action="/positions/destroy" method="post">-->

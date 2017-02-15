@@ -2,18 +2,14 @@
     <div class="page-header">
         <h1>{{items[0].scs()}} ({{filtered.length}})  <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">
-                <small>
-
-                    <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="debug" value="option1"> отладка
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="mode" value="option2"> режимы
-                    </label>
-
-                </small>
-                <button ui-sref="home.admin.users.settings" type="button" class="btn btn-success">
+                <button   type="checkbox"  ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">
+                    <span class="glyphicon glyphicon-wrench"></span>
+                </button>
+                <button ui-sref="home.admin.users.settings" title="Настройки" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-cog"></span>
+                </button>
+                <button   type="checkbox"  ng-click="mode = mode ? false : true" title="Режимы" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-off"></span>
                 </button>
                 <button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -150,11 +146,32 @@
 
                             </th>
                             <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}
-                                 <span class="sortOrder" ng-show="propertyName === 'contacts'"
+                                <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}-->
+                                 <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
+                                       <!--ng-class="{reverse: reverse}"></span>-->
+                                <!--</button>-->
+                                <!-- Single button -->
+                                <!-- Split button -->
+                                <div class="btn-group">
+                                    <button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">
+                                    <span class="sortOrder" ng-show="propertyName === 'contacts'"
                                        ng-class="{reverse: reverse}"></span>
-                                </button>
-
+                                        Контакты: {{fieldName}}
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Контакты: {{fieldName}}</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" ng-click="fieldName='Email'">Email</a></li>
+                                        <li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>
+                                        <li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>
+                                        <li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
                             </th>
                             <th></th>
                             <th></th>
@@ -166,8 +183,9 @@
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.getContact(fieldName)}}</td>
-                            <td>
-                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn btn-sm"
+                            <td class="btn-group-xs">
+
+                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
@@ -177,31 +195,18 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                 <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
+                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
+
                             </td>
-                            <td>
-                                <!--<form ng-if="mode" action="/user/destroy" method="post">-->
-                                <!--<input type="hidden" name="_method" value="delete">-->
-                                <!--<button type="submit" class="btn btn-sm btn-default">-->
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
-                                <!--</button>-->
-
-                                <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
-                                <!--<input type="hidden" name="id" value="{{item.id}}">-->
-
-                                <!--</form>-->
-                                <a ng-if="mode" ng-click="delete(item)" class="btn btn-sm btn-default">
-                                    <span class="glyphicon glyphicon-trash"></span>
+                            <td class="btn-group-xs">
+                                <a  href="#">
+                                    <span ng-if="mode" ng-click="delete(item)" class="glyphicon glyphicon-trash"></span>
                                 </a>
-
                             </td>
                         </tr>
-
-
                     </table>
-
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 angular.module('UserModule')
     .controller('EditController', ['$scope', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
         function ($scope, $state, Users, Positions, Departments, $stateParams, $rootScope) {
+            $scope.close = 1;
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);
@@ -53,8 +54,14 @@ angular.module('UserModule')
             console.log($state);
             console.log($state.$current.url.source);
 
-
-
+            $scope.closed = function () {
+                if($scope.close) {
+                    $scope.close = false;
+                }
+                else {
+                    $scope.close = true;
+                }
+            };
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             $scope.refresh = function () {
@@ -78,7 +85,7 @@ angular.module('UserModule')
                     console.log(success);
                     alert('OK! Объект удалён.');
                     $scope.refresh();
-               
+
                     // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {
                     console.log(err);
@@ -94,8 +101,8 @@ angular.module('UserModule')
                 if (angular.isDefined(item.id)) {
                     for (var i = 0; i < item.departments.length; i++) {
                         $scope.item.subdivision.push(item.departments[i].id);
-                    } 
-                    
+                    }
+
                     for (var z = 0; z < item.positions.length; z++) {
                         $scope.item.position.push(item.positions[z].id);
                     }
@@ -115,10 +122,10 @@ angular.module('UserModule')
                         angular.isDefined(item.firstName) &&
                         angular.isDefined(item.lastName) &&
                         angular.isDefined(item.patronymicName)  /*  &&
-                        angular.isDefined(item.login) &&
-                        angular.isDefined(item.fired) &&
-                        angular.isDefined(item.birthday) &&
-                        angular.isDefined(item.email)*/
+                     angular.isDefined(item.login) &&
+                     angular.isDefined(item.fired) &&
+                     angular.isDefined(item.birthday) &&
+                     angular.isDefined(item.email)*/
                     ) {
                         item.$save(item, function (success) {
                                 console.log('SUCCESS: OK!');
@@ -130,7 +137,7 @@ angular.module('UserModule')
                                 console.log(err);
                                 item.er();
                             });
-                   
+
                     }
                 }
             };
@@ -175,8 +182,6 @@ angular.module('UserModule')
                 $scope.item.removeDivision = t;
             };
 
-
-           
 
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);

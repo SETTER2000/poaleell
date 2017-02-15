@@ -109,8 +109,9 @@
                             <td>{{item.type }}</td>
                             <td>{{item.location}}</td>
 
-                            <td>
-                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn btn-sm"
+                            <td class="btn-group-xs">
+
+                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn "
                                    ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
@@ -120,11 +121,12 @@
                                 <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
                                     <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
+                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
+
                             </td>
-                            <td>
+                            <td class="btn-group-xs">
                                 <form ng-if="mode" action="/user/destroy" method="post">
                                     <input type="hidden" name="_method" value="delete">
                                     <button type="submit" class="btn btn-sm btn-default">
