@@ -219,19 +219,19 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','
             return value;
         }
     })
-    .animation('.slide', ['$animateCss', function($animateCss) {
-        return {
-            enter: function(element) {
-                return $animateCss(element, {
-                    event: 'enter',
-                    structural: true,
-                    addClass: 'maroon-setting',
-                    from: { height:0 },
-                    to: { height: 2000 }
-                });
-            }
-        }
-    }])
+    //.animation('.slide', ['$animateCss', function($animateCss) {
+    //    return {
+    //        enter: function(element) {
+    //            return $animateCss(element, {
+    //                event: 'enter',
+    //                structural: true,
+    //                addClass: 'maroon-setting',
+    //                from: { height:0 },
+    //                to: { height: 2000 }
+    //            });
+    //        }
+    //    }
+    //}])
     //.directive(
     //    'dateInput',
     //    function(dateFilter) {

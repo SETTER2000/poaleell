@@ -9,12 +9,23 @@
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
             $scope.fieldName = 'Внутренний телефон';
-            $scope.char = '';
+            $scope.charText = '';
+            $scope.searchText = '';
+            $scope.page_number = 0;
+
+
+            $scope.styleObj = {
+                color: false,
+                border: false,
+                size: false
+            };
 
             /**
-             * Кол-во строу, по умолчанию, выбраных в объект
+             * Кол-во строк, по умолчанию, выбраных в объект из бд
              */
-            $scope.limit = 1000;
+            $scope.limitAllQuery = 1000;
+
+            $scope.limit = 10;
             // // обработка события deleteUser на текущем scope
             // $scope.$on("deleteUser", function (event, args) {
             //     //event.stopPropagation(); // останавливаем распространение события
@@ -65,23 +76,68 @@
             console.log('STATE: ');
             //console.log( $state.get());
             //console.log($state);
-            console.log($state.get('home.admin.user'));
+            //console.log($state.get('home.admin.user'));
             //console.log($state.$current.path);
             //console.log('NAVIGABLE-N: ' + $state.$current.navigable);
             //console.log('NAVIGABLE-P: ' + $state.$current.path);
             $scope.refresh = function () {
+                $scope.itemsAll = Users.query(
+                    {
+                        limit: $scope.limitAllQuery,
+                        sort: $scope.sort
+                    },
+                    function (usersAll) {
+                        $scope.usersAll = usersAll;
+                        console.log($scope.usersAll);
+                    });
                 /**
                  * При обращении к службе $resource возвращается сгенерированный конструктор,
                  * дополненный методами для взаимодействия с конечной точкой
                  * RESTful: query, get, save и delete.
                  */
-                $scope.items = Users.query({limit: $scope.limit, sort:$scope.sort}, function (users) {
-                    $scope.users = users;
-                    // кол-во пользователей
-                    // console.log($scope.users.length);
-                    console.log($scope.users);
-                });
+
+                $scope.items = Users.query(
+                    {
+                        //limit: $scope.limit,
+                        sort: $scope.sort,
+                        skip: (($scope.page_number - 1) * $scope.limit),
+                        limit: $scope.limit
+                    },
+                    function (users) {
+                        $scope.users = users;
+                        // кол-во пользователей
+                        // console.log($scope.users.length);
+                        console.log($scope.users);
+                    });
             };
+
+
+            $scope.see = function () {
+                if ($scope.charText.length > 0) {
+                    return true;
+                }
+
+                if ($scope.searchText.length > 0) {
+                    return true;
+                }
+                return false;
+            };
+
+            $scope.getCharText = function (ch) {
+                $scope.charText = ch;
+            };
+
+            $scope.getPage = function (num) {
+                $scope.page_number = num;
+                $scope.refresh();
+            };
+
+            $scope.getCountRowsPage = function (num) {
+                $scope.limit = num;
+                $scope.refresh();
+            };
+
+
             $scope.delete = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
@@ -94,7 +150,12 @@
                 })
             };
 
-
+            //$scope.showBlock = function () {
+            //    if (($scope.searchText.length > 0) | ($scope.char.length > 0)) {
+            //        $scope.see = true;
+            //    }
+            //    $scope.see = false;
+            //};
             $scope.propertyName = 'lastName';
             $scope.reverse = false;
             // $scope.friends = friends;
