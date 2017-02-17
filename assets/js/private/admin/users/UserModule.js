@@ -1,4 +1,4 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','ng-fx'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 'ng-fx'])
     .config(function ($stateProvider) {
         $stateProvider
 
@@ -186,15 +186,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','
         Users.prototype.getContact = function (type) {
 
             for (var i in this.contacts) {
-               if(this.contacts[i].type === type){
-                   return this.contacts[i].value;
-                   //return this.contacts[i].type + ': ' + this.contacts[i].value;
-               }
+                if (this.contacts[i].type === type) {
+                    return this.contacts[i].value;
+                    //return this.contacts[i].type + ': ' + this.contacts[i].value;
+                }
             }
 
         };
         Users.prototype.deactivation = function () {
-            return  ' - уволены';
+            return ' - уволены';
         };
 
         return Users;
@@ -204,7 +204,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','
      */
     .filter('firstChar', function () {
         return function (value, param, char) {
-            if(char.length > 0){
+            if (char.length > 0) {
                 if (angular.isArray(value) && angular.isString(param)) {
                     var arr = [];
                     for (var i = 0, ii = value.length; i < ii; i++) {
@@ -219,6 +219,29 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','
             return value;
         }
     })
+    //.filter('paginationButton', function () {
+    //    return function (value, limitRows) {
+    //        if (angular.isArray(value) && angular.isNumber(limitRows)) {
+    //            var count_page;
+    //            var arrButton = [];
+    //            // Кол-во страниц (ни строк на странице!) или можно сказать, кол-во кнопок
+    //            if (value.length <= limitRows) {
+    //                count_page = 1;
+    //            } else {
+    //                count_page = Math.floor(value.length / limitRows) + 1;
+    //            }
+    //
+    //            var numberPage = 1;
+    //            for (var i = 0; i < count_page; i++) {
+    //
+    //                //каждый пуш это кнопка, пока без свойств
+    //                arrButton.push({'numberPage': numberPage++, 'allCountPage': count_page});
+    //            }
+    //        }
+    //        console.log(arrButton);
+    //        return arrButton;
+    //    }
+    //})
     //.animation('.slide', ['$animateCss', function($animateCss) {
     //    return {
     //        enter: function(element) {
@@ -252,6 +275,23 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','
     //            }
     //        };
     //    })
+    .filter("skipItems", function () {
+
+        return function (value, count) {
+            // isArray - проверка, что переменная является массивом
+            // isNumber - проверка, что переменная является числом
+            if (angular.isArray(value) && angular.isNumber(count)) {
+                if (count > value.length || count < 1) {
+                    return value;
+                } else {
+                    return value.slice(count);
+                }
+            } else {
+                return value;
+            }
+        }
+
+    });
 ;
 
 
