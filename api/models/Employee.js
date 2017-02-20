@@ -37,6 +37,12 @@ module.exports = {
         email: {
             type: 'string'
         },
+        time_in_employees:{
+            type:'date'
+        },
+        time_update_employees:{
+            type:'date'
+        },
         description: {
             type: 'string'
         },

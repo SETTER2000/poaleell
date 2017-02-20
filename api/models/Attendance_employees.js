@@ -9,9 +9,9 @@ module.exports = {
     schema: true,
     connection: 'localMysqlServer',
     autoCreatedAt: false,
-    autoUpdateAt: false,
+    autoUpdatedAt: false,
     tableName:'attendance_employees',
-    autoPK: false,
+    //autoPK: false,
     attributes: {
         attendance_id: {
             model:"attendance"

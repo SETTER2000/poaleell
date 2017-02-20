@@ -1,21 +1,11 @@
 (function (angular) {
     'use strict';
-    angular.module('EmployeeModule')
-        .controller('ListEmployeeController', ['$scope', 'Employees', '$state',
-            function ($scope, Employees, $state) {
-                /**
-                 * Поле сортировки объекта по умолчанию.
-                 * @type {string}
-                 */
-                $scope.sort = 'lname';
-
-                /**
-                 * Кол-во строу, по умолчанию, выбраных в объект
-                 */
-                $scope.limit = 1000;
+    angular.module('CalendarModule')
+        .controller('ListCalendarController', ['$scope', 'Calendars', '$state',
+            function ($scope, Calendars, $state) {
 
 
-                // var ups = $scope.ups =  Employees.query();
+                // var ups = $scope.ups =  Calendars.query();
                 //  console.log('UPS1: ');
                 //  console.log(ups);
                 //  // console.log( $scope.ups.then(onFullField));
@@ -40,13 +30,13 @@
                      * дополненный методами для взаимодействия с конечной точкой
                      * RESTful: query, get, save и delete.
                      */
-                        // Сортировка наоборот sort: 'name DESC'
-                    $scope.items = Employees.query({limit: $scope.limit, sort: $scope.sort}, function (employees) {
-                        $scope.employees = employees;
-                        // console.log('SUCCCE: ');
-                        // console.log( $scope.employees);
-                        // console.log( $scope.employees.filter({"action": 1}));
-                        // console.log(employees.get({"action": 1},function (success) {
+                    // Сортировка наоборот sort: 'name DESC'
+                    $scope.items = Calendars.query({limit:300, sort: 'name DESC'},function (calendars) {
+                        $scope.calendars = calendars;
+                         console.log('SUCCCE: ');
+                         console.log( $scope.calendars);
+                        // console.log( $scope.calendars.filter({"action": 1}));
+                        // console.log(calendars.get({"action": 1},function (success) {
                         //     console.log('URAAA:');
                         //     alert('5685');
                         //     console.log(success);
@@ -55,19 +45,17 @@
                         //     console.log(err);
                         // }));
                         // кол-во пользователей
-                        console.log($scope.employees.length);
-                        console.log($scope.employees);
-                       
-                        //console.log(employees.scs());
+                        // console.log($scope.calendars.length);
+                        //console.log(calendars.scs());
                     });
                 };
 
-                //$scope.sections =   $scope.employees.sections();
-                $scope.propertyName = $scope.sort;
+                //$scope.sections =   $scope.calendars.sections();
+                $scope.propertyName = 'name';
                 $scope.reverse = false;
                 // $scope.friends = friends;
 
-                console.log(   $scope.items);
+
                 $scope.sortBy = function (propertyName) {
                     $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
                     $scope.propertyName = propertyName;
@@ -96,7 +84,7 @@
                 var breadcrumb = new BreadCrumb();
                 breadcrumb.set('Home', '/');
                 breadcrumb.set('Admin', '/admin');
-                breadcrumb.set('Employees', '/employees/' + $state.current.url);
+                breadcrumb.set('Calendars', '/calendars/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
 
 

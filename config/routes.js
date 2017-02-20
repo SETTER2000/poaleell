@@ -32,6 +32,7 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
+    //'GET /attendance': 'PageController.showHomePage',
     'GET /': 'PageController.showHomePage',
     'GET /admin': 'PageController.showHomePage',
 
@@ -41,6 +42,8 @@ module.exports.routes = {
 
     'GET /admin/users': 'PageController.showHomePage',
     'GET /admin/departments': 'PageController.showHomePage',
+    'GET /admin/calendars': 'PageController.showHomePage',
+    'GET /admin/attendances': 'PageController.showHomePage',
     'GET /admin/positions': 'PageController.showHomePage',
     'GET /admin/employees': 'PageController.showHomePage',
 
@@ -50,6 +53,7 @@ module.exports.routes = {
     'GET /admin/positions/settings': 'PageController.showHomePage',
     'GET /admin/positions/create': 'PageController.showHomePage',
     'GET /admin/departments/create': 'PageController.showHomePage',
+    'GET /admin/calendars/create': 'PageController.showHomePage',
 
     'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
@@ -74,7 +78,9 @@ module.exports.routes = {
     'GET /admin/positions/edit/:id': 'PositionController.findOne',
     'GET /admin/position/:id': 'PositionController.findOne',
 
-
+    'GET /admin/calendars/:id': 'CalendarController.findOne',
+    'GET /admin/calendars/edit/:id': 'CalendarController.findOne',
+    'GET /admin/calendar/:id': 'PageController.showHomePage',
 
     'GET /admin/employees/:id': 'PageController.showHomePage',
     'GET /admin/employees/edit/:id': 'PageController.showHomePage',
@@ -87,6 +93,8 @@ module.exports.routes = {
     'PUT /user/:id': 'UserController.update',
     'POST /user': 'UserController.signup',
     'PUT /department/:id': 'DepartmentController.update',
+    'PUT /calendar/:id': 'CalendarController.update',
+    //'PUT /attendance/:id': 'AttendanceController.update',
     'PUT /position/:id': 'PositionController.update',
 
     'GET /signup': {view: 'public/signup', locals: {layout: 'signup'}},

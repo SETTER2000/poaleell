@@ -291,7 +291,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
             }
         }
 
-    });
+    })
 ;
 
 
