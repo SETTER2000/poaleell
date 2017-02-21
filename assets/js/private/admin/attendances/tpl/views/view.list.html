@@ -1,0 +1,9 @@
+﻿
+<ol>
+    <li ng-repeat="item in data  | orderBy:'fio'">
+        [{{item.id}}] {{item.fio}}: {{item.date | date:'dd.MM.yyyy'}}
+        <strong>{{item.time_in}}</strong>&nbsp;
+        <strong>{{item.time_out}}</strong>
+    </li>
+</ol>
+

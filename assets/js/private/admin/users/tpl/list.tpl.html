@@ -1,8 +1,13 @@
 <div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{items[0].scs()}} <!--({{filtered.length}})-->
-            <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
-                всего: {{items.length}}</a>
+            <a  ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
+                всего:
+                <span ng-if="mode">{{(items | filter:{fired:true}).length}}</span>
+                <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->
+                <span ng-if="!mode">{{items.length}}</span>
+            </a>
+
             <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">
                 <button type="checkbox" ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">

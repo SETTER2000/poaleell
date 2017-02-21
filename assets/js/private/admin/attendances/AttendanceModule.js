@@ -80,33 +80,33 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
             return this.employees[0].lname + ' ' + this.employees[0].fname + ' ' + this.employees[0].pname;
         };
 
-         Attendances.prototype.sc = function () {
-             return this.section;
-         };
-         Attendances.prototype.scs = function () {
-             return this.sections;
-         };
+        Attendances.prototype.sc = function () {
+            return this.section;
+        };
+        Attendances.prototype.scs = function () {
+            return this.sections;
+        };
 
         Attendances.prototype.ok = function () {
             return alert(this.section + ': ' + this.name + ' изменён!');
         };
         Attendances.prototype.er = function () {
-            return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты!');
+            return alert('ОШИБКА!!! ' + this.name + ' - изменения не приняты!');
         };
         Attendances.prototype.getListUrl = function () {
             return '/admin/attendances';
         };
         Attendances.prototype.getEditUrl = function (id) {
-            return '/admin/attendances/edit/'+id;
+            return '/admin/attendances/edit/' + id;
         };
         Attendances.prototype.getShowUrl = function (id) {
-            return '/admin/attendance/'+id;
+            return '/admin/attendance/' + id;
         };
         Attendances.prototype.getCreateUrl = function () {
             return '/admin/attendances/create';
         };
         Attendances.prototype.deactivation = function () {
-            return  ' - деактивирован';
+            return ' - деактивирован';
         };
         Attendances.prototype.getNamePage = function () {
             return 'Посещаемость';
@@ -114,6 +114,220 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
 
         return Attendances;
     })
+    //.directive("attendanceList", function () {
+    //    return function (scope, element, attributes) {
+    //
+    //        var data = scope[attributes["attendanceList"]];
+    //        var expression = attributes["displayProperty"];
+    //
+    //        if (angular.isArray(data)) {
+    //            console.log('LENGTH:');
+    //            console.log(data);
+    //            console.log(data.length);
+    //            var e = angular.element("<ul>");
+    //            element.append(e);
+    //
+    //            for (var i = 0; i < data.length; i++) {
+    //
+    //                // немедленно-запускаемая функция, которая выступает в роли области видимости
+    //                // и избежать замыкание на переменной i;
+    //                (function () {
+    //                    var item = angular.element('<li>');
+    //                    e.append(item);
+    //                    var index = i;
+    //
+    //                    var watcherFunction = function (watchScope) {
+    //                        return watchScope.$eval(expression, data[index]);
+    //                    };
+    //
+    //                    // scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
+    //                    // Функция будет вызываться каждый раз, когда меняется scope.
+    //                    // Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
+    //                    scope.$watch(watcherFunction, function (newValue, oldValue) {
+    //                        item.text(newValue);
+    //                    });
+    //                }());
+    //            }
+    //        }else{
+    //            console.log('NOT ARRAY!!!!');
+    //        }
+    //    }
+    //})
+    .directive("attendanceList", function () {
+        return {
+            link: function (scope, element, attributes) {
+                scope.data = scope[attributes["attendanceList"]];
+                console.log('DIRECTIVES-1:');
+                //console.log(scope[attributes["attendanceList"]]);
+                console.log(scope.data);
+                console.log(scope.length);
+                scope.data.$promise.then(rejectFull);
+
+                function rejectFull(t) {
+                    scope.data = [];
+                    scope.fio = [];
+                    //console.log('PROMISE^^^');
+                    //console.log(t.length);
+
+                    if (angular.isArray(t) && t.length > 0) {
+                        for (var y = 0; y < t.length; y++) {
+                            scope.fio.push(t[y].getFullName());
+
+                        }
+                        //[{
+                        //    fio: [{
+                        //        id: t[i].id,
+                        //        date: t[i].date,
+                        //        time_in: t[i].time_in,
+                        //        time_out: t[i].time_out,
+                        //        fio: t[i].getFullName()
+                        //    }
+                        //    ]
+                        //}]
+                        for (var i = 0; i < t.length; i++) {
+                            scope.data.push(
+                                {
+                                    id: t[i].id,
+                                    date: t[i].date,
+                                    time_in: t[i].time_in,
+                                    time_out: t[i].time_out,
+                                    fio: t[i].getFullName()
+                                }
+                            );
+                        }
+
+                        console.log('DATA:');
+                        console.log(scope.data);
+                    }
+                }
+
+                //if (angular.isArray(data) && data.length > 0) {
+                //    console.log('DIRECTIVES-2:');
+                //    console.log(data.length);
+                //    //console.log(data.getFullName());
+                //    //console.log(data[0].id);
+                //    //var e = angular.element('<tr>');
+                //    //element.append(e);
+                //    //console.log('DIRECTIVES2:');
+                //    //console.log(data);
+                //    for (var i = 0; i < data.length; i++) {
+                //        console.log('DIRECTIVES23:');
+                //        console.log(data[i].id);
+                //        newData.push({id: data[i].id});
+                //
+                //
+                //        //(function () {
+                //        //    var item = angular.element('<td>');
+                //        //    e.append(item);
+                //        //    //var index = i;
+                //        //    //var watcherFunction = function (watchScope) {
+                //        //    //    return watchScope.$eval(expression, data[index]);
+                //        //    //};
+                //        //    //// scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
+                //        //    //// Функция будет вызываться каждый раз, когда меняется scope.
+                //        //    //// Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
+                //        //    //scope.$watch(watcherFunction, function (newValue, oldValue) {
+                //        //    //    item.text(newValue);
+                //        //    //});
+                //        //}());
+                //    }
+                //
+                //}
+            },
+            restrict: "A",
+            templateUrl: function (element, attributes) {
+                var list = '/js/private/admin/attendances/tpl/views/view.list.html';
+                var table = '/js/private/admin/attendances/tpl/views/view.table.html';
+                // выбор внешнего шаблона на основе атрибута template
+                return attributes["template"] == "table" ? table : list;
+            },
+            scope: true  // каждый экземпляр директивы должен работать со своим scope и наследовать scope своего контроллера
+            // scope:{} // В данном случае директива создается с изолированным scope - данный scope не участвует в наследовании.
+
+            // true - элемент, которому будет присвоена директива будет заменен разметкой сгенерированной по шаблону
+            // false - в элемент, к которому присвоена директива, будет добавлена разметка
+            // Для того, чтобы увидеть эффект работы директивы, необходимо открыть инспектор DOM в браузере
+            //replace:true
+        }
+    })
+    //.directive("orderedList", function () {
+    //    return {
+    //        link: function (scope, element, attributes) {
+    //            scope.data = scope[attributes["orderedList"]];
+    //        },
+    //        restrict: "A",
+    //        // адрес внешнего файла с шаблоном
+    //        templateUrl: "/js/private/admin/attendances/tpl/template.html"
+    //    }
+    //})
+    //.directive("orderedList", function () {
+    //    return {
+    //        link: function (scope, element, attributes) {
+    //            scope.data = scope[attributes["orderedList"]];
+    //        },
+    //        restrict: "A",
+    //        // шаблон для создания разметки
+    //        template: "<ol><li ng-repeat='item in data'>{{item.id}}</li></ol>"
+    //    }
+    //})
+    //.directive("orderedList", function () {
+    //    // link function - производит связывание директивы и HTML разметки.
+    //    // Данная функция вызывается каждый раз когда новый экземпляр директивы создается AngularJS
+    //    // Аргументы функции (не предоставляются через Dependecy Injection):
+    //    // 1 - scope к которому применяется директива
+    //    // 2 - HTML элемент, к которому применяется директива
+    //    // 3 - атрибуты HTML элемента
+    //    return function (scope, element, attributes) {
+    //
+    //        var attrValue = attributes["orderedList"];  // получаем значение атрибута (ordered-list="items")
+    //        var data = scope[attrValue];                // получаем значение из scope (scope[items])
+    //
+    //        if (angular.isArray(data)) {
+    //            // angular.element - метод преобразовывает строку или DOM элемент в jQuery объект
+    //            var e = angular.element("<ol>");
+    //            element.append(e); // добавляем ol к элементу для которого установлена директива
+    //            for (var i = 0; i < data.length; i++) {
+    //                // Создаем li элементы заполняя их данными из массива data
+    //                e.append(angular.element('<li>').text(data[i].id));
+    //            }
+    //        }
+    //    }
+    //})
+    //.directive("orderedList", function () {
+    //    return function (scope, element, attributes) {
+    //
+    //        var data = scope[attributes["orderedList"]];
+    //        var expression = attributes["displayProperty"];
+    //
+    //        if (angular.isArray(data)) {
+    //
+    //            var e = angular.element("<ul>");
+    //            element.append(e);
+    //
+    //            for (var i = 0; i < data.length; i++) {
+    //
+    //                // немедленно-запускаемая функция, которая выступает в роли области видимости
+    //                // и избежать замыкание на переменной i;
+    //                (function () {
+    //                    var item = angular.element('<li>');
+    //                    e.append(item);
+    //                    var index = i;
+    //
+    //                    var watcherFunction = function (watchScope) {
+    //                        return watchScope.$eval(expression, data[index]);
+    //                    }
+    //
+    //                    // scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
+    //                    // Функция будет вызываться каждый раз, когда меняется scope.
+    //                    // Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
+    //                    scope.$watch(watcherFunction, function (newValue, oldValue) {
+    //                        item.text(newValue);
+    //                    });
+    //                }());
+    //            }
+    //        }
+    //    }
+    //})
     //.filter("agEmployees", function () {
     //
     //    return function (value, nameField) {

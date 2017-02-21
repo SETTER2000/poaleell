@@ -1,0 +1,77 @@
+﻿<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>
+            <button class="btn btn-default" ng-click="sortBy('fio')">ФИО
+                                <span class="sortOrder" ng-show="propertyName === 'fio'"
+                                      ng-class="{reverse: reverse}"></span>
+            </button>
+        </th>
+        <th>
+            <button class="btn btn-default" ng-click="sortBy('id')">ID
+                                <span class="sortOrder" ng-show="propertyName === 'id'"
+                                      ng-class="{reverse: reverse}"></span>
+            </button>
+        </th>
+        <th>
+            <button class="btn btn-default" ng-click="sortBy('date')">Дата
+                                <span class="sortOrder" ng-show="propertyName === 'date'"
+                                      ng-class="{reverse: reverse}"></span>
+            </button>
+
+        </th>
+        <th>
+            <button class="btn btn-default" ng-click="sortBy('time_in')">Приход
+                                <span class="sortOrder" ng-show="propertyName === 'time_in'"
+                                      ng-class="{reverse: reverse}"></span>
+            </button>
+
+        </th>
+
+        <th>
+            <button class="btn btn-default" ng-click="sortBy('time_out')">Уход
+                                 <span class="sortOrder" ng-show="propertyName === 'time_out'"
+                                       ng-class="{reverse: reverse}"></span>
+            </button>
+
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in filtered=(data | filter:{$:searchText} | orderBy:propertyName:reverse)  ">
+        <!--<tr ng-repeat="item in data">-->
+        <td>{{$index+1}}</td>
+        <td>{{item.fio}}</td>
+        <td>{{item.id }}</td>
+        <td>{{item.date | date:'dd.MM.yyyy'}}</td>
+        <td>{{item.time_in }}</td>
+        <td>{{item.time_out}}</td>
+        <td class="btn-group-xs">
+            <a ng-href="{{item.getShowUrl(item.id)}}" class="btn "
+               ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
+                                    <span class="glyphicon "
+                                          ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
+                                          aria-hidden="true"></span>
+            </a>
+            <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+        </td>
+        <td class="btn-group-xs">
+            <form ng-if="mode" action="/attendance/destroy" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="btn  btn-default">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+
+                <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                <input type="hidden" name="id" value="{{item.id}}">
+
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
