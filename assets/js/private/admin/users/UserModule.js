@@ -300,14 +300,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
                 currentPage: '=',
                 onSelectPage: '&'
             },
-            template:
-            '<nav aria-label="Page navigation">'+
-            '<ul class="pagination">' +
-            '<li ng-class="{disabled: noPrevious()}"><a ng-click="selectPrevious()">Previous</a></li>' +
-            '<li ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a ng-click="selectPage(page)">{{page}}</a></li>' +
-            '<li ng-class="{disabled: noNext()}"><a ng-click="selectNext()">Next</a></li>' +
-            '</ul>' +
-            '</nav>',
+            templateUrl:'/js/private/admin/users/views/pagination.html',
             replace: true,
             link: function(scope) {
                 scope.$watch('numPages', function(value) {
