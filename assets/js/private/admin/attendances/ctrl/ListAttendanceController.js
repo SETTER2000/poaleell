@@ -7,6 +7,16 @@
                 $scope.sort = 'date';
                 $scope.limitAll = 100;
 
+                $scope.currentPage=1;
+
+                $scope.selectCount=0;
+                //$scope.tasks=[
+                //    {name:'n1'},
+                //    {name:'n2'},
+                //    {name:'n3'},
+                //    {name:'n4'},
+                //    {name:'n5'}
+                //];
                 // var ups = $scope.ups =  Attendances.query();
                 //  console.log('UPS1: ');
                 //  console.log(ups);
@@ -53,6 +63,7 @@
                         // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
                         $scope.attendances = attendances;
+                        $scope.numPages=attendances.length;
                         console.log('ATTENDANCES: ');
                         console.log($scope.attendances);
                         console.log($scope.attendances.length);
@@ -72,9 +83,13 @@
                     });
                     //};
 
-
+                //$scope.pages = [1,2,3,4,5];
+                //
+                //
+                //    console.log('PAGE');
+                //    console.log($scope.pages);
                     console.log($scope.items);
-
+                //$scope.items.currentPage=0;
                     //$scope.sections =   $scope.attendances.sections();
                     $scope.propertyName = 'fio';
                     $scope.reverse = false;

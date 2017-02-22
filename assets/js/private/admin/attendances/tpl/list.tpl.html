@@ -25,7 +25,6 @@
                 <!--</a>-->
             </div>
         </h1>
-
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
@@ -36,14 +35,10 @@
                 </ng-switch>
             </li>
         </ul>
-
         <div ui-view></div>
         <div ui-view="settings"></div>
-
-
     </div>
-
-
+    <pagination num-pages="numPages" current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">
@@ -73,11 +68,18 @@
                         <!--<span class="glyphicon" ng-class="{'glyphicon-calendar': !gle, 'glyphicon-thumbs-up':gle}" ></span>-->
                         <!--</buttton>-->
                     </h3>
+                    <!--<pagination-->
+                            <!--num-pages="items.pageCount"-->
+                            <!--current-page="items.currentPage"-->
+                            <!--on-select-page="selectPage(page)" >-->
+                    <!--</pagination>-->
+
                 </div>
                 <div class="panel-body">
 
                     <!--<div ordered-list="attendances" display-property="date | date:'dd.MM.yyyy'"></div>-->
-
+                    <!--<div custom-directive="items" display-property="date|date:'dd.MM.yyyy'"></div>-->
+                    <!--<div field-list="items" display-property="date|date:'dd.MM.yyyy'"></div>-->
 
                     <div ng-if="gle" attendance-list="items" ></div>
 
@@ -86,7 +88,7 @@
                         This is where the list will go
                     </div>
 
-
+                    <!--<button type="submit" size="large">Submit</button>-->
                 </div>
             </div>
         </div>

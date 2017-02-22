@@ -81,10 +81,13 @@
                 <!--<span class="glyphicon glyphicon-remove"></span>-->
                 <!--</button>-->
                 <!--</div>-->
-                <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm" role="group" aria-label="4">
+                <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm"
+                     role="group" aria-label="4">
                     <button ng-click="getPage(it.numberPage)" type="button" ng-bind="it.numberPage"
                             class="btn " ng-class="{'btn-danger':enabledButton, 'btn-default':!enabledButton}"></button>
                 </div>
+                <pagination num-pages="numPages"
+                            current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
                 <div class="btn-group btn-group-sm" role="group" aria-label="4">
                     <!--<button ng-click="getPage(1)" type="button" class="btn btn-default">1</button>-->
                     <!--<button ng-click="getPage(2)" type="button" class="btn btn-default">2</button>-->
@@ -215,7 +218,7 @@
                         </tr>
                         <!--| firstChar:param:charText-->
                         <!--ng-class="$even ? 'default' : 'success'"-->
-                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse | skipItems: ((page_number-1)*limitRows)| limitTo: limitRows)">
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse | skipItems: ((currentPage-1)*limitRows)| limitTo: limitRows)">
                             <td>{{$index+1}}</td>
                             <td>{{item.getFullName()}}</td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>

@@ -17,7 +17,7 @@
             $scope.limitRows = 50;
             $scope.limitAll = 1000;
             $scope.where = {};
-            $scope.arrButton = [];
+            //$scope.arrButton = [];
             $scope.enabledButton = false;
             $scope.styleObj = {
                 color: false,
@@ -106,7 +106,8 @@
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
-                        $scope.users = users;
+                        //$scope.cnt = users.length;
+                        $scope.numPages = Math.floor( users.length / $scope.limitRows) + 1;
                         // кол-во пользователей
                         // console.log($scope.users.length);
                         //console.log($scope.users);
@@ -145,6 +146,10 @@
                 //    });
 
             };
+
+
+
+
             $scope.paginationButton = function (limitRows) {
                 if (limitRows > 0) {
                     $scope.limitRows = limitRows;
@@ -164,6 +169,8 @@
                         arrButton.push({'numberPage': numberPage++, 'allCountPage': count_page});
                     }
                 }
+                $scope.numPages = arrButton.length;
+
                 //console.log(arrButton);
                 $scope.arrButton = arrButton;
             };
@@ -186,11 +193,11 @@
 
             $scope.getPage = function (num) {
                 $scope.page_number = num;
-                if ($scope.enabledButton) {
-                    $scope.enabledButton = false;
-                } else {
-                    $scope.enabledButton = true;
-                }
+                //if ($scope.enabledButton) {
+                //    $scope.enabledButton = false;
+                //} else {
+                //    $scope.enabledButton = true;
+                //}
             };
 
 

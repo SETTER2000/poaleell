@@ -114,45 +114,38 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
 
         return Attendances;
     })
-    //.directive("attendanceList", function () {
-    //    return function (scope, element, attributes) {
-    //
-    //        var data = scope[attributes["attendanceList"]];
-    //        var expression = attributes["displayProperty"];
-    //
-    //        if (angular.isArray(data)) {
-    //            console.log('LENGTH:');
-    //            console.log(data);
-    //            console.log(data.length);
-    //            var e = angular.element("<ul>");
-    //            element.append(e);
-    //
-    //            for (var i = 0; i < data.length; i++) {
-    //
-    //                // немедленно-запускаемая функция, которая выступает в роли области видимости
-    //                // и избежать замыкание на переменной i;
-    //                (function () {
-    //                    var item = angular.element('<li>');
-    //                    e.append(item);
-    //                    var index = i;
-    //
-    //                    var watcherFunction = function (watchScope) {
-    //                        return watchScope.$eval(expression, data[index]);
-    //                    };
-    //
-    //                    // scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
-    //                    // Функция будет вызываться каждый раз, когда меняется scope.
-    //                    // Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
-    //                    scope.$watch(watcherFunction, function (newValue, oldValue) {
-    //                        item.text(newValue);
-    //                    });
-    //                }());
-    //            }
-    //        }else{
-    //            console.log('NOT ARRAY!!!!');
-    //        }
-    //    }
-    //})
+    .directive("fieldList", function () {
+        return function (scope, element, attributes) {
+            var data = scope[attributes["fieldList"]];
+            var expression = attributes["displayProperty"];
+            data.$promise.then(onFulfilled, onRejected);
+            function onFulfilled(data) {
+                //console.log('PROMISE');
+                //console.log(data.length);
+                //console.log(data);
+
+                if (angular.isArray(data)) {
+                    var e = angular.element("<ol>");
+                    element.append(e);
+                    for (var i = 0; i < data.length; i++) {
+
+                        // scope.$eval([expression], [locals]) выполняет выражение на текущем scope
+                        // [expression] выражение которое нужно выполнить
+                        // [locals] объект который содержит переменные для переопределения значений в scope
+
+                        e.append(angular.element('<li>').text(scope.$eval(expression, data[i])));
+                        //e.append(angular.element('<li>').text(data[i][expression]));
+                    }
+                }
+
+            }
+
+            function onRejected(err) {
+                console.log(err.message);
+            }
+
+        }
+    })
     .directive("attendanceList", function () {
         return {
             link: function (scope, element, attributes) {
@@ -250,6 +243,134 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
             //replace:true
         }
     })
+
+    .directive("customDirective", function () {
+        return function (scope, element, attributes) {
+            // element - jqLite объект
+            var elements = element.children(); // получение всех дочерних элементов
+            //console.log('JQL');
+            //console.log(elements.length);
+            //console.log(elements.eq(1));
+            //console.log(elements.eq(1).val());
+            for (var i = 0; i < elements.length; i++) {
+                //console.log(elements.eq(i).text());
+                // если элемент содержит текст Red сделать его красным цветом
+                if (elements.eq(i).text() == "Абрамов Александр Павлович") {
+                    elements.eq(i).css("color", "red");
+                }
+            }
+        }
+    })
+    .directive('button', function () {
+        return {
+            restrict: 'E',
+            compile: function (element, attributes) {
+                element.addClass('btn');
+                if (attributes.type === 'submit') {
+                    element.addClass('btn-default');
+                }
+                if (attributes.size) {
+                    element.addClass('btn-' + attributes.size);
+                }
+            }
+        };
+    })
+    //.directive('pagination', function() {
+    //    return {
+    //        restrict: 'E',
+    //        scope: {
+    //            numPages: '=',
+    //            currentPage: '=',
+    //            onSelectPage: '&'
+    //        },
+    //        template:
+    //        '<nav aria-label="Page navigation">'+
+    //        '<ul class="pagination">' +
+    //        '<li ng-class="{disabled: noPrevious()}"><a ng-click="selectPrevious()">Previous</a></li>' +
+    //        '<li ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a ng-click="selectPage(page)">{{page}}</a></li>' +
+    //        '<li ng-class="{disabled: noNext()}"><a ng-click="selectNext()">Next</a></li>' +
+    //        '</ul>' +
+    //        '</nav>',
+    //        replace: true,
+    //        link: function(scope) {
+    //            scope.$watch('numPages', function(value) {
+    //                scope.pages = [];
+    //                for(var i=1;i<=value;i++) {
+    //                    scope.pages.push(i);
+    //                }
+    //                if ( scope.currentPage > value ) {
+    //                    scope.selectPage(value);
+    //                }
+    //            });
+    //            scope.noPrevious = function() {
+    //                return scope.currentPage === 1;
+    //            };
+    //            scope.noNext = function() {
+    //                return scope.currentPage === scope.numPages;
+    //            };
+    //            scope.isActive = function(page) {
+    //                return scope.currentPage === page;
+    //            };
+    //
+    //            scope.selectPage = function(page) {
+    //                if ( ! scope.isActive(page) ) {
+    //                    scope.currentPage = page;
+    //                    scope.onSelectPage({ page: page });
+    //                }
+    //            };
+    //
+    //            scope.selectPrevious = function() {
+    //                if ( !scope.noPrevious() ) {
+    //                    scope.selectPage(scope.currentPage-1);
+    //                }
+    //            };
+    //            scope.selectNext = function() {
+    //                if ( !scope.noNext() ) {
+    //                    scope.selectPage(scope.currentPage+1);
+    //                }
+    //            };
+    //        }
+    //    };
+    //})
+    //.directive("attendanceList", function () {
+    //    return function (scope, element, attributes) {
+    //
+    //        var data = scope[attributes["attendanceList"]];
+    //        var expression = attributes["displayProperty"];
+    //
+    //        if (angular.isArray(data)) {
+    //            console.log('LENGTH:');
+    //            console.log(data);
+    //            console.log(data.length);
+    //            var e = angular.element("<ul>");
+    //            element.append(e);
+    //
+    //            for (var i = 0; i < data.length; i++) {
+    //
+    //                // немедленно-запускаемая функция, которая выступает в роли области видимости
+    //                // и избежать замыкание на переменной i;
+    //                (function () {
+    //                    var item = angular.element('<li>');
+    //                    e.append(item);
+    //                    var index = i;
+    //
+    //                    var watcherFunction = function (watchScope) {
+    //                        return watchScope.$eval(expression, data[index]);
+    //                    };
+    //
+    //                    // scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
+    //                    // Функция будет вызываться каждый раз, когда меняется scope.
+    //                    // Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
+    //                    scope.$watch(watcherFunction, function (newValue, oldValue) {
+    //                        item.text(newValue);
+    //                    });
+    //                }());
+    //            }
+    //        }else{
+    //            console.log('NOT ARRAY!!!!');
+    //        }
+    //    }
+    //})
     //.directive("orderedList", function () {
     //    return {
     //        link: function (scope, element, attributes) {
