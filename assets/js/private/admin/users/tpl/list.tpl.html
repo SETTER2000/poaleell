@@ -1,7 +1,7 @@
 <div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>{{items[0].scs()}} <!--({{filtered.length}})-->
-            <a  ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
+            <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 всего:
                 <span ng-if="mode">{{(items | filter:{fired:true}).length}}</span>
                 <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->
@@ -16,7 +16,7 @@
                 <button ui-sref="home.admin.users.settings" title="Настройки" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
-                <button type="checkbox" ng-click="mode = mode ? false : true" title="Режимы" class="btn btn-danger">
+                <button type="checkbox" ng-click="getMode(t)" title="Режимы" class="btn btn-danger">
                     <span class="glyphicon glyphicon-off"></span>
                 </button>
                 <button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">
@@ -48,84 +48,38 @@
 
         <div ui-view></div>
         <div ui-view="settings"></div>
-
-
     </div>
-    charText: {{charText}}
-    searchText: {{searchText}}
-    LENGTH: {{charText.length}}{{searchText.length}}
+    <!--charText: {{charText}}-->
+    <!--searchText: {{searchText}}-->
+    <!--LENGTH: {{charText.length}}-{{searchText.length}}-->
     <div class="row">
         <div class="col-md-12">
             <div class="btn-toolbar" role="toolbar" aria-label="0">
                 <div class="btn-group btn-group-sm " role="group" aria-label="1">
-                    <button ng-repeat="ch in ['А','Б','В','Г','Д','Е','Ж','З','И','К']"
-                            ng-click="getCharText(ch)" ng-bind="ch"  type="button" class="btn btn-default"></button>
-
-                </div>
-                <div class="btn-group btn-group-sm " role="group" aria-label="1">
-                    <button ng-repeat="ch in ['Л','М','Н','О','П','Р','С','Т','У','Ф']"
-                            ng-click="getCharText(ch)" ng-bind="ch" type="button" class="btn btn-default"></button>
-
-                </div>
-                <div class="btn-group btn-group-sm " role="group" aria-label="1">
-                    <button ng-repeat="ch in ['Х','Ц','Ч','Ш','Щ','Э','Ю','Я']"
-                            ng-click="getCharText(ch)" ng-bind="ch" type="button" class="btn btn-default"></button>
+                    <button ng-repeat="ch in alfavit"
+                            ng-click="getCharText(ch)" ng-bind="ch" type="button" class="btn btn-default">
+                    </button>
                     <button ng-click="getCharText(0)" class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
-                <!--<div class="btn-group btn-group-sm " role="group" aria-label="1">-->
-                <!--<button ng-repeat="ch in ['Х','Ц','Ч','Ш','Щ','Э','Ю','Я']"-->
-                <!--ng-click="getCharText(ch)" ng-bind="ch" type="button" class="btn btn-default"></button>-->
-                <!--<button ng-click="getCharText('')" class="btn btn-default" type="button">-->
-                <!--<span class="glyphicon glyphicon-remove"></span>-->
-                <!--</button>-->
-                <!--</div>-->
                 <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm"
                      role="group" aria-label="4">
                     <button ng-click="getPage(it.numberPage)" type="button" ng-bind="it.numberPage"
                             class="btn " ng-class="{'btn-danger':enabledButton, 'btn-default':!enabledButton}"></button>
                 </div>
-                <pagination num-pages="numPages"
-                            current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
-                <div class="btn-group btn-group-sm" role="group" aria-label="4">
-                    <!--<button ng-click="getPage(1)" type="button" class="btn btn-default">1</button>-->
-                    <!--<button ng-click="getPage(2)" type="button" class="btn btn-default">2</button>-->
-                    <!--<button ng-click="getPage(3)" type="button" class="btn btn-default">3</button>-->
-                    <!--<button ng-click="getPage(4)" type="button" class="btn btn-default">4</button>-->
-                    <!--<button ng-click="getPage(5)" type="button" class="btn btn-default">5</button>-->
-                    <!--<button ng-click="getPage(6)" type="button" class="btn btn-default">6</button>-->
-                    <!--<button ng-click="getPage(7)" type="button" class="btn btn-default">7</button>-->
-                    <!--<button ng-click="getPage(8)" type="button" class="btn btn-default">8</button>-->
-                    <!--<button ng-click="getPage(9)" type="button" class="btn btn-default">9</button>-->
-                    <!--<button ng-click="getPage(10)" type="button" class="btn btn-default">10</button>-->
-                    <div  class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                            Количество: {{limitRows}}
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a ng-click="paginationButton(10)" href="#">10</a></li>
-                            <li><a ng-click="paginationButton(30)" href="#">30</a></li>
-                            <li><a ng-click="paginationButton(50)" href="#">50</a></li>
-                            <li><a ng-click="paginationButton(100)" href="#">100</a></li>
-                            <li><a ng-click="paginationButton(items.length)" href="#">Все</a></li>
-                        </ul>
-                    </div>
-                    <!--<button ng-click="page_number=''" class="btn btn-default" type="button">-->
-                    <!--<span class="glyphicon glyphicon-remove"></span>-->
-                    <!--</button>-->
-                </div>
             </div>
+        </div>
+    </div>
 
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            &nbsp;
-        </div>
-    </div>
+
+    <pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="items.length"
+                current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
+
+    <!--<pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="lengthObject"-->
+    <!--current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>-->
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">
@@ -159,27 +113,27 @@
                         <tr>
                             <th>#</th>
                             <th>
-                                <button class="btn btn-sm btn-default" ng-click="sortBy('lastName')">ФИО
+                                <button class="btn btn-sm btn-default" ng-click="sortBy('lastName')">{{fioArea}}
                                 <span class="sortOrder" ng-show="propertyName === 'lastName'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
                             <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('birthday')">ДР
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('birthday')">{{drArea}}
                                 <span class="sortOrder" ng-show="propertyName === 'birthday'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
                             <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('login')">Логин
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('login')">{{loginArea}}
                                  <span class="sortOrder" ng-show="propertyName === 'login'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
                             <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Email
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">{{emailArea}}
                                  <span class="sortOrder" ng-show="propertyName === 'email'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
@@ -218,15 +172,17 @@
                         </tr>
                         <!--| firstChar:param:charText-->
                         <!--ng-class="$even ? 'default' : 'success'"-->
-                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode}| orderBy:propertyName:reverse | skipItems: ((currentPage-1)*limitRows)| limitTo: limitRows)">
+                        <!--<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>-->
+                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode} |
+                        orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
+
                             <td>{{$index+1}}</td>
-                            <td>{{item.getFullName()}}</td>
+                            <td><a ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.getContact(fieldName)}}</td>
                             <td class="btn-group-xs">
-
                                 <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
                                     <span class="glyphicon "
@@ -240,7 +196,6 @@
                                 <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-
                             </td>
                             <td class="btn-group-xs">
                                 <a href="#">
@@ -248,13 +203,12 @@
                                 </a>
                             </td>
                         </tr>
-
-
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
+    <pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="items.length"
+                current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
     <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
 </div>

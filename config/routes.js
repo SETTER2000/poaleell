@@ -111,6 +111,8 @@ module.exports.routes = {
 
 
     'POST /signup': 'UserController.signup',
+    'GET /att': 'Attendance.getQuery',
+    'POST /att': 'Attendance.getQuery',
     'PUT /login': 'UserController.login',
     'GET /logout': 'UserController.logout',
     'DELETE /user/:id': 'UserController.destroy',

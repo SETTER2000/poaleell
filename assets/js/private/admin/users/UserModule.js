@@ -1,4 +1,4 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 'ng-fx'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceModule','ngAnimate', 'ng-fx'])
     .config(function ($stateProvider) {
         $stateProvider
 
@@ -63,24 +63,24 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
                 }
             })
 
-            //        .state('admin.users.edit',{
-            //            url:'/:id',
-            //            views:{
-            //                '@':{
-            //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
-            //                },
-            //                controller:'EditController'
-            //            }
-            //        })
-            //        .state('admin.users.list', {
-            //            url: '/:id',
-            //            views: {
-            //                '@': {
-            //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
-            //                },
-            //                controller:'ListController'
-            //            }
-            //        })
+        //        .state('admin.users.edit',{
+        //            url:'/:id',
+        //            views:{
+        //                '@':{
+        //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
+        //                },
+        //                controller:'EditController'
+        //            }
+        //        })
+        //        .state('admin.users.list', {
+        //            url: '/:id',
+        //            views: {
+        //                '@': {
+        //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
+        //                },
+        //                controller:'ListController'
+        //            }
+        //        })
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
@@ -100,32 +100,24 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
             }
         );
         Users.prototype.formatDate = function (date) {
-
             var dd = date.getDate();
             if (dd < 10) dd = '0' + dd;
-
             var mm = date.getMonth() + 1;
             if (mm < 10) mm = '0' + mm;
-
             var yy = date.getFullYear();
-            //var yy = date.getFullYear() % 100;
             if (yy < 10) yy = '0' + yy;
-
             return yy + '-' + mm + '-' + dd;
-            //return dd + '.' + mm + '.' + yy;
         };
 
         Users.prototype.getFullName = function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
-
         Users.prototype.sc = function () {
             return this.section;
         };
         Users.prototype.scs = function () {
             return this.sections;
         };
-
         Users.prototype.ok = function () {
             return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
         };
@@ -135,7 +127,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
         Users.prototype.lastDateSetting = function () {
             return new Date();
         };
-
         Users.prototype.getBirthday = function () {
             if (this.birthday) {
                 var tm;
@@ -143,7 +134,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
                 this.birthday = tm;
             }
         };
-
         Users.prototype.getDateInWork = function () {
             if (this.dateInWork) {
                 var tm;
@@ -151,7 +141,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
                 this.dateInWork = tm;
             }
         };
-
         Users.prototype.getFiredDate = function () {
             if (this.firedDate) {
                 var tm;
@@ -159,14 +148,12 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
                 this.firedDate = tm;
             }
         };
-
         Users.prototype.getCreatedAt = function () {
             if (!this.createdAt) {
                 return 'Mongo import';
             }
             return this.createdAt;
         };
-
         Users.prototype.getCurrentDate = function () {
             var t = this.formatDate(new Date());
             return t;
@@ -184,19 +171,16 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
             return ' - деактивирован';
         };
         Users.prototype.getContact = function (type) {
-
             for (var i in this.contacts) {
                 if (this.contacts[i].type === type) {
                     return this.contacts[i].value;
                     //return this.contacts[i].type + ': ' + this.contacts[i].value;
                 }
             }
-
         };
         Users.prototype.deactivation = function () {
             return ' - уволены';
         };
-
         return Users;
     })
     /**
@@ -276,7 +260,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
     //        };
     //    })
     .filter("skipItems", function () {
-
         return function (value, count) {
             // isArray - проверка, что переменная является массивом
             // isNumber - проверка, что переменная является числом
@@ -290,58 +273,155 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 
                 return value;
             }
         }
-
     })
-    .directive('pagination', function() {
+    .directive('pagination', function () {
         return {
             restrict: 'E',
             scope: {
-                numPages: '=',
+                numPages: '=', // кол-во страниц (кнопок)
+                defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
+                limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
+                lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
                 currentPage: '=',
                 onSelectPage: '&'
             },
-            templateUrl:'/js/private/admin/users/views/pagination.html',
+            templateUrl: '/js/private/admin/users/views/pagination.html',
             replace: true,
-            link: function(scope) {
-                scope.$watch('numPages', function(value) {
+            link: function (scope) {
+                scope.$watch('numPages', function (value) {
                     scope.pages = [];
-                    for(var i=1;i<=value;i++) {
+                    for (var i = 1; i <= value; i++) {
                         scope.pages.push(i);
                     }
-                    if ( scope.currentPage > value ) {
+                    if (scope.currentPage > value) {
                         scope.selectPage(value);
                     }
                 });
-                scope.noPrevious = function() {
+                scope.$watch('limitRows', function (value) {
+                    scope.rows = [];
+                    for (var i = 0; i <= value.length; i++) {
+                        scope.rows.push(value[i]);
+                    }
+                });
+                scope.$watch('defaultRows', function (value, oldValue) {
+                    if (value > 0) {
+                        scope.defaultRows = value;
+                        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+                    }
+                });
+                scope.noPrevious = function () {
                     return scope.currentPage === 1;
                 };
-                scope.noNext = function() {
+                scope.noNext = function () {
                     return scope.currentPage === scope.numPages;
                 };
-                scope.isActive = function(page) {
+                scope.isActive = function (page) {
                     return scope.currentPage === page;
                 };
-
-                scope.selectPage = function(page) {
-                    if ( ! scope.isActive(page) ) {
+                scope.isActiveRow = function (row) {
+                    return scope.defaultRows === row;
+                };
+                scope.selectPage = function (page) {
+                    if (!scope.isActive(page)) {
                         scope.currentPage = page;
-                        scope.onSelectPage({ page: page });
+                        scope.onSelectPage({page: page});
                     }
                 };
-
-                scope.selectPrevious = function() {
-                    if ( !scope.noPrevious() ) {
-                        scope.selectPage(scope.currentPage-1);
+                scope.selectPrevious = function () {
+                    if (!scope.noPrevious()) {
+                        scope.selectPage(scope.currentPage - 1);
                     }
                 };
-                scope.selectNext = function() {
-                    if ( !scope.noNext() ) {
-                        scope.selectPage(scope.currentPage+1);
+                scope.selectNext = function () {
+                    if (!scope.noNext()) {
+                        scope.selectPage(scope.currentPage + 1);
+                    }
+                };
+                scope.getLimitRows = function (limitRows) {
+                    scope.defaultRows = limitRows;
+                    if (scope.lengthObject <= scope.defaultRows) {
+                        scope.numPages = 1;
+                    } else {
+                        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
                     }
                 };
             }
         };
     })
+    // .directive('pagination', function () {
+    //     return {
+    //         restrict: 'E',
+    //         scope: {
+    //             numPages: '=', // кол-во страниц (кнопок)
+    //             defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
+    //             limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
+    //             lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
+    //             currentPage: '=',
+    //             onSelectPage: '&'
+    //         },
+    //         templateUrl: '/js/private/admin/users/views/pagination.html',
+    //         replace: true,
+    //         link: function (scope) {
+    //             scope.$watch('numPages', function (value) {
+    //                 scope.pages = [];
+    //                 for (var i = 1; i <= value; i++) {
+    //                     scope.pages.push(i);
+    //                 }
+    //                 if (scope.currentPage > value) {
+    //                     scope.selectPage(value);
+    //                 }
+    //             });
+    //             scope.$watch('limitRows', function (value) {
+    //                 scope.rows = [];
+    //                 for (var i = 0; i <= value.length; i++) {
+    //                     scope.rows.push(value[i]);
+    //                 }
+    //             });
+    //             scope.$watch('defaultRows', function (value, oldValue) {
+    //                 if (value > 0) {
+    //                     scope.defaultRows = value;
+    //                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+    //                 }
+    //             });
+    //             scope.noPrevious = function () {
+    //                 return scope.currentPage === 1;
+    //             };
+    //             scope.noNext = function () {
+    //                 return scope.currentPage === scope.numPages;
+    //             };
+    //             scope.isActive = function (page) {
+    //                 return scope.currentPage === page;
+    //             };
+    //             scope.isActiveRow = function (row) {
+    //                 return scope.defaultRows === row;
+    //             };
+    //             scope.selectPage = function (page) {
+    //                 if (!scope.isActive(page)) {
+    //                     scope.currentPage = page;
+    //                     scope.onSelectPage({page: page});
+    //                 }
+    //             };
+    //             scope.selectPrevious = function () {
+    //                 if (!scope.noPrevious()) {
+    //                     scope.selectPage(scope.currentPage - 1);
+    //                 }
+    //             };
+    //             scope.selectNext = function () {
+    //                 if (!scope.noNext()) {
+    //                     scope.selectPage(scope.currentPage + 1);
+    //                 }
+    //             };
+    //             scope.getLimitRows = function (limitRows) {
+    //                 scope.defaultRows = limitRows;
+    //                 if (scope.lengthObject <= scope.defaultRows) {
+    //                     scope.numPages = 1;
+    //                 } else {
+    //                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+    //                 }
+    //             };
+    //         }
+    //     };
+    // })
 ;
 
 

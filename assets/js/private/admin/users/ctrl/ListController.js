@@ -1,22 +1,31 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', "$rootScope", '$state', 'Users', '$window', function ($scope, $rootScope, $state, Users) {
+        .controller('ListController', ['$scope', '$http', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, $http, $rootScope, $state, Users, Attendances) {
             /**
-             * Поле сортировки объекта по умолчанию.
-             * @type {string}
+             * PAGINATION
              */
-                //var defaultRows;
-                //defaultRows = 10;
+            $scope.defaultRows = 50;
+            $scope.limitRows = [30, 50, 70, 100];
+            $scope.currentPage = 1;
+
+            $scope.fioArea = 'ФИО';
+            $scope.drArea = 'ДР';
+            $scope.loginArea = 'Логин';
+            $scope.emailArea = 'Email';
+            // $scope.fio = 'ФИО';
+            // $scope.fio = 'ФИО';
+            // $scope.fio = 'ФИО';
+            
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
             $scope.fieldName = 'Внутренний телефон';
             $scope.charText = '';
             $scope.searchText = '';
             $scope.page_number = 0;
-            $scope.limitRows = 50;
             $scope.limitAll = 1000;
             $scope.where = {};
+            $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
             //$scope.arrButton = [];
             $scope.enabledButton = false;
             $scope.styleObj = {
@@ -24,67 +33,62 @@
                 border: false,
                 size: false
             };
-
-            /**
-             * Кол-во строк, по умолчанию, выбраных в объект из бд
-             */
-                //$scope.limitAllQuery = 1000;
-
-
-                // // обработка события deleteUser на текущем scope
-                // $scope.$on("deleteUser", function (event, args) {
-                //     //event.stopPropagation(); // останавливаем распространение события
-                //     // $scope.info = args.message;
-                //     // $scope.delete(args);
-                //     $scope.info = args.message;
+            $scope.getLastName = function (item) {
+                // $scope.attendances = Attendances.query({}, function (attendances) {
+                //     console.log('attendances^^');
+                //         console.log(attendances);
                 // });
-                // $scope.deleteEdit = function () {
-                //     // $emit - отправка события от текущего scope к родительским scope
-                //     // $scope.$emit("deleteUser", item);
-                //     // $broadcast - отправка события всем scope от rootScope
-                //     // $rootScope.$broadcast("deleteUser", {
-                //     //     message: 'GOOOO'
-                //     // });
-                //     $rootScope.$broadcast("deleteUser", {
-                //         message: 'GOOOO'
-                //     });
-                // };
-                //$scope.data = {counter: 1};
-                //
-                //$scope.$on('foo', function (event, args) {
-                //    $scope.data = args;
-                //});
-                //
-                //$scope.increment = function (val) {
-                //    $scope.data.counter += val;
-                //};
-                //$rootScope.$broadcast('foo',$scope.data);
+                // $scope.items = [];
+                // console.log("ITEMMM");
+                // console.log(item);
+                // item.limit=30;
+                $http.post('/att', item)
+                // $scope.attendances = Attendances.query(item, function (attendance) {
+                    .then(function (attendance) {
+                    console.log('attendance^^');
+                    console.log(attendance);
+                    $scope.items = attendance.data;
 
-                //$scope.$emit("countUser", $scope.data);
+                    $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
+                });
+                // $scope.query = {"lname": lname};
+                // $scope.refreshAttendance({where:{"employees.fname": "Александр"}});
+                // $scope.refreshAttendance({
+                //     where: {"employees":[{"lname": lname}]},
+                //     sort: 'date',
+                //     limit: $scope.limitAll
+                // });
+                // $scope.refreshAttendance({"dateid": [{"lname": lname}]});
+            };
 
-                //$scope.$watch("data.counter", function (newValue, oldValue) {
-                //    var data = {counter: 0};
-                //    console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
-                //    data.counter = newValue;
-                //    console.log(data);
-                //    $rootScope.$broadcast('foo2', data);
-                //});
+            // $scope.refreshAttendance = function (query) {
+            //     // 'SELECT * FROM employees AS e LEFT JOIN attendance_employees AS ae ON e.id = ae.employees_id LEFT JOIN attendance AS a ON a.id=ae.attendance_id WHERE a.date > "2017-02-01"'
+            //     $scope.attendances = Attendances.query(query, function (attendances) {
+            //         $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
+            //         $scope.items = attendances;
+            //         // $scope.numPages = attendances.length;
+            //         console.log('ATTENDANCES: ');
+            //         console.log($scope.attendances);
+            //         console.log($scope.attendances.length);
+            //         //console.log($scope.items);
+            //         // console.log( $scope.attendances.filter({"action": 1}));
+            //         // console.log(attendances.get({"action": 1},function (success) {
+            //         //     console.log('URAAA:');
+            //         //     alert('5685');
+            //         //     console.log(success);
+            //         // },function (err) {
+            //         //     alert('ERRRRRR');
+            //         //     console.log(err);
+            //         // }));
+            //         // кол-во пользователей
+            //         // console.log($scope.attendances.length);
+            //         //console.log(attendances.scs());
+            //     });
+            // };
 
-                //console.log($scope.$$watchers);
-                ////$scope.$watch("items.length", function (newValue, oldValue) {
-                ////    console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
-                ////});
-                ////console.log('COUNTER: ');
-                ////console.log($scope.data.counter );
-                //
-            console.log(Users);
+            // console.log(Users);
             //console.log('STATE: ');
             //console.log( $state.get());
-            //console.log($state);
-            //console.log($state.get('home.admin.user'));
-            //console.log($state.$current.path);
-            //console.log('NAVIGABLE-N: ' + $state.$current.navigable);
-            //console.log('NAVIGABLE-P: ' + $state.$current.path);
             $scope.refresh = function (where) {
                 if (where) {
                     $scope.where = where;
@@ -95,109 +99,42 @@
                     where: $scope.where,
                     sort: $scope.sort,
                     limit: $scope.limitAll
-                    // c какой по счёту строки возвращать строки,
-                    // а limit определяет кол-во возвращаемых строк
-                    // page_number умноженый на лимит по сути и определяет начиная с какой строки
-                    // вернуть кучку строк
-                    //skip: (($scope.page_number - 1) * $scope.limitRows),
-
                 };
-
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
-                        //$scope.cnt = users.length;
-                        $scope.numPages = Math.floor( users.length / $scope.limitRows) + 1;
-                        // кол-во пользователей
-                        // console.log($scope.users.length);
-                        //console.log($scope.users);
-                        $scope.paginationButton();
-
+                        // $scope.lengthObject = users.length;
+                        $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
                     });
-
-
-                //$scope.itemsAll = Users.query(
-                //    {
-                //        limit: $scope.limitAllQuery,
-                //        sort: $scope.sort
-                //    },
-                //    function (usersAll) {
-                //        $scope.usersAll = usersAll;
-                //        console.log($scope.usersAll);
-                //    });
-                /**
-                 * При обращении к службе $resource возвращается сгенерированный конструктор,
-                 * дополненный методами для взаимодействия с конечной точкой
-                 * RESTful: query, get, save и delete.
-                 */
-                //
-                //$scope.items = Users.query(
-                //    {
-                //        //limit: $scope.limit,
-                //        sort: $scope.sort,
-                //        skip: (($scope.page_number - 1) * $scope.limit),
-                //        limit: $scope.limit
-                //    },
-                //    function (users) {
-                //        $scope.users = users;
-                //        // кол-во пользователей
-                //        // console.log($scope.users.length);
-                //        console.log($scope.users);
-                //    });
-
             };
 
-
-
-
-            $scope.paginationButton = function (limitRows) {
-                if (limitRows > 0) {
-                    $scope.limitRows = limitRows;
-                }
-                if (angular.isArray($scope.items) && angular.isNumber($scope.limitRows)) {
-                    var count_page;
-                    var arrButton = [];
-                    // Кол-во страниц (ни строк на странице!) или можно сказать, кол-во кнопок
-                    if ($scope.items.length <= $scope.limitRows) {
-                        count_page = 1;
-                    } else {
-                        count_page = Math.floor($scope.items.length / $scope.limitRows) + 1;
-                    }
-                    var numberPage = 1;
-                    for (var i = 0; i < count_page; i++) {
-                        //каждый пуш это кнопка, пока без свойств
-                        arrButton.push({'numberPage': numberPage++, 'allCountPage': count_page});
-                    }
-                }
-                $scope.numPages = arrButton.length;
-
-                //console.log(arrButton);
-                $scope.arrButton = arrButton;
-            };
 
             $scope.getCharText = function (ch) {
-                if (ch) {
-                    var where;
+                console.log(ch);
+                var where = {};
+                if (angular.isString(ch)) {
                     where = {"lastName": {'like': ch + '%'}};
-                    //$scope.limit = $scope.limitAll;
                     $scope.charText = ch;
-
-
                 } else {
-                    $scope.limitRows = defaultRows;
+                    // $scope.defaultRows;
                     $scope.charText = '';
                 }
-
                 $scope.refresh(where);
+            };
+            $scope.getMode = function (t) {
+                // console.log('DDDDDD');
+                // console.log(t);
+                if (t) {
+                    $scope.refresh({"fired": false});
+                    $scope.t = false;
+                } else {
+                    $scope.refresh({"fired": true});
+                    $scope.t = true;
+                }
             };
 
             $scope.getPage = function (num) {
                 $scope.page_number = num;
-                //if ($scope.enabledButton) {
-                //    $scope.enabledButton = false;
-                //} else {
-                //    $scope.enabledButton = true;
-                //}
             };
 
 
@@ -213,12 +150,6 @@
                 })
             };
 
-            //$scope.showBlock = function () {
-            //    if (($scope.searchText.length > 0) | ($scope.char.length > 0)) {
-            //        $scope.see = true;
-            //    }
-            //    $scope.see = false;
-            //};
             $scope.propertyName = 'lastName';
             $scope.reverse = false;
             // $scope.friends = friends;
@@ -231,7 +162,6 @@
 
             $scope.msd = ['settings', 'home', 'options', 'other'];
             $scope.selectionMode = $scope.msd[0];
-
 
             // конструктор хлебных крошек
             function BreadCrumb() {
@@ -257,11 +187,6 @@
             breadcrumb.set('Admin', '/admin');
             breadcrumb.set('Users', '/admin/' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
-
-
-            // $scope.resetForm = function () {
-            //     return $scope.item = {};
-            // };
 
 
             $scope.refresh();
