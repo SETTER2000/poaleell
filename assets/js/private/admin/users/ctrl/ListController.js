@@ -59,16 +59,16 @@
                 text: 'hello world!',
                 time: new Date()
             };
-            $scope.calendar = moment().calendar(null, {
-                sameDay: function (now) {
-                    if (this.isBefore(now)) {
-                        return '[Случится Сегодня]';
-                    } else {
-                        return '[Произошло сегодня]';
-                    }
-                    /* ... */
-                }
-            });
+            // $scope.calendar = moment().calendar(null, {
+            //     sameDay: function (now) {
+            //         if (this.isBefore(now)) {
+            //             return '[Случится Сегодня]';
+            //         } else {
+            //             return '[Произошло сегодня]';
+            //         }
+            //         /* ... */
+            //     }
+            // });
 
 
             $scope.getLastName = function (item) {
@@ -81,14 +81,14 @@
                 // console.log(item);
                 // item.limit=30;
                 $http.post('/att', item)
-                    // $scope.attendances = Attendances.query(item, function (attendance) {
+                // $scope.attendances = Attendances.query(item, function (attendance) {
                     .then(function (attendance) {
                         console.log('attendance^^');
                         console.log(attendance);
 
-                        $scope.items = $scope.differ(attendance);
-                        console.log( 'DDD:');
-                        console.log( $scope.items);
+                         $scope.differ(attendance);
+                        console.log('DDD:');
+                        console.log($scope.items);
 
                         $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
                     });
@@ -101,31 +101,36 @@
                 // });
                 // $scope.refreshAttendance({"dateid": [{"lname": lname}]});
             };
+
             $scope.differ = function (attendance) {
-                var items = [];
-                var a,b;
+                var data = [];
+
                 for (var i = 0; i < attendance.data.length; i++) {
-                  a = moment(attendance.data[i].date+' '+attendance.data[i].time_in, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
-                  b = moment(attendance.data[i].date+' '+attendance.data[i].time_out, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
-                    $scope.diff = b.diff(a, 'm');
-                    items.push({
-                        'getFullName':function(){
-                            return this.lname+' '+ this.fname+' '+ this.pname;
-                        },
-                        getContact:function(fieldName){
-                            return this.date;
-                        },
-                        'pname':attendance.data[i].pname,
-                        'lname':attendance.data[i].lname,
-                        'fname':attendance.data[i].fname,
-                        'date':attendance.data[i].date,
-                        'birthday':attendance.data[i].time_in,
-                        'login':attendance.data[i].time_out,
-                        'email':attendance.data[i].email,
-                        'diff':$scope.diff
-                    });
+                    (function () { // каждая созданная функция будет работать со своей локальной переменной.
+                        var local = i;
+                        var a, b, df;
+                        a = moment(attendance.data[local].date + ' ' + attendance.data[local].time_in, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
+                        b = moment(attendance.data[local].date + ' ' + attendance.data[local].time_out, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
+                        df = b.diff(a, 'm');
+                        data.push({
+                            'getFullName': function () {
+                                return this.lname + ' ' + this.fname + ' ' + this.pname;
+                            },
+                            getContact: function (fieldName) {
+                                return this.date;
+                            },
+                            'pname': attendance.data[local].pname,
+                            'lname': attendance.data[local].lname,
+                            'fname': attendance.data[local].fname,
+                            'date': attendance.data[local].date,
+                            'birthday': attendance.data[local].time_in,
+                            'login': attendance.data[local].time_out,
+                            'email': attendance.data[local].email,
+                            'diff': df
+                        });
+                    })(); // immediately invoked function expression (IIFE)
                 }
-                return items ;
+                $scope.items = data;
             };
             // $scope.refreshAttendance = function (query) {
             //     // 'SELECT * FROM employees AS e LEFT JOIN attendance_employees AS ae ON e.id = ae.employees_id LEFT JOIN attendance AS a ON a.id=ae.attendance_id WHERE a.date > "2017-02-01"'

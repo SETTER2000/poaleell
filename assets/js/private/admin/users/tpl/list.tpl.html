@@ -207,12 +207,12 @@
                         orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
                             <td>{{$index+1}}</td>
-                            <td><a ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
+                            <td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.getContact(fieldName)}}</td>
-                            <td>{{diff}}</td>
+                            <td>{{item.diff}}</td>
                             <td class="btn-group-xs">
                                 <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
