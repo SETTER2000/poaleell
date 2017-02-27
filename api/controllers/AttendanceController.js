@@ -42,7 +42,7 @@ module.exports = {
                     return res.serverError(err);
                 }
                 // sails.log(req.allParams());
-                sails.log(attendance);
+                //sails.log(attendance);
                 return res.json(attendance);
             });
     },

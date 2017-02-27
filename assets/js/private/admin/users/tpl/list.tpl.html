@@ -1,6 +1,6 @@
 <div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{items[0].scs()}} <!--({{filtered.length}})-->
+        <h1>{{items[0].scs()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
             <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 всего:
                 <span ng-if="mode">{{(items | filter:{fired:true}).length}}</span>
@@ -23,8 +23,33 @@
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
-
         </h1>
+
+        <!--<span am-time-ago="message.unixTime | amFromUnix">-->
+        <!--<p>{{message.date | amUtc | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}</p>-->
+
+        <!--<p>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
+        <!--<span am-time-ago="message.time| amParse:'DD.MM.YYYY HH:mm:ss'"></span>-->
+        <!--<p>Локально: {{local}}</p>-->
+        <!--<p>Локальное время: {{localTime}}</p>-->
+        <!--<p>Сколько прошло?: {{end}}</p>-->
+        <!--<p>diff: {{diff}}</p>-->
+        <!--<p>days: {{days}}</p>-->
+        <!--<p>hours: {{hours}}</p>-->
+        <!--<p>Month: {{month}}</p>-->
+        <!--<p>Months: {{months}}</p>-->
+        <!--<p>seconds: {{seconds}}</p>-->
+        <!--<p>{{message.date | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
+        <!--<p>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
+        <!--&lt;!&ndash;<p>Message age: {{message.ageInMinutes | amDurationFormat : 'minute' }}</p>&ndash;&gt;-->
+        <!--<p>Message age: {{calendar }}</p>-->
+
+
+
+
+
+
+        <!--<p>Scheduled {{message.createdAt | amDifference : null : 'days' }} days from now</p>-->
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
@@ -157,6 +182,11 @@
                                         <span class="caret"></span>
                                         <span class="sr-only">Контакты: {{fieldName}}</span>
                                     </button>
+                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Фактически отработанное время: {{summDiff}}</span>
+                                    </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="#" ng-click="fieldName='Email'">Email</a></li>
                                         <li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>
@@ -182,6 +212,7 @@
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.getContact(fieldName)}}</td>
+                            <td>{{diff}}</td>
                             <td class="btn-group-xs">
                                 <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                                    ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">

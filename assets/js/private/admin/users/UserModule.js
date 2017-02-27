@@ -1,4 +1,4 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceModule','ngAnimate', 'ng-fx'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceModule','ngAnimate', 'ng-fx','angularMoment'])
     .config(function ($stateProvider) {
         $stateProvider
 
@@ -84,9 +84,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceMod
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
-    .run(function ($rootScope, $state, $stateParams) {
+    .run(function ($rootScope, $state, $stateParams,amMoment) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        amMoment.changeLocale('ru');
     })
     .factory('Users', function ($resource, $state, CONF_MODULE) {
         var Users = $resource(

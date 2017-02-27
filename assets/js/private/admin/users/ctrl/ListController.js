@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', '$http', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, $http, $rootScope, $state, Users, Attendances) {
+        .controller('ListController', ['$scope', 'moment', '$http', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, moment, $http, $rootScope, $state, Users, Attendances) {
             /**
              * PAGINATION
              */
@@ -16,7 +16,7 @@
             // $scope.fio = 'ФИО';
             // $scope.fio = 'ФИО';
             // $scope.fio = 'ФИО';
-            
+
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
             $scope.fieldName = 'Внутренний телефон';
@@ -33,6 +33,44 @@
                 border: false,
                 size: false
             };
+
+
+            //$scope.days = moment.duration(2).days();
+            //$scope.hours = moment.duration(2).hours();
+            //$scope.month = moment.duration().months();
+            //$scope.months = moment.duration().asMonths();
+            //$scope.seconds = moment.duration(1000).seconds();
+            //var a = moment('2016-01-21 09:38:00', ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
+            //var b = moment('2016-01-21 13:54:00', ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
+            //$scope.diff = b.diff(a, 'm');
+            //$scope.exampleDate = moment().hour(8).minute(0).second(0).toDate();
+            //$scope.local = moment().local().format("ddd, hA");
+            //$scope.local = moment().local().format("dddd, MMMM Do YYYY, h:mm:ss a");
+            //$scope.localTime = moment().local().format();
+            //$scope.localTime = moment.parseZone('2016-05-03T22:15:01+02:00').local().format();
+            //$scope.localTime = moment().utc().local().hours();
+            //var start = moment([2007, 0, 5]);
+            //var end = moment([2007, 0, 10]);
+            //end.from(start);       // "in 5 days"
+            //$scope.end = end.from(start, true); // "5 days"
+
+
+            $scope.message = {
+                text: 'hello world!',
+                time: new Date()
+            };
+            $scope.calendar = moment().calendar(null, {
+                sameDay: function (now) {
+                    if (this.isBefore(now)) {
+                        return '[Случится Сегодня]';
+                    } else {
+                        return '[Произошло сегодня]';
+                    }
+                    /* ... */
+                }
+            });
+
+
             $scope.getLastName = function (item) {
                 // $scope.attendances = Attendances.query({}, function (attendances) {
                 //     console.log('attendances^^');
@@ -43,14 +81,17 @@
                 // console.log(item);
                 // item.limit=30;
                 $http.post('/att', item)
-                // $scope.attendances = Attendances.query(item, function (attendance) {
+                    // $scope.attendances = Attendances.query(item, function (attendance) {
                     .then(function (attendance) {
-                    console.log('attendance^^');
-                    console.log(attendance);
-                    $scope.items = attendance.data;
+                        console.log('attendance^^');
+                        console.log(attendance);
 
-                    $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
-                });
+                        $scope.items = $scope.differ(attendance);
+                        console.log( 'DDD:');
+                        console.log( $scope.items);
+
+                        $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
+                    });
                 // $scope.query = {"lname": lname};
                 // $scope.refreshAttendance({where:{"employees.fname": "Александр"}});
                 // $scope.refreshAttendance({
@@ -60,7 +101,32 @@
                 // });
                 // $scope.refreshAttendance({"dateid": [{"lname": lname}]});
             };
-
+            $scope.differ = function (attendance) {
+                var items = [];
+                var a,b;
+                for (var i = 0; i < attendance.data.length; i++) {
+                  a = moment(attendance.data[i].date+' '+attendance.data[i].time_in, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
+                  b = moment(attendance.data[i].date+' '+attendance.data[i].time_out, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
+                    $scope.diff = b.diff(a, 'm');
+                    items.push({
+                        'getFullName':function(){
+                            return this.lname+' '+ this.fname+' '+ this.pname;
+                        },
+                        getContact:function(fieldName){
+                            return this.date;
+                        },
+                        'pname':attendance.data[i].pname,
+                        'lname':attendance.data[i].lname,
+                        'fname':attendance.data[i].fname,
+                        'date':attendance.data[i].date,
+                        'birthday':attendance.data[i].time_in,
+                        'login':attendance.data[i].time_out,
+                        'email':attendance.data[i].email,
+                        'diff':$scope.diff
+                    });
+                }
+                return items ;
+            };
             // $scope.refreshAttendance = function (query) {
             //     // 'SELECT * FROM employees AS e LEFT JOIN attendance_employees AS ae ON e.id = ae.employees_id LEFT JOIN attendance AS a ON a.id=ae.attendance_id WHERE a.date > "2017-02-01"'
             //     $scope.attendances = Attendances.query(query, function (attendances) {
@@ -139,9 +205,9 @@
 
 
             $scope.delete = function (item) {
-                console.log(item);
+                //console.log(item);
                 item.$delete(item, function (success) {
-                    console.log(success);
+                    //console.log(success);
                     $scope.refresh();
                     // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {

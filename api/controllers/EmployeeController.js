@@ -21,8 +21,8 @@ module.exports = {
     //}
     findOne: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        console.log('REGSESSIONME:');
-        console.log(req.session.me);
+        //console.log('REGSESSIONME:');
+        //console.log(req.session.me);
         Employee.findOne(req.param('id'))
             .exec(function foundEmployee(err, employee) {
                 if (err) return res.negotiate(err);

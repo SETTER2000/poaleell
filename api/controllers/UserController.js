@@ -71,8 +71,8 @@ module.exports = {
                             gravatarUrl: gravatarUrl
                         }, function userCreated(err, newUser) {
                             if (err) {
-                                console.log('err:', err);
-                                console.log('err.invalidAttributes: ', err.invalidAttributes);
+                                //console.log('err:', err);
+                                //console.log('err.invalidAttributes: ', err.invalidAttributes);
                                 if (err.invalidAttributes && err.invalidAttributes.email && err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 'unique') {
                                     return res.emailAddressInUse();
                                 }
@@ -143,8 +143,8 @@ module.exports = {
     //},
     findOne: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        console.log('REGSESSIONME:');
-        console.log(req.session.me);
+        //console.log('REGSESSIONME:');
+        //console.log(req.session.me);
         User.findOne(req.param('id'))
             .exec(function foundUser(err, user) {
                 if (err) return res.serverError(err);
