@@ -1,4 +1,4 @@
-angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
+angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'angularMoment'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.attendances', {
@@ -76,8 +76,17 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
         );
 
         Attendances.prototype.getFullName = function () {
-            //item.employees[0].lname
             return this.employees[0].lname + ' ' + this.employees[0].fname + ' ' + this.employees[0].pname;
+        };
+
+        Attendances.prototype.getLastName = function () {
+            return this.employees[0].lname ;
+        };
+        Attendances.prototype.getFirstName = function () {
+            return this.employees[0].fname ;
+        };
+        Attendances.prototype.getPatronymicName = function () {
+            return this.employees[0].pname ;
         };
 
         Attendances.prototype.sc = function () {
@@ -184,7 +193,10 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate'])
                                     date: t[i].date,
                                     time_in: t[i].time_in,
                                     time_out: t[i].time_out,
-                                    fio: t[i].getFullName()
+                                    fio: t[i].getFullName(),
+                                    lastName: t[i].getLastName(),
+                                    firstName: t[i].getFirstName(),
+                                    patronymicName: t[i].getPatronymicName()
                                 }
                             );
                         }

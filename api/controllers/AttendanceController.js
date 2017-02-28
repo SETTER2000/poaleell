@@ -35,6 +35,7 @@ module.exports = {
             // Attendance.query('SELECT * FROM attendance WHERE attendance.id = ?',
             // ['1208']
             // {id: req.param('id'), limit: req.param('limit')}
+            // [req.param('lname'),req.param('fname'),req.param('pname')]
             [req.param('lastName'),req.param('firstName'),req.param('patronymicName')]
             // [req.allParams()]
             , function (err, attendance) {

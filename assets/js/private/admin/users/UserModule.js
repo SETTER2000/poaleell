@@ -1,4 +1,4 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceModule','ngAnimate', 'ng-fx','angularMoment'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule', 'ngAnimate', 'ng-fx', 'angularMoment'])
     .config(function ($stateProvider) {
         $stateProvider
 
@@ -9,7 +9,18 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceMod
                         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
                         controller: 'ListController'
                     }
+
+                    // "viewB": {template: "users.viewB"}
                 }
+                // views: {
+                //     '@': {
+                //         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
+                //         controller: 'ListController'
+                //     },
+                //     'info':{templateUrl: '/js/private/admin/users/views/info.html',
+                //         controller: 'ListController'}
+                //    
+                // }
             })
             .state('home.admin.users.settings', {
                 url: '/settings',
@@ -33,6 +44,49 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceMod
                 //
                 //    }
                 //}
+            })
+            .state('home.admin.users.list', {
+                url: '/list',
+                //template:'<h1>Users</h1>'
+                //controller: function () {
+                //
+                //}
+                views: {
+                    'list@home.admin.users': {
+                        templateUrl: '/js/private/admin/users/views/home.admin.users.list.html',
+                        controller: 'ListController'
+                    }
+                }
+                //views: {
+                //    'settings@': {
+                //
+                //    }
+                //}
+                //views: {
+                //    '@': {
+                //        template: function($stateParams) {
+                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
+                //        },
+                //        controller: function() {}
+                //
+                //    }
+                //}
+            })
+            .state('home.admin.users.attendance', {
+                url: '/attendance',
+               
+                // views: {
+                //     'attendance@home.admin.users': {
+                //         templateUrl: '/js/private/admin/users/views/home.admin.users.attendance.html',
+                //         controller: 'ListController'
+                //     }
+                // }
+                views: {
+                    'attendance@home.admin.users': {
+                        templateUrl: '/js/private/admin/attendances/tpl/list.tpl.html',
+                        controller: 'ListAttendanceController'
+                    }
+                }
             })
             .state('home.admin.users.edit', {
                 url: '/edit/:userId',
@@ -84,7 +138,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceMod
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
-    .run(function ($rootScope, $state, $stateParams,amMoment) {
+    .run(function ($rootScope, $state, $stateParams, amMoment) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         amMoment.changeLocale('ru');
@@ -349,80 +403,80 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource','AttendanceMod
             }
         };
     })
-    // .directive('pagination', function () {
-    //     return {
-    //         restrict: 'E',
-    //         scope: {
-    //             numPages: '=', // кол-во страниц (кнопок)
-    //             defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
-    //             limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
-    //             lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
-    //             currentPage: '=',
-    //             onSelectPage: '&'
-    //         },
-    //         templateUrl: '/js/private/admin/users/views/pagination.html',
-    //         replace: true,
-    //         link: function (scope) {
-    //             scope.$watch('numPages', function (value) {
-    //                 scope.pages = [];
-    //                 for (var i = 1; i <= value; i++) {
-    //                     scope.pages.push(i);
-    //                 }
-    //                 if (scope.currentPage > value) {
-    //                     scope.selectPage(value);
-    //                 }
-    //             });
-    //             scope.$watch('limitRows', function (value) {
-    //                 scope.rows = [];
-    //                 for (var i = 0; i <= value.length; i++) {
-    //                     scope.rows.push(value[i]);
-    //                 }
-    //             });
-    //             scope.$watch('defaultRows', function (value, oldValue) {
-    //                 if (value > 0) {
-    //                     scope.defaultRows = value;
-    //                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-    //                 }
-    //             });
-    //             scope.noPrevious = function () {
-    //                 return scope.currentPage === 1;
-    //             };
-    //             scope.noNext = function () {
-    //                 return scope.currentPage === scope.numPages;
-    //             };
-    //             scope.isActive = function (page) {
-    //                 return scope.currentPage === page;
-    //             };
-    //             scope.isActiveRow = function (row) {
-    //                 return scope.defaultRows === row;
-    //             };
-    //             scope.selectPage = function (page) {
-    //                 if (!scope.isActive(page)) {
-    //                     scope.currentPage = page;
-    //                     scope.onSelectPage({page: page});
-    //                 }
-    //             };
-    //             scope.selectPrevious = function () {
-    //                 if (!scope.noPrevious()) {
-    //                     scope.selectPage(scope.currentPage - 1);
-    //                 }
-    //             };
-    //             scope.selectNext = function () {
-    //                 if (!scope.noNext()) {
-    //                     scope.selectPage(scope.currentPage + 1);
-    //                 }
-    //             };
-    //             scope.getLimitRows = function (limitRows) {
-    //                 scope.defaultRows = limitRows;
-    //                 if (scope.lengthObject <= scope.defaultRows) {
-    //                     scope.numPages = 1;
-    //                 } else {
-    //                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-    //                 }
-    //             };
-    //         }
-    //     };
-    // })
+// .directive('pagination', function () {
+//     return {
+//         restrict: 'E',
+//         scope: {
+//             numPages: '=', // кол-во страниц (кнопок)
+//             defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
+//             limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
+//             lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
+//             currentPage: '=',
+//             onSelectPage: '&'
+//         },
+//         templateUrl: '/js/private/admin/users/views/pagination.html',
+//         replace: true,
+//         link: function (scope) {
+//             scope.$watch('numPages', function (value) {
+//                 scope.pages = [];
+//                 for (var i = 1; i <= value; i++) {
+//                     scope.pages.push(i);
+//                 }
+//                 if (scope.currentPage > value) {
+//                     scope.selectPage(value);
+//                 }
+//             });
+//             scope.$watch('limitRows', function (value) {
+//                 scope.rows = [];
+//                 for (var i = 0; i <= value.length; i++) {
+//                     scope.rows.push(value[i]);
+//                 }
+//             });
+//             scope.$watch('defaultRows', function (value, oldValue) {
+//                 if (value > 0) {
+//                     scope.defaultRows = value;
+//                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+//                 }
+//             });
+//             scope.noPrevious = function () {
+//                 return scope.currentPage === 1;
+//             };
+//             scope.noNext = function () {
+//                 return scope.currentPage === scope.numPages;
+//             };
+//             scope.isActive = function (page) {
+//                 return scope.currentPage === page;
+//             };
+//             scope.isActiveRow = function (row) {
+//                 return scope.defaultRows === row;
+//             };
+//             scope.selectPage = function (page) {
+//                 if (!scope.isActive(page)) {
+//                     scope.currentPage = page;
+//                     scope.onSelectPage({page: page});
+//                 }
+//             };
+//             scope.selectPrevious = function () {
+//                 if (!scope.noPrevious()) {
+//                     scope.selectPage(scope.currentPage - 1);
+//                 }
+//             };
+//             scope.selectNext = function () {
+//                 if (!scope.noNext()) {
+//                     scope.selectPage(scope.currentPage + 1);
+//                 }
+//             };
+//             scope.getLimitRows = function (limitRows) {
+//                 scope.defaultRows = limitRows;
+//                 if (scope.lengthObject <= scope.defaultRows) {
+//                     scope.numPages = 1;
+//                 } else {
+//                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+//                 }
+//             };
+//         }
+//     };
+// })
 ;
 
 

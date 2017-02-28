@@ -50,6 +50,7 @@ module.exports.routes = {
 
     'GET /admin/users/create': 'PageController.showHomePage',
     'GET /admin/users/settings': 'PageController.showHomePage',
+    'GET /admin/users/attendance': 'PageController.showHomePage',
     'GET /admin/positions/settings': 'PageController.showHomePage',
     'GET /admin/positions/create': 'PageController.showHomePage',
     'GET /admin/departments/create': 'PageController.showHomePage',
