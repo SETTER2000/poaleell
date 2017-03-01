@@ -54,6 +54,11 @@
             //end.from(start);       // "in 5 days"
             //$scope.end = end.from(start, true); // "5 days"
 
+            // $scope.items = [{ name: "Item 1", value: "10" },
+            //     { name: "Item 2", value: "2" },
+            //     { name: "Item 3", value: "31" }];
+
+
             if (moment().isLeapYear()) {
                 $scope.yearLeap = 'Да!';
             } else {
@@ -64,16 +69,40 @@
                 text: 'hello world!',
                 time: new Date()
             };
-            // $scope.calendar = moment().calendar(null, {
-            //     sameDay: function (now) {
-            //         if (this.isBefore(now)) {
-            //             return '[Случится Сегодня]';
-            //         } else {
-            //             return '[Произошло сегодня]';
-            //         }
-            //         /* ... */
-            //     }
-            // });
+            $scope.calendar = moment().calendar(null, {
+                sameDay: function (now) {
+                    if (this.isBefore(now)) {
+                        return '[Случится Сегодня]';
+                    } else {
+                        return '[Произошло сегодня]';
+                    }
+                    /* ... */
+                }
+            });
+
+           
+            $scope.options =
+                [
+                    {display: "Таблица", value: "table"},
+                    {display: "Список", value: "list"},
+                    {display: "Список с маркерами", value: "budge"},
+                    {display: "Календарь", value: "calendar"}
+                ];
+            $scope.modeSelect = $scope.options[0];
+            $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
+            $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
+            $scope.calendarView = "/js/private/admin/users/views/home.admin.users.calendar.html";
+            $scope.budgeView = "/js/private/admin/users/views/home.admin.users.budge.html";
+
+            // $scope.url = $scope.tableView;
+            //
+            // $scope.showList = function () {
+            //     $scope.url = $scope.listView;
+            // }
+            //
+            // $scope.showTable = function () {
+            //     $scope.url = $scope.tableView;
+            // }
 
 
             $scope.getLastName = function (item) {
@@ -87,7 +116,7 @@
                 // console.log(item);
                 // item.limit=30;
                 $http.post('/att', item)
-                    // $scope.attendances = Attendances.query(item, function (attendance) {
+                // $scope.attendances = Attendances.query(item, function (attendance) {
                     .then(function (attendance) {
                         console.log('attendance^^');
                         console.log(attendance);

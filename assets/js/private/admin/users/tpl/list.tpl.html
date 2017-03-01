@@ -3,7 +3,7 @@
         <h1>{{items[0].scs()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
             <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 всего:
-                <span ng-if="mode">{{(items | filter:{fired:true}).length}}</span>
+                <span ng-if="mode">SD{{(items | filter:{fired:true}).length}}</span>
                 <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->
                 <span ng-if="!mode">{{items.length}}</span>
             </a>
@@ -79,7 +79,7 @@
     <!--searchText: {{searchText}}-->
     <!--LENGTH: {{charText.length}}-{{searchText.length}}-->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="btn-toolbar" role="toolbar" aria-label="0">
                 <div class="btn-group btn-group-sm " role="group" aria-label="1">
                     <button ng-repeat="ch in alfavit"
@@ -89,12 +89,49 @@
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
+
+
                 <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm"
                      role="group" aria-label="4">
                     <button ng-click="getPage(it.numberPage)" type="button" ng-bind="it.numberPage"
                             class="btn " ng-class="{'btn-danger':enabledButton, 'btn-default':!enabledButton}"></button>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" role="group"
+                    ng-model="modeSelect" ng-options="item.display for item in options track by item.value"></select>
+            <!--<div ng-switch on="modeSelect.value" style="margin-top:20px;">-->
+                <!--<table class="table" ng-switch-when="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th>Name</th>-->
+                        <!--<th>Value</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tr ng-repeat="item in items">-->
+                        <!--<td>{{item.getFullName()}}</td>-->
+                        <!--<td>{{item.login}}</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+                <!--<div class="list-group" ng-switch-when="list">-->
+                    <!--<a href="#" class="list-group-item active">-->
+                        <!--Список-->
+                    <!--</a>-->
+                    <!--<a href="#" ng-repeat="item in items" class="list-group-item">-->
+                        <!--{{item.getFullName()}}:{{item.login}}-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<ul class="list-group" ng-switch-when="budges">-->
+                    <!--<li ng-repeat="item in items" class="list-group-item">-->
+                        <!--<span class="badge">{{item.login}}</span>-->
+                        <!--{{item.getFullName()}}-->
+                    <!--</li>-->
+                <!--</ul>-->
+
+
+            <!--</div>-->
+
         </div>
     </div>
     <!--<button type="submit" size="large">Click Me!</button>-->
@@ -148,113 +185,131 @@
                     <h3 class="panel-title">Список сотрудников компании</h3>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>#</th>
-                            <th>
-                                <button class="btn btn-sm btn-default" ng-click="sortBy('lastName')">{{fioArea}}
-                                <span class="sortOrder" ng-show="propertyName === 'lastName'"
-                                      ng-class="{reverse: reverse}"></span>
-                                </button>
-                            </th>
-                            <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('birthday')">{{drArea}}
-                                <span class="sortOrder" ng-show="propertyName === 'birthday'"
-                                      ng-class="{reverse: reverse}"></span>
-                                </button>
-
-                            </th>
-                            <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('login')">{{loginArea}}
-                                 <span class="sortOrder" ng-show="propertyName === 'login'"
-                                       ng-class="{reverse: reverse}"></span>
-                                </button>
-
-                            </th>
-                            <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">{{emailArea}}
-                                 <span class="sortOrder" ng-show="propertyName === 'email'"
-                                       ng-class="{reverse: reverse}"></span>
-                                </button>
-
-                            </th>
-
-                            <th>
-                                <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}-->
-                                <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
-                                <!--ng-class="{reverse: reverse}"></span>-->
+                    <!--<table class="table table-hover">-->
+                        <!--<tr>-->
+                            <!--<th>#</th>-->
+                            <!--<th>-->
+                                <!--<button class="btn btn-sm btn-default" ng-click="sortBy('lastName')">{{fioArea}}-->
+                                <!--<span class="sortOrder" ng-show="propertyName === 'lastName'"-->
+                                      <!--ng-class="{reverse: reverse}"></span>-->
                                 <!--</button>-->
-                                <!-- Single button -->
-                                <!-- Split button -->
-                                <div class="btn-group">
-                                    <button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">
-                                    <span class="sortOrder" ng-show="propertyName === 'contacts'"
-                                          ng-class="{reverse: reverse}"></span>
-                                        Контакты: {{fieldName}}
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
-                                        <span class="sr-only">Контакты: {{fieldName}}</span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#" ng-click="fieldName='Email'">Email</a></li>
-                                        <li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>
-                                        <li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>
-                                        <li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                            </th>
-                            <th>
-                                <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Фактически отработанное время
-                                 <span class="sortOrder" ng-show="propertyName === 'email'"
-                                       ng-class="{reverse: reverse}"></span>
-                                </button>
+                            <!--</th>-->
+                            <!--<th>-->
+                                <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('birthday')">{{drArea}}-->
+                                <!--<span class="sortOrder" ng-show="propertyName === 'birthday'"-->
+                                      <!--ng-class="{reverse: reverse}"></span>-->
+                                <!--</button>-->
 
-                            </th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        <!--| firstChar:param:charText-->
-                        <!--ng-class="$even ? 'default' : 'success'"-->
-                        <!--<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>-->
-                        <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode} |
-                        orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
+                            <!--</th>-->
+                            <!--<th>-->
+                                <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('login')">{{loginArea}}-->
+                                 <!--<span class="sortOrder" ng-show="propertyName === 'login'"-->
+                                       <!--ng-class="{reverse: reverse}"></span>-->
+                                <!--</button>-->
 
-                            <td>{{$index+1}}</td>
-                            <td ><a href='#'  ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
-                            <!--<td ng-if="">{{item.getFullName()}}</td>-->
-                            <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
-                            <td>{{item.login}}</td>
-                            <td>{{item.email}}</td>
-                            <td>{{item.getContact(fieldName)}}</td>
-                            <td>{{item.diff}}</td>
-                            <td class="btn-group-xs">
-                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
-                                   ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
-                                    <span class="glyphicon "
-                                          ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
-                                          aria-hidden="true"></span>
-                                </a>
-                                <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
-                                <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                            <!--</th>-->
+                            <!--<th>-->
+                                <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('email')">{{emailArea}}-->
+                                 <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
+                                       <!--ng-class="{reverse: reverse}"></span>-->
+                                <!--</button>-->
+
+                            <!--</th>-->
+
+                            <!--<th>-->
+                                <!--&lt;!&ndash;<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}&ndash;&gt;-->
+                                <!--&lt;!&ndash;<span class="sortOrder" ng-show="propertyName === 'contacts'"&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-class="{reverse: reverse}"></span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                                <!--&lt;!&ndash; Single button &ndash;&gt;-->
+                                <!--&lt;!&ndash; Split button &ndash;&gt;-->
+                                <!--<div class="btn-group">-->
+                                    <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">-->
+                                    <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
+                                          <!--ng-class="{reverse: reverse}"></span>-->
+                                        <!--Контакты: {{fieldName}}-->
+                                    <!--</button>-->
+                                    <!--<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"-->
+                                            <!--aria-haspopup="true" aria-expanded="false">-->
+                                        <!--<span class="caret"></span>-->
+                                        <!--<span class="sr-only">Контакты: {{fieldName}}</span>-->
+                                    <!--</button>-->
+                                    <!--<ul class="dropdown-menu">-->
+                                        <!--<li><a href="#" ng-click="fieldName='Email'">Email</a></li>-->
+                                        <!--<li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>-->
+                                        <!--<li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>-->
+                                        <!--<li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>-->
+                                        <!--<li role="separator" class="divider"></li>-->
+                                        <!--<li><a href="#">Separated link</a></li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</th>-->
+                            <!--<th>-->
+                                <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Фактически отработанное время-->
+                                 <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
+                                       <!--ng-class="{reverse: reverse}"></span>-->
+                                <!--</button>-->
+
+                            <!--</th>-->
+                            <!--<th></th>-->
+                            <!--<th></th>-->
+                        <!--</tr>-->
+                        <!--&lt;!&ndash;| firstChar:param:charText&ndash;&gt;-->
+                        <!--&lt;!&ndash;ng-class="$even ? 'default' : 'success'"&ndash;&gt;-->
+                        <!--&lt;!&ndash;<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>&ndash;&gt;-->
+                        <!--<tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode} |-->
+                        <!--orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">-->
+
+                            <!--<td>{{$index+1}}</td>-->
+                            <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
+                            <!--&lt;!&ndash;<td ng-if="">{{item.getFullName()}}</td>&ndash;&gt;-->
+                            <!--<td>{{item.birthday | date:'dd.MM.yyyy'}}</td>-->
+                            <!--<td>{{item.login}}</td>-->
+                            <!--<td>{{item.email}}</td>-->
+                            <!--<td>{{item.getContact(fieldName)}}</td>-->
+                            <!--<td>{{item.diff}}</td>-->
+                            <!--<td class="btn-group-xs">-->
+                                <!--<a ng-href="{{item.getShowUrl(item.id)}}" class="btn"-->
+                                   <!--ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">-->
+                                    <!--<span class="glyphicon "-->
+                                          <!--ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"-->
+                                          <!--aria-hidden="true"></span>-->
                                 <!--</a>-->
-                                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                            </td>
-                            <td class="btn-group-xs">
-                                <a href="#">
-                                    <span ng-if="mode" ng-click="delete(item)" class="glyphicon glyphicon-trash"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
+                                <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                                <!--<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">-->
+                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                <!--</a>-->
+                            <!--</td>-->
+                            <!--<td class="btn-group-xs">-->
+                                <!--<a href="#">-->
+                                    <!--<span ng-if="mode" ng-click="delete(item)" class="glyphicon glyphicon-trash"></span>-->
+                                <!--</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                    <div ng-switch on="modeSelect.value" style="margin-top:20px;">
+                        <div  ng-switch-when="list">
+                        <ng-include src="listView"></ng-include>
+                        </div>
+                        <div ng-switch-when="table">
+                            <ng-include src="tableView" ></ng-include>
+                        </div>
+                        <div ng-switch-when="budge">
+                            <ng-include src="budgeView" ></ng-include>
+                        </div>
+                        <div ng-switch-when="calendar">
+                            <ng-include src="calendarView" ></ng-include>
+                        </div>
+
+                    </div>
                 </div>
             </div>
+
+
+
         </div>
     </div>
     <div ui-view="list"></div>
