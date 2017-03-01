@@ -197,11 +197,6 @@
                                         <span class="caret"></span>
                                         <span class="sr-only">Контакты: {{fieldName}}</span>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
-                                        <span class="sr-only">Фактически отработанное время: {{summDiff}}</span>
-                                    </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="#" ng-click="fieldName='Email'">Email</a></li>
                                         <li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>
@@ -229,7 +224,8 @@
                         orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
                             <td>{{$index+1}}</td>
-                            <td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
+                            <td ><a href='#'  ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
+                            <!--<td ng-if="">{{item.getFullName()}}</td>-->
                             <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                             <td>{{item.login}}</td>
                             <td>{{item.email}}</td>

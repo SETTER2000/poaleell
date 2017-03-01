@@ -1,12 +1,12 @@
-<div class="row" >
+<div class="row">
     <div class="col-md-12">
         <nav class="pull-right">
             <!--<button type="submit" ng-bind="getPartOfSpeech(objectName,countChar)"></button>-->
             <ul class="pagination">
                 <!--<li ng-class="{disabled: noPrevious()}"><a href="#" ng-click="selectPrevious()"><span aria-hidden="true">&laquo;</span></a>-->
                 <!--</li>-->
-                <li ng-repeat="part in parts  track by $index"
-                    ng-class="{active: isActive(part)}">
+                <li ng-if="charText" ng-repeat="part in parts  track by $index"
+                    ng-class="{active: isActive(part)}"  ng-cloak>
 
                     <a href="#" ng-click="selectPart(part)">
                         {{part}}

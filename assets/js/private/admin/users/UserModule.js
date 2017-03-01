@@ -431,7 +431,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 charText: '=',
                 where: '='
             },
-
             templateUrl: '/js/private/admin/users/views/wordPart.html',
             replace: true,
             link: function (scope) {
@@ -452,14 +451,14 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     var parts = [];
                     var v = scope.objectName;
                     for (var key in v) {
-                            var obj = v[key];
-                            for (var prop in obj) {
-                                if (prop === scope.filedName) {
-                                    if (!scope.uniqueValue(parts, obj[prop])) {
-                                        parts.push(obj[prop]);
-                                    }
+                        var obj = v[key];
+                        for (var prop in obj) {
+                            if (prop === scope.filedName) {
+                                if (!scope.uniqueValue(parts, obj[prop])) {
+                                    parts.push(obj[prop]);
                                 }
                             }
+                        }
                     }
                     console.log("scope.PARTS");
                     console.log(scope.parts);
@@ -468,9 +467,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
 
 
                 scope.uniqueValue = function (array, value) {
-                    //if (array.indexOf) { // если метод существует
-                    //    return array.indexOf(value);
-                    //}
                     for (var i = 0; i < array.length; i++) {
                         if (array[i] === value) return i;
                     }
@@ -517,13 +513,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     cntChar = (scope.isNumeric(countChar)) ? countChar : 3;
                     return str.substr(0, cntChar);
                 };
-                //
-                //scope.noPrevious = function () {
-                //    return scope.currentPage === 1;
-                //};
-                //scope.noNext = function () {
-                //    return scope.currentPage === scope.numPages;
-                //};
                 scope.isActive = function (part) {
                     return scope.currentPart === part;
                 };
@@ -531,8 +520,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     return scope.defaultRows === row;
                 };
                 scope.getPartText = function (ch) {
-                    console.log(ch);
-
                     if (angular.isString(ch)) {
                         scope.where = {"lastName": {'like': ch + '%'}};
                         scope.charText = ch;
@@ -543,6 +530,17 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
 
                 };
+                //scope.getPartText = function (ch) {
+                //    if (angular.isString(ch)) {
+                //        scope.where = {"lastName": {'like': ch + '%'}};
+                //        scope.charText = ch;
+                //        console.log(scope.where);
+                //    } else {
+                //        // $scope.defaultRows;
+                //        scope.charText = '';
+                //    }
+                //
+                //};
                 scope.selectPart = function (part) {
                     if (!scope.isActive(part)) {
                         scope.currentPart = part;
@@ -550,24 +548,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         scope.onSelectPart({part: part});
                     }
                 };
-                //scope.selectPrevious = function () {
-                //    if (!scope.noPrevious()) {
-                //        scope.selectPage(scope.currentPage - 1);
-                //    }
-                //};
-                //scope.selectNext = function () {
-                //    if (!scope.noNext()) {
-                //        scope.selectPage(scope.currentPage + 1);
-                //    }
-                //};
-                //scope.getLimitRows = function (limitRows) {
-                //    scope.defaultRows = limitRows;
-                //    if (scope.lengthObject <= scope.defaultRows) {
-                //        scope.numPages = 1;
-                //    } else {
-                //        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-                //    }
-                //};
+
             }
         };
     })

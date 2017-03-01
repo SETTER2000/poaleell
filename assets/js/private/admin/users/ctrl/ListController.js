@@ -77,6 +77,7 @@
 
 
             $scope.getLastName = function (item) {
+
                 // $scope.attendances = Attendances.query({}, function (attendances) {
                 //     console.log('attendances^^');
                 //         console.log(attendances);
