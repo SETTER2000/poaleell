@@ -452,26 +452,41 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     var v = scope.objectName;
                     for (var key in v) {
                         var obj = v[key];
+
                         for (var prop in obj) {
+                            var chars;
                             if (prop === scope.filedName) {
-                                if (!scope.uniqueValue(parts, obj[prop])) {
-                                    parts.push(obj[prop]);
-                                }
+
+                                chars = obj[prop].substr(0,3);
+                                parts.push(chars);
+                                // if (!scope.uniqueValue(parts, chars)) {
+                                //     console.log(chars);
+                                //
+                                // }
                             }
                         }
                     }
-                    console.log("scope.PARTS");
-                    console.log(scope.parts);
-                    scope.parts = parts;
+                    // console.log("scope.PARTS");
+                    // console.log(scope.parts);
+                    scope.parts =  scope.uniqueValue(parts);
                 };
 
+                scope.uniqueValue = function(arr) {
+                    var obj = {};
 
-                scope.uniqueValue = function (array, value) {
-                    for (var i = 0; i < array.length; i++) {
-                        if (array[i] === value) return i;
+                    for (var i = 0; i < arr.length; i++) {
+                        var str = arr[i];
+                        obj[str] = true; // запомнить строку в виде свойства объекта
                     }
-                    return false;
+
+                    return Object.keys(obj); // или собрать ключи перебором для IE8-
                 };
+                // scope.uniqueValue = function (array, value) {
+                //     for (var i = 0; i < array.length; i++) {
+                //         if (array[i] === value) return i;
+                //     }
+                //     return false;
+                // };
 
 
                 scope.$watch('charText', function (value) {
