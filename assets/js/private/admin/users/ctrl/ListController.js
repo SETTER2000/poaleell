@@ -7,7 +7,7 @@
              */
             $scope.defaultRows = 50;
             $scope.limitRows = [30, 50, 70, 100];
-            $scope.currentPage = 1;
+            $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
             $scope.fioArea = 'ФИО';
             $scope.drArea = 'ДР';
@@ -54,7 +54,12 @@
             //end.from(start);       // "in 5 days"
             //$scope.end = end.from(start, true); // "5 days"
 
-
+            if (moment().isLeapYear()) {
+                $scope.yearLeap = 'Да!';
+            } else {
+                $scope.yearLeap = 'Нет';
+            }
+            $scope.yearLeap = moment(1316116057189).fromNow();
             $scope.message = {
                 text: 'hello world!',
                 time: new Date()
@@ -81,12 +86,12 @@
                 // console.log(item);
                 // item.limit=30;
                 $http.post('/att', item)
-                // $scope.attendances = Attendances.query(item, function (attendance) {
+                    // $scope.attendances = Attendances.query(item, function (attendance) {
                     .then(function (attendance) {
                         console.log('attendance^^');
                         console.log(attendance);
 
-                         $scope.differ(attendance);
+                        $scope.differ(attendance);
                         console.log('DDD:');
                         console.log($scope.items);
 
@@ -108,10 +113,10 @@
                 for (var i = 0; i < attendance.data.length; i++) {
                     (function () { // каждая созданная функция будет работать со своей локальной переменной.
                         var local = i;
-                        var a, b, df;
-                        a = moment(attendance.data[local].date + ' ' + attendance.data[local].time_in, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
-                        b = moment(attendance.data[local].date + ' ' + attendance.data[local].time_out, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
-                        df = b.diff(a, 'm');
+                        var a, b;
+                        a = moment(attendance.data[local].time_in, ['HH:mm:ss']);
+                        b = moment(attendance.data[local].time_out, ['HH:mm:ss']);
+
                         data.push({
                             'getFullName': function () {
                                 return this.lname + ' ' + this.fname + ' ' + this.pname;
@@ -126,12 +131,53 @@
                             'birthday': attendance.data[local].time_in,
                             'login': attendance.data[local].time_out,
                             'email': attendance.data[local].email,
-                            'diff': df
+                            'diff': $scope.getTimeFormatMilliseconds(b.diff(a), 1, 'Неизвестно')
                         });
                     })(); // immediately invoked function expression (IIFE)
                 }
                 $scope.items = data;
             };
+
+            /**
+             * Проверка на точное соответствие аргумента n числу
+             * @param n
+             * @returns {boolean}
+             */
+            $scope.isNumeric = function (n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            };
+
+            $scope.getTimeFormatMilliseconds = function (milliseconds, secondAdd, mess) {
+                if ($scope.isNumeric(milliseconds)) {
+                    var a = {};
+                    var sec;
+                    sec = (secondAdd) ? ':00' : '';
+                    // всего минут
+                    a.min = (milliseconds / 1000) / 60;
+                    // минуты после целого, т.е. часов
+                    a.minCeil = (a.min % 60);
+                    // Добавляем ведущий ноль
+                    a.minCeil = (a.minCeil < 10) ? ('0' + a.minCeil) : a.minCeil;
+                    a.hoursCeil = Math.floor(a.min / 60); // минуты после целого, т.е. часов
+                    // Добавляем ведущий ноль (один час был: 1 стал 01)
+                    a.hoursCeil = (a.hoursCeil < 10) ? ('0' + a.hoursCeil) : a.hoursCeil;
+                    milliseconds = a.time = a.hoursCeil + ':' + a.minCeil + sec;
+                } else {
+                    // Сообщение если отсутствует значение или оно не корректно
+                    milliseconds = mess;
+                }
+                return milliseconds;
+            };
+
+            $scope.str = 'Петров';
+            $scope.countChar = '4';
+            $scope.filedName = 'lastName';
+
+            //$scope.objectName =[
+            //    {'lastName':'Петров', 'firstName':'Gena1'},
+            //    {'lastName':'Васюков', 'firstName':'Gena2'},
+            //    {'lastName':'Гавнюков', 'firstName':'Gena3'}
+            //];
             // $scope.refreshAttendance = function (query) {
             //     // 'SELECT * FROM employees AS e LEFT JOIN attendance_employees AS ae ON e.id = ae.employees_id LEFT JOIN attendance AS a ON a.id=ae.attendance_id WHERE a.date > "2017-02-01"'
             //     $scope.attendances = Attendances.query(query, function (attendances) {
@@ -156,7 +202,11 @@
             //         //console.log(attendances.scs());
             //     });
             // };
+            $scope.$watch('where', function (value) {
 
+                $scope.refresh(value);
+
+            });
             // console.log(Users);
             //console.log('STATE: ');
             //console.log( $state.get());
@@ -174,7 +224,10 @@
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
+                        $scope.items = users;
                         // $scope.lengthObject = users.length;
+                        console.log(users);
+                        $scope.objectName = users;
                         $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
                     });
             };

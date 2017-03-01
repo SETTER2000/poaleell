@@ -74,7 +74,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             })
             .state('home.admin.users.attendance', {
                 url: '/attendance',
-               
+
                 // views: {
                 //     'attendance@home.admin.users': {
                 //         templateUrl: '/js/private/admin/users/views/home.admin.users.attendance.html',
@@ -117,24 +117,24 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 }
             })
 
-        //        .state('admin.users.edit',{
-        //            url:'/:id',
-        //            views:{
-        //                '@':{
-        //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
-        //                },
-        //                controller:'EditController'
-        //            }
-        //        })
-        //        .state('admin.users.list', {
-        //            url: '/:id',
-        //            views: {
-        //                '@': {
-        //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
-        //                },
-        //                controller:'ListController'
-        //            }
-        //        })
+            //        .state('admin.users.edit',{
+            //            url:'/:id',
+            //            views:{
+            //                '@':{
+            //                    templateUrl: '/js/private/admin/users/tpl/edit.tpl.html'
+            //                },
+            //                controller:'EditController'
+            //            }
+            //        })
+            //        .state('admin.users.list', {
+            //            url: '/:id',
+            //            views: {
+            //                '@': {
+            //                    templateUrl: '/js/private/admin/users/tpl/list.tpl.html'
+            //                },
+            //                controller:'ListController'
+            //            }
+            //        })
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
@@ -329,7 +329,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             }
         }
     })
-    .directive('pagination', function () {
+    .directive('pagination', function () { // функция компиляции директивы (фабричная функция)
         return {
             restrict: 'E',
             scope: {
@@ -400,6 +400,174 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
                     }
                 };
+            }
+        };
+    })
+    .directive('wordPart', function () {
+        return {
+            restrict: 'E',
+            // Это изолированый scope.
+            // имена полей изолированного контекста (свойства объекта), а значение
+            // определяет имя атрибута элемента с префиксом @, = или &
+            /** Например:
+             * scope: {
+                    isolated1: ‘@attribute1’,
+                    isolated2: ‘=attribute2’,
+                    isolated3: ‘&attribute3’
+                    }
+
+             * Если имя атрибута отсутствует в описании значения, предполагается,
+             * что он имеет то же имя, что и поле изолированного контекста:
+             * scope: { isolated1: ‘@’ }
+             * Здесь предполагается, что атрибут имеет имя isolated1.
+             * (стр. 265)
+             */
+            scope: {
+                objectName: '=', // Массив оъектов с фамилиями
+                countChar: '=', // по умолчанию сколько строк должно показываться на одной странице
+                filedName: '=', // по умолчанию сколько строк должно показываться на одной странице
+                onSelectPart: '&',
+                getCharText: '&',
+                charText: '=',
+                where: '='
+            },
+
+            templateUrl: '/js/private/admin/users/views/wordPart.html',
+            replace: true,
+            link: function (scope) {
+                scope.$watch('objectName', function (value) {
+                    scope.objectName = value;
+                    scope.checkArray();
+                });
+                //scope.$watch('numPages', function (value) {
+                //    scope.pages = [];
+                //    for (var i = 1; i <= value; i++) {
+                //        scope.pages.push(i);
+                //    }
+                //    if (scope.currentPage > value) {
+                //        scope.selectPage(value);
+                //    }
+                //});
+                scope.checkArray = function () {
+                    var parts = [];
+                    var v = scope.objectName;
+                    for (var key in v) {
+                            var obj = v[key];
+                            for (var prop in obj) {
+                                if (prop === scope.filedName) {
+                                    if (!scope.uniqueValue(parts, obj[prop])) {
+                                        parts.push(obj[prop]);
+                                    }
+                                }
+                            }
+                    }
+                    console.log("scope.PARTS");
+                    console.log(scope.parts);
+                    scope.parts = parts;
+                };
+
+
+                scope.uniqueValue = function (array, value) {
+                    //if (array.indexOf) { // если метод существует
+                    //    return array.indexOf(value);
+                    //}
+                    for (var i = 0; i < array.length; i++) {
+                        if (array[i] === value) return i;
+                    }
+                    return false;
+                };
+
+
+                scope.$watch('charText', function (value) {
+                    scope.charText = value;
+                });
+
+                scope.$watch('where', function (value) {
+                    scope.where = value;
+                });
+                //scope.$watch('limitRows', function (value) {
+                //    scope.rows = [];
+                //    for (var i = 0; i <= value.length; i++) {
+                //        scope.rows.push(value[i]);
+                //    }
+                //});
+                //scope.$watch('defaultRows', function (value, oldValue) {
+                //    if (value > 0) {
+                //        scope.defaultRows = value;
+                //        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+                //    }
+                //});
+                //scope.getCharText = function (ch) {
+                //    console.log(ch);
+                //    var where = {};
+                //    if (angular.isString(ch)) {
+                //        where = {"lastName": {'like': ch + '%'}};
+                //        $scope.charText = ch;
+                //    } else {
+                //        // $scope.defaultRows;
+                //        $scope.charText = '';
+                //    }
+                //    $scope.refresh(where);
+                //};
+                scope.isNumeric = function (n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                };
+                scope.getPartOfSpeech = function (str, countChar) {
+                    var cntChar;
+                    cntChar = (scope.isNumeric(countChar)) ? countChar : 3;
+                    return str.substr(0, cntChar);
+                };
+                //
+                //scope.noPrevious = function () {
+                //    return scope.currentPage === 1;
+                //};
+                //scope.noNext = function () {
+                //    return scope.currentPage === scope.numPages;
+                //};
+                scope.isActive = function (part) {
+                    return scope.currentPart === part;
+                };
+                scope.isActiveRow = function (row) {
+                    return scope.defaultRows === row;
+                };
+                scope.getPartText = function (ch) {
+                    console.log(ch);
+
+                    if (angular.isString(ch)) {
+                        scope.where = {"lastName": {'like': ch + '%'}};
+                        scope.charText = ch;
+                        console.log(scope.where);
+                    } else {
+                        // $scope.defaultRows;
+                        scope.charText = '';
+                    }
+
+                };
+                scope.selectPart = function (part) {
+                    if (!scope.isActive(part)) {
+                        scope.currentPart = part;
+                        scope.getPartText(part);
+                        scope.onSelectPart({part: part});
+                    }
+                };
+                //scope.selectPrevious = function () {
+                //    if (!scope.noPrevious()) {
+                //        scope.selectPage(scope.currentPage - 1);
+                //    }
+                //};
+                //scope.selectNext = function () {
+                //    if (!scope.noNext()) {
+                //        scope.selectPage(scope.currentPage + 1);
+                //    }
+                //};
+                //scope.getLimitRows = function (limitRows) {
+                //    scope.defaultRows = limitRows;
+                //    if (scope.lengthObject <= scope.defaultRows) {
+                //        scope.numPages = 1;
+                //    } else {
+                //        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+                //    }
+                //};
             }
         };
     })

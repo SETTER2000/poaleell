@@ -15,7 +15,7 @@
                     <span class="glyphicon glyphicon-wrench"></span>
                 </button>
                 <!--<button ui-sref="home.admin.users.list" title="Список" type="button" class="btn btn-default">-->
-                    <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--<span class="glyphicon glyphicon-cog"></span>-->
                 <!--</button>-->
                 <button ui-sref="home.admin.users.settings" title="Настройки" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-cog"></span>
@@ -39,6 +39,7 @@
         <!--<p>Сколько прошло?: {{end}}</p>-->
         <!--<p>diff: {{diff}}</p>-->
         <!--<p>days: {{days}}</p>-->
+        <!--<p>Год високосный?  {{yearLeap}}</p>-->
         <!--<p>hours: {{hours}}</p>-->
         <!--<p>Month: {{month}}</p>-->
         <!--<p>Months: {{months}}</p>-->
@@ -47,10 +48,6 @@
         <!--<p>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
         <!--&lt;!&ndash;<p>Message age: {{message.ageInMinutes | amDurationFormat : 'minute' }}</p>&ndash;&gt;-->
         <!--<p>Message age: {{calendar }}</p>-->
-
-
-
-
 
 
         <!--<p>Scheduled {{message.createdAt | amDifference : null : 'days' }} days from now</p>-->
@@ -100,11 +97,24 @@
             </div>
         </div>
     </div>
+    <!--<button type="submit" size="large">Click Me!</button>-->
+    <!--{{charText}}  {{where}}-->
+    <pagination num-pages="numPages"
+                limit-rows="limitRows"
+                default-rows="defaultRows"
+                length-object="items.length"
+                current-page="currentPage"
+                on-select-page="selectCount=selectCount+1">
+    </pagination>
 
-
-    <pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="items.length"
-                current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
-
+    <word-part object-name="objectName"
+               filed-name="filedName"
+               where="where"
+               count-char="countChar"
+               char-text="charText"
+               get-char-text="getCharText(ch)">
+    </word-part>
+    <!--<pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="lengthObject"-->
     <!--<pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="lengthObject"-->
     <!--current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>-->
 
@@ -168,6 +178,7 @@
                                 </button>
 
                             </th>
+
                             <th>
                                 <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}-->
                                 <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
@@ -200,6 +211,13 @@
                                         <li><a href="#">Separated link</a></li>
                                     </ul>
                                 </div>
+                            </th>
+                            <th>
+                                <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Фактически отработанное время
+                                 <span class="sortOrder" ng-show="propertyName === 'email'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
+
                             </th>
                             <th></th>
                             <th></th>

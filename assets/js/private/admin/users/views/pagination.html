@@ -10,12 +10,7 @@
                 <li><input ng-model="defaultRows" class="form-control"></li>
                 <li ng-repeat="row in rows" ng-class="{active: isActiveRow(row)}">
                     <a href="#" ng-click="getLimitRows(row)">{{row}}</a>
-                    <!--<a href="#" ng-click="selectPage(page)">{{page}}</a>-->
                 </li>
-                <!--<li><a ng-click="paginationButton(30)" href="#">30</a></li>-->
-                <!--<li><a ng-click="paginationButton(50)" href="#">50</a></li>-->
-                <!--<li><a ng-click="paginationButton(70)" href="#">70</a></li>-->
-                <!--<li><a ng-click="paginationButton(100)" href="#">100</a></li>-->
                 <li><a ng-click="getLimitRows(lengthObject)" href="#">Все</a></li>
             </ul>
         </div>
@@ -23,10 +18,26 @@
     <div class="col-md-10">
         <nav class="pull-right">
             <ul class="pagination">
-                <li ng-class="{disabled: noPrevious()}"><a href="#" ng-click="selectPrevious()"><span aria-hidden="true">&laquo;</span></a>
+                <li ng-class="{disabled: noPrevious()}">
+                    <a href="#" ng-click="selectPrevious()">
+                        <span aria-hidden="true">
+                            &laquo;
+                        </span>
+                    </a>
                 </li>
-                <li ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a href="#" ng-click="selectPage(page)">{{page}}</a></li>
-                <li ng-class="{disabled: noNext()}"><a href="#" ng-click="selectNext()"><span aria-hidden="true">&raquo;</span></a></li>
+                <li ng-repeat="page in pages"
+                    ng-class="{active: isActive(page)}">
+                    <a href="#" ng-click="selectPage(page)">
+                        {{page}}
+                    </a>
+                </li>
+                <li ng-class="{disabled: noNext()}">
+                    <a href="#" ng-click="selectNext()">
+                        <span aria-hidden="true">
+                            &raquo;
+                        </span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

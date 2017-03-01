@@ -1,0 +1,41 @@
+<div class="row" >
+    <div class="col-md-12">
+        <nav class="pull-right">
+            <!--<button type="submit" ng-bind="getPartOfSpeech(objectName,countChar)"></button>-->
+            <ul class="pagination">
+                <!--<li ng-class="{disabled: noPrevious()}"><a href="#" ng-click="selectPrevious()"><span aria-hidden="true">&laquo;</span></a>-->
+                <!--</li>-->
+                <li ng-repeat="part in parts  track by $index"
+                    ng-class="{active: isActive(part)}">
+
+                    <a href="#" ng-click="selectPart(part)">
+                        {{part}}
+                    </a>
+                </li>
+                <!--<li ng-class="{disabled: noNext()}"><a href="#" ng-click="selectNext()"><span aria-hidden="true">&raquo;</span></a></li>-->
+            </ul>
+        </nav>
+    </div>
+    <!--<div class="col-md-2">-->
+    <!--<div class="btn-group btn-group-sm pagination" role="group">-->
+    <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"-->
+    <!--aria-expanded="false">-->
+    <!--Количество: {{defaultRows}}-->
+    <!--<span class="caret"></span>-->
+    <!--</button>-->
+    <!--<ul class="dropdown-menu">-->
+    <!--<li><input ng-model="defaultRows" class="form-control"></li>-->
+    <!--<li ng-repeat="row in rows" ng-class="{active: isActiveRow(row)}">-->
+    <!--<a href="#" ng-click="getLimitRows(row)">{{row}}</a>-->
+    <!--&lt;!&ndash;<a href="#" ng-click="selectPage(page)">{{page}}</a>&ndash;&gt;-->
+    <!--</li>-->
+    <!--&lt;!&ndash;<li><a ng-click="paginationButton(30)" href="#">30</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a ng-click="paginationButton(50)" href="#">50</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a ng-click="paginationButton(70)" href="#">70</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a ng-click="paginationButton(100)" href="#">100</a></li>&ndash;&gt;-->
+    <!--<li><a ng-click="getLimitRows(lengthObject)" href="#">Все</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+
+</div>
