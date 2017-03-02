@@ -1,6 +1,6 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{item.sc()}} {{item.name}}
+        <h1>{{item.sc()}} {{item.name}} {{item.year| date:"YYYY"}}
             <div class="btn-group-xs pull-right">
                 <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
@@ -27,7 +27,9 @@
                     <th>Местоположение</th>
                     <td>{{item.location}}</td>
                 </tr>
-                <tr><th colspan="30"></th></tr>
+                <tr>
+                    <th colspan="30"></th>
+                </tr>
 
 
             </table>

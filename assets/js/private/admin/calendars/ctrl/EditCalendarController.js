@@ -37,7 +37,17 @@ angular.module('CalendarModule')
                         );
                     } else {
                         $scope.refresh();
-                        item.$save(item)
+                        item.$save(item, function (success) {
+                                $scope.refresh();
+                                console.log('SUCCESS: OK!');
+                                item.ok();
+                            },
+                            function (err) {
+
+                                console.log('ERROR: ' + err.status);
+                                console.log(err);
+                                item.er('Возможно ЧПУ не уникален.');
+                            })
                     }
                 };
             

@@ -32,15 +32,21 @@ module.exports = {
             defaultsTo: false
         },
         patronymicName: {
-            type: 'string', required: true
+            type: 'string',
+            required: true
         },
 
         login: {
-            type: 'string', required: true, unique: true
+            type: 'string',
+            required: true,
+            unique: true
         },
 
         email: {
-            type: 'string', email: true, required: true
+            type: 'string',
+            email: true,
+            unique: true,
+            required: true
         },
 
         birthday: {
@@ -55,7 +61,8 @@ module.exports = {
             size: 50
         },
         encryptedPassword: {
-            type: 'string', required: true
+            type: 'string',
+            required: true
         },
 
         contacts: {
@@ -64,7 +71,8 @@ module.exports = {
         },
 
         fired: {
-            type: 'boolean', defaultsTo: false
+            type: 'boolean',
+            defaultsTo: false
         },
 
         firedDate: {
@@ -81,7 +89,9 @@ module.exports = {
         },
 
         lastLoggedIn: {
-            type: 'date', required: true, defaultsTo: new Date(0)
+            type: 'date',
+            required: true,
+            defaultsTo: new Date(0)
         },
 
         gravatarUrl: {

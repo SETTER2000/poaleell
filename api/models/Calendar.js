@@ -9,6 +9,11 @@ module.exports = {
     connection: 'userMongodbServer',
     schema: true,
     attributes: {
+        slug: {
+            type: 'string',
+            unique: true,
+            required:true
+        },
         section: {
             type: 'string',
             defaultsTo: 'Календарь'
@@ -19,13 +24,12 @@ module.exports = {
         },
         action: {
             type: 'boolean',
-            defaultsTo: true,
-            required: true
-
+            defaultsTo: true
         },
         name: {
             type: 'string',
-            unique: true
+            unique: true,
+            required: true
         },
         type: {
             type: 'string',

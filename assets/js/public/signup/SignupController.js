@@ -15,12 +15,21 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
             birthday: $scope.signupForm.birthday,
             password: $scope.signupForm.password
         }).then(function onSuccess(sailsResponse) {
-            window.location = '/';
+            window.location = '/admin/users';
+            console.log('sailsResponse:');
             console.log(sailsResponse);
         }).catch(function onError(sailsResponse) {
+            console.log('sailsResponse:');
+            console.log(sailsResponse);
             var emailAddressAlreadyInUse = sailsResponse.status == 409;
             if (emailAddressAlreadyInUse) {
                 toastr.error('Этот email уже зарегистрирован, пожалуйста введите другой email.', 'Ошибка');
+                return;
+            }
+
+            var loginAlreadyInUse = sailsResponse.status == 410;
+            if (loginAlreadyInUse) {
+                toastr.error('Этот логин уже зарегистрирован, пожалуйста введите другой логин.', 'Ошибка');
                 return;
             }
         }).finally(function eitherWay() {

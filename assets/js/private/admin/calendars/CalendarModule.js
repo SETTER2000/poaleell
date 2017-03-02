@@ -51,6 +51,15 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
+            //.state('home.admin.calendar', {
+            //    url: '/slug/:slug',
+            //    views: {
+            //        '@': {
+            //            templateUrl: '/js/private/admin/calendars/tpl/show.tpl.html',
+            //            controller: 'CalendarController'
+            //        }
+            //    }
+            //})
             .state('home.admin.calendars.create', {
                 url: '/create/:calendarId',
                 views: {
@@ -66,7 +75,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate'])
     .factory('Calendars', function ($resource, CONF_MODULE_CALENDAR) {
         var Calendars = $resource(
             CONF_MODULE_CALENDAR.baseUrl,
-            {calendarId: '@id'},
+            {calendarId: '@slug'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
             {
                 update: {
@@ -89,8 +98,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate'])
         Calendars.prototype.ok = function () {
             return alert(this.section + ': ' + this.name + ' изменён!');
         };
-        Calendars.prototype.er = function () {
-            return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты!');
+        Calendars.prototype.er = function (ms) {
+            return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты! '+ms);
         };
         Calendars.prototype.getListUrl = function () {
             return '/admin/calendars';

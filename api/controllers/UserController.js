@@ -71,11 +71,18 @@ module.exports = {
                             gravatarUrl: gravatarUrl
                         }, function userCreated(err, newUser) {
                             if (err) {
-                                //console.log('err:', err);
+                                console.log('err:', err);
                                 //console.log('err.invalidAttributes: ', err.invalidAttributes);
                                 if (err.invalidAttributes && err.invalidAttributes.email && err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 'unique') {
                                     return res.emailAddressInUse();
                                 }
+                                if (err.invalidAttributes && err.invalidAttributes.login && err.invalidAttributes.login[0] && err.invalidAttributes.login[0].rule === 'unique') {
+
+                                    //console.log('err.invalidAttributes: ', err.invalidAttributes);
+                                    //console.log('ERRRRR:: ', err);
+                                    return res.loginInUse();
+                                }
+
                                 return res.negotiate(err);
                             }
 

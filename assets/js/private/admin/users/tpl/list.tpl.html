@@ -79,7 +79,7 @@
     <!--searchText: {{searchText}}-->
     <!--LENGTH: {{charText.length}}-{{searchText.length}}-->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="btn-toolbar" role="toolbar" aria-label="0">
                 <div class="btn-group btn-group-sm " role="group" aria-label="1">
                     <button ng-repeat="ch in alfavit"
@@ -98,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select class="form-control" role="group"
                     ng-model="modeSelect" ng-options="item.display for item in options track by item.value"></select>
             <!--<div ng-switch on="modeSelect.value" style="margin-top:20px;">-->
