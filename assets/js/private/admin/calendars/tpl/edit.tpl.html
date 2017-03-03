@@ -19,54 +19,48 @@
         <div class="col-md-6">
             <div class="panel" ng-class="{'panel-warning':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Редактировать</h3>
+                    <h3 class="panel-title">{{edit}}</h3>
                 </div>
 
                 <div class="panel-body">
 
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"  ng-model="item.action">Активность
+                            <input type="checkbox"  ng-model="item.action">{{activity}}
                         </label>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="inputSuccess1">Наименование</label>
+                        <label class="control-label" for="inputSuccess1">{{title}}</label>
                         <input type="text" class="form-control" ng-model="item.name">
                         <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="inputSuccess1">ЧПУ*</label>
+                        <label class="control-label" for="inputSuccess1">{{chpu}}*</label>
                         <input type="text" class="form-control" ng-model="item.slug">
-                        <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label ng-if="!item.year" class="control-label" for="inputSuccess12">
-                                    Установить год календаря
-                                </label>
-                                <label ng-if="item.year" class="control-label" for="inputSuccess4">
-                                    Редактировать год календаря
-                                </label>
-                                <input type="date" min="1991" max="2030" class="form-control" ng-model="item.year">
-
-                                <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group " ng-if="item.year">
-                                <label class="control-label" for="inputSuccess5">Год </label>
-
-                                <div><a href="#" class="btn btn-default  disabled" role="button">
-                                     <span class="glyphicon " ng-class="{ 'glyphicon-gift':item.year}"
-                                           aria-hidden="true"></span>
-                                    {{item.year | date:'yyyy'}}
-                                </a></div>
-
-                                <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-6">-->
+                            <!--<div class="form-group ">-->
+                                <!--<label ng-if="!item.year" class="control-label" for="inputSuccess12">-->
+                                    <!--Установить год календаря-->
+                                <!--</label>-->
+                                <!--<label ng-if="item.year" class="control-label" for="inputSuccess4">-->
+                                    <!--Редактировать год календаря-->
+                                <!--</label>-->
+                                <!--<input type="date" min="1991" max="2030" class="form-control" ng-model="item.year">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-6">-->
+                            <!--<div class="form-group " ng-if="item.year">-->
+                                <!--<label class="control-label" for="inputSuccess5">Год </label>-->
+                                <!--<div><a href="#" class="btn btn-default  disabled" role="button">-->
+                                     <!--<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.year}"-->
+                                           <!--aria-hidden="true"></span>-->
+                                    <!--{{item.year | date:'yyyy'}}-->
+                                <!--</a></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <!--<div class="form-group">-->
                         <!--&lt;!&ndash;<label class="control-label" for="inputSuccess1">Год</label>&ndash;&gt;-->
                         <!--&lt;!&ndash;<input type="text" class="form-control" ng-model="item.year | date:'yyyy'">&ndash;&gt;-->
@@ -82,12 +76,12 @@
                     <!--</div>-->
 
                     <div class="form-group">
-                        <label class="control-label" for="inputSuccess2">Тип</label>
-                        <input type="text" class="form-control" ng-model="item.type">
-                        <!--<span id="helpBlock2" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        <label class="control-label" for="inputSuccess2">{{headline}}</label>
+                        <textarea class = "form-control" rows = "3" ng-model="item.description"></textarea>
                     </div>
+
                     <div class="form-group">
-                        <label class="control-label" for="inputSuccess3">Местоположения</label>
+                        <label class="control-label" for="inputSuccess3">{{location}} </label>
                         <input type="text" class="form-control" ng-model="item.location">
                         <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
@@ -126,7 +120,9 @@
                             <span class="glyphicon glyphicon-list"> </span>
                             Список
                         </a>
-
+                        <button ng-click="changeLanguage('de')" translate="BUTTON_LANG_DE"></button>
+                        <button ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></button>
+                        <button ng-click="changeLanguage('ru')" translate="BUTTON_LANG_RU"></button>
                         <!--<a href="/admin/departments/edit/{{data.id}}"-->
                            <!--class="btn btn-default btn-sm pull-right" role="button">-->
                             <!--<span class="glyphicon glyphicon-trash"></span>-->
@@ -144,7 +140,7 @@
         <div class="col-md-6">
             <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Информация</h3>
+                    <h3 class="panel-title">{{info}}</h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">

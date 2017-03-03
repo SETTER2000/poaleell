@@ -83,16 +83,16 @@
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
-                            <th>
-                                <button class="btn btn-default" ng-click="sortBy('year')">Год
-                                <span class="sortOrder" ng-show="propertyName === 'year'"
-                                      ng-class="{reverse: reverse}"></span>
-                                </button>
-                            </th>
+                            <!--<th>-->
+                                <!--<button class="btn btn-default" ng-click="sortBy('year')">Год-->
+                                <!--<span class="sortOrder" ng-show="propertyName === 'year'"-->
+                                      <!--ng-class="{reverse: reverse}"></span>-->
+                                <!--</button>-->
+                            <!--</th>-->
 
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('type')">Тип
-                                <span class="sortOrder" ng-show="propertyName === 'type'"
+                                <button class="btn btn-default" ng-click="sortBy('description')">Описание
+                                <span class="sortOrder" ng-show="propertyName === 'description'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
 
@@ -110,9 +110,9 @@
                         </tr>
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                             <td>{{$index+1}}</td>
-                            <td><a href="#">{{item.name}}</a></td>
+                            <td><a ng-href="{{item.getShowUrl(item.id)}}">{{item.name}}</a></td>
                             <td>{{item.slug}}</td>
-                            <td>{{item.year | date:'yyyy'}}</td>
+                            <!--<td>{{item.year | date:'yyyy'}}</td>-->
                             <td>{{item.type }}</td>
                             <td>{{item.location}}</td>
 

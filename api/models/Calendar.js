@@ -28,16 +28,14 @@ module.exports = {
         },
         name: {
             type: 'string',
-            unique: true,
             required: true
         },
-        type: {
+        description: {
             type: 'string',
             defaultsTo: ''
         },
         year: {
             type: 'date',
-            required: true,
             defaultsTo: new Date(0)
         },
         location: {

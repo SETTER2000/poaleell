@@ -3,7 +3,13 @@ angular.module("AdminModule")
         // $watch регистрирует функцию в коллекции $$watchers текущего scope.
         // функция будут выполняться при каждом изменении свойства counter.
 // // обработка события deleteUser на текущем scope
-
+        $scope.options =
+            [
+                {display: "Таблица", value: "table"},
+                {display: "Список", value: "list"},
+                {display: "Список с маркерами", value: "budge"},
+                {display: "Календарь", value: "calendar"}
+            ];
         $scope.data = {counter: 6};
 
         io.socket.on('User', function (event) {

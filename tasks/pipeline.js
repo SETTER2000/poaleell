@@ -27,6 +27,8 @@ var jsFilesToInject = [
     'js/dependencies/sails.io.js',
     'js/dependencies/angular.js', // Dependencies like jQuery, or Angular are brought in here
     'js/dependencies/angular-ui-router.js',
+    'js/dependencies/angular-translate.js',
+    'js/dependencies/angular-translate-loader-url.js',
     'js/dependencies/angular-resource.js',
     'js/dependencies/moment.js',
     'js/dependencies/ru.js',

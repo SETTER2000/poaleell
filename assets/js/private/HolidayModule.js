@@ -114,7 +114,7 @@ angular.module('Holiday', [
         $scope.header = function () {
             return 'Привет, ' + $scope.firstName;
         };
-
+       
     }]);
 
 

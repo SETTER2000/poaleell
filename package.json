@@ -55,5 +55,8 @@
   "bugs": {
     "url": "https://github.com/SETTER2000/kadr/issues"
   },
-  "homepage": "https://github.com/SETTER2000/kadr#readme"
+  "homepage": "https://github.com/SETTER2000/kadr#readme",
+  "devDependencies": {
+    "angular-translate": "^2.15.0"
+  }
 }
