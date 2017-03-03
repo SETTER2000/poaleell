@@ -110,14 +110,14 @@
                         </tr>
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                             <td>{{$index+1}}</td>
-                            <td><a ng-href="{{item.getShowUrl(item.id)}}">{{item.name}}</a></td>
+                            <td><a ng-href="{{item.getShowUrl(item.id)}}/1">{{item.name}}</a></td>
                             <td>{{item.slug}}</td>
                             <!--<td>{{item.year | date:'yyyy'}}</td>-->
-                            <td>{{item.type }}</td>
+                            <td>{{item.description }}</td>
                             <td>{{item.location}}</td>
 
                             <td class="btn-group-xs">
-                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn "
+                                <a ng-href="{{item.getShowUrl(item.id)}}/show" class="btn "
                                    ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
                                     <span class="glyphicon "
                                           ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"

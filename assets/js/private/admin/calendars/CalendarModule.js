@@ -41,7 +41,7 @@ var translationsDE= {
     BUTTON_LANG_RU: 'Russian'
 };
 
-angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascalprecht.translate'])
+angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascalprecht.translate', 'angularMoment'])
     .config(['$stateProvider','$translateProvider',function ($stateProvider,$translateProvider) {
         // $translateProvider.translations('en', translations).preferredLanguage('en');
         $translateProvider.translations('en', translationsEN);
@@ -101,15 +101,24 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascal
                     }
                 }
             })
-            //.state('home.admin.calendar', {
-            //    url: '/slug/:slug',
-            //    views: {
-            //        '@': {
-            //            templateUrl: '/js/private/admin/calendars/tpl/show.tpl.html',
-            //            controller: 'CalendarController'
-            //        }
-            //    }
-            //})
+            .state('home.admin.calendar.show', {
+                url: '/show',
+                views: {
+                    '@home.admin.calendar': {
+                        templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.show.html',
+                        controller: 'CalendarController'
+                    }
+                }
+            })
+            .state('home.admin.calendar.month', {
+                url: '/:monthId',
+                views: {
+                    '@home.admin.calendar': {
+                        templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',
+                        controller: 'CalendarController'
+                    }
+                }
+            })
             .state('home.admin.calendars.create', {
                 url: '/create/:calendarId',
                 views: {

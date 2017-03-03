@@ -27,6 +27,7 @@
     "machinepack-gravatar": "^1.2.0",
     "machinepack-passwords": "^2.3.0",
     "moment": "^2.17.1",
+    "moment-recur": "^1.0.5",
     "moment-weekday-calc": "^1.1.3",
     "mysql": "^2.13.0",
     "ng-fx": "^2.0.4",

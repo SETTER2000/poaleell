@@ -91,81 +91,81 @@ angular.module('CalendarModule')
 
 
             // $scope.item.slug = $scope.item.name;
-            $scope.$watch('item.name', function (value) {
-                var charsRU = [
-                    "а",
-                    "б",
-                    "в",
-                    "г",
-                    "д",
-                    "е",
-                    "ё",
-                    "ж",
-                    "з",
-                    "и",
-                    "й",
-                    "к",
-                    "л",
-                    "м",
-                    "н",
-                    "о",
-                    "п",
-                    "р",
-                    "с",
-                    "т",
-                    "у",
-                    "ф",
-                    "х",
-                    "ц",
-                    "ч",
-                    "ш",
-                    "щ",
-                    "ь",
-                    "ъ",
-                    "э",
-                    "ю",
-                    "я"];
-                var charsEN = [
-                    'a',
-                    'b',
-                    'v',
-                    'g',
-                    'd',
-                    'e',
-                    'e',
-                    'j',
-                    'z',
-                    'i',
-                    'i',
-                    'k',
-                    'l',
-                    'm',
-                    'n',
-                    'o',
-                    'p',
-                    'r',
-                    's',
-                    't',
-                    'u',
-                    'f',
-                    'h',
-                    'c',
-                    'ch',
-                    'sh',
-                    'cha',
-                    '',
-                    '',
-                    'e',
-                    'yu',
-                    'ya'
-                ];
-                if (angular.isDefined(charsEN[charsRU.indexOf(value)])) {
-                    var u = charsEN[charsRU.indexOf(value)];
-                }
-                $scope.item.slug =u;
-
-
-            });
+            //$scope.$watch('item.name', function (value) {
+            //    var charsRU = [
+            //        "а",
+            //        "б",
+            //        "в",
+            //        "г",
+            //        "д",
+            //        "е",
+            //        "ё",
+            //        "ж",
+            //        "з",
+            //        "и",
+            //        "й",
+            //        "к",
+            //        "л",
+            //        "м",
+            //        "н",
+            //        "о",
+            //        "п",
+            //        "р",
+            //        "с",
+            //        "т",
+            //        "у",
+            //        "ф",
+            //        "х",
+            //        "ц",
+            //        "ч",
+            //        "ш",
+            //        "щ",
+            //        "ь",
+            //        "ъ",
+            //        "э",
+            //        "ю",
+            //        "я"];
+            //    var charsEN = [
+            //        'a',
+            //        'b',
+            //        'v',
+            //        'g',
+            //        'd',
+            //        'e',
+            //        'e',
+            //        'j',
+            //        'z',
+            //        'i',
+            //        'i',
+            //        'k',
+            //        'l',
+            //        'm',
+            //        'n',
+            //        'o',
+            //        'p',
+            //        'r',
+            //        's',
+            //        't',
+            //        'u',
+            //        'f',
+            //        'h',
+            //        'c',
+            //        'ch',
+            //        'sh',
+            //        'cha',
+            //        '',
+            //        '',
+            //        'e',
+            //        'yu',
+            //        'ya'
+            //    ];
+            //    if (angular.isDefined(charsEN[charsRU.indexOf(value)])) {
+            //        var u = charsEN[charsRU.indexOf(value)];
+            //    }
+            //    $scope.item.slug =u;
+            //
+            //
+            //});
 
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
@@ -186,6 +186,7 @@ angular.module('CalendarModule')
                     if (err) console.log(err.message);
                 });
             };
+
             $scope.saveEdit = function (item) {
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);
@@ -195,7 +196,6 @@ angular.module('CalendarModule')
                             item.ok();
                         },
                         function (err) {
-
                             console.log('ERROR: ' + err.status);
                             console.log(err);
                             item.er();

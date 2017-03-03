@@ -34,10 +34,6 @@ module.exports = {
             type: 'string',
             defaultsTo: ''
         },
-        year: {
-            type: 'date',
-            defaultsTo: new Date(0)
-        },
         location: {
             type: 'string',
             defaultsTo: ''

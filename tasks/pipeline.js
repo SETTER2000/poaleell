@@ -31,8 +31,10 @@ var jsFilesToInject = [
     'js/dependencies/angular-translate-loader-url.js',
     'js/dependencies/angular-resource.js',
     'js/dependencies/moment.js',
+    'js/dependencies/moment-recur.js',
     'js/dependencies/ru.js',
     'js/dependencies/angular-moment.js',
+
     'js/dependencies/**/*.js',
 
     'js/private/admin/departments/DepartmentModule.js',

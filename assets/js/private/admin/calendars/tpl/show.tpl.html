@@ -1,6 +1,6 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1>{{item.sc()}} "{{item.name}} {{item.year| date:"yyyy"}}"
+        <h3>{{item.sc()}} "{{item.name}} {{item.year| date:"yyyy"}}"
             <div class="btn-group-xs pull-right">
                 <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
@@ -9,31 +9,44 @@
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             </div>
-        </h1>
+        </h3>
     </div>
     <div class="row">
-        <div class=" col-md-12">
-            <table class="table">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="pagination">
+                        <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/сегодня">Сегодня</a></li>
+                    </ul>&nbsp;&nbsp;
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал"><</a>
+                            <a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-md-offset-1">
 
-                <tr>
-                    <th>Наименование</th>
-                    <td>{{item.name}}</td>
-                </tr>
-                <tr>
-                    <th>Тип</th>
-                    <td>{{item.type | date:'dd.MM.yyyy'}}</td>
-                </tr>
-                <tr>
-                    <th>Местоположение</th>
-                    <td>{{item.location}}</td>
-                </tr>
-                <tr>
-                    <th colspan="30"></th>
-                </tr>
+                </div>
+            </div>
 
 
-            </table>
+        </div>
+        <div class="col-md-4">
+            <ul class="pagination">
+                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>
+                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/неделя">Неделя</a></li>
+                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/месяц">Месяц</a></li>
+                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>
+                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/год">Год</a></li>
+            </ul>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div ui-view></div>
+        </div>
+    </div>
+
 </div>
 

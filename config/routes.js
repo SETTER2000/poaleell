@@ -85,6 +85,7 @@ module.exports.routes = {
     'GET /admin/calendars/create': 'PageController.showHomePage',
     'GET /admin/calendars/edit/:id': 'CalendarController.findOne',
     'GET /admin/calendar/:id': 'CalendarController.findOne',
+    'GET /admin/calendar/:id/:month': 'PageController.showHomePage',
 
     'GET /admin/employees/:id': 'PageController.showHomePage',
     'GET /admin/employees/edit/:id': 'PageController.showHomePage',

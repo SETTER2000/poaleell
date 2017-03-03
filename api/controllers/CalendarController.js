@@ -20,22 +20,15 @@ module.exports = {
                 calendar: calendar, me: req.session.me
             });
         });
-
     },
     addCalendar: function (req, res, next) {
         User.findOne(req.param('id')).exec(function (err, user) {
             if (err) return next(err);
-
-            // Queue up a new pet to be added and a record to be created in the join table
             user.calendars.add({name: 'Программисты'});
-
-            // Save the user, creating the new pet and associations in the join table
             user.save(function (err) {
                 if (err) return next(err);
-
                 res.send('OK!!!!!');
             });
-
         })
     },
 
@@ -46,7 +39,8 @@ module.exports = {
             type: req.param('type'),
             location: req.param('location'),
             action: req.param('action'),
-            year: req.param('year')
+            slug: req.param('slug'),
+            description: req.param('description')
         };
         Calendar.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.negotiate(err);
@@ -66,7 +60,6 @@ module.exports = {
             Calendar.destroy(req.param('id'), function userDestroyed(err) {
                 if (err)return next(err);
             });
-            // res.redirect('/admin/users');
             res.ok();
         });
     }

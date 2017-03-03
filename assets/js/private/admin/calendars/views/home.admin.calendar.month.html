@@ -1,0 +1,36 @@
+<!--<h1>{{dateDayInterval}}</h1>-->
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th class="text-center" width="180px">
+            <ul class="pagination pagination-sm">
+                <li><h4>{{period | uppercase}}</h4></li>
+            </ul>
+        </th>
+        <th ng-repeat="day in dateDayInterval" class="text-center">
+            <a class="pagination pagination-lg " href="#" aria-label="Previous">
+                <span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">
+                    {{day.substr(0,2)}}
+                </span>
+                <span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">
+                    {{dn=getDayWeek(day.substr(0,2))}}
+                </span>
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th colspan="35">ФИО  {{cal}}</th>
+    </tr>
+    <tr ng-repeat="user in users">
+        <td width="180px">{{user.lname}} {{user.fname.substr(0,1)}}.{{user.pname.substr(0,1)}}.</td>
+    </tr>
+    </tbody>
+</table>
+<!--<ul>-->
+<!--<li>Наименование: {{item.name}}</li>-->
+<!--<li>Тип: {{item.type | date:'dd.MM.yyyy'}}</li>-->
+<!--<li>Местоположение: {{item.location}}</li>-->
+<!--</ul>-->
