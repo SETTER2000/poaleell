@@ -52,14 +52,14 @@ angular.module('CalendarModule')
                 $scope.solo = ($scope.solo) ? false : true;
             };
 
-            $scope.toggleBlur = function () {
+            $scope.toggleBlur = function (mx) {
                 $scope.solo = ($scope.solo) ? false : true;
-                $scope.startPeriod = moment($scope.mx).format("YYYY-MM-DD");
-                $scope.m = moment($scope.mx).format("M");
+                $scope.startPeriod = moment(mx).format("YYYY-MM-DD");
+                $scope.m = moment(mx).format("M");
                 $scope.m--;
-                $scope.d = moment($scope.mx).format("D");
+                $scope.d = moment(mx).format("D");
                 $scope.d--;
-                $scope.y = moment($scope.mx).format("YYYY");
+                $scope.y = moment(mx).format("YYYY");
                 console.log('PERIODDD');
                 console.log($scope.m);
                 console.log($scope.d);
@@ -76,7 +76,8 @@ angular.module('CalendarModule')
             };
 
             $scope.nextOfMonth = function () {
-                if ($scope.m) {
+                if ($scope.m && $scope.mx) {
+                    $scope.m = moment($scope.mx).format("M");
                     $scope.m++;
                 } else {
                     $scope.currentPeriod();

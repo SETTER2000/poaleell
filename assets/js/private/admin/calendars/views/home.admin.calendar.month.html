@@ -5,7 +5,7 @@
         <th class="text-center" width="190px" nowrap>   {{m}}
             <ul class="pagination pagination-sm">
                 <li ng-if="solo" ><h4  ng-click="toggleTop()" class="gray-light">{{periodMonth | uppercase}} {{periodYear}}</h4></li>
-                <li ng-if="!solo" ><input type="date" ng-model="mx"   ng-blur="toggleBlur()"  class="form-control"></li>
+                <li ng-if="!solo" ><input type="date" ng-model="mx"   ng-blur="toggleBlur(mx)"  class="form-control"></li>
             </ul>
         </th>
         <td ng-repeat="op in daysPeriod">
