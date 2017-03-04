@@ -110,7 +110,7 @@
                         </tr>
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                             <td>{{$index+1}}</td>
-                            <td><a ng-href="{{item.getShowUrl(item.id)}}/1">{{item.name}}</a></td>
+                            <td><a ng-href="{{item.getShowUrl(item.id)}}/месяц">{{item.name}}</a></td>
                             <td>{{item.slug}}</td>
                             <!--<td>{{item.year | date:'yyyy'}}</td>-->
                             <td>{{item.description }}</td>

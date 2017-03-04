@@ -110,8 +110,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascal
                     }
                 }
             })
-            .state('home.admin.calendar.month', {
-                url: '/:monthId',
+            .state('home.admin.calendar.месяц', {
+                url: '/месяц',
                 views: {
                     '@home.admin.calendar': {
                         templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',

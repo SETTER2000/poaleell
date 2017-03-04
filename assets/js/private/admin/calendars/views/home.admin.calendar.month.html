@@ -1,31 +1,41 @@
 <!--<h1>{{dateDayInterval}}</h1>-->
-
 <table class="table table-hover table-bordered">
     <thead>
     <tr>
-        <th class="text-center" width="180px">
+        <th class="text-center" width="190px" nowrap>   {{m}}
             <ul class="pagination pagination-sm">
-                <li><h4>{{period | uppercase}}</h4></li>
+                <li ng-if="solo" ><h4  ng-click="toggleTop()" class="gray-light">{{periodMonth | uppercase}} {{periodYear}}</h4></li>
+                <li ng-if="!solo" ><input type="date" ng-model="mx"   ng-blur="toggleBlur()"  class="form-control"></li>
             </ul>
         </th>
-        <th ng-repeat="day in dateDayInterval" class="text-center">
-            <a class="pagination pagination-lg " href="#" aria-label="Previous">
-                <span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">
-                    {{day.substr(0,2)}}
-                </span>
-                <span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">
-                    {{dn=getDayWeek(day.substr(0,2))}}
-                </span>
-            </a>
-        </th>
+        <td ng-repeat="op in daysPeriod">
+            <span ng-class="{'text-danger':(op.format('dd')==='вс' || op.format('dd')==='сб'), 'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')}">
+                {{op.format('DD')}}  {{op.format('dd')}}
+            </span>
+            <!--{{op.format('MMM')}}  {{op.format('YYYY')}}-->
+        </td>
+        <!--<th ng-repeat="day in dateDayInterval" class="text-center">-->
+            <!--<a class="pagination pagination-lg " href="#" aria-label="Previous">-->
+                <!--<span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">-->
+                    <!--{{day.substr(0,2)}}-->
+                <!--</span>-->
+                <!--<span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">-->
+                    <!--{{dn=getDayWeek(day.substr(0,2))}}-->
+                <!--</span>-->
+            <!--</a>-->
+        <!--</th>-->
     </tr>
     </thead>
     <tbody>
     <tr>
-        <th colspan="35">ФИО  {{cal}}</th>
+        <th colspan="35">ФИО</th>
     </tr>
     <tr ng-repeat="user in users">
-        <td width="180px">{{user.lname}} {{user.fname.substr(0,1)}}.{{user.pname.substr(0,1)}}.</td>
+        <td width="190px" nowrap>{{user.lname}} {{user.fname.substr(0,1)}}.{{user.pname.substr(0,1)}}.</td>
+
+
+
+
     </tr>
     </tbody>
 </table>

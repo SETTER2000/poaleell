@@ -16,12 +16,12 @@
             <div class="row">
                 <div class="col-md-3">
                     <ul class="pagination">
-                        <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/сегодня">Сегодня</a></li>
+                        <li><a href="#" ng-click="currentPeriod()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Сегодня</a></li>
                     </ul>&nbsp;&nbsp;
                     <ul class="pagination">
                         <li>
-                            <a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал"><</a>
-                            <a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">></a>
+                            <a href="#"  ng-click="prevOfMonth()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">< {{m}}</a>
+                            <a href="#" ng-click="nextOfMonth()"  ng-href="{{item.getShowUrl(item.id)}}/{{section}}">> {{m}}</a>
                         </li>
                     </ul>
                 </div>
@@ -36,7 +36,7 @@
             <ul class="pagination">
                 <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>
                 <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/неделя">Неделя</a></li>
-                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/месяц">Месяц</a></li>
+                <li><a href="#" ng-click="currentPeriod()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Месяц</a></li>
                 <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>
                 <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/год">Год</a></li>
             </ul>
