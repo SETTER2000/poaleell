@@ -119,6 +119,15 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascal
                     }
                 }
             })
+            .state('home.admin.calendar.неделя', {
+                url: '/неделя',
+                views: {
+                    '@home.admin.calendar': {
+                        templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',
+                        controller: 'CalendarController'
+                    }
+                }
+            })
             .state('home.admin.calendars.create', {
                 url: '/create/:calendarId',
                 views: {

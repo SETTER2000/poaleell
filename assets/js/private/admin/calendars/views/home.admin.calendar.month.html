@@ -1,16 +1,52 @@
-<!--<h1>{{dateDayInterval}}</h1>-->
-<table class="table table-hover table-bordered">
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="pagination">
+                    <li><a href="#" ng-click="currentPeriod()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Сегодня</a></li>
+                </ul>&nbsp;&nbsp;
+                <ul class="pagination">
+                    <li>
+                        <a href="#"  ng-click="periodPrevNext(1,-1)" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">< {{m}}</a>
+                        <a href="#" ng-click="periodPrevNext(1,1)"  ng-href="{{item.getShowUrl(item.id)}}/{{section}}">> {{m}}</a>
+                        <!--<a href="#" ng-click="g(1)"  ng-href="{{item.getShowUrl(item.id)}}/{{section}}">> {{m}}</a>-->
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-md-offset-1">
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-4">
+        <ul class="pagination">
+            <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>
+            <li ng-class="{'active':(section == 'неделя')}"><a href="#"  ng-click="currentPeriod('week')" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Неделя</a></li>
+            <li ng-class="{'active':(section == 'месяц')}"><a href="#"  ng-click="currentPeriod('month')" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Месяц</a></li>
+            <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover table-bordered">
     <thead>
     <tr>
-        <th class="text-center" width="190px" nowrap>   {{m}}
+        <th class="text-center" width="190px" nowrap>
             <ul class="pagination pagination-sm">
-                <li ng-if="solo" ><h4  ng-click="toggleTop()" class="gray-light">{{periodMonth | uppercase}} {{periodYear}}</h4></li>
+                <li ng-if="solo" ><h4  ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}} {{daysPeriod.periodYear}}</h4></li>
                 <li ng-if="!solo" ><input type="date" ng-model="mx"   ng-blur="toggleBlur(mx)"  class="form-control"></li>
             </ul>
         </th>
-        <td ng-repeat="op in daysPeriod">
-            <span ng-class="{'text-danger':(op.format('dd')==='вс' || op.format('dd')==='сб'), 'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')}">
-                {{op.format('DD')}}  {{op.format('dd')}}
+        <td class="text-center" ng-repeat="op in daysPeriod.data">
+            <span  ng-class="{
+            'text-danger':(op.format('dd')==='вс' || op.format('dd')==='сб'),
+            'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')
+            }">
+                {{op.format('DD')}}
+          <span ng-class="{  'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
             </span>
             <!--{{op.format('MMM')}}  {{op.format('YYYY')}}-->
         </td>
@@ -39,8 +75,5 @@
     </tr>
     </tbody>
 </table>
-<!--<ul>-->
-<!--<li>Наименование: {{item.name}}</li>-->
-<!--<li>Тип: {{item.type | date:'dd.MM.yyyy'}}</li>-->
-<!--<li>Местоположение: {{item.location}}</li>-->
-<!--</ul>-->
+    </div>
+</div>

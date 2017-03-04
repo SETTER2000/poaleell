@@ -11,42 +11,9 @@
             </div>
         </h3>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-3">
-                    <ul class="pagination">
-                        <li><a href="#" ng-click="currentPeriod()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Сегодня</a></li>
-                    </ul>&nbsp;&nbsp;
-                    <ul class="pagination">
-                        <li>
-                            <a href="#"  ng-click="prevOfMonth()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">< {{m}}</a>
-                            <a href="#" ng-click="nextOfMonth()"  ng-href="{{item.getShowUrl(item.id)}}/{{section}}">> {{m}}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-md-offset-1">
-
-                </div>
-            </div>
 
 
-        </div>
-        <div class="col-md-4">
-            <ul class="pagination">
-                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>
-                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/неделя">Неделя</a></li>
-                <li><a href="#" ng-click="currentPeriod()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Месяц</a></li>
-                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>
-                <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/год">Год</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div ui-view></div>
-        </div>
-    </div>
 
+    <div ui-view></div>
 </div>
 

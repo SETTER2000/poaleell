@@ -1,6 +1,6 @@
 angular.module('CalendarModule')
-    .controller('CalendarController', ['$scope', 'moment', 'Calendars', '$stateParams',
-        function ($scope, moment, Calendars, $stateParams) {
+    .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$stateParams', '$rootScope',
+        function ($scope, $http, moment, Calendars, $stateParams, $rootScope) {
 
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
@@ -11,9 +11,36 @@ angular.module('CalendarModule')
              * В данном конструкторе добавлен метод Users.getFullName()
              */
             moment.locale('ru');
+            // $scope.globalPeriod = 'month';
+            // $scope.globalPeriod = 'week';
+            var interval = {
+                start: moment().startOf($scope.globalPeriod).date(1).hours(0).minutes(0).seconds(0).milliseconds(0),
+                end: moment().endOf($scope.globalPeriod)
+            };
+            //
+            // console.log('STAT PARAM');
+            // console.log($scope.section);
+            //
+            // console.log('START #1 PERIOD');
+            // console.log(interval.start);
+            //
+            // console.log('END  #1 PERIOD');
+            // console.log(interval.end);
+            //
+
             $scope.solo = true;
-            $scope.section = 'месяц';
-            $scope.mx = new Date();
+
+
+            // $http.get('http://basicdata.ru/api/json/calend')
+            //     .then(function (attendance) {
+            //         console.log('attendance^^');
+            //         console.log(attendance);
+            //
+            //         $scope.differ(attendance);
+            //         console.log('DDD:');
+            //         console.log($scope.items);
+            //
+            //     });
 
 
             $scope.users = [
@@ -36,148 +63,100 @@ angular.module('CalendarModule')
                 {lname: 'Большакова', fname: 'Татьяна', pname: 'Ивановна'}
             ];
 
+            $scope.currentPeriod = function (period) {
+                
+                $scope.globalPeriod = (period === 'week') ? 'week' : 'month';
+                $scope.section =  (period === 'week') ? 'неделя' : 'месяц';
+                $scope.interval = {};
+                // console.log('CURRENT DATE');
+                // console.log(moment().startOf($scope.globalPeriod).date(1));
+                //
 
-            // var recurrence;
-            // $scope.m =moment();
-            // console.log('SAAAAAA');
-            // console.log($scope.m);
+                $scope.interval = interval;
+                $scope.interval.start = moment().startOf($scope.globalPeriod).date(1);
+                $scope.restart();
+            };
 
-            // $scope.startPeriod = moment().year($scope.y).month($scope.m).date($scope.d);
-            // // $scope.endPeriod = moment().year($scope.y).month().date($scope.d);
-            // recurrence = moment().recur(moment().day($scope.d), moment().date(31)).every(1).days();
-            // $scope.daysPeriod = recurrence.next(31);
-            // $scope.periodMonth = $scope.daysPeriod[0].format('MMMM');
-            // $scope.periodYear = $scope.daysPeriod[0].format('YYYY');
+            $scope.periodPrevNext = function (n, operator) {
+                var t = 0;
+                var y = $scope.interval.end;
+                if (operator == 1) {
+                    t = (n) ? (t + n) : t++;
+                } else {
+                    t = (n) ? (t - n) : t--;
+                }
+                if($scope.globalPeriod === 'week'){
+                    $scope.interval = $scope.interval.start.recur().every(1).weeks();
+                    $scope.interval.end = y.recur().every(1).weeks().start;
+                }
+                if($scope.globalPeriod === 'month'){
+                    $scope.interval = $scope.interval.start.recur().every(1).months();
+                    $scope.interval.end = y.recur().every(1).months().start;
+                }
+
+
+                $scope.interval.start.add(t, $scope.globalPeriod);
+                $scope.interval.end.add(t, $scope.globalPeriod);
+                $scope.restart();
+            };
+
+            $scope.restart = function () {
+                var recurrence;
+                var daysPeriod = {data: []};
+                if (angular.isDefined($scope.interval)) {
+                    var start = $scope.interval.start;
+                    var end = $scope.interval.end;
+                    recurrence = moment().recur(start, end).every(1).days(1);
+                    // console.log('RECURRENCE');
+                    recurrence.start.subtract(1, 'days');
+                    recurrence.end.subtract(1, 'days');
+                    // console.log(recurrence);
+                    daysPeriod.data = recurrence.next(31);
+
+                    // console.log('SPISOK DNEY');
+                    // console.log(daysPeriod);
+
+                    daysPeriod.currentDate = moment().format('DD.MM.YYYY');
+                    // console.log('SPISOK333 DNEY');
+                    // console.log(daysPeriod.currentDate);
+                    daysPeriod.periodMonth = daysPeriod.data[0].format('MMMM');
+                    daysPeriod.periodYear = daysPeriod.data[0].format('YYYY');
+                }
+                else {
+                    $scope.currentPeriod();
+                }
+                $scope.daysPeriod =daysPeriod;
+                // $rootScope.$broadcast('eventNextPeriod', daysPeriod);
+            };
+
+            // $scope.$on("eventNextPeriod", function (event, args) {
+            //     $scope.daysPeriod = args;
+            // });
+
+
             $scope.toggleTop = function () {
                 $scope.solo = ($scope.solo) ? false : true;
             };
 
             $scope.toggleBlur = function (mx) {
                 $scope.solo = ($scope.solo) ? false : true;
-                $scope.startPeriod = moment(mx).format("YYYY-MM-DD");
-                $scope.m = moment(mx).format("M");
-                $scope.m--;
-                $scope.d = moment(mx).format("D");
-                $scope.d--;
-                $scope.y = moment(mx).format("YYYY");
-                console.log('PERIODDD');
-                console.log($scope.m);
-                console.log($scope.d);
-                console.log($scope.y);
-                console.log($scope.startPeriod);
-                $scope.restart();
-            };
+                $scope.interval.start = moment(mx).hours(0).minutes(0).seconds(0).milliseconds(0);
 
-            $scope.currentPeriod = function () {
-                $scope.y = moment().year();
-                $scope.m = moment().month();
-                $scope.d = 0;
-                $scope.restart();
-            };
-
-            $scope.nextOfMonth = function () {
-                if ($scope.m && $scope.mx) {
-                    $scope.m = moment($scope.mx).format("M");
-                    $scope.m++;
-                } else {
-                    $scope.currentPeriod();
-                }
-                $scope.restart();
-            };
-            $scope.prevOfMonth = function () {
-                if ($scope.m) {
-                    $scope.m--;
-                } else {
-                    $scope.currentPeriod();
-                }
+                // console.log('PERIODDD BLUR');
+                // console.log($scope.interval);
 
                 $scope.restart();
             };
-
-            // $scope.$watch('m', function (value) {
-            //     $scope.m = value;
-            //     console.log('МЕСЯЦ3');
-            //     console.log($scope.m);
-            //     $scope.restart();
-            // });
-
-            // $scope.$watch('m', function (value) {
-            //     $scope.m = value;
-            //     $scope.restart();
-            // });
-            $scope.restart = function () {
-                console.log('PERIODDD2');
-                console.log($scope.m);
-                var en = $scope.m;
-                $scope.startPeriod = moment().year($scope.y).month($scope.m).date($scope.d);
-                $scope.endPeriod = moment().year($scope.y).month(en++).date($scope.d);
-                recurrence = moment().recur(moment($scope.startPeriod), moment($scope.endPeriod).date(31)).every(1).days();
-                $scope.daysPeriod = recurrence.next(31);
-                $scope.periodMonth = $scope.daysPeriod[0].format('MMMM');
-                $scope.periodYear = $scope.daysPeriod[0].format('YYYY');
-            };
-            // $scope.startPeriod = moment().year($scope.y).month($scope.m).date($scope.d);
-            // $scope.endPeriod = moment().year($scope.y).month($scope.m).date($scope.d);
-            // // $scope.startPeriod = moment().recur().every(1).month();
-            //
-            //
-            // recurrence = moment().recur(moment($scope.startPeriod), moment( $scope.endPeriod).date(31)).every(1).days();
-            // $scope.daysPeriod = recurrence.next(31);
-            //
-            //
-            // /**
-            //  * Calendar
-            //  */
-            // $scope.periodMonth = $scope.daysPeriod[0].format('MMMM');
-            // $scope.periodYear = $scope.daysPeriod[0].format('YYYY');
-            // $scope.period = moment($scope.dateStart).format('MMM');
-            // recurrence = moment().recur(moment($scope.dateStart).date(1), moment($scope.dateEnd).date(31)).every(1).days();
-            //recurrence = moment().recur(moment().date(1),moment().date(31)).every(1).months();
-            // $scope.getDayWeek = function (day) {
-            //     return moment({'day': day}).format('dd');
-            // };
-            // $scope.dn = moment().format('dd');
-            //$scope.dateDayInterval = recurrence.next(3);
-            // $scope.dateDayInterval = recurrence.all("L");
-            //$scope.dateDayInterval = recurrence.next(3, "L");
 
 
             $scope.refresh = function () {
                 $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
                     $scope.calendars = calendars;
-
+                    $scope.restart();
                 }, function (err) {
                     if (err) console.log(err.message);
                 });
             };
 
-            // $scope.toggleSelected = function () {
-            //     $scope.selected = !$scope.selected;
-            // };
-            // $scope.isSelected = function () {
-            //     return $scope.selected;
-            // };
-            //console.log($scope.items.login);
-
-
-            // Обновление элемента
-            //$scope.update = function (item) {
-            //    item.$save();
-            //    //$scope.currentView = 'table';
-            //};
-
-
-            //$scope.currentItem = ;
-            // редеактирование существующего или создание нового элемента
-            //$scope.editOrCreate = function (item) {
-            //    $scope.currentItem = 'GOOOOOO';
-            //    $location.path("/user/edit");
-            //
-            //};
-            //$scope.goToViewEdit = function () {
-            //    $location.path("/user/edit");
-            //};
-
             $scope.refresh();
-
         }]);
