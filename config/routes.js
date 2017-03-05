@@ -122,7 +122,7 @@ module.exports.routes = {
     'PUT /login': 'UserController.login',
     'GET /logout': 'UserController.logout',
     'DELETE /user/:id': 'UserController.destroy',
-    'DELETE /position/:id': 'PositionController.destroy'
+    'DELETE /position/:id': 'PositionController.destroy',
 
     /***************************************************************************
      *                                                                          *
@@ -133,5 +133,10 @@ module.exports.routes = {
      * for configuration options and examples.                                  *
      *                                                                          *
      ***************************************************************************/
+
+
+
+    'GET /say/hello':'SayController.hello'
+
 
 };
