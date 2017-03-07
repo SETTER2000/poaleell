@@ -1,6 +1,6 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
-        <h1><!--{{items[0].scs()}}-->{{items[0].getNamePage()}} <span ng-if="mode">не активные</span> ({{filtered.length}})
+        <h1><!--{{items[0].scs()}}-->{{items[0].getNamePage()}} <span ng-if="mode">не активные</span> {{filtered.length}}
             <div class="btn-group-xs pull-right">
                 <small>
                     <label class="checkbox-inline">
@@ -14,10 +14,10 @@
                 <button ui-sref="home.admin.positions.settings" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
-                <!--<button ui-sref="home.admin.positions.create" type="button" class="btn btn-warning">-->
-                   <!---->
-                <!--</button>-->
-                <button ui-sref="home.admin.calendars.create" type="button" class="btn btn-warning" >
+                <button ui-sref="home.admin.attendances.calendar" type="button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </button>
+                <button ui-sref="home.admin.attendances.create" type="button" class="btn btn-warning" >
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 <!--<a ng-href="{{items[0].getCreateUrl()}}" class="btn btn-warning">-->
@@ -38,7 +38,23 @@
         <div ui-view></div>
         <div ui-view="settings"></div>
     </div>
-    <pagination num-pages="numPages" current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
+
+    <pagination num-pages="numPages"
+                limit-rows="limitRows"
+                default-rows="defaultRows"
+                length-object="items.length"
+                current-page="currentPage"
+                on-select-page="selectCount=selectCount+1">
+    </pagination>
+
+    <word-part object-name="objectName"
+               filed-name="filedName"
+               where="where"
+               count-char="countChar"
+               char-text="charText"
+               get-char-text="getCharText(ch)">
+    </word-part>
+
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">

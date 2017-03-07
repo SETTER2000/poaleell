@@ -6,16 +6,6 @@
  */
 
 module.exports = {
-    //get: function (req,res) {
-    //   Attendance.find()
-    //       //.populate('employees')
-    //       .exec(function (err, attendances) {
-    //           if (err) {
-    //               return res.json(err);
-    //           }
-    //           return res.view(attendances);
-    //       });
-    //},
     getQuery: function (req, res) {
 
         // var Promise = require('bluebird');

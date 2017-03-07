@@ -93,6 +93,9 @@ module.exports.routes = {
     'GET /admin/employee/:id': 'PageController.showHomePage',
 
 
+    'GET /admin/attendances/calendar': 'PageController.showHomePage',
+
+
 
 
 

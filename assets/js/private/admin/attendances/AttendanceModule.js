@@ -60,6 +60,15 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                     }
                 }
             })
+            .state('home.admin.attendances.calendar', {
+                url: '/calendar/:attendanceId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/calendars/tpl/show.tpl.html',
+                        controller: 'CalendarController'
+                    }
+                }
+            })
         ;
     })
     .constant('CONF_MODULE_Attendance', {baseUrl: '/attendance/:attendanceId'})
@@ -287,197 +296,78 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
             }
         };
     })
-    //.directive('pagination', function() {
+    //.directive('pagination', function () { // функция компиляции директивы (фабричная функция)
     //    return {
     //        restrict: 'E',
     //        scope: {
-    //            numPages: '=',
+    //            numPages: '=', // кол-во страниц (кнопок)
+    //            defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
+    //            limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
+    //            lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
     //            currentPage: '=',
     //            onSelectPage: '&'
     //        },
-    //        template:
-    //        '<nav aria-label="Page navigation">'+
-    //        '<ul class="pagination">' +
-    //        '<li ng-class="{disabled: noPrevious()}"><a ng-click="selectPrevious()">Previous</a></li>' +
-    //        '<li ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a ng-click="selectPage(page)">{{page}}</a></li>' +
-    //        '<li ng-class="{disabled: noNext()}"><a ng-click="selectNext()">Next</a></li>' +
-    //        '</ul>' +
-    //        '</nav>',
+    //        templateUrl: '/js/private/admin/attendances/tpl/views/pagination.html',
     //        replace: true,
-    //        link: function(scope) {
-    //            scope.$watch('numPages', function(value) {
+    //        link: function (scope) {
+    //            scope.$watch('numPages', function (value) {
     //                scope.pages = [];
-    //                for(var i=1;i<=value;i++) {
+    //                for (var i = 1; i <= value; i++) {
     //                    scope.pages.push(i);
     //                }
-    //                if ( scope.currentPage > value ) {
+    //                if (scope.currentPage > value) {
     //                    scope.selectPage(value);
     //                }
     //            });
-    //            scope.noPrevious = function() {
+    //            scope.$watch('limitRows', function (value) {
+    //                scope.rows = [];
+    //                for (var i = 0; i <= value.length; i++) {
+    //                    scope.rows.push(value[i]);
+    //                }
+    //            });
+    //            scope.$watch('defaultRows', function (value, oldValue) {
+    //                if (value > 0) {
+    //                    scope.defaultRows = value;
+    //                    scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+    //                }
+    //            });
+    //            scope.noPrevious = function () {
     //                return scope.currentPage === 1;
     //            };
-    //            scope.noNext = function() {
+    //            scope.noNext = function () {
     //                return scope.currentPage === scope.numPages;
     //            };
-    //            scope.isActive = function(page) {
+    //            scope.isActive = function (page) {
     //                return scope.currentPage === page;
     //            };
-    //
-    //            scope.selectPage = function(page) {
-    //                if ( ! scope.isActive(page) ) {
+    //            scope.isActiveRow = function (row) {
+    //                return scope.defaultRows === row;
+    //            };
+    //            scope.selectPage = function (page) {
+    //                if (!scope.isActive(page)) {
     //                    scope.currentPage = page;
-    //                    scope.onSelectPage({ page: page });
+    //                    scope.onSelectPage({page: page});
     //                }
     //            };
-    //
-    //            scope.selectPrevious = function() {
-    //                if ( !scope.noPrevious() ) {
-    //                    scope.selectPage(scope.currentPage-1);
+    //            scope.selectPrevious = function () {
+    //                if (!scope.noPrevious()) {
+    //                    scope.selectPage(scope.currentPage - 1);
     //                }
     //            };
-    //            scope.selectNext = function() {
-    //                if ( !scope.noNext() ) {
-    //                    scope.selectPage(scope.currentPage+1);
+    //            scope.selectNext = function () {
+    //                if (!scope.noNext()) {
+    //                    scope.selectPage(scope.currentPage + 1);
+    //                }
+    //            };
+    //            scope.getLimitRows = function (limitRows) {
+    //                scope.defaultRows = limitRows;
+    //                if (scope.lengthObject <= scope.defaultRows) {
+    //                    scope.numPages = 1;
+    //                } else {
+    //                    scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
     //                }
     //            };
     //        }
     //    };
-    //})
-    //.directive("attendanceList", function () {
-    //    return function (scope, element, attributes) {
-    //
-    //        var data = scope[attributes["attendanceList"]];
-    //        var expression = attributes["displayProperty"];
-    //
-    //        if (angular.isArray(data)) {
-    //            console.log('LENGTH:');
-    //            console.log(data);
-    //            console.log(data.length);
-    //            var e = angular.element("<ul>");
-    //            element.append(e);
-    //
-    //            for (var i = 0; i < data.length; i++) {
-    //
-    //                // немедленно-запускаемая функция, которая выступает в роли области видимости
-    //                // и избежать замыкание на переменной i;
-    //                (function () {
-    //                    var item = angular.element('<li>');
-    //                    e.append(item);
-    //                    var index = i;
-    //
-    //                    var watcherFunction = function (watchScope) {
-    //                        return watchScope.$eval(expression, data[index]);
-    //                    };
-    //
-    //                    // scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
-    //                    // Функция будет вызываться каждый раз, когда меняется scope.
-    //                    // Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
-    //                    scope.$watch(watcherFunction, function (newValue, oldValue) {
-    //                        item.text(newValue);
-    //                    });
-    //                }());
-    //            }
-    //        }else{
-    //            console.log('NOT ARRAY!!!!');
-    //        }
-    //    }
-    //})
-    //.directive("orderedList", function () {
-    //    return {
-    //        link: function (scope, element, attributes) {
-    //            scope.data = scope[attributes["orderedList"]];
-    //        },
-    //        restrict: "A",
-    //        // адрес внешнего файла с шаблоном
-    //        templateUrl: "/js/private/admin/attendances/tpl/template.html"
-    //    }
-    //})
-    //.directive("orderedList", function () {
-    //    return {
-    //        link: function (scope, element, attributes) {
-    //            scope.data = scope[attributes["orderedList"]];
-    //        },
-    //        restrict: "A",
-    //        // шаблон для создания разметки
-    //        template: "<ol><li ng-repeat='item in data'>{{item.id}}</li></ol>"
-    //    }
-    //})
-    //.directive("orderedList", function () {
-    //    // link function - производит связывание директивы и HTML разметки.
-    //    // Данная функция вызывается каждый раз когда новый экземпляр директивы создается AngularJS
-    //    // Аргументы функции (не предоставляются через Dependecy Injection):
-    //    // 1 - scope к которому применяется директива
-    //    // 2 - HTML элемент, к которому применяется директива
-    //    // 3 - атрибуты HTML элемента
-    //    return function (scope, element, attributes) {
-    //
-    //        var attrValue = attributes["orderedList"];  // получаем значение атрибута (ordered-list="items")
-    //        var data = scope[attrValue];                // получаем значение из scope (scope[items])
-    //
-    //        if (angular.isArray(data)) {
-    //            // angular.element - метод преобразовывает строку или DOM элемент в jQuery объект
-    //            var e = angular.element("<ol>");
-    //            element.append(e); // добавляем ol к элементу для которого установлена директива
-    //            for (var i = 0; i < data.length; i++) {
-    //                // Создаем li элементы заполняя их данными из массива data
-    //                e.append(angular.element('<li>').text(data[i].id));
-    //            }
-    //        }
-    //    }
-    //})
-    //.directive("orderedList", function () {
-    //    return function (scope, element, attributes) {
-    //
-    //        var data = scope[attributes["orderedList"]];
-    //        var expression = attributes["displayProperty"];
-    //
-    //        if (angular.isArray(data)) {
-    //
-    //            var e = angular.element("<ul>");
-    //            element.append(e);
-    //
-    //            for (var i = 0; i < data.length; i++) {
-    //
-    //                // немедленно-запускаемая функция, которая выступает в роли области видимости
-    //                // и избежать замыкание на переменной i;
-    //                (function () {
-    //                    var item = angular.element('<li>');
-    //                    e.append(item);
-    //                    var index = i;
-    //
-    //                    var watcherFunction = function (watchScope) {
-    //                        return watchScope.$eval(expression, data[index]);
-    //                    }
-    //
-    //                    // scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
-    //                    // Функция будет вызываться каждый раз, когда меняется scope.
-    //                    // Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
-    //                    scope.$watch(watcherFunction, function (newValue, oldValue) {
-    //                        item.text(newValue);
-    //                    });
-    //                }());
-    //            }
-    //        }
-    //    }
-    //})
-    //.filter("agEmployees", function () {
-    //
-    //    return function (value, nameField) {
-    //        // isArray - проверка, что переменная является массивом
-    //        // isNumber - проверка, что переменная является числом
-    //        if (angular.isArray(value) && angular.isString(nameField)) {
-    //
-    //            return value[value.employees[0].nameField];
-    //            //if (count > value.length || count < 1) {
-    //            //    return value;
-    //            //} else {
-    //            //    return value.slice(count);
-    //            //}
-    //        } else {
-    //            return value;
-    //        }
-    //    }
-    //
     //})
 ;

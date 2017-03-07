@@ -4,10 +4,17 @@
         .controller('ListAttendanceController', ['$scope', '$http', 'moment', 'Attendances', '$state',
             function ($scope, $http, moment, Attendances, $state) {
 
-                $scope.sort = 'date';
-                $scope.limitAll = 100;
 
-                $scope.currentPage = 1;
+
+                /**
+                 * PAGINATION
+                 */
+                $scope.defaultRows = 150;
+                $scope.limitRows = [30, 50, 70, 100];
+                $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
+
+                $scope.sort = 'date';
+                $scope.limitAll = 1000;
 
                 $scope.selectCount = 0;
                 //$scope.tasks=[
@@ -68,6 +75,9 @@
                         console.log('ATTENDANCES: ');
                         console.log($scope.attendances);
                         console.log($scope.attendances.length);
+
+
+                        $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
                         // $scope.items = attendances;
                         // $scope.differ(attendances);
 

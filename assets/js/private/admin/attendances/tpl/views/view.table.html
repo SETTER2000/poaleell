@@ -48,7 +48,7 @@
     </tr>
     </thead>
     <tbody >
-    <tr ng-repeat="item in filtered=(data | filter:{$:searchText} | orderBy:propertyName:reverse)  ">
+    <tr ng-repeat="item in filtered=(data | filter:{$:searchText} | orderBy:propertyName:reverse) | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows ">
         <!--<tr ng-repeat="item in data">-->
         <td>{{$index+1}}</td>
         <td><a href="#" ng-click="getTargetUser(item)">{{item.fio}}</a></td>
