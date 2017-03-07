@@ -3,26 +3,12 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
         $stateProvider
             .state('home.admin.attendances', {
                 url: '/attendances',
-                //template:'<h1>Attendances</h1>'
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/attendances/tpl/list.tpl.html',
                         controller: 'ListAttendanceController'
-                        //template:'<h1>DEPARTAMENT</h1>'
                     }
                 }
-                //views: {
-                //    '@': {
-                //        template: function($stateParams) {
-                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
-                //        },
-                //        controller: function() {}
-                //
-                //    }
-                //}
             })
             .state('home.admin.attendances.edit', {
                 url: '/edit/:attendanceId',
@@ -33,15 +19,6 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                     }
                 }
             })
-            //.state('home.admin.depart', {
-            //    url: '/depart/:attendanceId',
-            //    views: {
-            //        '@': {
-            //            templateUrl: '/js/private/admin/attendances/tpl/list.tpl.html',
-            //            controller: 'EditAttendanceController'
-            //        }
-            //    }
-            //})
             .state('home.admin.attendance', {
                 url: '/attendance/:attendanceId',
                 views: {
@@ -61,10 +38,28 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                 }
             })
             .state('home.admin.attendances.calendar', {
-                url: '/calendar/:attendanceId',
+                url: '/calendar',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/calendars/tpl/show.tpl.html',
+                        templateUrl: '/js/private/admin/attendances/tpl/show.tpl.html',
+                        controller: 'CalendarController'
+                    }
+                }
+            })
+            .state('home.admin.attendances.calendar.месяц', {
+                url: '/месяц',
+                views: {
+                    '@home.admin.attendances.calendar': {
+                        templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',
+                        controller: 'CalendarController'
+                    }
+                }
+            })
+            .state('home.admin.attendances.calendar.неделя', {
+                url: '/неделя',
+                views: {
+                    '@home.admin.attendances.calendar': {
+                        templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',
                         controller: 'CalendarController'
                     }
                 }
@@ -138,10 +133,6 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
             var expression = attributes["displayProperty"];
             data.$promise.then(onFulfilled, onRejected);
             function onFulfilled(data) {
-                //console.log('PROMISE');
-                //console.log(data.length);
-                //console.log(data);
-
                 if (angular.isArray(data)) {
                     var e = angular.element("<ol>");
                     element.append(e);
@@ -177,24 +168,10 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                 function rejectFull(t) {
                     scope.data = [];
                     scope.fio = [];
-                    //console.log('PROMISE^^^');
-                    //console.log(t.length);
-
                     if (angular.isArray(t) && t.length > 0) {
                         for (var y = 0; y < t.length; y++) {
                             scope.fio.push(t[y].getFullName());
-
                         }
-                        //[{
-                        //    fio: [{
-                        //        id: t[i].id,
-                        //        date: t[i].date,
-                        //        time_in: t[i].time_in,
-                        //        time_out: t[i].time_out,
-                        //        fio: t[i].getFullName()
-                        //    }
-                        //    ]
-                        //}]
                         for (var i = 0; i < t.length; i++) {
                             scope.data.push(
                                 {
@@ -209,44 +186,11 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                                 }
                             );
                         }
-
                         console.log('DATA:');
                         console.log(scope.data);
                     }
                 }
 
-                //if (angular.isArray(data) && data.length > 0) {
-                //    console.log('DIRECTIVES-2:');
-                //    console.log(data.length);
-                //    //console.log(data.getFullName());
-                //    //console.log(data[0].id);
-                //    //var e = angular.element('<tr>');
-                //    //element.append(e);
-                //    //console.log('DIRECTIVES2:');
-                //    //console.log(data);
-                //    for (var i = 0; i < data.length; i++) {
-                //        console.log('DIRECTIVES23:');
-                //        console.log(data[i].id);
-                //        newData.push({id: data[i].id});
-                //
-                //
-                //        //(function () {
-                //        //    var item = angular.element('<td>');
-                //        //    e.append(item);
-                //        //    //var index = i;
-                //        //    //var watcherFunction = function (watchScope) {
-                //        //    //    return watchScope.$eval(expression, data[index]);
-                //        //    //};
-                //        //    //// scope.$watch - Устанавливаем отслеживание изменений в scope на основе watcherFunction, которая возвращает значение с учетом фильтров.
-                //        //    //// Функция будет вызываться каждый раз, когда меняется scope.
-                //        //    //// Если функция возвращает новое значение, то элемент отображающий это значение обновляется.
-                //        //    //scope.$watch(watcherFunction, function (newValue, oldValue) {
-                //        //    //    item.text(newValue);
-                //        //    //});
-                //        //}());
-                //    }
-                //
-                //}
             },
             restrict: "A",
             templateUrl: function (element, attributes) {
@@ -269,10 +213,6 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
         return function (scope, element, attributes) {
             // element - jqLite объект
             var elements = element.children(); // получение всех дочерних элементов
-            //console.log('JQL');
-            //console.log(elements.length);
-            //console.log(elements.eq(1));
-            //console.log(elements.eq(1).val());
             for (var i = 0; i < elements.length; i++) {
                 //console.log(elements.eq(i).text());
                 // если элемент содержит текст Red сделать его красным цветом

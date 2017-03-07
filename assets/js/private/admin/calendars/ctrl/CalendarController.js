@@ -1,7 +1,18 @@
+(function(angular) {
+    'use strict';
 angular.module('CalendarModule')
-    .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$stateParams', '$rootScope',
-        function ($scope, $http, moment, Calendars, $stateParams, $rootScope) {
+    .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$location', '$stateParams', '$rootScope',
+        function ($scope, $http, moment, Calendars, $location, $stateParams, $rootScope) {
 
+            //this.$uiRoute = ;
+
+            //this.$location = $location;
+            //this.$stateParams = $stateParams;
+
+            console.log('$STATE_PARAMS');
+            console.log( this.$stateParams);
+
+            $scope.tbody = "/js/private/admin/calendars/views/view.tbody.html";
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -64,9 +75,9 @@ angular.module('CalendarModule')
             ];
 
             $scope.currentPeriod = function (period) {
-                
+
                 $scope.globalPeriod = (period === 'week') ? 'week' : 'month';
-                $scope.section =  (period === 'week') ? 'неделя' : 'месяц';
+                $scope.section = (period === 'week') ? 'неделя' : 'месяц';
                 $scope.interval = {};
                 // console.log('CURRENT DATE');
                 // console.log(moment().startOf($scope.globalPeriod).date(1));
@@ -85,11 +96,11 @@ angular.module('CalendarModule')
                 } else {
                     t = (n) ? (t - n) : t--;
                 }
-                if($scope.globalPeriod === 'week'){
+                if ($scope.globalPeriod === 'week') {
                     $scope.interval = $scope.interval.start.recur().every(1).weeks();
                     $scope.interval.end = y.recur().every(1).weeks().start;
                 }
-                if($scope.globalPeriod === 'month'){
+                if ($scope.globalPeriod === 'month') {
                     $scope.interval = $scope.interval.start.recur().every(1).months();
                     $scope.interval.end = y.recur().every(1).months().start;
                 }
@@ -125,7 +136,7 @@ angular.module('CalendarModule')
                 else {
                     $scope.currentPeriod();
                 }
-                $scope.daysPeriod =daysPeriod;
+                $scope.daysPeriod = daysPeriod;
                 // $rootScope.$broadcast('eventNextPeriod', daysPeriod);
             };
 
@@ -159,4 +170,13 @@ angular.module('CalendarModule')
             };
 
             $scope.refresh();
-        }]);
+        }])
+
+    //.controller('PeriodController', ['$stateParams', function ($stateParams) {
+    //    this.name = 'PeriodController';
+    //    this.params = $stateParams;
+    //}])
+
+
+;
+})(window.angular);

@@ -1,15 +1,14 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10">
         <div class="row">
             <div class="col-md-3">
                 <ul class="pagination">
-                    <li><a href="#" ng-click="currentPeriod()" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Сегодня</a></li>
+                    <li><a href="#" ng-click="currentPeriod()" ng-href="{{section}}">Сегодня</a></li>
                 </ul>&nbsp;&nbsp;
                 <ul class="pagination">
                     <li>
-                        <a href="#"  ng-click="periodPrevNext(1,-1)" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">< {{m}}</a>
-                        <a href="#" ng-click="periodPrevNext(1,1)"  ng-href="{{item.getShowUrl(item.id)}}/{{section}}">> {{m}}</a>
-                        <!--<a href="#" ng-click="g(1)"  ng-href="{{item.getShowUrl(item.id)}}/{{section}}">> {{m}}</a>-->
+                        <a href="#"  ng-click="periodPrevNext(1,-1)" ng-href="{{section}}">< {{m}}</a>
+                        <a href="#" ng-click="periodPrevNext(1,1)"  ng-href="{{section}}">> {{m}}</a>
                     </li>
                 </ul>
             </div>
@@ -17,20 +16,18 @@
 
             </div>
         </div>
-
-
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <ul class="pagination">
-            <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>
-            <li ng-class="{'active':(section == 'неделя')}"><a href="#"  ng-click="currentPeriod('week')" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Неделя</a></li>
-            <li ng-class="{'active':(section == 'месяц')}"><a href="#"  ng-click="currentPeriod('month')" ng-href="{{item.getShowUrl(item.id)}}/{{section}}">Месяц</a></li>
-            <li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>
+            <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>-->
+            <li ng-class="{'active':(section == 'неделя')}"><a  ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a></li>
+            <li ng-class="{'active':(section == 'месяц')}"><a  ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
+            <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>-->
         </ul>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <ui-view class="col-md-12">
         <table class="table table-hover table-bordered">
     <thead>
     <tr>
@@ -63,17 +60,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th colspan="35">ФИО</th>
-    </tr>
-    <tr ng-repeat="user in users">
-        <td width="190px" nowrap>{{user.lname}} {{user.fname.substr(0,1)}}.{{user.pname.substr(0,1)}}.</td>
 
 
-
-
-    </tr>
     </tbody>
-</table>
+</table> <span ng-view></span>
+</table> <span ng-view="trbody"></span>
     </div>
-</div>
+

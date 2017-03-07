@@ -27,8 +27,8 @@ var translationsEN = {
     BUTTON_LANG_EN: 'English',
     BUTTON_LANG_RU: 'Russian'
 };
-var translationsDE= {
-    TITLE:'Titel',
+var translationsDE = {
+    TITLE: 'Titel',
     HEADLINE: 'Beschreibung',
     CHPU: 'Freundliche URL!',
     ATTENDANCE: 'TEILNAHME',
@@ -41,8 +41,8 @@ var translationsDE= {
     BUTTON_LANG_RU: 'Russian'
 };
 
-angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascalprecht.translate', 'angularMoment'])
-    .config(['$stateProvider','$translateProvider',function ($stateProvider,$translateProvider) {
+angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pascalprecht.translate', 'angularMoment'])
+    .config(['$stateProvider', '$translateProvider', function ($stateProvider, $translateProvider) {
         // $translateProvider.translations('en', translations).preferredLanguage('en');
         $translateProvider.translations('en', translationsEN);
         $translateProvider.translations('de', translationsDE);
@@ -119,12 +119,32 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascal
                     }
                 }
             })
+            //.state('home.admin.calendar.месяц', {
+            //    views: {
+            //        'trbody@home.admin.calendar': {
+            //            templateUrl: '/js/private/admin/calendars/views/view.tbody.html'
+            //        }
+            //    }
+            //})
+            //.state('home.admin.calendar', {
+            //
+            //        'tbody@home.admin.calendar.месяц': {
+            //            templateUrl: '/js/private/admin/calendars/views/view.tbody.html'
+            //        }
+            //})
             .state('home.admin.calendar.неделя', {
                 url: '/неделя',
                 views: {
                     '@home.admin.calendar': {
                         templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',
                         controller: 'CalendarController'
+                    }
+                }
+            })
+            .state("tbody", {
+                views: {
+                    'tbody@': {
+                        templateUrl: "/js/private/admin/calendars/views/view.tbody.html"
                     }
                 }
             })
@@ -156,33 +176,33 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate','pascal
         //    return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         //};
 
-         Calendars.prototype.sc = function () {
-             return this.section;
-         };
-         Calendars.prototype.scs = function () {
-             return this.sections;
-         };
+        Calendars.prototype.sc = function () {
+            return this.section;
+        };
+        Calendars.prototype.scs = function () {
+            return this.sections;
+        };
 
         Calendars.prototype.ok = function () {
             return alert(this.section + ': ' + this.name + ' изменён!');
         };
         Calendars.prototype.er = function (ms) {
-            return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты! '+ms);
+            return alert('ОШИБКА!!! ' + this.name + ' - изменения не приняты! ' + ms);
         };
         Calendars.prototype.getListUrl = function () {
             return '/admin/calendars';
         };
         Calendars.prototype.getEditUrl = function (id) {
-            return '/admin/calendars/edit/'+id;
+            return '/admin/calendars/edit/' + id;
         };
         Calendars.prototype.getShowUrl = function (id) {
-            return '/admin/calendar/'+id;
+            return '/admin/calendar/' + id;
         };
         Calendars.prototype.getCreateUrl = function () {
             return '/admin/calendars/create';
         };
         Calendars.prototype.deactivation = function () {
-            return  ' - деактивирован';
+            return ' - деактивирован';
         };
 
         return Calendars;
