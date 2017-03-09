@@ -1,9 +1,10 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
     <div class="page-header">
         <h1>
-            <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}} <span ng-if="!item.action" ng-bind="item.deactivation()"></span></p>
-            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
-                сотрудников: </a>
+            <p ng-class="{'fired':!item.action}">{{item.sc()}} {{item.name}}
+                <span ng-if="!item.action" ng-bind="item.deactivation()"></span></p>
+            <!--<a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">-->
+                <!--сотрудников: </a>-->
 
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
@@ -14,6 +15,16 @@
                 </a>
             </div>
         </h1>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                        <span ng-switch-default>
+                                <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                        </span>
+                </ng-switch>
+            </li>
+        </ul>
     </div>
     <div class="row">
         <div class="col-md-6">

@@ -2,24 +2,24 @@
     <div class="page-header">
         <h1><!--{{items[0].scs()}}-->{{items[0].getNamePage()}} <span ng-if="mode">не активные</span> {{filtered.length}}
             <div class="btn-group-xs pull-right">
-                <small>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="debug" value="option1"> отладка
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="mode" value="option2"> режимы
-                    </label>
+                <!--<small>-->
+                    <!--<label class="checkbox-inline">-->
+                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
+                    <!--</label>-->
+                    <!--<label class="checkbox-inline">-->
+                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
+                    <!--</label>-->
 
-                </small>
-                <button ui-sref="home.admin.positions.settings" type="button" class="btn btn-success">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </button>
+                <!--</small>-->
+                <!--<button ui-sref="home.admin.attendances.settings" type="button" class="btn btn-success">-->
+                    <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--</button>-->
                 <button ui-sref="home.admin.attendances.calendar.месяц" type="button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </button>
-                <button ui-sref="home.admin.attendances.create" type="button" class="btn btn-warning" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                <!--<button ui-sref="home.admin.attendances.create" type="button" class="btn btn-warning" >-->
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+                <!--</button>-->
                 <!--<a ng-href="{{items[0].getCreateUrl()}}" class="btn btn-warning">-->
                     <!--<span class="glyphicon glyphicon-plus"></span>-->
                 <!--</a>-->
@@ -76,35 +76,15 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Посещаемость
-                        <buttton class="btn btn-default" ng-click="tug()">
-                        <span class="glyphicon" ng-class="{'glyphicon-th': gle, 'glyphicon-menu-hamburger':!gle}" ></span>
-                        </buttton>
-                        <!--<buttton class="btn btn-default" ng-click="tug()">-->
-                        <!--<span class="glyphicon" ng-class="{'glyphicon-calendar': !gle, 'glyphicon-thumbs-up':gle}" ></span>-->
-                        <!--</buttton>-->
+                    <h3 class="panel-title">
+                        Посещаемость
                     </h3>
-                    <!--<pagination-->
-                            <!--num-pages="items.pageCount"-->
-                            <!--current-page="items.currentPage"-->
-                            <!--on-select-page="selectPage(page)" >-->
-                    <!--</pagination>-->
-
                 </div>
                 <div class="panel-body">
-
-                    <!--<div ordered-list="attendances" display-property="date | date:'dd.MM.yyyy'"></div>-->
-                    <!--<div custom-directive="items" display-property="date|date:'dd.MM.yyyy'"></div>-->
-                    <!--<div field-list="items" display-property="date|date:'dd.MM.yyyy'"></div>-->
-
                     <div ng-if="gle" attendance-list="items" ></div>
-
-
                     <div  ng-if="!gle" attendance-list="items" template="table">
-                        This is where the list will go
-                    </div>
 
-                    <!--<button type="submit" size="large">Submit</button>-->
+                    </div>
                 </div>
             </div>
         </div>

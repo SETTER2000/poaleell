@@ -28,6 +28,15 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                     }
                 }
             })
+            .state('home.admin.attendance.show', {
+                url: '/show',
+                views: {
+                    '@home.admin.attendance': {
+                        templateUrl: '/js/private/admin/attendances/tpl/show.tpl.html',
+                        controller: 'AttendanceController'
+                    }
+                }
+            })
             .state('home.admin.attendances.create', {
                 url: '/create/:attendanceId',
                 views: {
@@ -42,7 +51,7 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/attendances/tpl/show.tpl.html',
-                        controller: 'CalendarController'
+                        controller: 'AttendanceController'
                     }
                 }
             })

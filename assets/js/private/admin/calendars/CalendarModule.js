@@ -64,18 +64,10 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                         //template:'<h1>DEPARTAMENT</h1>'
                     }
                 }
-                //views: {
-                //    '@': {
-                //        template: function($stateParams) {
-                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
-                //        },
-                //        controller: function() {}
-                //
-                //    }
-                //}
             })
-            .state('home.admin.calendars.edit', {
-                url: '/edit/:calendarId',
+
+            .state('home.admin.calendars.create', {
+                url: '/create',
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/calendars/tpl/edit.tpl.html',
@@ -83,6 +75,16 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     }
                 }
             })
+
+            //.state('home.admin.calendars.edit', {
+            //    url: '/edit/:calendarId',
+            //    views: {
+            //        '@': {
+            //            templateUrl: '/js/private/admin/calendars/tpl/edit.tpl.html',
+            //            controller: 'EditCalendarController'
+            //        }
+            //    }
+            //})
             //.state('home.admin.depart', {
             //    url: '/depart/:calendarId',
             //    views: {
@@ -98,6 +100,15 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     '@': {
                         templateUrl: '/js/private/admin/calendars/tpl/show.tpl.html',
                         controller: 'CalendarController'
+                    }
+                }
+            })
+            .state('home.admin.calendar.edit', {
+                url: '/edit',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/calendars/tpl/edit.tpl.html',
+                        controller: 'EditCalendarController'
                     }
                 }
             })
@@ -148,15 +159,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     }
                 }
             })
-            .state('home.admin.calendars.create', {
-                url: '/create/:calendarId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/admin/calendars/tpl/edit.tpl.html',
-                        controller: 'EditCalendarController'
-                    }
-                }
-            })
+
         ;
     }])
     .constant('CONF_MODULE_CALENDAR', {baseUrl: '/calendar/:calendarId'})
@@ -193,7 +196,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
             return '/admin/calendars';
         };
         Calendars.prototype.getEditUrl = function (id) {
-            return '/admin/calendars/edit/' + id;
+            return '/admin/calendar/' + id + '/edit';
         };
         Calendars.prototype.getShowUrl = function (id) {
             return '/admin/calendar/' + id;

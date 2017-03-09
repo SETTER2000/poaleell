@@ -7,7 +7,7 @@ angular.module('CalendarModule')
             //this.$uiRoute = ;
 
             //this.$location = $location;
-            //this.$stateParams = $stateParams;
+            this.$stateParams = $stateParams;
 
             console.log('$STATE_PARAMS');
             console.log( this.$stateParams);
