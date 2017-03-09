@@ -1,15 +1,16 @@
-angular.module('CalendarModule')
-    .controller('EditCalendarController', ['$scope', '$http', '$state', 'Calendars', '$stateParams', 'CONF_MODULE',
-        function ($scope, $http, $state, Calendars, $stateParams) {
+angular.module('AttendanceModule')
+    .controller('EditAttendanceModule', ['$scope', '$http', '$state', 'Attendances', '$stateParams', 'CONF_MODULE',
+        function ($scope, $http, $state, Attendances, $stateParams) {
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
             $scope.refresh = function () {
-                var item = $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
-                    $scope.calendars = calendars;
+                var item = $scope.item = Attendances.get(
+                    {id: $stateParams.attendanceId}, function (attendances) {
+                    $scope.attendances = attendances;
                     // кол-во пользователей
-                    //console.log($scope.calendars.length);
-                    //console.log($scope.calendars);
+                    //console.log($scope.attendances.length);
+                    //console.log($scope.attendances);
                     // console.log('USSS1: ' +  $scope.newBirthday);
                     // console.log('USSS2: ' + $scope.item.dt());
                     // // $scope.item.birthday = $scope.newBirthday;

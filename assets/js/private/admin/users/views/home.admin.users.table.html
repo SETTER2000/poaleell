@@ -59,13 +59,13 @@
                 </ul>
             </div>
         </th>
-        <th>
-            <button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Отработанное время
-<span class="sortOrder" ng-show="propertyName === 'email'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
+        <!--<th>-->
+            <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Отработанное время-->
+<!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
+      <!--ng-class="{reverse: reverse}"></span>-->
+            <!--</button>-->
 
-        </th>
+        <!--</th>-->
         <th></th>
         <th></th>
     </tr>
@@ -76,13 +76,14 @@
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
         <td>{{$index+1}}</td>
-        <td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>
+        <td>{{item.getFullName()}}</td>
+        <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
         <!--<td ng-if="">{{item.getFullName()}}</td>-->
         <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
         <td>{{item.login}}</td>
         <td>{{item.email}}</td>
-        <td>{{item.getContact(fieldName)}}</td>
-        <td>{{item.diff}}</td>
+        <td class="text-center">{{item.getContact(fieldName)}}</td>
+        <!--<td>{{item.diff}}</td>-->
         <td class="btn-group-xs">
             <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">

@@ -93,13 +93,13 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
         };
 
         Attendances.prototype.getLastName = function () {
-            return this.employees[0].lname ;
+            return this.employees[0].lname;
         };
         Attendances.prototype.getFirstName = function () {
-            return this.employees[0].fname ;
+            return this.employees[0].fname;
         };
         Attendances.prototype.getPatronymicName = function () {
-            return this.employees[0].pname ;
+            return this.employees[0].pname;
         };
 
         Attendances.prototype.sc = function () {
@@ -167,21 +167,36 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
     .directive("attendanceList", function () {
         return {
             link: function (scope, element, attributes) {
+
                 scope.data = scope[attributes["attendanceList"]];
                 console.log('DIRECTIVES-1:');
                 //console.log(scope[attributes["attendanceList"]]);
                 console.log(scope.data);
-                console.log(scope.length);
+                console.log(scope.data.length);
                 scope.data.$promise.then(rejectFull);
 
                 function rejectFull(t) {
+
                     scope.data = [];
+                    scope.prevData = [];
                     scope.fio = [];
                     if (angular.isArray(t) && t.length > 0) {
                         for (var y = 0; y < t.length; y++) {
                             scope.fio.push(t[y].getFullName());
                         }
                         for (var i = 0; i < t.length; i++) {
+                            var intv = moment(t[i].date + " " + t[i].time_in, 'YYYY-MM-DD HH:mm');
+                            var outv = moment(t[i].date + " " + t[i].time_out, 'YYYY-MM-DD HH:mm');
+                            var subs = outv.diff(intv);
+                            var dlit = moment.preciseDiff(intv, outv, true);
+                            dlit.getTimeForm = function () {
+                                var m = this.minutes;
+                                var h = this.hours;
+                                h = h < 10 ? "0" + h : h;
+                                m = m < 10 ? "0" + m : m;
+                                return h + ':' + m;
+                            };
+
                             scope.data.push(
                                 {
                                     id: t[i].id,
@@ -191,15 +206,24 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                                     fio: t[i].getFullName(),
                                     lastName: t[i].getLastName(),
                                     firstName: t[i].getFirstName(),
-                                    patronymicName: t[i].getPatronymicName()
+                                    patronymicName: t[i].getPatronymicName(),
+                                    moment_in: intv,
+                                    moment_out: outv,
+                                    diffMillsec: subs,
+                                    dlt: dlit
                                 }
                             );
                         }
                         console.log('DATA:');
                         console.log(scope.data);
                     }
-                }
 
+                    //for (var key in prevData) {
+                    //    if (key == 'id') {
+                    //        scope.data[prevData[key]] = prevData;
+                    //    }
+                    //}
+                }
             },
             restrict: "A",
             templateUrl: function (element, attributes) {

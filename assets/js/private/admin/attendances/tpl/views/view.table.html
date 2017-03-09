@@ -36,13 +36,13 @@
             </button>
 
         </th>
-        <!--<th>-->
-            <!--<button class="btn btn-default" ng-click="sortBy('diff')">Минуты-->
-                                 <!--<span class="sortOrder" ng-show="propertyName === 'diff'"-->
-                                       <!--ng-class="{reverse: reverse}"></span>-->
-            <!--</button>-->
+        <th>
+            <button class="btn btn-default" ng-click="sortBy('dlt.hours')">Рабочее время
+                                 <span class="sortOrder" ng-show="propertyName === 'dlt.hours'"
+                                       ng-class="{reverse: reverse}"></span>
+            </button>
 
-        <!--</th>-->
+        </th>
         <!--<th></th>-->
         <!--<th></th>-->
     </tr>
@@ -57,7 +57,7 @@
         <td>{{item.date | date:'dd.MM.yyyy'}}</td>
         <td>{{item.time_in }}</td>
         <td>{{item.time_out}}</td>
-        <!--<td>{{item.diff}}</td>-->
+        <td>{{item.dlt.getTimeForm()}}</td>
         <!--<td class="btn-group-xs">-->
             <!--<a ng-href="{{item.getShowUrl(item.id)}}" class="btn "-->
                <!--ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">-->

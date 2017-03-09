@@ -1,6 +1,6 @@
 angular.module('AttendanceModule')
-    .controller('AttendanceController', ['$scope', 'Attendances', '$stateParams',
-        function ($scope, Attendances, $stateParams) {
+    .controller('CalendarAttendanceController', ['$scope', 'CalendarAttendance', '$stateParams',
+        function ($scope, CalendarAttendance, $stateParams) {
 
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
@@ -10,25 +10,20 @@ angular.module('AttendanceModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Users.getFullName()
              */
-            $scope.refresh = function () {
 
-                $scope.item = Attendances.query({limit: 1000}, function (attendances) {
-                    $scope.item = attendances;
-                    //$scope.numPages = attendances.length;
-                    console.log('ATTENDANCES: ');
-                    console.log($scope.attendances);
-                    console.log($scope.attendances.length);
+            $scope.item = CalendarAttendance.query({}, function (attendances) {
+                $scope.item = attendances;
+                $scope.numPages = attendances.length;
+                console.log('ATTENDANCES: ');
+                console.log($scope.attendances);
+                console.log($scope.item.length);
+                //
+                //
+                //$scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
+                //// $scope.items = attendances;
+                //// $scope.differ(attendances);
 
-                    //$scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
-                    //// $scope.items = attendances;
-                    //// $scope.differ(attendances);
-                });
-            };
-            //$scope.$watch('attendances',function (val) {
-            //    $scope.item = val;
-            //});
-            console.log('ITEM:');
-            console.log($scope.items);
+            });
             //$scope.refresh = function () {
             //    $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
             //        $scope.calendars = calendars;
@@ -68,6 +63,7 @@ angular.module('AttendanceModule')
             //};
 
 
+
             // конструктор хлебных крошек
             function BreadCrumb() {
                 var name;
@@ -95,5 +91,5 @@ angular.module('AttendanceModule')
             $scope.breadcrumbs = breadcrumb;
 
 
-            $scope.refresh();
+            //$scope.refresh();
         }]);
