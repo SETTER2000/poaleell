@@ -1,4 +1,4 @@
-angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'angularMoment'])
+angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'angularMoment','CalendarModule'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.attendances', {
@@ -51,7 +51,7 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/attendances/tpl/show.tpl.html',
-                        controller: 'AttendanceController'
+                        controller: 'CalendarAttendanceController'
                     }
                 }
             })
@@ -70,6 +70,15 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
                     '@home.admin.attendances.calendar': {
                         templateUrl: '/js/private/admin/calendars/views/home.admin.calendar.month.html',
                         controller: 'CalendarController'
+                    }
+                }
+            })
+            .state('home.admin.attendances.calendar.tbody', {
+                url: '/calendar/tbody',
+                views: {
+                    'tbody@home.admin.attendances.calendar': {
+                        templateUrl: '/js/private/admin/attendances/tpl/views/view.tbody.html',
+                        controller: 'CalendarAttendanceController'
                     }
                 }
             })
@@ -161,7 +170,6 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
             function onRejected(err) {
                 console.log(err.message);
             }
-
         }
     })
     .directive("attendanceList", function () {

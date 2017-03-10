@@ -1,7 +1,18 @@
 angular.module('AttendanceModule')
-    .controller('CalendarAttendanceController', ['$scope', 'CalendarAttendance', '$stateParams',
-        function ($scope, CalendarAttendance, $stateParams) {
+    .controller('CalendarAttendanceController', ['$scope','$state', '$stateParams', 'Attendances','Calendars',
+        function ($scope, $state, $stateParams, Attendances,Calendars) {
 
+            $scope.statName = 'Календарь посещаемости';
+            $scope.tbody = '/js/private/admin/attendances/tpl/views/view.tbody.html';
+
+
+            //$scope.itemsCalendars = Calendars.get({'slug':'attendances'}, function (calendars) {
+            //    $scope.calendars = calendars;
+            //    console.log('$SCOPE.CALENDARS');
+            //    console.log($scope.calendars);
+            //});
+            console.log('$SCOPE.ITEMScALENDARS');
+            console.log($scope.itemsCalendars);
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -10,20 +21,37 @@ angular.module('AttendanceModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Users.getFullName()
              */
+            $scope.defaultRows = 150;
+            $scope.limitRows = [30, 50, 70, 100];
+            $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
-            $scope.item = CalendarAttendance.query({}, function (attendances) {
-                $scope.item = attendances;
+            $scope.sort = 'date';
+            $scope.limitAll = 1000;
+            $scope.selectCount = 0;
+
+            $scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
+                $scope.attendances = attendances;
                 $scope.numPages = attendances.length;
                 console.log('ATTENDANCES: ');
                 console.log($scope.attendances);
-                console.log($scope.item.length);
-                //
-                //
-                //$scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
-                //// $scope.items = attendances;
-                //// $scope.differ(attendances);
-
+                console.log($scope.attendances.length);
+                $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
             });
+            console.log('ITEMS');
+            console.log($scope.items);
+            //$scope.item = CalendarAttendance.query({}, function (attendances) {
+            //    $scope.item = attendances;
+            //    $scope.numPages = attendances.length;
+            //    console.log('ATTENDANCES: ');
+            //    console.log($scope.attendances);
+            //    console.log($scope.item.length);
+            //    //
+            //    //
+            //    //$scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
+            //    //// $scope.items = attendances;
+            //    //// $scope.differ(attendances);
+            //
+            //});
             //$scope.refresh = function () {
             //    $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
             //        $scope.calendars = calendars;
@@ -63,7 +91,6 @@ angular.module('AttendanceModule')
             //};
 
 
-
             // конструктор хлебных крошек
             function BreadCrumb() {
                 var name;
@@ -92,4 +119,5 @@ angular.module('AttendanceModule')
 
 
             //$scope.refresh();
-        }]);
+        }])
+;

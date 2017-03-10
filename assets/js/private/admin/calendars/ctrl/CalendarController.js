@@ -4,9 +4,6 @@ angular.module('CalendarModule')
     .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$location', '$stateParams', '$rootScope',
         function ($scope, $http, moment, Calendars, $location, $stateParams, $rootScope) {
 
-            //this.$uiRoute = ;
-
-            //this.$location = $location;
             this.$stateParams = $stateParams;
 
             console.log('$STATE_PARAMS');
