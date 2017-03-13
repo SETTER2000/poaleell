@@ -1,11 +1,39 @@
 angular.module('AttendanceModule')
-    .controller('CalendarAttendanceController', ['$scope','$state', '$stateParams', 'Attendances','Calendars',
-        function ($scope, $state, $stateParams, Attendances,Calendars) {
+    .controller('CalendarAttendanceController', ['$scope', '$rootScope', '$state', '$stateParams', 'Attendances', 'Calendars',
+        function ($scope, $rootScope, $state, $stateParams, Attendances, Calendars) {
 
             $scope.statName = 'Календарь посещаемости';
             $scope.tbody = '/js/private/admin/attendances/tpl/views/view.tbody.html';
 
+            $scope.users = [
+                {lname: 'Абрамов', fname: 'Александр', pname: 'Павлович'},
+                {lname: 'Авилкин', fname: 'Андрей', pname: 'Владимирович'},
+                {lname: 'Адушкина ', fname: 'алина', pname: 'Сергеевна'},
+                {lname: 'Аксиньина', fname: 'Наталья', pname: 'Васильевна'},
+                //{lname: 'Андреев', fname: 'Денис', pname: 'Игоревич'},
+                //{lname: 'Аникеев', fname: 'Игорь', pname: 'Юрьевич'},
+                //{lname: 'Анисимова', fname: 'Ирина', pname: 'Игоревна'},
+                //{lname: 'Аршавская', fname: 'Екатерина', pname: 'Александровна'},
+                //{lname: 'Бакалин', fname: 'Сергей', pname: 'Иванович'},
+                //{lname: 'Балабанов', fname: 'Александр', pname: 'Николаевич'},
+                //{lname: 'Баранов', fname: 'Дмитрий', pname: 'Борисович'},
+                //{lname: 'Белых', fname: 'Сергей', pname: 'Николаевич'},
+                //{lname: 'Беляев', fname: 'Александр', pname: 'Игоревич'},
+                //{lname: 'Бессмертный', fname: 'Вячеслав', pname: 'Виталиевич'},
+                //{lname: 'Бирюков', fname: 'Алексей', pname: 'Викторович'},
+                //{lname: 'Богомолова', fname: 'Галина', pname: 'Анатольевна'},
+                //{lname: 'Большакова', fname: 'Татьяна', pname: 'Ивановна'}
+            ];
+            //$scope.send = function () {
+            //    $rootScope.$broadcast('userNewArr', {arr: $scope.users});
+            //};
 
+            //$scope.$watch('users', function (newValue, oldValue) {
+            //    if (newValue !== oldValue) {
+            //        // Only increment the counter if the value changed
+            //        $scope.users = newValue;
+            //    }
+            //});
             //$scope.itemsCalendars = Calendars.get({'slug':'attendances'}, function (calendars) {
             //    $scope.calendars = calendars;
             //    console.log('$SCOPE.CALENDARS');

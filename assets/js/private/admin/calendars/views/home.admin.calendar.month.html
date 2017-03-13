@@ -4,11 +4,12 @@
             <div class="col-md-3">
                 <ul class="pagination">
                     <li><a href="#" ng-click="currentPeriod()" ng-href="{{section}}">Сегодня</a></li>
-                </ul>&nbsp;&nbsp;
+                </ul>
+                &nbsp;&nbsp;
                 <ul class="pagination">
                     <li>
-                        <a href="#"  ng-click="periodPrevNext(1,-1)" ng-href="{{section}}"> < </a>
-                        <a href="#" ng-click="periodPrevNext(1,1)"  ng-href="{{section}}"> > </a>
+                        <a href="#" ng-click="periodPrevNext(1,-1)" ng-href="{{section}}"> < </a>
+                        <a href="#" ng-click="periodPrevNext(1,1)" ng-href="{{section}}"> > </a>
                     </li>
                 </ul>
             </div>
@@ -20,8 +21,8 @@
     <div class="col-md-2">
         <ul class="pagination">
             <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>-->
-            <li ng-class="{'active':(section == 'неделя')}"><a  ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a></li>
-            <li ng-class="{'active':(section == 'месяц')}"><a  ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
+            <li ng-class="{'active':(section == 'неделя')}"><a ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a></li>
+            <li ng-class="{'active':(section == 'месяц')}"><a ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
             <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>-->
         </ul>
     </div>
@@ -29,42 +30,49 @@
 <div class="row">
     <ui-view class="col-md-12">
         <table class="table table-hover table-bordered">
-    <thead>
-    <tr>
-        <th class="text-center" width="190px" nowrap>
-            <ul class="pagination pagination-sm">
-                <li ng-if="solo" ><h4  ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}} {{daysPeriod.periodYear}}</h4></li>
-                <li ng-if="!solo" ><input type="date" ng-model="mx"   ng-blur="toggleBlur(mx)"  class="form-control"></li>
-            </ul>
-        </th>
-        <td class="text-center" ng-repeat="op in daysPeriod.data">
-            <span  ng-class="{
+            <thead>
+            <tr>
+                <th class="text-center" width="190px" nowrap>
+                    <ul class="pagination pagination-sm">
+                        <li ng-if="solo"><h4 ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}}
+                            {{daysPeriod.periodYear}}</h4></li>
+                        <li ng-if="!solo"><input type="date" ng-model="mx" ng-blur="toggleBlur(mx)" class="form-control"></li>
+                    </ul>
+                </th>
+                <td class="text-center" ng-repeat="op in daysPeriod.data ">
+            <span ng-class="{
             'text-danger':(op.format('dd')==='вс' || op.format('dd')==='сб'),
             'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')
             }">
                 {{op.format('DD')}}
-          <span ng-class="{  'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
+          <span ng-class="{'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
             </span>
-            <!--{{op.format('MMM')}}  {{op.format('YYYY')}}-->
-        </td>
-        <!--<th ng-repeat="day in dateDayInterval" class="text-center">-->
-            <!--<a class="pagination pagination-lg " href="#" aria-label="Previous">-->
+                    <!--{{inDate=op.format('YYYY-MM-DD')}}  {{op.format('MMM')}}  {{op.format('YYYY')}}-->
+                </td>
+                <!--<th ng-repeat="day in dateDayInterval" class="text-center">-->
+                <!--<a class="pagination pagination-lg " href="#" aria-label="Previous">-->
                 <!--<span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">-->
-                    <!--{{day.substr(0,2)}}-->
+                <!--{{day.substr(0,2)}}-->
                 <!--</span>-->
                 <!--<span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">-->
-                    <!--{{dn=getDayWeek(day.substr(0,2))}}-->
+                <!--{{dn=getDayWeek(day.substr(0,2))}}-->
                 <!--</span>-->
-            <!--</a>-->
-        <!--</th>-->
-    </tr>
-    </thead>
-    <tbody>
-
-
-    </tbody>
-</table>
+                <!--</a>-->
+                <!--</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr ng-repeat="user in data | filter:getDtForm ">-->
+                <!--<td>{{user.lastName}}</td>-->
+                <!--<td>{{user.dlt}}</td>-->
+                <!--<td>{{user.date}}</td>-->
+            <!--</tr>-->
+            <tr ng-repeat="fop in data | filter:getDtForm ">
+                <td ng-repeat="props in fop">{{props}}</td>
+            </tr>
+            </tbody>
+        </table>
         <!--<span ng-view></span>-->
-<!--<span ng-view="trbody"></span>-->
-    </div>
+        <!--<span ng-view="trbody"></span>-->
+</div>
 

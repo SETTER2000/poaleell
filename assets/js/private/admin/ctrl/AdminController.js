@@ -40,10 +40,10 @@ angular.module("AdminModule")
             $scope.data = args;
         });
 
-        $scope.$watch("data.counter", function (newValue, oldValue) {
-            console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
-
-        });
+        //$scope.$watch("data.counter", function (newValue, oldValue) {
+        //    //console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
+        //
+        //});
         //$scope.$on("countUser", function (event, args) {
         //    //event.stopPropagation(); // останавливаем распространение события
         //    // $scope.info = args.message;

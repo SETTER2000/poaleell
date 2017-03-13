@@ -25,48 +25,43 @@
                 });
 
 
-                $scope.getTargetUser = function (item) {
-                    $http.post('/att', item)
-                        .then(function (attendance) {
-                            console.log('attendance^^');
-                            console.log(attendance);
-                            $scope.differ(attendance);
-                            console.log('DDD:');
-                            console.log($scope.items);
-                            $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
-                        });
-                };
+                //$scope.getTargetUser = function (item) {
+                //    $http.post('/att', item)
+                //        .then(function (attendance) {
+                //            console.log('attendance^^');
+                //            console.log(attendance);
+                //            $scope.differ(attendance);
+                //            console.log('DDD:');
+                //            console.log($scope.items);
+                //            $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
+                //        });
+                //};
 
 
-                $scope.differ = function (attendance) {
-                    var data = [];
-                    for (var i = 0; i < attendance.data.length; i++) {
-                        (function () { // каждая созданная функция будет работать со своей локальной переменной.
-                            var local = i;
-                            var a, b, df;
-                            a = moment(attendance.data[local].date + ' ' + attendance.data[local].time_in, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
-                            b = moment(attendance.data[local].date + ' ' + attendance.data[local].time_out, ['DD.MM.YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']);
-                            df = b.diff(a, 'm');
-                            data.push({
-                                'getFullName': function () {
-                                    return this.lname + ' ' + this.fname + ' ' + this.pname;
-                                },
-                                getContact: function (fieldName) {
-                                    return this.date;
-                                },
-                                'patronymicName': attendance.data[local].pname,
-                                'lastName': attendance.data[local].lname,
-                                'firstName': attendance.data[local].fname,
-                                'date': attendance.data[local].date,
-                                'birthday': attendance.data[local].time_in,
-                                'login': attendance.data[local].time_out,
-                                'email': attendance.data[local].email,
-                                'diff': df
-                            });
-                        })();
-                    }
-                    $scope.items = data;
-                };
+                //$scope.differ = function (attendance) {
+                //    var data = [];
+                //    for (var i = 0; i < attendance.data.length; i++) {
+                //        (function () { // каждая созданная функция будет работать со своей локальной переменной.
+                //            var local = i;
+                //            data.push({
+                //                'getFullName': function () {
+                //                    return this.lname + ' ' + this.fname + ' ' + this.pname;
+                //                },
+                //                getContact: function (fieldName) {
+                //                    return this.date;
+                //                },
+                //                'patronymicName': attendance.data[local].pname,
+                //                'lastName': attendance.data[local].lname,
+                //                'firstName': attendance.data[local].fname,
+                //                'date': attendance.data[local].date,
+                //                'birthday': attendance.data[local].time_in,
+                //                'login': attendance.data[local].time_out,
+                //                'email': attendance.data[local].email
+                //            });
+                //        })();
+                //    }
+                //    $scope.items = data;
+                //};
 
 
                 $scope.propertyName = 'fio';
