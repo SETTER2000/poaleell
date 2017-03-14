@@ -3,26 +3,26 @@ angular.module('AttendanceModule')
         function ($scope, $rootScope, $state, $stateParams, Attendances, Calendars) {
 
             $scope.statName = 'Календарь посещаемости';
-            $scope.tbody = '/js/private/admin/attendances/tpl/views/view.tbody.html';
+            //$scope.tbody = '/js/private/admin/attendances/tpl/views/view.tbody.html';
 
-            $scope.users = [
-                {lname: 'Абрамов', fname: 'Александр', pname: 'Павлович'},
-                {lname: 'Авилкин', fname: 'Андрей', pname: 'Владимирович'},
-                {lname: 'Адушкина ', fname: 'алина', pname: 'Сергеевна'},
-                {lname: 'Аксиньина', fname: 'Наталья', pname: 'Васильевна'},
-                //{lname: 'Андреев', fname: 'Денис', pname: 'Игоревич'},
-                //{lname: 'Аникеев', fname: 'Игорь', pname: 'Юрьевич'},
-                //{lname: 'Анисимова', fname: 'Ирина', pname: 'Игоревна'},
-                //{lname: 'Аршавская', fname: 'Екатерина', pname: 'Александровна'},
-                //{lname: 'Бакалин', fname: 'Сергей', pname: 'Иванович'},
-                //{lname: 'Балабанов', fname: 'Александр', pname: 'Николаевич'},
-                //{lname: 'Баранов', fname: 'Дмитрий', pname: 'Борисович'},
-                //{lname: 'Белых', fname: 'Сергей', pname: 'Николаевич'},
-                //{lname: 'Беляев', fname: 'Александр', pname: 'Игоревич'},
-                //{lname: 'Бессмертный', fname: 'Вячеслав', pname: 'Виталиевич'},
-                //{lname: 'Бирюков', fname: 'Алексей', pname: 'Викторович'},
-                //{lname: 'Богомолова', fname: 'Галина', pname: 'Анатольевна'},
-                //{lname: 'Большакова', fname: 'Татьяна', pname: 'Ивановна'}
+            $scope.data = [
+                {lastName: 'Абрамов1', firstName: 'Александр', patronymicName: 'Павлович'},
+                {lastName: 'Авилкин', firstName: 'Андрей', patronymicName: 'Владимирович'},
+                {lastName: 'Адушкина ', firstName: 'алина', patronymicName: 'Сергеевна'},
+                {lastName: 'Аксиньина', firstName: 'Наталья', patronymicName: 'Васильевна'}
+                //{lastName: 'Андреев', firstName: 'Денис', patronymicName: 'Игоревич'},
+                //{lastName: 'Аникеев', firstName: 'Игорь', patronymicName: 'Юрьевич'},
+                //{lastName: 'Анисимова', firstName: 'Ирина', patronymicName: 'Игоревна'},
+                //{lastName: 'Аршавская', firstName: 'Екатерина', patronymicName: 'Александровна'},
+                //{lastName: 'Бакалин', firstName: 'Сергей', patronymicName: 'Иванович'},
+                //{lastName: 'Балабанов', firstName: 'Александр', patronymicName: 'Николаевич'},
+                //{lastName: 'Баранов', firstName: 'Дмитрий', patronymicName: 'Борисович'},
+                //{lastName: 'Белых', firstName: 'Сергей', patronymicName: 'Николаевич'},
+                //{lastName: 'Беляев', firstName: 'Александр', patronymicName: 'Игоревич'},
+                //{lastName: 'Бессмертный', firstName: 'Вячеслав', patronymicName: 'Виталиевич'},
+                //{lastName: 'Бирюков', firstName: 'Алексей', patronymicName: 'Викторович'},
+                //{lastName: 'Богомолова', firstName: 'Галина', patronymicName: 'Анатольевна'},
+                //{lastName: 'Большакова', firstName: 'Татьяна', patronymicName: 'Ивановна'}
             ];
             //$scope.send = function () {
             //    $rootScope.$broadcast('userNewArr', {arr: $scope.users});
@@ -60,13 +60,20 @@ angular.module('AttendanceModule')
             $scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
                 $scope.attendances = attendances;
                 $scope.numPages = attendances.length;
-                console.log('ATTENDANCES: ');
+                console.log('ATTENDANCES-CALENDAR: ');
                 console.log($scope.attendances);
                 console.log($scope.attendances.length);
                 $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
+
             });
+            $scope.find= function () {
+                $rootScope.$broadcast('newData',{
+                    data:$scope.items
+                });
+            };
             console.log('ITEMS');
             console.log($scope.items);
+
             //$scope.item = CalendarAttendance.query({}, function (attendances) {
             //    $scope.item = attendances;
             //    $scope.numPages = attendances.length;
