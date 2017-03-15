@@ -24,7 +24,7 @@
         <ul class="pagination">
             <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>-->
             <li ng-class="{'active':(section == 'неделя')}"><a ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a></li>
-            <li ng-class="{'active':(section == 'месяц')}"><a ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
+            <li ng-class="{'active':(section == 'месяц')}"> <a ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
             <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>-->
         </ul>
     </div>
@@ -71,7 +71,7 @@
                 <!--<td>{{user.date}}</td>-->
             <!--</tr>-->
             <tr ng-repeat="item in data">
-                <td ng-repeat="props in item">{{props}}</td>
+              <td>{{item }}</td>  <td ng-repeat="props in item">{{props}}</td>
             </tr>
             <!--<tr ng-repeat="item in data | filter:getDtForm ">-->
                 <!--<td ng-repeat="props in item">{{props}}</td>-->

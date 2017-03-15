@@ -26,7 +26,7 @@ module.exports = {
             // ['1208']
             // {id: req.param('id'), limit: req.param('limit')}
             // [req.param('lname'),req.param('fname'),req.param('pname')]
-            [req.param('lastName'),req.param('firstName'),req.param('patronymicName')]
+            [req.param('lastName'), req.param('firstName'), req.param('patronymicName')]
             // [req.allParams()]
             , function (err, attendance) {
                 if (err) {
@@ -36,6 +36,39 @@ module.exports = {
                 //sails.log(attendance);
                 return res.json(attendance);
             });
+    },
+    findPeriod: function (req, res) {
+        Attendance.find({date: {'>': new Date(req.param('startDate')), '<': new Date(req.param('endDate'))},sort:'date'})
+            .paginate({page: req.param('page'), limit: req.param('limit')})
+            .populate('employees')
+            .exec(function(err, attendanceEmployees) {
+                if(err)  return res.negotiate(err);
+                //res.send(attendanceEmployees);
+                return res.json(attendanceEmployees);
+                // The users object would look something like the following
+                // [{
+                //   id: 123,
+                //   firstName: 'Foo',
+                //   lastName: 'Bar',
+                //   pets: [{
+                //     id: 1,
+                //     breed: 'labrador',
+                //     type: 'dog',
+                //     name: 'fido',
+                //     user: 123
+                //   }]
+                // }]
+                    });
+
+        //Attendance.find({
+        //    //date: ["2016-01-21","2017-02-10"]
+        //    date: {'>': new Date(req.param('startDate')), '<': new Date(req.param('endDate'))},sort:'date'
+        //    //date: ["2017-03-01", "2017-03-02", "2017-03-03", "2017-03-04", "2017-03-05", "2017-03-06", "2017-03-07", "2017-03-08", "2017-03-09", "2017-03-10", "2017-03-11", "2017-03-12", "2017-03-13", "2017-03-14", "2017-03-15"]
+        //}).paginate({page: req.param('page'), limit: req.param('limit')}).exec(function (err, waltersAndSkylers) {
+        //    //sails.log(waltersAndSkylers);
+        //    if (err)  return res.negotiate(err);
+        //    res.json(waltersAndSkylers);
+        //});
     },
     findOne: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});

@@ -85,7 +85,8 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
             })
         ;
     })
-    .constant('CONF_MODULE_Attendance', {baseUrl: '/attendance/:attendanceId'})
+    .constant('CONF_MODULE_Attendance', {baseUrl: '/period/:attendanceId'})
+    //.constant('CONF_MODULE_Attendance', {baseUrl: '/attendance/:attendanceId'})
     .factory('Attendances', function ($resource, CONF_MODULE_Attendance) {
         var Attendances = $resource(
             CONF_MODULE_Attendance.baseUrl,
@@ -146,7 +147,10 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
         Attendances.prototype.getNamePage = function () {
             return 'Посещаемость';
         };
+        Attendances.prototype.getPeriod = function (limit) {
 
+
+        };
         return Attendances;
     })
     .directive("fieldList", function () {

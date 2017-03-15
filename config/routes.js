@@ -96,6 +96,9 @@ module.exports.routes = {
     'GET /admin/attendances/calendar': 'PageController.showHomePage',
     'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
 
+    //'POST /admin/attendances/calendars': 'AttendanceController.getQuery',
+
+
 
 
 
@@ -122,6 +125,10 @@ module.exports.routes = {
     'POST /signup': 'UserController.signup',
     'GET /att': 'Attendance.getQuery',
     'POST /att': 'Attendance.getQuery',
+    'GET /period': 'Attendance.findPeriod',
+    'POST /period': 'Attendance.findPeriod',
+
+
     'PUT /login': 'UserController.login',
     'GET /logout': 'UserController.logout',
     'DELETE /user/:id': 'UserController.destroy',

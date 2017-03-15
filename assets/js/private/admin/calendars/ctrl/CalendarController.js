@@ -1,8 +1,8 @@
 (function (angular) {
     'use strict';
     angular.module('CalendarModule')
-        .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$location', '$stateParams', '$rootScope','Attendances',
-            function ($scope, $http, moment, Calendars, $location, $stateParams, $rootScope,Attendances) {
+        .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$location', '$stateParams', '$rootScope', 'Attendances',
+            function ($scope, $http, moment, Calendars, $location, $stateParams, $rootScope, Attendances) {
 
                 this.$stateParams = $stateParams;
                 $scope.solo = true;
@@ -33,15 +33,34 @@
                 //    console.log($scope.items);
                 //});
                 // where:{date:'2015-12-09'},
-                $scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
-                    $scope.attendances = attendances;
-                    $scope.numPages = attendances.length;
-                    // console.log('ATTENDANCES-CALENDAR: ');
-                    // console.log($scope.attendances);
-                    // console.log($scope.attendances.length);
-                    $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
 
-                });
+                //$scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
+                //    $scope.attendances = attendances;
+                //    $scope.numPages = attendances.length;
+                //     console.log('ATTENDANCES-CALENDAR: ');
+                //     console.log($scope.attendances);
+                //    // console.log($scope.attendances.length);
+                //    $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
+                //
+                //});
+                $scope.startInterval = '2017-03-01';
+
+                $scope.items = Attendances.query(
+                        {
+                            page: 1,
+                            startDate: '2016-10-01',
+                            endDate: '2016-11-01',
+                            limit: 200
+                        }
+                    ,function (attendanceEmployees) {
+                        console.log('ATTENDANCEeMPLOYEES');
+                        console.log(attendanceEmployees);
+                        $scope.numPages = attendanceEmployees.length;
+
+                        $scope.numPages = Math.floor(attendanceEmployees.length / $scope.defaultRows) + 1;
+                    });
+
+
 
                 //$scope.data = [
                 //    {dlt: '1:30', date: '2017-03-12', lastName: 'Абрамов2', firstName: 'Александр', patronymicName: 'Павлович'},

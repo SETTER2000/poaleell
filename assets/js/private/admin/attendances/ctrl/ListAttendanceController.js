@@ -25,6 +25,11 @@
                 });
 
 
+                //$scope.$watch('items', function (value) {
+                //    $scope.items = value;
+                //});
+                //console.log('IIIOP!');
+                //console.log( $scope.it);
                 //$scope.getTargetUser = function (item) {
                 //    $http.post('/att', item)
                 //        .then(function (attendance) {

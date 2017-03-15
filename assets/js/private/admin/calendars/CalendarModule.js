@@ -278,7 +278,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 // =daysPeriod - эта переменная из tpl скоупа,
                 // слева - переменная (daysPeriod) из шаблона директивы
                 daysPeriod: '=daysPeriod',
-                itemsNew: '=attendance', // имя шаблона
+                itemsNew: '=attendance', // attendance
                 refresh: '&'
                 //currentPeriod : '&'
                 //defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
@@ -295,6 +295,22 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     end: moment().endOf(scope.globalPeriod)
                 };
 
+
+                //scope.$watch('daysPeriod', function (value, old) {
+                //    console.log('NEW');
+                //    console.log(value);
+                //    scope.dPeriod = value;
+                //    console.log('OLD');
+                //    console.log(old);
+                //});
+                //console.log('DPERIOD-REAL');
+                //console.log(scope.daysPeriod);
+                //scope.daysPeriod.$promise.then(function d0(dPeriod) {
+                //    scope.dPeriod = dPeriod;
+                //    console.log('DPERIOD');
+                //    console.log(scope.daysPeriod);
+                //    console.log(scope.dPeriod);
+                //});
                 scope.itemsNew.$promise
                     .then(function f0(t) {
                         var dt = [];
@@ -337,199 +353,167 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                 );
                             }
                             t.dt = dt;
+                            console.log('DT-1');
+                            console.log(dt);
+                            console.log('T-1');
+                            console.log(t[0].getPeriod(1));
                             return t;
                         }
                     })
-
                     .then(function f1(result) {
-                        console.log('GGGGG');
-                        console.log(result.dt);
+                        //console.log('GGGGG');
+                        //console.log(result.dt);
                         var store = {};
                         scope.nameArray = result.map(function (item, i) {
-                            console.log(item);
+                            //console.log(item);
                             var key = item.getFullName();
                             store[key] = true;
                         });
-                        console.log('BZXXX');
-                        console.log(store);
+                        //console.log('BZXXX');
+                        //console.log(store);
                         result.store = store;
                         return result;
                     })
                     .then(function f2(result) {
-                        console.log('GGGGG=555');
-                        console.log(result.dt);
+                        //console.log('GGGGG=555');
+                        //console.log(result.dt);
                         var keys = Object.keys(result.store);
                         // console.log(keys.length);
                         keys.sort();
                         // var e = keys.split(', ');
                         // console.log('DASAX');
                         // console.log(e);
-                        console.log('FAASAD2');
+                        //console.log('FAASAD2');
                         result.arrUniq = keys;
                         return result;
                     })
                     .then(function f3(result) {
                         var jk = {};
+                        var h = {};
                         for (var k in result.arrUniq) {
                             // console.log(k);
                             var mls = 0;
                             var ars = [];
+                            var darr = [];
                             var millsec = 0;
-                            var h={};
+
                             var nameArray = result.dt.map(function (item, i) {
-                                // console.log('ITEM_DT');
-                                // console.log(result.arrUniq[k]);
-                                // console.log('weeeDDDDDDDDDDD');
-                                // console.log(item.fio);
                                 if (item.fio === result.arrUniq[k]) {
 
-                                    
-
-                                    console.log('HHHSDDDDDDDDDDDDD');
-                                    millsec = (+millsec + +item.diffMillsec);
-                                    ars.push({date: item.date, milliSecSum: millsec, mls:item.diffMillsec});
-
-                                    // mls = mls + item.diffMillsec;
+                                    millsec = (millsec + item.diffMillsec);
+                                    ars.push({
+                                        fio: result.arrUniq[k],
+                                        date: item.date,
+                                        mls: item.diffMillsec,
+                                        getMill: function () {
+                                            return this.mls
+                                        },
+                                        getData: function () {
+                                            return this.date
+                                        }
+                                    });
+                                    //ars.push({fio: result.arrUniq[k], date: item.date, mls: item.diffMillsec});
                                 }
-                                jk[result.arrUniq[k]] = ars;
+
 
                             });
+                            jk[result.arrUniq[k]] = [{millsecSum: millsec, 'data': ars}];
+                            //for (var ky in jk[result.arrUniq[k]]) {
+                            //    console.log(jk[result.arrUniq[k]][ky]);
+                            //}
+
                         }
-                        console.log('ZASSADAS');
-                        console.log(jk);
+
+                        //jk.prototype.getNm = function () {
+                        //    return this.valueOf();
+                        //};
                         result.jk = jk;
                         scope.data = jk;
                         return result;
                     })
+                    .then(function f4(result) {
 
+                    })
                 ;
 
-
-                // scope.getUniqueFIO = function () {
+                //scope.rejectFull = function (t) {
+                //    scope.data = [];
+                //    scope.prevData = [];
+                //    scope.fio = [];
+                //    if (angular.isArray(t) && t.length > 0) {
+                //        for (var y = 0; y < t.length; y++) {
+                //            scope.fio.push(t[y].getFullName());
+                //        }
+                //        var longTimeWork = 0;
+                //        for (var i = 0; i < t.length; i++) {
+                //            var intv = moment(t[i].date + " " + t[i].time_in, 'YYYY-MM-DD HH:mm');
+                //            var outv = moment(t[i].date + " " + t[i].time_out, 'YYYY-MM-DD HH:mm');
+                //            var subs = outv.diff(intv);
+                //            var dlit = moment.preciseDiff(intv, outv, true);
                 //
-                //     var ar = scope.itemsNew;
-                //     var nameArray = [];
-                //     // var nameLengths = names.map(function (name) {
-                //     //     return name.h;
-                //     // });
-                //     console.log('DDDDDDDDDDDD');
-                //     console.log(ar);
-                //     nameArray = ar.map(function (item) {
-                //         console.log(item);
-                //         // nameArray.push();
-                //         // if(!nameArray.indexOf(name.getFullName())){
-                //         //     return name.getFullName();
-                //         // }
-                //     });
-                //     // return nameLengths;
-                //     console.log('scope.getUniqueFIO:');
-                //     console.log(nameArray);
-                //     return nameArray;
-                // };
-
-
-                scope.rejectFull = function (t) {
-                    scope.data = [];
-                    scope.prevData = [];
-                    scope.fio = [];
-                    if (angular.isArray(t) && t.length > 0) {
-                        for (var y = 0; y < t.length; y++) {
-                            scope.fio.push(t[y].getFullName());
-                        }
-                        var longTimeWork = 0;
-                        for (var i = 0; i < t.length; i++) {
-                            var intv = moment(t[i].date + " " + t[i].time_in, 'YYYY-MM-DD HH:mm');
-                            var outv = moment(t[i].date + " " + t[i].time_out, 'YYYY-MM-DD HH:mm');
-                            var subs = outv.diff(intv);
-                            var dlit = moment.preciseDiff(intv, outv, true);
-
-                            dlit.getTimeForm = function () {
-                                var m = this.minutes;
-                                var h = this.hours;
-                                h = h < 10 ? "0" + h : h;
-                                m = m < 10 ? "0" + m : m;
-                                return h + ':' + m;
-                            };
-
-
-                            if (t[i].date === '2016-01-21' && t[i].getFullName() === 'Абрамов Александр Павлович') {
-
-                                longTimeWork = (longTimeWork + subs);
-                                scope.data.push({
-                                    dlt: longTimeWork
-                                });
-
-                                //var arr = [1, -1, 2, -2, 3];
-                                //
-                                //var positiveArr = arr.filter(function(number) {
-                                //    return number > 0;
-                                //});
-                            }
-                            //scope.data.push(
-                            //    {
-                            //        fio: t[i].getShortName(),
-                            //        dlt: (function () {
-                            //            return dlit.getTimeForm();
-                            //        })(),
-                            //        date: t[i].date
-                            //        //id: t[i].id,
-                            //        //time_in: t[i].time_in,
-                            //        //time_out: t[i].time_out,
-                            //        //lastName: t[i].getLastName(),
-                            //        //firstName: t[i].getFirstName(),
-                            //        //patronymicName: t[i].getPatronymicName(),
-                            //        //moment_in: intv,
-                            //        //moment_out: outv,
-                            //        //diffMillsec: subs
-                            //    }
-                            //);
-                            //scope.data.push(
-                            //    {
-                            //        fio: t[i].getShortName(),
-                            //        dlt: (function () {
-                            //            return dlit.getTimeForm();
-                            //        })(),
-                            //        date: t[i].date
-                            //        //id: t[i].id,
-                            //        //time_in: t[i].time_in,
-                            //        //time_out: t[i].time_out,
-                            //        //lastName: t[i].getLastName(),
-                            //        //firstName: t[i].getFirstName(),
-                            //        //patronymicName: t[i].getPatronymicName(),
-                            //        //moment_in: intv,
-                            //        //moment_out: outv,
-                            //        //diffMillsec: subs
-                            //    }
-                            //);
-
-                        }
-
-                        console.log('DATA-DIRECTIVE Calendar:');
-                        console.log(scope.data);
-                    }
-                };
-
-                //scope.getUniqueName = function () {
-                //    var unique = scope.data;
-                //    var ar = [];
-                //    if (angular.isArray(unique) && unique.length > 0) {
-                //        for (item in unique) {
-                //            console.log('UNIQUE');
+                //            dlit.getTimeForm = function () {
+                //                var m = this.minutes;
+                //                var h = this.hours;
+                //                h = h < 10 ? "0" + h : h;
+                //                m = m < 10 ? "0" + m : m;
+                //                return h + ':' + m;
+                //            };
                 //
                 //
-                //            console.log(unique[item]);
-                //            var fio = unique[item].getFullName();
-                //            if(angular.isDefined(fio)){
-                //                if (!ar.indexOf(fio) > 0) {
-                //                    ar.push(fio);
-                //                }
+                //            if (t[i].date === '2016-01-21' && t[i].getFullName() === 'Абрамов Александр Павлович') {
+                //
+                //                longTimeWork = (longTimeWork + subs);
+                //                scope.data.push({
+                //                    dlt: longTimeWork
+                //                });
+                //
+                //                //var arr = [1, -1, 2, -2, 3];
+                //                //
+                //                //var positiveArr = arr.filter(function(number) {
+                //                //    return number > 0;
+                //                //});
                 //            }
+                //            //scope.data.push(
+                //            //    {
+                //            //        fio: t[i].getShortName(),
+                //            //        dlt: (function () {
+                //            //            return dlit.getTimeForm();
+                //            //        })(),
+                //            //        date: t[i].date
+                //            //        //id: t[i].id,
+                //            //        //time_in: t[i].time_in,
+                //            //        //time_out: t[i].time_out,
+                //            //        //lastName: t[i].getLastName(),
+                //            //        //firstName: t[i].getFirstName(),
+                //            //        //patronymicName: t[i].getPatronymicName(),
+                //            //        //moment_in: intv,
+                //            //        //moment_out: outv,
+                //            //        //diffMillsec: subs
+                //            //    }
+                //            //);
+                //            //scope.data.push(
+                //            //    {
+                //            //        fio: t[i].getShortName(),
+                //            //        dlt: (function () {
+                //            //            return dlit.getTimeForm();
+                //            //        })(),
+                //            //        date: t[i].date
+                //            //        //id: t[i].id,
+                //            //        //time_in: t[i].time_in,
+                //            //        //time_out: t[i].time_out,
+                //            //        //lastName: t[i].getLastName(),
+                //            //        //firstName: t[i].getFirstName(),
+                //            //        //patronymicName: t[i].getPatronymicName(),
+                //            //        //moment_in: intv,
+                //            //        //moment_out: outv,
+                //            //        //diffMillsec: subs
+                //            //    }
+                //            //);
                 //
                 //        }
-                //
-                //        console.log('ARRRR');
-                //        console.log(ar);
-                //        return ar;
+                //        //
+                //        //console.log('DATA-DIRECTIVE Calendar:');
+                //        //console.log(scope.data);
                 //    }
                 //};
 
@@ -544,7 +528,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 };
 
                 scope.restart = function () {
-                    scope.rejectFull(scope.itemsNew);
+                    //scope.rejectFull(scope.itemsNew);
                     var recurrence;
                     var dForm = [];
                     var daysPeriod = {data: []};
@@ -557,9 +541,11 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                         daysPeriod.data = recurrence.next(31);
                         console.log('DAYSpERIOD.DATA');
                         console.log(daysPeriod.data);
-                        console.log(daysPeriod.data[0].format('YYYY-MM-DD'));
-                        console.log('LENGTH-D: ');
-                        console.log(dForm);
+                        //console.log(daysPeriod.data[0].format('YYYY-MM-DD'));
+                        //console.log('LENGTH-D: ');
+                        //console.log(dForm);
+                        console.log("START-INTERVAL");
+                        console.log(scope.interval.start);
                         daysPeriod.currentDate = moment().format('DD.MM.YYYY');
                         daysPeriod.periodMonth = daysPeriod.data[0].format('MMMM');
                         daysPeriod.periodYear = daysPeriod.data[0].format('YYYY');
@@ -578,8 +564,13 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     scope.daysPeriod = daysPeriod;
                     console.log('DAYSpERIOD.DATA');
                     console.log(scope.daysPeriod.dForm);
+                    scope.getPeriodDB(scope.daysPeriod.dForm);
+                    console.log('ZX-77');
+                    console.log(scope.data);
                 };
+                scope.getPeriodDB = function (period) {
 
+                };
                 scope.periodPrevNext = function (n, operator) {
                     var t = 0;
                     var y = scope.interval.end;
