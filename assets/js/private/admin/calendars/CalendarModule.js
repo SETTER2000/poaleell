@@ -182,11 +182,11 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 scope.dataPeriod = scope[attributes["period"]];
                 console.log('attendanceCalendar - DIRECTIVES:');
                 //console.log(scope[attributes["attendanceList"]]);
-                console.log('DATA_EXX');
-                console.log(scope.data);
-                console.log('DATA-Period');
-                console.log(scope.dataPeriod);
-                console.log(scope.data.length);
+                // console.log('DATA_EXX');
+                // console.log(scope.data);
+                // console.log('DATA-Period');
+                // console.log(scope.dataPeriod);
+                // console.log(scope.data.length);
                 scope.data.$promise.then(rejectFull);
 
                 scope.$watch('daysPeriod', function (value) {
@@ -294,13 +294,139 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     start: moment().startOf(scope.globalPeriod).date(1).hours(0).minutes(0).seconds(0).milliseconds(0),
                     end: moment().endOf(scope.globalPeriod)
                 };
-                //scope.$watch('items', function (value) {
-                //    scope.items = value;
-                //});
+
+                scope.itemsNew.$promise
+                    .then(function f0(t) {
+                        var dt = [];
+                        scope.prevData = [];
+                        scope.fio = [];
+                        if (angular.isArray(t) && t.length > 0) {
+                            for (var y = 0; y < t.length; y++) {
+                                scope.fio.push(t[y].getFullName());
+                            }
+                            for (var i = 0; i < t.length; i++) {
+                                var intv = moment(t[i].date + " " + t[i].time_in, 'YYYY-MM-DD HH:mm');
+                                var outv = moment(t[i].date + " " + t[i].time_out, 'YYYY-MM-DD HH:mm');
+                                var subs = outv.diff(intv);
+                                var dlit = moment.preciseDiff(intv, outv, true);
+                                dlit.getTimeForm = function () {
+                                    var m = this.minutes;
+                                    var h = this.hours;
+                                    h = h < 10 ? "0" + h : h;
+                                    m = m < 10 ? "0" + m : m;
+                                    return h + ':' + m;
+                                };
+
+                                dt.push(
+                                    {
+                                        fio: t[i].getFullName(),
+                                        dlt: (function () {
+                                            return dlit.getTimeForm();
+                                        })(),
+                                        date: t[i].date,
+                                        id: t[i].id,
+                                        time_in: t[i].time_in,
+                                        time_out: t[i].time_out,
+                                        lastName: t[i].getLastName(),
+                                        firstName: t[i].getFirstName(),
+                                        patronymicName: t[i].getPatronymicName(),
+                                        moment_in: intv,
+                                        moment_out: outv,
+                                        diffMillsec: subs
+                                    }
+                                );
+                            }
+                            t.dt = dt;
+                            return t;
+                        }
+                    })
+
+                    .then(function f1(result) {
+                        console.log('GGGGG');
+                        console.log(result.dt);
+                        var store = {};
+                        scope.nameArray = result.map(function (item, i) {
+                            console.log(item);
+                            var key = item.getFullName();
+                            store[key] = true;
+                        });
+                        console.log('BZXXX');
+                        console.log(store);
+                        result.store = store;
+                        return result;
+                    })
+                    .then(function f2(result) {
+                        console.log('GGGGG=555');
+                        console.log(result.dt);
+                        var keys = Object.keys(result.store);
+                        // console.log(keys.length);
+                        keys.sort();
+                        // var e = keys.split(', ');
+                        // console.log('DASAX');
+                        // console.log(e);
+                        console.log('FAASAD2');
+                        result.arrUniq = keys;
+                        return result;
+                    })
+                    .then(function f3(result) {
+                        var jk = {};
+                        for (var k in result.arrUniq) {
+                            // console.log(k);
+                            var mls = 0;
+                            var ars = [];
+                            var millsec = 0;
+                            var h={};
+                            var nameArray = result.dt.map(function (item, i) {
+                                // console.log('ITEM_DT');
+                                // console.log(result.arrUniq[k]);
+                                // console.log('weeeDDDDDDDDDDD');
+                                // console.log(item.fio);
+                                if (item.fio === result.arrUniq[k]) {
+
+                                    
+
+                                    console.log('HHHSDDDDDDDDDDDDD');
+                                    millsec = (+millsec + +item.diffMillsec);
+                                    ars.push({date: item.date, milliSecSum: millsec, mls:item.diffMillsec});
+
+                                    // mls = mls + item.diffMillsec;
+                                }
+                                jk[result.arrUniq[k]] = ars;
+
+                            });
+                        }
+                        console.log('ZASSADAS');
+                        console.log(jk);
+                        result.jk = jk;
+                        scope.data = jk;
+                        return result;
+                    })
+
+                ;
+
+
+                // scope.getUniqueFIO = function () {
                 //
-                //  scope.items =  this.itemsNotCheck;
-                //console.log('SCOPE.ITEMSnEW');
-                //console.log(scope.itemsNew);
+                //     var ar = scope.itemsNew;
+                //     var nameArray = [];
+                //     // var nameLengths = names.map(function (name) {
+                //     //     return name.h;
+                //     // });
+                //     console.log('DDDDDDDDDDDD');
+                //     console.log(ar);
+                //     nameArray = ar.map(function (item) {
+                //         console.log(item);
+                //         // nameArray.push();
+                //         // if(!nameArray.indexOf(name.getFullName())){
+                //         //     return name.getFullName();
+                //         // }
+                //     });
+                //     // return nameLengths;
+                //     console.log('scope.getUniqueFIO:');
+                //     console.log(nameArray);
+                //     return nameArray;
+                // };
+
 
                 scope.rejectFull = function (t) {
                     scope.data = [];
@@ -310,7 +436,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                         for (var y = 0; y < t.length; y++) {
                             scope.fio.push(t[y].getFullName());
                         }
-                        var longTimeWork=0;
+                        var longTimeWork = 0;
                         for (var i = 0; i < t.length; i++) {
                             var intv = moment(t[i].date + " " + t[i].time_in, 'YYYY-MM-DD HH:mm');
                             var outv = moment(t[i].date + " " + t[i].time_out, 'YYYY-MM-DD HH:mm');
@@ -325,9 +451,10 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                 return h + ':' + m;
                             };
 
+
                             if (t[i].date === '2016-01-21' && t[i].getFullName() === 'Абрамов Александр Павлович') {
 
-                               longTimeWork = (longTimeWork + subs);
+                                longTimeWork = (longTimeWork + subs);
                                 scope.data.push({
                                     dlt: longTimeWork
                                 });

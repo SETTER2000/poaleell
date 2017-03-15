@@ -8,6 +8,14 @@
                 $scope.solo = true;
                 $scope.inDate = '';
                 moment.locale('ru');
+
+                $scope.defaultRows = 150;
+                $scope.limitRows = [30, 50, 70, 100];
+                $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
+
+                $scope.sort = 'date';
+                $scope.limitAll = 1000;
+                $scope.selectCount = 0;
                 //$scope.tbody = "/js/private/admin/calendars/views/view.tbody.html";
                 //var interval = {
                 //    start: moment().startOf($scope.globalPeriod).date(1).hours(0).minutes(0).seconds(0).milliseconds(0),
@@ -24,12 +32,13 @@
                 //    console.log('$STATE_PARAMS');
                 //    console.log($scope.items);
                 //});
+                // where:{date:'2015-12-09'},
                 $scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
                     $scope.attendances = attendances;
                     $scope.numPages = attendances.length;
-                    console.log('ATTENDANCES-CALENDAR: ');
-                    console.log($scope.attendances);
-                    console.log($scope.attendances.length);
+                    // console.log('ATTENDANCES-CALENDAR: ');
+                    // console.log($scope.attendances);
+                    // console.log($scope.attendances.length);
                     $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
 
                 });
