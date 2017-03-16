@@ -16,20 +16,16 @@
                 </ul>
             </div>
             <div class="col-md-3 col-md-offset-1">
-
             </div>
         </div>
     </div>
     <div class="col-md-2">
         <ul class="pagination">
-            <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/день">День</a></li>-->
             <li ng-class="{'active':(section == 'неделя')}"><a ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a></li>
             <li ng-class="{'active':(section == 'месяц')}"> <a ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
-            <!--<li><a href="#" ng-href="{{item.getShowUrl(item.id)}}/квартал">Квартал</a></li>-->
         </ul>
     </div>
 </div>
-
 <div class="row">
     <ui-view class="col-md-12">
         <table class="table table-hover table-bordered">
@@ -43,44 +39,20 @@
                     </ul>
                 </th>
                 <td class="text-center" ng-repeat="op in daysPeriod.data ">
-            <span ng-class="{
-            'text-danger':(op.format('dd')==='вс' || op.format('dd')==='сб'),
-            'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')
-            }">
+            <span ng-class="{'text-danger':(op.format('dd')==='вс' || op.format('dd')==='сб'),
+            'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')}">
                 {{op.format('DD')}}
           <span ng-class="{'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
             </span>
-                    <!--{{inDate=op.format('YYYY-MM-DD')}}  {{op.format('MMM')}}  {{op.format('YYYY')}}-->
                 </td>
-                <!--<th ng-repeat="day in dateDayInterval" class="text-center">-->
-                <!--<a class="pagination pagination-lg " href="#" aria-label="Previous">-->
-                <!--<span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">-->
-                <!--{{day.substr(0,2)}}-->
-                <!--</span>-->
-                <!--<span ng-class="{'text-danger':(dn==='вс' || dn==='сб')}">-->
-                <!--{{dn=getDayWeek(day.substr(0,2))}}-->
-                <!--</span>-->
-                <!--</a>-->
-                <!--</th>-->
             </tr>
             </thead>
             <tbody>
-            <!--<tr ng-repeat="user in data | filter:getDtForm ">-->
-                <!--<td>{{user.lastName}}</td>-->
-                <!--<td>{{user.dlt}}</td>-->
-                <!--<td>{{user.date}}</td>-->
-            <!--</tr>-->
-            <tr ng-repeat="item in data">
-              <td>{{item }}</td>  <td ng-repeat="props in item">{{props}}</td>
+            <tr ng-repeat="(key, item) in data">
+              <td>{{item.data[key].fio}}</td> <td ng-repeat="props in item.data">{{props.fio}} {{props.date}} {{props.mls}}</td>
             </tr>
-            <!--<tr ng-repeat="item in data | filter:getDtForm ">-->
-                <!--<td ng-repeat="props in item">{{props}}</td>-->
-            <!--</tr>-->
-
             </tbody>
         </table>
-        <!--<span ng-view></span>-->
-        <!--<span ng-view="trbody"></span>-->
 </div>
 
     </div>

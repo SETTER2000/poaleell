@@ -126,7 +126,7 @@ module.exports.routes = {
     'GET /att': 'Attendance.getQuery',
     'POST /att': 'Attendance.getQuery',
     'GET /period': 'Attendance.findPeriod',
-    'POST /period': 'Attendance.findPeriod',
+    //'POST /period': 'Attendance.findPeriod',
 
 
     'PUT /login': 'UserController.login',

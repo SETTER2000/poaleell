@@ -33,8 +33,8 @@
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Calendars.query({limit:300, sort: 'name DESC'},function (calendars) {
                         $scope.calendars = calendars;
-                         console.log('SUCCCE: ');
-                         console.log( $scope.calendars);
+                         //console.log('SUCCCE: ');
+                         //console.log( $scope.calendars);
                         // console.log( $scope.calendars.filter({"action": 1}));
                         // console.log(calendars.get({"action": 1},function (success) {
                         //     console.log('URAAA:');
