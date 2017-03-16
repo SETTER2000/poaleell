@@ -45,6 +45,17 @@ module.exports = {
                 if(err)  return res.negotiate(err);
                 //res.send(attendanceEmployees);
                 return res.json(attendanceEmployees);
+
+               /* SELECT *
+                FROM `attendance_employees` AS ae
+                LEFT JOIN employees AS e
+                ON ae.employees_id = e.id
+                LEFT JOIN attendance AS a
+                ON ae.attendance_id = a.id
+                WHERE a.date BETWEEN '2017-03-01' AND '2017-03-31';*/
+
+
+
                 // The users object would look something like the following
                 // [{
                 //   id: 123,

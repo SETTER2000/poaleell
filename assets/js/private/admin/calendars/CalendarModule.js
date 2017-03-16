@@ -181,17 +181,11 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 scope.data = scope[attributes["attendanceCalendar"]];
                 scope.dataPeriod = scope[attributes["period"]];
                 console.log('attendanceCalendar - DIRECTIVES:');
-                //console.log(scope[attributes["attendanceList"]]);
-                // console.log('DATA_EXX');
-                // console.log(scope.data);
-                // console.log('DATA-Period');
-                // console.log(scope.dataPeriod);
-                // console.log(scope.data.length);
                 scope.data.$promise.then(rejectFull);
 
                 scope.$watch('daysPeriod', function (value) {
                     getDtForm();
-                    console.log('HHHH');
+                    //console.log('HHHH');
                 });
                 function getDtForm(item) {
                     return item;
@@ -290,7 +284,6 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 scope.month = 'month';
                 scope.nedela = 'неделя';
                 scope.mesiac = 'месяц';
-
 
                 var interval = {
                     start: moment().startOf(scope.globalPeriod).date(1).hours(0).minutes(0).seconds(0).milliseconds(0),
