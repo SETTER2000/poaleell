@@ -126,6 +126,8 @@ module.exports.routes = {
     'GET /att': 'Attendance.getQuery',
     'POST /att': 'Attendance.getQuery',
     'GET /period': 'Attendance.findPeriod',
+    'GET /pd': 'Attendance.fPeriod',
+    'GET /fp': 'Attendance.fp',
     //'POST /period': 'Attendance.findPeriod',
 
 

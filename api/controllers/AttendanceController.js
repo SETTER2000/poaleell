@@ -37,23 +37,72 @@ module.exports = {
                 return res.json(attendance);
             });
     },
+    fp: function (req, res) {
+       Attendance.query("CALL calendar(?, ?)",
+            [req.param('startDate'), req.param('endDate')],
+            function (err, attendance) {
+                if (err) {
+                    return res.serverError(err);
+                }
+
+                Attendance.query("SELECT * FROM t1",[],function (err, attendance) {
+                    if (err) {
+                        return res.serverError(err);
+
+                    }
+
+                    return res.json(attendance);
+                });
+
+            });
+    },
+    fPeriod: function (req, res) {
+        Attendance.query(
+            "SELECT " +
+            "lname, " +
+            "fname, " +
+            "pname, " +
+            "DATE_FORMAT(date,GET_FORMAT(DATE,'EUR')) as date, " +
+            "time_in, " +
+            "time_out, " +
+            "DATE_FORMAT(SEC_TO_TIME(TIMESTAMPDIFF(SECOND, time_in, time_out)), GET_FORMAT(TIME, 'JIS')) as rz " +
+            "FROM attendance_employees AS ae " +
+            "LEFT JOIN employees AS e " +
+            "ON ae.employees_id = e.id " +
+            "LEFT JOIN attendance AS a " +
+            "ON ae.attendance_id = a.id " +
+            "WHERE a.date BETWEEN ? AND ? " +
+            "ORDER BY date,lname " +
+            "LIMIT " + (req.param('page') * req.param('limit')) + ", "+  req.param('limit'),
+            [req.param('startDate'), req.param('endDate')],
+            function (err, attendance) {
+                if (err) {
+                    return res.serverError(err);
+                }
+                return res.json(attendance);
+            });
+        //.paginate({page: req.param('page'), limit: req.param('limit')})
+        //.populate('employees')
+
+    },
+
+
     findPeriod: function (req, res) {
-        Attendance.find({date: {'>': new Date(req.param('startDate')), '<': new Date(req.param('endDate'))},sort:'date'})
+        Attendance.find({date: {'>': new Date(req.param('startDate')), '<': new Date(req.param('endDate'))}, sort: 'date'})
             .paginate({page: req.param('page'), limit: req.param('limit')})
             .populate('employees')
-            .exec(function(err, attendanceEmployees) {
-                if(err)  return res.negotiate(err);
+            .exec(function (err, attendanceEmployees) {
+                if (err)  return res.negotiate(err);
                 //res.send(attendanceEmployees);
                 return res.json(attendanceEmployees);
 
-               /* SELECT *
-                FROM `attendance_employees` AS ae
-                LEFT JOIN employees AS e
-                ON ae.employees_id = e.id
-                LEFT JOIN attendance AS a
-                ON ae.attendance_id = a.id
-                WHERE a.date BETWEEN '2017-03-01' AND '2017-03-31';*/
-
+                /* SELECT *
+                 FROM `attendance_employees` AS ae
+                 LEFT JOIN employees AS e
+                 ON ae.employees_id = e.id
+                 LEFT JOIN attendance AS a
+                 ON ae.attendance_id = a.id
+                 WHERE a.date BETWEEN '2017-03-01' AND '2017-03-31';*/
 
 
                 // The users object would look something like the following
@@ -69,7 +118,7 @@ module.exports = {
                 //     user: 123
                 //   }]
                 // }]
-                    });
+            });
 
         //Attendance.find({
         //    //date: ["2016-01-21","2017-02-10"]
