@@ -85,7 +85,7 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
             })
         ;
     })
-    .constant('CONF_MODULE_Attendance', {baseUrl: '/period/:attendanceId'})
+    .constant('CONF_MODULE_Attendance', {baseUrl: '/api/:attendanceId'})
     //.constant('CONF_MODULE_Attendance', {baseUrl: '/attendance/:attendanceId'})
     .factory('Attendances', function ($resource, CONF_MODULE_Attendance) {
         var Attendances = $resource(
@@ -102,8 +102,14 @@ angular.module('AttendanceModule', ['ui.router', 'ngResource', 'ngAnimate', 'ang
         Attendances.prototype.getFullName = function () {
             return this.employees[0].lname + ' ' + this.employees[0].fname + ' ' + this.employees[0].pname;
         };
+        Attendances.prototype.getFullName2 = function () {
+            return this.lname + ' ' + this.fname + ' ' + this.pname;
+        };
         Attendances.prototype.getShortName = function () {
             return this.employees[0].lname + ' ' + this.employees[0].fname.substr(0,1) + '.' + this.employees[0].pname.substr(0,1)+'.';
+        };
+        Attendances.prototype.getShortName2 = function () {
+            return this.lname + ' ' + this.fname.substr(0,1) + '.' + this.pname.substr(0,1)+'.';
         };
 
         Attendances.prototype.getLastName = function () {

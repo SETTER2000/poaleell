@@ -37,23 +37,20 @@ module.exports = {
                 return res.json(attendance);
             });
     },
-    fp: function (req, res) {
-       Attendance.query("CALL calendar(?, ?)",
+    api: function (req, res) {
+        //if (!req.session.me) {
+        //    return res.view('public/header', {layout: 'homepage'});
+        //}
+       Attendance.query(
+           "SELECT * " +
+           "FROM calendar_group " +
+           "WHERE date BETWEEN ? AND ?",
             [req.param('startDate'), req.param('endDate')],
             function (err, attendance) {
                 if (err) {
                     return res.serverError(err);
                 }
-
-                Attendance.query("SELECT * FROM t1",[],function (err, attendance) {
-                    if (err) {
-                        return res.serverError(err);
-
-                    }
-
-                    return res.json(attendance);
-                });
-
+                return res.json(attendance);
             });
     },
     fPeriod: function (req, res) {

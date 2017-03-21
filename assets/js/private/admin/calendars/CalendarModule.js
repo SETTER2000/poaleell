@@ -128,6 +128,18 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
         ;
     }])
     .constant('CONF_MODULE_CALENDAR', {baseUrl: '/calendar/:calendarId'})
+    .filter("timeCut", function () {
+        // Отрежим нули
+        return function (value, toCut) {
+            // проверка переменной value на наличие строки
+            if (angular.isString(value)) {
+                var processedValue = toCut ? value.substr(0, 5) : value;
+                return processedValue;
+            } else {
+                return value;
+            }
+        };
+    })
     .factory('Calendars', function ($resource, CONF_MODULE_CALENDAR) {
         var Calendars = $resource(
             CONF_MODULE_CALENDAR.baseUrl,
@@ -290,155 +302,110 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     end: moment().endOf(scope.globalPeriod)
                 };
 
-
-                //
-                //scope.$watch('query', function (value, old) {
-                //    //console.log('NEW');
-                //    //console.log(value);
-                //    //scope.data = value;
-                //    //console.log('OLD');
-                //    //console.log(old);
-                //    scope.getDataObj();
-                //});
-                //scope.query = {};
-                //scope.query = {};
                 scope.getQuery = function (query) {
-                    if(!angular.isDefined(query))return ;
-
+                    if (!angular.isDefined(query))return;
                     scope.attendance = Attendances.query(
                         query,
-                        function (attendanceEmployees,err) {
-                            console.log(err());
-                            console.log('QUERY');
-                            console.log(attendanceEmployees);
+                        function (attendanceEmployees, err) {
+                            //console.log('QUERY');
+                            //console.log(attendanceEmployees);
                             scope.attendance = attendanceEmployees;
                             scope.attendance.$promise
-                                .then(function f0(t) {
-                                    var dt = [];
-                                    scope.prevData = [];
-                                    scope.fio = [];
+                                .then(function group(result) {
+                                    var data = [];
+                                    /**
+                                     * store - получаем массив уникальных ФИО
+                                     * data - начинаем формировать данные для вывода в календарь
+                                     */
 
-                                    if (angular.isArray(t) && t.length > 0) {
-                                        for (var y = 0; y < t.length; y++) {
-                                            scope.fio.push(t[y].getFullName());
-                                        }
-
-                                        for (var i = 0; i < t.length; i++) {
-                                            var intv = moment(t[i].date + " " + t[i].time_in, 'YYYY-MM-DD HH:mm');
-                                            var outv = moment(t[i].date + " " + t[i].time_out, 'YYYY-MM-DD HH:mm');
-                                            var subs = outv.diff(intv);
-                                            var dlit = moment.preciseDiff(intv, outv, true);
-                                            dlit.getTimeForm = function () {
-                                                var m = this.minutes;
-                                                var h = this.hours;
-                                                h = h < 10 ? "0" + h : h;
-                                                m = m < 10 ? "0" + m : m;
-                                                return h + ':' + m;
-                                            };
-
-                                            dt.push(
-                                                {
-                                                    fio: t[i].getFullName(),
-                                                    dlt: dlit,
-                                                    //dlt: (function () {
-                                                    //    return dlit.getTimeForm();
-                                                    //})(),
-                                                    date: t[i].date,
-                                                    id: t[i].id,
-                                                    time_in: t[i].time_in,
-                                                    time_out: t[i].time_out,
-                                                    lastName: t[i].getLastName(),
-                                                    firstName: t[i].getFirstName(),
-                                                    patronymicName: t[i].getPatronymicName(),
-                                                    moment_in: intv,
-                                                    moment_out: outv,
-                                                    diffMillsec: subs
-                                                }
-                                            );
-                                        }
-                                        t.dt = dt;
-                                        return t;
-                                    }
-                                })
-                                .then(function f1(result) {
                                     var store = {};
                                     scope.nameArray = result.map(function (item, i) {
-                                        var key = item.getFullName();
+                                        var key = item.getShortName2();
                                         store[key] = true;
+
                                     });
-                                    result.store = store;
-                                    return result;
-                                })
-                                .then(function f2(result) {
-                                    var keys = Object.keys(result.store);
-                                    keys.sort();
-                                    result.arrUniq = keys;
-                                    return result;
-                                })
-                                .then(function f3(result) {
-                                    var jk = {};
-                                    var h = {};
-                                    for (var k in result.arrUniq) {
-                                        var mls = 0;
-                                        var ars = [];
-                                        var darr = [];
-                                        var millsec = 0;
 
-                                        var nameArray = result.dt.map(function (item, i) {
-                                            if (item.fio === result.arrUniq[k]) {
-
-                                                millsec = (millsec + item.diffMillsec);
-                                                ars.push({
-                                                    fio: result.arrUniq[k],
-                                                    date: item.date,
-                                                    mls: item.diffMillsec,
-                                                    getMill: function () {
-                                                        return this.mls
-                                                    },
-                                                    getData: function () {
-                                                        return this.date
-                                                    }
-                                                });
-                                            }
-                                        });
-                                        jk[result.arrUniq[k]] = [{millsecSum: millsec, 'data': ars}];
+                                    var str = Object.keys(store);
+                                    var lengthDForm = scope.daysPeriod.dForm.length;
+                                    for (var i = 0; i < str.length; i++) {
+                                        data.push({'fio': str[i], 'data': [], 'objData': new Array(lengthDForm)});
                                     }
-                                    result.jk = jk;
-                                    //scope.data = jk;
 
-
+                                    result.store = store;
+                                    result.data = data;
                                     return result;
                                 })
                                 .then(function f4(result) {
-                                    var g =[];
-                                    for(var o in result.jk){
-                                        console.log(o);
-                                        g.push(result.jk[o][0]);
-                                        //if(){
-                                        //
-                                        //} 
-                                    }
-                                    console.log(g);
-                                    console.log('DATAAAAAAAAAAAA');
-                                    console.log( result.store);
-                                    console.log( result.jk);
-                                    result.g=g;
-                                    scope.data = g;
-                                    return result;
-                                })
-                            ;
-                        });
-                };
+                                    console.log('SCOPE.DAYSPERIOD.DfORM');
+                                    console.log(scope.daysPeriod.dForm);
+                                    var periodDate = {}; // объект для коллекции
 
-                //scope.getQuery({
-                //    page: scope.numPage,
-                //    startDate: interval.start.format('YYYY-MM-DD'),
-                //    endDate: interval.end.format('YYYY-MM-DD'),
-                //    //startDate: '2016-10-01',
-                //    //endDate: '2016-11-01',
-                //    // Кол-во строк показываемых на странице
-                //    limit: scope.limit
-                //});
+                                    for (var ie = 0; ie < scope.daysPeriod.dForm.length; ie++) {
+                                        var k = scope.daysPeriod.dForm[ie]; // для каждого элемента создаём свойство
+                                        periodDate[k] = true; // значение здесь не важно
+
+                                    }
+
+                                    //console.log('scope.daysPeriod.dForm');
+                                    //console.log(scope.daysPeriod.dForm);
+                                    //
+                                    //console.log('periodDate');
+                                    //console.log(periodDate);
+                                    //
+                                    //console.log('RESULT');
+                                    //console.log(result);
+                                    //
+                                    //
+                                    //console.log('STORE');
+                                    //console.log(result.store);
+                                    //
+                                    //
+                                    //console.log('DATA');
+                                    //console.log(result.data);
+
+
+                                    for (var i = 0; i < result.length; i++) {
+                                        //console.log('TESTTTTT***');
+                                        var shortName = result[i].getShortName2();
+                                        var dateResult = result[i].date;
+                                        for (var j = 0; j < result.data.length; j++) {
+
+                                            if (result.data[j].fio === shortName) {
+                                                //result.data[j].data.push(result[i].result);
+                                                var t = {
+                                                    'date': result[i].date,
+                                                    'result': result[i].result,
+                                                    'getDate': function () {
+                                                        return this.date;
+                                                    }
+                                                };
+                                                /**
+                                                 *  Заполнение матрицы.
+                                                 *  Нашли объект с именем.
+                                                 *  Нужно понять вставлять ли в массив result.data[j].objData
+                                                 *  объект с результатом на эту дату или вставить пустой результат,
+                                                 *  чтоб не выводилась в ячейки ни какая информация
+                                                 */
+
+                                                var key = scope.daysPeriod.dForm.indexOf(result[i].date);
+                                                //console.log('KEY+++');
+                                                //console.log(key);
+                                                result.data[j].objData.splice(key, 1, t);
+
+                                            }
+                                        }
+                                    }
+
+
+                                    console.log('RESULT.DATA');
+                                    console.log(result.data);
+
+                                    scope.data = result.data;
+                                })
+                        }
+                    );
+                }
+                ;
 
                 scope.currentPeriod = function (period) {
                     scope.globalPeriod = (period === scope.week) ? scope.week : scope.month;
@@ -446,28 +413,15 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     scope.interval = {};
                     scope.interval = interval;
                     scope.interval.start = moment().startOf(scope.globalPeriod).date(1);
-
-
-                    //scope.getQuery({
-                    //    page: scope.numPage,
-                    //    startDate: scope.interval.start.format('YYYY-MM-DD'),
-                    //    endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-                    //    //startDate: '2016-10-01',
-                    //    //endDate: '2016-11-01',
-                    //
-                    //    // Кол-во строк показываемых на странице
-                    //    limit: scope.limit
-                    //});
-
                     scope.restart();
                 };
-                
+
 
                 scope.restart = function () {
                     var recurrence;
                     var dForm = [];
                     var daysPeriod = {data: []};
-                    
+
                     if (angular.isDefined(scope.interval)) {
                         var start = scope.interval.start;
                         var end = scope.interval.end;
@@ -486,13 +440,13 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
 
 
                         scope.getQuery({
-                            page: scope.numPage,
+                            //  page: scope.numPage,
                             startDate: daysPeriod.data[0].format('YYYY-MM-DD'),
-                            endDate: daysPeriod.data[30].format('YYYY-MM-DD'),
+                            endDate: daysPeriod.data[30].format('YYYY-MM-DD')
                             //startDate: '2016-10-01',
                             //endDate: '2016-11-01',
                             // Кол-во строк показываемых на странице
-                            limit: scope.limit
+                            //  limit: scope.limit
                         });
 
                         // Сегодняшняя дата (16.03.2017)
@@ -539,6 +493,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     scope.restart();
                 };
             }
-        };
+        }
+            ;
     })
 ;
