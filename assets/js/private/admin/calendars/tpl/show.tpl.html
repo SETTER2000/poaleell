@@ -1,4 +1,4 @@
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
+<div class="col-sm-11  col-md-12  main ng-scope">
     <div class="page-header">
         <h1>{{item.sc()}} "{{item.name}} {{item.year| date:"yyyy"}}"
             <div class="btn-group-xs pull-right">
@@ -10,7 +10,18 @@
                 </a>
             </div>
         </h1>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                        <span ng-switch-default>
+                                <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                        </span>
+                </ng-switch>
+            </li>
+        </ul>
     </div>
+
 <!--<button ng-click="getOb()">send</button>-->
     <!-- current-period="currentPeriod()"-->
     <calendar query="query" refresh="refresh()" days-period="daysPeriod" ></calendar>

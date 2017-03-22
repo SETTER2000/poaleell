@@ -10,15 +10,15 @@
             <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">
 
-                <button type="checkbox" ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">
-                    <span class="glyphicon glyphicon-wrench"></span>
-                </button>
+                <!--<button type="checkbox" ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">-->
+                    <!--<span class="glyphicon glyphicon-wrench"></span>-->
+                <!--</button>-->
                 <!--<button ui-sref="home.admin.users.list" title="Список" type="button" class="btn btn-default">-->
                 <!--<span class="glyphicon glyphicon-cog"></span>-->
                 <!--</button>-->
-                <button ui-sref="home.admin.users.settings" title="Настройки" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </button>
+                <!--<button ui-sref="home.admin.users.settings" title="Настройки" type="button" class="btn btn-default">-->
+                    <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--</button>-->
                 <button type="checkbox" ng-click="getMode(t)" title="Режимы" class="btn btn-danger">
                     <span class="glyphicon glyphicon-off"></span>
                 </button>
@@ -298,18 +298,13 @@
                         <div ng-switch-when="calendar">
                             <ng-include src="calendarView" ></ng-include>
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
     <div ui-view="list"></div>
     <div ui-view="attendance"></div>
-
     <pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="items.length"
                 current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
     <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>

@@ -76,6 +76,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
             .state('home.admin.calendar', {
                 url: '/calendar/:calendarId',
                 views: {
+                    'sidebar@': {templateUrl: '/js/private/admin/calendars/tpl/sidebar.html'},
                     '@': {
                         templateUrl: '/js/private/admin/calendars/tpl/show.tpl.html',
                         controller: 'CalendarController'
@@ -192,7 +193,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
             link: function (scope, element, attributes) {
                 scope.data = scope[attributes["attendanceCalendar"]];
                 scope.dataPeriod = scope[attributes["period"]];
-                console.log('attendanceCalendar - DIRECTIVES:');
+                //console.log('attendanceCalendar - DIRECTIVES:');
                 scope.data.$promise.then(rejectFull);
 
                 scope.$watch('daysPeriod', function (value) {
@@ -255,8 +256,6 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                 })
                             );
                         }
-                        console.log('DATA-DIRECTIVE Calendar:');
-                        console.log(scope.data);
                     }
                 }
             },
@@ -336,42 +335,18 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                     return result;
                                 })
                                 .then(function f4(result) {
-                                    console.log('SCOPE.DAYSPERIOD.DfORM');
-                                    console.log(scope.daysPeriod.dForm);
-                                    var periodDate = {}; // объект для коллекции
-
+                                    var periodDate = {};
                                     for (var ie = 0; ie < scope.daysPeriod.dForm.length; ie++) {
                                         var k = scope.daysPeriod.dForm[ie]; // для каждого элемента создаём свойство
                                         periodDate[k] = true; // значение здесь не важно
 
                                     }
 
-                                    //console.log('scope.daysPeriod.dForm');
-                                    //console.log(scope.daysPeriod.dForm);
-                                    //
-                                    //console.log('periodDate');
-                                    //console.log(periodDate);
-                                    //
-                                    //console.log('RESULT');
-                                    //console.log(result);
-                                    //
-                                    //
-                                    //console.log('STORE');
-                                    //console.log(result.store);
-                                    //
-                                    //
-                                    //console.log('DATA');
-                                    //console.log(result.data);
-
-
                                     for (var i = 0; i < result.length; i++) {
-                                        //console.log('TESTTTTT***');
                                         var shortName = result[i].getShortName2();
                                         var dateResult = result[i].date;
                                         for (var j = 0; j < result.data.length; j++) {
-
                                             if (result.data[j].fio === shortName) {
-                                                //result.data[j].data.push(result[i].result);
                                                 var t = {
                                                     'date': result[i].date,
                                                     'result': result[i].result,
@@ -388,18 +363,10 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                                  */
 
                                                 var key = scope.daysPeriod.dForm.indexOf(result[i].date);
-                                                //console.log('KEY+++');
-                                                //console.log(key);
                                                 result.data[j].objData.splice(key, 1, t);
-
                                             }
                                         }
                                     }
-
-
-                                    console.log('RESULT.DATA');
-                                    console.log(result.data);
-
                                     scope.data = result.data;
                                 })
                         }
@@ -476,7 +443,6 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                         t = (n) ? (t + n) : t++;
                     } else {
                         t = (n) ? (t - n) : t--;
-
                     }
 
                     if (scope.globalPeriod === scope.week) {

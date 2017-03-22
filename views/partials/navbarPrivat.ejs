@@ -35,7 +35,7 @@
                         <li><a ui-sref="home.admin.positions">Должности</a></li>
                         <li><a ui-sref="home.admin.calendars">Календари</a></li>
                         <!--<li><a ui-sref="home.admin.employees">Employees</a></li>-->
-                        <li><a ui-sref="home.admin.attendances">Посещаемость</a></li>
+                        <!--<li><a ui-sref="home.admin.attendances">Посещаемость</a></li>-->
 
 
                         <li role="separator" class="divider"></li>
@@ -45,13 +45,12 @@
                     </ul>
                 </li>
                 <li>
-
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">
 
-                <li><a href="#"><%= me.firstName %> <%= me.patronymicName %> (<%= me.login %>)</a></li>
+                <li><a ><%= me.firstName %> <%= me.patronymicName %> (<%= me.login %>)</a></li>
 
                 <li>
                     <form action="/logout" class="navbar-form navbar-right">
