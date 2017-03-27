@@ -2,6 +2,14 @@ angular.module('UserModule')
     .controller('EditController', ['$scope', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
         function ($scope, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             $scope.close = 1;
+            $scope.loginAdmin = false;
+            //console.log('window.SAILS_LOCALS.me.email');
+            //console.log(SAILS_LOCALS.me.email);
+            var emAdmin = SAILS_LOCALS.me.email;
+            if (emAdmin == 'apetrov@landata.ru') {
+                $scope.loginAdmin = true;
+            }
+
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);
@@ -55,7 +63,7 @@ angular.module('UserModule')
             console.log($state.$current.url.source);
 
             $scope.closed = function () {
-                if($scope.close) {
+                if ($scope.close) {
                     $scope.close = false;
                 }
                 else {

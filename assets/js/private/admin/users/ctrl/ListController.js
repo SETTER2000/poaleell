@@ -13,6 +13,8 @@
             $scope.drArea = 'ДР';
             $scope.loginArea = 'Логин';
             $scope.emailArea = 'Email';
+            $scope.departmentArea = 'Отдел';
+            $scope.positionArea = 'Должность';
             // $scope.fio = 'ФИО';
             // $scope.fio = 'ФИО';
             // $scope.fio = 'ФИО';
@@ -83,10 +85,8 @@
            
             $scope.options =
                 [
-                    {display: "Таблица", value: "table"},
-                    {display: "Список", value: "list"},
-                    {display: "Список с маркерами", value: "budge"},
-                    {display: "Календарь", value: "calendar"}
+                    {display: "Все", value: "table"},
+                    {display: "Уволены", value: "list"}
                 ];
             $scope.modeSelect = $scope.options[0];
             $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";

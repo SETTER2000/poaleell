@@ -20,7 +20,7 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
             .state('home', {
                 url: '/',
                 views: {
-                    'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
+                    //'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
                     '@': {templateUrl: '/js/private/tpl/workspace.tpl.html'}
                 }
             })
