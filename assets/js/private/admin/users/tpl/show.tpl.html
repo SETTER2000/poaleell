@@ -52,6 +52,11 @@
                     <tr><th>ДР</th><td>{{item.birthday | date:'dd.MM.yyyy'}}</td></tr>
                     <tr><th>Логин</th><td>{{item.login}}</td></tr>
                     <tr><th>Email</th> <td>{{item.email}}</td></tr>
+                    <tr><th>Должность</th> <td>{{item.positions[0].name}}</td></tr>
+                    <tr><th>Отдел</th> <td>{{item.departments[0].name}}</td></tr>
+                    <tr ng-if="!item.firedDate"><th>Работает с</th> <td>{{item.dateInWork | date: "dd.MM.yyyy"}} {{message}}</td></tr>
+                    <tr ng-if="item.firedDate"><th>Работал</th> <td>{{item.dateInWork | date: "dd.MM.yyyy"}} - {{item.firedDate | date: "dd.MM.yyyy"}}</td></tr>
+                    <tr ng-if="item.firedDate" ><th>Уволен с</th> <td>{{item.firedDate | date: "dd.MM.yyyy"}}</td></tr>
                     <tr><th colspan="20"></th></tr>
 
 

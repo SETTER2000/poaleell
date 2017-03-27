@@ -1,7 +1,7 @@
-angular.module('UserModule')
-    .controller('UserController', ['$scope', 'Users', '$stateParams',
-        function ($scope, Users, $stateParams) {
-
+-angular.module('UserModule')
+    .controller('UserController', ['$scope', 'moment', 'Users', '$stateParams',
+        function ($scope, moment, Users, $stateParams) {
+            //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -10,23 +10,23 @@ angular.module('UserModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Users.getFullName()
              */
-            //io.socket.on('purchase', function (event) {
-            //    console.log('EVENT:');
-            //    console.log(event.data);
-            //    $scope.$apply();
-            //});
-            //
-            //io.socket.on('user', function (event) {
-            //    console.log('EVENT:');
-            //    console.log(event.data);
-            //    //$scope.$apply();
-            //});
-            //io.socket.get('/user', function (resData, jwres) {
-            //    console.log(resData);
-            //    $scope.$apply();
-            //});
+                //io.socket.on('purchase', function (event) {
+                //    console.log('EVENT:');
+                //    console.log(event.data);
+                //    $scope.$apply();
+                //});
+                //
+                //io.socket.on('user', function (event) {
+                //    console.log('EVENT:');
+                //    console.log(event.data);
+                //    //$scope.$apply();
+                //});
+                //io.socket.get('/user', function (resData, jwres) {
+                //    console.log(resData);
+                //    $scope.$apply();
+                //});
             console.log('EEEE:');
-            io.socket.on('User', function (event){
+            io.socket.on('User', function (event) {
                 console.log(event);
                 // => see below
             });
