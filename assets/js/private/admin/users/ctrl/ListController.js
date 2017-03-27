@@ -10,7 +10,7 @@
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
             $scope.fioArea = 'ФИО';
-            $scope.drArea = 'ДР';
+            $scope.drArea = 'ДР11';
             $scope.loginArea = 'Логин';
             $scope.emailArea = 'Email';
             $scope.departmentArea = 'Отдел';
@@ -91,8 +91,8 @@
             $scope.modeSelect = $scope.options[0];
             $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
             $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
-            $scope.calendarView = "/js/private/admin/users/views/home.admin.users.calendar.html";
-            $scope.budgeView = "/js/private/admin/users/views/home.admin.users.budge.html";
+            //$scope.calendarView = "/js/private/admin/users/views/home.admin.users.calendar.html";
+            //$scope.budgeView = "/js/private/admin/users/views/home.admin.users.budge.html";
 
             // $scope.url = $scope.tableView;
             //
