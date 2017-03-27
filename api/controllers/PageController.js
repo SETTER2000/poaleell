@@ -34,6 +34,7 @@ module.exports = {
                     isAdmin:!!user.admin,
                     gravatarUrl:user.gravatarUrl,
                     lastLoggedIn:user.lastLoggedIn
+
                 }
             });
             //res.view('dashboard/index', {layout:'dashboard'});
