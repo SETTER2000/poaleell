@@ -41,10 +41,15 @@ module.exports = {
         //if (!req.session.me) {
         //    return res.view('public/header', {layout: 'homepage'});
         //}
-       Attendance.query(
-           "SELECT * " +
-           "FROM  " + req.param('table') +
-           " WHERE date BETWEEN ? AND ? ",
+        var table = ['calendar_group', 'calendar_group_clear_time'];
+        var time = table[0];
+        if (req.param('timeClear')>0) {
+            time = table[1];
+        }
+        Attendance.query(
+            "SELECT * " +
+            "FROM  " + time +
+            " WHERE date BETWEEN ? AND ? ",
             [req.param('startDate'), req.param('endDate')],
             function (err, attendance) {
                 if (err) {
@@ -70,7 +75,7 @@ module.exports = {
             "ON ae.attendance_id = a.id " +
             "WHERE a.date BETWEEN ? AND ? " +
             "ORDER BY date,lname " +
-            "LIMIT " + (req.param('page') * req.param('limit')) + ", "+  req.param('limit'),
+            "LIMIT " + (req.param('page') * req.param('limit')) + ", " + req.param('limit'),
             [req.param('startDate'), req.param('endDate')],
             function (err, attendance) {
                 if (err) {

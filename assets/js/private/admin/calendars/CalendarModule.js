@@ -409,10 +409,13 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
 
 
                         scope.getQuery({
-                            // Чистое время прибывания на работе за день
-                            //table: 'calendar_group_clear_time',
-                            // Общее время на работе за день
-                            table: 'calendar_group',
+                            /**
+                             *  1 - чистое время прибывания на работе за день
+                             *  0 - общее время на работе за день
+                             *  по умолчанию чистое, т.е. true
+                             */
+
+                            timeClear: 0,
                             startDate: daysPeriod.data[0].format('YYYY-MM-DD'),
                             endDate: daysPeriod.data[30].format('YYYY-MM-DD')
                             //startDate: '2016-10-01',
