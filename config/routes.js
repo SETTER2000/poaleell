@@ -127,7 +127,7 @@ module.exports.routes = {
     'POST /att': 'Attendance.getQuery',
     'GET /period': 'Attendance.findPeriod',
     'GET /pd': 'Attendance.fPeriod',
-    'GET /api': 'Attendance.api',
+    'GET /api': 'Attendance.timeAll',
     //'POST /period': 'Attendance.findPeriod',
 
 

@@ -306,8 +306,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     scope.attendance = Attendances.query(
                         query,
                         function (attendanceEmployees, err) {
-                            //console.log('QUERY');
-                            //console.log(attendanceEmployees);
+                            console.log('QUERY');
+                            console.log(attendanceEmployees);
                             scope.attendance = attendanceEmployees;
                             scope.attendance.$promise
                                 .then(function group(result) {
@@ -367,6 +367,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                             }
                                         }
                                     }
+                                    console.log('result.data');
+                                    console.log(result.data);
                                     scope.data = result.data;
                                 })
                         }
@@ -407,7 +409,10 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
 
 
                         scope.getQuery({
-                            //  page: scope.numPage,
+                            // Чистое время прибывания на работе за день
+                            //table: 'calendar_group_clear_time',
+                            // Общее время на работе за день
+                            table: 'calendar_group',
                             startDate: daysPeriod.data[0].format('YYYY-MM-DD'),
                             endDate: daysPeriod.data[30].format('YYYY-MM-DD')
                             //startDate: '2016-10-01',

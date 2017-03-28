@@ -37,14 +37,14 @@ module.exports = {
                 return res.json(attendance);
             });
     },
-    api: function (req, res) {
+    timeAll: function (req, res) {
         //if (!req.session.me) {
         //    return res.view('public/header', {layout: 'homepage'});
         //}
        Attendance.query(
            "SELECT * " +
-           "FROM calendar_group " +
-           "WHERE date BETWEEN ? AND ?",
+           "FROM  " + req.param('table') +
+           " WHERE date BETWEEN ? AND ? ",
             [req.param('startDate'), req.param('endDate')],
             function (err, attendance) {
                 if (err) {
