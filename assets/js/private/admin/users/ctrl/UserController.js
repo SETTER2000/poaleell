@@ -1,4 +1,4 @@
--angular.module('UserModule')
+angular.module('UserModule')
     .controller('UserController', ['$scope', 'moment', 'Users', '$stateParams',
         function ($scope, moment, Users, $stateParams) {
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
