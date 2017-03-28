@@ -31,7 +31,7 @@
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
-                <th class="text-center" width="150px" nowrap>
+                <th colspan="2" class="text-center" width="170px" nowrap>
                     <ul class="pagination pagination-sm">
                         <li ng-if="solo"><h4 ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}}
                             {{daysPeriod.periodYear}}</h4></li>
@@ -49,7 +49,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="(key, item) in data">
-              <td>{{data[key].fio}}</td> <td ng-repeat="props  in data[key].objData track by $index">{{props.result | timeCut:true}} </td>
+             <td class="text-center" width="5px">{{key+1}}</td> <td>{{data[key].fio}}</td> <td ng-repeat="props  in data[key].objData track by $index">{{props.result | timeCut:true}} </td>
             </tr>
             </tbody>
         </table>
