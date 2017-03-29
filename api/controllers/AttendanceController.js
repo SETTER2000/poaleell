@@ -43,7 +43,7 @@ module.exports = {
         //}
         var table = ['calendar_group', 'calendar_group_clear_time'];
         var time = table[0];
-        if (req.param('timeClear')>0) {
+        if (req.param('timeClear') > 0) {
             time = table[1];
         }
         Attendance.query(

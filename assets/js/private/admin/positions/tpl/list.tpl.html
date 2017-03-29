@@ -2,34 +2,41 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h1>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{filtered.length}})
-            <div class="btn-group-xs pull-right">
-                    <!--<small>-->
+            <span class="btn-group-xs pull-right">
+                <small>
+                    <small>
+                        <!--<small>-->
                         <!--<label class="checkbox-inline">-->
-                            <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
+                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
                         <!--</label>-->
                         <!--<label class="checkbox-inline">-->
-                            <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
+                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
                         <!--</label>-->
-
-                    <!--</small>-->
-                <!--<button ui-sref="home.admin.positions.settings" type="button" class="btn btn-success">-->
-                    <!--<span class="glyphicon glyphicon-cog"></span>-->
-                <!--</button>-->
-                <!--<button ui-sref="home.admin.positions.create" type="button" class="btn btn-warning">-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
-                <!--</button>-->
-                </div>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="mode" value="option2"> не активные
+                            <!--<span class="glyphicon  glyphicon-eye-open" ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}" aria-hidden="true"></span>-->
+                        </label>
+                        <!--</small>-->
+                        <!--<button ui-sref="home.admin.positions.settings" type="button" class="btn btn-success">-->
+                        <!--<span class="glyphicon glyphicon-cog"></span>-->
+                        <!--</button>-->
+                        <!--<button ui-sref="home.admin.positions.create" type="button" class="btn btn-warning">-->
+                        <!--<span class="glyphicon glyphicon-plus"></span>-->
+                        <!--</button>-->
+                    </small>
+                </small>
+                </span>
         </h1>
 
         <!--<ul class="breadcrumb">-->
-            <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
-                <!--<ng-switch on="$last">-->
-                    <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
-                        <!--<span ng-switch-default>-->
-                                <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
-                        <!--</span>-->
-                <!--</ng-switch>-->
-            <!--</li>-->
+        <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
+        <!--<ng-switch on="$last">-->
+        <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
+        <!--<span ng-switch-default>-->
+        <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
+        <!--</span>-->
+        <!--</ng-switch>-->
+        <!--</li>-->
         <!--</ul>-->
         <div ui-view></div>
         <div ui-view="settings"></div>
@@ -72,18 +79,18 @@
                                 </button>
                             </th>
                             <!--<th>-->
-                                <!--<button class="btn btn-default" ng-click="sortBy('birthday')">Тип-->
-                                <!--<span class="sortOrder" ng-show="propertyName === 'type'"-->
-                                      <!--ng-class="{reverse: reverse}"></span>-->
-                                <!--</button>-->
+                            <!--<button class="btn btn-default" ng-click="sortBy('birthday')">Тип-->
+                            <!--<span class="sortOrder" ng-show="propertyName === 'type'"-->
+                            <!--ng-class="{reverse: reverse}"></span>-->
+                            <!--</button>-->
 
                             <!--</th>-->
 
                             <!--<th>-->
-                                <!--<button class="btn btn-default" ng-click="sortBy('email')">Местоположение-->
-                                 <!--<span class="sortOrder" ng-show="propertyName === 'location'"-->
-                                       <!--ng-class="{reverse: reverse}"></span>-->
-                                <!--</button>-->
+                            <!--<button class="btn btn-default" ng-click="sortBy('email')">Местоположение-->
+                            <!--<span class="sortOrder" ng-show="propertyName === 'location'"-->
+                            <!--ng-class="{reverse: reverse}"></span>-->
+                            <!--</button>-->
 
                             <!--</th>-->
                             <th></th>
@@ -92,7 +99,7 @@
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a ng-href="{{item.getEditUrl(item.id)}}" >
+                                <a ng-href="{{item.getEditUrl(item.id)}}">
                                     {{item.name}}
                                 </a>
                             </td>
@@ -107,7 +114,7 @@
                                           aria-hidden="true"></span>
                                 </a>
                                 <!--<a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-warning">-->
-                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
                             </td>
                             <td class="btn-group-xs">
@@ -115,13 +122,13 @@
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                                 <!--<form ng-if="mode" action="/positions/destroy" method="post">-->
-                                    <!--<input type="hidden" name="_method" value="delete">-->
-                                    <!--<button type="submit" class="btn btn-sm btn-default">-->
-                                        <!--<span class="glyphicon glyphicon-trash"></span>-->
-                                    <!--</button>-->
+                                <!--<input type="hidden" name="_method" value="delete">-->
+                                <!--<button type="submit" class="btn btn-sm btn-default">-->
+                                <!--<span class="glyphicon glyphicon-trash"></span>-->
+                                <!--</button>-->
 
-                                    <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
-                                    <!--<input type="hidden" name="id" value="{{item.id}}">-->
+                                <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
+                                <!--<input type="hidden" name="id" value="{{item.id}}">-->
 
                                 <!--</form>-->
                             </td>
