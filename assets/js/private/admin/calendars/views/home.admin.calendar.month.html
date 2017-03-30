@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-md-3">
                 <ul class="pagination">
-                    <li><a href="#" ng-click="currentPeriod()" ng-href="{{section}}">Сегодня</a></li>
+                    <li><a class="btn-sm" href="#" ng-click="currentPeriod()" ng-href="{{section}}">Сегодня</a></li>
                 </ul>
                 &nbsp;&nbsp;
                 <ul class="pagination">
                     <li>
-                        <a href="#" ng-click="periodPrevNext(1,-1)" ng-href="{{section}}"> < </a>
-                        <a href="#" ng-click="periodPrevNext(1,1)" ng-href="{{section}}"> > </a>
+                        <a class="btn-sm" href="#" ng-click="periodPrevNext(1,-1)" ng-href="{{section}}"> < </a>
+                        <a class="btn-sm" href="#" ng-click="periodPrevNext(1,1)" ng-href="{{section}}"> > </a>
                     </li>
                 </ul>
             </div>
@@ -21,8 +21,12 @@
     </div>
     <div class="col-md-2">
         <ul class="pagination">
-            <li ng-class="{'active':(section == 'неделя')}"><a ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a></li>
-            <li ng-class="{'active':(section == 'месяц')}"> <a ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a></li>
+            <li ng-class="{'active':(section == 'неделя')}">
+                <a class="btn-sm" ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a>
+            </li>
+            <li ng-class="{'active':(section == 'месяц')}">
+                <a class="btn-sm" ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a>
+            </li>
         </ul>
     </div>
 </div>

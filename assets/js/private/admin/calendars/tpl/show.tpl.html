@@ -1,6 +1,6 @@
 <div class="col-sm-11  col-md-12  main ng-scope">
     <div class="page-header">
-        <h1>{{item.sc()}} "{{item.name}}" {{item.year| date:"yyyy"}}
+        <h3>{{item.sc()}} "{{item.name}}" {{item.year| date:"yyyy"}}
             <div class="btn-group-xs pull-right">
                 <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
@@ -9,7 +9,7 @@
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             </div>
-        </h1>
+        </h3>
         <!--<ul class="breadcrumb">-->
             <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
                 <!--<ng-switch on="$last">-->
