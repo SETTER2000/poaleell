@@ -18,14 +18,17 @@ module.exports = {
             defaultsTo: 'Сотрудники'
         },
         action: {
-            type: 'boolean', defaultsTo: true
+            type: 'boolean',
+            defaultsTo: true
         },
         firstName: {
-            type: 'string', required: true
+            type: 'string',
+            required: true
         },
 
         lastName: {
-            type: 'string', required: true
+            type: 'string',
+            required: true
         },
         onLine: {
             type: 'boolean',
@@ -54,10 +57,12 @@ module.exports = {
         },
 
         subdivision: {
-            type: 'array', defaultsTo: '[]'
+            type: 'array',
+            defaultsTo: '[]'
         },
         position: {
-            type: 'string', defaultsTo: 'нет данных',
+            type: 'string',
+            defaultsTo: 'нет данных',
             size: 50
         },
         encryptedPassword: {
