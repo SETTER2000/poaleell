@@ -16,11 +16,11 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
             password: $scope.signupForm.password
         }).then(function onSuccess(sailsResponse) {
             window.location = '/admin/users';
-            console.log('sailsResponse:');
-            console.log(sailsResponse);
+            // console.log('sailsResponse:');
+            // console.log(sailsResponse);
         }).catch(function onError(sailsResponse) {
-            console.log('sailsResponse:');
-            console.log(sailsResponse);
+            // console.log('sailsResponse:');
+            // console.log(sailsResponse);
             var emailAddressAlreadyInUse = sailsResponse.status == 409;
             if (emailAddressAlreadyInUse) {
                 toastr.error('Этот email уже зарегистрирован, пожалуйста введите другой email.', 'Ошибка');

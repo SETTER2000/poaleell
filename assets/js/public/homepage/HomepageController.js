@@ -11,8 +11,8 @@ angular.module('HomepageModule').controller('HomepageController', ['$scope', '$h
                 email: $scope.loginForm.email,
                 password: $scope.loginForm.password
             })
-                .then(function onSuccess(sailsResponse) {
-                    window.location = '/';
+                .then(function onSuccess() {
+                    window.location = '/admin/users';
                 })
                 .catch(function onError(sailsResponse) {
 

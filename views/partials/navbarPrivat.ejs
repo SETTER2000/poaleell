@@ -25,6 +25,7 @@
                 <!--<li><a ui-sref="contact">Contact</a>-->
 
                     <!-- Also a way to navigate -->
+                <!--<li><a href="/videos">Videos</a></li>-->
 
 
                 <li class="dropdown">
@@ -48,8 +49,12 @@
                         <!--<li><a href="#">Структура компании</a></li>-->
                     </ul>
                 </li>
+
+                <li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Администрирование</a></li>
+
                 <li>
                 </li>
+
             </ul>
             <ul ng-show="me.id" class="nav navbar-nav navbar-right">
                 <li class="gravatarSm">

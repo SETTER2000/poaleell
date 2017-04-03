@@ -21,7 +21,16 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                 url: '/',
                 views: {
                     //'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
-                    '@': {templateUrl: '/js/private/tpl/workspace.tpl.html'}
+                    '@': {templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html'}
+                }
+            })
+            .state('home.profile', {
+                url: 'profile',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/dashboard/tpl/profile.tpl.html',
+                        controller: 'ProfileController'
+                    }
                 }
             })
         //    .state('account', {

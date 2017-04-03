@@ -35,6 +35,10 @@ module.exports.routes = {
     //'GET /attendance': 'PageController.showHomePage',
     'GET /': 'PageController.showHomePage',
     'GET /admin': 'PageController.showHomePage',
+    'GET /admin/users/administration': 'PageController.showAdminPage',
+   
+
+
     //'GET /calendar': 'PageController.showHomePage',
 
     //'/employee/find':'PageController.showHomePage',
@@ -66,8 +70,17 @@ module.exports.routes = {
     'GET /admin/users/edit/:id': 'PageController.showHomePage',
     //'GET /admin/users/edit/:id': 'UserController.findOne',
     'GET /admin/users/:id': 'UserController.findOne',
+   
     //'GET /admin/:id': 'UserController.findOne',
 
+    // **** TEST routers ***//
+    
+    'GET /videos': 'PageController.showVideosPage',
+    'GET /profile': 'PageController.showHomePage',
+    'GET /edit-profile': 'PageController.showEditProfilePage',
+    'GET /restore-profile': 'PageController.showRestorePage',
+    // **** END TEST routers ***//
+    
 
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
@@ -99,12 +112,9 @@ module.exports.routes = {
     //'POST /admin/attendances/calendars': 'AttendanceController.getQuery',
 
 
-
-
-
     'PUT /user/:id': 'UserController.update',
     'POST /user': 'UserController.signup',
-    'GET /profile': 'UserController.profile',
+
     'PUT /department/:id': 'DepartmentController.update',
     'PUT /calendar/:id': 'CalendarController.update',
     //'PUT /attendance/:id': 'AttendanceController.update',
@@ -149,7 +159,7 @@ module.exports.routes = {
 
 
 
-    'GET /say/hello':'SayController.hello'
+    'GET /say/hello': 'SayController.hello'
 
 
 };

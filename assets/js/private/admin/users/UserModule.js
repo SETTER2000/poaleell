@@ -116,6 +116,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 }
             })
+            .state('home.admin.users.administration', {
+                url: '/administration',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/tpl/administration.tpl.html',
+                        controller: 'AdministrationController'
+                    }
+                }
+            })
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
