@@ -8,7 +8,7 @@
 module.exports = {
     showHomePage: function (req, res) {
         if (!req.session.me) {
-            return res.view('public/header', {layout: 'homepage'});
+            return res.view('public/header', {layout: 'homepage',me: null});
         }
         User.findOne(req.session.me, function (err, user) {
             if (err) {
@@ -16,7 +16,7 @@ module.exports = {
             }
             if (!user) {
                 sails.log.verbose('Session refers to a user who no longer exists did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
-                return res.view('public/header', {layout: 'homepage'});
+                return res.view('public/header', {layout: 'homepage',me: null});
             }
             // return res.view({
             //     me: user
@@ -31,7 +31,7 @@ module.exports = {
                 email: user.email,
                 login: user.login,
                 subdivision: user.subdivision,
-                isAdmin: !!user.admin,
+                admin: user.admin,
                 gravatarUrl: user.gravatarUrl,
                 lastLoggedIn: user.lastLoggedIn,
                 fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName

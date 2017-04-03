@@ -52,28 +52,29 @@ module.exports = {
                             "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
 
                     }
+
+                    //req.session.userId = user.id;
                     req.session.me = user.id;
                     return res.ok();
                 }
             });
         });
     },
-    //
-    //setSession: function(req, res) {
-    //
-    //req.session.userId = req.param('sessionVar');
-    //
-    //    return res.json(req.session.userId || 'not yet set');
-    //
-    //},
-    //
-    //getSession: function(req, res) {
-    //
-    //return res.json(req.session.userId || 'not yet set');
-    //
-    //},
 
+    profile: function(req, res) {
 
+    // Try to look up user using the provided email address
+    User.findOne(req.param('id')).exec(function foundUser(err, user) {
+        // Handle error
+        if (err) return res.negotiate(err);
+
+        // Handle no user being found
+        if (!user) return res.notFound();
+
+        // Return the user
+        return res.json(user);
+    });
+},
 
     /**
      * Регистрация нового пользователя.
@@ -142,9 +143,12 @@ module.exports = {
                             //        console.log('Ok! Send mail.');
                             //    }
                             //});
-                            return res.json({
-                                id: newUser.id
-                            });
+
+
+                            return res.json(newUser);
+                            //return res.json({
+                            //    id: newUser.id
+                            //});
 
                         });
                     }
@@ -155,43 +159,7 @@ module.exports = {
         // Send an email, either in plaintext or from an HTML template.
         //.where( actionUtil.parseCriteria(req) )
     },
-    //find: function (req, res) {
 
-    //    User.find()
-    //        .limit(200)
-    //        .where(req.allParams())
-    //        .exec(function found(err, users) {
-    //            console.log(users);
-    //            console.log('METHOD FIND req.allParams():');
-    //            console.log(req.allParams());
-    //            console.log('METHOD FIND req.param("id"):');
-    //            console.log(req.param('id'));
-    //
-    //            if (err)  return res.negotiate(err);
-    //            if (!users)  return res.negotiate(err);
-    //
-    //            // return res.redirect('/admin/users/edit/' + req.param('id'));
-    //            // return res.backToHomePage();
-    //            //return res.redirect('/admin/users/edit/' + req.param('id'));
-    //            //res.view({
-    //            //    users: users, me: req.session.me
-    //            //});
-    //            //users.me=req.session.me;
-    //            res.ok(users);
-    //            //    res.view({
-    //            //        user: user, me: req.session.me
-    //            //    });
-    //        });
-    //
-    //
-    //    //return res.json(403, 'Single model lookup is denied.');
-    //},
-    //index: function (req, res, next) {
-    //    if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-    //
-    //    next();
-    //    //return res.view('page/showHomePage', {layout: 'dashboard', user: user, me: req.session.me});
-    //},
     findOne: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //console.log('REGSESSIONME:');
@@ -213,6 +181,7 @@ module.exports = {
                 });
             });
     },
+
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -324,14 +293,73 @@ module.exports = {
     },
 
     logout: function (req, res) {
+
+
         User.findOne(req.session.me, function foundUser(err, user) {
-            if (err) return res.view('public/header', {layout: 'homepage'});
+            //if (err) return res.view('public/header', {layout: 'homepage'});
+            if (err) return res.negotiate(err);
             if (!user) {
                 sails.log.verbose('Сессия относится к пользователю, который больше не существует/');
                 return res.backToHomePage();
             }
             req.session.me = null;
             return res.backToHomePage();
+        });
+    },
+
+    removeProfile: function(req, res) {
+
+        if (!req.param('id')) {
+            return res.badRequest('id is a required parameter.');
+        }
+
+        User.update({
+            id: req.param('id')
+        }, {
+            deleted: true
+        }, function(err, removedUser) {
+
+            if (err) return res.negotiate(err);
+            if (removedUser.length === 0) {
+                return res.notFound();
+            }
+            req.session.me = null;
+            return res.ok();
+        });
+    },
+
+    restoreProfile: function(req, res) {
+
+        User.findOne({
+            email: req.param('email')
+        }, function foundUser(err, user) {
+            if (err) return res.negotiate(err);
+            if (!user) return res.notFound();
+
+            Passwords.checkPassword({
+                passwordAttempt: req.param('password'),
+                encryptedPassword: user.encryptedPassword
+            }).exec({
+
+                error: function(err) {
+                    return res.negotiate(err);
+                },
+
+                incorrect: function() {
+                    return res.notFound();
+                },
+
+                success: function() {
+                    User.update({
+                        id: user.id
+                    }, {
+                        deleted: false
+                    }).exec(function(err, updatedUser) {
+                        req.session.me = user.id;
+                        return res.json(updatedUser);
+                    });
+                }
+            });
         });
     }
 

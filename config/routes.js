@@ -104,6 +104,7 @@ module.exports.routes = {
 
     'PUT /user/:id': 'UserController.update',
     'POST /user': 'UserController.signup',
+    'GET /profile': 'UserController.profile',
     'PUT /department/:id': 'DepartmentController.update',
     'PUT /calendar/:id': 'CalendarController.update',
     //'PUT /attendance/:id': 'AttendanceController.update',
