@@ -1,3 +1,4 @@
+<div ng-controller="navPageController" ng-cloak class="container-fluid">
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -50,17 +51,31 @@
                 <li>
                 </li>
             </ul>
-
-            <ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">
-
-                <li><a ><%= me.firstName %> <%= me.patronymicName %> (<%= me.login %>)</a></li>
-
+            <ul ng-show="me.id" class="nav navbar-nav navbar-right">
+                <li class="gravatarSm">
+                    <img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>
+                </li>
+                <li class="activityOverlord active">
+                    <a href="/profile" class="pointer"> {{me.fullName}} ({{me.login}})</a>
+                </li>
                 <li>
+                    <!--<a href="/logout">Выход</a>-->
                     <form action="/logout" class="navbar-form navbar-right">
                         <button class="btn btn-success btn-md" type="submit">Выход</button>
-                    </form>
-                </li>
-            </ul>
+                        </form>
+                    </li>
+                </ul>
+                <!--<ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">-->
+
+                <!--<li><a ><%= me.firstName %> <%= me.patronymicName %> {{me.email}} (<%= me.login %>)</a></li>-->
+
+                <!--<li>-->
+                    <!--<form action="/logout" class="navbar-form navbar-right">-->
+                        <!--<button class="btn btn-success btn-md" type="submit">Выход</button>-->
+                    <!--</form>-->
+                <!--</li>-->
+            <!--</ul>-->
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+    </div>

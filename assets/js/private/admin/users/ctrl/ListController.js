@@ -86,11 +86,13 @@
             $scope.options =
                 [
                     {display: "Все", value: "table"},
-                    {display: "Уволены", value: "list"}
+                    {display: "Уволены", value: "list"},
+                    {display: "Не активированы / Заблокированы", value: "action"}
                 ];
             $scope.modeSelect = $scope.options[0];
             $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
             $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
+            $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
             //$scope.calendarView = "/js/private/admin/users/views/home.admin.users.calendar.html";
             //$scope.budgeView = "/js/private/admin/users/views/home.admin.users.budge.html";
 

@@ -15,11 +15,21 @@ angular.module('HomepageModule').controller('HomepageController', ['$scope', '$h
                     window.location = '/';
                 })
                 .catch(function onError(sailsResponse) {
+
+                    // Handle known error type(s).
+                    // Deleted account
+                    if (sailsResponse.status == 403) {
+                        toastr.error(sailsResponse.data, 'Ошибка!', {
+                            closeButton: true
+                        });
+                        return;
+                    }
+
                     if(sailsResponse.status === 400 || 404){
                         toastr.error('Не правильный логин/пароль.', 'Ошибка авторизации!', {closeButton:true});
                         return;
                     }
-                    toastr.error('Неожиданная ошибка, пожалуйста попробуйте еще раз..', 'Error', {closeButton:true});
+                    toastr.error('Неожиданная ошибка, пожалуйста попробуйте еще раз..', 'Ошибка', {closeButton:true});
                     return;
                 })
                 .finally(function eitherWay() {

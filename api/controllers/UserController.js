@@ -4,6 +4,14 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+
+/**
+ * res.negotiate() - является функцией, которая проверяет предоставленную ошибку (err) и
+ * определяет соответствующее поведение обработки ошибок с помощью свойства status errors и
+ * перенаправляет его в один из следующих ответов в словаре res: res.badRequest () [400 ошибок],
+ * res.forbidden () [403 ошибки], res.notFound () [404 ошибки] или res.serverError () [500 ошибок].
+ */
+
 // var Sugar = require('sugar');
 module.exports = {
     /**
@@ -14,7 +22,10 @@ module.exports = {
      */
     login: function (req, res) {
         User.findOne({
-            email: req.param('email')
+            or: [
+                {email: req.param('email')},
+                {login: req.param('email')}
+            ]
         }, function foundUser(err, user) {
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
@@ -23,15 +34,48 @@ module.exports = {
             }).exec({
                 error: function (err) {
                     return res.negotiate(err);
-                }, incorrect: function () {
+                },
+                incorrect: function () {
                     return res.notFound();
-                }, success: function () {
+                },
+                success: function () {
+
+                    if (user.deleted) {
+
+                        return res.forbidden("'Your account has been deleted. " +
+                            "Please visit ... restore to restore your account.'");
+
+                    }
+                    if (!user.action) {
+
+                        return res.forbidden("Ваша учетная запись заблокирована, " +
+                            "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
+
+                    }
                     req.session.me = user.id;
                     return res.ok();
                 }
             });
         });
-    }, /**
+    },
+    //
+    //setSession: function(req, res) {
+    //
+    //req.session.userId = req.param('sessionVar');
+    //
+    //    return res.json(req.session.userId || 'not yet set');
+    //
+    //},
+    //
+    //getSession: function(req, res) {
+    //
+    //return res.json(req.session.userId || 'not yet set');
+    //
+    //},
+
+
+
+    /**
      * Регистрация нового пользователя.
      */
     signup: function (req, res) {

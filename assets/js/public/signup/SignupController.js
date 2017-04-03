@@ -46,11 +46,21 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
         }).then(function onSuccess(sailsResponse) {
             window.location = '/';
         }).catch(function onError(sailsResponse) {
-            if (sailsResponse.status === 400 || 404) {
-                toastr.error('Не правильный логин/пароль.', 'Ошибка авторизации!', {closeButton: true});
+
+            // Handle known error type(s).
+            // Deleted account
+            if (sailsResponse.status == 403) {
+                toastr.error(sailsResponse.data, 'Ошибка!', {
+                    closeButton: true
+                });
                 return;
             }
-            toastr.error('Неожиданная ошибка, пожалуйста попробуйте еще раз.', 'Ошибка!', {closeButton: true});
+
+            if(sailsResponse.status === 400 || 404){
+                toastr.error('Не правильный логин/пароль.', 'Ошибка авторизации!', {closeButton:true});
+                return;
+            }
+            toastr.error('Неожиданная ошибка, пожалуйста попробуйте еще раз..', 'Ошибка', {closeButton:true});
             return;
         }).finally(function eitherWay() {
             $scope.loginForm.loading = false;

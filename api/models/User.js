@@ -19,7 +19,7 @@ module.exports = {
         },
         action: {
             type: 'boolean',
-            defaultsTo: true
+            defaultsTo: false
         },
         firstName: {
             type: 'string',
@@ -51,6 +51,13 @@ module.exports = {
             unique: true,
             required: true
         },
+        deleted: {
+            type: 'boolean'
+        },
+        admin: {
+            type: 'boolean'
+        },
+
 
         birthday: {
             type: 'date'

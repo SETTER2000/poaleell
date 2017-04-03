@@ -19,11 +19,12 @@
 
         window.SAILS_LOCALS = {
             _csrf: '<%= _csrf %>',
-            me: <%- JSON.stringify(me) %>
+            me: <%- JSON.stringify(me||null) %>
         };
     </script>
 </head>
 <body>
+
 <%- partial('./partials/navbarPrivat.ejs') %>
 
 <div class="container-fluid">
@@ -87,6 +88,7 @@
 <script src="/js/private/admin/users/ctrl/UserController.js"></script>
 <script src="/js/private/admin/users/ts/controller_test.js"></script>
 <script src="/js/private/admin/users/ts/karma.conf.js"></script>
+<script src="/js/private/ctrl/navPageController.js"></script>
 <script src="/js/private/dashboard/account/ctrl/AccountController.js"></script>
 <script src="/js/private/dashboard/ctrl/DashboardController.js"></script>
 <script src="/js/public/homepage/HomepageController.js"></script>

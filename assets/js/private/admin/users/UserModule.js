@@ -214,7 +214,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 }
             }
         };
-        Users.prototype.deactivation = function () {
+        Users.prototype.forrbidden = function () {
             return ' - уволены';
         };
         return Users;

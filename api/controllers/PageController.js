@@ -21,21 +21,24 @@ module.exports = {
             // return res.view({
             //     me: user
             // });
-            return   res.view({
-                me:{
-                    id:user.id,
-                    firstName:user.firstName,
-                    lastName:user.lastName,
-                    patronymicName:user.patronymicName,
-                    birthday:user.birthday,
-                    email:user.email,
-                    login:user.login,
-                    subdivision:user.subdivision,
-                    isAdmin:!!user.admin,
-                    gravatarUrl:user.gravatarUrl,
-                    lastLoggedIn:user.lastLoggedIn
 
-                }
+            var empl = {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                patronymicName: user.patronymicName,
+                birthday: user.birthday,
+                email: user.email,
+                login: user.login,
+                subdivision: user.subdivision,
+                isAdmin: !!user.admin,
+                gravatarUrl: user.gravatarUrl,
+                lastLoggedIn: user.lastLoggedIn,
+                fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
+            };
+
+            return res.view({
+                me: empl
             });
             //res.view('dashboard/index', {layout:'dashboard'});
         });
