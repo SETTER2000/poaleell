@@ -4,7 +4,7 @@
         <h1>
             <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action">{{item.deactivation()}}</span>
             </p>
-            <p ng-if="!item.lastName">Администрирование</p>
+            <p ng-if="!item.lastName">Права доступа</p>
             <!--<a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |-->
             <!--date:'dd.MM.yyyy' }}</a>-->
             <!--<a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |-->
@@ -46,7 +46,7 @@
             <!-- USERS PAGE -->
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Политики безопасности</h3>
+                    <h3 class="panel-title">Группы</h3>
                 </div>
                 <div class="panel-body">
 

@@ -38,6 +38,7 @@
                             <li><a ui-sref="home.admin.users">Сотрудники</a></li>
                             <li><a ui-sref="home.admin.departments">Отделы</a></li>
                             <li><a ui-sref="home.admin.positions">Должности</a></li>
+                            <li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                             <!--<li><a ui-sref="home.admin.calendars">Календари</a></li>-->
                             <!--<li><a ui-sref="home.admin.employees">Employees</a></li>-->
                             <!--<li><a ui-sref="home.admin.attendances">Посещаемость</a></li>-->
@@ -50,7 +51,7 @@
                         </ul>
                     </li>
 
-                    <li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Администрирование</a></li>
+                    <!--<li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Администрирование</a></li>-->
 
                     <li>
                     </li>

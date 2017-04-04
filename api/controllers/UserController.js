@@ -59,7 +59,7 @@ module.exports = {
                     }
 
                     //req.session.userId = user.id;
-                    req.session.me = user.id;
+                    req.session.me = user;
                     return res.ok();
                 }
             });
@@ -299,8 +299,6 @@ module.exports = {
     },
 
     logout: function (req, res) {
-
-
         User.findOne(req.session.me, function foundUser(err, user) {
             //if (err) return res.view('public/header', {layout: 'homepage'});
             if (err) return res.negotiate(err);
@@ -440,25 +438,19 @@ module.exports = {
     },
 
     updateAdmin: function (req, res) {
-
         User.update(req.param('id'), {
             admin: req.param('admin')
         }).exec(function (err, update) {
-
             if (err) return res.negotiate(err);
-
             return res.ok();
         });
     },
 
     updateKadr: function (req, res) {
-
         User.update(req.param('id'), {
             kadr: req.param('kadr')
         }).exec(function (err, update) {
-
             if (err) return res.negotiate(err);
-
             return res.ok();
         });
     },
