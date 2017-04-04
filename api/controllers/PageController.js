@@ -35,6 +35,7 @@ module.exports = {
                     login: user.login,
                     subdivision: user.subdivision,
                     admin: user.admin,
+                    kadr: user.kadr,
                     gravatarUrl: user.gravatarUrl,
                     lastLoggedIn: user.lastLoggedIn,
                     fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
@@ -78,6 +79,7 @@ module.exports = {
                         login: user.login,
                         subdivision: user.subdivision,
                         admin: user.admin,
+                        kadr: user.kadr,
                         gravatarUrl: user.gravatarUrl,
                         lastLoggedIn: user.lastLoggedIn,
                         fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName

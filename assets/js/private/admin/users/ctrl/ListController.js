@@ -256,6 +256,7 @@
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
+                        console.log('ITEMS QUERY');
                         $scope.items = users;
                         // $scope.lengthObject = users.length;
                         console.log(users);

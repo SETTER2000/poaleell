@@ -57,6 +57,9 @@ module.exports = {
         admin: {
             type: 'boolean'
         },
+        kadr: {
+            type: 'boolean'
+        },
 
 
         birthday: {

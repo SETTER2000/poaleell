@@ -17,9 +17,68 @@
             <h3>
                 <a href="mailto:{{me.email}}">{{me.email}}</a>
             </h3>
+
+            <div class="row">
+                <div class=" col-md-12">
+                    <table class="table">
+
+                        <tr>
+                            <th>ДР</th>
+                            <td>{{me.birthday | date:'dd.MM.yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <th>Логин</th>
+                            <td>{{me.login}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{me.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Должность</th>
+                            <td>{{me.positions[0].name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Отдел</th>
+                            <td>{{me.departments[0].name}}</td>
+                        </tr>
+                        <tr ng-if="!me.firedDate">
+                            <th>Работает с</th>
+                            <td>{{me.dateInWork | date: "dd.MM.yyyy"}} {{message}}</td>
+                        </tr>
+                        <tr ng-if="me.firedDate">
+                            <th>Работал</th>
+                            <td>{{me.dateInWork | date: "dd.MM.yyyy"}} - {{me.firedDate | date: "dd.MM.yyyy"}}</td>
+                        </tr>
+                        <tr ng-if="me.firedDate">
+                            <th>Уволен с</th>
+                            <td>{{me.firedDate | date: "dd.MM.yyyy"}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="20"></th>
+                        </tr>
+
+
+                        <!--<tr ng-cloak>-->
+                        <!--<td>-->
+                        <!--<a ui-sref="home.admin.users" class="btn btn-sm btn-warning">-->
+                        <!--<span class="glyphicon glyphicon-list"></span>-->
+                        <!--</a>-->
+
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<a ui-sref="home.admin.users.edit({userId:me.id})" class="btn btn-sm btn-warning">-->
+                        <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                        <!--</a>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+
+                    </table>
+                </div>
+            </div>
             <div>
                 <a href="/edit-profile" class="btn btn-sm btn-primary">Edit</a>
-                <a ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
+                <a ng-show="me.admin" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
             </div>
         </div>
     </div>

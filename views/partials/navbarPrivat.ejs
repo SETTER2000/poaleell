@@ -1,72 +1,72 @@
 <div ng-controller="navPageController" ng-cloak class="container-fluid">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/#" class="pull-left"><img height="29" width="29"  src="/images/logo.png" style="margin: 10px; "></a>
-            <a class="navbar-brand " href="/" > КС</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <!--<li><a href="/">Home</a></li>-->
-                <!--<li><a ui-sref="home.admin.calendars">Посещаемость</a></li>-->
-                <li><a href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>
-                <!--<li><a ui-sref="account">Аккаунт</a></li>-->
-                <!--<li><a ui-sref="contact.detail">Detail</a></li>-->
-                <!--<li><a ui-sref="home.admin">Admin</a></li>-->
-                <!--<li><a ui-sref="home.admin.users">Users</a></li>-->
-                <!--<li><a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a></li>-->
-                <!--<li><a ui-sref="contact">Contact</a>-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/#" class="pull-left brighten"><img height="29" width="29" src="/images/logo.png" style="margin: 10px; "></a>
+                <a class="navbar-brand " href="/"> КС</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!--<li><a href="/">Home</a></li>-->
+                    <!--<li><a ui-sref="home.admin.calendars">Посещаемость</a></li>-->
+                    <li><a href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>
+                    <!--<li><a ui-sref="account">Аккаунт</a></li>-->
+                    <!--<li><a ui-sref="contact.detail">Detail</a></li>-->
+                    <!--<li><a ui-sref="home.admin">Admin</a></li>-->
+                    <!--<li><a ui-sref="home.admin.users">Users</a></li>-->
+                    <!--<li><a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a></li>-->
+                    <!--<li><a ui-sref="contact">Contact</a>-->
 
                     <!-- Also a way to navigate -->
-                <!--<li><a href="/videos">Videos</a></li>-->
+                    <!--<li><a href="/videos">Videos</a></li>-->
 
 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">
-                        Справочники
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">Редактирование</li>
-                        <!--<li><a ui-sref="admin.users.list">Сотрудники</a></li>-->
-                        <li><a ui-sref="home.admin.users">Сотрудники</a></li>
-                        <li><a ui-sref="home.admin.departments">Отделы</a></li>
-                        <li><a ui-sref="home.admin.positions">Должности</a></li>
-                        <!--<li><a ui-sref="home.admin.calendars">Календари</a></li>-->
-                        <!--<li><a ui-sref="home.admin.employees">Employees</a></li>-->
-                        <!--<li><a ui-sref="home.admin.attendances">Посещаемость</a></li>-->
+                    <li class="dropdown">
+                        <a ng-show="me.kadr" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            Справочники
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Редактирование</li>
+                            <!--<li><a ui-sref="admin.users.list">Сотрудники</a></li>-->
+                            <li><a ui-sref="home.admin.users">Сотрудники</a></li>
+                            <li><a ui-sref="home.admin.departments">Отделы</a></li>
+                            <li><a ui-sref="home.admin.positions">Должности</a></li>
+                            <!--<li><a ui-sref="home.admin.calendars">Календари</a></li>-->
+                            <!--<li><a ui-sref="home.admin.employees">Employees</a></li>-->
+                            <!--<li><a ui-sref="home.admin.attendances">Посещаемость</a></li>-->
 
 
-                        <!--<li role="separator" class="divider"></li>-->
-                        <!--<li class="dropdown-header">Просмотр</li>-->
+                            <!--<li role="separator" class="divider"></li>-->
+                            <!--<li class="dropdown-header">Просмотр</li>-->
 
-                        <!--<li><a href="#">Структура компании</a></li>-->
-                    </ul>
-                </li>
+                            <!--<li><a href="#">Структура компании</a></li>-->
+                        </ul>
+                    </li>
 
-                <li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Администрирование</a></li>
+                    <li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Администрирование</a></li>
 
-                <li>
-                </li>
+                    <li>
+                    </li>
 
-            </ul>
-            <ul ng-show="me.id" class="nav navbar-nav navbar-right">
-                <li class="gravatarSm">
-                    <img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>
-                </li>
-                <li class="activityOverlord active">
-                    <a href="/profile" class="pointer"> {{me.fullName}} ({{me.login}})</a>
-                </li>
-                <li>
-                    <!--<a href="/logout">Выход</a>-->
-                    <form action="/logout" class="navbar-form navbar-right">
-                        <button class="btn btn-success btn-md" type="submit">Выход</button>
+                </ul>
+                <ul ng-show="me.id" class="nav navbar-nav navbar-right">
+                    <li class="gravatarSm">
+                        <img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>
+                    </li>
+                    <li class="activityOverlord active">
+                        <a href="/profile" class="pointer"> {{me.fullName}} ({{me.login}})</a>
+                    </li>
+                    <li>
+                        <!--<a href="/logout">Выход</a>-->
+                        <form action="/logout" class="navbar-form navbar-right">
+                            <button class="btn btn-success btn-md" type="submit">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -75,12 +75,12 @@
                 <!--<li><a ><%= me.firstName %> <%= me.patronymicName %> {{me.email}} (<%= me.login %>)</a></li>-->
 
                 <!--<li>-->
-                    <!--<form action="/logout" class="navbar-form navbar-right">-->
-                        <!--<button class="btn btn-success btn-md" type="submit">Выход</button>-->
-                    <!--</form>-->
+                <!--<form action="/logout" class="navbar-form navbar-right">-->
+                <!--<button class="btn btn-success btn-md" type="submit">Выход</button>-->
+                <!--</form>-->
                 <!--</li>-->
-            <!--</ul>-->
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
-    </div>
+                <!--</ul>-->
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+</div>

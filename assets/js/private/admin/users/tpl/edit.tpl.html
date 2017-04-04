@@ -1,12 +1,14 @@
 <!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
-    <div class="col-sm-11  col-md-12  main">
+<div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h1>
-            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action" >{{item.deactivation()}}</span></p>
+            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action">{{item.deactivation()}}</span>
+            </p>
             <p ng-if="!item.lastName">Новый сотрудник</p>
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }}</a>
-            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate | date:'dd.MM.yyyy'}}</a>
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
+                date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
@@ -18,11 +20,11 @@
         </h1>
     </div>
     <div class="row">
-        <div  ng-class="{'col-md-6':close, 'col-md-12':!close, 'fx-fade-left':!close, 'fx-fade-right':close}">
-        <!--<div  class="fx-fade-right" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
-        <!--<div  class="fx-fade-down" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
-        <!--<div  class="fx-fade-up fx-ease-sine" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
-        <!--<div  class="fx-fade-normal" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+        <div ng-class="{'col-md-6':close, 'col-md-12':!close, 'fx-fade-left':!close, 'fx-fade-right':close}">
+            <!--<div  class="fx-fade-right" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <!--<div  class="fx-fade-down" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <!--<div  class="fx-fade-up fx-ease-sine" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <!--<div  class="fx-fade-normal" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
             <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать
@@ -32,11 +34,11 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form name="userForm" novalidate  ng-submit="saveEdit(item)">
+                    <form name="userForm" novalidate ng-submit="saveEdit(item)">
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"  ng-model="item.action">Активность
+                                    <input type="checkbox" ng-model="item.action">Активность
                                 </label>
                             </div>
                             <label class="control-label" for="inputSuccess1">Фамилия</label>
@@ -93,22 +95,22 @@
                         </div>
                         <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" for="inputSuccess8" ng-bind="items[0].sc()"></label>
-                                [ <a href="#" ng-click="addDepartment()">добавить</a> ]
-                                <div class="form-inline" ng-repeat="department in item.departments">
-                                    <div class="form-group">
-                                        <select class="form-control" ng-model="department.id">
-                                            <option ng-repeat="option in items" value="{{option.id}}">{{option.name}}</option>
-                                        </select>
-                                   </div>
-                                    <button type="button" class="btn btn-default" ng-click="removeDepartment(department)">x</button>
-                             </div>
+                            [ <a href="#" ng-click="addDepartment()">добавить</a> ]
+                            <div class="form-inline" ng-repeat="department in item.departments">
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="department.id">
+                                        <option ng-repeat="option in items" value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-default" ng-click="removeDepartment(department)">x</button>
+                            </div>
                         </div>
 
                         <!--  E D I T  P O S I T I O N S  C O N T R O L L E R  -->
                         <div ng-controller="ListPositionController" class="form-group ">
                             <!--<pre class="text-right" ><p>{{items| json}}</p></pre>-->
                             <label class="control-label" for="inputSuccess8" ng-bind="items[0].sc()"></label>
-                            [ <a   href="#" ng-click="items[0].addPosition(item)">добавить</a> ]
+                            [ <a href="#" ng-click="items[0].addPosition(item)">добавить</a> ]
                             <div class="form-inline" ng-repeat="position in item.positions">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="position.id">
@@ -121,9 +123,9 @@
 
 
                         <!--<div class="form-group ">-->
-                            <!--<label class="control-label" for="inputSuccess9">Должность</label>-->
-                            <!--<input type="text" class="form-control" ng-model="item.position">-->
-                            <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                        <!--<label class="control-label" for="inputSuccess9">Должность</label>-->
+                        <!--<input type="text" class="form-control" ng-model="item.position">-->
+                        <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
                         <!--</div>-->
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess10">ПФР</label>
@@ -175,7 +177,8 @@
                                     <label ng-if="item.dateInWork" class="control-label" for="inputSuccess13">
                                         Редактировать дату приёма на работу
                                     </label>
-                                    <input type="date" class="form-control" min="1995-01-01" max="{{item.getCurrentDate()}}" ng-model="item.dateInWork">
+                                    <input type="date" class="form-control" min="1995-01-01" max="{{item.getCurrentDate()}}"
+                                           ng-model="item.dateInWork">
                                     <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                 </div>
                             </div>
@@ -192,7 +195,7 @@
                             </div>
                         </div>
 
-                        <div  class="form-group ">
+                        <div class="form-group ">
                             <label class="checkbox-inline">
                                 <input type="checkbox" ng-model="item.fired"> Уволен
                             </label>
@@ -228,16 +231,15 @@
                         </div>
 
 
-
                         <div class="row" ng-if="item.id">
                             <div class="col-md-5">
                                 <div class="form-group ">
-                                    <div class="form-group " >
+                                    <div class="form-group ">
                                         <label class="control-label" for="inputSuccess18">Зарегистрирован в системе</label>
                                         <div><a href="#" class="btn btn-default  disabled" role="button">
                                      <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.createdAt}"
                                            aria-hidden="true"></span>
-                                            {{item.getCreatedAt() |  date:'dd.MM.yyyy HH:mm'}}
+                                            {{item.getCreatedAt() | date:'dd.MM.yyyy HH:mm'}}
                                         </a></div>
                                         <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                     </div>
@@ -258,36 +260,36 @@
                             </div>
                         </div>
 
-                        <div ng-if="!item.id" class="row">
-                            <!-- P A S S W O R D -->
+                        <!--<div ng-show="me.admin" class="row">-->
+                            <!--&lt;!&ndash; P A S S W O R D &ndash;&gt;-->
 
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="control-group form-group">
-                                    <input data-ng-model="item.password" required data-ng-minlength="6"
-                                           type="password" name="password"
-                                           class="form-control" placeholder="Пароль" tabindex="6">
-                                    <!--<span class="help-block has-error" data-ng-if="signup.password.$dirty">-->
-                                    <!--<span data-ng-show="signup.password.$error.required">Поле обязательно к заполнению.</span>-->
-                                    <!--<span data-ng-show="signup.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>-->
+                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
+                                <!--<div class="control-group form-group">-->
+                                    <!--<input data-ng-model="item.password" required data-ng-minlength="6"-->
+                                           <!--type="password" name="password"-->
+                                           <!--class="form-control" placeholder="Пароль" tabindex="6">-->
+                                    <!--<span class="help-block has-error" data-ng-if="item.password.$dirty">-->
+                                    <!--<span data-ng-show="item.password.$error.required">Поле обязательно к заполнению.</span>-->
+                                    <!--<span data-ng-show="item.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>-->
                                     <!--</span>-->
-                                </div>
-                            </div>
+                                <!--</div>-->
+                            <!--</div>-->
 
-                            <!-- C O N F I R M  P A S S W O R D -->
+                            <!--&lt;!&ndash; C O N F I R M  P A S S W O R D &ndash;&gt;-->
 
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="control-group form-group">
-                                    <input data-ng-model="item.encryptedPassword" required type="password"
-                                           name="confirmation"
-                                           class="form-control"
-                                           placeholder="Повторить пароль" tabindex="7">
-                                    <!--<span class="help-block has-error" data-ng-if="signup.confirmation.$dirty">-->
-                                    <!--<span data-ng-show="signup.password.$error.compareTo">Пароли должны совпадать.</span>-->
-                                    <!--<span data-ng-show="signup.password.$error.required">Требуется повторить пароль.</span>-->
+                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
+                                <!--<div class="control-group form-group">-->
+                                    <!--<input data-ng-model="item.encryptedPassword" required type="password"-->
+                                           <!--name="confirmation"-->
+                                           <!--class="form-control"-->
+                                           <!--placeholder="Повторить пароль" tabindex="7">-->
+                                    <!--<span class="help-block has-error" data-ng-if="item.confirmation.$dirty">-->
+                                    <!--<span data-ng-show="item.password.$error.compareTo">Пароли должны совпадать.</span>-->
+                                    <!--<span data-ng-show="item.password.$error.required">Требуется повторить пароль.</span>-->
                                     <!--</span>-->
-                                </div>
-                            </div>
-                        </div>
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
 
                         <div class="form-group">
@@ -295,7 +297,7 @@
                                 <span class="glyphicon glyphicon-check"></span>
                                 Сохранить
                             </button>
-                            <a  ng-href="{{item.getListUrl()}}" class="btn btn-md btn-warning">
+                            <a ng-href="{{item.getListUrl()}}" class="btn btn-md btn-warning">
                                 <span class="glyphicon glyphicon-list"> </span>
                                 Список
                             </a>
@@ -306,21 +308,67 @@
 
 
                             <!--<button ng-if="item.id" ui-sref="home.admin.users.edit(data.id)"-->
-                                    <!--class="btn btn-default btn-md pull-right" role="button">-->
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
+                            <!--class="btn btn-default btn-md pull-right" role="button">-->
+                            <!--<span class="glyphicon glyphicon-trash"></span>-->
                             <!--</button>-->
 
                         </div>
                     </form>
-                    <button ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right" >
+                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>
             </div>
 
         </div>
-        <div  ng-if="loginAdmin" class="col-md-6" ng-if="close">
-            <div class="panel"  ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+        <div ng-show="me.admin" class="col-md-6" ng-if="close">
+
+            <div class="panel"
+                         ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Сменить пароль
+
+                            </h3>
+                        </div>
+                            <!-- Error state -->
+                            <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
+                                <h4>Oops!</h4>
+                                <code>
+                                    {{editProfile.changePassword.errorMsg}}
+                                </code>
+                            </div>
+                            <form ng-submit="changeMyPassword()" name="changePassword">
+                                <div class="control-group form-group col-md-6"
+                                     ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
+                                    <label>Новый пароль</label>
+                                    <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
+                                           ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
+                                           compare-to="editProfile.properties.confirmPassword">
+                <span class="help-block has-error" ng-if="changePassword.password.$dirty">
+                  <span ng-show="changePassword.password.$error.required">Введите пароль.</span>
+                  <span ng-show="changePassword.password.$error.minlength">Пароль должен содержать не менее 6 символов.</span>
+                </span>
+                                </div>
+                                <div class="control-group form-group col-md-6">
+                                    <label>Повторить пароль</label>
+                                    <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
+                                           ng-model="editProfile.properties.confirmPassword" required>
+                <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
+                  <span ng-show="changePassword.password.$error.compareTo">Password must match.</span>
+                  <span ng-show="changePassword.confirmation.$error.required">Confirmation password is required.</span>
+                </span>
+                                </div>
+                                <button type="submit" class="btn btn-lg btn-default btn-block" ng-disabled="changePassword.$invalid">
+                                    <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
+                                    <span ng-show="changePasswordForm.saving">Сохраняю...</span>
+                                    <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
+                                </button>
+                            </form>
+                        </div>
+
+
+            <div class="panel"
+                 ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Информация
 
@@ -337,6 +385,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>

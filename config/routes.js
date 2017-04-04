@@ -63,10 +63,12 @@ module.exports.routes = {
 
     'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
+
     //'GET /admin/user/:id': 'UserController.findOne',
     //'GET /admin/users/user/:id': 'UserController.findOne',
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit': 'PageController.showHomePage',
+    'PUT /admin/users/edit/changePassword': 'UserController.changePassword',
     'GET /admin/users/edit/:id': 'PageController.showHomePage',
     //'GET /admin/users/edit/:id': 'UserController.findOne',
     'GET /admin/users/:id': 'UserController.findOne',
@@ -77,8 +79,8 @@ module.exports.routes = {
     
     'GET /videos': 'PageController.showVideosPage',
     'GET /profile': 'PageController.showHomePage',
-    'GET /edit-profile': 'PageController.showEditProfilePage',
-    'GET /restore-profile': 'PageController.showRestorePage',
+    'GET /edit-profile': 'PageController.showHomePage',
+    'GET /restore-profile': 'PageController.showHomePage',
     // **** END TEST routers ***//
     
 
@@ -122,7 +124,9 @@ module.exports.routes = {
 
     'GET /signup': {view: 'public/signup', locals: {layout: 'signup'}},
 
-
+    'GET /user/adminUsers': 'UserController.adminUsers',
+    'PUT /user/updateProfile/:id': 'UserController.updateProfile',
+    'PUT /user/changePassword': 'UserController.changePassword',
     //'GET /admin/users/show': 'PageController.showHomePage',
     //'GET /admin/users/edit': 'PageController.showHomePage',
 

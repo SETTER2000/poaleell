@@ -1,14 +1,15 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
-        function ($scope, $state, Users, Positions, Departments, $stateParams, $rootScope) {
+    .controller('EditController', ['$scope', '$http','toastr','$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
+        function ($scope,$http,toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             $scope.close = 1;
             $scope.loginAdmin = false;
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
-            var emAdmin = SAILS_LOCALS.me.email;
-            if (emAdmin == 'apetrov@landata.ru') {
-                $scope.loginAdmin = true;
-            }
+            //var emAdmin = SAILS_LOCALS.me.email;
+            $scope.me = window.SAILS_LOCALS.me;
+            //if (emAdmin == 'apetrov@landata.ru') {
+            //    $scope.loginAdmin = true;
+            //}
 
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
@@ -101,6 +102,38 @@ angular.module('UserModule')
                 })
             };
 
+            $scope.editProfile = {
+                properties: {},
+                errorMsg: '',
+                error: false,
+                saving: false,
+                loading: false,
+                changePassword: {}
+            };
+
+            $scope.changeMyPassword = function () {
+                $http.put('/user/changePassword', {
+                        id: $scope.item.id,
+                        password: $scope.editProfile.properties.password
+                    })
+                    .then(function onSuccess(sailsResponse) {
+                        console.log('sailsResponse: ');
+                        console.log(sailsResponse);
+                        // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
+                        // window.location = '#/profile/' + $scope.editProfile.properties.id;
+                        //window.location = '/profile';
+                         toastr.success('Пароль обновлён!');
+                        $scope.editProfile.loading = false;
+                    })
+                    .catch(function onError(sailsResponse) {
+                        // console.log('sailsresponse: ', sailsResponse)
+                        // Otherwise, display generic error if the error is unrecognized.
+                        $scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
+                    })
+                    .finally(function eitherWay() {
+                        $scope.editProfile.loading = false;
+                    });
+            };
 
             $scope.saveEdit = function (item) {
                 $scope.item.subdivision = [];

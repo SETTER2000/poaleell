@@ -33,6 +33,15 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                     }
                 }
             })
+            .state('home.edit-profile', {
+                url: 'edit-profile',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/dashboard/tpl/edit-profile.html',
+                        controller: 'EditProfileController'
+                    }
+                }
+            })
         //    .state('account', {
         //        url: '/account',
         //        templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html'

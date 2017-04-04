@@ -11,6 +11,11 @@
  * перенаправляет его в один из следующих ответов в словаре res: res.badRequest () [400 ошибок],
  * res.forbidden () [403 ошибки], res.notFound () [404 ошибки] или res.serverError () [500 ошибок].
  */
+//var Emailaddresses = require('machinepack-emailaddresses');
+var Passwords = require('machinepack-passwords');
+var Gravatar = require('machinepack-gravatar');
+
+var Email = require('machinepack-email');
 
 // var Sugar = require('sugar');
 module.exports = {
@@ -61,27 +66,26 @@ module.exports = {
         });
     },
 
-    profile: function(req, res) {
+    profile: function (req, res) {
 
-    // Try to look up user using the provided email address
-    User.findOne(req.param('id')).exec(function foundUser(err, user) {
-        // Handle error
-        if (err) return res.negotiate(err);
+        // Try to look up user using the provided email address
+        User.findOne(req.param('id')).exec(function foundUser(err, user) {
+            // Handle error
+            if (err) return res.negotiate(err);
 
-        // Handle no user being found
-        if (!user) return res.notFound();
+            // Handle no user being found
+            if (!user) return res.notFound();
 
-        // Return the user
-        return res.json(user);
-    });
-},
+            // Return the user
+            return res.json(user);
+        });
+    },
 
     /**
      * Регистрация нового пользователя.
      */
     signup: function (req, res) {
-        var Email = require('machinepack-email');
-        var Passwords = require('machinepack-passwords');
+
 
         // Encrypt a string using the BCrypt algorithm.
         Passwords.encryptPassword({
@@ -92,12 +96,14 @@ module.exports = {
                 return res.negotiate(err);
             }, // OK.
             success: function (encryptedPassword) {
-                require('machinepack-gravatar').getImageUrl({
+                Gravatar.getImageUrl({
                     emailAddress: req.param('email')
                 }).exec({
                     error: function (err) {
                         return res.negotiate(err);
-                    }, success: function (gravatarUrl) {
+                    },
+
+                    success: function (gravatarUrl) {
 
                         User.create({
                             login: req.param('login'),
@@ -307,7 +313,7 @@ module.exports = {
         });
     },
 
-    removeProfile: function(req, res) {
+    removeProfile: function (req, res) {
 
         if (!req.param('id')) {
             return res.badRequest('id is a required parameter.');
@@ -317,7 +323,7 @@ module.exports = {
             id: req.param('id')
         }, {
             deleted: true
-        }, function(err, removedUser) {
+        }, function (err, removedUser) {
 
             if (err) return res.negotiate(err);
             if (removedUser.length === 0) {
@@ -328,7 +334,7 @@ module.exports = {
         });
     },
 
-    restoreProfile: function(req, res) {
+    restoreProfile: function (req, res) {
 
         User.findOne({
             email: req.param('email')
@@ -341,27 +347,138 @@ module.exports = {
                 encryptedPassword: user.encryptedPassword
             }).exec({
 
-                error: function(err) {
+                error: function (err) {
                     return res.negotiate(err);
                 },
 
-                incorrect: function() {
+                incorrect: function () {
                     return res.notFound();
                 },
 
-                success: function() {
+                success: function () {
                     User.update({
                         id: user.id
                     }, {
                         deleted: false
-                    }).exec(function(err, updatedUser) {
+                    }).exec(function (err, updatedUser) {
                         req.session.me = user.id;
                         return res.json(updatedUser);
                     });
                 }
             });
         });
-    }
+    },
 
+    restoreGravatarURL: function (req, res) {
+
+        try {
+
+            var restoredGravatarURL = gravatarUrl = Gravatar.getImageUrl({
+                emailAddress: req.param('email')
+            }).execSync();
+
+            return res.json(restoredGravatarURL);
+
+        } catch (err) {
+            return res.serverError(err);
+        }
+    },
+
+    updateProfile: function (req, res) {
+
+        User.update({
+            id: req.param('id')
+        }, {
+            gravatarUrl: req.param('gravatarUrl')
+        }, function (err, updatedUser) {
+
+            if (err) return res.negotiate(err);
+
+            return res.json(updatedUser);
+
+        });
+    },
+
+    changePassword: function (req, res) {
+
+        if (_.isUndefined(req.param('password'))) {
+            return res.badRequest('A password is required!');
+        }
+
+        if (req.param('password').length < 6) {
+            return res.badRequest('Password must be at least 6 characters!');
+        }
+
+        Passwords.encryptPassword({
+            password: req.param('password')
+        }).exec({
+            error: function (err) {
+                return res.serverError(err);
+            },
+            success: function (encryptedPassword) {
+
+                User.update({id: req.param('id')}, { encryptedPassword: encryptedPassword})
+                    .exec(function (err, updatedUser) {
+                    if (err) {
+                        return res.negotiate(err);
+                    }
+                    return res.json(updatedUser);
+                });
+            }
+        });
+    },
+
+    adminUsers: function (req, res) {
+
+        User.find({limit:1000,sort:'lastName'}).exec(function (err, users) {
+
+            if (err) return res.negotiate(err);
+
+            return res.json(users);
+
+        });
+    },
+
+    updateAdmin: function (req, res) {
+
+        User.update(req.param('id'), {
+            admin: req.param('admin')
+        }).exec(function (err, update) {
+
+            if (err) return res.negotiate(err);
+
+            return res.ok();
+        });
+    },
+
+    updateKadr: function (req, res) {
+
+        User.update(req.param('id'), {
+            kadr: req.param('kadr')
+        }).exec(function (err, update) {
+
+            if (err) return res.negotiate(err);
+
+            return res.ok();
+        });
+    },
+
+    updateBanned: function (req, res) {
+        User.update(req.param('id'), {
+            banned: req.param('action')
+        }).exec(function (err, update) {
+            if (err) return res.negotiate(err);
+            return res.ok();
+        });
+    },
+
+    updateDeleted: function (req, res) {
+        User.update(req.param('id'), {
+            deleted: req.param('deleted')
+        }).exec(function (err, update) {
+            if (err) return res.negotiate(err);
+            return res.ok();
+        });
+    }
 };
 

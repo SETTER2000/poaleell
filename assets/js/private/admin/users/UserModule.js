@@ -157,6 +157,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         Users.prototype.getFullName = function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
+        Users.prototype.getShortName = function () {
+            return this.lastName + ' ' + this.firstName.substr(0,1) + '.' + this.patronymicName.substr(0,1)+'.';
+        };
         Users.prototype.sc = function () {
             return this.section;
         };
