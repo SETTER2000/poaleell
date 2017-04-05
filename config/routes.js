@@ -143,13 +143,13 @@ module.exports.routes = {
     'GET /period': 'Attendance.findPeriod',
     'GET /pd': 'Attendance.fPeriod',
     'GET /api': 'Attendance.timeAll',
-    //'POST /period': 'Attendance.findPeriod',
+
 
 
     'PUT /login': 'UserController.login',
     'GET /logout': 'UserController.logout',
     'DELETE /user/:id': 'UserController.destroy',
-    'DELETE /position/:id': 'PositionController.destroy',
+    'DELETE /position/:id': 'PositionController.destroy'
 
     /***************************************************************************
      *                                                                          *
@@ -163,7 +163,7 @@ module.exports.routes = {
 
 
 
-    'GET /say/hello': 'SayController.hello'
+
 
 
 };

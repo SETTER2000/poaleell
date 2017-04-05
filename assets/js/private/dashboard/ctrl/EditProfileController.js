@@ -64,7 +64,7 @@ angular.module('DashboardModule').controller('EditProfileController', ['$scope',
 
         $scope.updateProfile = function () {
 
-            var theRoute = 'user/updateProfile/' + $scope.me.id;
+            var theRoute = 'user/updateProfile/';
 
             // Submit PUT request to Sails.
             $http.put(theRoute, {
@@ -116,12 +116,12 @@ angular.module('DashboardModule').controller('EditProfileController', ['$scope',
 
         $scope.changeMyPassword = function () {
             $http.put('/user/changePassword', {
-                    id: $scope.me.id,
                     password: $scope.editProfile.properties.password
                 })
                 .then(function onSuccess(sailsResponse) {
                     console.log('sailsResponse: ');
                     console.log(sailsResponse);
+                    toastr.success(sailsResponse.data.status,'OK!');
                     // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                     // window.location = '#/profile/' + $scope.editProfile.properties.id;
                     window.location = '/profile';

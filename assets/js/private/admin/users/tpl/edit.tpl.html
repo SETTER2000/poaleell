@@ -122,11 +122,6 @@
                         </div>
 
 
-                        <!--<div class="form-group ">-->
-                        <!--<label class="control-label" for="inputSuccess9">Должность</label>-->
-                        <!--<input type="text" class="form-control" ng-model="item.position">-->
-                        <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
-                        <!--</div>-->
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess10">ПФР</label>
                             <input type="text" class="form-control" ng-model="item.pfr">
@@ -260,36 +255,33 @@
                             </div>
                         </div>
 
-                        <!--<div ng-show="me.admin" class="row">-->
-                            <!--&lt;!&ndash; P A S S W O R D &ndash;&gt;-->
 
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="control-group form-group">-->
-                                    <!--<input data-ng-model="item.password" required data-ng-minlength="6"-->
-                                           <!--type="password" name="password"-->
-                                           <!--class="form-control" placeholder="Пароль" tabindex="6">-->
-                                    <!--<span class="help-block has-error" data-ng-if="item.password.$dirty">-->
-                                    <!--<span data-ng-show="item.password.$error.required">Поле обязательно к заполнению.</span>-->
-                                    <!--<span data-ng-show="item.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>-->
-                                    <!--</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        <div ng-show="(me.admin || me.kadr)" class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="control-group form-group">
+                                    <input data-ng-model="item.password" required data-ng-minlength="6"
+                                           type="password" name="password"
+                                           class="form-control" placeholder="Пароль" tabindex="6">
+<span class="help-block has-error" data-ng-if="item.password.$dirty">
+<span data-ng-show="item.password.$error.required">Поле обязательно к заполнению.</span>
+<span data-ng-show="item.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>
+</span>
+                                </div>
+                            </div>
 
-                            <!--&lt;!&ndash; C O N F I R M  P A S S W O R D &ndash;&gt;-->
-
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="control-group form-group">-->
-                                    <!--<input data-ng-model="item.encryptedPassword" required type="password"-->
-                                           <!--name="confirmation"-->
-                                           <!--class="form-control"-->
-                                           <!--placeholder="Повторить пароль" tabindex="7">-->
-                                    <!--<span class="help-block has-error" data-ng-if="item.confirmation.$dirty">-->
-                                    <!--<span data-ng-show="item.password.$error.compareTo">Пароли должны совпадать.</span>-->
-                                    <!--<span data-ng-show="item.password.$error.required">Требуется повторить пароль.</span>-->
-                                    <!--</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="control-group form-group">
+                                    <input data-ng-model="item.encryptedPassword" required type="password"
+                                           name="confirmation"
+                                           class="form-control"
+                                           placeholder="Повторить пароль" tabindex="7">
+    <span class="help-block has-error" data-ng-if="item.confirmation.$dirty">
+    <span data-ng-show="item.password.$error.compareTo">Пароли должны совпадать.</span>
+<span data-ng-show="item.password.$error.required">Требуется повторить пароль.</span>
+</span>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div class="form-group">
@@ -324,47 +316,47 @@
         <div ng-show="me.admin" class="col-md-6" ng-if="close">
 
             <div class="panel"
-                         ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Сменить пароль
+                 ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Сменить пароль
 
-                            </h3>
-                        </div>
-                            <!-- Error state -->
-                            <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
-                                <h4>Oops!</h4>
-                                <code>
-                                    {{editProfile.changePassword.errorMsg}}
-                                </code>
-                            </div>
-                            <form ng-submit="changeMyPassword()" name="changePassword">
-                                <div class="control-group form-group col-md-6"
-                                     ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
-                                    <label>Новый пароль</label>
-                                    <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
-                                           ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
-                                           compare-to="editProfile.properties.confirmPassword">
+                    </h3>
+                </div>
+                <!-- Error state -->
+                <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
+                    <h4>Oops!</h4>
+                    <code>
+                        {{editProfile.changePassword.errorMsg}}
+                    </code>
+                </div>
+                <form ng-submit="changeMyPassword()" name="changePassword">
+                    <div class="control-group form-group col-md-6"
+                         ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
+                        <label>Новый пароль</label>
+                        <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
+                               ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
+                               compare-to="editProfile.properties.confirmPassword">
                 <span class="help-block has-error" ng-if="changePassword.password.$dirty">
                   <span ng-show="changePassword.password.$error.required">Введите пароль.</span>
                   <span ng-show="changePassword.password.$error.minlength">Пароль должен содержать не менее 6 символов.</span>
                 </span>
-                                </div>
-                                <div class="control-group form-group col-md-6">
-                                    <label>Повторить пароль</label>
-                                    <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
-                                           ng-model="editProfile.properties.confirmPassword" required>
+                    </div>
+                    <div class="control-group form-group col-md-6">
+                        <label>Повторить пароль</label>
+                        <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
+                               ng-model="editProfile.properties.confirmPassword" required>
                 <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
                   <span ng-show="changePassword.password.$error.compareTo">Password must match.</span>
                   <span ng-show="changePassword.confirmation.$error.required">Confirmation password is required.</span>
                 </span>
-                                </div>
-                                <button type="submit" class="btn btn-lg btn-default btn-block" ng-disabled="changePassword.$invalid">
-                                    <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
-                                    <span ng-show="changePasswordForm.saving">Сохраняю...</span>
-                                    <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
-                                </button>
-                            </form>
-                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-default btn-block" ng-disabled="changePassword.$invalid">
+                        <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
+                        <span ng-show="changePasswordForm.saving">Сохраняю...</span>
+                        <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
+                    </button>
+                </form>
+            </div>
 
 
             <div class="panel"

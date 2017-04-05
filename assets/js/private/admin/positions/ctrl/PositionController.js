@@ -1,7 +1,8 @@
 angular.module('PositionModule')
-    .controller('PositionController', ['$scope', 'Positions', '$stateParams',
-        function ($scope, Positions, $stateParams) {
-
+    .controller('PositionController', ['$scope', 'toastr', 'Positions', '$stateParams',
+        function ($scope, toastr, Positions, $stateParams) {
+            //$scope.me = window.SAILS_LOCALS.me;
+            //if(!$scope.me.admin) $location.path('/') ;
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами
@@ -10,39 +11,39 @@ angular.module('PositionModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Users.getFullName()
              */
-            //io.socket.on('purchase', function (event) {
-            //    console.log('EVENT:');
-            //    console.log(event.data);
-            //    $scope.$apply();
-            //});
-            //
-            //io.socket.on('user', function (event) {
-            //    console.log('EVENT:');
-            //    console.log(event.data);
-            //    //$scope.$apply();
-            //});
-            //io.socket.get('/user', function (resData, jwres) {
-            //    console.log(resData);
-            //    $scope.$apply();
-            //});
-            // console.log('EEEE:');
-            // io.socket.on('Position', function (event){
-            //     console.log(event);
-            //     // => see below
-            // });
+                //io.socket.on('purchase', function (event) {
+                //    console.log('EVENT:');
+                //    console.log(event.data);
+                //    $scope.$apply();
+                //});
+                //
+                //io.socket.on('user', function (event) {
+                //    console.log('EVENT:');
+                //    console.log(event.data);
+                //    //$scope.$apply();
+                //});
+                //io.socket.get('/user', function (resData, jwres) {
+                //    console.log(resData);
+                //    $scope.$apply();
+                //});
+                // console.log('EEEE:');
+                // io.socket.on('Position', function (event){
+                //     console.log(event);
+                //     // => see below
+                // });
 
-            // io.socket.on('position', function (event) {
-            //     console.log('EVA:');
-            //     console.log(event);
-            // });
-            // //io.socket.on('message', function (data){
-            // //    console.log(data.greeting);
-            // //});
-            //
-            // io.socket.on('position', function (event) {
-            //     console.log('DEPAR:');
-            //     console.log(event);
-            // });
+                // io.socket.on('position', function (event) {
+                //     console.log('EVA:');
+                //     console.log(event);
+                // });
+                // //io.socket.on('message', function (data){
+                // //    console.log(data.greeting);
+                // //});
+                //
+                // io.socket.on('position', function (event) {
+                //     console.log('DEPAR:');
+                //     console.log(event);
+                // });
 
             $scope.refresh = function () {
                 $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {

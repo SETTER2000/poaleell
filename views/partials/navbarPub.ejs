@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -19,7 +18,6 @@
                 <div class="form-group">
                     <input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">
                 </div>
-
                 <button type="submit" class="btn btn-success">
                     <span ng-show="!loginForm.loading">Войти</span>
                     <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
@@ -27,6 +25,6 @@
                 </button>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
             </form>
-        </div><!--/.navbar-collapse -->
+        </div>
     </div>
 </nav>

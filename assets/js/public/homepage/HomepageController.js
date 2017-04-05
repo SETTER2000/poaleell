@@ -12,7 +12,7 @@ angular.module('HomepageModule').controller('HomepageController', ['$scope', '$h
                 password: $scope.loginForm.password
             })
                 .then(function onSuccess() {
-                    window.location = '/admin/users';
+                    window.location = '/';
                 })
                 .catch(function onError(sailsResponse) {
 

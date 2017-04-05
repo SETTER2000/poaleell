@@ -1,6 +1,8 @@
 angular.module('PositionModule')
-    .controller('EditPositionController', ['$scope', '$state', 'Positions', '$stateParams', '$rootScope',
-        function ($scope, $state, Positions, $stateParams, $rootScope) {
+    .controller('EditPositionController', ['$scope', '$state','toastr', 'Positions', '$stateParams', '$rootScope',
+        function ($scope, $state,toastr, Positions, $stateParams, $rootScope) {
+            //$scope.me = window.SAILS_LOCALS.me;
+            //if(!$scope.me.admin) $location.path('/') ;
             // $scope.deleteEdit = function (item) {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);

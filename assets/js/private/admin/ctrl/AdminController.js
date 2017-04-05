@@ -1,8 +1,9 @@
 angular.module("AdminModule")
-    .controller("AdminController", ["$scope", "$rootScope", function ($scope, $rootScope) {
-        // $watch регистрирует функцию в коллекции $$watchers текущего scope.
-        // функция будут выполняться при каждом изменении свойства counter.
-// // обработка события deleteUser на текущем scope
+    .controller("AdminController", ["$scope", "$rootScope", '$location', function ($scope, $rootScope,$location) {
+        $scope.me = window.SAILS_LOCALS.me;
+        if(!$scope.me.admin) $location.path('/') ;
+
+
         $scope.options =
             [
                 {display: "Таблица", value: "table"},

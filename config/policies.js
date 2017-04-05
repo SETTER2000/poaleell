@@ -28,10 +28,45 @@ module.exports.policies = {
 
     // '*': true,
     UserController: {
+        create: ['isLoggedIn', 'isAdmin'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        //update: ['isLoggedIn', 'isAdmin'],
+        login: ['isLoggedOut'],
+        logout: ['isLoggedIn'],
+        //signup: ['isLoggedOut'],
+        removeProfile: ['isLoggedIn'],
+        updateProfile: ['isLoggedIn'],
+        restoreGravatarURL: ['isLoggedIn'],
+        restoreProfile: ['isLoggedOut'],
+        changePassword: ['isLoggedIn'],
+        adminUsers: ['isLoggedIn', 'isAdmin'],
+        updateAdmin: ['isLoggedIn', 'isAdmin'],
+        updateAction: ['isLoggedIn', 'isAdmin'],
+        updateDeleted: ['isLoggedIn', 'isAdmin'],
+        //find: ['isLoggedIn']
+        //find: [['isLoggedIn'],['isKadr'], ['isAdmin']]
+    },
+
+
+    PageController: {
+        showSignupPage: ['isLoggedOut']
+    },
+
+    DepartmentController: {
         create: ['isLoggedIn'],
         delete: ['isLoggedIn'],
         update: ['isLoggedIn'],
-        find: ['isAdmin']
+        find: ['isLoggedIn']
+        //find:   ['isLoggedIn', 'isAdmin','isKadr']
+    },
+
+    PositionController: {
+        //'*': false,
+        create: ['isLoggedIn', 'isAdmin','isKadr'],
+        delete: ['isAdmin'],
+        update: ['isLoggedIn', 'isAdmin','isKadr'],
+        find: ['isLoggedIn']
+        //find:   ['isLoggedIn', 'isAdmin','isKadr'],
     }
     /***************************************************************************
      *                                                                          *

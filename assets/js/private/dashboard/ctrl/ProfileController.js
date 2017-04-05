@@ -71,7 +71,7 @@ angular.module('DashboardModule').controller('ProfileController', ['$scope', '$w
     // console.log('the change userprofile is: ', $scope.userProfile);
 
     // var theRoute = '/user/removeProfile/' + $scope.userProfile.properties.id;
-    var theRoute = '/user/removeProfile/' + $scope.me.id;
+    var theRoute = '/user/removeProfile/';
     $http.put(theRoute, {
         deleted: true
       })

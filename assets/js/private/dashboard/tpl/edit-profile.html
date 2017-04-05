@@ -32,7 +32,7 @@
               </div>
               <button type="submit" class="btn btn-lg btn-success btn-block">
               <span ng-show="editProfile.saving" class="overlord-loading-spinner fa fa-spinner"></span>
-              <span ng-show="editProfile.saving">Saving...</span>
+              <span ng-show="editProfile.saving">Секунду...</span>
               <span ng-hide="editProfile.saving" class="btn-text">Save</span>
               </button>
             </form>
@@ -64,16 +64,16 @@
               </div>
               <div class="control-group form-group col-md-12">
                 <label>Повторить пароль</label>
-                <input type="password" class="form-control" placeholder="one more time" name="confirmation" ng-model="editProfile.properties.confirmPassword" required>
+                <input type="password" class="form-control" placeholder="повторите пароль" name="confirmation" ng-model="editProfile.properties.confirmPassword" required>
                 <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
-                  <span ng-show="changePassword.password.$error.compareTo">Password must match.</span>
-                  <span ng-show="changePassword.confirmation.$error.required">Confirmation password is required.</span>
+                  <span ng-show="changePassword.password.$error.compareTo">Пароли должны совпадать.</span>
+                  <span ng-show="changePassword.confirmation.$error.required">Требуется подтверждение пароля.</span>
                 </span>
               </div>
               <button type="submit" class="btn btn-lg btn-success btn-block" ng-disabled="changePassword.$invalid">
-              <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
-              <span ng-show="changePasswordForm.saving">Saving...</span>
-              <span ng-hide="changePasswordForm.saving" class="btn-text">Save</span>
+              <span ng-show="changePassword.saving" class="overlord-loading-spinner fa fa-spinner"></span>
+              <span ng-show="changePassword.saving">Сохраняется...</span>
+              <span ng-hide="changePassword.saving" class="btn-text">Сохранить</span>
               </button>
             </form>
           </div>

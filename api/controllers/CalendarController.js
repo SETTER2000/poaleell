@@ -22,6 +22,7 @@ module.exports = {
         });
     },
     addCalendar: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id')).exec(function (err, user) {
             if (err) return next(err);
             user.calendars.add({name: 'Программисты'});
@@ -54,6 +55,7 @@ module.exports = {
     },
 
     destroy: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Calendar.findOne(req.param('id'), function foundUser(err, user) {
             if (err)return next(err);
             if (!user)return next('Calendar doesn\'t exists.');

@@ -1,9 +1,9 @@
 (function (angular) {
     'use strict';
     angular.module('PositionModule')
-        .controller('ListPositionController', ['$scope', 'Positions', '$state',
-            function ($scope, Positions, $state) {
-
+        .controller('ListPositionController', ['$scope', 'Positions','toastr', '$state',function ($scope, Positions,toastr, $state) {
+            //$scope.me = window.SAILS_LOCALS.me;
+            //if(!$scope.me.admin) $location.path('/') ;
                 /**
                  * Поле сортировки объекта по умолчанию.
                  * @type {string}
@@ -14,8 +14,8 @@
                  * Кол-во строу, по умолчанию, выбраных в объект
                  */
                 $scope.limit = 300;
-                
-                
+
+
                 // var ups = $scope.ups =  Departments.query();
                 //  console.log('UPS1: ');
                 //  console.log(ups);
@@ -59,6 +59,8 @@
                         // кол-во пользователей
                         // console.log($scope.departments.length);
                         //console.log(departments.scs());
+                    }, function(err){
+                        toastr.error(err.data,'Ошибка!');
                     });
                 };
 

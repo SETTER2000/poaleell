@@ -44,22 +44,19 @@ module.exports = {
                     return res.notFound();
                 },
                 success: function () {
-
                     if (user.deleted) {
-
                         return res.forbidden("'Your account has been deleted. " +
                             "Please visit ... restore to restore your account.'");
-
                     }
                     if (!user.action) {
-
                         return res.forbidden("Ваша учетная запись заблокирована, " +
                             "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
-
                     }
 
-                    //req.session.userId = user.id;
-                    req.session.me = user;
+                    req.session.me = user.id;
+                    req.session.admin = user.admin;
+                    req.session.kadr = 11;
+                    //req.session.me = user;
                     return res.ok();
                 }
             });
@@ -287,6 +284,7 @@ module.exports = {
     },
 
     destroy: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
             if (err)return next(err);
             if (!user)return next('User doesn\'t exists.');
@@ -299,6 +297,7 @@ module.exports = {
     },
 
     logout: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.session.me, function foundUser(err, user) {
             //if (err) return res.view('public/header', {layout: 'homepage'});
             if (err) return res.negotiate(err);
@@ -313,12 +312,12 @@ module.exports = {
 
     removeProfile: function (req, res) {
 
-        if (!req.param('id')) {
-            return res.badRequest('id is a required parameter.');
-        }
+        //if (!req.param('id')) {
+        //    return res.badRequest('id is a required parameter.');
+        //}
 
         User.update({
-            id: req.param('id')
+            id: req.session.me
         }, {
             deleted: true
         }, function (err, removedUser) {
@@ -385,7 +384,7 @@ module.exports = {
     updateProfile: function (req, res) {
 
         User.update({
-            id: req.param('id')
+            id:req.session.me
         }, {
             gravatarUrl: req.param('gravatarUrl')
         }, function (err, updatedUser) {
@@ -415,20 +414,20 @@ module.exports = {
             },
             success: function (encryptedPassword) {
 
-                User.update({id: req.param('id')}, { encryptedPassword: encryptedPassword})
+                User.update({id: req.session.me}, {encryptedPassword: encryptedPassword})
                     .exec(function (err, updatedUser) {
-                    if (err) {
-                        return res.negotiate(err);
-                    }
-                    return res.json(updatedUser);
-                });
+                        if (err) {
+                            return res.negotiate(err);
+                        }
+                        return res.json(updatedUser);
+                    });
             }
         });
     },
 
     adminUsers: function (req, res) {
 
-        User.find({limit:1000,sort:'lastName'}).exec(function (err, users) {
+        User.find({limit: 1000, sort: 'lastName'}).exec(function (err, users) {
 
             if (err) return res.negotiate(err);
 
@@ -438,6 +437,7 @@ module.exports = {
     },
 
     updateAdmin: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
             admin: req.param('admin')
         }).exec(function (err, update) {
@@ -447,6 +447,7 @@ module.exports = {
     },
 
     updateKadr: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
             kadr: req.param('kadr')
         }).exec(function (err, update) {
@@ -455,9 +456,10 @@ module.exports = {
         });
     },
 
-    updateBanned: function (req, res) {
+    updateAction: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
-            banned: req.param('action')
+            action: req.param('action')
         }).exec(function (err, update) {
             if (err) return res.negotiate(err);
             return res.ok();
@@ -465,6 +467,7 @@ module.exports = {
     },
 
     updateDeleted: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
             deleted: req.param('deleted')
         }).exec(function (err, update) {

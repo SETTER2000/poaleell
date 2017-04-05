@@ -1,6 +1,8 @@
 angular.module('DepartmentModule')
-    .controller('EditDepartmentController', ['$scope', '$http', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
-        function ($scope, $http, $state, Departments, $stateParams) {
+    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
+        function ($scope, $http,toastr, $state, Departments, $stateParams) {
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
@@ -20,27 +22,27 @@ angular.module('DepartmentModule')
                     if (err) console.log(err.message);
                 });
             };
-                $scope.saveEdit = function (item) {
-                    if (angular.isDefined(item.id)) {
-                        //item.$update(item);
-                        item.$update(item, function (success) {
-                                $scope.refresh();
-                                console.log('SUCCESS: OK!');
-                                item.ok();
-                            },
-                            function (err) {
+            $scope.saveEdit = function (item) {
+                if (angular.isDefined(item.id)) {
+                    //item.$update(item);
+                    item.$update(item, function (success) {
+                            $scope.refresh();
+                            console.log('SUCCESS: OK!');
+                            item.ok();
+                        },
+                        function (err) {
 
-                                console.log('ERROR: ' + err.status);
-                                console.log(err);
-                                item.er();
-                            }
-                        );
-                    } else {
-                        $scope.refresh();
-                        item.$save(item)
-                    }
-                };
-            
+                            console.log('ERROR: ' + err.status);
+                            console.log(err);
+                            item.er();
+                        }
+                    );
+                } else {
+                    $scope.refresh();
+                    item.$save(item)
+                }
+            };
+
             // $scope.item.contacts = [{type:'phone', value:'1(234) 555-1212'}];
 
             // $scope.state = /^\w\w$/;

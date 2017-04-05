@@ -89,16 +89,12 @@ angular.module('UserModule')
                 });
             };
             $scope.delete2 = function (item) {
-                console.log(item);
                 item.$delete(item, function (success) {
-                    console.log(success);
-                    alert('OK! Объект удалён.');
+                    toastr.success('Объект удалён.','OK! ');
                     $scope.refresh();
-
-                    // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {
                     console.log(err);
-                    // alert();
+                    toastr.error('Не смог удалить.','Ошибка! ');
                 })
             };
 
@@ -129,6 +125,7 @@ angular.module('UserModule')
                         // console.log('sailsresponse: ', sailsResponse)
                         // Otherwise, display generic error if the error is unrecognized.
                         $scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
+                        toastr.error($scope.editProfile.changePassword.errorMsg);
                     })
                     .finally(function eitherWay() {
                         $scope.editProfile.loading = false;
@@ -148,14 +145,16 @@ angular.module('UserModule')
                         $scope.item.position.push(item.positions[z].id);
                     }
                     item.$update(item, function (success) {
+                            toastr.success('Изменения сохранены!');
                             $scope.refresh();
-                            console.log('SUCCESS: OK!');
-                            item.ok();
+                            //console.log('SUCCESS: OK!');
+                            //item.ok();
                         },
                         function (err) {
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
-                            item.er();
+                            toastr.error('Статус: '+err.status,'Ошибка!');
+                            //console.log('ERROR: ' + err.status);
+                            //console.log(err);
+                            //item.er();
                         }
                     );
                 } else {
@@ -169,14 +168,17 @@ angular.module('UserModule')
                      angular.isDefined(item.email)*/
                     ) {
                         item.$save(item, function (success) {
-                                console.log('SUCCESS: OK!');
-                                item.ok();
-                                $scope.refresh();
+                                toastr.success('Пользователь создан!');
+                                //$location.path('/profile') ;
+                                location.reload() ;
+
+                                //$scope.refresh();
                             },
                             function (err) {
-                                console.log('ERROR: ' + err.status);
-                                console.log(err);
-                                item.er();
+                                toastr.error('Статус: '+err.status,'Ошибка!');
+                                //console.log('ERROR: ' + err.status);
+                                //console.log(err);
+                                //item.er();
                             });
 
                     }

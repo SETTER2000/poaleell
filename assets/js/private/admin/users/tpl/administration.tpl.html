@@ -75,7 +75,7 @@
                     <table class="table table-hover" ng-show="!userList.loading && userList.contents.length > 0">
                         <tr>
                             <th></th>
-                            <th>id</th>
+                            <!--<th>id</th>-->
                             <th>ФИО</th>
                             <th>foto</th>
                             <th>login</th>
@@ -84,23 +84,22 @@
                             <th>admin</th>
                             <th>action</th>
                             <th>deleted</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+
                         </tr>
 
                         <!--<tr ng-repeat="user in userList.contents">-->
                         <tr ng-repeat="user in filtered=(userList.contents | filter:{$:searchText} |
 orderBy:propertyName:reverse |  limitTo: 1000)">
                             <td></td>
-                            <td> {{user.id}}</td>
-                            <td> {{user.lastName}} {{user.firstName.substr(0,1)}}. {{user.patronymicName.substr(0,1)}}.</td>
+                            <!--<td> {{user.id}}</td>-->
+                            <td><a href="/admin/users/edit/{{user.id}}">{{user.lastName}} {{user.firstName.substr(0,1)}}.
+                                {{user.patronymicName.substr(0,1)}}.</a></td>
                             <td> {{user.gravatarURL}}</td>
                             <td> {{user.login}}</td>
                             <td> {{user.email}}</td>
                             <td><input type="checkbox" ng-model="user.kadr" ng-click="saveKadr(user.id, user.kadr)"></td>
                             <td><input type="checkbox" ng-model="user.admin" ng-click="saveAdmin(user.id, user.admin)"></td>
-                            <td><input type="checkbox" ng-model="user.action" ng-click="saveBanned(user.id, user.action)"></td>
+                            <td><input type="checkbox" ng-model="user.action" ng-click="saveAction(user.id, user.action)"></td>
                             <td><input type="checkbox" ng-model="user.deleted" ng-click="saveDeleted(user.id, user.deleted)"></td>
                     </table>
                 </div>

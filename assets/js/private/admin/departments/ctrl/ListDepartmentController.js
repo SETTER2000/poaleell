@@ -1,8 +1,8 @@
 (function (angular) {
     'use strict';
     angular.module('DepartmentModule')
-        .controller('ListDepartmentController', ['$scope', 'Departments', '$state',
-            function ($scope, Departments, $state) {
+        .controller('ListDepartmentController', ['$scope', 'toastr','Departments', '$state',
+            function ($scope,toastr, Departments, $state) {
 
 
                 // var ups = $scope.ups =  Departments.query();
@@ -33,20 +33,8 @@
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Departments.query({limit:300, sort: 'name'},function (departments) {
                         $scope.departments = departments;
-                        // console.log('SUCCCE: ');
-                        // console.log( $scope.departments);
-                        // console.log( $scope.departments.filter({"action": 1}));
-                        // console.log(departments.get({"action": 1},function (success) {
-                        //     console.log('URAAA:');
-                        //     alert('5685');
-                        //     console.log(success);
-                        // },function (err) {
-                        //     alert('ERRRRRR');
-                        //     console.log(err);
-                        // }));
-                        // кол-во пользователей
-                        // console.log($scope.departments.length);
-                        //console.log(departments.scs());
+                    }, function(err){
+                        toastr.error(err.data,'Ошибка!');
                     });
                 };
 

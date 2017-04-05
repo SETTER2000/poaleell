@@ -141,6 +141,7 @@ module.exports = {
             });
         });
     },
+
     showProfilePage: function (req, res) {
 
         if (!req.session.me) {

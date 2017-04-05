@@ -3,6 +3,9 @@
     angular.module('CalendarModule')
         .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$location', '$stateParams','$state', '$rootScope', 'Attendances',
             function ($scope, $http, moment, Calendars, $location, $stateParams, $state, $rootScope, Attendances) {
+                $scope.me = window.SAILS_LOCALS.me;
+                //if(!$scope.me.admin) $location.path('/') ;
+
 
                 this.$stateParams = $stateParams;
                 $scope.solo = true;

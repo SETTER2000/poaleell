@@ -1,11 +1,15 @@
 angular.module('UserModule').controller('AdministrationController', ['$scope', '$http', 'toastr', function($scope, $http, toastr){
-$scope.recordSave = 'Запись успешно сохранена!';
+
+    $scope.me = window.SAILS_LOCALS.me;
+
+    $scope.recordSave = 'Запись успешно сохранена!';
   // set-up loading state
   $scope.userList = {
     loading: false
   };
 
-  $scope.me = window.SAILS_LOCALS.me;
+
+
   $http.get('/user/adminUsers')
       .then(function onSuccess(sailsResponse){
 
@@ -88,16 +92,16 @@ $scope.recordSave = 'Запись успешно сохранена!';
 
   };
 
-  $scope.saveBanned = function(id, change){
+  $scope.saveAction = function(id, change){
 
     console.log('id: ', id);
     console.log('change: ', change);
-    var theRoute = '/user/updateBanned/' + id;
+    var theRoute = '/user/updateAction/' + id;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
           id: id,
-          banned: change
+          action: change
         })
         .then(function onSuccess(sailsResponse) {
 

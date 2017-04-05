@@ -1,7 +1,27 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', 'moment', '$http', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, moment, $http, $rootScope, $state, Users, Attendances) {
+        .controller('ListController', ['$scope', 'moment', '$http', 'toastr',"$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
+
+            //toastr.options = {
+            //    "closeButton": false,
+            //    "debug": false,
+            //    "newestOnTop": false,
+            //    "progressBar": false,
+            //    "positionClass": "toast-top-full-width",
+            //    "preventDuplicates": true,
+            //    "onclick": null,
+            //    "showDuration": "300",
+            //    "hideDuration": "1000",
+            //    "timeOut": "5000",
+            //    "extendedTimeOut": "1000",
+            //    "showEasing": "swing",
+            //    "hideEasing": "linear",
+            //    "showMethod": "fadeIn",
+            //    "hideMethod": "fadeOut"
+            //};
+
+
             /**
              * PAGINATION
              */
@@ -28,14 +48,12 @@
             $scope.limitAll = 1000;
             $scope.where = {};
             $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
-            //$scope.arrButton = [];
             $scope.enabledButton = false;
             $scope.styleObj = {
                 color: false,
                 border: false,
                 size: false
             };
-
 
             //$scope.days = moment.duration(2).days();
             //$scope.hours = moment.duration(2).hours();
@@ -60,17 +78,19 @@
             //     { name: "Item 2", value: "2" },
             //     { name: "Item 3", value: "31" }];
 
-
             if (moment().isLeapYear()) {
                 $scope.yearLeap = 'Да!';
             } else {
                 $scope.yearLeap = 'Нет';
             }
+
             $scope.yearLeap = moment(1316116057189).fromNow();
+
             $scope.message = {
                 text: 'hello world!',
                 time: new Date()
             };
+
             $scope.calendar = moment().calendar(null, {
                 sameDay: function (now) {
                     if (this.isBefore(now)) {
@@ -82,7 +102,6 @@
                 }
             });
 
-           
             $scope.options =
                 [
                     {display: "Все", value: "table"},
@@ -105,7 +124,6 @@
             // $scope.showTable = function () {
             //     $scope.url = $scope.tableView;
             // }
-
 
             $scope.getLastName = function (item) {
 
@@ -234,11 +252,11 @@
             //         //console.log(attendances.scs());
             //     });
             // };
-            $scope.$watch('where', function (value) {
-
-                $scope.refresh(value);
-
-            });
+            //$scope.$watch('where', function (value) {
+            //
+            //    $scope.refresh(value);
+            //
+            //});
             // console.log(Users);
             //console.log('STATE: ');
             //console.log( $state.get());
@@ -262,9 +280,10 @@
                         console.log(users);
                         $scope.objectName = users;
                         $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
+                    }, function(err){
+                        toastr.error(err.data,'Ошибка!');
                     });
             };
-
 
             $scope.getCharText = function (ch) {
                 console.log(ch);
@@ -278,6 +297,7 @@
                 }
                 $scope.refresh(where);
             };
+
             $scope.getMode = function (t) {
                 // console.log('DDDDDD');
                 // console.log(t);
@@ -294,7 +314,6 @@
                 $scope.page_number = num;
             };
 
-
             $scope.delete = function (item) {
                 //console.log(item);
                 item.$delete(item, function (success) {
@@ -308,16 +327,16 @@
             };
 
             $scope.propertyName = 'lastName';
+
             $scope.reverse = false;
-            // $scope.friends = friends;
 
             $scope.sortBy = function (propertyName) {
                 $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
                 $scope.propertyName = propertyName;
             };
 
-
             $scope.msd = ['settings', 'home', 'options', 'other'];
+
             $scope.selectionMode = $scope.msd[0];
 
             // конструктор хлебных крошек
@@ -330,21 +349,23 @@
             BreadCrumb.prototype.add = function () {
                 this.arr.push({name: this.name, path: this.path});
             };
+
             BreadCrumb.prototype.set = function (name, path) {
                 this.name = name;
                 this.path = path;
                 this.add();
             };
+
             BreadCrumb.prototype.getAll = function () {
                 return this.arr;
             };
 
             var breadcrumb = new BreadCrumb();
+
             breadcrumb.set('Home', '/');
             breadcrumb.set('Admin', '/admin');
             breadcrumb.set('Users', '/admin/' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
-
 
             $scope.refresh();
         }]);

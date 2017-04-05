@@ -22,6 +22,7 @@ module.exports = {
 
     },
     addDepartment: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id')).exec(function (err, user) {
             if (err) return next(err);
 
@@ -39,6 +40,7 @@ module.exports = {
     },
 
     update: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //req.params.all()
         Department.update(req.param('id'))
             .set(

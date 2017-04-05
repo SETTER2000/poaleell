@@ -1,13 +1,31 @@
 module.exports = function isAdmin(req, res, next) {
 
-    if (req.session.me.admin || req.session.me.kadr) {
-        return next();
-    }
-
-    //  Если пользовательский агент хочет Json, ответьте кодом состояния и сообщением JSON
+    if (!req.session.me) {
     if (req.wantsJSON) {
-        return res.forbidden('Вам не разрешено выполнять это действие.');
+        return res.forbidden('isAdmin: Вам не разрешено выполнять это действие.');
+    }
+        return res.redirect('/');
     }
 
-    return res.redirect('/');
+    User.findOne(req.session.me).exec(function(err, foundUser){
+
+    if (err) return res.negotiate(err);
+
+        if (!foundUser) {
+      if (req.wantsJSON) {
+          return res.forbidden('isAdmin: Вам не разрешено выполнять это действие.');
+      }
+            return res.redirect('/');
+        }
+
+        if (foundUser.admin) {
+      return next();
+        } else {
+      if (req.wantsJSON) {
+          return res.forbidden('isAdmin: Вам не разрешено выполнять это действие.');
+      }
+            return res.redirect('/');
+        }
+
+    });
 };
