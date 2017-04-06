@@ -252,11 +252,11 @@
             //         //console.log(attendances.scs());
             //     });
             // };
-            //$scope.$watch('where', function (value) {
-            //
-            //    $scope.refresh(value);
-            //
-            //});
+            $scope.$watch('where', function (value) {
+
+                $scope.refresh(value);
+
+            });
             // console.log(Users);
             //console.log('STATE: ');
             //console.log( $state.get());

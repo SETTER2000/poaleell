@@ -15,14 +15,13 @@ module.exports = {
                 return res.negotiate(err);
             }
             if (!user) {
-                sails.log.verbose('Session refers to a user who no longer exists did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
+                sails.log.verbose('Сеанс относится к пользователю, который больше не существует, удалил ли пользователь, а затем попытался обновить страницу с открытой вкладкой, вошедшей в систему под этим пользователем?');
                 return res.view('public/header', {layout: 'homepage', me: null});
             }
             // return res.view({
             //     me: user
             // });
 
-           
 
             return res.view({
                 me: {
@@ -45,7 +44,7 @@ module.exports = {
         });
     },
     showAdminPage: function (req, res) {
-       
+
         if (!req.session.me) {
             return res.view('public/header', {layout: 'homepage', me: null});
         }
@@ -57,60 +56,61 @@ module.exports = {
             }
 
             if (!user) {
-                sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
+                sails.log.verbose('Сеанс относится к пользователю, который больше не существует, удалил ли пользователь, а затем попытался обновить страницу с открытой вкладкой, вошедшей в систему под этим пользователем?');
                 return res.view('public/header', {layout: 'homepage', me: null});
             }
-           
+
             // if (!user.admin) return res.backToHomePage();
             if (!user.admin) {
                 req.session.me = user.id;
                 return res.forbidden("Нет прав для просмотра данной страницы.");
-
             }
-        
-                return res.view( {
-                    me: {
-                        id: user.id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        patronymicName: user.patronymicName,
-                        birthday: user.birthday,
-                        email: user.email,
-                        login: user.login,
-                        subdivision: user.subdivision,
-                        admin: user.admin,
-                        kadr: user.kadr,
-                        gravatarUrl: user.gravatarUrl,
-                        lastLoggedIn: user.lastLoggedIn,
-                        fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
-                    }
-                });
-         
-            
-                // return res.forbidden("У Вас нет прав для просмотра данной страницы, " +
-                //     "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
-           
-                // return res.view({
-                //     me: {
-                //         id: user.id,
-                //         firstName: user.firstName,
-                //         lastName: user.lastName,
-                //         patronymicName: user.patronymicName,
-                //         birthday: user.birthday,
-                //         email: user.email,
-                //         login: user.login,
-                //         subdivision: user.subdivision,
-                //         admin: user.admin,
-                //         gravatarUrl: user.gravatarUrl,
-                //         lastLoggedIn: user.lastLoggedIn,
-                //         fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
-                //     }
-                // });
-              
-            
+
+            user.fullName = user.lastName + ' ' + user.firstName + ' ' + user.patronymicName;
+            return res.view({me: user});
+            //return res.view( {
+            //    me: {
+            //        id: user.id,
+            //        firstName: user.firstName,
+            //        lastName: user.lastName,
+            //        patronymicName: user.patronymicName,
+            //        birthday: user.birthday,
+            //        email: user.email,
+            //        login: user.login,
+            //        subdivision: user.subdivision,
+            //        admin: user.admin,
+            //        kadr: user.kadr,
+            //        gravatarUrl: user.gravatarUrl,
+            //        lastLoggedIn: user.lastLoggedIn,
+            //        fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
+            //    }
+            //});
+
+
+            // return res.forbidden("У Вас нет прав для просмотра данной страницы, " +
+            //     "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
+
+            // return res.view({
+            //     me: {
+            //         id: user.id,
+            //         firstName: user.firstName,
+            //         lastName: user.lastName,
+            //         patronymicName: user.patronymicName,
+            //         birthday: user.birthday,
+            //         email: user.email,
+            //         login: user.login,
+            //         subdivision: user.subdivision,
+            //         admin: user.admin,
+            //         gravatarUrl: user.gravatarUrl,
+            //         lastLoggedIn: user.lastLoggedIn,
+            //         fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
+            //     }
+            // });
+
+
         });
     },
-    
+
     showVideosPage: function (req, res) {
 
         if (!req.session.me) {
@@ -199,12 +199,12 @@ module.exports = {
     },
     showRestorePage: function (req, res) {
         if (req.session.me) {
-      return res.redirect('/');
+            return res.redirect('/');
         }
 
         return res.view('restore-profile', {
-      me: null
-    });
+            me: null
+        });
     }
 };
 

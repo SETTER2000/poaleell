@@ -75,6 +75,7 @@
                     <table class="table table-hover" ng-show="!userList.loading && userList.contents.length > 0">
                         <tr>
                             <th></th>
+                            <th>#</th>
                             <!--<th>id</th>-->
                             <th>ФИО</th>
                             <th>foto</th>
@@ -91,6 +92,7 @@
                         <tr ng-repeat="user in filtered=(userList.contents | filter:{$:searchText} |
 orderBy:propertyName:reverse |  limitTo: 1000)">
                             <td></td>
+                            <td> {{$index+1}}</td>
                             <!--<td> {{user.id}}</td>-->
                             <td><a href="/admin/users/edit/{{user.id}}">{{user.lastName}} {{user.firstName.substr(0,1)}}.
                                 {{user.patronymicName.substr(0,1)}}.</a></td>
