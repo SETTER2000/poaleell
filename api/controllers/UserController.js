@@ -14,9 +14,19 @@
 //var Emailaddresses = require('machinepack-emailaddresses');
 var Passwords = require('machinepack-passwords');
 var Gravatar = require('machinepack-gravatar');
-
+var LdapStrategy = require('passport-ldapauth');
 var Email = require('machinepack-email');
-
+var OPTS = {
+    server: {
+        url: 'ldap://192.168.38.14:389',
+        bindDn: 'cn=testuser',
+        bindCredentials: 'P@ssw0rd',
+        searchBase: 'ou=passport-ldapauth',
+        //searchBase: 'ou=passport-ldapauth',
+        searchFilter: '(uid={{username}})'
+    }
+};
+//passport.use(new LdapStrategy(OPTS));
 // var Sugar = require('sugar');
 module.exports = {
     /**
@@ -34,7 +44,7 @@ module.exports = {
         }, function foundUser(err, user) {
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
-            require('machinepack-passwords').checkPassword({
+            Passwords.checkPassword({
                 passwordAttempt: req.param('password'), encryptedPassword: user.encryptedPassword
             }).exec({
                 error: function (err) {
