@@ -26,7 +26,7 @@ var OPTS = {
         searchFilter: '(uid={{username}})'
     }
 };
-passport.use(new LdapStrategy(OPTS));
+//passport.use(new LdapStrategy(OPTS));
 // var Sugar = require('sugar');
 module.exports = {
     /**
