@@ -127,7 +127,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             })
         ;
     })
-    .constant('CONF_MODULE', {baseUrl: '/user/:userId'})
+    .constant('CONF_MODULE', {baseUrl: '/users/:userId'})
     .run(function ($rootScope, $state, $stateParams, amMoment) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;

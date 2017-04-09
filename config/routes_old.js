@@ -20,51 +20,29 @@
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
-module.exports.routes = {
+module.exports.routes_old = {
 
-    /*************************************************************
-     * JSON API ENDPOINTS                                                    *
-     *************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+     * etc. depending on your default view engine) your home page.              *
+     *                                                                          *
+     * (Alternatively, remove this and add an `index.html` file in your         *
+     * `assets` directory)                                                      *
+     *                                                                          *
+     ***************************************************************************/
 
-    'PUT /login': 'UserController.login',
-    'POST /logout': 'UserController.logout',
-    'GET /logout': 'PageController.logout',
-    
-
-    'POST /user/signup': 'UserController.signup',
-    'PUT /user/remove-profile': 'UserController.removeProfile',
-    'PUT /user/restore-profile': 'UserController.restoreProfile',
-    'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
-    'PUT /user/update-profile': 'UserController.updateProfile',
-    'PUT /user/change-password': 'UserController.changePassword',
-    
-    'GET /users/:id': 'UserController.findUsers',
-    'GET /users': 'UserController.findUsers',
-    'DELETE /users/:id': 'UserController.destroy',
-    
-    'GET /positions/:id': 'PositionController.findPositions',
-    'GET /positions': 'PositionController.findPositions',
-    
-    'GET /departments/:id': 'DepartmentController.findDepartments',
-    'GET /departments': 'DepartmentController.findDepartments',
-   
-    /*************************************************************
-     * Server-rendered HTML Pages                                *
-     *************************************************************/
-
+    //'GET /attendance': 'PageController.showHomePage',
     'GET /': 'PageController.showHomePage',
-    'GET /profile/edit': 'PageController.showHomePage',
-    'GET /profile': 'PageController.showHomePage',
-    'GET /profile/restore': 'PageController.restoreProfile',
-    'GET /administration': 'PageController.showAdminPage',
-    'GET /signup': 'PageController.showSignupPage',
-
-
-
-
     'GET /admin': 'PageController.showHomePage',
     'GET /admin/users/administration': 'PageController.showAdminPage',
    
+
+
+    //'GET /calendar': 'PageController.showHomePage',
+
+    //'/employee/find':'PageController.showHomePage',
+    //'/attendance/get':'AttendanceController.get',
 
 
     'GET /admin/users': 'PageController.showHomePage',
@@ -81,21 +59,42 @@ module.exports.routes = {
     'GET /admin/positions/settings': 'PageController.showHomePage',
     'GET /admin/positions/create': 'PageController.showHomePage',
     'GET /admin/departments/create': 'PageController.showHomePage',
+
+
     'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
+
+    //'GET /admin/user/:id': 'UserController.findOne',
+    //'GET /admin/users/user/:id': 'UserController.findOne',
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit': 'PageController.showHomePage',
     'PUT /admin/users/edit/changePassword': 'UserController.changePassword',
     'GET /admin/users/edit/:id': 'PageController.showHomePage',
+    //'GET /admin/users/edit/:id': 'UserController.findOne',
     'GET /admin/users/:id': 'UserController.findOne',
+
+    //'GET /admin/:id': 'UserController.findOne',
+
+    // **** TEST routers ***//
+
+    'GET /videos': 'PageController.showVideosPage',
+    'GET /profile': 'PageController.showHomePage',
+    'GET /edit-profile': 'PageController.showHomePage',
+    'GET /restore-profile': 'PageController.showHomePage',
+    // **** END TEST routers ***//
+
+
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
     'GET /admin/department/:id': 'PageController.showHomePage',
+    //'GET /admin/department/:id': 'DepartmentController.findOne',
     'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
+
     'GET /admin/positions/:id': 'PositionController.findOne',
     'GET /admin/positions/edit/:id': 'PositionController.findOne',
     'GET /admin/position/:id': 'PositionController.findOne',
+
     'GET /admin/calendars': 'PageController.showHomePage',
     'GET /admin/calendars/:id': 'CalendarController.findOne',
     'GET /admin/calendars/create': 'PageController.showHomePage',
@@ -103,6 +102,7 @@ module.exports.routes = {
     'GET /admin/calendar/:id': 'CalendarController.findOne',
     'GET /admin/calendar/:id/:month': 'PageController.showHomePage',
     'GET /admin/calendar/:id/:week': 'PageController.showHomePage',
+
     'GET /admin/employees/:id': 'PageController.showHomePage',
     'GET /admin/employees/edit/:id': 'PageController.showHomePage',
     'GET /admin/employee/:id': 'PageController.showHomePage',
@@ -111,30 +111,59 @@ module.exports.routes = {
     'GET /admin/attendances/calendar': 'PageController.showHomePage',
     'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
 
+    //'POST /admin/attendances/calendars': 'AttendanceController.getQuery',
 
 
     'PUT /user/:id': 'UserController.update',
     'POST /user': 'UserController.signup',
 
-
     'PUT /department/:id': 'DepartmentController.update',
     'PUT /calendar/:id': 'CalendarController.update',
+    //'PUT /attendance/:id': 'AttendanceController.update',
     'PUT /position/:id': 'PositionController.update',
 
-
+    'GET /signup': {view: 'public/signup', locals: {layout: 'signup'}},
 
     'GET /user/adminUsers': 'UserController.adminUsers',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
     'PUT /user/changePassword': 'UserController.changePassword',
+    //'GET /admin/users/show': 'PageController.showHomePage',
+    //'GET /admin/users/edit': 'PageController.showHomePage',
 
-  
+
+    //'GET /contact': 'PageController.showHomePage',
+
+    //'GET /find/:id': 'UserController.find',
+    //'POST /user': {response: 'notFound'},
+
+
+    'POST /signup': 'UserController.signup',
     'GET /att': 'Attendance.getQuery',
     'POST /att': 'Attendance.getQuery',
     'GET /period': 'Attendance.findPeriod',
     'GET /pd': 'Attendance.fPeriod',
     'GET /api': 'Attendance.timeAll',
 
-   
+
+
+    'PUT /login': 'UserController.login',
+    'GET /logout': 'UserController.logout',
+    'DELETE /user/:id': 'UserController.destroy',
     'DELETE /position/:id': 'PositionController.destroy'
+
+    /***************************************************************************
+     *                                                                          *
+     * Custom routes here...                                                    *
+     *                                                                          *
+     * If a request to a URL doesn't match any of the custom routes above, it   *
+     * is matched against Sails route blueprints. See `config/blueprints.js`    *
+     * for configuration options and examples.                                  *
+     *                                                                          *
+     ***************************************************************************/
+
+
+
+
+
 
 };

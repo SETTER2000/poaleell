@@ -21,6 +21,26 @@ module.exports = {
         });
 
     },
+
+    findDepartments:function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if(req.param('id')){
+            Department.findOne(req.param('id'))
+                .exec(function foundUser(err, department) {
+                    if (err) return res.serverError(err);
+                    if (!department) return res.notFound();
+                    res.ok(department);
+                });
+        }else{
+            Department.find()
+                .exec(function foundUser(err, departments) {
+                    if (err) return res.serverError(err);
+                    if (!departments) return res.notFound();
+                    res.ok(departments);
+                });
+        }
+    },
+    
     addDepartment: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id')).exec(function (err, user) {

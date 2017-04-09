@@ -6,6 +6,32 @@
  */
 
 module.exports = {
+    logout: function(req, res) {
+
+        if (!req.session.me) {
+            return res.redirect('/');
+        }
+
+        User.findOne(req.session.me, function(err, user) {
+            if (err) {
+                console.log('error: ', err);
+                return res.negotiate(err);
+            }
+
+            if (!user) {
+                sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
+                return res.view('homepage');
+            }
+
+            return res.view('signout', {
+                me: {
+                    username: user.username,
+                    gravatarURL: user.gravatarURL,
+                    admin: user.admin
+                }
+            });
+        });
+    },
     showHomePage: function (req, res) {
         if (!req.session.me) {
             return res.view('public/header', {layout: 'homepage', me: null});
@@ -142,33 +168,7 @@ module.exports = {
         });
     },
 
-    showProfilePage: function (req, res) {
 
-        if (!req.session.me) {
-            return res.redirect('/');
-        }
-
-        User.findOne(req.session.me, function (err, user) {
-            if (err) {
-                console.log('error: ', error);
-                return res.negotiate(err);
-            }
-
-            if (!user) {
-                sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
-                return res.view('homepage');
-            }
-
-            return res.view('profile', {
-                me: {
-                    id: user.id,
-                    email: user.email,
-                    gravatarURL: user.gravatarURL,
-                    admin: user.admin
-                }
-            });
-        });
-    },
     showEditProfilePage: function (req, res) {
 
         if (!req.session.me) {
@@ -205,6 +205,21 @@ module.exports = {
         return res.view('restore-profile', {
             me: null
         });
+    },
+    showSignupPage: function (req, res) {
+        if (req.session.userId) {
+            return res.redirect('/');
+        }
+       return res.view('public/signup', {layout: 'signup'});
+        // return res.view('signup', {
+        //     me: null
+        // });
+    },
+    restoreProfile: function(req, res) {
+        return res.view('public/restore', {layout: 'homepage'});
+        // return res.view('restore-profile', {
+        //     me: null
+        // });
     }
 };
 

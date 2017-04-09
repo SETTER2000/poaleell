@@ -21,20 +21,20 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                 url: '/',
                 views: {
                     //'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
-                    '@': {templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html'}
+                    '@': {templateUrl: '/js/private/dashboard/tpl/dashboard.html'}
                 }
             })
             .state('home.profile', {
                 url: 'profile',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/dashboard/tpl/profile.tpl.html',
+                        templateUrl: '/js/private/dashboard/tpl/profile.html',
                         controller: 'ProfileController'
                     }
                 }
             })
-            .state('home.edit-profile', {
-                url: 'edit-profile',
+            .state('home.profile.edit', {
+                url: '/edit',
                 views: {
                     '@': {
                         templateUrl: '/js/private/dashboard/tpl/edit-profile.html',
@@ -42,6 +42,15 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                     }
                 }
             })
+            // .state('home.profile.restore', {
+            //     url: 'restore',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/dashboard/tpl/restore-profile.html',
+            //             controller: 'RestoreProfileController'
+            //         }
+            //     }
+            // })
         //    .state('account', {
         //        url: '/account',
         //        templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html'

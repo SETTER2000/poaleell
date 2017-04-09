@@ -33,7 +33,7 @@ module.exports.policies = {
         //update: ['isLoggedIn', 'isAdmin'],
         login: ['isLoggedOut'],
         logout: ['isLoggedIn'],
-        //signup: ['isLoggedOut'],
+        signup: ['isLoggedOut'],
         removeProfile: ['isLoggedIn'],
         updateProfile: ['isLoggedIn'],
         restoreGravatarURL: ['isLoggedIn'],

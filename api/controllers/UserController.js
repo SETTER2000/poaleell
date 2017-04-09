@@ -55,8 +55,8 @@ module.exports = {
                 },
                 success: function () {
                     if (user.deleted) {
-                        return res.forbidden("'Your account has been deleted. " +
-                            "Please visit ... restore to restore your account.'");
+                        return res.forbidden("'Ваша учетная запись удалена. " +
+                            "Пожалуйста, посетите ... восстановить для восстановления вашей учетной записи.'");
                     }
                     if (!user.action) {
                         return res.forbidden("Ваша учетная запись заблокирована, " +
@@ -172,29 +172,56 @@ module.exports = {
         // Send an email, either in plaintext or from an HTML template.
         //.where( actionUtil.parseCriteria(req) )
     },
-
-    findOne: function (req, res, next) {
+    
+    logout: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        //console.log('REGSESSIONME:');
-        //console.log(req.session.me);
+        User.findOne(req.session.me, function foundUser(err, user) {
+            //if (err) return res.view('public/header', {layout: 'homepage'});
+            if (err) return res.negotiate(err);
+            if (!user) {
+                sails.log.verbose('Сессия относится к пользователю, который больше не существует/');
+                return res.backToHomePage();
+            }
+            req.session.me = null;
+            return res.backToHomePage();
+        });
+    },
+    
+    findOne: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
             .exec(function foundUser(err, user) {
                 if (err) return res.serverError(err);
                 if (!user) return res.notFound();
-
-                //User.message(user.id, {count: 12, hairColor: 'red'});
-                //sails.sockets.broadcast('artsAndEntertainment', { greeting: 'Hola!' });
-                //res.view({
-                //    user: user, me: req.session.me
-                //});
-
-                res.view({
-                    user: user,
-                    me: req.session.me
-                });
+                res.ok(user);
+                // res.view({
+                //     user: user,
+                //     me: req.session.me
+                // });
             });
     },
-
+    
+    findUsers:function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if(req.param('id')){
+            User.findOne(req.param('id'))
+                .exec(function foundUser(err, user) {
+                    if (err) return res.serverError(err);
+                    if (!user) return res.notFound();
+                  res.ok(user);
+                
+                });
+        }else{
+            User.find()
+                .exec(function foundUser(err, users) {
+                    if (err) return res.serverError(err);
+                    if (!users) return res.notFound();
+                    res.ok(users);
+                });
+        }
+      
+    },
+    
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -303,20 +330,6 @@ module.exports = {
             });
             // res.redirect('/admin/users');
             res.ok();
-        });
-    },
-
-    logout: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne(req.session.me, function foundUser(err, user) {
-            //if (err) return res.view('public/header', {layout: 'homepage'});
-            if (err) return res.negotiate(err);
-            if (!user) {
-                sails.log.verbose('Сессия относится к пользователю, который больше не существует/');
-                return res.backToHomePage();
-            }
-            req.session.me = null;
-            return res.backToHomePage();
         });
     },
 

@@ -53,7 +53,7 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
             })
         ;
     })
-    .constant('CONF_MODULE_DEPARTMENT', {baseUrl: '/department/:depId'})
+    .constant('CONF_MODULE_DEPARTMENT', {baseUrl: '/departments/:depId'})
     .factory('Departments', function ($resource, CONF_MODULE_DEPARTMENT) {
         var Departments = $resource(
             CONF_MODULE_DEPARTMENT.baseUrl,

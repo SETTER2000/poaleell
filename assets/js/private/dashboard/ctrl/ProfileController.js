@@ -1,5 +1,5 @@
-angular.module('DashboardModule').controller('ProfileController', ['$scope', '$window', '$stateParams', 'Users', 'toastr', '$resource','$rootScope',
-  function ($scope, $window, $stateParams, Users, toastr, $resource,$rootScope){
+angular.module('DashboardModule').controller('ProfileController', ['$scope', '$http','$window', '$stateParams', 'Users', 'toastr', '$resource','$rootScope',
+  function ($scope, $http,$window, $stateParams, Users, toastr, $resource,$rootScope){
 
   // Just a hack so we can type `SCOPE` in the Chrome inspector.
   // SCOPE=$scope;
@@ -71,15 +71,15 @@ angular.module('DashboardModule').controller('ProfileController', ['$scope', '$w
     // console.log('the change userprofile is: ', $scope.userProfile);
 
     // var theRoute = '/user/removeProfile/' + $scope.userProfile.properties.id;
-    var theRoute = '/user/removeProfile/';
-    $http.put(theRoute, {
+   
+    $http.put('/user/remove-profile', {
         deleted: true
       })
       .then(function onSuccess(sailsResponse) {
 
         // console.log('sailsResponse: ', sailsResponse);
           // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
-          window.location = '/signup';
+          window.location = '/profile/restore';
           // 
           // toastr.success('Password Updated!');
 
@@ -96,17 +96,17 @@ angular.module('DashboardModule').controller('ProfileController', ['$scope', '$w
       });
   };
 
-  $scope.deleteProfile = function() {
-
-    var theRoute = 'user/delete/' + $routeParams.id;
-
-    $http.delete(theRoute)
-    .then(function onSuccess(deletedProfile){
-      window.location = '#/signup';
-    })
-    .catch(function onError(err){
-      $scope.userProfile.errorMsg = 'An unexpected error occurred: ' + err;
-    });
-  };
+  // $scope.deleteProfile = function() {
+  //
+  //   var theRoute = 'user/delete/' + $routeParams.id;
+  //
+  //   $http.delete(theRoute)
+  //   .then(function onSuccess(deletedProfile){
+  //     window.location = '#/signup';
+  //   })
+  //   .catch(function onError(err){
+  //     $scope.userProfile.errorMsg = 'An unexpected error occurred: ' + err;
+  //   });
+  // };
 
 }]);

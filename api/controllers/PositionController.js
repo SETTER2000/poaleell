@@ -22,6 +22,28 @@ module.exports = {
         });
 
     },
+    
+    findPositions:function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if(req.param('id')){
+            Position.findOne(req.param('id'))
+                .exec(function foundUser(err, position) {
+                    if (err) return res.serverError(err);
+                    if (!position) return res.notFound();
+                    res.ok(position);
+
+                });
+        }else{
+            Position.find()
+                .exec(function foundUser(err, positions) {
+                    if (err) return res.serverError(err);
+                    if (!positions) return res.notFound();
+                    res.ok(positions);
+                });
+        }
+
+    },
+    
     addPosition: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id')).exec(function (err, user) {

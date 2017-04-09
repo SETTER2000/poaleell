@@ -45,7 +45,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
 
         ;
     })
-    .constant('CONF_MODULE_POSITION', {baseUrl: '/position/:positionId'})
+    .constant('CONF_MODULE_POSITION', {baseUrl: '/positions/:positionId'})
     .factory('Positions', function ($resource, CONF_MODULE_POSITION) {
 
         var Positions = $resource(

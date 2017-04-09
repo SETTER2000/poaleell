@@ -1,0 +1,40 @@
+<div class="jumbotron white">
+    <div ng-controller="RestoreProfileController" class="container">
+        <!-- S T A R T  O F  T H E  P A N E L -->
+        <div class="row">
+            <div class="auth-form login-form col-sm-4 col-sm-offset-4">
+                <form role="form" ng-submit="restoreProfile()" id="restore-profile-form" name="restoreprofile">
+                    <fieldset>
+                        <div class="form-title">
+                            <!--<img src="/images/logo_transparent_orange_notext.png" alt="brushfire logo">-->
+                            <h2>Восстановить профиль</h2>
+                        </div>
+                        <!-- E M A I L -->
+                        <div class="form-group" ng-class="{'has-error':restoreprofile.email.$invalid &&restoreprofile.email.$dirty}">
+                            <!-- Email address or Username -->
+                            <input ng-model="restoreProfileForm.email" class="form-control input-lg" autofocus placeholder="email" name="email" type="email" required>
+              <span class="help-block has-error" ng-if="restoreprofile.email.$dirty">
+                <span ng-show="restoreprofile.email.$error.required">Email обязателен.</span>
+                <span ng-show="restoreprofile.email.$error.email">Не правильный email.</span>
+              </span>
+                        </div>
+                        <!-- P A S S W O R D -->
+                        <div class="form-group" ng-class="{'has-error':restoreprofile.password.$invalid &&restoreprofile.password.$dirty}">
+                            <input ng-model="restoreProfileForm.password" class="form-control input-lg"  name="password" type="password" id="password" required placeholder="password">
+              <span class="help-block has-error" ng-if="restoreprofile.password.$dirty">
+                <span ng-show="restoreprofile.password.$error.required">Пароль обязателен.</span>
+              </span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="submit-btn btn btn-lg btn-block" ng-disabled="restoreprofile.$invalid.$invalid">
+                                <span ng-show="!restoreProfileForm.loading">Восстановление профиля.</span>
+                                <span ng-show="restoreProfileForm.loading" class="fa fa-spinner"></span>
+                                <span ng-show="restoreProfileForm.loading">Отправка email...</span>
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

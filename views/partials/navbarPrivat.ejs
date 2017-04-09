@@ -65,10 +65,11 @@
                         <a href="/profile" class="pointer"> {{me.fullName}} ({{me.login}})</a>
                     </li>
                     <li>
-                        <!--<a href="/logout">Выход</a>-->
-                        <form action="/logout" class="navbar-form navbar-right">
-                            <button class="btn btn-success btn-md" type="submit">Выход</button>
+
+                        <form  class="navbar-form navbar-right" autocomplete="off">
+                            <button  class="btn btn-success btn-md" ng-click="signOut()" >Выход</button>
                         </form>
+
                     </li>
                 </ul>
                 <!--<ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">-->

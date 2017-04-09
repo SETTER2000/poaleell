@@ -7,6 +7,7 @@ angular.module('UserModule')
             //console.log(SAILS_LOCALS.me.email);
             //var emAdmin = SAILS_LOCALS.me.email;
             $scope.me = window.SAILS_LOCALS.me;
+            var t = [];
             //if (emAdmin == 'apetrov@landata.ru') {
             //    $scope.loginAdmin = true;
             //}
@@ -76,25 +77,26 @@ angular.module('UserModule')
             $scope.refresh = function () {
                 var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                     $scope.users = users;
-
                     console.log(users);
-
                     item.getBirthday();
                     item.getDateInWork();
                     item.getFiredDate();
-
-
                 }, function (err) {
-                    if (err) console.log(err.message);
+                  
+                    toastr.error(err,'Ошибка! User.EditController.refresh ');
                 });
             };
+
             $scope.delete2 = function (item) {
                 item.$delete(item, function (success) {
                     toastr.success('Объект удалён.','OK! ');
-                    $scope.refresh();
+                    $state.go('home.admin.users');
+                    // $location.path("/table");
+                    // $scope.$apply(function() { $location.path("/admin/users"); });
+                    // $scope.refresh();
                 }, function (err) {
                     console.log(err);
-                    toastr.error('Не смог удалить.','Ошибка! ');
+                    toastr.error(err,'Ошибка122! ');
                 })
             };
 
@@ -151,7 +153,7 @@ angular.module('UserModule')
                             //item.ok();
                         },
                         function (err) {
-                            toastr.error('Статус: '+err.status,'Ошибка!');
+                            toastr.error(err,'Ошибка33!');
                             //console.log('ERROR: ' + err.status);
                             //console.log(err);
                             //item.er();
@@ -175,7 +177,7 @@ angular.module('UserModule')
                                 //$scope.refresh();
                             },
                             function (err) {
-                                toastr.error('Статус: '+err.status,'Ошибка!');
+                                toastr.error(err,'Ошибка44!');
                                 //console.log('ERROR: ' + err.status);
                                 //console.log(err);
                                 //item.er();
@@ -194,6 +196,7 @@ angular.module('UserModule')
                     $scope.item.departments = [{}];
                 }
             };
+            
             $scope.addContact = function () {
                 if (angular.isArray($scope.item.contacts)) {
                     $scope.item.contacts.push({type: "телефон", value: ""});
@@ -201,6 +204,7 @@ angular.module('UserModule')
                     $scope.item.contacts = [{type: "телефон", value: ""}];
                 }
             };
+            
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
                 for (var i = 0, ii = contacts.length; i < ii; i++) {
@@ -209,7 +213,7 @@ angular.module('UserModule')
                     }
                 }
             };
-            var t = [];
+            
             $scope.removeDepartment = function (department) {
                 if (angular.isDefined(department) &&
                     angular.isDefined(department.id)) {
@@ -224,8 +228,7 @@ angular.module('UserModule')
                 }
                 $scope.item.removeDivision = t;
             };
-
-
+            
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);
             };
@@ -234,13 +237,14 @@ angular.module('UserModule')
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
 
-
             var original = angular.copy($scope.item);
+            
             $scope.revert = function () {
                 $scope.item = angular.copy(original);
                 $scope.passwordRepeat = $scope.item.password;
                 $scope.userInfoForm.$setPristine();
             };
+            
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };

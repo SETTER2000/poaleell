@@ -44,23 +44,8 @@
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Positions.query({limit:$scope.limit, sort: $scope.sort},function (positions) {
                         $scope.positions = positions;
-                         console.log('SUCCCEpp: ');
-                         console.log( $scope.positions);
-                        console.log('LENGTH: ');
-                         console.log( $scope.positions.length);
-                        // console.log(departments.get({"action": 1},function (success) {
-                        //     console.log('URAAA:');
-                        //     alert('5685');
-                        //     console.log(success);
-                        // },function (err) {
-                        //     alert('ERRRRRR');
-                        //     console.log(err);
-                        // }));
-                        // кол-во пользователей
-                        // console.log($scope.departments.length);
-                        //console.log(departments.scs());
                     }, function(err){
-                        toastr.error(err.data,'Ошибка!');
+                        toastr.error(err,'Ошибка ListPositionController!');
                     });
                 };
 

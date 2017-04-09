@@ -6,7 +6,7 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
 
     $scope.submitSignupForm = function () {
         $scope.signupForm.loading = true;
-        $http.post('/signup', {
+        $http.post('/user/signup', {
             login: $scope.signupForm.login,
             email: $scope.signupForm.email,
             firstName: $scope.signupForm.firstName,
@@ -36,9 +36,11 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
             $scope.signupForm.location = false;
         })
     };
+    
     $scope.loginForm = {
         loading: false
     };
+    
     $scope.submitLoginForm = function () {
         $scope.loginForm.loading = true;
         $http.put('/login', {
@@ -50,7 +52,7 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
             // Handle known error type(s).
             // Deleted account
             if (sailsResponse.status == 403) {
-                toastr.error(sailsResponse.data, 'Ошибка!', {
+                toastr.error(sailsResponse.data, 'Ошибка799!', {
                     closeButton: true
                 });
                 return;

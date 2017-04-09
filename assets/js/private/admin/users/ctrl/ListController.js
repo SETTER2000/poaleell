@@ -282,7 +282,7 @@
                         $scope.objectName = users;
                         $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
                     }, function(err){
-                        toastr.error(err.data,'Ошибка!');
+                        toastr.error(err,'Ошибка77!');
                     });
             };
 
