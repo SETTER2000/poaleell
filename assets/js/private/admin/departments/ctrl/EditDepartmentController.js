@@ -2,7 +2,7 @@ angular.module('DepartmentModule')
     .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
         function ($scope, $http,toastr, $state, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
-            if (!$scope.me.admin) $location.path('/');
+            //if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
@@ -26,20 +26,27 @@ angular.module('DepartmentModule')
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);
                     item.$update(item, function (success) {
+                            toastr.success('Данные обновлены!');
                             $scope.refresh();
-                            console.log('SUCCESS: OK!');
-                            item.ok();
+                            //console.log('SUCCESS: OK!');
+                            //item.ok();
                         },
                         function (err) {
-
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
-                            item.er();
+                            toastr.error(err,'Ошибка 1 EditDepartmentController!');
+                            //console.log('ERROR: ' + err.status);
+                            //console.log(err);
+                            //item.er();
                         }
                     );
                 } else {
                     $scope.refresh();
-                    item.$save(item)
+                    item.$save(item, function (success) {
+                        toastr.success('Данные сохранены!');
+                        $scope.refresh();
+                    }, function (err) {
+                        toastr.error(err,'Ошибка 2 EditDepartmentController!');
+                    });
+
                 }
             };
 
@@ -68,15 +75,11 @@ angular.module('DepartmentModule')
             };
 
             $scope.delete = function (item) {
-                console.log(item);
                 item.$delete(item, function (success) {
-                    $scope.refresh();
-                    console.log('SUCCESS: OK!');
-                    item.ok();
+                    toastr.success('Объект удалён.','OK! ');
+                    $state.go('home.admin.departments');
                 }, function (err) {
-                    console.log('ERROR: ' + err.status);
-                    console.log(err);
-                    item.er();
+                    toastr.error(err,'Ошибка 3 EditDepartmentController!');
                 })
             };
             $scope.refresh();

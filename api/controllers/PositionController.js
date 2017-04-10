@@ -27,7 +27,7 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if(req.param('id')){
             Position.findOne(req.param('id'))
-                .exec(function foundUser(err, position) {
+                .exec(function foundPosition(err, position) {
                     if (err) return res.serverError(err);
                     if (!position) return res.notFound();
                     res.ok(position);
@@ -35,7 +35,7 @@ module.exports = {
                 });
         }else{
             Position.find()
-                .exec(function foundUser(err, positions) {
+                .exec(function foundPosition(err, positions) {
                     if (err) return res.serverError(err);
                     if (!positions) return res.notFound();
                     res.ok(positions);
@@ -60,6 +60,31 @@ module.exports = {
             });
 
         })
+    },
+
+    createPosition: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+
+        Position.create(req.body).exec(function (err, finn) {
+            if(err) {return res.serverError(err);}
+            sails.log('Finn\'s id is:', finn.id);
+            return res.ok();
+        });
+
+        //Position.findOne(req.param('id')).exec(function (err, user) {
+        //    if (err) return next(err);
+        //
+        //    // Queue up a new pet to be added and a record to be created in the join table
+        //    user.positions.add({name: 'Программисты'});
+        //
+        //    // Save the user, creating the new pet and associations in the join table
+        //    Position.save(function (err) {
+        //        if (err) return next(err);
+        //
+        //        res.send('OK!!!!!');
+        //    });
+        //
+        //})
     },
 
     update: function (req, res) {

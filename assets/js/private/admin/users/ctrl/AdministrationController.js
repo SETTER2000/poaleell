@@ -30,7 +30,7 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
 
     console.log('id: ', id);
     console.log('change: ', change);
-    var theRoute = '/user/updateAdmin/' + id;
+    var theRoute = '/user/update-admin/' + id;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -63,7 +63,7 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
 
     console.log('id: ', id);
     console.log('change: ', change);
-    var theRoute = '/user/updateKadr/' + id;
+    var theRoute = '/user/update-kadr/' + id;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -96,7 +96,7 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
 
     console.log('id: ', id);
     console.log('change: ', change);
-    var theRoute = '/user/updateAction/' + id;
+    var theRoute = '/user/update-action/' + id;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -131,7 +131,7 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
 
     console.log('id: ', id);
     console.log('change: ', change);
-    var theRoute = '/user/updateDeleted/' + id;
+    var theRoute = '/user/update-deleted/' + id;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {

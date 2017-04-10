@@ -1,6 +1,6 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http','toastr','$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
-        function ($scope,$http,toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
+    .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
+        function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             $scope.close = 1;
             $scope.loginAdmin = false;
             //console.log('window.SAILS_LOCALS.me.email');
@@ -81,22 +81,24 @@ angular.module('UserModule')
                     item.getBirthday();
                     item.getDateInWork();
                     item.getFiredDate();
-                }, function (err) {
-                  
-                    toastr.error(err,'Ошибка! User.EditController.refresh ');
-                });
+                }
+                //    function (err) {
+                //
+                //    toastr.error(err, 'Ошибка! User.EditController.refresh ');
+                //}
+                );
             };
 
             $scope.delete2 = function (item) {
                 item.$delete(item, function (success) {
-                    toastr.success('Объект удалён.','OK! ');
+                    toastr.success('Объект удалён.', 'OK! ');
                     $state.go('home.admin.users');
                     // $location.path("/table");
                     // $scope.$apply(function() { $location.path("/admin/users"); });
                     // $scope.refresh();
                 }, function (err) {
                     console.log(err);
-                    toastr.error(err,'Ошибка122! ');
+                    toastr.error(err, 'Ошибка122! ');
                 })
             };
 
@@ -120,7 +122,7 @@ angular.module('UserModule')
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
-                         toastr.success('Пароль обновлён!');
+                        toastr.success('Пароль обновлён!');
                         $scope.editProfile.loading = false;
                     })
                     .catch(function onError(sailsResponse) {
@@ -139,13 +141,18 @@ angular.module('UserModule')
                 $scope.item.position = [];
                 //$scope.item.removeDivision = '589b22e8789b83a241b56056';
                 if (angular.isDefined(item.id)) {
-                    for (var i = 0; i < item.departments.length; i++) {
-                        $scope.item.subdivision.push(item.departments[i].id);
+                    if (angular.isDefined(item.departments)) {
+                        for (var i = 0; i < item.departments.length; i++) {
+                            $scope.item.subdivision.push(item.departments[i].id);
+                        }
                     }
 
-                    for (var z = 0; z < item.positions.length; z++) {
-                        $scope.item.position.push(item.positions[z].id);
+                    if (angular.isDefined(item.positions)) {
+                        for (var z = 0; z < item.positions.length; z++) {
+                            $scope.item.position.push(item.positions[z].id);
+                        }
                     }
+
                     item.$update(item, function (success) {
                             toastr.success('Изменения сохранены!');
                             $scope.refresh();
@@ -153,9 +160,10 @@ angular.module('UserModule')
                             //item.ok();
                         },
                         function (err) {
-                            toastr.error(err,'Ошибка33!');
+                            console.log(err);
+                            toastr.error(err, 'Ошибка33!');
                             //console.log('ERROR: ' + err.status);
-                            //console.log(err);
+
                             //item.er();
                         }
                     );
@@ -172,12 +180,12 @@ angular.module('UserModule')
                         item.$save(item, function (success) {
                                 toastr.success('Пользователь создан!');
                                 //$location.path('/profile') ;
-                                location.reload() ;
+                                location.reload();
 
                                 //$scope.refresh();
                             },
                             function (err) {
-                                toastr.error(err,'Ошибка44!');
+                                toastr.error(err, 'Ошибка44!');
                                 //console.log('ERROR: ' + err.status);
                                 //console.log(err);
                                 //item.er();
@@ -196,7 +204,7 @@ angular.module('UserModule')
                     $scope.item.departments = [{}];
                 }
             };
-            
+
             $scope.addContact = function () {
                 if (angular.isArray($scope.item.contacts)) {
                     $scope.item.contacts.push({type: "телефон", value: ""});
@@ -204,7 +212,7 @@ angular.module('UserModule')
                     $scope.item.contacts = [{type: "телефон", value: ""}];
                 }
             };
-            
+
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
                 for (var i = 0, ii = contacts.length; i < ii; i++) {
@@ -213,7 +221,7 @@ angular.module('UserModule')
                     }
                 }
             };
-            
+
             $scope.removeDepartment = function (department) {
                 if (angular.isDefined(department) &&
                     angular.isDefined(department.id)) {
@@ -228,7 +236,7 @@ angular.module('UserModule')
                 }
                 $scope.item.removeDivision = t;
             };
-            
+
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);
             };
@@ -238,13 +246,13 @@ angular.module('UserModule')
             };
 
             var original = angular.copy($scope.item);
-            
+
             $scope.revert = function () {
                 $scope.item = angular.copy(original);
                 $scope.passwordRepeat = $scope.item.password;
                 $scope.userInfoForm.$setPristine();
             };
-            
+
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };

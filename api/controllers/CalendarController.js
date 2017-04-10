@@ -21,6 +21,26 @@ module.exports = {
             });
         });
     },
+
+    findCalendars:function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if(req.param('id')){
+            Calendar.findOne(req.param('id'))
+                .exec(function foundUser(err, calendar) {
+                    if (err) return res.serverError(err);
+                    if (!calendar) return res.notFound();
+                    res.ok(calendar);
+                });
+        }else{
+            Calendar.find()
+                .exec(function foundUser(err, calendars) {
+                    if (err) return res.serverError(err);
+                    if (!calendars) return res.notFound();
+                    res.ok(calendars);
+                });
+        }
+    },
+
     addCalendar: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id')).exec(function (err, user) {
@@ -32,7 +52,7 @@ module.exports = {
             });
         })
     },
-
+    //updateCalendars:
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         var obj = {

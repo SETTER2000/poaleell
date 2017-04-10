@@ -92,8 +92,6 @@ module.exports = {
      * Регистрация нового пользователя.
      */
     signup: function (req, res) {
-
-
         // Encrypt a string using the BCrypt algorithm.
         Passwords.encryptPassword({
             password: req.param('password'), difficulty: 10
@@ -111,7 +109,6 @@ module.exports = {
                     },
 
                     success: function (gravatarUrl) {
-
                         User.create({
                             login: req.param('login'),
                             email: req.param('email'),
@@ -127,7 +124,9 @@ module.exports = {
                             dateInWork: req.param('dateInWork'),
                             lastLoggedIn: new Date(),
                             gravatarUrl: gravatarUrl
-                        }, function userCreated(err, newUser) {
+                        },
+
+                            function userCreated(err, newUser) {
                             if (err) {
                                 console.log('err:', err);
                                 //console.log('err.invalidAttributes: ', err.invalidAttributes);
@@ -172,7 +171,40 @@ module.exports = {
         // Send an email, either in plaintext or from an HTML template.
         //.where( actionUtil.parseCriteria(req) )
     },
-    
+
+    createUser: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        Passwords.encryptPassword({
+            password: req.param('password'), difficulty: 10
+        }).exec({
+            error: function (err) {
+                return res.negotiate(err);
+            },
+            success: function (encryptedPassword) {
+                User.create({
+                    login: req.param('login'),
+                    email: req.param('email'),
+                    firstName: req.param('firstName'),
+                    lastName: req.param('lastName'),
+                    patronymicName: req.param('patronymicName'),
+                    encryptedPassword: encryptedPassword,
+                    birthday: req.param('birthday'),
+                    contacts: req.param('contacts'),
+                    subdivision: req.param('subdivision'),
+                    position: req.param('position'),
+                    pfr: req.param('pfr'),
+                    dateInWork: req.param('dateInWork'),
+                    lastLoggedIn: new Date()
+                    //gravatarUrl: gravatarUrl
+                }, function (err, newUser) {
+                    if(err) return res.negotiate(err);
+                    sails.log('Создан новый пользователь с логином:' + newUser.login);
+                    res.ok();
+                });
+            }
+        });
+    },
+
     logout: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.session.me, function foundUser(err, user) {
@@ -186,7 +218,7 @@ module.exports = {
             return res.backToHomePage();
         });
     },
-    
+
     findOne: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
@@ -200,18 +232,18 @@ module.exports = {
                 // });
             });
     },
-    
-    findUsers:function (req, res) {
+
+    findUsers: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        if(req.param('id')){
+        if (req.param('id')) {
             User.findOne(req.param('id'))
                 .exec(function foundUser(err, user) {
                     if (err) return res.serverError(err);
                     if (!user) return res.notFound();
-                  res.ok(user);
-                
+                    res.ok(user);
+
                 });
-        }else{
+        } else {
             User.find()
                 .exec(function foundUser(err, users) {
                     if (err) return res.serverError(err);
@@ -219,9 +251,9 @@ module.exports = {
                     res.ok(users);
                 });
         }
-      
+
     },
-    
+
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -249,17 +281,6 @@ module.exports = {
 
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        //User.findOne(req.param('id')).exec(function (err, user) {
-        //    if (err)  return res.negotiate(err);
-        //
-        //    // Queue up a record to be inserted into the join table
-        //    user.departments.add(req.param('subdivision'));
-        //
-        //    // Save the user, creating the new associations in the join table
-        //    user.save(function (err) {
-        //        return res.negotiate(err);
-        //    });
-        //});
         var obj = {
             login: req.param('login'),
             email: req.param('email'),
@@ -307,16 +328,6 @@ module.exports = {
             }
 
             res.ok();
-            //res.view({
-            //    user: user, me: req.session.me
-            //});
-            // User.publishUpdate(bobs[0].id, {
-            //     hairColor: 'red'
-            // }, req, {
-            //     previous: {
-            //         hairColor: bobs[0].hairColor
-            //     }
-            // });
         });
     },
 
@@ -407,7 +418,7 @@ module.exports = {
     updateProfile: function (req, res) {
 
         User.update({
-            id:req.session.me
+            id: req.session.me
         }, {
             gravatarUrl: req.param('gravatarUrl')
         }, function (err, updatedUser) {

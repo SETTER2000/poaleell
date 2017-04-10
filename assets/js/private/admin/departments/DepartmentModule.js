@@ -33,6 +33,15 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
+            .state('home.admin.departments.create', {
+                url: '/create/:departmentId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/departments/tpl/edit.tpl.html',
+                        controller: 'EditDepartmentController'
+                    }
+                }
+            })
             //.state('home.admin.depart', {
             //    url: '/depart/:depId',
             //    views: {

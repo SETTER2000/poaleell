@@ -40,7 +40,17 @@ module.exports = {
                 });
         }
     },
-    
+
+    createDepartment: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+
+        Department.create(req.body).exec(function (err, finn) {
+            if(err) {return res.serverError(err);}
+            sails.log('Finn\'s id is:', finn.id);
+            return res.ok();
+        });
+    },
+
     addDepartment: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id')).exec(function (err, user) {
@@ -81,7 +91,7 @@ module.exports = {
                 // res.location('/home/admin/departments');
                 res.ok();
             }) 
-    }
+    },
         // update: function (req, res, next) {
     //     //req.params.all()
     //     Department.update(req.param('id'), {
@@ -98,6 +108,16 @@ module.exports = {
     //         res.ok();
     //     });
     // }
-
+    destroy: function (req, res, next) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        Department.findOne(req.param('id'), function foundUser(err, user) {
+            if (err)return next(err);
+            if (!user)return next('Position doesn\'t exists.');
+            Department.destroy(req.param('id'), function userDestroyed(err) {
+                if (err)return next(err);
+            });
+            res.ok();
+        });
+    }
 };
 

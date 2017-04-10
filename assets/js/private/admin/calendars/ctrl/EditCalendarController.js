@@ -1,6 +1,6 @@
 angular.module('CalendarModule')
-    .controller('EditCalendarController', ['$scope', '$translate', '$rootScope', '$http', '$state', 'Calendars', '$stateParams', 'CONF_MODULE',
-        function ($scope, $translate, $rootScope, $http, $state, Calendars, $stateParams) {
+    .controller('EditCalendarController', ['$scope','toastr', '$translate', '$rootScope', '$http', '$state', 'Calendars', '$stateParams', 'CONF_MODULE',
+        function ($scope,toastr, $translate, $rootScope, $http, $state, Calendars, $stateParams) {
             $rootScope.$on('$translateChangeSuccess', function () {
                 $translate('TITLE').then(function (translation) {
                     $scope.title = translation;
@@ -46,7 +46,6 @@ angular.module('CalendarModule')
             $scope.changeLanguage = function (langKey) {
                 $translate.use(langKey);
             };
-
 
             $translate('EDIT').then(function (edit) {
                 $scope.edit = edit;
@@ -173,17 +172,10 @@ angular.module('CalendarModule')
             $scope.refresh = function () {
                 var item = $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
                     $scope.calendars = calendars;
-                    // кол-во пользователей
-                    //console.log($scope.calendars.length);
-                    //console.log($scope.calendars);
-                    // console.log('USSS1: ' +  $scope.newBirthday);
-                    // console.log('USSS2: ' + $scope.item.dt());
-                    // // $scope.item.birthday = $scope.newBirthday;
-                    // console.log('USSS3: ' + item.birthday);
-                    // console.log('USSS4: ' + $scope.item.birthday);
-
                 }, function (err) {
-                    if (err) console.log(err.message);
+                    if (err) {
+                        toastr.error(err,'Ошибка EditCalendarController!');
+                    }
                 });
             };
 
@@ -191,14 +183,17 @@ angular.module('CalendarModule')
                 if (angular.isDefined(item.id)) {
                     //item.$update(item);
                     item.$update(item, function (success) {
+                            //toastr.success(err,'Ошибка 2 EditCalendarController!');
+                            toastr.success('Данные обновлены!');
                             $scope.refresh();
-                            console.log('SUCCESS: OK!');
-                            item.ok();
+                            //console.log('SUCCESS: OK!');
+                            //item.ok();
                         },
                         function (err) {
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
-                            item.er();
+                            //console.log('ERROR: ' + err.status);
+                            //console.log(err);
+                            toastr.error(err,'Ошибка 3 EditCalendarController!');
+                            //item.er();
                         }
                     );
                 } else {
@@ -209,9 +204,9 @@ angular.module('CalendarModule')
                             item.ok();
                         },
                         function (err) {
-
-                            console.log('ERROR: ' + err.status);
-                            console.log(err);
+                            toastr.error(err,'Ошибка! Возможно ЧПУ не уникален. EditCalendarController!');
+                            //console.log('ERROR: ' + err.status);
+                            //console.log(err);
                             item.er('Возможно ЧПУ не уникален.');
                         })
                 }

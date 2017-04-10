@@ -128,7 +128,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
             })
         ;
     }])
-    .constant('CONF_MODULE_CALENDAR', {baseUrl: '/calendar/:calendarId'})
+    .constant('CONF_MODULE_CALENDAR', {baseUrl: '/calendars/:calendarId'})
     .filter("timeCut", function () {
         // Отрежим нули
         return function (value, toCut) {

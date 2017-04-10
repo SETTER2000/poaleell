@@ -37,17 +37,33 @@ module.exports.routes = {
     'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
     'PUT /user/update-profile': 'UserController.updateProfile',
     'PUT /user/change-password': 'UserController.changePassword',
-    
+    'PUT /user/update-admin/:id': 'UserController.updateAdmin',
+    'PUT /user/update-kadr/:id': 'UserController.updateKadr',
+    'PUT /user/update-action/:id': 'UserController.updateAction',
+    'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
+
     'GET /users/:id': 'UserController.findUsers',
     'GET /users': 'UserController.findUsers',
     'DELETE /users/:id': 'UserController.destroy',
-    
+    'PUT /users/:id': 'UserController.update',
+    'POST /users' : 'UserController.createUser',
+
     'GET /positions/:id': 'PositionController.findPositions',
     'GET /positions': 'PositionController.findPositions',
-    
+    'PUT /positions/:id': 'PositionController.update',
+    'DELETE /positions/:id': 'PositionController.destroy',
+    'POST /positions' : 'PositionController.createPosition',
+
     'GET /departments/:id': 'DepartmentController.findDepartments',
     'GET /departments': 'DepartmentController.findDepartments',
-   
+    'PUT /departments/:id': 'DepartmentController.update',
+    'POST /departments' : 'DepartmentController.createDepartment',
+    'DELETE /departments/:id': 'DepartmentController.destroy',
+
+
+    'GET /calendars/:id': 'CalendarController.findCalendars',
+    'GET /calendars': 'CalendarController.findCalendars',
+    'PUT /calendars/:id': 'CalendarController.update',
     /*************************************************************
      * Server-rendered HTML Pages                                *
      *************************************************************/
@@ -89,12 +105,12 @@ module.exports.routes = {
     'GET /admin/users/edit/:id': 'PageController.showHomePage',
     'GET /admin/users/:id': 'UserController.findOne',
     'GET /admin/departments/:id': 'DepartmentController.findOne',
-    'GET /admin/departments/edit/:id': 'DepartmentController.findOne',
+    'GET /admin/departments/edit/:id': 'PageController.showHomePage',
     'GET /admin/department/:id': 'PageController.showHomePage',
     'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
     'GET /admin/positions/:id': 'PositionController.findOne',
-    'GET /admin/positions/edit/:id': 'PositionController.findOne',
+    'GET /admin/positions/edit/:id': 'PageController.showHomePage',
     'GET /admin/position/:id': 'PositionController.findOne',
     'GET /admin/calendars': 'PageController.showHomePage',
     'GET /admin/calendars/:id': 'CalendarController.findOne',
@@ -113,13 +129,11 @@ module.exports.routes = {
 
 
 
-    'PUT /user/:id': 'UserController.update',
-    'POST /user': 'UserController.signup',
+
+    //'POST /user': 'UserController.signup',
 
 
-    'PUT /department/:id': 'DepartmentController.update',
-    'PUT /calendar/:id': 'CalendarController.update',
-    'PUT /position/:id': 'PositionController.update',
+
 
 
 
@@ -135,6 +149,6 @@ module.exports.routes = {
     'GET /api': 'Attendance.timeAll',
 
    
-    'DELETE /position/:id': 'PositionController.destroy'
+
 
 };
