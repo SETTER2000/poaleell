@@ -1,7 +1,6 @@
 angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule', 'ngAnimate', 'ng-fx', 'angularMoment'])
     .config(function ($stateProvider) {
         $stateProvider
-
             .state('home.admin.users', {
                 url: '/users',
                 views: {
@@ -389,11 +388,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     var v = scope.objectName;
                     for (var key in v) {
                         var obj = v[key];
-
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
-
                                 chars = obj[prop].substr(0,3);
                                 parts.push(chars);
                                 // if (!scope.uniqueValue(parts, chars)) {
