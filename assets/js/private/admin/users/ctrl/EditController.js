@@ -87,6 +87,9 @@ angular.module('UserModule')
                 //    toastr.error(err, 'Ошибка! User.EditController.refresh ');
                 //}
                 );
+
+                console.log($scope.item);
+                console.log($scope.users);
             };
 
             $scope.delete2 = function (item) {
@@ -141,18 +144,18 @@ angular.module('UserModule')
                 $scope.item.position = [];
                 //$scope.item.removeDivision = '589b22e8789b83a241b56056';
                 if (angular.isDefined(item.id)) {
-                    if (angular.isDefined(item.departments)) {
+                    //if (angular.isDefined(item.departments)) {
                         for (var i = 0; i < item.departments.length; i++) {
                             $scope.item.subdivision.push(item.departments[i].id);
                         }
-                    }
+                    //}
 
-                    if (angular.isDefined(item.positions)) {
+                    //if (angular.isDefined(item.positions)) {
                         for (var z = 0; z < item.positions.length; z++) {
                             $scope.item.position.push(item.positions[z].id);
                         }
-                    }
-
+                    //}
+                    console.log(item);
                     item.$update(item, function (success) {
                             toastr.success('Изменения сохранены!');
                             $scope.refresh();

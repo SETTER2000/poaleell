@@ -29,7 +29,7 @@ module.exports.routes = {
     'PUT /login': 'UserController.login',
     'POST /logout': 'UserController.logout',
     'GET /logout': 'PageController.logout',
-    
+
 
     'POST /user/signup': 'UserController.signup',
     'PUT /user/remove-profile': 'UserController.removeProfile',
@@ -46,18 +46,18 @@ module.exports.routes = {
     'GET /users': 'UserController.findUsers',
     'DELETE /users/:id': 'UserController.destroy',
     'PUT /users/:id': 'UserController.update',
-    'POST /users' : 'UserController.createUser',
+    'POST /users': 'UserController.createUser',
 
     'GET /positions/:id': 'PositionController.findPositions',
     'GET /positions': 'PositionController.findPositions',
     'PUT /positions/:id': 'PositionController.update',
     'DELETE /positions/:id': 'PositionController.destroy',
-    'POST /positions' : 'PositionController.createPosition',
+    'POST /positions': 'PositionController.createPosition',
 
     'GET /departments/:id': 'DepartmentController.findDepartments',
     'GET /departments': 'DepartmentController.findDepartments',
     'PUT /departments/:id': 'DepartmentController.update',
-    'POST /departments' : 'DepartmentController.createDepartment',
+    'POST /departments': 'DepartmentController.createDepartment',
     'DELETE /departments/:id': 'DepartmentController.destroy',
 
 
@@ -76,11 +76,8 @@ module.exports.routes = {
     'GET /signup': 'PageController.showSignupPage',
 
 
-
-
     'GET /admin': 'PageController.showHomePage',
     'GET /admin/users/administration': 'PageController.showAdminPage',
-   
 
 
     'GET /admin/users': 'PageController.showHomePage',
@@ -128,27 +125,29 @@ module.exports.routes = {
     'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
 
 
-
-
     //'POST /user': 'UserController.signup',
-
-
-
-
 
 
     'GET /user/adminUsers': 'UserController.adminUsers',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
     'PUT /user/changePassword': 'UserController.changePassword',
 
-  
+
     'GET /att': 'Attendance.getQuery',
     'POST /att': 'Attendance.getQuery',
     'GET /period': 'Attendance.findPeriod',
     'GET /pd': 'Attendance.fPeriod',
     'GET /api': 'Attendance.timeAll',
 
-   
+    //'GET /:username': {
+    //    controller: 'PageController',
+    //    action: 'profile',
+    //    skipAssets: true
+    //}
 
-
+    'GET /:login': {
+        controller: 'PageController',
+        action: 'profile',
+        skipAssets: true
+    }
 };

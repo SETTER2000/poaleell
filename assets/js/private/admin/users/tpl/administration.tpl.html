@@ -81,8 +81,8 @@
                             <th>foto</th>
                             <th>login</th>
                             <th>email</th>
-                            <th>kadr</th>
                             <th>admin</th>
+                            <th>kadr</th>
                             <th>action</th>
                             <th>deleted</th>
 
@@ -99,8 +99,8 @@ orderBy:propertyName:reverse |  limitTo: 1000)">
                             <td> {{user.gravatarURL}}</td>
                             <td> {{user.login}}</td>
                             <td> {{user.email}}</td>
-                            <td><input type="checkbox" ng-model="user.kadr" ng-click="saveKadr(user.id, user.kadr)"></td>
                             <td><input type="checkbox" ng-model="user.admin" ng-click="saveAdmin(user.id, user.admin)"></td>
+                            <td><input type="checkbox" ng-model="user.kadr" ng-click="saveKadr(user.id, user.kadr)"></td>
                             <td><input type="checkbox" ng-model="user.action" ng-click="saveAction(user.id, user.action)"></td>
                             <td><input type="checkbox" ng-model="user.deleted" ng-click="saveDeleted(user.id, user.deleted)"></td>
                     </table>

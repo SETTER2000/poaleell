@@ -73,21 +73,6 @@ module.exports = {
         });
     },
 
-    profile: function (req, res) {
-
-        // Try to look up user using the provided email address
-        User.findOne(req.param('id')).exec(function foundUser(err, user) {
-            // Handle error
-            if (err) return res.negotiate(err);
-
-            // Handle no user being found
-            if (!user) return res.notFound();
-
-            // Return the user
-            return res.json(user);
-        });
-    },
-
     /**
      * Регистрация нового пользователя.
      */
@@ -235,6 +220,11 @@ module.exports = {
 
     findUsers: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        //sails.log(req.session.me);
+
+
+
+
         if (req.param('id')) {
             User.findOne(req.param('id'))
                 .exec(function foundUser(err, user) {
@@ -251,7 +241,6 @@ module.exports = {
                     res.ok(users);
                 });
         }
-
     },
 
     show: function (req, res, next) {
@@ -327,7 +316,7 @@ module.exports = {
                 });
             }
 
-            res.ok();
+            //res.ok();
         });
     },
 
