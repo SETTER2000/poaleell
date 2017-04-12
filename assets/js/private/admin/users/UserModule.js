@@ -361,7 +361,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             scope: {
                 objectName: '=', // Массив оъектов с фамилиями
                 countChar: '=', // по умолчанию сколько строк должно показываться на одной странице
-                filedName: '=', // по умолчанию сколько строк должно показываться на одной странице
+                filedName: '=', // из какого поля берутся начальные буквы
                 onSelectPart: '&',
                 getCharText: '&',
                 charText: '=',
@@ -371,38 +371,35 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             replace: true,
             link: function (scope) {
                 scope.$watch('objectName', function (value) {
+
+                    console.log('OBJECT NAME');
+                    console.log(value);
+
                     scope.objectName = value;
                     scope.checkArray();
                 });
-                //scope.$watch('numPages', function (value) {
-                //    scope.pages = [];
-                //    for (var i = 1; i <= value; i++) {
-                //        scope.pages.push(i);
-                //    }
-                //    if (scope.currentPage > value) {
-                //        scope.selectPage(value);
-                //    }
-                //});
+
                 scope.checkArray = function () {
                     var parts = [];
                     var v = scope.objectName;
                     for (var key in v) {
                         var obj = v[key];
+
+                        console.log(obj);
+                        
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
                                 chars = obj[prop].substr(0,3);
                                 parts.push(chars);
-                                // if (!scope.uniqueValue(parts, chars)) {
-                                //     console.log(chars);
-                                //
-                                // }
                             }
                         }
                     }
-                    // console.log("scope.PARTS");
-                    // console.log(scope.parts);
+                    console.log('PARTS');
+                    console.log(parts);
                     scope.parts =  scope.uniqueValue(parts);
+                    console.log('UNIQUE PARTS');
+                    console.log(scope.parts);
                 };
 
                 scope.uniqueValue = function(arr) {
@@ -415,13 +412,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
 
                     return Object.keys(obj); // или собрать ключи перебором для IE8-
                 };
-                // scope.uniqueValue = function (array, value) {
-                //     for (var i = 0; i < array.length; i++) {
-                //         if (array[i] === value) return i;
-                //     }
-                //     return false;
-                // };
-
 
                 scope.$watch('charText', function (value) {
                     scope.charText = value;
@@ -430,30 +420,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 scope.$watch('where', function (value) {
                     scope.where = value;
                 });
-                //scope.$watch('limitRows', function (value) {
-                //    scope.rows = [];
-                //    for (var i = 0; i <= value.length; i++) {
-                //        scope.rows.push(value[i]);
-                //    }
-                //});
-                //scope.$watch('defaultRows', function (value, oldValue) {
-                //    if (value > 0) {
-                //        scope.defaultRows = value;
-                //        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-                //    }
-                //});
-                //scope.getCharText = function (ch) {
-                //    console.log(ch);
-                //    var where = {};
-                //    if (angular.isString(ch)) {
-                //        where = {"lastName": {'like': ch + '%'}};
-                //        $scope.charText = ch;
-                //    } else {
-                //        // $scope.defaultRows;
-                //        $scope.charText = '';
-                //    }
-                //    $scope.refresh(where);
-                //};
+
                 scope.isNumeric = function (n) {
                     return !isNaN(parseFloat(n)) && isFinite(n);
                 };
@@ -472,6 +439,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     if (angular.isString(ch)) {
                         scope.where = {"lastName": {'like': ch + '%'}};
                         scope.charText = ch;
+                        console.log('WHERE');
                         console.log(scope.where);
                     } else {
                         // $scope.defaultRows;
@@ -479,17 +447,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
 
                 };
-                //scope.getPartText = function (ch) {
-                //    if (angular.isString(ch)) {
-                //        scope.where = {"lastName": {'like': ch + '%'}};
-                //        scope.charText = ch;
-                //        console.log(scope.where);
-                //    } else {
-                //        // $scope.defaultRows;
-                //        scope.charText = '';
-                //    }
-                //
-                //};
+
                 scope.selectPart = function (part) {
                     if (!scope.isActive(part)) {
                         scope.currentPart = part;
@@ -498,6 +456,138 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 };
 
+            }
+        };
+    })
+    .directive('alfavit', function () {
+        return {
+            restrict: 'E',
+            // Это изолированый scope.
+            // имена полей изолированного контекста (свойства объекта), а значение
+            // определяет имя атрибута элемента с префиксом @, = или &
+            /** Например:
+             * scope: {
+                    isolated1: ‘@attribute1’,
+                    isolated2: ‘=attribute2’,
+                    isolated3: ‘&attribute3’
+                    }
+
+             * Если имя атрибута отсутствует в описании значения, предполагается,
+             * что он имеет то же имя, что и поле изолированного контекста:
+             * scope: { isolated1: ‘@’ }
+             * Здесь предполагается, что атрибут имеет имя isolated1.
+             * (стр. 265)
+             */
+            scope: {
+                objectName: '=', // Массив оъектов с фамилиями
+                countChar: '=', // по умолчанию сколько строк должно показываться на одной странице
+                filedName: '=', // из какого поля берутся начальные буквы
+                //onSelectPart: '&',
+                getCharText: '&',
+                charText: '=',
+                where: '='
+            },
+            templateUrl: '/js/private/admin/users/views/alfavit.html',
+            replace: true,
+            link: function (scope) {
+
+                scope.$watch('objectName', function (value) {
+                    console.log('OBJECT NAME33');
+                    console.log(value);
+
+                    scope.objectName = value;
+                    scope.checkArray();
+                });
+
+                scope.checkArray = function () {
+                    var parts = [];
+                    var v = scope.objectName;
+                    for (var key in v) {
+                        var obj = v[key];
+                        for (var prop in obj) {
+                            var chars;
+                            if (prop === scope.filedName) {
+                                chars = obj[prop].substr(0,1);
+                                parts.push(chars);
+                            }
+                        }
+                    }
+                    //console.log('PARTS');
+                    //console.log(parts);
+                    scope.parts =  scope.uniqueValue(parts).sort();
+                    console.log('UNIQUE2 PARTS2');
+                    console.log(scope.parts);
+                };
+
+                scope.uniqueValue = function(arr) {
+                    var obj = {};
+
+                    for (var i = 0; i < arr.length; i++) {
+                        var str = arr[i];
+                        obj[str] = true; // запомнить строку в виде свойства объекта
+                    }
+
+                    return Object.keys(obj); // или собрать ключи перебором для IE8-
+                };
+
+                scope.$watch('charText', function (value) {
+                    scope.charText = value;
+                });
+
+                scope.$watch('where', function (value) {
+                    scope.where = value;
+                });
+
+                scope.isNumeric = function (n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                };
+
+                scope.getPartOfSpeech = function (str, countChar) {
+                    var cntChar;
+                    cntChar = (scope.isNumeric(countChar)) ? countChar : 3;
+                    return str.substr(0, cntChar);
+                };
+
+                scope.isActive = function (part) {
+                    return scope.currentPart === part;
+                };
+
+                scope.isActiveRow = function (row) {
+                    return scope.defaultRows === row;
+                };
+
+                scope.getPartText = function (ch) {
+                    if (angular.isString(ch)) {
+                        scope.where = {"lastName": {'like': ch + '%'}};
+                        scope.charText = ch;
+                    } else {
+                        scope.charText = '';
+                    }
+
+                };
+
+                scope.getCharText = function (ch) {
+                    //console.log(ch);
+
+                    if (angular.isString(ch) && ch.length>0) {
+                        scope.where = {lastName: {'like': ch + '%'}};
+                        scope.charText = ch;
+                    } else {
+                        // $scope.defaultRows;
+                        scope.charText = '';
+                        scope.where ={};
+                    }
+                    //scope.refresh(where);
+                };
+
+                scope.selectPart = function (part) {
+                    if (!scope.isActive(part)) {
+                        scope.currentPart = part;
+                        scope.getPartText(part);
+                        scope.getCharText(part);
+                        scope.onSelectPart({part: part});
+                    }
+                };
             }
         };
     })

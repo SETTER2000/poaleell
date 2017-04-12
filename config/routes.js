@@ -36,17 +36,21 @@ module.exports.routes = {
     'PUT /user/restore-profile': 'UserController.restoreProfile',
     'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
     'PUT /user/update-profile': 'UserController.updateProfile',
-    'PUT /user/change-password': 'UserController.changePassword',
+    'PUT /user/change-password': 'UserController.changePasswordProfile',
     'PUT /user/update-admin/:id': 'UserController.updateAdmin',
     'PUT /user/update-kadr/:id': 'UserController.updateKadr',
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
 
-    'GET /users/:id': 'UserController.findUsers',
+
+    'POST /users': 'UserController.createUser',
     'GET /users': 'UserController.findUsers',
+    'PUT /users/changePassword': 'UserController.changePassword',
+    'GET /users/:id': 'UserController.findUsers',
     'DELETE /users/:id': 'UserController.destroy',
     'PUT /users/:id': 'UserController.update',
-    'POST /users': 'UserController.createUser',
+
+
 
     'GET /positions/:id': 'PositionController.findPositions',
     'GET /positions': 'PositionController.findPositions',
@@ -98,7 +102,7 @@ module.exports.routes = {
     'GET /admin/user/:id': 'PageController.showHomePage',
     'GET /admin/users/show/:id': 'UserController.findOne',
     'GET /admin/users/edit': 'PageController.showHomePage',
-    'PUT /admin/users/edit/changePassword': 'UserController.changePassword',
+    'PUT /admin/users/edit/changePassword': 'UserController.changePasswordProfile',
     'GET /admin/users/edit/:id': 'PageController.showHomePage',
     'GET /admin/users/:id': 'UserController.findOne',
     'GET /admin/departments/:id': 'DepartmentController.findOne',
@@ -130,7 +134,7 @@ module.exports.routes = {
 
     'GET /user/adminUsers': 'UserController.adminUsers',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-    'PUT /user/changePassword': 'UserController.changePassword',
+
 
 
     'GET /att': 'Attendance.getQuery',

@@ -115,7 +115,7 @@ angular.module('DashboardModule').controller('EditProfileController', ['$scope',
         };
 
         $scope.changeMyPassword = function () {
-            $http.put('/user/changePassword', {
+            $http.put('/users/changePassword', {
                     password: $scope.editProfile.properties.password
                 })
                 .then(function onSuccess(sailsResponse) {

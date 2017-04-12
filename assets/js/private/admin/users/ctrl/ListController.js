@@ -1,9 +1,9 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', '$location','moment', '$http', 'toastr',"$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope,$location, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
+        .controller('ListController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
             $scope.me = window.SAILS_LOCALS.me;
-            if(!$scope.me.kadr ) $location.path('/') ;
+            if (!$scope.me.kadr) $location.path('/');
             //toastr.options = {
             //    "closeButton": false,
             //    "debug": false,
@@ -113,54 +113,17 @@
             $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
             $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
             $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
-            //$scope.calendarView = "/js/private/admin/users/views/home.admin.users.calendar.html";
-            //$scope.budgeView = "/js/private/admin/users/views/home.admin.users.budge.html";
-
-            // $scope.url = $scope.tableView;
-            //
-            // $scope.showList = function () {
-            //     $scope.url = $scope.listView;
-            // }
-            //
-            // $scope.showTable = function () {
-            //     $scope.url = $scope.tableView;
-            // }
 
             $scope.getLastName = function (item) {
-
-                // $scope.attendances = Attendances.query({}, function (attendances) {
-                //     console.log('attendances^^');
-                //         console.log(attendances);
-                // });
-                // $scope.items = [];
-                // console.log("ITEMMM");
-                // console.log(item);
-                // item.limit=30;
                 $http.post('/att', item)
-                // $scope.attendances = Attendances.query(item, function (attendance) {
                     .then(function (attendance) {
-                        console.log('attendance^^');
-                        console.log(attendance);
-
                         $scope.differ(attendance);
-                        console.log('DDD:');
-                        console.log($scope.items);
-
                         $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
                     });
-                // $scope.query = {"lname": lname};
-                // $scope.refreshAttendance({where:{"employees.fname": "Александр"}});
-                // $scope.refreshAttendance({
-                //     where: {"employees":[{"lname": lname}]},
-                //     sort: 'date',
-                //     limit: $scope.limitAll
-                // });
-                // $scope.refreshAttendance({"dateid": [{"lname": lname}]});
             };
 
             $scope.differ = function (attendance) {
                 var data = [];
-
                 for (var i = 0; i < attendance.data.length; i++) {
                     (function () { // каждая созданная функция будет работать со своей локальной переменной.
                         var local = i;
@@ -262,6 +225,8 @@
             //console.log('STATE: ');
             //console.log( $state.get());
             $scope.refresh = function (where) {
+                console.log('WHERE LIST');
+                console.log(where);
                 if (where) {
                     $scope.where = where;
                 } else {
@@ -269,35 +234,42 @@
                 }
                 $scope.query = {
                     where: $scope.where,
-                    sort: $scope.sort,
-                    limit: $scope.limitAll
+                    sort:  $scope.sort,
+                    limit: $scope.limitAll,
+                    property: 'lastName',
+                    char:  $scope.charText+'%'
                 };
+                //$scope.query = {sort:'email'};
+                //console.log('QUERY ЗАПРоС');
+                //console.log($scope.query);
+
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
-                        console.log('ITEMS QUERY');
+
                         $scope.items = users;
-                        // $scope.lengthObject = users.length;
-                        console.log(users);
+
+                        //console.log(users);
                         $scope.objectName = users;
                         $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
-                    }, function(err){
-                        toastr.error(err,'Ошибка77!');
+                    }, function (err) {
+                        console.log(err);
+                        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
                     });
             };
 
-            $scope.getCharText = function (ch) {
-                console.log(ch);
-                var where = {};
-                if (angular.isString(ch)) {
-                    where = {"lastName": {'like': ch + '%'}};
-                    $scope.charText = ch;
-                } else {
-                    // $scope.defaultRows;
-                    $scope.charText = '';
-                }
-                $scope.refresh(where);
-            };
+            //$scope.getCharText = function (ch) {
+            //    //console.log(ch);
+            //    var where = {};
+            //    if (angular.isString(ch)) {
+            //        where = {lastName: {'like': ch + '%'}};
+            //        $scope.charText = ch;
+            //    } else {
+            //        // $scope.defaultRows;
+            //        $scope.charText = '';
+            //    }
+            //    $scope.refresh(where);
+            //};
 
             $scope.getMode = function (t) {
                 // console.log('DDDDDD');

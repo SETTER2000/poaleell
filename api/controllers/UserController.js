@@ -95,59 +95,59 @@ module.exports = {
 
                     success: function (gravatarUrl) {
                         User.create({
-                            login: req.param('login'),
-                            email: req.param('email'),
-                            firstName: req.param('firstName'),
-                            lastName: req.param('lastName'),
-                            patronymicName: req.param('patronymicName'),
-                            encryptedPassword: encryptedPassword,
-                            birthday: req.param('birthday'),
-                            contacts: req.param('contacts'),
-                            subdivision: req.param('subdivision'),
-                            position: req.param('position'),
-                            pfr: req.param('pfr'),
-                            dateInWork: req.param('dateInWork'),
-                            lastLoggedIn: new Date(),
-                            gravatarUrl: gravatarUrl
-                        },
+                                login: req.param('login'),
+                                email: req.param('email'),
+                                firstName: req.param('firstName'),
+                                lastName: req.param('lastName'),
+                                patronymicName: req.param('patronymicName'),
+                                encryptedPassword: encryptedPassword,
+                                birthday: req.param('birthday'),
+                                contacts: req.param('contacts'),
+                                subdivision: req.param('subdivision'),
+                                position: req.param('position'),
+                                pfr: req.param('pfr'),
+                                dateInWork: req.param('dateInWork'),
+                                lastLoggedIn: new Date(),
+                                gravatarUrl: gravatarUrl
+                            },
 
                             function userCreated(err, newUser) {
-                            if (err) {
-                                console.log('err:', err);
-                                //console.log('err.invalidAttributes: ', err.invalidAttributes);
-                                if (err.invalidAttributes && err.invalidAttributes.email && err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 'unique') {
-                                    return res.emailAddressInUse();
-                                }
-                                if (err.invalidAttributes && err.invalidAttributes.login && err.invalidAttributes.login[0] && err.invalidAttributes.login[0].rule === 'unique') {
-
+                                if (err) {
+                                    console.log('err:', err);
                                     //console.log('err.invalidAttributes: ', err.invalidAttributes);
-                                    //console.log('ERRRRR:: ', err);
-                                    return res.loginInUse();
+                                    if (err.invalidAttributes && err.invalidAttributes.email && err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 'unique') {
+                                        return res.emailAddressInUse();
+                                    }
+                                    if (err.invalidAttributes && err.invalidAttributes.login && err.invalidAttributes.login[0] && err.invalidAttributes.login[0].rule === 'unique') {
+
+                                        //console.log('err.invalidAttributes: ', err.invalidAttributes);
+                                        //console.log('ERRRRR:: ', err);
+                                        return res.loginInUse();
+                                    }
+
+                                    return res.negotiate(err);
                                 }
 
-                                return res.negotiate(err);
-                            }
-
-                            req.session.me = newUser.id;
-                            // res.redirect('/admin/users/edit/' + newUser.id);
-                            // Отправка на email данных о регистрации
-                            //Email.send(sails.config.sendMail).exec({
-                            //    error: function (err) {
-                            //        console.log(err);
-                            //
-                            //    }, success: function () {
-                            //
-                            //        console.log('Ok! Send mail.');
-                            //    }
-                            //});
+                                req.session.me = newUser.id;
+                                // res.redirect('/admin/users/edit/' + newUser.id);
+                                // Отправка на email данных о регистрации
+                                //Email.send(sails.config.sendMail).exec({
+                                //    error: function (err) {
+                                //        console.log(err);
+                                //
+                                //    }, success: function () {
+                                //
+                                //        console.log('Ok! Send mail.');
+                                //    }
+                                //});
 
 
-                            return res.json(newUser);
-                            //return res.json({
-                            //    id: newUser.id
-                            //});
+                                return res.json(newUser);
+                                //return res.json({
+                                //    id: newUser.id
+                                //});
 
-                        });
+                            });
                     }
                 });
             }
@@ -182,7 +182,7 @@ module.exports = {
                     lastLoggedIn: new Date()
                     //gravatarUrl: gravatarUrl
                 }, function (err, newUser) {
-                    if(err) return res.negotiate(err);
+                    if (err) return res.negotiate(err);
                     sails.log('Создан новый пользователь с логином:' + newUser.login);
                     res.ok();
                 });
@@ -219,12 +219,13 @@ module.exports = {
     },
 
     findUsers: function (req, res) {
+        //sails.log(req.body);
+        //sails.log(req.params);
+        //sails.log(req.param);
+        sails.log(req.query);
+        sails.log(req.param('where'));
+
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        //sails.log(req.session.me);
-
-
-
-
         if (req.param('id')) {
             User.findOne(req.param('id'))
                 .exec(function foundUser(err, user) {
@@ -234,12 +235,30 @@ module.exports = {
 
                 });
         } else {
-            User.find()
-                .exec(function foundUser(err, users) {
-                    if (err) return res.serverError(err);
-                    if (!users) return res.notFound();
-                    res.ok(users);
-                });
+            if (req.param('where').length > 0 && req.param('char').length > 0) {
+                var q = {
+                    limit: req.params.limit,
+                    sort: req.params.sort
+                };
+                var y = {};
+                y[req.param('property')] = {'like': req.param('char')};
+                q.where = y;
+
+
+                User.find(q)
+                    .exec(function foundUser(err, users) {
+                        if (err) return res.serverError(err);
+                        if (!users) return res.notFound();
+                        return res.ok(users);
+                    });
+            } else {
+                User.find()
+                    .exec(function foundUser(err, users) {
+                        if (err) return res.serverError(err);
+                        if (!users) return res.notFound();
+                        res.ok(users);
+                    });
+            }
         }
     },
 
@@ -420,6 +439,35 @@ module.exports = {
     },
 
     changePassword: function (req, res) {
+
+        if (_.isUndefined(req.param('password'))) {
+            return res.badRequest('A password is required!');
+        }
+
+        if (req.param('password').length < 6) {
+            return res.badRequest('Password must be at least 6 characters!');
+        }
+
+        Passwords.encryptPassword({
+            password: req.param('password')
+        }).exec({
+            error: function (err) {
+                return res.serverError(err);
+            },
+            success: function (encryptedPassword) {
+
+                User.update({id: req.param('id')}, {encryptedPassword: encryptedPassword})
+                    .exec(function (err, updatedUser) {
+                        if (err) {
+                            return res.negotiate(err);
+                        }
+                        return res.json(updatedUser);
+                    });
+            }
+        });
+    },
+
+    changePasswordProfile: function (req, res) {
 
         if (_.isUndefined(req.param('password'))) {
             return res.badRequest('A password is required!');

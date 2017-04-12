@@ -6,15 +6,8 @@
  */
 
 module.exports = {
-    getQuery: function (req, res) {
 
-        // var Promise = require('bluebird');
-        //
-        // var userQueryAsync = Promise.promisify(User.query);
-        // userQueryAsync("SELECT email FROM user WHERE email = ?", [email])
-        //     .then(function (user) {
-        //         console.log(user);
-        //     });
+    getQuery: function (req, res) {
         Attendance.query(
             'SELECT * FROM attendance AS a ' +
             'LEFT JOIN attendance_employees AS ae ' +
@@ -37,6 +30,7 @@ module.exports = {
                 return res.json(attendance);
             });
     },
+
     timeAll: function (req, res) {
         //if (!req.session.me) {
         //    return res.view('public/header', {layout: 'homepage'});
@@ -58,6 +52,7 @@ module.exports = {
                 return res.json(attendance);
             });
     },
+
     fPeriod: function (req, res) {
         Attendance.query(
             "SELECT " +
@@ -87,7 +82,6 @@ module.exports = {
         //.populate('employees')
 
     },
-
 
     findPeriod: function (req, res) {
         Attendance.find({date: {'>': new Date(req.param('startDate')), '<': new Date(req.param('endDate'))}, sort: 'date'})
@@ -132,6 +126,7 @@ module.exports = {
         //    res.json(waltersAndSkylers);
         //});
     },
+
     findOne: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Attendance.findOne(req.param('id'), function foundDepartment(err, attendance) {

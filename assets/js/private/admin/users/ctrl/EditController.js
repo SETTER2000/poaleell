@@ -115,7 +115,7 @@ angular.module('UserModule')
             };
 
             $scope.changeMyPassword = function () {
-                $http.put('/user/changePassword', {
+                $http.put('/users/changePassword', {
                         id: $scope.item.id,
                         password: $scope.editProfile.properties.password
                     })
