@@ -3,7 +3,6 @@ angular.module('PositionModule')
         function ($scope, $state,toastr, Positions, $stateParams, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             //if(!$scope.me.admin) $location.path('/') ;
-
             $scope.refresh = function () {
                 var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
                     $scope.positions = positions;
@@ -19,19 +18,14 @@ angular.module('PositionModule')
                     if (err) console.log(err.message);
                 });
             };
+
             $scope.delete = function (item) {
                 console.log(item);
                 item.$delete(item, function (success) {
                     toastr.success('Объект удалён.','OK! ');
                     $state.go('home.admin.positions');
-                    //$scope.refresh();
-                    //console.log('SUCCESS: OK!');
-                    //item.ok();
                 }, function (err) {
                     toastr.error(err,'Ошибка 3 EditPositionController!');
-                    //console.log('ERROR: ' + err.status);
-                    //console.log(err);
-                    //item.er();
                 })
             };
 
@@ -43,23 +37,16 @@ angular.module('PositionModule')
                         },
                         function (err) {
                             toastr.error(err,'Ошибка 1 EditPositionController!');
-                            //console.log('ERROR: ' + err.status);
-                            //console.log(err);
-                            //item.er();
                         }
                     );
                 } else {
+                    $scope.refresh();
                     item.$save(item,function (success) {
                             toastr.success('Данные сохранены!');
                         $scope.refresh();
-                        //console.log('SUCCESS: OK!');
-                        //item.ok();
                     },
                     function (err) {
-                        toastr.error(err,'Ошибка 2 EditPositionController!');
-                        //console.log('ERROR: ' + err.status);
-                        //console.log(err);
-                        //item.er();
+                        toastr.error(err.data,'Ошибка! EditPositionController!');
                     });
                 }
             };
@@ -71,6 +58,7 @@ angular.module('PositionModule')
                     item.contacts = [{type: "телефон", value: ""}];
                 }
             };
+
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
                 for (var i = 0, ii = contacts.length; i < ii; i++) {
@@ -79,8 +67,6 @@ angular.module('PositionModule')
                     }
                 }
             };
-           
-
 
             //$scope.removeDepartment = function (department) {
             //    $scope.item.removeDivision = [];
@@ -102,13 +88,14 @@ angular.module('PositionModule')
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
 
-
             var original = angular.copy($scope.item);
+
             $scope.revert = function () {
                 $scope.item = angular.copy(original);
                 $scope.passwordRepeat = $scope.item.password;
                 $scope.userInfoForm.$setPristine();
             };
+
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };

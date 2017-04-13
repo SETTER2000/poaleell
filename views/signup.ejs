@@ -23,199 +23,7 @@
 <body ng-app="SignupModule" ng-controller="SignupController" ng-cloak>
 <%- partial('./partials/navbarPub.ejs') %>
 
-<div class="container">
-    <div class="page-header">
-        <h1>Регистрация</h1>
-    </div>
-    <p class="lead"> Добавить сотрудника в базу данных компании.</p>
-    <p><form data-ng-submit="submitSignupForm()" class="form-signup" novalidate name="signup" id="sign-up-form">
-
-        <div class="row">
-
-            <!-- L O G I N -->
-
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group"
-                     data-ng-class="{'has-error':signup.login.$invalid && signup.login.$dirty}">
-                    <input data-ng-model="signupForm.login" required data-ng-maxlength="25"
-                           data-ng-minlength="3" type="text" name="login"
-                           id="login" class="form-control input-lg" placeholder="Login" tabindex="1">
-                            <span class="help-block has-error" ng-if="signup.login.$dirty">
-                                <span ng-show="signup.login.$error.required">Поле обязательно к заполнению.</span>
-                                <span ng-show="signup.login.$error.maxlength">Login не может быть более 25 знаков.</span>
-                                <span ng-show="signup.login.$error.minlength">Login не может быть менее 3 знаков.</span>
-                            </span>
-                </div>
-            </div>
-
-            <!-- E M A I L -->
-
-            <div class=" control-group col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group"
-                     data-ng-class="{'has-error':signup.email.$invalid && signup.email.$dirty}">
-                    <input data-ng-model="signupForm.email" required type="email" name="email" id="email"
-                           class="form-control input-lg"
-                           placeholder="nikola@tesla.com" tabindex="2">
-                            <span class="help-block has-error" ng-if="signup.email.$dirty">
-                                <span ng-show="signup.email.$error.required">Поле обязательно к заполнению.</span>
-                                <span ng-show="signup.email.$error.email">Неверный формат email.</span>
-                            </span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-            <!-- L A S T  N A M E -->
-
-            <div class="control-group  col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group"
-                     data-ng-class="{'has-error':signup.lastName.$invalid && signup.lastName.$dirty}">
-                    <input data-ng-model="signupForm.lastName" data-ng-maxlength="25" data-ng-minlength="2"
-                           required type="text"
-                           name="lastName" id="lastName" class="form-control input-lg" placeholder="Фамилия"
-                           tabindex="3">
-
-                            <span class="help-block has-error" data-ng-if="signup.lastName.$dirty">
-                                <span data-ng-show="signup.lastName.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng-show="signup.lastName.$error.maxlength">Фамилия не может быть более 25 знаков.</span>
-                                <span data-ng-show="signup.lastName.$error.minlength">Фамилия не должна быть менее 2 знаков.</span>
-                            </span>
-                </div>
-            </div>
-
-            <!-- F I R S T  N A M E -->
-
-            <div class="control-group col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group"
-                     data-ng-class="{'has-error':signup.firstName.$invalid && signup.firstName.$dirty}">
-                    <input data-ng-model="signupForm.firstName" data-ng-maxlength="25" data-ng-minlength="2"
-                           required type="text" name="firstName" class="form-control input-lg"
-                           placeholder="Имя" tabindex="4">
-
-                            <span class="help-block has-error" data-ng-if="signup.firstName.$dirty">
-                                <span data-ng-show="signup.firstName.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng-show="signup.firstName.$error.maxlength">Имя не может быть более 25 знаков.</span>
-                                <span data-ng-show="signup.firstName.$error.minlength">Имя не должно быть менее 2 знаков.</span>
-                            </span>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-
-            <!-- P A T R O N Y M I C  N A M E-->
-
-            <div class="control-group col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group"
-                     data-ng-class="{'has-error':signup.patronymicName.$invalid && signup.patronymicName.$dirty}">
-                    <input data-ng-model="signupForm.patronymicName" data-ng-maxlength="25" data-ng-minlength="2"
-                           required type="text" name="patronymicName" id="patronymicName"
-                           class="form-control input-lg" placeholder="Отчество" tabindex="5">
-
-                     <span class="help-block has-error" data-ng-if="signup.patronymicName.$dirty">
-                                <span data-ng-show="signup.patronymicName.$error.required">Поле обязательно к заполнению.</span>
-                                <span data-ng-show="signup.patronymicName.$error.maxlength">Отчество не может быть более 25 знаков.</span>
-                                <span data-ng-show="signup.patronymicName.$error.minlength">Отчество не должно быть менее 2 знаков.</span>
-                            </span>
-                </div>
-            </div>
-
-            <!--B I R T H D A Y-->
-
-            <div class="control-group col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group" data-ng-class="{'has-error':signup.birthday.$invalid && signup.birthday.$dirty}">
-                    <!--<input data-ng-model="signupForm.birthday"-->
-                    <!--required ng-required="1" type="date" name="birthday" id="birthday"-->
-                    <!--class="form-control input-lg" placeholder="Дата рождения" tabindex="6" min="1950-01-01" max="2000-12-31">-->
-
-
-                    <input type="date" class="form-control input-lg" id="birthday" name="birthday" ng-model="signupForm.birthday"
-                           placeholder="Дата рождения" tabindex="6" min="1950-01-01" max="2000-12-31" required/>
-                     <span class="help-block has-error" data-ng-if="signup.birthday.$dirty">
-                                <!--<span data-ng&#45;&#45;show="signup.birthday.$error.required">Поле обязательно к заполнению.</span>-->
-                                <span data-ng-show="signupForm.input.$error.required">Дата рождения не может быть более 10 знаков.</span>
-                                <span data-ng-show="signupForm.input.$error.date">Дата рождения не должно быть менее 2 знаков.</span>
-                            </span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-
-            <!-- P A S S W O R D -->
-
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="control-group form-group"
-                     data-ng-class="{'has-error':signup.password.$invalid && signup.password.$dirty}">
-                    <input data-ng-model="signupForm.password" required data-ng-minlength="6"
-                           compare-to="signupForm.confirmPassword" type="password" name="password" id="password"
-                           class="form-control input-lg" placeholder="Пароль" tabindex="7">
-                            <span class="help-block has-error" data-ng-if="signup.password.$dirty">
-                            <span data-ng-show="signup.password.$error.required">Поле обязательно к заполнению.</span>
-                            <span data-ng-show="signup.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>
-                            </span>
-                </div>
-            </div>
-
-            <!-- C O N F I R M  P A S S W O R D -->
-
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="control-group form-group">
-                    <input data-ng-model="signupForm.confirmPassword" required type="password"
-                           name="confirmation"
-                           class="form-control input-lg"
-                           placeholder="Повторить пароль" tabindex="8">
-                            <span class="help-block has-error" data-ng-if="signup.confirmation.$dirty">
-                            <span data-ng-show="signup.password.$error.compareTo">Пароли должны совпадать.</span>
-                            <span data-ng-show="signup.password.$error.required">Требуется повторить пароль.</span>
-                            </span>
-                </div>
-            </div>
-        </div>
-
-        <!-- C O N F I R M E D  C O N D I T I O N S  -->
-
-        <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3">
-					<span class="button-checkbox">
-						<button data-ng-click="signupForm.confirmAacceptTerms=true" type="button" class="btn"
-                                data-color="info"
-                                tabindex="9">Я согласен(а)
-                        </button>
-                        <input data-ng-model="signupForm.confirmAacceptTerms" required type="checkbox"
-                               name="confirmAacceptTerms" id="confirmAacceptTerms" class="hidden">
-					</span>
-            </div>
-            <div class="col-xs-9 col-sm-9 col-md-9">
-                Нажатием на кнопку <strong class="label label-primary">Регистрация</strong>, вы соглашаетесь с
-                <a href="#" data-toggle="modal" data-target="#t_and_c_m">Условиями</a>, установленными на данном
-                сайте.
-
-            </div>
-        </div>
-
-        <hr class="colorgraph">
-
-        <!-- S U B M I T -->
-
-        <div class="row">
-            <!-- Disable signup button until the form has no errors -->
-            <div class="col-xs-12 col-md-12">
-                <button type="submit" class="btn btn-primary btn-block btn-lg"
-                        data-ng-disabled="signup.$invalid" tabindex="10">
-                    <span ng-show="!signupForm.loading">Регистрация</span>
-                    <span ng-show="signupForm.loading" class="overlord-loading-spinner fa fa-spinner"></span>
-                    <span ng-show="signupForm.loading">Подготовка новой учетной записи...</span>
-                </button>
-                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-            </div>
-            <!--<div class="col-xs-6 col-md-6">-->
-            <!--<a href="#" class="btn btn-success btn-block btn-lg">Войти</a>-->
-            <!--</div>-->
-        </div>
-    </form></p>
-</div>
+<%- body %>
 
 <%- partial('./partials/footer.ejs') %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -241,6 +49,7 @@
 <script src="/js/dependencies/angular-toastr.js"></script>
 <script src="/js/dependencies/angular-ui-router.min.js"></script>
 <script src="/js/dependencies/compareTo.module.js"></script>
+<script src="/js/dependencies/lodash.js"></script>
 <script src="/js/dependencies/ng-fx.min.js"></script>
 <script src="/js/private/admin/departments/DepartmentModule.js"></script>
 <script src="/js/private/admin/calendars/CalendarModule.js"></script>
@@ -285,6 +94,8 @@
 <script src="/js/private/dashboard/ctrl/ProfileController.js"></script>
 <script src="/js/public/homepage/ctrl/RestoreProfileController.js"></script>
 <script src="/js/public/homepage/HomepageController.js"></script>
+<script src="/js/public/recovery/passwordRecoveryPageController.js"></script>
+<script src="/js/public/recovery/resetPasswordPageController.js"></script>
 <script src="/js/public/signup/SignupController.js"></script>
 <!--SCRIPTS END-->
 

@@ -3,6 +3,8 @@ angular.module('UserModule')
         function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             $scope.close = 1;
             $scope.loginAdmin = false;
+          
+
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
             //var emAdmin = SAILS_LOCALS.me.email;
@@ -76,16 +78,16 @@ angular.module('UserModule')
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             $scope.refresh = function () {
                 var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
-                    $scope.users = users;
-                    console.log(users);
-                    item.getBirthday();
-                    item.getDateInWork();
-                    item.getFiredDate();
-                }
-                //    function (err) {
-                //
-                //    toastr.error(err, 'Ошибка! User.EditController.refresh ');
-                //}
+                        $scope.users = users;
+                        console.log(users);
+                        item.getBirthday();
+                        item.getDateInWork();
+                        item.getFiredDate();
+                    }
+                    //    function (err) {
+                    //
+                    //    toastr.error(err, 'Ошибка! User.EditController.refresh ');
+                    //}
                 );
 
                 console.log($scope.item);
@@ -145,36 +147,32 @@ angular.module('UserModule')
                 //$scope.item.removeDivision = '589b22e8789b83a241b56056';
                 if (angular.isDefined(item.id)) {
                     //if (angular.isDefined(item.departments)) {
-                        for (var i = 0; i < item.departments.length; i++) {
-                            $scope.item.subdivision.push(item.departments[i].id);
-                        }
+                    for (var i = 0; i < item.departments.length; i++) {
+                        $scope.item.subdivision.push(item.departments[i].id);
+                    }
                     //}
 
                     //if (angular.isDefined(item.positions)) {
-                        for (var z = 0; z < item.positions.length; z++) {
-                            $scope.item.position.push(item.positions[z].id);
-                        }
+                    for (var z = 0; z < item.positions.length; z++) {
+                        $scope.item.position.push(item.positions[z].id);
+                    }
                     //}
-                    console.log(item);
+                    //console.log(item);
                     item.$update(item, function (success) {
                             toastr.success('Изменения сохранены!');
                             $scope.refresh();
-                            //console.log('SUCCESS: OK!');
-                            //item.ok();
                         },
                         function (err) {
                             console.log(err);
                             toastr.error(err, 'Ошибка33!');
-                            //console.log('ERROR: ' + err.status);
-
-                            //item.er();
                         }
                     );
                 } else {
-                    if (angular.isDefined(item) &&
-                        angular.isDefined(item.firstName) &&
-                        angular.isDefined(item.lastName) &&
-                        angular.isDefined(item.patronymicName)  /*  &&
+                    if (angular.isDefined(item)
+                    //&& angular.isDefined(item.firstName) &&
+                    //angular.isDefined(item.lastName) &&
+                    //angular.isDefined(item.patronymicName)
+                    /*  &&
                      angular.isDefined(item.login) &&
                      angular.isDefined(item.fired) &&
                      angular.isDefined(item.birthday) &&
@@ -183,17 +181,12 @@ angular.module('UserModule')
                         item.$save(item, function (success) {
                                 toastr.success('Пользователь создан!');
                                 //$location.path('/profile') ;
+                                //$state.go('profile');
                                 location.reload();
-
-                                //$scope.refresh();
                             },
                             function (err) {
-                                toastr.error(err, 'Ошибка44!');
-                                //console.log('ERROR: ' + err.status);
-                                //console.log(err);
-                                //item.er();
+                                toastr.error(err.data, 'Ошибка! EditController');
                             });
-
                     }
                 }
             };

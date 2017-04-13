@@ -16,7 +16,7 @@ module.exports.bootstrap = function (cb) {
     var Passwords = require('machinepack-passwords');
     var Gravatar = require('machinepack-gravatar');
 
-
+    //console.log(sails.config.admin.shortName());
     //Video.count().exec(function (err, numVideos) {
     //    if (err) {
     //        return cb(err);

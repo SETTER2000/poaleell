@@ -157,8 +157,33 @@ module.exports = {
         //.where( actionUtil.parseCriteria(req) )
     },
 
+    /**
+     * Создать нового пользователя
+     * @param req
+     * @param res
+     */
     createUser: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+
+        if (!_.isString( req.param('lastName') ) ) {return res.badRequest('Фамилия не заполнена.');}
+        if (!_.isString( req.param('firstName') ) ) {return res.badRequest('Имя не заполнено.');}
+        if (!_.isString( req.param('patronymicName') ) ) {return res.badRequest('Отчество не заполнено.');}
+        if (!_.isString(req.param('login'))) {return res.badRequest('Логин не заполнен.');}
+        if (!_.isString(req.param('email'))) {return res.badRequest('Email не заполнен.');}
+
+        if(req.param('patronymicName').length < 2 || req.param('patronymicName').length > 15){
+            return res.badRequest('Отчество должно быть от 2 до 15 знаков!');
+        }
+        if(req.param('firstName').length < 2 || req.param('firstName').length > 15){
+            return res.badRequest('Имя должно быть от 2 до 15 знаков!');
+        }
+        if(req.param('lastName').length < 2 || req.param('lastName').length > 15){
+            return res.badRequest('Фамилия должна быть от 2 до 15 знаков!');
+        }
+
+
+
+
         Passwords.encryptPassword({
             password: req.param('password'), difficulty: 10
         }).exec({
@@ -166,6 +191,7 @@ module.exports = {
                 return res.negotiate(err);
             },
             success: function (encryptedPassword) {
+
                 User.create({
                     login: req.param('login'),
                     email: req.param('email'),
@@ -190,6 +216,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Выход с сайта
+     * @param req
+     * @param res
+     */
     logout: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.session.me, function foundUser(err, user) {
@@ -204,6 +235,148 @@ module.exports = {
         });
     },
 
+    /**
+     *  Восстановление пароля
+     * @param req
+     * @param res
+     * @returns {*}
+     */
+    generateRecoveryEmail: function (req, res) {
+
+        // secondary check for email parameter
+        if (_.isUndefined(req.param('email'))) {
+            return res.badRequest('Необходимо указать адрес электронной почты!');
+        }
+
+        // Find user by the incoming `email` parameter
+        User.findOne({
+            email: req.param('email')
+        }).exec(function foundUser(err, user) {
+
+            if (err) return res.negotiate(err);
+
+            if (!user) return res.notFound();
+
+            // Generate random alphanumeric string for the passwordRecoveryToken
+            try {
+                var randomString = Strings.random({}).execSync();
+            } catch (err) {
+                return res.serverError(err);
+            }
+
+            // Update user's paswordRecoveryToken attribute with the newly created alphanumeric string
+            User.update({
+                id: user.id
+            }, {
+                passwordRecoveryToken: randomString
+            }).exec(function updateUser(err, updatedUser) {
+                if (err) return res.negotiate(err);
+
+                // email user with a URL which includes the password recovery token as a parameter
+
+                // The Url that inclues the password recovery token as a parameter
+                var recoverUrl = sails.config.mailgun.baseUrl + '/password-reset-form/' + updatedUser[0].passwordRecoveryToken;
+
+                var messageTemplate = 'Восстановление пароля! \n' +
+                    '\n' +
+                    'Для сброса пароля, воспользуйтесь следующей ссылкой: \n' +
+                    recoverUrl + '\n' +
+                    '\n' +
+                    'Удачи.';
+
+                // Send a simple plaintext email.
+                Mailgun.sendPlaintextEmail({
+                    apiKey: sails.config.mailgun.apiKey,
+                    domain: sails.config.mailgun.domain,
+                    toEmail: updatedUser[0].email,
+                    subject: '[KADR] Сброс пароля',
+                    message: messageTemplate,
+                    fromEmail: sails.config.admin.email,
+                    fromName: sails.config.admin.name
+                }).exec({
+                    // An unexpected error occurred.
+                    error: function (err) {
+                        return res.negotiate(err);
+                    },
+                    success: function () {
+                        return res.ok();
+                    }
+                });
+            });
+        });
+    },
+
+    /**
+     * Сброс пароля при восстановлении
+     * @param req
+     * @param res
+     * @returns {*}
+     */
+    resetPassword: function (req, res) {
+
+        // check for token parameter
+        if (!_.isString(req.param('passwordRecoveryToken'))) {
+            return res.badRequest('A password recovery token is required!');
+        }
+
+        // secondary check for password parameter
+        if (!_.isString(req.param('password'))) {
+            return res.badRequest('A password is required!');
+        }
+
+        // Fallback to client-side length check validation
+        if (req.param('password').length < 6) {
+            return res.badRequest('Password must be at least 6 characters!');
+        }
+
+        // Try to find user with passwordRecoveryToken
+        User.findOne({
+            passwordRecoveryToken: req.param('passwordRecoveryToken')
+        }).exec(function foundUser(err, user) {
+            if (err) return res.negotiate(err);
+
+            // If this token doesn't correspond with a real user record, it is invalid.
+            // We send a 404 response so that our front-end code can show an
+            // appropriate error message.
+            if (!user) {
+                return res.notFound();
+            }
+
+            // Encrypt new password
+            Passwords.encryptPassword({
+                password: req.param('password'),
+            }).exec({
+                error: function (err) {
+                    return res.serverError(err);
+                },
+                success: function (encryptedPassword) {
+
+                    User.update(user.id, {
+                        encryptedPassword: encryptedPassword,
+                        passwordRecoveryToken: null
+                    }).exec(function (err, updatedUsers) {
+                        if (err) {
+                            return res.negotiate(err);
+                        }
+
+                        // Log the user in
+                        req.session.userId = updatedUsers[0].id;
+
+                        // If successful return updatedUsers
+                        return res.json({
+                            username: updatedUsers[0].username
+                        });
+                    });
+                }
+            });
+        });
+    },
+
+    /**
+     * Получить конкретного пользователя
+     * @param req
+     * @param res
+     */
     findOne: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
@@ -218,12 +391,17 @@ module.exports = {
             });
     },
 
+    /**
+     * Получить всех пользователей системы
+     * @param req
+     * @param res
+     */
     findUsers: function (req, res) {
         //sails.log(req.body);
         //sails.log(req.params);
         //sails.log(req.param);
-        sails.log(req.query);
-        sails.log(req.param('where'));
+        //sails.log(req.query);
+        //sails.log(req.param('where'));
 
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
@@ -262,6 +440,12 @@ module.exports = {
         }
     },
 
+    /**
+     * Показать пользователя
+     * @param req
+     * @param res
+     * @param next
+     */
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -274,6 +458,12 @@ module.exports = {
         });
     },
 
+    /**
+     * Редактировать пользователя
+     * @param req
+     * @param res
+     * @param next
+     */
     edit: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -287,6 +477,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Обновить пользователя
+     * @param req
+     * @param res
+     */
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         var obj = {
@@ -339,6 +534,12 @@ module.exports = {
         });
     },
 
+    /**
+     * Удалить пользователя
+     * @param req
+     * @param res
+     * @param next
+     */
     destroy: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
@@ -352,6 +553,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Удалить профиль
+     * @param req
+     * @param res
+     */
     removeProfile: function (req, res) {
 
         //if (!req.param('id')) {
@@ -373,6 +579,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Восстановить профиль
+     * @param req
+     * @param res
+     */
     restoreProfile: function (req, res) {
 
         User.findOne({
@@ -408,8 +619,13 @@ module.exports = {
         });
     },
 
+    /**
+     * Восстановить Gravatar
+     * @param req
+     * @param res
+     * @returns {*}
+     */
     restoreGravatarURL: function (req, res) {
-
         try {
 
             var restoredGravatarURL = gravatarUrl = Gravatar.getImageUrl({
@@ -423,6 +639,11 @@ module.exports = {
         }
     },
 
+    /**
+     * Обновить профиль
+     * @param req
+     * @param res
+     */
     updateProfile: function (req, res) {
 
         User.update({
@@ -438,6 +659,12 @@ module.exports = {
         });
     },
 
+    /**
+     * Сменить пароль (функция для использования только админами)
+     * @param req
+     * @param res
+     * @returns {*}
+     */
     changePassword: function (req, res) {
 
         if (_.isUndefined(req.param('password'))) {
@@ -467,6 +694,12 @@ module.exports = {
         });
     },
 
+    /**
+     * Сменить пароль (функция для авторизованного пользователя)
+     * @param req
+     * @param res
+     * @returns {*}
+     */
     changePasswordProfile: function (req, res) {
 
         if (_.isUndefined(req.param('password'))) {
@@ -507,6 +740,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Установка пользователю прав администратора
+     * @param req
+     * @param res
+     */
     updateAdmin: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
@@ -517,6 +755,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Установка пользователю прав кадровика
+     * @param req
+     * @param res
+     */
     updateKadr: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
@@ -527,6 +770,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Установка пользователю состояния активации (action)
+     * @param req
+     * @param res
+     */
     updateAction: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
@@ -537,6 +785,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Установка пользователю состояния удалён (deleted)
+     * @param req
+     * @param res
+     */
     updateDeleted: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {

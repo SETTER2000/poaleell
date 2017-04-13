@@ -64,6 +64,20 @@ module.exports = {
 
     createPosition: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if (!_.isString( req.param('name') ) ) {
+            sails.log(req.param('name'));
+            sails.log('is not string');
+            return res.badRequest('Наименование не заполнено.');
+        }
+        if (_.isNumber( req.param('name') ) ) {
+            sails.log(req.param('name'));
+            sails.log('is not string');
+            return res.badRequest('Наименование не строка!');
+        }
+
+        if(req.param('name').length < 2 || req.param('name').length > 35){
+            return res.badRequest('Наименование должно быть от 2 до 35 знаков!');
+        }
 
         Position.create(req.body).exec(function (err, finn) {
             if(err) {return res.serverError(err);}

@@ -139,6 +139,22 @@ module.exports = {
         });
     },
 
+    passwordRecoveryEmail: function(req, res) {
+        return res.view('public/password-recovery-email', {layout: 'signup', me:null});
+    },
+
+    passwordRecoveryEmailSent: function(req, res) {
+        return res.view('public/password-recovery-email-sent', {layout: 'signup',me: null});
+    },
+
+    passwordReset: function(req, res) {
+        res.view('public/password-reset', {
+            layout: 'signup',
+            me: null,
+            passwordRecoveryToken: req.param('passwordRecoveryToken')
+        });
+    },
+
     profile: function(req, res) {
 
         var FAKE_DATA = {
@@ -394,13 +410,10 @@ module.exports = {
     },
 
     showSignupPage: function (req, res) {
-        if (req.session.userId) {
+        if (req.session.me) {
             return res.redirect('/');
         }
        return res.view('public/signup', {layout: 'signup'});
-        // return res.view('signup', {
-        //     me: null
-        // });
     },
 
     restoreProfile: function(req, res) {
@@ -409,6 +422,9 @@ module.exports = {
         //     me: null
         // });
     }
+
+
+
 };
 
 /*

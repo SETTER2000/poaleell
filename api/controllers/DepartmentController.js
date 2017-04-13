@@ -22,16 +22,16 @@ module.exports = {
 
     },
 
-    findDepartments:function (req, res) {
+    findDepartments: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        if(req.param('id')){
+        if (req.param('id')) {
             Department.findOne(req.param('id'))
                 .exec(function foundUser(err, department) {
                     if (err) return res.serverError(err);
                     if (!department) return res.notFound();
                     res.ok(department);
                 });
-        }else{
+        } else {
             Department.find()
                 .exec(function foundUser(err, departments) {
                     if (err) return res.serverError(err);
@@ -44,9 +44,19 @@ module.exports = {
     createDepartment: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
+        if (!_.isString( req.param('name') ) ) {
+            sails.log(req.param('name'));
+            sails.log('is not string');
+            return res.badRequest('Наименование не заполнено.');
+        }
+        if(req.param('name').length < 2 || req.param('name').length > 35){
+            return res.badRequest('Наименование должно быть от 2 до 35 знаков!');
+        }
         Department.create(req.body).exec(function (err, finn) {
-            if(err) {return res.serverError(err);}
-            sails.log('Finn\'s id is:', finn.id);
+            if (err) {
+                return res.serverError(err);
+            }
+            sails.log('Идентификатор department:', finn.id);
             return res.ok();
         });
     },
@@ -69,7 +79,7 @@ module.exports = {
         })
     },
 
-    update: function (req, res, next) {
+    update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //req.params.all()
         Department.update(req.param('id'))
@@ -90,24 +100,9 @@ module.exports = {
                 //res.redirect('/admin/users/show/' + req.param('id'));
                 // res.location('/home/admin/departments');
                 res.ok();
-            }) 
+            })
     },
-        // update: function (req, res, next) {
-    //     //req.params.all()
-    //     Department.update(req.param('id'), {
-    //         name: req.param('name'),
-    //         type: req.param('type'),
-    //         location: req.param('location')
-    //
-    //     }, function departmentUpdate(err) {
-    //         if (err)return res.negotiate(err);
-    //         //if (err) {
-    //         //    return res.redirect('/admin/departments/edit/' + req.param('id'));
-    //         //}
-    //         //res.redirect('/admin/users/show/' + req.param('id'));
-    //         res.ok();
-    //     });
-    // }
+
     destroy: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Department.findOne(req.param('id'), function foundUser(err, user) {

@@ -23,22 +23,27 @@ module.exports = {
         },
         firstName: {
             type: 'string',
-            required: true
+            required: true,
+            minLength: 2,
+            maxLength: 15
         },
 
         lastName: {
             type: 'string',
-            required: true
+            required: true,
+            minLength: 2,
+            maxLength: 15
+        },
+        patronymicName: {
+            type: 'string',
+            required: true,
+            minLength: 2,
+            maxLength: 15
         },
         onLine: {
             type: 'boolean',
             defaultsTo: false
         },
-        patronymicName: {
-            type: 'string',
-            required: true
-        },
-
         login: {
             type: 'string',
             required: true,

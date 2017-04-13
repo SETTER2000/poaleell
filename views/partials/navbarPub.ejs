@@ -1,16 +1,22 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="pull-left brighten"><img height="29" width="29"  src="/images/logo.png" style="margin: 10px; "></a>
+            <a href="/" class="pull-left brighten"><img height="29" width="29" src="/images/logo.png" style="margin: 10px; "></a>
             <a class="navbar-brand" href="/">КС</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" ng-class="!navCollapsed && 'in'">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a title="Восстановить пароль" href="/password-recovery-email"><span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a>
+                </li>
+            </ul>
             <form ng-submit="submitLoginForm()" class="navbar-form navbar-right">
                 <div class="form-group">
                     <input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control">
@@ -23,8 +29,11 @@
                     <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
                     <span ng-show="loginForm.loading">Секунду...</span>
                 </button>
-                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+
+                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
             </form>
+
+
         </div>
     </div>
 </nav>

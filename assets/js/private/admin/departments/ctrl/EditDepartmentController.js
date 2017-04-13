@@ -39,12 +39,12 @@ angular.module('DepartmentModule')
                         }
                     );
                 } else {
-                    $scope.refresh();
+                    //$scope.refresh();
                     item.$save(item, function (success) {
                         toastr.success('Данные сохранены!');
                         $scope.refresh();
                     }, function (err) {
-                        toastr.error(err,'Ошибка 2 EditDepartmentController!');
+                        toastr.error(err.data,'Ошибка! EditDepartmentController!');
                     });
 
                 }

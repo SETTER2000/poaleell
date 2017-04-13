@@ -37,6 +37,7 @@ module.exports.routes = {
     'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
     'PUT /user/update-profile': 'UserController.updateProfile',
     'PUT /user/change-password': 'UserController.changePasswordProfile',
+    'PUT /user/generate-recovery-email': 'UserController.generateRecoveryEmail',
     'PUT /user/update-admin/:id': 'UserController.updateAdmin',
     'PUT /user/update-kadr/:id': 'UserController.updateKadr',
     'PUT /user/update-action/:id': 'UserController.updateAction',
@@ -58,26 +59,39 @@ module.exports.routes = {
     'DELETE /positions/:id': 'PositionController.destroy',
     'POST /positions': 'PositionController.createPosition',
 
-    'GET /departments/:id': 'DepartmentController.findDepartments',
+    'POST /departments': 'DepartmentController.createDepartment',
     'GET /departments': 'DepartmentController.findDepartments',
     'PUT /departments/:id': 'DepartmentController.update',
-    'POST /departments': 'DepartmentController.createDepartment',
+    'GET /departments/:id': 'DepartmentController.findDepartments',
     'DELETE /departments/:id': 'DepartmentController.destroy',
 
 
     'GET /calendars/:id': 'CalendarController.findCalendars',
     'GET /calendars': 'CalendarController.findCalendars',
     'PUT /calendars/:id': 'CalendarController.update',
+
+
+    'GET /tutorials': 'TutorialController.browseTutorials',
+    'POST /tutorials': 'TutorialController.createTutorial',
+    'POST /tutorials/:tutorialId/videos': 'TutorialController.addVideo',
+    'PUT /tutorials/:id': 'TutorialController.updateTutorial',
+    'PUT /tutorials/:id/rate': 'TutorialController.rateTutorial',
+
     /*************************************************************
      * Server-rendered HTML Pages                                *
      *************************************************************/
 
     'GET /': 'PageController.showHomePage',
-    'GET /profile/edit': 'PageController.showHomePage',
     'GET /profile': 'PageController.showHomePage',
-    'GET /profile/restore': 'PageController.restoreProfile',
     'GET /administration': 'PageController.showAdminPage',
     'GET /signup': 'PageController.showSignupPage',
+    'GET /profile/edit': 'PageController.showHomePage',
+    'GET /profile/restore': 'PageController.restoreProfile',
+
+
+    'GET /password-recovery-email': 'PageController.passwordRecoveryEmail',
+    'GET /password-recovery-email-sent': 'PageController.passwordRecoveryEmailSent',
+    'GET /password-reset-form/:passwordRecoveryToken': 'PageController.passwordReset',
 
 
     'GET /admin': 'PageController.showHomePage',
@@ -85,6 +99,7 @@ module.exports.routes = {
 
 
     'GET /admin/users': 'PageController.showHomePage',
+    'GET /admin/users/create/': 'PageController.showHomePage',
     'GET /admin/departments': 'PageController.showHomePage',
 
     'GET /admin/attendances': 'PageController.showHomePage',
