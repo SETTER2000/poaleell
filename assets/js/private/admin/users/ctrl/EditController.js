@@ -3,7 +3,7 @@ angular.module('UserModule')
         function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             $scope.close = 1;
             $scope.loginAdmin = false;
-          
+
 
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
