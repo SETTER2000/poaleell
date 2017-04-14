@@ -91,9 +91,21 @@
                 <!--</div>-->
                 <!--
                                         get-char-text="getCharText(ch)"-->
-                <alfavit object-name="objectName" get-char-text="getCharText(ch)" filed-name="filedName" where="where" char-text="charText" count-char="countChar">
+                <alfavit
+                        object-name="objectName"
+                        get-char-text="getCharText(ch)"
+                        filed-name="filedName"
+                        where="where"
+                        char-text="charText"
+                        count-char="countChar">
                 </alfavit>
-
+                <word-part object-name="objectName"
+                           filed-name="filedName"
+                           where="where"
+                           count-char="countChar"
+                           char-text="charText"
+                           get-char-text="getCharText(ch)">
+                </word-part>
 
                 <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm"
                      role="group" aria-label="4">
@@ -149,13 +161,7 @@
                 on-select-page="selectCount=selectCount+1">
     </pagination>
 
-    <word-part object-name="objectName"
-               filed-name="filedName"
-               where="where"
-               count-char="countChar"
-               char-text="charText"
-               get-char-text="getCharText(ch)">
-    </word-part>
+
 
     <div class="row">
         <div class="col-md-12">

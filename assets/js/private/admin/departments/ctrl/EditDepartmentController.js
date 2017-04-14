@@ -2,6 +2,7 @@ angular.module('DepartmentModule')
     .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
         function ($scope, $http,toastr, $state, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
+            $scope.edit = $state.includes('home.admin.departments.edit');
             //if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
@@ -24,25 +25,20 @@ angular.module('DepartmentModule')
             };
             $scope.saveEdit = function (item) {
                 if (angular.isDefined(item.id)) {
-                    //item.$update(item);
                     item.$update(item, function (success) {
                             toastr.success('Данные обновлены!');
                             $scope.refresh();
-                            //console.log('SUCCESS: OK!');
-                            //item.ok();
                         },
                         function (err) {
                             toastr.error(err,'Ошибка 1 EditDepartmentController!');
-                            //console.log('ERROR: ' + err.status);
-                            //console.log(err);
-                            //item.er();
                         }
                     );
                 } else {
-                    //$scope.refresh();
                     item.$save(item, function (success) {
-                        toastr.success('Данные сохранены!');
-                        $scope.refresh();
+                        toastr.success('Новый отдел создан.');
+                        // /admin/user/
+                        //$location.path('/profile') ;
+                        $state.go('home.admin.department', {depId: success.id});
                     }, function (err) {
                         toastr.error(err.data,'Ошибка! EditDepartmentController!');
                     });

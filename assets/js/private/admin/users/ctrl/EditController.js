@@ -4,6 +4,7 @@ angular.module('UserModule')
             $scope.close = 1;
             $scope.loginAdmin = false;
 
+            $scope.edit = $state.includes('home.admin.users.edit');
 
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
@@ -62,9 +63,9 @@ angular.module('UserModule')
             //     if (err) console.log(err.message);
             // });
 
-            console.log('STATE2: ');
-            console.log($state);
-            console.log($state.$current.url.source);
+            //console.log('STATE2: ');
+            //console.log($state);
+            //console.log($state.$current.url.source);
 
             $scope.closed = function () {
                 if ($scope.close) {
@@ -142,23 +143,26 @@ angular.module('UserModule')
             };
 
             $scope.saveEdit = function (item) {
-                $scope.item.subdivision = [];
-                $scope.item.position = [];
-                //$scope.item.removeDivision = '589b22e8789b83a241b56056';
+                //$scope.item.subdivision = [];
                 if (angular.isDefined(item.id)) {
+
                     //if (angular.isDefined(item.departments)) {
-                    for (var i = 0; i < item.departments.length; i++) {
-                        $scope.item.subdivision.push(item.departments[i].id);
-                    }
+                    //    if (!angular.isArray($scope.item.departments)) $scope.item.departments = [];
+                    //    for (var i = 0; i < item.departments.length; i++) {
+                    //        $scope.item.subdivision.push(item.departments[i].id);
+                    //    }
                     //}
 
-                    //if (angular.isDefined(item.positions)) {
-                    for (var z = 0; z < item.positions.length; z++) {
-                        $scope.item.position.push(item.positions[z].id);
-                    }
+                    //if (!angular.isDefined(item.positions)) {
+                    //    if (!angular.isArray($scope.item.positions)) $scope.item.positions = [];
+                    //    for (var z = 0; z < item.positions.length; z++) {
+                    //        $scope.item.position.push(item.positions[z].id);
+                    //    }
                     //}
-                    //console.log(item);
+
                     item.$update(item, function (success) {
+                            //toastr.success(success);
+                            //toastr.options.closeButton = true;
                             toastr.success('Изменения сохранены!');
                             $scope.refresh();
                         },
@@ -179,10 +183,12 @@ angular.module('UserModule')
                      angular.isDefined(item.email)*/
                     ) {
                         item.$save(item, function (success) {
-                                toastr.success('Пользователь создан!');
+                                //console.log(success);
+                                //location.reload();
+                                toastr.success('Новый пользователь создан.');
+                                // /admin/user/
                                 //$location.path('/profile') ;
-                                //$state.go('profile');
-                                location.reload();
+                                $state.go('home.admin.user', {userId: success.id});
                             },
                             function (err) {
                                 toastr.error(err.data, 'Ошибка! EditController');
@@ -191,15 +197,9 @@ angular.module('UserModule')
                 }
             };
 
+
             //$scope.state = /^\w\w$/;
             //$scope.zip = /^\d\d\d\d\d$/;
-            $scope.addDepartment = function () {
-                if (angular.isArray($scope.item.departments)) {
-                    $scope.item.departments.push({});
-                } else {
-                    $scope.item.departments = [{}];
-                }
-            };
 
             $scope.addContact = function () {
                 if (angular.isArray($scope.item.contacts)) {
@@ -218,19 +218,38 @@ angular.module('UserModule')
                 }
             };
 
-            $scope.removeDepartment = function (department) {
-                if (angular.isDefined(department) &&
-                    angular.isDefined(department.id)) {
-                    t.push(department.id);
+            $scope.addSubdivision = function () {
+                if (angular.isArray($scope.item.subdivision)) {
+                    $scope.item.subdivision.push({});
+                } else {
+                    $scope.item.subdivision = [{}];
                 }
+            };
 
-                var departments = $scope.item.departments;
-                for (var i = 0, ii = departments.length; i < ii; i++) {
-                    if (department === departments[i]) {
-                        departments.splice(i, 1);
+            $scope.removeSubdivision = function (department) {
+                for (var i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
+                    if ($scope.item.subdivision[i].id === department.id) {
+                        $scope.item.subdivision.splice(i, 1);
+                        return;
                     }
                 }
-                $scope.item.removeDivision = t;
+            };
+
+            $scope.addPosition = function () {
+                if (angular.isArray($scope.item.position)) {
+                    $scope.item.position.push({});
+                } else {
+                    $scope.item.position = [{}];
+                }
+            };
+
+            $scope.removePosition = function (position) {
+                for (var i = 0, ii = $scope.item.position.length; i < ii; i++) {
+                    if ($scope.item.position[i].id === position.id) {
+                        $scope.item.position.splice(i, 1);
+                        return;
+                    }
+                }
             };
 
             $scope.isCancelDisabled = function () {

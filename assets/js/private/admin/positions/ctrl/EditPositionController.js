@@ -2,6 +2,7 @@ angular.module('PositionModule')
     .controller('EditPositionController', ['$scope', '$state','toastr', 'Positions', '$stateParams', '$rootScope',
         function ($scope, $state,toastr, Positions, $stateParams, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
+            $scope.editPosition = $state.includes('home.admin.positions.edit');
             //if(!$scope.me.admin) $location.path('/') ;
             $scope.refresh = function () {
                 var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
@@ -42,8 +43,8 @@ angular.module('PositionModule')
                 } else {
                     $scope.refresh();
                     item.$save(item,function (success) {
-                            toastr.success('Данные сохранены!');
-                        $scope.refresh();
+                            toastr.success('Новая должность создана.');
+                            $state.go('home.admin.position', {positionId: success.id});
                     },
                     function (err) {
                         toastr.error(err.data,'Ошибка! EditPositionController!');

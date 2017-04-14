@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-md-12">
-        <nav class="pull-left">
+        <nav class="text-center">
             <ul class="word">
                 <li ng-if="charText" ng-repeat="part in parts  track by $index" ng-class="{active: isActive(part)}" ng-cloak>
-                    <a href="#" ng-click="selectPart(part)">
+                    <a  class="btn btn-default btn-sm" href="#" role="button" ng-click="selectPart(part)">
                         {{part}}
                     </a>
                 </li>

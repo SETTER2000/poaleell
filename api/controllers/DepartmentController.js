@@ -57,7 +57,8 @@ module.exports = {
                 return res.serverError(err);
             }
             sails.log('Идентификатор department:', finn.id);
-            return res.ok();
+            return res.send({id: finn.id});
+
         });
     },
 

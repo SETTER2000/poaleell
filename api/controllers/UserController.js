@@ -14,6 +14,7 @@
 //var Emailaddresses = require('machinepack-emailaddresses');
 var Passwords = require('machinepack-passwords');
 var Gravatar = require('machinepack-gravatar');
+var _ = require('lodash');
 var LdapStrategy = require('passport-ldapauth');
 var Email = require('machinepack-email');
 var OPTS = {
@@ -55,8 +56,8 @@ module.exports = {
                 },
                 success: function () {
                     if (user.deleted) {
-                        return res.forbidden("'Ваша учетная запись удалена. " +
-                            "Пожалуйста, посетите ... восстановить для восстановления вашей учетной записи.'");
+                        return res.forbidden("Ваша учетная запись удалена. " +
+                            "Перейдите на страницу 'Восстановить профиль'.");
                     }
                     if (!user.action) {
                         return res.forbidden("Ваша учетная запись заблокирована, " +
@@ -181,9 +182,6 @@ module.exports = {
             return res.badRequest('Фамилия должна быть от 2 до 15 знаков!');
         }
 
-
-
-
         Passwords.encryptPassword({
             password: req.param('password'), difficulty: 10
         }).exec({
@@ -191,7 +189,6 @@ module.exports = {
                 return res.negotiate(err);
             },
             success: function (encryptedPassword) {
-
                 User.create({
                     login: req.param('login'),
                     email: req.param('email'),
@@ -210,7 +207,7 @@ module.exports = {
                 }, function (err, newUser) {
                     if (err) return res.negotiate(err);
                     sails.log('Создан новый пользователь с логином:' + newUser.login);
-                    res.ok();
+                    res.send({id:newUser.id});
                 });
             }
         });
@@ -401,7 +398,7 @@ module.exports = {
         //sails.log(req.params);
         //sails.log(req.param);
         //sails.log(req.query);
-        //sails.log(req.param('where'));
+        sails.log(req.param('where'));
 
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
@@ -413,7 +410,9 @@ module.exports = {
 
                 });
         } else {
-            if (req.param('where').length > 0 && req.param('char').length > 0) {
+            if (!_.isUndefined(req.param('where')) && req.param('char').length > 0) {
+                sails.log('ПРОШЁЛ ЗАПРОС');
+                sails.log(req.param('where'));
                 var q = {
                     limit: req.params.limit,
                     sort: req.params.sort

@@ -76,9 +76,8 @@ module.exports = {
             defaultsTo: '[]'
         },
         position: {
-            type: 'string',
-            defaultsTo: 'нет данных',
-            size: 50
+            type: 'array',
+            defaultsTo: '[]'
         },
         encryptedPassword: {
             type: 'string',

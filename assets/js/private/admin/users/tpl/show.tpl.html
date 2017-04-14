@@ -66,11 +66,11 @@
                 </tr>
                 <tr>
                     <th>Должность</th>
-                    <td>{{item.positions[0].name}}</td>
+                    <td>{{item.position | json}}</td>
                 </tr>
                 <tr>
                     <th>Отдел</th>
-                    <td>{{item.departments[0].name}}</td>
+                    <td>{{item.subdivision | json}}</td>
                 </tr>
                 <tr ng-if="!item.firedDate">
                     <th>Работает с</th>

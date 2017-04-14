@@ -225,8 +225,8 @@
             //console.log('STATE: ');
             //console.log( $state.get());
             $scope.refresh = function (where) {
-                console.log('WHERE LIST');
-                console.log(where);
+                //console.log('WHERE LIST');
+                //console.log(where);
                 if (where) {
                     $scope.where = where;
                 } else {
@@ -253,7 +253,7 @@
                         $scope.objectName = users;
                         $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
                     }, function (err) {
-                        console.log(err);
+                        //console.log(err);
                         toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
                     });
             };

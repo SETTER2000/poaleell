@@ -372,8 +372,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             link: function (scope) {
                 scope.$watch('objectName', function (value) {
 
-                    console.log('OBJECT NAME');
-                    console.log(value);
+                    //console.log('OBJECT NAME');
+                    //console.log(value);
 
                     scope.objectName = value;
                     scope.checkArray();
@@ -385,7 +385,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     for (var key in v) {
                         var obj = v[key];
 
-                        console.log(obj);
+                        //console.log(obj);
                         
                         for (var prop in obj) {
                             var chars;
@@ -395,11 +395,11 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                             }
                         }
                     }
-                    console.log('PARTS');
-                    console.log(parts);
+                    //console.log('PARTS');
+                    //console.log(parts);
                     scope.parts =  scope.uniqueValue(parts);
-                    console.log('UNIQUE PARTS');
-                    console.log(scope.parts);
+                    //console.log('UNIQUE PARTS');
+                    //console.log(scope.parts);
                 };
 
                 scope.uniqueValue = function(arr) {
@@ -439,13 +439,12 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     if (angular.isString(ch)) {
                         scope.where = {"lastName": {'like': ch + '%'}};
                         scope.charText = ch;
-                        console.log('WHERE');
-                        console.log(scope.where);
+                        //console.log('WHERE');
+                        //console.log(scope.where);
                     } else {
                         // $scope.defaultRows;
                         scope.charText = '';
                     }
-
                 };
 
                 scope.selectPart = function (part) {
@@ -492,8 +491,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             link: function (scope) {
 
                 scope.$watch('objectName', function (value) {
-                    console.log('OBJECT NAME33');
-                    console.log(value);
+                    //console.log('OBJECT NAME33');
+                    //console.log(value);
 
                     scope.objectName = value;
                     scope.checkArray();
@@ -515,8 +514,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     //console.log('PARTS');
                     //console.log(parts);
                     scope.parts =  scope.uniqueValue(parts).sort();
-                    console.log('UNIQUE2 PARTS2');
-                    console.log(scope.parts);
+                    //console.log('UNIQUE2 PARTS2');
+                    //console.log(scope.parts);
                 };
 
                 scope.uniqueValue = function(arr) {

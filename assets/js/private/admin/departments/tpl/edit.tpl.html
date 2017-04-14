@@ -4,8 +4,8 @@
         <h1>
             <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}} <span ng-if="!item.action"
                                                                                     ng-bind="item.deactivation()"></span></p>
-            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
-                сотрудников: </a>
+            <!--<a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">-->
+                <!--сотрудников: </a>-->
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
@@ -65,7 +65,7 @@
                                 Список
                             </a>
 
-                            <a ng-if="!item.action" ng-click="delete(item)" class="btn  btn-default pull-right">
+                            <a ng-show="me.admin" ng-if="!item.action" ng-click="delete(item)" class="btn  btn-default pull-right">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </div>

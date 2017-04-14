@@ -28,8 +28,8 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
 
   $scope.saveAdmin = function(id, change){
 
-    console.log('id: ', id);
-    console.log('change: ', change);
+    //console.log('id: ', id);
+    //console.log('change: ', change);
     var theRoute = '/user/update-admin/' + id;
 
     // Submit PUT request to Sails.

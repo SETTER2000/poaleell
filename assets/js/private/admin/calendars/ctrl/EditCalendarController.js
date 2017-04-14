@@ -1,6 +1,6 @@
 angular.module('CalendarModule')
-    .controller('EditCalendarController', ['$scope','toastr', '$translate', '$rootScope', '$http', '$state', 'Calendars', '$stateParams', 'CONF_MODULE',
-        function ($scope,toastr, $translate, $rootScope, $http, $state, Calendars, $stateParams) {
+    .controller('EditCalendarController', ['$scope', 'toastr', '$translate', '$rootScope', '$http', '$state', 'Calendars', '$stateParams', 'CONF_MODULE',
+        function ($scope, toastr, $translate, $rootScope, $http, $state, Calendars, $stateParams) {
             $rootScope.$on('$translateChangeSuccess', function () {
                 $translate('TITLE').then(function (translation) {
                     $scope.title = translation;
@@ -88,6 +88,7 @@ angular.module('CalendarModule')
                 $scope.location = translationId;
             });
 
+            $scope.me = window.SAILS_LOCALS.me;
 
             // $scope.item.slug = $scope.item.name;
             //$scope.$watch('item.name', function (value) {
@@ -174,7 +175,7 @@ angular.module('CalendarModule')
                     $scope.calendars = calendars;
                 }, function (err) {
                     if (err) {
-                        toastr.error(err,'Ошибка EditCalendarController!');
+                        toastr.error(err, 'Ошибка EditCalendarController!');
                     }
                 });
             };
@@ -192,7 +193,7 @@ angular.module('CalendarModule')
                         function (err) {
                             //console.log('ERROR: ' + err.status);
                             //console.log(err);
-                            toastr.error(err,'Ошибка 3 EditCalendarController!');
+                            toastr.error(err, 'Ошибка 3 EditCalendarController!');
                             //item.er();
                         }
                     );
@@ -204,7 +205,7 @@ angular.module('CalendarModule')
                             item.ok();
                         },
                         function (err) {
-                            toastr.error(err,'Ошибка! Возможно ЧПУ не уникален. EditCalendarController!');
+                            toastr.error(err, 'Ошибка! Возможно ЧПУ не уникален. EditCalendarController!');
                             //console.log('ERROR: ' + err.status);
                             //console.log(err);
                             item.er('Возможно ЧПУ не уникален.');

@@ -82,7 +82,7 @@ module.exports = {
         Position.create(req.body).exec(function (err, finn) {
             if(err) {return res.serverError(err);}
             sails.log('Finn\'s id is:', finn.id);
-            return res.ok();
+            return res.send({id: finn.id});
         });
 
         //Position.findOne(req.param('id')).exec(function (err, user) {
