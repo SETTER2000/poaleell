@@ -42,7 +42,7 @@ module.exports.policies = {
         adminUsers: ['isLoggedIn', 'isAdmin'],
         updateAdmin: ['isLoggedIn', 'isAdmin'],
         updateAction: ['isLoggedIn', 'isAdmin'],
-        updateDeleted: ['isLoggedIn', 'isAdmin'],
+        updateDeleted: ['isLoggedIn', 'isAdmin']
         //find: ['isLoggedIn']
         //find: [['isLoggedIn'],['isKadr'], ['isAdmin']]
     },
