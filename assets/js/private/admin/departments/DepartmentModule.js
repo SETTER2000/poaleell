@@ -3,15 +3,10 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
         $stateProvider
             .state('home.admin.departments', {
                 url: '/departments',
-                //template:'<h1>Departments</h1>'
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/departments/tpl/list.tpl.html',
                         controller: 'ListDepartmentController'
-                        //template:'<h1>DEPARTAMENT</h1>'
                     }
                 }
                 //views: {
