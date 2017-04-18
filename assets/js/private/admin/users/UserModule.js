@@ -8,78 +8,33 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
                         controller: 'ListController'
                     }
-
-                    // "viewB": {template: "users.viewB"}
                 }
-                // views: {
-                //     '@': {
-                //         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
-                //         controller: 'ListController'
-                //     },
-                //     'info':{templateUrl: '/js/private/admin/users/views/info.html',
-                //         controller: 'ListController'}
-                //    
-                // }
+            })
+            .state('home.admin.users.exit', {
+                url: '/exit',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/tpl/exit.html',
+                        controller: 'EditController'
+                    }
+                }
             })
             .state('home.admin.users.settings', {
                 url: '/settings',
-                //template:'<h1>Users</h1>'
-                //controller: function () {
-                //
-                //}
                 templateUrl: '/js/private/admin/users/views/home.admin.users.settings.html',
                 controller: 'ListController'
-                //views: {
-                //    'settings@': {
-                //
-                //    }
-                //}
-                //views: {
-                //    '@': {
-                //        template: function($stateParams) {
-                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
-                //        },
-                //        controller: function() {}
-                //
-                //    }
-                //}
             })
             .state('home.admin.users.list', {
                 url: '/list',
-                //template:'<h1>Users</h1>'
-                //controller: function () {
-                //
-                //}
                 views: {
                     'list@home.admin.users': {
                         templateUrl: '/js/private/admin/users/views/home.admin.users.list.html',
                         controller: 'ListController'
                     }
                 }
-                //views: {
-                //    'settings@': {
-                //
-                //    }
-                //}
-                //views: {
-                //    '@': {
-                //        template: function($stateParams) {
-                //            return '<div>Category:' + $stateParams.catId + '<ui-view/></div>';
-                //        },
-                //        controller: function() {}
-                //
-                //    }
-                //}
             })
             .state('home.admin.users.attendance', {
                 url: '/attendance',
-
-                // views: {
-                //     'attendance@home.admin.users': {
-                //         templateUrl: '/js/private/admin/users/views/home.admin.users.attendance.html',
-                //         controller: 'ListController'
-                //     }
-                // }
                 views: {
                     'attendance@home.admin.users': {
                         templateUrl: '/js/private/admin/attendances/tpl/list.tpl.html',
@@ -96,7 +51,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 }
             })
-            //.state('home.admin.users.user', {
             .state('home.admin.user', {
                 url: '/user/:userId',
                 views: {

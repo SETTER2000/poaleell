@@ -65,8 +65,8 @@ module.exports = {
                     }
 
                     req.session.me = user.id;
-                    req.session.admin = user.admin;
-                    req.session.kadr = 11;
+                    //req.session.admin = user.admin;
+                    //req.session.kadr = 11;
                     //req.session.me = user;
                     return res.ok();
                 }
@@ -394,12 +394,6 @@ module.exports = {
      * @param res
      */
     findUsers: function (req, res) {
-        //sails.log(req.body);
-        //sails.log(req.params);
-        //sails.log(req.param);
-        //sails.log(req.query);
-        sails.log(req.param('where'));
-
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
             User.findOne(req.param('id'))
@@ -411,8 +405,6 @@ module.exports = {
                 });
         } else {
             if (!_.isUndefined(req.param('where')) && req.param('char').length > 0) {
-                sails.log('ПРОШЁЛ ЗАПРОС');
-                sails.log(req.param('where'));
                 var q = {
                     limit: req.params.limit,
                     sort: req.params.sort
@@ -420,8 +412,6 @@ module.exports = {
                 var y = {};
                 y[req.param('property')] = {'like': req.param('char')};
                 q.where = y;
-
-
                 User.find(q)
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
@@ -775,8 +765,6 @@ module.exports = {
      * @param res
      */
     updateLeader: function (req, res) {
-        if(req.param('leader')) sails.log('TRUE');
-
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.update(req.param('id'), {
             leader: req.param('leader')

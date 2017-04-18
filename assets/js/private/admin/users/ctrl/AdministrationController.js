@@ -8,8 +8,6 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
     loading: false
   };
 
-
-
   $http.get('/user/adminUsers')
       .then(function onSuccess(sailsResponse){
 
@@ -80,7 +78,7 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
     var theRoute = '/user/update-leader/' + id;
     $http.put(theRoute, {
           id: id,
-          kadr: change
+            leader: change
         })
         .then(function onSuccess(sailsResponse) {
           toastr.success($scope.recordSave,'', { timeOut: 1000 });

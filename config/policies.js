@@ -25,12 +25,12 @@ module.exports.policies = {
      * access)                                                                  *
      *                                                                          *
      ***************************************************************************/
-
+    // Ограничение действий controllers
     // '*': true,
     UserController: {
         create: ['isLoggedIn', 'isAdmin'],
         destroy: ['isLoggedIn', 'isAdmin'],
-        //update: ['isLoggedIn','isLeader','isKadr', 'isAdmin'],
+        update: ['isLoggedIn'],
         login: ['isLoggedOut'],
         logout: ['isLoggedIn'],
         signup: ['isLoggedOut'],

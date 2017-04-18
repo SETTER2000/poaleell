@@ -1,8 +1,10 @@
 <!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
-<div class="col-sm-11  col-md-12  main " ng-controller="AdministrationController" ng-cloak>
+<div class="col-sm-11  col-md-12  main "  ng-cloak>
     <div class="page-header">
         <h1>
-            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action">{{item.deactivation()}}</span>
+            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">
+                {{item.getFullName()}}
+                <span ng-if="!item.action">{{item.deactivation()}}</span>
             </p>
             <p ng-if="!item.lastName">Права доступа</p>
             <!--<a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |-->

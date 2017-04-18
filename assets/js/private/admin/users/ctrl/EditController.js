@@ -1,6 +1,11 @@
 angular.module('UserModule')
     .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
         function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
+
+
+
             $scope.close = 1;
             $scope.loginAdmin = false;
 
@@ -9,7 +14,7 @@ angular.module('UserModule')
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
             //var emAdmin = SAILS_LOCALS.me.email;
-            $scope.me = window.SAILS_LOCALS.me;
+
             var t = [];
             //if (emAdmin == 'apetrov@landata.ru') {
             //    $scope.loginAdmin = true;

@@ -1,6 +1,8 @@
 angular.module('UserModule')
-    .controller('UserController', ['$scope', '$state', 'moment', 'Users', '$stateParams',
-        function ($scope,$state, moment, Users, $stateParams) {
+    .controller('ExitUserController', ['$scope','$state', 'moment', 'Users', '$stateParams',
+        function ($scope, $state, moment, Users, $stateParams) {
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.leader && !$scope.me.admin) $state.go('home');
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,

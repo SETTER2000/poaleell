@@ -3,7 +3,7 @@
     angular.module('UserModule')
         .controller('ListController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
             $scope.me = window.SAILS_LOCALS.me;
-            if (!$scope.me.kadr || !$scope.me.admin) $location.path('/');
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //toastr.options = {
             //    "closeButton": false,
             //    "debug": false,

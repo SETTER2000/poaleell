@@ -27,11 +27,12 @@ module.exports.routes = {
      *************************************************************/
 
     'PUT /login': 'UserController.login',
-    'POST /logout': 'UserController.logout',
     'GET /logout': 'PageController.logout',
+    'POST /logout': 'UserController.logout',
 
 
-    'POST /user/signup': 'UserController.signup',
+
+
     'PUT /user/remove-profile': 'UserController.removeProfile',
     'PUT /user/restore-profile': 'UserController.restoreProfile',
     'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
@@ -43,8 +44,12 @@ module.exports.routes = {
     'PUT /user/update-leader/:id': 'UserController.updateLeader',
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
+    'PUT /user/updateProfile/:id': 'UserController.updateProfile',
+    'POST /user/signup': 'UserController.signup',
 
-
+    /**
+     * RESTful routes
+     */
     'POST /users': 'UserController.createUser',
     'GET /users': 'UserController.findUsers',
     'PUT /users/changePassword': 'UserController.changePassword',
@@ -72,12 +77,6 @@ module.exports.routes = {
     'PUT /calendars/:id': 'CalendarController.update',
 
 
-    'GET /tutorials': 'TutorialController.browseTutorials',
-    'POST /tutorials': 'TutorialController.createTutorial',
-    'POST /tutorials/:tutorialId/videos': 'TutorialController.addVideo',
-    'PUT /tutorials/:id': 'TutorialController.updateTutorial',
-    'PUT /tutorials/:id/rate': 'TutorialController.rateTutorial',
-
     /*************************************************************
      * Server-rendered HTML Pages                                *
      *************************************************************/
@@ -96,11 +95,11 @@ module.exports.routes = {
 
 
     'GET /admin': 'PageController.showHomePage',
+    'GET /admin/users': 'PageController.getListUserPage',
     'GET /admin/users/administration': 'PageController.showAdminPage',
+    'GET /admin/users/create': 'PageController.showHomePage',
+    'GET /admin/users/exit': 'PageController.getExitUserPage',
 
-
-    'GET /admin/users': 'PageController.showHomePage',
-    'GET /admin/users/create/': 'PageController.showHomePage',
     'GET /admin/departments': 'PageController.showHomePage',
 
     'GET /admin/attendances': 'PageController.showHomePage',
@@ -108,27 +107,27 @@ module.exports.routes = {
     'GET /admin/employees': 'PageController.showHomePage',
 
 
-    'GET /admin/users/create': 'PageController.showHomePage',
-    'GET /admin/users/settings': 'PageController.showHomePage',
+
     'GET /admin/users/attendance': 'PageController.showHomePage',
-    'GET /admin/positions/settings': 'PageController.showHomePage',
     'GET /admin/positions/create': 'PageController.showHomePage',
-    'GET /admin/departments/create': 'PageController.showHomePage',
-    'GET /admin/users/list': 'PageController.showHomePage',
+    //'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
     'GET /admin/users/show/:id': 'UserController.findOne',
-    'GET /admin/users/edit': 'PageController.showHomePage',
+    'GET /admin/users/edit': 'PageController.getEditUserPage',
     'PUT /admin/users/edit/changePassword': 'UserController.changePasswordProfile',
-    'GET /admin/users/edit/:id': 'PageController.showHomePage',
-    'GET /admin/users/:id': 'UserController.findOne',
+    'GET /admin/users/edit/:id': 'PageController.getEditUserPage',
+
+    'GET /admin/departments/create': 'PageController.showHomePage',
     'GET /admin/departments/:id': 'DepartmentController.findOne',
     'GET /admin/departments/edit/:id': 'PageController.showHomePage',
     'GET /admin/department/:id': 'PageController.showHomePage',
     'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
+
     'GET /admin/positions/:id': 'PositionController.findOne',
     'GET /admin/positions/edit/:id': 'PageController.showHomePage',
     'GET /admin/position/:id': 'PositionController.findOne',
+
     'GET /admin/calendars': 'PageController.showHomePage',
     'GET /admin/calendars/:id': 'CalendarController.findOne',
     'GET /admin/calendars/create': 'PageController.showHomePage',
@@ -136,6 +135,7 @@ module.exports.routes = {
     'GET /admin/calendar/:id': 'CalendarController.findOne',
     'GET /admin/calendar/:id/:month': 'PageController.showHomePage',
     'GET /admin/calendar/:id/:week': 'PageController.showHomePage',
+
     'GET /admin/employees/:id': 'PageController.showHomePage',
     'GET /admin/employees/edit/:id': 'PageController.showHomePage',
     'GET /admin/employee/:id': 'PageController.showHomePage',
@@ -144,26 +144,13 @@ module.exports.routes = {
     'GET /admin/attendances/calendar': 'PageController.showHomePage',
     'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
 
-
-    //'POST /user': 'UserController.signup',
-
-
     'GET /user/adminUsers': 'UserController.adminUsers',
-    'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-
-
 
     'GET /att': 'Attendance.getQuery',
     'POST /att': 'Attendance.getQuery',
     'GET /period': 'Attendance.findPeriod',
     'GET /pd': 'Attendance.fPeriod',
     'GET /api': 'Attendance.timeAll',
-
-    //'GET /:username': {
-    //    controller: 'PageController',
-    //    action: 'profile',
-    //    skipAssets: true
-    //}
 
     'GET /:login': {
         controller: 'PageController',

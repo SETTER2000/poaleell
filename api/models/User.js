@@ -70,8 +70,7 @@ module.exports = {
         },
 
         leader: {
-            type: 'boolean',
-            defaultsTo: false
+            type: 'boolean'
         },
 
         birthday: {
@@ -109,9 +108,21 @@ module.exports = {
             type: 'date'
         },
 
+        room: {
+            type: 'string'
+        },
+
+        location: {
+            type: 'string'
+        },
+
         pfr: {
             type: 'string',
             size: 15
+        },
+
+        workplace:{
+            type:'string'
         },
 
         lastLoggedIn: {
