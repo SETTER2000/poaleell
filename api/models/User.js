@@ -56,16 +56,23 @@ module.exports = {
             unique: true,
             required: true
         },
+
         deleted: {
             type: 'boolean'
         },
+
         admin: {
             type: 'boolean'
         },
+
         kadr: {
             type: 'boolean'
         },
 
+        leader: {
+            type: 'boolean',
+            defaultsTo: false
+        },
 
         birthday: {
             type: 'date'

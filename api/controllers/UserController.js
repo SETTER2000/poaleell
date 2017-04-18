@@ -770,6 +770,23 @@ module.exports = {
     },
 
     /**
+     * Установка пользователю прав руководителя
+     * @param req
+     * @param res
+     */
+    updateLeader: function (req, res) {
+        if(req.param('leader')) sails.log('TRUE');
+
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.update(req.param('id'), {
+            leader: req.param('leader')
+        }).exec(function (err, update) {
+            if (err) return res.negotiate(err);
+            return res.ok();
+        });
+    },
+
+    /**
      * Установка пользователю состояния активации (action)
      * @param req
      * @param res

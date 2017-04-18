@@ -145,21 +145,6 @@ angular.module('UserModule')
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];
                 if (angular.isDefined(item.id)) {
-
-                    //if (angular.isDefined(item.departments)) {
-                    //    if (!angular.isArray($scope.item.departments)) $scope.item.departments = [];
-                    //    for (var i = 0; i < item.departments.length; i++) {
-                    //        $scope.item.subdivision.push(item.departments[i].id);
-                    //    }
-                    //}
-
-                    //if (!angular.isDefined(item.positions)) {
-                    //    if (!angular.isArray($scope.item.positions)) $scope.item.positions = [];
-                    //    for (var z = 0; z < item.positions.length; z++) {
-                    //        $scope.item.position.push(item.positions[z].id);
-                    //    }
-                    //}
-
                     item.$update(item, function (success) {
                             //toastr.success(success);
                             //toastr.options.closeButton = true;
@@ -168,7 +153,7 @@ angular.module('UserModule')
                         },
                         function (err) {
                             console.log(err);
-                            toastr.error(err, 'Ошибка33!');
+                            toastr.error(err.data, 'Ошибка! EditController User');
                         }
                     );
                 } else {

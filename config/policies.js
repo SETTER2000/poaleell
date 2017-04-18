@@ -30,7 +30,7 @@ module.exports.policies = {
     UserController: {
         create: ['isLoggedIn', 'isAdmin'],
         destroy: ['isLoggedIn', 'isAdmin'],
-        //update: ['isLoggedIn', 'isAdmin'],
+        //update: ['isLoggedIn','isLeader','isKadr', 'isAdmin'],
         login: ['isLoggedOut'],
         logout: ['isLoggedIn'],
         signup: ['isLoggedOut'],

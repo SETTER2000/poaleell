@@ -2,7 +2,7 @@ module.exports = function isKadr(req, res, next) {
 
     if (!req.session.me) {
         if (req.wantsJSON) {
-            return res.forbidden('isKadr: Вам не разрешено выполнять это действие.');
+            return res.forbidden('isLeader: Вам не разрешено выполнять это действие.');
         }
         return res.redirect('/');
     }
@@ -13,16 +13,16 @@ module.exports = function isKadr(req, res, next) {
 
         if (!foundUser) {
             if (req.wantsJSON) {
-                return res.forbidden('isKadr: Вам не разрешено выполнять это действие.');
+                return res.forbidden('isLeader: Вам не разрешено выполнять это действие.');
             }
             return res.redirect('/');
         }
 
-        if (foundUser.kadr) {
+        if (foundUser.leader) {
             return next();
         } else {
             if (req.wantsJSON) {
-                return res.forbidden('isKadr: Вам не разрешено выполнять это действие.');
+                return res.forbidden('isLeader: Вам не разрешено выполнять это действие.');
             }
             return res.redirect('/');
         }

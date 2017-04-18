@@ -60,36 +60,38 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
   };
 
   $scope.saveKadr = function(id, change){
-
-    console.log('id: ', id);
-    console.log('change: ', change);
     var theRoute = '/user/update-kadr/' + id;
-
-    // Submit PUT request to Sails.
     $http.put(theRoute, {
           id: id,
           kadr: change
         })
         .then(function onSuccess(sailsResponse) {
-
-          // Notice that the sailsResponse is an array and not a single object
-          // The .update() model method returns an array and not a single record.
-          // window.location = '#/profile/' + sailsResponse.data[0].id;
-
-          // $scope.editProfile.loading = false;
           toastr.success($scope.recordSave,'', { timeOut: 1000 });
           console.log('sailsResponse: ', sailsResponse);
         })
         .catch(function onError(sailsResponse) {
-          // console.log(sailsResponse);
-          // Otherwise, display generic error if the error is unrecognized.
           $scope.editProfile.errorMsg = 'Произошла непредвиденная ошибка: ' + (sailsResponse.data || sailsResponse.status);
-
         })
         .finally(function eitherWay() {
           $scope.editProfile.loading = false;
         });
-
+  };
+  $scope.saveLeader = function(id, change){
+    var theRoute = '/user/update-leader/' + id;
+    $http.put(theRoute, {
+          id: id,
+          kadr: change
+        })
+        .then(function onSuccess(sailsResponse) {
+          toastr.success($scope.recordSave,'', { timeOut: 1000 });
+          console.log('sailsResponse: ', sailsResponse);
+        })
+        .catch(function onError(sailsResponse) {
+          $scope.editProfile.errorMsg = 'Произошла непредвиденная ошибка: ' + (sailsResponse.data || sailsResponse.status);
+        })
+        .finally(function eitherWay() {
+          $scope.editProfile.loading = false;
+        });
   };
 
   $scope.saveAction = function(id, change){
