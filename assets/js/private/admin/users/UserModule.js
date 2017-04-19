@@ -10,15 +10,6 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 }
             })
-            .state('home.admin.users.exit', {
-                url: '/exit',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/admin/users/tpl/exit.html',
-                        controller: 'EditController'
-                    }
-                }
-            })
             .state('home.admin.users.settings', {
                 url: '/settings',
                 templateUrl: '/js/private/admin/users/views/home.admin.users.settings.html',
@@ -75,6 +66,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/administration.tpl.html',
                         controller: 'AdministrationController'
+                    }
+                }
+            })
+            .state('home.admin.users.exit', {
+                url: '/exit',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/tpl/exit.html',
+                        controller: 'EditController'
                     }
                 }
             })
