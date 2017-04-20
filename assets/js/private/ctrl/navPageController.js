@@ -1,6 +1,6 @@
 angular.module('Holiday').controller('navPageController',
     ['$location', '$scope', '$http', 'toastr', function ($location, $scope, $http, toastr) {
-        
+
         $scope.signOut = function () {
             $http.post('/logout')
                 .then(function onSuccess(sailsReponse) {
@@ -19,7 +19,13 @@ angular.module('Holiday').controller('navPageController',
         $scope.loginForm = {};
 
         $scope.me = window.SAILS_LOCALS.me;
-        
+        for(var index in $scope.me.contacts){
+            if($scope.me.contacts[index].type === 'Внутренний телефон')   $scope.me.phoneInner=$scope.me.contacts[index].value;
+        }
+
+
+
+
         $scope.submitLoginForm = function () {
 
             // Set the loading state (i.e. show loading spinner)
