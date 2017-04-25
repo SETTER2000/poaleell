@@ -69,15 +69,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 }
             })
-            .state('home.admin.users.exit', {
-                url: '/exit',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/admin/users/tpl/exit.html',
-                        controller: 'EditController'
-                    }
-                }
-            })
+            //.state('home.admin.users.exit', {
+            //    url: '/exit',
+            //    views: {
+            //        '@': {
+            //            templateUrl: '/js/private/admin/users/tpl/exit.html',
+            //            controller: 'EditController'
+            //        }
+            //    }
+            //})
         ;
     })
     .constant('CONF_MODULE', {baseUrl: '/users/:userId'})

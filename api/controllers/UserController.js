@@ -506,18 +506,18 @@ module.exports = {
                     });
                 });
             }
-            if (req.param('position')) {
-                User.findOne(req.param('id')).exec(function (err, user) {
-                    user.positions.add(req.param('position'));
-                    if (req.param('removePosition')) {
-                        user.positions.remove(req.param('removePosition'));
-                    }
-                    user.save(function (err) {
-                        if (err) return res.negotiate(err);
-                        res.ok();
-                    });
-                });
-            }
+            //if (req.param('position')) {
+            //    User.findOne(req.param('id')).exec(function (err, user) {
+            //        user.positions.add(req.param('position'));
+            //        if (req.param('removePosition')) {
+            //            user.positions.remove(req.param('removePosition'));
+            //        }
+            //        user.save(function (err) {
+            //            if (err) return res.negotiate(err);
+            //            res.ok();
+            //        });
+            //    });
+            //}
 
             //res.ok();
         });
@@ -764,15 +764,15 @@ module.exports = {
      * @param req
      * @param res
      */
-    updateLeader: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.update(req.param('id'), {
-            leader: req.param('leader')
-        }).exec(function (err, update) {
-            if (err) return res.negotiate(err);
-            return res.ok();
-        });
-    },
+    //updateLeader: function (req, res) {
+    //    if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //    User.update(req.param('id'), {
+    //        leader: req.param('leader')
+    //    }).exec(function (err, update) {
+    //        if (err) return res.negotiate(err);
+    //        return res.ok();
+    //    });
+    //},
 
     /**
      * Установка пользователю состояния активации (action)
