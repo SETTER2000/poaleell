@@ -2,7 +2,7 @@ angular.module('UserModule')
     .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
         function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
-            if (!$scope.me.admin && !$scope.me.kadr && !$scope.me.leader) $state.go('home.admin.users');
+            //if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
 
 
 
