@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-    logout: function(req, res) {
+    logout: function (req, res) {
 
         if (!req.session.me) {
             return res.redirect('/');
         }
 
-        User.findOne(req.session.me, function(err, user) {
+        User.findOne(req.session.me, function (err, user) {
             if (err) {
                 console.log('error: ', err);
                 return res.negotiate(err);
@@ -149,7 +149,7 @@ module.exports = {
             }
 
             user.fullName = user.lastName + ' ' + user.firstName + ' ' + user.patronymicName;
-            return res.view('page/showhomepage',{me: user});
+            return res.view('page/showhomepage', {me: user});
         });
     },
 
@@ -177,7 +177,7 @@ module.exports = {
             }
 
             user.fullName = user.lastName + ' ' + user.firstName + ' ' + user.patronymicName;
-            return res.view('page/showhomepage',{me: user});
+            return res.view('page/showhomepage', {me: user});
         });
     },
 
@@ -205,19 +205,19 @@ module.exports = {
             }
 
             user.fullName = user.lastName + ' ' + user.firstName + ' ' + user.patronymicName;
-            return res.view('page/showhomepage',{me: user});
+            return res.view('page/showhomepage', {me: user});
         });
     },
 
-    passwordRecoveryEmail: function(req, res) {
-        return res.view('public/password-recovery-email', {layout: 'signup', me:null});
+    passwordRecoveryEmail: function (req, res) {
+        return res.view('public/password-recovery-email', {layout: 'signup', me: null});
     },
 
-    passwordRecoveryEmailSent: function(req, res) {
-        return res.view('public/password-recovery-email-sent', {layout: 'signup',me: null});
+    passwordRecoveryEmailSent: function (req, res) {
+        return res.view('public/password-recovery-email-sent', {layout: 'signup', me: null});
     },
 
-    passwordReset: function(req, res) {
+    passwordReset: function (req, res) {
         res.view('public/password-reset', {
             layout: 'signup',
             me: null,
@@ -225,7 +225,7 @@ module.exports = {
         });
     },
 
-    profile: function(req, res) {
+    profile: function (req, res) {
 
         var FAKE_DATA = {
             frontEnd: {
@@ -327,7 +327,7 @@ module.exports = {
         // Look up the user record for the `username` parameter
         User.findOne({
             login: req.param('login')
-        }).exec(function(err, foundByUsername) {
+        }).exec(function (err, foundByUsername) {
             if (err) {
                 return res.negotiate(err);
             }
@@ -364,7 +364,7 @@ module.exports = {
             User.findOne({
                     id: req.session.me
                 })
-                .exec(function(err, foundUser) {
+                .exec(function (err, foundUser) {
                     if (err) {
                         return res.negotiate(err);
                     }
@@ -483,16 +483,15 @@ module.exports = {
         if (req.session.me) {
             return res.redirect('/');
         }
-       return res.view('public/signup', {layout: 'signup'});
+        return res.view('public/signup', {layout: 'signup'});
     },
 
-    restoreProfile: function(req, res) {
+    restoreProfile: function (req, res) {
         return res.view('public/restore', {layout: 'homepage'});
         // return res.view('restore-profile', {
         //     me: null
         // });
     }
-
 
 
 };

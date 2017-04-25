@@ -40,20 +40,8 @@
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Отделы</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
-                            <!--<li><a ui-sref="home.admin.calendars">Календари</a></li>-->
-                            <!--<li><a ui-sref="home.admin.employees">Employees</a></li>-->
-                            <!--<li><a ui-sref="home.admin.attendances">Посещаемость</a></li>-->
-
-
-                            <!--<li role="separator" class="divider"></li>-->
-                            <!--<li class="dropdown-header">Просмотр</li>-->
-
-                            <!--<li><a href="#">Структура компании</a></li>-->
                         </ul>
                     </li>
-
-                    <!--<li><a ng-show="me.admin" ui-sref="home.admin.users.administration">Администрирование</a></li>-->
-
                     <li>
                     </li>
 
@@ -63,7 +51,7 @@
                         <img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>
                     </li>
                     <li class="activityOverlord active">
-                        <a href="/profile" class="pointer"> {{me.fullName}} ({{me.login}})</a>
+                        <a href="/profile" class="pointer"> {{me.fullName}} ({{me.phoneInner}})</a>
                     </li>
                     <li>
 
