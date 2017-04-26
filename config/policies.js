@@ -32,6 +32,7 @@ module.exports.policies = {
         destroy: ['isLoggedIn', 'isAdmin'],
         update: ['isLoggedIn'],
         login: ['isLoggedOut'],
+        loginLDAP: ['isLoggedOut'],
         logout: ['isLoggedIn'],
         signup: ['isLoggedOut'],
         removeProfile: ['isLoggedIn'],

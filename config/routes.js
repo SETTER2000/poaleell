@@ -26,11 +26,11 @@ module.exports.routes = {
      * JSON API ENDPOINTS                                                    *
      *************************************************************/
 
-    'PUT /login': 'UserController.login',
+    'PUT /login': 'UserController.loginLDAP',
     'GET /logout': 'PageController.logout',
     'POST /logout': 'UserController.logout',
 
-
+    //'GET /ldap': 'UserController.ldapConnect',
 
 
     'PUT /user/remove-profile': 'UserController.removeProfile',

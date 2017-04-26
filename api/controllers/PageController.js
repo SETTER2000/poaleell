@@ -4,52 +4,9 @@
  * @description :: Server-side logic for managing pages
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var ldap = require('ldapjs');
-var assert = require('assert');
+
 module.exports = {
-    ldapConnect: function (req, res) {
-        var client = ldap.createClient({
-            url: sails.config.ldap.uri
-        });
 
-        client.bind(sails.config.ldap.username, sails.config.ldap.password, function (err) {
-            assert.ifError(err);
-            var opts = {
-                scope: 'sub',
-                attributes: sails.config.ldap.attributes,
-                paged: true,
-                sizeLimit: 200
-            };
-            client.search(sails.config.ldap.dn, opts, function (err, res) {
-                assert.ifError(err);
-                res.on('searchEntry', function (entry) {
-                    //console.log('entry: ' + JSON.stringify(entry.object));
-                    if (entry.object.displayName) {
-                        console.log('Результат: ' + JSON.stringify(entry.object.displayName + ' ' + entry.object.mail + ' ' + entry.object.telephoneNumber + ' ' + entry.object.sAMAccountName));
-                    }
-                });
-
-                res.on('searchReference', function (referral) {
-                    console.log('referral: ' + referral.uris.join());
-                });
-                res.on('error', function (err) {
-                    console.error('error: ' + err.message);
-                });
-                res.on('end', function (result) {
-                    console.log('status: ' + result.status);
-                });
-                res.on('page', function (result) {
-                    console.log('page end');
-                });
-                res.on('error', function (resErr) {
-                    assert.ifError(resErr);
-                });
-                res.on('end', function (result) {
-                    console.log('done ');
-                });
-            });
-        });
-    },
     logout: function (req, res) {
 
         if (!req.session.me) {

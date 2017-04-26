@@ -15,20 +15,12 @@
 var Passwords = require('machinepack-passwords');
 var Gravatar = require('machinepack-gravatar');
 var _ = require('lodash');
-var LdapStrategy = require('passport-ldapauth');
 var Email = require('machinepack-email');
-var OPTS = {
-    server: {
-        url: 'ldap://192.168.38.14:389',
-        bindDn: 'cn=testuser',
-        bindCredentials: 'P@ssw0rd',
-        searchBase: 'ou=passport-ldapauth',
-        //searchBase: 'ou=passport-ldapauth',
-        searchFilter: '(uid={{username}})'
-    }
-};
-//passport.use(new LdapStrategy(OPTS));
-// var Sugar = require('sugar');
+var ldap = require('ldapjs');
+var assert = require('assert');
+var clientLDAP = ldap.createClient({
+    url: sails.config.ldap.uri
+});
 module.exports = {
     /**
      * Авторизация. Проверка логина и пароля.
@@ -36,6 +28,100 @@ module.exports = {
      * @param req - запрос от клиента к серверу
      * @param res - ответ сервера клиенту
      */
+    loginLDAP: function (req, res) {
+        User.findOne({
+            or: [
+                {email: req.param('email')},
+                {login: req.param('email')}
+            ]
+        }, function foundUser(err, user) {
+            if (err) return res.negotiate(err);
+            if (!user) return res.notFound();
+            clientLDAP.bind(user.login+'@'+sails.config.admin.company, req.param('password'), function (err) {
+                if (err) return res.negotiate(err);
+                var opts = {
+                    scope: 'sub',
+                    //filter: '(cn=Петров Александр)',
+                    filter: '(sAMAccountName=' + user.login + ')',
+                    attributes: sails.config.ldap.attributes,
+                    paged: true,
+                    sizeLimit: 50
+                };
+                clientLDAP.search(sails.config.ldap.dn, opts, function (err, ldapUser) {
+                    ldapUser.on('searchEntry', function (entry) {
+                        console.log('Результат: ' + JSON.stringify(entry.object.displayName + ' ' + entry.object.mail + ' ' + entry.object.telephoneNumber + ' ' + entry.object.sAMAccountName + ' ' + entry.object.userAccountControl));
+                        //return res.ok('LDAP: проверка пройдена! ');
+                        if (user.deleted) {
+                            return res.forbidden("Ваша учетная запись удалена. " +
+                                "Перейдите на страницу 'Восстановить профиль'.");
+                        }
+                        if (!user.action) {
+                            return res.forbidden("Ваша учетная запись заблокирована, " +
+                                "пожалуйста свяжитесь с администратором: "+sails.config.admin.email);
+                        }
+
+                        req.session.me = user.id;
+                        //req.session.admin = user.admin;
+                        //req.session.kadr = 11;
+                        //req.session.me = user;
+                        return res.ok();
+                        //Passwords.checkPassword({
+                        //    passwordAttempt: req.param('password'), encryptedPassword: user.encryptedPassword
+                        //}).exec({
+                        //    error: function (err) {
+                        //        return res.negotiate(err);
+                        //    },
+                        //    incorrect: function () {
+                        //        return res.notFound();
+                        //    },
+                        //    success: function () {
+                        //        if (user.deleted) {
+                        //            return res.forbidden("Ваша учетная запись удалена. " +
+                        //                "Перейдите на страницу 'Восстановить профиль'.");
+                        //        }
+                        //        if (!user.action) {
+                        //            return res.forbidden("Ваша учетная запись заблокирована, " +
+                        //                "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
+                        //        }
+                        //
+                        //        req.session.me = user.id;
+                        //        //req.session.admin = user.admin;
+                        //        //req.session.kadr = 11;
+                        //        //req.session.me = user;
+                        //        return res.ok();
+                        //    }
+                        //});
+                    });
+
+                    //return res.notFound();
+                    //clientLDAP.on('searchReference', function (referral) {
+                    //    console.log('referral: ' + referral.uris.join());
+                    //});
+                    //clientLDAP.on('error', function (err) {
+                    //    console.error('error: ' + err.message);
+                    //});
+                    //clientLDAP.on('end', function (result) {
+                    //    console.log('status: ' + result.status);
+                    //});
+                    //clientLDAP.on('page', function (result) {
+                    //    console.log('page end');
+                    //});
+                    //clientLDAP.on('error', function (resErr) {
+                    //    //assert.ifError(resErr);
+                    //    if (resErr) return res.negotiate(resErr);
+                    //    //if (!clientLDAP) return res.notFound();
+                    //});
+                    //clientLDAP.on('end', function (result) {
+                    //    console.log('done ');
+                    //});
+                });
+            });
+
+
+
+        });
+    },
+
     login: function (req, res) {
         User.findOne({
             or: [
@@ -166,19 +252,29 @@ module.exports = {
     createUser: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
-        if (!_.isString( req.param('lastName') ) ) {return res.badRequest('Фамилия не заполнена.');}
-        if (!_.isString( req.param('firstName') ) ) {return res.badRequest('Имя не заполнено.');}
-        if (!_.isString( req.param('patronymicName') ) ) {return res.badRequest('Отчество не заполнено.');}
-        if (!_.isString(req.param('login'))) {return res.badRequest('Логин не заполнен.');}
-        if (!_.isString(req.param('email'))) {return res.badRequest('Email не заполнен.');}
+        if (!_.isString(req.param('lastName'))) {
+            return res.badRequest('Фамилия не заполнена.');
+        }
+        if (!_.isString(req.param('firstName'))) {
+            return res.badRequest('Имя не заполнено.');
+        }
+        if (!_.isString(req.param('patronymicName'))) {
+            return res.badRequest('Отчество не заполнено.');
+        }
+        if (!_.isString(req.param('login'))) {
+            return res.badRequest('Логин не заполнен.');
+        }
+        if (!_.isString(req.param('email'))) {
+            return res.badRequest('Email не заполнен.');
+        }
 
-        if(req.param('patronymicName').length < 2 || req.param('patronymicName').length > 15){
+        if (req.param('patronymicName').length < 2 || req.param('patronymicName').length > 15) {
             return res.badRequest('Отчество должно быть от 2 до 15 знаков!');
         }
-        if(req.param('firstName').length < 2 || req.param('firstName').length > 15){
+        if (req.param('firstName').length < 2 || req.param('firstName').length > 15) {
             return res.badRequest('Имя должно быть от 2 до 15 знаков!');
         }
-        if(req.param('lastName').length < 2 || req.param('lastName').length > 15){
+        if (req.param('lastName').length < 2 || req.param('lastName').length > 15) {
             return res.badRequest('Фамилия должна быть от 2 до 15 знаков!');
         }
 
@@ -207,7 +303,7 @@ module.exports = {
                 }, function (err, newUser) {
                     if (err) return res.negotiate(err);
                     sails.log('Создан новый пользователь с логином:' + newUser.login);
-                    res.send({id:newUser.id});
+                    res.send({id: newUser.id});
                 });
             }
         });
