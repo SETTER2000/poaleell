@@ -24,6 +24,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 }
             })
+            .state('home.admin.users.work', {
+                url: '/work',
+                views: {
+                    'list@home.admin.users': {
+                        templateUrl: '/js/private/admin/users/views/home.admin.users.work.html',
+                        controller: 'ListController'
+                    }
+                }
+            })
             .state('home.admin.users.attendance', {
                 url: '/attendance',
                 views: {

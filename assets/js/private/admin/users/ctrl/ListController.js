@@ -36,9 +36,7 @@
             $scope.emailArea = 'Email';
             $scope.departmentArea = 'Отдел';
             $scope.positionArea = 'Должность';
-            // $scope.fio = 'ФИО';
-            // $scope.fio = 'ФИО';
-            // $scope.fio = 'ФИО';
+
 
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
@@ -75,10 +73,6 @@
             //end.from(start);       // "in 5 days"
             //$scope.end = end.from(start, true); // "5 days"
 
-            // $scope.items = [{ name: "Item 1", value: "10" },
-            //     { name: "Item 2", value: "2" },
-            //     { name: "Item 3", value: "31" }];
-
             if (moment().isLeapYear()) {
                 $scope.yearLeap = 'Да!';
             } else {
@@ -105,14 +99,16 @@
 
             $scope.options =
                 [
-                    {display: "Все", value: "table"},
+                    {display: "Работают", value: "work"},
                     {display: "Уволены", value: "list"},
-                    {display: "Не активированы / Заблокированы", value: "action"}
+                    {display: "Не активированы / Заблокированы", value: "action"},
+                    {display: "Все", value: "table"}
                 ];
             $scope.modeSelect = $scope.options[0];
             $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
             $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
             $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
+            $scope.workView = "/js/private/admin/users/views/home.admin.users.work.html";
 
             $scope.getLastName = function (item) {
                 $http.post('/att', item)
@@ -187,46 +183,14 @@
             $scope.countChar = '4';
             $scope.filedName = 'lastName';
 
-            //$scope.objectName =[
-            //    {'lastName':'Петров', 'firstName':'Gena1'},
-            //    {'lastName':'Васюков', 'firstName':'Gena2'},
-            //    {'lastName':'Гавнюков', 'firstName':'Gena3'}
-            //];
-            // $scope.refreshAttendance = function (query) {
-            //     // 'SELECT * FROM employees AS e LEFT JOIN attendance_employees AS ae ON e.id = ae.employees_id LEFT JOIN attendance AS a ON a.id=ae.attendance_id WHERE a.date > "2017-02-01"'
-            //     $scope.attendances = Attendances.query(query, function (attendances) {
-            //         $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;
-            //         $scope.items = attendances;
-            //         // $scope.numPages = attendances.length;
-            //         console.log('ATTENDANCES: ');
-            //         console.log($scope.attendances);
-            //         console.log($scope.attendances.length);
-            //         //console.log($scope.items);
-            //         // console.log( $scope.attendances.filter({"action": 1}));
-            //         // console.log(attendances.get({"action": 1},function (success) {
-            //         //     console.log('URAAA:');
-            //         //     alert('5685');
-            //         //     console.log(success);
-            //         // },function (err) {
-            //         //     alert('ERRRRRR');
-            //         //     console.log(err);
-            //         // }));
-            //         // кол-во пользователей
-            //         // console.log($scope.attendances.length);
-            //         //console.log(attendances.scs());
-            //     });
-            // };
+
             $scope.$watch('where', function (value) {
 
                 $scope.refresh(value);
 
             });
-            // console.log(Users);
-            //console.log('STATE: ');
-            //console.log( $state.get());
+
             $scope.refresh = function (where) {
-                //console.log('WHERE LIST');
-                //console.log(where);
                 if (where) {
                     $scope.where = where;
                 } else {
@@ -239,41 +203,18 @@
                     property: 'lastName',
                     char:  $scope.charText+'%'
                 };
-                //$scope.query = {sort:'email'};
-                //console.log('QUERY ЗАПРоС');
-                //console.log($scope.query);
-
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
-
                         $scope.items = users;
-
-                        //console.log(users);
                         $scope.objectName = users;
                         $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
                     }, function (err) {
-                        //console.log(err);
                         toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
                     });
             };
 
-            //$scope.getCharText = function (ch) {
-            //    //console.log(ch);
-            //    var where = {};
-            //    if (angular.isString(ch)) {
-            //        where = {lastName: {'like': ch + '%'}};
-            //        $scope.charText = ch;
-            //    } else {
-            //        // $scope.defaultRows;
-            //        $scope.charText = '';
-            //    }
-            //    $scope.refresh(where);
-            //};
-
             $scope.getMode = function (t) {
-                // console.log('DDDDDD');
-                // console.log(t);
                 if (t) {
                     $scope.refresh({"fired": false});
                     $scope.t = false;
@@ -288,14 +229,10 @@
             };
 
             $scope.delete = function (item) {
-                //console.log(item);
                 item.$delete(item, function (success) {
-                    //console.log(success);
                     $scope.refresh();
-                    // $scope.items.splice($scope.items.indexOf(item), 1);
                 }, function (err) {
                     console.log(err);
-                    // alert();
                 })
             };
 
@@ -312,7 +249,10 @@
 
             $scope.selectionMode = $scope.msd[0];
 
-            // конструктор хлебных крошек
+            /**
+             *  Конструктор хлебных крошек
+             * @constructor
+             */
             function BreadCrumb() {
                 var name;
                 var path;

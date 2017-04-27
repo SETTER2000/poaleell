@@ -189,7 +189,7 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><!--Список сотрудников компании -->
+                    <h3 class="panel-title">
                         <button ui-sref="home.admin.users.create" title="Добавить сотрудника" type="button" class="btn btn-default btn-sm">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
@@ -197,111 +197,6 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <!--<table class="table table-hover">-->
-                    <!--<tr>-->
-                    <!--<th>#</th>-->
-                    <!--<th>-->
-                    <!--<button class="btn btn-sm btn-default" ng-click="sortBy('lastName')">{{fioArea}}-->
-                    <!--<span class="sortOrder" ng-show="propertyName === 'lastName'"-->
-                    <!--ng-class="{reverse: reverse}"></span>-->
-                    <!--</button>-->
-                    <!--</th>-->
-                    <!--<th>-->
-                    <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('birthday')">{{drArea}}-->
-                    <!--<span class="sortOrder" ng-show="propertyName === 'birthday'"-->
-                    <!--ng-class="{reverse: reverse}"></span>-->
-                    <!--</button>-->
-
-                    <!--</th>-->
-                    <!--<th>-->
-                    <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('login')">{{loginArea}}-->
-                    <!--<span class="sortOrder" ng-show="propertyName === 'login'"-->
-                    <!--ng-class="{reverse: reverse}"></span>-->
-                    <!--</button>-->
-
-                    <!--</th>-->
-                    <!--<th>-->
-                    <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('email')">{{emailArea}}-->
-                    <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
-                    <!--ng-class="{reverse: reverse}"></span>-->
-                    <!--</button>-->
-
-                    <!--</th>-->
-
-                    <!--<th>-->
-                    <!--&lt;!&ndash;<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}&ndash;&gt;-->
-                    <!--&lt;!&ndash;<span class="sortOrder" ng-show="propertyName === 'contacts'"&ndash;&gt;-->
-                    <!--&lt;!&ndash;ng-class="{reverse: reverse}"></span>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash; Single button &ndash;&gt;-->
-                    <!--&lt;!&ndash; Split button &ndash;&gt;-->
-                    <!--<div class="btn-group">-->
-                    <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">-->
-                    <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
-                    <!--ng-class="{reverse: reverse}"></span>-->
-                    <!--Контакты: {{fieldName}}-->
-                    <!--</button>-->
-                    <!--<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"-->
-                    <!--aria-haspopup="true" aria-expanded="false">-->
-                    <!--<span class="caret"></span>-->
-                    <!--<span class="sr-only">Контакты: {{fieldName}}</span>-->
-                    <!--</button>-->
-                    <!--<ul class="dropdown-menu">-->
-                    <!--<li><a href="#" ng-click="fieldName='Email'">Email</a></li>-->
-                    <!--<li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>-->
-                    <!--<li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>-->
-                    <!--<li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>-->
-                    <!--<li role="separator" class="divider"></li>-->
-                    <!--<li><a href="#">Separated link</a></li>-->
-                    <!--</ul>-->
-                    <!--</div>-->
-                    <!--</th>-->
-                    <!--<th>-->
-                    <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('email')">Фактически отработанное время-->
-                    <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
-                    <!--ng-class="{reverse: reverse}"></span>-->
-                    <!--</button>-->
-
-                    <!--</th>-->
-                    <!--<th></th>-->
-                    <!--<th></th>-->
-                    <!--</tr>-->
-                    <!--&lt;!&ndash;| firstChar:param:charText&ndash;&gt;-->
-                    <!--&lt;!&ndash;ng-class="$even ? 'default' : 'success'"&ndash;&gt;-->
-                    <!--&lt;!&ndash;<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>&ndash;&gt;-->
-                    <!--<tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:mode} |-->
-                    <!--orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">-->
-
-                    <!--<td>{{$index+1}}</td>-->
-                    <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
-                    <!--&lt;!&ndash;<td ng-if="">{{item.getFullName()}}</td>&ndash;&gt;-->
-                    <!--<td>{{item.birthday | date:'dd.MM.yyyy'}}</td>-->
-                    <!--<td>{{item.login}}</td>-->
-                    <!--<td>{{item.email}}</td>-->
-                    <!--<td>{{item.getContact(fieldName)}}</td>-->
-                    <!--<td>{{item.diff}}</td>-->
-                    <!--<td class="btn-group-xs">-->
-                    <!--<a ng-href="{{item.getShowUrl(item.id)}}" class="btn"-->
-                    <!--ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">-->
-                    <!--<span class="glyphicon "-->
-                    <!--ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"-->
-                    <!--aria-hidden="true"></span>-->
-                    <!--</a>-->
-                    <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                    <!--<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">-->
-                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                    <!--</a>-->
-                    <!--</td>-->
-                    <!--<td class="btn-group-xs">-->
-                    <!--<a href="#">-->
-                    <!--<span ng-if="mode" ng-click="delete(item)" class="glyphicon glyphicon-trash"></span>-->
-                    <!--</a>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--</table>-->
                     <div ng-switch on="modeSelect.value" style="margin-top:20px;">
                         <div ng-switch-when="list">
                             <ng-include src="listView"></ng-include>
@@ -312,9 +207,9 @@
                         <div ng-switch-when="action">
                             <ng-include src="actionView"></ng-include>
                         </div>
-                        <!--<div ng-switch-when="calendar">-->
-                            <!--<ng-include src="calendarView"></ng-include>-->
-                        <!--</div>-->
+                        <div ng-switch-when="work">
+                            <ng-include src="workView"></ng-include>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -324,5 +219,6 @@
     <div ui-view="attendance"></div>
     <pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="items.length"
                 current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
+
     <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
 </div>

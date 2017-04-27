@@ -126,8 +126,6 @@
                         </div>
 
 
-
-
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess10">ПФР</label>
                             <input type="text" class="form-control" ng-model="item.pfr">
@@ -261,7 +259,7 @@
                         </div>
 
 
-                        <div ng-show="((me.admin || me.kadr) && !edit)"  class="row">
+                        <div ng-show="((me.admin || me.kadr) && !edit)" class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="control-group form-group">
                                     <input data-ng-model="item.password" required data-ng-minlength="6"
@@ -303,7 +301,7 @@
                                 <span class="glyphicon glyphicon-list"> </span>
                                 Список
                             </a>
-                            <button  ng-if="!item.id" ng-click="revert()" ng-disabled="!canRevert()" class="btn btn-md btn-primary">
+                            <button ng-if="!item.id" ng-click="revert()" ng-disabled="!canRevert()" class="btn btn-md btn-primary">
                                 <span class="glyphicon glyphicon-erase"> </span>
                                 Очистить
                             </button>
@@ -316,7 +314,7 @@
 
                         </div>
                     </form>
-                    <button  ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right">
+                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>
