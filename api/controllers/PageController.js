@@ -497,17 +497,4 @@ module.exports = {
 
 };
 
-/*
- {
- me:{
- id:user.id,
- firstName:user.firstName,
- lastName:user.lastName,
- patronymicName:user.patronymicName,
- email:user.email,
- login:user.login,
- isAdmin:!!user.admin,
- gravatarUrl:user.gravatarUrl,
- lastLoggedIn:user.lastLoggedIn
- }
- }*/
+

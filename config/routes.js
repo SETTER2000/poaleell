@@ -27,6 +27,7 @@ module.exports.routes = {
      *************************************************************/
 
     'PUT /login': 'UserController.loginLDAP',
+    //'PUT /login': 'UserController.login',
     'GET /logout': 'PageController.logout',
     'POST /logout': 'UserController.logout',
 
@@ -45,7 +46,10 @@ module.exports.routes = {
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-    'POST /user/signup': 'UserController.signup',
+
+
+    // !!!! Õ≈ ”ƒ¿Àﬂ“‹ –Œ”“!
+    //'POST /user/signup': 'UserController.signup',
 
     /**
      * RESTful routes
