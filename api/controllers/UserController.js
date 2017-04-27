@@ -123,6 +123,12 @@ module.exports = {
         });
     },
 
+    /**
+     * Авторизация. Проверка логина и пароля.
+     *
+     * @param req
+     * @param res
+     */
     login: function (req, res) {
         User.findOne({
             or: [
@@ -591,18 +597,25 @@ module.exports = {
             if (err) {
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
-            if (req.param('subdivision')) {
-                User.findOne(req.param('id')).exec(function (err, user) {
-                    user.departments.add(req.param('subdivision'));
-                    if (req.param('removeDivision')) {
-                        user.departments.remove(req.param('removeDivision'));
-                    }
-                    user.save(function (err) {
-                        if (err) return res.negotiate(err);
-                        res.ok();
-                    });
-                });
-            }
+
+            //sails.log('subdivision');
+            //sails.log(req.param('subdivision').length);
+            ////sails.log(req.param('subdivision')[0].length);
+            //sails.log(req.param('subdivision'));
+
+            //if (req.param('subdivision').length > 0) {
+            //    User.findOne(req.param('id')).exec(function (err, user) {
+            //        if(err) return res.negotiate(err);
+            //        user.departments.add(req.param('subdivision'));
+            //        if (req.param('removeDivision')) {
+            //            user.departments.remove(req.param('removeDivision'));
+            //        }
+            //        user.save(function (err) {
+            //            if (err) return res.negotiate(err);
+            //            res.ok();
+            //        });
+            //    });
+            //}
             //if (req.param('position')) {
             //    User.findOne(req.param('id')).exec(function (err, user) {
             //        user.positions.add(req.param('position'));
