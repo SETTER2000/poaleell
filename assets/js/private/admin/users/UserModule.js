@@ -232,16 +232,34 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         return {
             restrict: 'E',
             scope: {
-                numPages: '=', // кол-во страниц (кнопок)
+                //numPages: '=', // кол-во страниц (кнопок)
                 defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
                 limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
                 lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
                 currentPage: '=',
-                onSelectPage: '&'
+                onSelectPage: '&',
+                added:'='
             },
             templateUrl: '/js/private/admin/users/views/pagination.html',
             replace: true,
             link: function (scope) {
+
+                scope.$watch('added', function (value) {
+                    scope.added = value;
+                });
+
+                scope.$watch('lengthObject', function (value) {
+                    scope.numPages = Math.floor(value / scope.defaultRows) + 1;
+                    //scope.pages = [];
+                    //for (var i = 1; i <= value; i++) {
+                    //    scope.pages.push(i);
+                    //}
+                    //if (scope.currentPage > value) {
+                    //    scope.selectPage(value);
+                    //}
+                });
+
+
                 scope.$watch('numPages', function (value) {
                     scope.pages = [];
                     for (var i = 1; i <= value; i++) {

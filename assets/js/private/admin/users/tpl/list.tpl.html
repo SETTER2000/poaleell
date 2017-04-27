@@ -153,15 +153,19 @@
     <!--<button type="submit" size="large">Click Me!</button>-->
     <!--{{charText}}  {{where}}-->
 
-    <pagination num-pages="numPages"
-                limit-rows="limitRows"
-                default-rows="defaultRows"
-                length-object="items.length"
-                current-page="currentPage"
-                on-select-page="selectCount=selectCount+1">
-    </pagination>
+    <!--<pagination num-pages="numPages"-->
+                <!--limit-rows="limitRows"-->
+                <!--default-rows="defaultRows"-->
+                <!--length-object="items.length"-->
+                <!--current-page="currentPage"-->
+                <!--on-select-page="selectCount=selectCount+1">-->
+    <!--</pagination>-->
 
-
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -180,23 +184,17 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            &nbsp;
-        </div>
-    </div>
-    <div class="row" ng-cloak>
-        <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <button ui-sref="home.admin.users.create" title="Добавить сотрудника" type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
 
-                    </h3>
-                </div>
-                <div class="panel-body">
+    <!--<div class="row" ng-cloak>-->
+        <!--<div class="col-md-12">-->
+            <!--<div class="panel panel-info">-->
+                <!--<div class="panel-heading">-->
+
+
+
+
+                <!--</div>-->
+                <!--<div class="panel-body">-->
                     <div ng-switch on="modeSelect.value" style="margin-top:20px;">
                         <div ng-switch-when="list">
                             <ng-include src="listView"></ng-include>
@@ -212,13 +210,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
     <div ui-view="list"></div>
     <div ui-view="attendance"></div>
-    <pagination num-pages="numPages" limit-rows="limitRows" default-rows="defaultRows" length-object="items.length"
-                current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
 
     <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
 </div>

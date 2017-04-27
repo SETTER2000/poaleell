@@ -36,7 +36,7 @@
             $scope.emailArea = 'Email';
             $scope.departmentArea = 'Отдел';
             $scope.positionArea = 'Должность';
-
+            $scope.added = 'Добавить сотрудника';
 
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
@@ -198,17 +198,17 @@
                 }
                 $scope.query = {
                     where: $scope.where,
-                    sort:  $scope.sort,
+                    sort: $scope.sort,
                     limit: $scope.limitAll,
                     property: 'lastName',
-                    char:  $scope.charText+'%'
+                    char: $scope.charText + '%'
                 };
 
                 $scope.items = Users.query($scope.query,
                     function (users) {
                         $scope.items = users;
                         $scope.objectName = users;
-                        $scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
+                        //$scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
                     }, function (err) {
                         toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
                     });

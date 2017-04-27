@@ -1,5 +1,14 @@
 <!--<h3>LIST {{filtered.length}}</h1>-->
+<pagination
 
+        limit-rows="limitRows"
+        default-rows="defaultRows"
+        length-object="(items | filter:{$:searchText, fired:false} ).length"
+        current-page="currentPage"
+        added="added"
+        on-select-page="selectCount=selectCount+1">
+</pagination>
+<!--{{(items | filter:{$:searchText, fired:false} ).length}}-->
 <table class="table table-hover">
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
     <tr>
@@ -104,7 +113,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             <!--{{item.departments[0].name }}-->
 
             <ul class="position" ng-controller="ListDepartmentController" ng-repeat="subdivision in item.subdivision">
-                <li  ng-repeat="option in items | filter:subdivision.id">
+                <li ng-repeat="option in items | filter:subdivision.id">
                     {{option.name}}
                 </li>
             </ul>
@@ -144,3 +153,5 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         </td>
     </tr>
 </table>
+
+

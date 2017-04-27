@@ -1,21 +1,34 @@
 <div class="row">
-    <div class="col-md-2">
-        <div class="btn-group btn-group-sm pagination" role="group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                Количество: {{defaultRows}}
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><input ng-model="defaultRows" class="form-control"></li>
-                <li ng-repeat="row in rows" ng-class="{active: isActiveRow(row)}">
-                    <a href="#" ng-click="getLimitRows(row)">{{row}}</a>
-                </li>
-                <li><a ng-click="getLimitRows(lengthObject)" href="#">Все</a></li>
-            </ul>
+    <div class="col-md-4">
+        <div class="pull-left">
+            <div class="pagination">
+                <div class="btn-toolbar " role="toolbar">
+
+                    <button type="button" class="btn btn-default btn-group dropdown-toggle" role="group" data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        Количество: {{defaultRows}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><input ng-model="defaultRows" class="form-control"></li>
+                        <li ng-repeat="row in rows" ng-class="{active: isActiveRow(row)}">
+                            <a href="#" ng-click="getLimitRows(row)">{{row}}</a>
+                        </li>
+                        <li><a ng-click="getLimitRows(lengthObject)" href="#">Все</a></li>
+                    </ul>
+
+
+                    <button class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create" title="Добавить сотрудника"
+                            type="button">
+                        {{added}}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-10">
+
+    <div class="col-md-8">
         <nav class="pull-right">
             <ul class="pagination">
                 <li ng-class="{disabled: noPrevious()}">

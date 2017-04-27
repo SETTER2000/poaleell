@@ -1,21 +1,11 @@
-<!--<h1>TABLE {{filtered.length}}</h1>-->
-<!--<script type="text/javascript">-->
-    <!--$(document).ready(function(){-->
-        <!--//Инициализация всплывающей панели для-->
-        <!--//элементов веб-страницы, имеющих атрибут-->
-        <!--//data-toggle="popover"-->
-<!--//        $('[data-toggle="popover"]').popover({-->
-<!--//            //Установление направления отображения popover-->
-<!--//            placement : 'top'-->
-<!--//        });-->
-<!--//-->
-        <!--$('[data-toggle="popover"]').popover({-->
-            <!--//Установление направления отображения popover-->
-            <!--placement : 'top'-->
-        <!--});-->
-    <!--});-->
-<!--</script>-->
-
+<pagination
+        limit-rows="limitRows"
+        default-rows="defaultRows"
+        length-object="(items | filter:{$:searchText, fired:mode} ).length"
+        current-page="currentPage"
+        added="added"
+        on-select-page="selectCount=selectCount+1">
+</pagination>
 
 <table class="table table-hover">
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
@@ -117,9 +107,9 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             <!--<button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>-->
 
             <!--<button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">-->
-                <!--{{item.getFullName()}}-->
+            <!--{{item.getFullName()}}-->
             <!--</button>-->
-           </td>
+        </td>
         <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
         <!--<td ng-if="">{{item.getFullName()}}</td>-->
         <!--<td>{{item.birthday | date:'dd.MM.yyyy'}}</td>-->
@@ -141,7 +131,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             <!--<span class="glyphicon glyphicon-pencil"></span>-->
             <!--</a>-->
             <!--<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">-->
-                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+            <!--<span class="glyphicon glyphicon-pencil"></span>-->
             <!--</a>-->
         </td>
         <td class="btn-group-xs">

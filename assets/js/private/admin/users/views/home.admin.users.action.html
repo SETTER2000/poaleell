@@ -1,4 +1,11 @@
-<!--<h3>LIST {{filtered.length}}</h1>-->
+<pagination
+        limit-rows="limitRows"
+        default-rows="defaultRows"
+        length-object="(items | filter:{$:searchText, action:false} ).length"
+        current-page="currentPage"
+        added="added"
+        on-select-page="selectCount=selectCount+1">
+</pagination>
 
 <table class="table table-hover">
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
@@ -11,17 +18,17 @@
             </button>
         </th>
         <!--<th>-->
-            <!--<button class="btn  btn-sm btn-default not-border" ng-click="sortBy('birthday')">{{drArea}}-->
-<!--<span class="sortOrder" ng-show="propertyName === 'birthday'"-->
-      <!--ng-class="{reverse: reverse}"></span>-->
-            <!--</button>-->
+        <!--<button class="btn  btn-sm btn-default not-border" ng-click="sortBy('birthday')">{{drArea}}-->
+        <!--<span class="sortOrder" ng-show="propertyName === 'birthday'"-->
+        <!--ng-class="{reverse: reverse}"></span>-->
+        <!--</button>-->
 
         <!--</th>-->
         <!--<th>-->
-            <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('login')">{{loginArea}}-->
-<!--<span class="sortOrder" ng-show="propertyName === 'login'"-->
-      <!--ng-class="{reverse: reverse}"></span>-->
-            <!--</button>-->
+        <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('login')">{{loginArea}}-->
+        <!--<span class="sortOrder" ng-show="propertyName === 'login'"-->
+        <!--ng-class="{reverse: reverse}"></span>-->
+        <!--</button>-->
 
         <!--</th>-->
         <th>
@@ -75,10 +82,10 @@
             </div>
         </th>
         <!--<th>-->
-            <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">Отработанное время-->
-<!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
-      <!--ng-class="{reverse: reverse}"></span>-->
-            <!--</button>-->
+        <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">Отработанное время-->
+        <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
+        <!--ng-class="{reverse: reverse}"></span>-->
+        <!--</button>-->
 
         <!--</th>-->
         <th></th>
@@ -94,7 +101,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
         <td>
             <a href="{{item.getEditUrl(item.id)}}">
-            {{item.getFullName()}}
+                {{item.getFullName()}}
             </a>
         </td>
         <!--<td>{{item.getFullName()}}</td>-->
@@ -110,14 +117,14 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
             <span class="glyphicon"
                   ng-class="{'glyphicon-eye-open': item.action, 'glyphicon-eye-close':!item.action}"
-      aria-hidden="true"></span>
+                  aria-hidden="true"></span>
             </a>
             <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
             <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
             <!--<span class="glyphicon glyphicon-pencil"></span>-->
             <!--</a>-->
             <!--<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">-->
-                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+            <!--<span class="glyphicon glyphicon-pencil"></span>-->
             <!--</a>-->
         </td>
         <td class="btn-group-xs">
