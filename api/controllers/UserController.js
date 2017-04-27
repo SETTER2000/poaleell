@@ -21,9 +21,10 @@ var assert = require('assert');
 var clientLDAP = ldap.createClient({
     url: sails.config.ldap.uri
 });
+
 module.exports = {
     /**
-     * Авторизация. Проверка логина и пароля.
+     * Авторизация LDAP. Проверка логина и пароля.
      *
      * @param req - запрос от клиента к серверу
      * @param res - ответ сервера клиенту
@@ -615,7 +616,7 @@ module.exports = {
             //    });
             //}
 
-            //res.ok();
+            res.ok();
         });
     },
 
