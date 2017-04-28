@@ -39,7 +39,7 @@ module.exports = {
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
             clientLDAP.bind(user.login+'@'+sails.config.admin.company, req.param('password'), function (err) {
-                if (err) return res.negotiate(err);
+                assert.ifError(err);
                 var opts = {
                     scope: 'sub',
                     //filter: '(cn=Петров Александр)',
@@ -48,78 +48,48 @@ module.exports = {
                     paged: true,
                     sizeLimit: 50
                 };
+
                 clientLDAP.search(sails.config.ldap.dn, opts, function (err, ldapUser) {
+                    assert.ifError(err);
                     ldapUser.on('searchEntry', function (entry) {
                         console.log('Результат: ' + JSON.stringify(entry.object.displayName + ' ' + entry.object.mail + ' ' + entry.object.telephoneNumber + ' ' + entry.object.sAMAccountName + ' ' + entry.object.userAccountControl));
-                        //return res.ok('LDAP: проверка пройдена! ');
-                        if (user.deleted) {
-                            return res.forbidden("Ваша учетная запись удалена. " +
-                                "Перейдите на страницу 'Восстановить профиль'.");
-                        }
-                        if (!user.action) {
-                            return res.forbidden("Ваша учетная запись заблокирована, " +
-                                "пожалуйста свяжитесь с администратором: "+sails.config.admin.email);
-                        }
-
-                        req.session.me = user.id;
-                        //req.session.admin = user.admin;
-                        //req.session.kadr = 11;
-                        //req.session.me = user;
-                        return res.ok();
-                        //Passwords.checkPassword({
-                        //    passwordAttempt: req.param('password'), encryptedPassword: user.encryptedPassword
-                        //}).exec({
-                        //    error: function (err) {
-                        //        return res.negotiate(err);
-                        //    },
-                        //    incorrect: function () {
-                        //        return res.notFound();
-                        //    },
-                        //    success: function () {
-                        //        if (user.deleted) {
-                        //            return res.forbidden("Ваша учетная запись удалена. " +
-                        //                "Перейдите на страницу 'Восстановить профиль'.");
-                        //        }
-                        //        if (!user.action) {
-                        //            return res.forbidden("Ваша учетная запись заблокирована, " +
-                        //                "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
-                        //        }
-                        //
-                        //        req.session.me = user.id;
-                        //        //req.session.admin = user.admin;
-                        //        //req.session.kadr = 11;
-                        //        //req.session.me = user;
-                        //        return res.ok();
-                        //    }
-                        //});
                     });
 
-                    //return res.notFound();
-                    //clientLDAP.on('searchReference', function (referral) {
-                    //    console.log('referral: ' + referral.uris.join());
-                    //});
-                    //clientLDAP.on('error', function (err) {
-                    //    console.error('error: ' + err.message);
-                    //});
-                    //clientLDAP.on('end', function (result) {
-                    //    console.log('status: ' + result.status);
-                    //});
-                    //clientLDAP.on('page', function (result) {
-                    //    console.log('page end');
-                    //});
-                    //clientLDAP.on('error', function (resErr) {
-                    //    //assert.ifError(resErr);
-                    //    if (resErr) return res.negotiate(resErr);
-                    //    //if (!clientLDAP) return res.notFound();
-                    //});
-                    //clientLDAP.on('end', function (result) {
-                    //    console.log('done ');
-                    //});
+                    ldapUser.on('searchReference', function (referral) {
+                        console.log('referral: ' + referral.uris.join());
+                    });
+                    ldapUser.on('error', function (err) {
+                        console.error('error: ' + err.message);
+                    });
+                    ldapUser.on('end', function (result) {
+                        console.log('status: ' + result.status);
+                    });
+                    ldapUser.on('page', function (result) {
+                        console.log('page end');
+                    });
+                    ldapUser.on('error', function (resErr) {
+                        assert.ifError(resErr);
+                        if (resErr) return res.negotiate(resErr);
+                        //if (!clientLDAP) return res.notFound();
+                    });
+                    ldapUser.on('end', function (result) {
+                        console.log('done ');
+                    });
+
+
+                    if (user.deleted) {
+                        return res.forbidden("Ваша учетная запись удалена. " +
+                            "Перейдите на страницу 'Восстановить профиль'.");
+                    }
+                    if (!user.action) {
+                        return res.forbidden("Ваша учетная запись заблокирована, " +
+                            "пожалуйста свяжитесь с администратором: "+sails.config.admin.email);
+                    }
+
+                    req.session.me = user.id;
+                    return res.ok();
                 });
             });
-
-
-
         });
     },
 
@@ -595,13 +565,23 @@ module.exports = {
         };
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err) {
+                sails.log('ERROR');
+                sails.log(err);
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
 
-            //sails.log('subdivision');
+            sails.log('subdivision');
             //sails.log(req.param('subdivision').length);
-            ////sails.log(req.param('subdivision')[0].length);
-            //sails.log(req.param('subdivision'));
+            sails.log(req.param('subdivision'));
+
+
+            sails.log('position');
+            //sails.log(req.param('position').length);
+            sails.log(req.param('position'));
+            //sails.log(req.param('subdivision')[0].length);
+
+
+
 
             //if (req.param('subdivision').length > 0) {
             //    User.findOne(req.param('id')).exec(function (err, user) {

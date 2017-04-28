@@ -49,7 +49,7 @@ module.exports = {
             sails.log('is not string');
             return res.badRequest('Наименование не заполнено.');
         }
-        if(req.param('name').length < 2 || req.param('name').length > 35){
+        if(req.param('name').length < 2 || req.param('name').length > 150){
             return res.badRequest('Наименование должно быть от 2 до 35 знаков!');
         }
         Department.create(req.body).exec(function (err, finn) {

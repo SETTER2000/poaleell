@@ -52,7 +52,7 @@ angular.module('PositionModule')
                     // console.log($scope.users.length);
                     // console.log($scope.users);
                 }, function (err) {
-                    if (err) console.log(err.message);
+                    toastr.error(err.data.details, 'Ошибка - 211! ' + err.data.message);
                 });
             };
             // $SCOPE.SAVEeDIT = FUNCTION (ITEM) {
