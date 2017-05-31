@@ -7,8 +7,8 @@ angular.module('Holiday', [
         'EmployeeModule',
         'DashboardModule',
         'UserModule',
-    'CalendarModule',
-    'AttendanceModule',
+        'CalendarModule',
+        'AttendanceModule',
         'AdminModule'
     ])
     // .constant("baseUrl", "http://localhost\\:1337")

@@ -48,7 +48,7 @@ module.exports.routes = {
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
 
 
-    // !!!! Õ≈ ”ƒ¿Àﬂ“‹ –Œ”“!
+    // !!!! –ù–ï –£–î–ê–õ–Ø–¢–¨ –†–û–£–¢!
     //'POST /user/signup': 'UserController.signup',
 
     /**
@@ -79,6 +79,13 @@ module.exports.routes = {
     'GET /calendars/:id': 'CalendarController.findCalendars',
     'GET /calendars': 'CalendarController.findCalendars',
     'PUT /calendars/:id': 'CalendarController.update',
+
+
+
+    'GET /price':'PriceController.getPrice',
+
+
+
 
 
     /*************************************************************

@@ -46,6 +46,19 @@
                     $scope.interval.start = moment(mx).hours(0).minutes(0).seconds(0).milliseconds(0);
                     $scope.restart();
                 };
+
+                $scope.linkToWorkCalendar = 'http://data.gov.ru/api/json/dataset/7708660670-proizvcalendar/version/20151123T183036/content?search=2017&access_token=66b25fa9cdb07b473c217c61e3bfa47d';
+                $http.get($scope.linkToWorkCalendar).then(function (response) {
+                    //$scope.st = response.status;
+                    //$scope.dta = response.data;
+                    console.log(scope.data);
+                }, function (response) {
+                    //$scope.dta = response.data || 'Request failed';
+                    //$scope.st = response.status;
+                    console.log(scope.data);
+                });
+
+
                 //$scope.getQuery = function () {
                 //    $scope.items = Attendances.query(
                 //        $scope.query,

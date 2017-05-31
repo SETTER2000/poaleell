@@ -13,16 +13,16 @@ angular.module("AdminModule")
             ];
         $scope.data = {counter: 6};
 
-        io.socket.on('User', function (event) {
-            console.log('EVENT:');
-            console.log(event.data);
-            $scope.$apply();
-        });
-        io.socket.get('/user',{limit:300}, function (resData, jwres) {
-            console.log('COUNT:');
-            console.log(resData.length);
-            $scope.$apply();
-        });
+        //io.socket.on('User', function (event) {
+        //    console.log('EVENT:');
+        //    console.log(event.data);
+        //    $scope.$apply();
+        //});
+        //io.socket.get('/user',{limit:300}, function (resData, jwres) {
+        //    console.log('COUNT:');
+        //    console.log(resData.length);
+        //    $scope.$apply();
+        //});
         //$scope.$watch("data.counter", function (newValue, oldValue) {
         //    console.log("Старое значение - " + oldValue + ", новое значение - " + newValue);
         //    //$scope.data.counter = newValue;

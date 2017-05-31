@@ -302,12 +302,14 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 };
 
                 scope.getQuery = function (query) {
+                    //console.log('query:');
+                    //console.log(query);
                     if (!angular.isDefined(query))return;
                     scope.attendance = Attendances.query(
                         query,
                         function (attendanceEmployees, err) {
-                            console.log('QUERY');
-                            console.log(attendanceEmployees);
+                            //console.log('QUERY');
+                            //console.log(attendanceEmployees);
                             scope.attendance = attendanceEmployees;
                             scope.attendance.$promise
                                 .then(function group(result) {
@@ -367,14 +369,13 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                             }
                                         }
                                     }
-                                    console.log('result.data');
-                                    console.log(result.data);
+                                    //console.log('result.data');
+                                    //console.log(result.data);
                                     scope.data = result.data;
                                 })
                         }
                     );
-                }
-                ;
+                };
 
                 scope.currentPeriod = function (period) {
                     scope.globalPeriod = (period === scope.week) ? scope.week : scope.month;
@@ -410,8 +411,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
 
                         scope.getQuery({
                             /**
-                             *  1 - чистое время прибывания на работе за день
-                             *  0 - общее время на работе за день
+                             *  timeClear: 1 - чистое время прибывания на работе за день
+                             *  timeClear: 0 - общее время на работе за день
                              *  по умолчанию чистое, т.е. true
                              */
 
@@ -466,8 +467,9 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                     scope.interval.end.add(t, scope.globalPeriod);
                     scope.restart();
                 };
+                scope.currentPeriod();
+                scope.restart();
             }
-        }
-            ;
+        };
     })
 ;

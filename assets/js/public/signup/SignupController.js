@@ -44,7 +44,8 @@ angular.module('SignupModule').controller('SignupController', ['$scope', '$http'
     $scope.submitLoginForm = function () {
         $scope.loginForm.loading = true;
         $http.put('/login', {
-            email: $scope.loginForm.email, password: $scope.loginForm.password
+            email: $scope.loginForm.email,
+            password: $scope.loginForm.password
         }).then(function onSuccess(sailsResponse) {
             window.location = '/';
         }).catch(function onError(sailsResponse) {
