@@ -170,8 +170,26 @@ angular.module('CalendarModule')
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
+            //console.log("CALENDAR2");
+            Calendars.get({id: $stateParams.calendarId},function (calendars) {
+                    //console.log("CALENDAR");
+                    //console.log(calendars);
+                    $scope.item =calendars;
+                    $scope.calendars = calendars;
+                }, function (err) {
+                //console.log('ERRR EDIT');
+                //console.log(err);
+                
+                    if (err) {
+                        toastr.error(err, 'Ошибка EditCalendarController!');
+                    }
+                });
             $scope.refresh = function () {
-                var item = $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
+                var item = $scope.item = Calendars.get({id: $stateParams.calendarId}, 
+                    function (calendars) {
+                        console.log("CALENDAR");
+                        console.log(calendars);
+                        $scope.item =calendars;
                     $scope.calendars = calendars;
                 }, function (err) {
                     if (err) {

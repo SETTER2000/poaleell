@@ -37,8 +37,10 @@
                             <!--<li class="dropdown-header">Редактирование</li>-->
                             <!--<li><a ng-if="(me.kadr || me.admin || me.leader)" ui-sref="home.admin.users.exit">Выход сотрудника</a></li>-->
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Сотрудники</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Отделы</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Подразделения</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin">Структура компании</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.attendances">Отработанное время</a></li>
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>

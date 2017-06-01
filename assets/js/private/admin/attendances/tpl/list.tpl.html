@@ -1,41 +1,61 @@
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
-    <div class="page-header">
-        <h1><!--{{items[0].scs()}}-->{{items[0].getNamePage()}} <span ng-if="mode">не активные</span> {{filtered.length}}
-            <div class="btn-group-xs pull-right">
-                <!--<small>-->
-                    <!--<label class="checkbox-inline">-->
+<!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+<div class="col-sm-11  col-md-12  main">
+<div class="page-header">
+    <h1>{{items[0].scs()}} {{items[0].getNamePage()}}<span ng-if="mode">не активные</span> ({{filtered.length}})
+            <span class="pull-right">
+                <small>
+                    <small>
+                        <!--<label class="checkbox-inline">-->
                         <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
-                    <!--</label>-->
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
-                    <!--</label>-->
+                        <!--</label>-->
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="mode" value="option2"> не активные
+                            <!--<span class="glyphicon  glyphicon-eye-open" ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}" aria-hidden="true"></span>-->
+                        </label>
+                        <!--<label class="checkbox-inline">-->
+                        <!--<a  ui-sref="admin.users.list.settings">-->
+                        <!--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>-->
+                        <!--</a>-->
+                        <!--</label>-->
+                    </small>
+                </small></span>
+    </h1>
+        <!--<h1>&lt;!&ndash;{{items[0].scs()}}&ndash;&gt;{{items[0].getNamePage()}} <span ng-if="mode">не активные</span> {{filtered.length}}-->
+            <!--<div class="btn-group-xs pull-right">-->
+                <!--&lt;!&ndash;<small>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox-inline">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="checkbox" ng-model="debug" value="option1"> отладка&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox-inline">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="checkbox" ng-model="mode" value="option2"> режимы&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
 
-                <!--</small>-->
-                <!--<button ui-sref="home.admin.attendances.settings" type="button" class="btn btn-success">-->
-                    <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--&lt;!&ndash;</small>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button ui-sref="home.admin.attendances.settings" type="button" class="btn btn-success">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-cog"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--<button ui-sref="home.admin.attendances.calendar.месяц"-->
+                        <!--type="button" class="btn btn-primary">-->
+                    <!--<span class="glyphicon glyphicon-calendar"></span>-->
                 <!--</button>-->
-                <button ui-sref="home.admin.attendances.calendar.месяц"
-                        type="button" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </button>
-                <!--<button ui-sref="home.admin.attendances.create" type="button" class="btn btn-warning" >-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
-                <!--</button>-->
-                <!--<a ng-href="{{items[0].getCreateUrl()}}" class="btn btn-warning">-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
-                <!--</a>-->
-            </div>
-        </h1>
-        <ul class="breadcrumb">
-            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
-                <ng-switch on="$last">
-                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
-                        <span ng-switch-default>
-                                <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
-                        </span>
-                </ng-switch>
-            </li>
-        </ul>
+                <!--&lt;!&ndash;<button ui-sref="home.admin.attendances.create" type="button" class="btn btn-warning" >&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-plus"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a ng-href="{{items[0].getCreateUrl()}}" class="btn btn-warning">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-plus"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</h1>-->
+        <!--<ul class="breadcrumb">-->
+            <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
+                <!--<ng-switch on="$last">-->
+                    <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
+                        <!--<span ng-switch-default>-->
+                                <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
+                        <!--</span>-->
+                <!--</ng-switch>-->
+            <!--</li>-->
+        <!--</ul>-->
         <div ui-view></div>
         <div ui-view="settings"></div>
     </div>

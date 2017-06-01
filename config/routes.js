@@ -82,7 +82,8 @@ module.exports.routes = {
 
 
 
-    'GET /price':'PriceController.getPrice',
+    'GET /attendance': 'Attendance.timeAll', // для календаря
+    'GET /attendance/list': 'Attendance.attentanceList', // для календаря
 
 
 
@@ -119,12 +120,12 @@ module.exports.routes = {
 
 
 
-    'GET /admin/users/attendance': 'PageController.showHomePage',
+    //'GET /admin/users/attendance': 'PageController.showHomePage',
     'GET /admin/positions/create': 'PageController.showHomePage',
     //'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
     'GET /admin/users/show/:id': 'UserController.findOne',
-    'GET /admin/users/edit': 'PageController.getEditUserPage',
+    //'GET /admin/users/edit': 'PageController.getEditUserPage',
     'PUT /admin/users/edit/changePassword': 'UserController.changePasswordProfile',
     'GET /admin/users/edit/:id': 'PageController.getEditUserPage',
 
@@ -152,16 +153,17 @@ module.exports.routes = {
     'GET /admin/employee/:id': 'PageController.showHomePage',
 
 
-    'GET /admin/attendances/calendar': 'PageController.showHomePage',
-    'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
+    //'GET /admin/attendances/calendar': 'PageController.showHomePage',
+    //'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
 
     'GET /user/adminUsers': 'UserController.adminUsers',
 
-    'GET /att': 'Attendance.getQuery',
-    'POST /att': 'Attendance.getQuery',
-    'GET /period': 'Attendance.findPeriod',
-    'GET /pd': 'Attendance.fPeriod',
-    'GET /api': 'Attendance.timeAll',
+    // !!! НЕ УДАЛЯТЬ !!!
+    //'GET /att': 'Attendance.getQuery',
+    //'POST /att': 'Attendance.getQuery',
+    //'GET /period': 'Attendance.findPeriod',
+    //'GET /pd': 'Attendance.fPeriod',
+
 
     'GET /:login': {
         controller: 'PageController',

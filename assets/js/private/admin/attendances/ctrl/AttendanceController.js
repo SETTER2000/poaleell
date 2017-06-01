@@ -15,7 +15,7 @@ angular.module('AttendanceModule')
                 $scope.item = Attendances.query({limit: 1000}, function (attendances) {
                     $scope.item = attendances;
                     //$scope.numPages = attendances.length;
-                    console.log('ATTENDANCES: ');
+                    console.log(' 11: ');
                     console.log($scope.attendances);
                     console.log($scope.attendances.length);
 

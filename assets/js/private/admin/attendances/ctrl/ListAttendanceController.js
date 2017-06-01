@@ -18,7 +18,7 @@
                 $scope.items = Attendances.query({limit: $scope.limitAll, sort: $scope.sort}, function (attendances) {
                     $scope.attendances = attendances;
                     $scope.numPages = attendances.length;
-                    console.log('ATTENDANCES: ');
+                    console.log('ATTENDANCES 22: ');
                     console.log($scope.attendances);
                     console.log($scope.attendances.length);
                     $scope.numPages = Math.floor(attendances.length / $scope.defaultRows) + 1;

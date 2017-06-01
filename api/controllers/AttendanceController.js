@@ -6,6 +6,14 @@
  */
 
 module.exports = {
+    attentanceList: function (req, res) {
+        User.find({}).exec(function getUser(err, data) {
+            if(err) return res.negotiate(err);
+            if(data){
+                res.ok(data);
+            }
+        });
+    },
 
     getQuery: function (req, res) {
         Attendance.query(

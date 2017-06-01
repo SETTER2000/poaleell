@@ -4,11 +4,8 @@
  * @description :: Server-side logic for managing calendars
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var Pcru = require('pc-ru');
-const pc = new Pcru('66b25fa9cdb07b473c217c61e3bfa47d');
-
-
-
+//var Pcru = require('pc-ru');
+//const pc = new Pcru('66b25fa9cdb07b473c217c61e3bfa47d');
 module.exports = {
 
     findOne: function (req, res, next) {
@@ -33,24 +30,24 @@ module.exports = {
                 .exec(function foundUser(err, calendar) {
                     if (err) return res.serverError(err);
                     if (!calendar) return res.notFound();
-                    /**
-                     * Получить все данные за год.
-                     * По умолчанию текущий год.
-                     * Установить год (>1998) для календаря если нужно.
-                     */
+                    ///**
+                    // * Получить все данные за год.
+                    // * По умолчанию текущий год.
+                    // * Установить год (>1998) для календаря если нужно.
+                    // */
                     //pc.getCalendar();
-
-                    /**
-                     * Получить все праздничные дни год/месяц, если указать параметр monthNumber:
-                     * '1'  январь
-                     * '2'  февраль
-                     * '3'  март
-                     * и т.д.
-                     */
+                    //
+                    ///**
+                    // * Получить все праздничные дни год/месяц, если указать параметр monthNumber:
+                    // * '1'  январь
+                    // * '2'  февраль
+                    // * '3'  март
+                    // * и т.д.
+                    // */
                     //pc.getHolidays();
                     //pc.getHolidays(['1','2','3']);
                     //sails.log(calendar);
-                    //res.ok(calendar);
+                    res.ok(calendar);
                 });
         }else{
             Calendar.find()

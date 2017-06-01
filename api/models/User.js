@@ -144,7 +144,11 @@ module.exports = {
             collection: 'position',
             via: 'users',
             dominant: true
-        }
+        },
+        getFullName:function() {
+                return this.lastName+' ' + this.firstName+' '+this.patronymicName;
+            }
+
     }
 };
 

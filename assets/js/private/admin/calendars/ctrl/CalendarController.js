@@ -47,16 +47,16 @@
                     $scope.restart();
                 };
 
-                $scope.linkToWorkCalendar = 'http://data.gov.ru/api/json/dataset/7708660670-proizvcalendar/version/20151123T183036/content?search=2017&access_token=66b25fa9cdb07b473c217c61e3bfa47d';
-                $http.get($scope.linkToWorkCalendar).then(function (response) {
-                    //$scope.st = response.status;
-                    //$scope.dta = response.data;
-                    console.log(scope.data);
-                }, function (response) {
-                    //$scope.dta = response.data || 'Request failed';
-                    //$scope.st = response.status;
-                    console.log(scope.data);
-                });
+                //$scope.linkToWorkCalendar = 'http://data.gov.ru/api/json/dataset/7708660670-proizvcalendar/version/20151123T183036/content?search=2017&access_token=66b25fa9cdb07b473c217c61e3bfa47d';
+                //$http.get($scope.linkToWorkCalendar).then(function (response) {
+                //    //$scope.st = response.status;
+                //    //$scope.dta = response.data;
+                //    console.log(scope.data);
+                //}, function (response) {
+                //    //$scope.dta = response.data || 'Request failed';
+                //    //$scope.st = response.status;
+                //    console.log(scope.data);
+                //});
 
 
                 //$scope.getQuery = function () {
@@ -70,12 +70,14 @@
                 //            //$scope.numPages = Math.floor(attendanceEmployees.length / $scope.defaultRows) + 1;
                 //        });
                 //};
+
                 $scope.refresh = function () {
                     $scope.item = Calendars.get({id: $stateParams.calendarId}, function (calendars) {
                         $scope.calendars = calendars;
                         $scope.newData();
                         $scope.restart();
-
+                        console.log('ITEM ID');
+                        console.log($scope.item);
                     }, function (err) {
                         if (err) console.log(err.message);
                     });
