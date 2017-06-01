@@ -46,7 +46,7 @@ module.exports = {
                     // */
                     //pc.getHolidays();
                     //pc.getHolidays(['1','2','3']);
-                    //sails.log(calendar);
+                    // sails.log(calendar);
                     res.ok(calendar);
                 });
         }else{

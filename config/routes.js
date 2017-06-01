@@ -26,11 +26,11 @@ module.exports.routes = {
      * JSON API ENDPOINTS                                                    *
      *************************************************************/
 
-    'PUT /login': 'UserController.loginLDAP',
-    //'PUT /login': 'UserController.login',
+    // 'PUT /login': 'UserController.loginLDAP',
+    'PUT /login': 'UserController.login',
     'GET /logout': 'PageController.logout',
     'POST /logout': 'UserController.logout',
-
+    'GET /mail/send': 'MailController.send',
     //'GET /ldap': 'UserController.ldapConnect',
 
 
@@ -62,7 +62,6 @@ module.exports.routes = {
     'PUT /users/:id': 'UserController.update',
 
 
-
     'GET /positions/:id': 'PositionController.findPositions',
     'GET /positions': 'PositionController.findPositions',
     'PUT /positions/:id': 'PositionController.update',
@@ -81,12 +80,8 @@ module.exports.routes = {
     'PUT /calendars/:id': 'CalendarController.update',
 
 
-
     'GET /attendance': 'Attendance.timeAll', // для календаря
     'GET /attendance/list': 'Attendance.attentanceList', // для календаря
-
-
-
 
 
     /*************************************************************
@@ -117,7 +112,6 @@ module.exports.routes = {
     'GET /admin/attendances': 'PageController.showHomePage',
     'GET /admin/positions': 'PageController.showHomePage',
     'GET /admin/employees': 'PageController.showHomePage',
-
 
 
     //'GET /admin/users/attendance': 'PageController.showHomePage',
