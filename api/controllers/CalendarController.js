@@ -38,7 +38,7 @@ module.exports = {
                      * По умолчанию текущий год.
                      * Установить год (>1998) для календаря если нужно.
                      */
-                    pc.getCalendar();
+                    //pc.getCalendar();
 
                     /**
                      * Получить все праздничные дни год/месяц, если указать параметр monthNumber:
@@ -47,10 +47,10 @@ module.exports = {
                      * '3'  март
                      * и т.д.
                      */
-                    pc.getHolidays();
-                    pc.getHolidays(['1','2','3']);
-                    sails.log(calendar);
-                    res.ok(calendar);
+                    //pc.getHolidays();
+                    //pc.getHolidays(['1','2','3']);
+                    //sails.log(calendar);
+                    //res.ok(calendar);
                 });
         }else{
             Calendar.find()
