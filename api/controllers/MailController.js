@@ -11,17 +11,17 @@ module.exports = {
     send: function (req, res) {
 // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-            service: 'mail.ru',
+            service: 'gmail',
             auth: {
-                user: 'ins09@mail.ru',
-                pass: 'AdminMudak-123'
+                user: '',
+                pass: ''
             }
         });
 
 // setup email data with unicode symbols
         let mailOptions = {
-            from: '"Fred Foo 👻" <SETTER2000@yandex.ru>', // sender address
-            to: 'SETTER2008@yandex.ru, lphp@mail.ru', // list of receivers
+            from: '"Fred Foo 👻" <test@yandex.ru>', // sender address
+            to: 'test@ya.ru, test2@ya.ru', // list of receivers
             subject: 'Hello ✔', // Subject line
             text: 'Hello world ?', // plain text body
             html: '<b>Hello world ?</b>' // html body
