@@ -7,10 +7,18 @@
 
 module.exports = {
     attentanceList: function (req, res) {
-        User.find({}).exec(function getUser(err, data) {
+        User.find({}).exec(function getUser(err, users) {
             if(err) return res.negotiate(err);
-            if(data){
-                res.ok(data);
+            if(users){
+                async.each(users, function (userRow, next) {
+                        console.log(userRow);
+                        return next();
+                    },
+                    function (err) {
+                        sails.log(err);
+                        if (err) return res.negotiate('Œÿ»¡ ¿!!!!!' + err);
+                    });
+                res.ok();
             }
         });
     },
