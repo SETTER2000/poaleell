@@ -99,6 +99,7 @@ lib-cov
 npm-debug.log
 
 assets/images/skd/xlsx/*
+assets/images/skd/report/*
 
 
 
