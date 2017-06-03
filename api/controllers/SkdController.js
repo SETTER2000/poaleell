@@ -366,12 +366,10 @@ module.exports = {
 
 
                         workbook.toFileAsync(pathToReport).then((response)=>{
-                            console.log('response');
-                            console.log(response);
-                            fs.unlink(pathToXlsxFile, (err)=> {
-                                "use strict";
-                                if (err) console.log('ВНИМАНИЕ! ОШИБКА! Не могу удалить файл отчёта: ' +pathToXlsxFile);
-                            })
+                            // fs.unlink(pathToXlsxFile, (err)=> {
+                            //     "use strict";
+                            //     if (err) console.log('ВНИМАНИЕ! ОШИБКА! Не могу удалить файл отчёта: ' +pathToXlsxFile);
+                            // })
                         }).catch((error) => {
                             console.log(error, 'Promise error 9997788');
                         });
