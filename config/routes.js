@@ -30,9 +30,9 @@ module.exports.routes = {
     'PUT /login': 'UserController.login',
     'GET /logout': 'PageController.logout',
     'POST /logout': 'UserController.logout',
-    'GET /mail/send': 'MailController.send',
+    // 'GET /mail/send': 'MailController.send',
     //'GET /ldap': 'UserController.ldapConnect',
-
+    'GET /report/skd': 'SkdController.getReportSkd',
 
     'PUT /user/remove-profile': 'UserController.removeProfile',
     'PUT /user/restore-profile': 'UserController.restoreProfile',
@@ -81,7 +81,7 @@ module.exports.routes = {
 
 
     'GET /attendance': 'Attendance.timeAll', // для календаря
-    'GET /attendance/list': 'Attendance.attentanceList', // для календаря
+
 
 
     /*************************************************************

@@ -11,10 +11,88 @@
 
 module.exports.bootstrap = function (cb) {
 
+    const XLSX = require('xlsx');
+    const Watcher = require('listener-dir');
+    const execFile = require('child_process').execFile;
+    const XlsxPopulate = require('xlsx-populate');
+    const fs = require('fs');
 
-    var async = require('async');
-    var Passwords = require('machinepack-passwords');
-    var Gravatar = require('machinepack-gravatar');
+
+    /**
+     * Путь до папки с файлами .xlsx из SKD
+     */
+    const sourceReportSkd = 'F:/!_NODE_PROJECTS/KADR/skd-report/';
+    const targetReportSkd = 'F:/host/home/kadr/www/assets/images/skd/xlsx/';
+
+
+    /**
+     *  После определения класса Watcher можно воспользоваться им,
+     *  создав объект Watcher
+     *  Первый аргумен папка для прослушивания
+     *  Второй аргумент папка назначения файла. Куда он будет перемещён.
+     * @type {Watcher}
+     */
+    var watcher = new Watcher(sourceReportSkd, targetReportSkd);
+
+
+    /**
+     * В только что созданном объекте Watcher можно использовать метод on,
+     * унаследованный от класса генератора событий, чтобы создать
+     * логику обработки каждого файла,
+     */
+    watcher.on('process', function process(file) {
+        var pt = this.watchDir;
+        var watchFile = this.watchDir + '/' + file;
+        var processedFile = this.processedDir + '/' + file;
+
+        execFile('file', ['-b', '--mime-type', watchFile], function (error, stdout, stderr) {
+            if (stdout.trim() === 'application/vnd.ms-office' || stdout.trim() === 'application/zip') {
+                if (file.slice(-3) == 'xls') {
+                    var nameFile = file.slice(0, -3);
+                    console.log(nameFile);
+                    var workbook2 = XLSX.readFile(watchFile);
+                    var first_sheet_name = workbook2.SheetNames[0];
+                    var worksheet = workbook2.Sheets[first_sheet_name];
+                    var obj = XLSX.utils.sheet_to_json(worksheet, {header: ["A", "B", "C", "D", "E", "F"]});
+                    console.log(obj[1]);
+                  
+
+                    XLSX.writeFile(workbook2, pt + nameFile + 'xlsx');
+                    fs.unlink(pt + nameFile + file.slice(-3), (err)=> {
+                        "use strict";
+                        if (err) return cb();
+                    })
+                }
+                if (file.slice(-4) == 'xlsx') {
+                    fs.rename(watchFile, processedFile, (err)=> {
+                        if (err) console.error("Server Error" + err);
+                        XlsxPopulate.fromFileAsync(processedFile).then(function (workbook) {
+                                "use strict";
+                                /**
+                                 * Матрица вся книга.
+                                 * @type {Range|undefined}
+                                 */
+                                const matrix = workbook.sheet(0).usedRange();
+                            },
+                            function (reject) {
+                                console.log('Error reject: ' + reject);
+                                return cb();
+                            });
+                    });
+                }
+            }
+        });
+    });
+
+
+    /**
+     * Теперь, после создания всего необходимого кода, инициировать мониторинг
+     * папки можно с помощью такой команды:
+     */
+    watcher.start();
+
+    return cb();
+
 
     //console.log(sails.config.admin.shortName());
     //Video.count().exec(function (err, numVideos) {
@@ -67,8 +145,6 @@ module.exports.bootstrap = function (cb) {
     //    //console.log('Нет видеозаписей.');
     //
     //});
-
-
 
 
     // This is to prevent us from pulling our hair out creating test users manually in the app
@@ -155,7 +231,7 @@ module.exports.bootstrap = function (cb) {
     //
     //    return cb();
     //});
-    return cb();
+
 };
 
 

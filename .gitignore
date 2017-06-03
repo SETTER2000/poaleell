@@ -98,7 +98,7 @@ lib-cov
 *.pid
 npm-debug.log
 
-
+assets/images/skd/xlsx/*
 
 
 
