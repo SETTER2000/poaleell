@@ -9,7 +9,7 @@ const XlsxPopulate = require('xlsx-populate');
 const Ranges = require('named-ranges');
 const DateRu = require('date-ru');
 const Watcher = require('listener-dir');
-const fs = require('fs');
+
 /**
  *
  * @param a
@@ -34,11 +34,7 @@ module.exports = {
             this.targetReportSkd = targetReportSkd;
         }
 
-        /**
-         * Путь до папки с файлами .xlsx из SKD
-         */
-        const sourceReportSkd = 'F:/host/home/kadr/www/assets/images/skd/xlsx/';
-        const targetReportSkd = 'F:/host/home/kadr/www/assets/images/skd/report/';
+   
 
 
         /**
@@ -48,7 +44,7 @@ module.exports = {
          *  Второй аргумент папка назначения файла. Куда он будет перемещён.
          * @type {Watcher}
          */
-        var watcher = new Watcher(sourceReportSkd, targetReportSkd);
+        var watcher = new Watcher(sails.config.skd.sourceReportSkd, sails.config.skd.targetReportSkd);
 
 
         /**
@@ -57,7 +53,6 @@ module.exports = {
          * логику обработки каждого файла,
          */
         watcher.on('process', function process(file) {
-            
             const watchFile = this.watchDir + '/' + file;
             const processedFile = this.processedDir + '/' + file;
             const pathToXlsxFile = watchFile;

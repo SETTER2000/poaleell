@@ -27,7 +27,7 @@
     "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
     "ldapjs": "^1.0.1",
-    "listener-dir": "^0.1.0",
+    "listener-dir": "^0.2.0",
     "machinepack-email": "^0.1.3",
     "machinepack-gravatar": "^1.2.0",
     "machinepack-mailgun": "^0.6.0",

@@ -21,9 +21,11 @@ module.exports.bootstrap = function (cb) {
     /**
      * Путь до папки с файлами .xlsx из SKD
      */
-    const sourceReportSkd = 'F:/!_NODE_PROJECTS/KADR/skd-report/';
-    const targetReportSkd = 'F:/host/home/kadr/www/assets/images/skd/xlsx/';
-
+    //const sourceReportSkd = 'F:/!_NODE_PROJECTS/KADR/skd-report/';
+    //const targetReportSkd = 'F:/host/home/kadr/www/assets/images/skd/xlsx/';
+    const sourceReportSkd = 'D:\\skd\\';
+    //const sourceReportSkd = '//portal/DavWWWRoot/it/skd';
+    const targetReportSkd = 'D:\\host\\home\\kadr\\www\\assets\\images\\skd\\xlsx\\';
 
     /**
      *  После определения класса Watcher можно воспользоваться им,
@@ -41,9 +43,11 @@ module.exports.bootstrap = function (cb) {
      * логику обработки каждого файла,
      */
     watcher.on('process', function process(file) {
+        sails.log(this.watchDir+'88');
+        sails.log(file);
         var pt = this.watchDir;
-        var watchFile = this.watchDir + '/' + file;
-        var processedFile = this.processedDir + '/' + file;
+        var watchFile = this.watchDir  + file;
+        var processedFile = this.processedDir  + file;
 
         execFile('file', ['-b', '--mime-type', watchFile], function (error, stdout, stderr) {
             if (stdout.trim() === 'application/vnd.ms-office' || stdout.trim() === 'application/zip') {
@@ -54,8 +58,7 @@ module.exports.bootstrap = function (cb) {
                     var first_sheet_name = workbook2.SheetNames[0];
                     var worksheet = workbook2.Sheets[first_sheet_name];
                     var obj = XLSX.utils.sheet_to_json(worksheet, {header: ["A", "B", "C", "D", "E", "F"]});
-                    console.log(obj[1]);
-                  
+
 
                     XLSX.writeFile(workbook2, pt + nameFile + 'xlsx');
                     fs.unlink(pt + nameFile + file.slice(-3), (err)=> {
