@@ -89,8 +89,7 @@ module.exports.bootstrap = function (cb) {
     });
 
     /**
-     * Теперь, после создания всего необходимого кода, инициировать мониторинг
-     * папки можно с помощью такой команды:
+     * Инициировать мониторинг папки:
      */
     watcher.start();
 
@@ -113,7 +112,7 @@ module.exports.bootstrap = function (cb) {
     watcher2.on('process', function process(file) {
         const watchFile = this.watchDir + '/' + file;
         const processedFile = this.processedDir + '/' + file;
-        const reportOk = ReportFileOk + '/' + file;
+        const reportOk = sails.config.skd.targetReportOk + '/' + file;
         const pathToXlsxFile = watchFile;
 
         /**
@@ -268,7 +267,7 @@ module.exports.bootstrap = function (cb) {
                      * Инициализация имён диапазонов в загружаемой книге
                      */
 
-                        // ALL
+                   // ALL
                     workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
 
                     // NAMED
@@ -410,7 +409,7 @@ module.exports.bootstrap = function (cb) {
                     if (all.arrRowsError.length) {
                         workbook.toFileAsync(pathToReport).then((response)=> {
                         }).catch((error) => {
-                            console.log(error, 'Promise error 9997788');
+                            console.log(error, 'Promise error 99933');
                         });
                     } else {
                         fs.readFile(pathToReport, function (err, data) {
@@ -419,14 +418,14 @@ module.exports.bootstrap = function (cb) {
                                 }).catch((error) => {
                                     console.log(error, 'Promise error 9997788');
                                 });
-                                console.error('Файл не найден: ' + err);
+                                console.error('Файл для удаления из папки bad не найден: ' + err);
                             } else {
 
                                 fs.unlink(pathToReport, (err)=> {
                                     if (err) console.log('Ошибка удаления файла! ' + pathToReport);
                                     workbook.toFileAsync(sails.config.skd.targetReportOk + '/' + file).then((response)=> {
                                     }).catch((error) => {
-                                        console.log(error, 'Promise error 9997788');
+                                        console.log(error, 'Promise error 0007788');
                                     });
                                 });
                             }
@@ -450,479 +449,340 @@ module.exports.bootstrap = function (cb) {
     /**
      * Слушает папку Ok и при поступлении новых файлов, производит обработку и загрузку данных в БД
      */
-    const watcher3 = new Watcher(reportFileOk, reportFileErr);
-
-    watcher3.on('process', function process(file) {
-        const watchFile = this.watchDir + '/' + file;
-        const processedFile = this.processedDir + '/' + file;
-        const pathToXlsxFile = watchFile;
-
-        /**
-         * Путь и название файла отчета по загрузке
-         * @type {string}
-         */
-        const pathToReport = processedFile;
-
-        const date = new Date();
-        const tpl = '%d.%m.%y %H:%M:%S';
-        const tpl2 = '%d.%m.%y_%H-%M-%S';
-        const dateRu = new DateRu(date, tpl);
-        const dateRu2 = new DateRu(date, tpl2);
-
-        /**
-         * Текущая дата
-         */
-        // dateRu.localFormat();
-
-
-        /**
-         * Именование статусов
-         * @type {string}
-         */
-        const statusSec = 'Принят частично';
-        const statusOk = 'Принят полностью';
-        const statusErr = 'Не принят';
-
-
-        /**
-         * Формируем название файла отчёта NEW
-         */
-        const date2 = dateRu.localFormat();
-        const fname = 'report-' + dateRu2 + '.xlsx';
-
-
-        /**
-         *  Массив-шаблон названия столбцов,
-         *  с его помощью будет проверяться соответствие столбцов в загружаемом файле
-         * @type {string[]}
-         */
-        const arrNameColumnsIdeal = [
-            'Дата',
-            'Отдел',
-            'ФИО',
-            'Таб. №',
-            'События'
-        ];
-
-
-        // Загрузить существующую книгу xlsx
-        //XlsxPopulate.fromFileAsync(pathToXlsxFile)
-        //    .then(
-        //        function (workbook) {
-        //            "use strict";
-        //
-        //            /**
-        //             * Название листа.
-        //             * @type {Sheet|Sheet|undefined}
-        //             */
-        //            const nameList = workbook.sheet(0);
-        //
-        //
-        //            /**
-        //             * Матрица вся книга.
-        //             * @type {Range|undefined}
-        //             */
-        //            const matrix = workbook.sheet(0).usedRange();
-        //
-        //
-        //            /**
-        //             * Всего строк в книге
-        //             */
-        //            const allRows = matrix._numRows;
-        //
-        //
-        //            /**
-        //             * Проверяем наличие данных в книге
-        //             */
-        //            if (allRows < 2) {
-        //                console.log('Книга пустая, проверять нечего! ');
-        //                // return res.forbidden({
-        //                //     message: 'Книга пустая, проверять нечего! '
-        //                // });
-        //            }
-        //
-        //
-        //            /**
-        //             * Количество колонок в прайсе, которое должно быть по умолчанию
-        //             * @type {Number}
-        //             */
-        //            const countColumnsIdeal = arrNameColumnsIdeal.length;
-        //
-        //
-        //            /**
-        //             *  Массив для добавления имён столбцов из загружаемого файла
-        //             * @type {Array}
-        //             */
-        //            const arrNameColumns = [];
-        //
-        //            /**
-        //             *  Получить названия колонок в загружаемом файле
-        //             */
-        //            for (var i = 1; i <= countColumnsIdeal; i++) {
-        //                var nameColumn = workbook.sheet(0).row(7).cell(i).value();
-        //                if (typeof nameColumn == 'undefined' && arrNameColumns.length < countColumnsIdeal) {
-        //                    console.log('Кол-во колонок не совпадает с шаблоном по умолчанию! ');
-        //                    // return res.forbidden({
-        //                    //     message: 'Кол-во колонок не совпадает с шаблоном по умолчанию! ' +
-        //                    //     'Должно быть ' + countColumnsIdeal + ' колонок. '
-        //                    // });
-        //                }
-        //                if (arrNameColumnsIdeal[i - 1] !== nameColumn) {
-        //                    console.log('Не верное имя колонки ++++!');
-        //                    // return res.forbidden({
-        //                    //     message: 'Не верное имя колонки ' +
-        //                    //     nameColumn + '! Колонка должна называться ' + arrNameColumnsIdeal[i - 1]
-        //                    // });
-        //                }
-        //
-        //                arrNameColumns.push(workbook.sheet(0).row(7).cell(i).value());
-        //            }
-        //
-        //
-        //            /**
-        //             * Инициализация объектов диапазона
-        //             * @type {Ranges}
-        //             */
-        //            // Объект all будет содержать общую информацию по книге
-        //            const all = new Ranges(workbook, 'ALL', `A1:J${allRows}`);
-        //            const named = new Ranges(workbook, 'NAMED', 'A1:F1');
-        //            const info = new Ranges(workbook, 'INFO', 'C3:D5');
-        //            const header = new Ranges(workbook, 'HEADER', 'A7:E7');
-        //            const headerTwo = new Ranges(workbook, 'HEADERTWO', 'E8:F8');
-        //            const dateReport = new Ranges(workbook, 'DATEREPORT', `A9:A${allRows}`);
-        //            const department = new Ranges(workbook, 'DEPARTMENT', `B9:B${allRows}`, {
-        //                bold: true,
-        //                fontFamily: 'Arial',
-        //                numberFormat: 4,
-        //                fontSize: 8,
-        //                fontColor: 'ff0000',
-        //                horizontalAlignment: 'center',
-        //                verticalAlignment: 'center'
-        //            });
-        //            const fio = new Ranges(workbook, 'FIO', `C9:C${allRows}`);
-        //            const tab = new Ranges(workbook, 'TAB', `D9:D${allRows}`);
-        //            const coming = new Ranges(workbook, 'COMING', `E9:E${allRows}`);
-        //            const exit = new Ranges(workbook, 'EXIT', `F9:F${allRows}`);
-        //
-        //
-        //            /**
-        //             * Инициализация имён диапазонов в загружаемой книге
-        //             */
-        //
-        //                // ALL
-        //            workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
-        //
-        //            // NAMED
-        //            workbook.definedName(named.getName(), workbook.sheet(0).range(named.getRange()));
-        //
-        //            // INFO
-        //            workbook.definedName(info.getName(), workbook.sheet(0).range(info.getRange()));
-        //
-        //            // HEADER
-        //            workbook.definedName(header.getName(), workbook.sheet(0).range(header.getRange()));
-        //
-        //            // HEADERTWO
-        //            workbook.definedName(headerTwo.getName(), workbook.sheet(0).range(headerTwo.getRange()));
-        //
-        //            // DATEREPORT
-        //            workbook.definedName(dateReport.getName(), workbook.sheet(0).range(dateReport.getRange()));
-        //
-        //            // DEPARTMENT
-        //            workbook.definedName(department.getName(), workbook.sheet(0).range(department.getRange()));
-        //
-        //            // FIO
-        //            workbook.definedName(fio.getName(), workbook.sheet(0).range(fio.getRange()));
-        //
-        //            // TAB
-        //            workbook.definedName(tab.getName(), workbook.sheet(0).range(tab.getRange()));
-        //
-        //            // COMING
-        //            workbook.definedName(coming.getName(), workbook.sheet(0).range(coming.getRange()));
-        //
-        //            // EXIT
-        //            workbook.definedName(exit.getName(), workbook.sheet(0).range(exit.getRange()));
-        //
-        //
-        //            /**
-        //             * VALIDATION
-        //             */
-        //            dateReport.validationColumn(/^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])|undefined/gi);
-        //            fio.validationReplaceStringColumn(/([а-яё]+)\s(\(.*\))\s([а-яё]+)\s([а-яё]+)/gi, '$1 $3 $4');
-        //            fio.validationColumn(/^([а-яё]+)\s([а-яё]+)\s([а-яё]+)|undefined/gi);
-        //            coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
-        //            coming.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
-        //            exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
-        //            exit.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
-        //
-        //
-        //            /**
-        //             * Применить стили для диапазона
-        //             */
-        //            department.setStyle();
-        //
-        //
-        //            /**
-        //             * Собираем номера строк, которые имеют ошибки во входящем прайсе
-        //             * @type {Array.<T>}
-        //             */
-        //            all.arrRowsError = all.arrRowsError.concat(
-        //                all.arrRowsError,
-        //                header.arrRowsError,
-        //                headerTwo.arrRowsError,
-        //                named.arrRowsError,
-        //                info.arrRowsError,
-        //                dateReport.arrRowsError,
-        //                department.arrRowsError,
-        //                fio.arrRowsError,
-        //                tab.arrRowsError,
-        //                coming.arrRowsError,
-        //                exit.arrRowsError
-        //            );
-        //
-        //
-        //            /**
-        //             * Сверяет кол-во колонок с шаблоном по умолчанию
-        //             */
-        //            if (countColumnsIdeal != arrNameColumns.length) {
-        //                console.log('Кол-во колонок не совпадает с шаблоном по умолчанию!');
-        //                return cb();
-        //            }
-        //
-        //            /**
-        //             * В загружаемом файле, проверяем соответствие заголовков столбцов шаблону и
-        //             * возвращаем массив заголовков не соответствующих шаблону либо пустой массив
-        //             *
-        //             */
-        //            var rs = arrNameColumnsIdeal.diff(arrNameColumns);
-        //
-        //            if (rs.length == 1) {
-        //                const cll = workbook.sheet(0).row(7).find(rs[0]);
-        //                workbook.sheet(0).row(7).cell(cll[0]._columnNumber).style({bold: true, fontColor: 'f90b0b'});
-        //                workbook.toFileAsync(pathToReport);
-        //                console.log('Ошибка в названии столбца ');
-        //                return cb();
-        //            }
-        //
-        //            if (rs.length > 1) {
-        //                console.log('Есть ошибки в названии столбцов ' + rs + '!');
-        //                return cb();
-        //            }
-        //
-        //
-        //            // !!! НЕ УДАЛЯТЬ !!
-        //            console.log('');
-        //            console.log('***********************************');
-        //            console.log('*    Имя файла                    *');
-        //            console.log('***********************************');
-        //            console.log(file);
-        //            console.log('');
-        //            console.log('***********************************');
-        //            console.log('*    Всего ошибок                *');
-        //            console.log('***********************************');
-        //            console.log(all.arrRowsError.length);
-        //            console.log('');
-        //            console.log('***********************************');
-        //            console.log('*    Кол-во ошибок в колонках     *');
-        //            console.log('***********************************');
-        //            console.log('Header: ' + header.currentError + ' Строки: ' + header.arrRowsError);
-        //            console.log('HeaderTwo: ' + headerTwo.currentError + ' Строки: ' + headerTwo.arrRowsError);
-        //            console.log('NAMED: ' + named.currentError + ' Строки: ' + named.arrRowsError);
-        //            console.log('INFO: ' + info.currentError + ' Строки: ' + info.arrRowsError);
-        //            console.log('DateReport: ' + dateReport.currentError + ' Строки: ' + dateReport.arrRowsError);
-        //            console.log('Department: ' + department.currentError + ' Строки: ' + department.arrRowsError);
-        //            console.log('Fio: ' + fio.currentError + ' Строки: ' + fio.arrRowsError);
-        //            console.log('Tab: ' + tab.currentError + ' Строки: ' + tab.arrRowsError);
-        //            console.log('Coming: ' + coming.currentError + ' Строки: ' + coming.arrRowsError);
-        //            console.log('Exit: ' + exit.currentError + ' Строки: ' + exit.arrRowsError);
-        //            console.log('');
-        //            console.log('**********************************************');
-        //            console.log('* Процентное соотношение загружаемого прайса *');
-        //            console.log('**********************************************');
-        //            console.log('Валидный на: ' + all.getAllValidPercent() + '%');
-        //            console.log('Ошибок: ' + all.getAllErrorPercent() + '%');
-        //            console.log('');
-        //
-        //
-        //            if (all.uniqueArray().length == (allRows - 1)) {
-        //                console.log('Книга не валидная! Ни одна строка не записана.');
-        //                return cb();
-        //            }
-        //
-        //            if (all.arrRowsError.length) {
-        //                workbook.toFileAsync(pathToReport).then((response)=> {
-        //                }).catch((error) => {
-        //                    console.log(error, 'Promise error 9997788');
-        //                });
-        //            } else {
-        //                fs.readFile(pathToReport, function (err, data) {
-        //                    if (err) {
-        //                        workbook.toFileAsync(reportOk).then((response)=> {
-        //                        }).catch((error) => {
-        //                            console.log(error, 'Promise error 9997788');
-        //                        });
-        //                        console.error('Файл не найден: ' + err);
-        //                    } else {
-        //
-        //                        fs.unlink(pathToReport, (err)=> {
-        //                            if (err) console.log('Ошибка удаления файла! ' + pathToReport);
-        //                            workbook.toFileAsync(sails.config.skd.targetReportOk + '/' + file).then((response)=> {
-        //                            }).catch((error) => {
-        //                                console.log(error, 'Promise error 9997788');
-        //                            });
-        //                        });
-        //                    }
-        //                });
-        //            }
-        //        }
-        //    ).catch((error) => {
-        //    console.log(error, 'Promise error 885588');
-        //});
-
-    });
-
-    watcher3.start();
+    //const watcher3 = new Watcher(reportFileOk, reportFileErr);
+    //
+    //watcher3.on('process', function process(file) {
+    //    const watchFile = this.watchDir + '/' + file;
+    //    const processedFile = this.processedDir + '/' + file;
+    //    const pathToXlsxFile = watchFile;
+    //
+    //    /**
+    //     * Путь и название файла отчета по загрузке
+    //     * @type {string}
+    //     */
+    //    const pathToReport = processedFile;
+    //
+    //    const date = new Date();
+    //    const tpl = '%d.%m.%y %H:%M:%S';
+    //    const tpl2 = '%d.%m.%y_%H-%M-%S';
+    //    const dateRu = new DateRu(date, tpl);
+    //    const dateRu2 = new DateRu(date, tpl2);
+    //
+    //    /**
+    //     * Текущая дата
+    //     */
+    //    // dateRu.localFormat();
+    //
+    //
+    //    /**
+    //     * Именование статусов
+    //     * @type {string}
+    //     */
+    //    const statusSec = 'Принят частично';
+    //    const statusOk = 'Принят полностью';
+    //    const statusErr = 'Не принят';
+    //
+    //
+    //    /**
+    //     * Формируем название файла отчёта NEW
+    //     */
+    //    const date2 = dateRu.localFormat();
+    //    const fname = 'report-' + dateRu2 + '.xlsx';
+    //
+    //
+    //    /**
+    //     *  Массив-шаблон названия столбцов,
+    //     *  с его помощью будет проверяться соответствие столбцов в загружаемом файле
+    //     * @type {string[]}
+    //     */
+    //    const arrNameColumnsIdeal = [
+    //        'Дата',
+    //        'Отдел',
+    //        'ФИО',
+    //        'Таб. №',
+    //        'События'
+    //    ];
+    //
+    //
+    //    // Загрузить существующую книгу xlsx
+    //    //XlsxPopulate.fromFileAsync(pathToXlsxFile)
+    //    //    .then(
+    //    //        function (workbook) {
+    //    //            "use strict";
+    //    //
+    //    //            /**
+    //    //             * Название листа.
+    //    //             * @type {Sheet|Sheet|undefined}
+    //    //             */
+    //    //            const nameList = workbook.sheet(0);
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Матрица вся книга.
+    //    //             * @type {Range|undefined}
+    //    //             */
+    //    //            const matrix = workbook.sheet(0).usedRange();
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Всего строк в книге
+    //    //             */
+    //    //            const allRows = matrix._numRows;
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Проверяем наличие данных в книге
+    //    //             */
+    //    //            if (allRows < 2) {
+    //    //                console.log('Книга пустая, проверять нечего! ');
+    //    //                // return res.forbidden({
+    //    //                //     message: 'Книга пустая, проверять нечего! '
+    //    //                // });
+    //    //            }
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Количество колонок в прайсе, которое должно быть по умолчанию
+    //    //             * @type {Number}
+    //    //             */
+    //    //            const countColumnsIdeal = arrNameColumnsIdeal.length;
+    //    //
+    //    //
+    //    //            /**
+    //    //             *  Массив для добавления имён столбцов из загружаемого файла
+    //    //             * @type {Array}
+    //    //             */
+    //    //            const arrNameColumns = [];
+    //    //
+    //    //            /**
+    //    //             *  Получить названия колонок в загружаемом файле
+    //    //             */
+    //    //            for (var i = 1; i <= countColumnsIdeal; i++) {
+    //    //                var nameColumn = workbook.sheet(0).row(7).cell(i).value();
+    //    //                if (typeof nameColumn == 'undefined' && arrNameColumns.length < countColumnsIdeal) {
+    //    //                    console.log('Кол-во колонок не совпадает с шаблоном по умолчанию! ');
+    //    //                    // return res.forbidden({
+    //    //                    //     message: 'Кол-во колонок не совпадает с шаблоном по умолчанию! ' +
+    //    //                    //     'Должно быть ' + countColumnsIdeal + ' колонок. '
+    //    //                    // });
+    //    //                }
+    //    //                if (arrNameColumnsIdeal[i - 1] !== nameColumn) {
+    //    //                    console.log('Не верное имя колонки ++++!');
+    //    //                    // return res.forbidden({
+    //    //                    //     message: 'Не верное имя колонки ' +
+    //    //                    //     nameColumn + '! Колонка должна называться ' + arrNameColumnsIdeal[i - 1]
+    //    //                    // });
+    //    //                }
+    //    //
+    //    //                arrNameColumns.push(workbook.sheet(0).row(7).cell(i).value());
+    //    //            }
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Инициализация объектов диапазона
+    //    //             * @type {Ranges}
+    //    //             */
+    //    //            // Объект all будет содержать общую информацию по книге
+    //    //            const all = new Ranges(workbook, 'ALL', `A1:J${allRows}`);
+    //    //            const named = new Ranges(workbook, 'NAMED', 'A1:F1');
+    //    //            const info = new Ranges(workbook, 'INFO', 'C3:D5');
+    //    //            const header = new Ranges(workbook, 'HEADER', 'A7:E7');
+    //    //            const headerTwo = new Ranges(workbook, 'HEADERTWO', 'E8:F8');
+    //    //            const dateReport = new Ranges(workbook, 'DATEREPORT', `A9:A${allRows}`);
+    //    //            const department = new Ranges(workbook, 'DEPARTMENT', `B9:B${allRows}`, {
+    //    //                bold: true,
+    //    //                fontFamily: 'Arial',
+    //    //                numberFormat: 4,
+    //    //                fontSize: 8,
+    //    //                fontColor: 'ff0000',
+    //    //                horizontalAlignment: 'center',
+    //    //                verticalAlignment: 'center'
+    //    //            });
+    //    //            const fio = new Ranges(workbook, 'FIO', `C9:C${allRows}`);
+    //    //            const tab = new Ranges(workbook, 'TAB', `D9:D${allRows}`);
+    //    //            const coming = new Ranges(workbook, 'COMING', `E9:E${allRows}`);
+    //    //            const exit = new Ranges(workbook, 'EXIT', `F9:F${allRows}`);
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Инициализация имён диапазонов в загружаемой книге
+    //    //             */
+    //    //
+    //    //                // ALL
+    //    //            workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
+    //    //
+    //    //            // NAMED
+    //    //            workbook.definedName(named.getName(), workbook.sheet(0).range(named.getRange()));
+    //    //
+    //    //            // INFO
+    //    //            workbook.definedName(info.getName(), workbook.sheet(0).range(info.getRange()));
+    //    //
+    //    //            // HEADER
+    //    //            workbook.definedName(header.getName(), workbook.sheet(0).range(header.getRange()));
+    //    //
+    //    //            // HEADERTWO
+    //    //            workbook.definedName(headerTwo.getName(), workbook.sheet(0).range(headerTwo.getRange()));
+    //    //
+    //    //            // DATEREPORT
+    //    //            workbook.definedName(dateReport.getName(), workbook.sheet(0).range(dateReport.getRange()));
+    //    //
+    //    //            // DEPARTMENT
+    //    //            workbook.definedName(department.getName(), workbook.sheet(0).range(department.getRange()));
+    //    //
+    //    //            // FIO
+    //    //            workbook.definedName(fio.getName(), workbook.sheet(0).range(fio.getRange()));
+    //    //
+    //    //            // TAB
+    //    //            workbook.definedName(tab.getName(), workbook.sheet(0).range(tab.getRange()));
+    //    //
+    //    //            // COMING
+    //    //            workbook.definedName(coming.getName(), workbook.sheet(0).range(coming.getRange()));
+    //    //
+    //    //            // EXIT
+    //    //            workbook.definedName(exit.getName(), workbook.sheet(0).range(exit.getRange()));
+    //    //
+    //    //
+    //    //            /**
+    //    //             * VALIDATION
+    //    //             */
+    //    //            dateReport.validationColumn(/^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])|undefined/gi);
+    //    //            fio.validationReplaceStringColumn(/([а-яё]+)\s(\(.*\))\s([а-яё]+)\s([а-яё]+)/gi, '$1 $3 $4');
+    //    //            fio.validationColumn(/^([а-яё]+)\s([а-яё]+)\s([а-яё]+)|undefined/gi);
+    //    //            coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
+    //    //            coming.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
+    //    //            exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
+    //    //            exit.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Применить стили для диапазона
+    //    //             */
+    //    //            department.setStyle();
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Собираем номера строк, которые имеют ошибки во входящем прайсе
+    //    //             * @type {Array.<T>}
+    //    //             */
+    //    //            all.arrRowsError = all.arrRowsError.concat(
+    //    //                all.arrRowsError,
+    //    //                header.arrRowsError,
+    //    //                headerTwo.arrRowsError,
+    //    //                named.arrRowsError,
+    //    //                info.arrRowsError,
+    //    //                dateReport.arrRowsError,
+    //    //                department.arrRowsError,
+    //    //                fio.arrRowsError,
+    //    //                tab.arrRowsError,
+    //    //                coming.arrRowsError,
+    //    //                exit.arrRowsError
+    //    //            );
+    //    //
+    //    //
+    //    //            /**
+    //    //             * Сверяет кол-во колонок с шаблоном по умолчанию
+    //    //             */
+    //    //            if (countColumnsIdeal != arrNameColumns.length) {
+    //    //                console.log('Кол-во колонок не совпадает с шаблоном по умолчанию!');
+    //    //                return cb();
+    //    //            }
+    //    //
+    //    //            /**
+    //    //             * В загружаемом файле, проверяем соответствие заголовков столбцов шаблону и
+    //    //             * возвращаем массив заголовков не соответствующих шаблону либо пустой массив
+    //    //             *
+    //    //             */
+    //    //            var rs = arrNameColumnsIdeal.diff(arrNameColumns);
+    //    //
+    //    //            if (rs.length == 1) {
+    //    //                const cll = workbook.sheet(0).row(7).find(rs[0]);
+    //    //                workbook.sheet(0).row(7).cell(cll[0]._columnNumber).style({bold: true, fontColor: 'f90b0b'});
+    //    //                workbook.toFileAsync(pathToReport);
+    //    //                console.log('Ошибка в названии столбца ');
+    //    //                return cb();
+    //    //            }
+    //    //
+    //    //            if (rs.length > 1) {
+    //    //                console.log('Есть ошибки в названии столбцов ' + rs + '!');
+    //    //                return cb();
+    //    //            }
+    //    //
+    //    //
+    //    //            // !!! НЕ УДАЛЯТЬ !!
+    //    //            console.log('');
+    //    //            console.log('***********************************');
+    //    //            console.log('*    Имя файла                    *');
+    //    //            console.log('***********************************');
+    //    //            console.log(file);
+    //    //            console.log('');
+    //    //            console.log('***********************************');
+    //    //            console.log('*    Всего ошибок                *');
+    //    //            console.log('***********************************');
+    //    //            console.log(all.arrRowsError.length);
+    //    //            console.log('');
+    //    //            console.log('***********************************');
+    //    //            console.log('*    Кол-во ошибок в колонках     *');
+    //    //            console.log('***********************************');
+    //    //            console.log('Header: ' + header.currentError + ' Строки: ' + header.arrRowsError);
+    //    //            console.log('HeaderTwo: ' + headerTwo.currentError + ' Строки: ' + headerTwo.arrRowsError);
+    //    //            console.log('NAMED: ' + named.currentError + ' Строки: ' + named.arrRowsError);
+    //    //            console.log('INFO: ' + info.currentError + ' Строки: ' + info.arrRowsError);
+    //    //            console.log('DateReport: ' + dateReport.currentError + ' Строки: ' + dateReport.arrRowsError);
+    //    //            console.log('Department: ' + department.currentError + ' Строки: ' + department.arrRowsError);
+    //    //            console.log('Fio: ' + fio.currentError + ' Строки: ' + fio.arrRowsError);
+    //    //            console.log('Tab: ' + tab.currentError + ' Строки: ' + tab.arrRowsError);
+    //    //            console.log('Coming: ' + coming.currentError + ' Строки: ' + coming.arrRowsError);
+    //    //            console.log('Exit: ' + exit.currentError + ' Строки: ' + exit.arrRowsError);
+    //    //            console.log('');
+    //    //            console.log('**********************************************');
+    //    //            console.log('* Процентное соотношение загружаемого прайса *');
+    //    //            console.log('**********************************************');
+    //    //            console.log('Валидный на: ' + all.getAllValidPercent() + '%');
+    //    //            console.log('Ошибок: ' + all.getAllErrorPercent() + '%');
+    //    //            console.log('');
+    //    //
+    //    //
+    //    //            if (all.uniqueArray().length == (allRows - 1)) {
+    //    //                console.log('Книга не валидная! Ни одна строка не записана.');
+    //    //                return cb();
+    //    //            }
+    //    //
+    //    //            if (all.arrRowsError.length) {
+    //    //                workbook.toFileAsync(pathToReport).then((response)=> {
+    //    //                }).catch((error) => {
+    //    //                    console.log(error, 'Promise error 9997788');
+    //    //                });
+    //    //            } else {
+    //    //                fs.readFile(pathToReport, function (err, data) {
+    //    //                    if (err) {
+    //    //                        workbook.toFileAsync(reportOk).then((response)=> {
+    //    //                        }).catch((error) => {
+    //    //                            console.log(error, 'Promise error 9997788');
+    //    //                        });
+    //    //                        console.error('Файл не найден: ' + err);
+    //    //                    } else {
+    //    //
+    //    //                        fs.unlink(pathToReport, (err)=> {
+    //    //                            if (err) console.log('Ошибка удаления файла! ' + pathToReport);
+    //    //                            workbook.toFileAsync(sails.config.skd.targetReportOk + '/' + file).then((response)=> {
+    //    //                            }).catch((error) => {
+    //    //                                console.log(error, 'Promise error 9997788');
+    //    //                            });
+    //    //                        });
+    //    //                    }
+    //    //                });
+    //    //            }
+    //    //        }
+    //    //    ).catch((error) => {
+    //    //    console.log(error, 'Promise error 885588');
+    //    //});
+    //
+    //});
+    //
+    //watcher3.start();
 
 
     return cb();
-
-
-    //console.log(sails.config.admin.shortName());
-    //Video.count().exec(function (err, numVideos) {
-    //    if (err) {
-    //        return cb(err);
-    //    }
-    //
-    //    if (numVideos > 0) {
-    //        console.log('Количество видеозаписей: ', numVideos);
-    //        return cb();
-    //    }
-    //
-    //    // TODO: Заполнить базу данных видеороликами с YouTube.
-    //    var Youtube = require('machinepack-youtube');
-    //
-    //    // Список видео Youtube, которые соответствуют указанному поисковому запросу..
-    //    Youtube.searchVideos({
-    //        query: 'chinese crested dogs puppies',
-    //        apiKey: sails.config.google.apiKey,
-    //        limit: 15
-    //    }).exec({
-    //        // Произошла непредвиденная ошибка.
-    //        error: function (err) {
-    //            console.log('An error:', err);
-    //            return cb(err);
-    //        },
-    //
-    //        // OK.
-    //        // Листинг 5.8. Маршалинг возвращаемых данных с машины .searchVideos ()
-    //        success: function (foundVideos) {
-    //            // Итерации по каждому видео с помощью _.each ()
-    //            _.each(foundVideos, function (video) {
-    //                video.src = 'https://www.youtube.com/embed/' + video.id;
-    //                delete video.description;
-    //                delete video.publishedAt;
-    //                delete video.id;
-    //                delete video.url;
-    //            });
-    //
-    //            Video.create(foundVideos).exec(function (err, videoRecordsCreated) {
-    //                if (err) {
-    //                    return cb(err);
-    //                }
-    //                console.log(videoRecordsCreated);
-    //                return cb();
-    //            });
-    //        }
-    //    });
-    //
-    //    //console.log('Нет видеозаписей.');
-    //
-    //});
-
-
-    // This is to prevent us from pulling our hair out creating test users manually in the app
-    // `TEST_USERS` is an array of test users
-    //var TEST_USERS = [ {
-    //    email: 'admin@gmail.com',
-    //    login: 'admin',
-    //    firstName:'Admins',
-    //    lastName:'Adminov',
-    //    patronymicName:'Adminovich',
-    //    password: '4211817',
-    //    deleted:false,
-    //    admin:  true,
-    //    kadr:   true,
-    //    action: true
-    //}];
-
-
-    //async.each(TEST_USERS, function findOrCreateEachFakeUser(fakeUser, next){
-    //
-    //    // Check if this fake user already exists via the email property al
-    //    User.findOne({
-    //        email: fakeUser.email
-    //    }).exec(function (err, existingUser){
-    //
-    //        // This handles errors within the iteratee versus at the end in afterwards
-    //        // While I'm in findOrCreateEachFakeUser I can't call cb()
-    //        if (err) return next(err);
-    //
-    //        // if this user already exists...
-    //        if (existingUser) {
-    //            // then go to the next user
-    //            return next();
-    //        }
-    //
-    //        // Otherwise the user doesn't exist in the database.
-    //
-    //        // Encrypt the password of the test user
-    //        Passwords.encryptPassword({
-    //            password: fakeUser.password
-    //        }).exec({
-    //            error: function(err) {
-    //                return next(err);
-    //            },
-    //            success: function(encryptedPassword) {
-    //
-    //                // Get the gravatar url for the fakeUser
-    //                var gravatarURL;
-    //                try {
-    //                    gravatarURL = Gravatar.getImageUrl({
-    //                        emailAddress: fakeUser.email
-    //                    }).execSync();
-    //
-    //                } catch (err) {
-    //                    return next(err);
-    //                }
-    //
-    //                // Create a new user record with various stuff we just built
-    //                User.create({
-    //                    gravatarURL: gravatarURL,
-    //                    encryptedPassword: encryptedPassword,
-    //                    email: fakeUser.email,
-    //                    login: fakeUser.login,
-    //                    firstName:fakeUser.firstName,
-    //                    lastName:fakeUser.lastName,
-    //                    patronymicName:fakeUser.patronymicName,
-    //                    deleted: fakeUser.deleted,
-    //                    admin: fakeUser.admin,
-    //                    kadr: fakeUser.kadr,
-    //                    action: fakeUser.action
-    //                }).exec(function(err, createdUser) {
-    //                    if (err) {
-    //                        return next(err);
-    //                    }
-    //                    return next();
-    //                }); //</User.create()>
-    //            }
-    //        }); //</Passwords.encryptPassword>
-    //    }); // </ User.find
-    //}, function afterwards(err){
-    //    if (err) {
-    //        return cb(err);
-    //    }
-    //
-    //    return cb();
-    //});
 
 };
 
