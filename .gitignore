@@ -98,8 +98,7 @@ lib-cov
 *.pid
 npm-debug.log
 
-assets/images/skd/xlsx/*
-assets/images/skd/report/*
+
 
 
 
@@ -121,3 +120,6 @@ nbproject
 test.html
 1.html
 
+assets/images/skd/xlsx/*
+assets/images/skd/report/*
+assets/images/skd/ok/*

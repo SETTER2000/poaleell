@@ -34,8 +34,6 @@ module.exports = {
             this.targetReportSkd = targetReportSkd;
         }
 
-   
-
 
         /**
          *  После определения класса Watcher можно воспользоваться им,
@@ -44,7 +42,7 @@ module.exports = {
          *  Второй аргумент папка назначения файла. Куда он будет перемещён.
          * @type {Watcher}
          */
-        var watcher = new Watcher(sails.config.skd.sourceReportSkd, sails.config.skd.targetReportSkd);
+        var watcher2 = new Watcher(sails.config.skd.targetReportSkd, sails.config.skd.sourceReportSkdErr);
 
 
         /**
@@ -52,7 +50,7 @@ module.exports = {
          * унаследованный от класса генератора событий, чтобы создать
          * логику обработки каждого файла,
          */
-        watcher.on('process', function process(file) {
+        watcher2.on('process', function process(file) {
             const watchFile = this.watchDir + '/' + file;
             const processedFile = this.processedDir + '/' + file;
             const pathToXlsxFile = watchFile;
@@ -103,8 +101,6 @@ module.exports = {
                 'Таб. №',
                 'События'
             ];
-
-          
 
 
             // Загрузить существующую книгу xlsx
@@ -211,7 +207,7 @@ module.exports = {
                          * Инициализация имён диапазонов в загружаемой книге
                          */
 
-                        // ALL
+                            // ALL
                         workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
 
                         // NAMED
@@ -255,7 +251,6 @@ module.exports = {
                         coming.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
                         exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
                         exit.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
-                       
 
 
                         /**
@@ -359,16 +354,20 @@ module.exports = {
                             // });
                         }
 
+                        if (all.arrRowsError.length) {
+                            workbook.toFileAsync(pathToReport).then((response)=> {
+                                // fs.unlink(pathToXlsxFile, (err)=> {
+                                //     "use strict";
+                                //     if (err) console.log('ВНИМАНИЕ! ОШИБКА! Не могу удалить файл отчёта: ' +pathToXlsxFile);
+                                // })
+                            }).catch((error) => {
+                                console.log(error, 'Promise error 9997788');
+                            });
+                        }else{
 
-                        workbook.toFileAsync(pathToReport).then((response)=>{
-                            // fs.unlink(pathToXlsxFile, (err)=> {
-                            //     "use strict";
-                            //     if (err) console.log('ВНИМАНИЕ! ОШИБКА! Не могу удалить файл отчёта: ' +pathToXlsxFile);
-                            // })
-                        }).catch((error) => {
-                            console.log(error, 'Promise error 9997788');
-                        });
-                      
+                        }
+
+
                     }
                 ).catch((error) => {
                 console.log(error, 'Promise error 885588');
@@ -380,8 +379,8 @@ module.exports = {
          * Теперь, после создания всего необходимого кода, инициировать мониторинг
          * папки можно с помощью такой команды:
          */
-        watcher.start();
-        
+        watcher2.start();
+
 
         // Skd.destroy({vendor: vendor}).exec(function (err, destr) {
         //     if (err) sails.log('Ошибка при удалении записей из БД');
