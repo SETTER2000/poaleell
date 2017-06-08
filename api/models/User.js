@@ -121,8 +121,8 @@ module.exports = {
             size: 15
         },
 
-        workplace:{
-            type:'string'
+        workplace: {
+            type: 'string'
         },
 
         lastLoggedIn: {
@@ -145,9 +145,13 @@ module.exports = {
             via: 'users',
             dominant: true
         },
-        getFullName:function() {
-                return this.lastName+' ' + this.firstName+' '+this.patronymicName;
-            }
+        attendances: {
+            collection: 'skd',
+            via: 'owner'
+        },
+        getFullName: function () {
+            return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
+        }
 
     }
 };

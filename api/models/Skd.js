@@ -6,37 +6,42 @@
  */
 
 module.exports = {
-  connection: 'userMongodbServer',
-  attributes: {
-    section: {
-      type: 'string',
-      defaultsTo: ''
-    },
-    sections: {
-      type: 'string',
-      defaultsTo: ''
-    },
-    name: {
-      type: 'string'
-    },
-    dateCreate: {
-      type: 'string'
-    },
-    startPeriod: {
-      type: 'string'
-    },
-    endPeriod: {
-      type: 'string'
-    },
-    headerOneRow: {
-      type: 'string'
-    },
-    namheaderTwoRow: {
-      type: 'string'
-    },
-    data: {
-      type: 'string'
+    connection: 'userMongodbServer',
+    attributes: {
+        section: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        sections: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        name: {
+            type: 'string'
+        },
+        dateCreate: {
+            type: 'string'
+        },
+        startPeriod: {
+            type: 'string'
+        },
+        endPeriod: {
+            type: 'string'
+        },
+        headerOneRow: {
+            type: 'string'
+        },
+        headerTwoRow: {
+            type: 'string'
+        },
+        date: {
+            type: 'string'
+        },
+        owner:{
+            collection:'user',
+            via: 'attendances'
+
+        }
     }
-  }
 };
 

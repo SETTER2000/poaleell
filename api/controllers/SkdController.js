@@ -21,6 +21,37 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
+    createAttendance: function (req, res) {
+
+        User.findOne({
+            lastName: 'Якимов'
+        })
+            .exec(function (err, foundUser) {
+            if (err) return res.negotiate;
+            if (!foundUser) return res.notFound();
+
+
+
+
+
+
+            Skd.create({
+                name: req.param('name'),
+                startPeriod: req.param('startPeriod'),
+                owner: foundUser.id
+            }).exec(function (err, createdTutorial) {
+                if (err) return res.negotiate(err);
+
+                foundUser.tutorials.add(createdTutorial.id);
+
+                foundUser.save(function (err) {
+                    if (err) return res.negotiate(err);
+
+                    return res.json({id: createdTutorial.id});
+                });
+            });
+        });
+    },
     getReportSkd: function (req, res) {
         function SKD(sourceReportSkd, targetReportSkd) {
             this.name = {};
@@ -363,7 +394,7 @@ module.exports = {
                             }).catch((error) => {
                                 console.log(error, 'Promise error 9997788');
                             });
-                        }else{
+                        } else {
 
                         }
 
