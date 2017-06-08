@@ -766,13 +766,19 @@ module.exports.bootstrap = function (cb) {
                         //            }
                         let report = [];
                         let row = {};
+                        let dt ='';
+                        let nm ='';
                         for (let i = 9; i < allRows; i++) {
-                            let dt = workbook.sheet(0).cell(`A${i}`).value();
+                            dt = workbook.sheet(0).cell(`A${i}`).value();
+                            nm = workbook.sheet(0).cell(`C${i}`).value();
 
-                            if(dt != 'undefined'){
+                            if(dt){
                                 row.date = dt;
                             }
-                            row.name = workbook.sheet(0).cell(`C${i}`).value();
+                            if(nm){
+                                row.name = nm;
+                            }
+
                             row.startPeriod = workbook.sheet(0).cell(`E${i}`).value();
                             row.endPeriod = workbook.sheet(0).cell(`F${i}`).value();
                             report.push(row);
