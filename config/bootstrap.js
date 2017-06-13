@@ -455,7 +455,9 @@ module.exports.bootstrap = function (cb) {
         const watchFile = this.watchDir + '/' + file;
         const processedFile = this.processedDir + '/' + file;
         const pathToXlsxFile = watchFile;
-
+        fs.open(pathToXlsxFile, 'a+', (err, fd) => {
+            if (err) sails.log();
+        });
         /**
          * Путь и название файла отчета по загрузке
          * @type {string}
@@ -779,35 +781,52 @@ module.exports.bootstrap = function (cb) {
                             arrName = name.match(/([а-яё]+)/gi);
                         }
 
-                        row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
-                        row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
-                        row.startPeriod = workbook.sheet(0).cell(`E${i}`).value();
-                        row.endPeriod = workbook.sheet(0).cell(`F${i}`).value();
-                        if(row.lastName){
 
-                            sails.log('ROWWWWWWWWWW');
-                            sails.log(row);
-                            report.push(row);
+                        /**
+                         * Проверяем есть ли фамилия
+                         */
+                        if (arrName[0]) {
+
+                            //report.push(row);
                             User.findOne({
                                     lastName: arrName[0],
                                     firstName: arrName[1],
                                     patronymicName: arrName[2]
                                 })
                                 .exec(function (err, foundUser) {
+
                                     if (err) console.log('error 5555');
                                     if (!foundUser) return console.log('Пользователь не найден.');
-                                    row.owner = foundUser.id;
-                                    Skd.findOrCreate(row, row).exec(function (err, createdSKD) {
+
+                                    row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
+                                    row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
+                                    row.startPeriod = workbook.sheet(0).cell(`E${i}`).value();
+                                    row.endPeriod = workbook.sheet(0).cell(`F${i}`).value();
+
+
+                                   var userObj = {};
+                                    userObj.row = row;
+                                    userObj.row.owner = foundUser.id;
+
+
+                                    sails.log('ROWWWWWWWWWWu');
+                                    sails.log(row);
+                                    sails.log('userObjR');
+                                    sails.log(userObj.row);
+
+
+                                    Skd.findOrCreate(row,userObj.row).exec(function (err, createdSKD) {
                                         if (err) console.log('error25');
-                                        sails.log('Сохранил успешно!! Пользователь ID: ' + row.name + ' Приход: ' + row.startPeriod);
+
+                                        console.log(createdSKD );
+                                        //sails.log('Сохранил успешно!! Пользователь ID: ' + row.name + ' Приход: ' + row.startPeriod);
+                                        //sails.log('Сохранил успешно!! Пользователь ID: ' + row.name + ' Приход: ' + row.startPeriod);
                                     });
                                 });
                         }
-
-
                     }
 
-                    sails.log(report);
+                    //sails.log(report);
                     //let name = '';
                     //let startPeriod = '';
                     //let date = '';
@@ -882,7 +901,7 @@ module.exports.bootstrap = function (cb) {
 
                 }
             ).catch((error) => {
-            console.log('Promise error 223322');
+            console.log('Promise error 223322: ' + error);
         });
     });
 
