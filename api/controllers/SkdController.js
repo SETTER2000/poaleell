@@ -21,6 +21,31 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
+    createReport: function (req, res) {
+        User.findOne({
+                id: req.session.me
+            })
+            .exec(function (err, foundUser) {
+                if (err) return res.negotiate;
+                if (!foundUser) return res.notFound();
+
+                Skd.findOrCreate({
+                        name: req.param('name'),
+                        startPeriod: req.param('startPeriod'),
+                        endPeriod: req.param('endPeriod'),
+                        date: req.param('date'),
+                        owner: foundUser.id
+                    })
+                    .exec(function (err, createdTutorial) {
+                        if (err) return res.negotiate(err);
+
+                        return res.json({id: createdTutorial.id});
+                    });
+            });
+    },
+
+
+
     createAttendance: function (req, res) {
 
         User.findOne({

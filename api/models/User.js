@@ -145,8 +145,12 @@ module.exports = {
             via: 'users',
             dominant: true
         },
-        attendances: {
+        skds: {
             collection: 'skd',
+            via: 'owner'
+        },
+        tutorials: {
+            collection: 'tutorial',
             via: 'owner'
         },
         getFullName: function () {

@@ -48,6 +48,14 @@ module.exports.routes = {
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
 
 
+    /**
+     * Тестовые роуты
+     */
+    'GET /createReportSkd': 'SkdController.createReport',
+    'GET /tut': 'TutorialController.createTutorial',
+    'GET /ed': 'TutorialController.editTutorial',
+
+
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     //'POST /user/signup': 'UserController.signup',
 

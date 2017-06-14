@@ -38,9 +38,7 @@ module.exports = {
             type: 'string'
         },
         owner:{
-            collection:'user',
-            via: 'attendances'
-
+            model:'user'
         }
     }
 };
