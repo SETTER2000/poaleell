@@ -63,8 +63,8 @@ module.exports.bootstrap = function (cb) {
 
             if (file.slice(-3) == 'xls') {
 
-                console.log('watchFile');
-                console.log(watchFile);
+                console.log('Конвертирую в xlsx файл: ' + watchFile + '...');
+
                 var nameFile = file.slice(0, -3);
                 var workbook2 = XLSX.readFile(watchFile);
                 //console.log(err, 'Не возможно прочитать входящий файл.');
@@ -81,362 +81,361 @@ module.exports.bootstrap = function (cb) {
             }
 
             if (file.slice(-4) == 'xlsx') {
-                sails.log('Перемещаемый файл: ' + watchFile);
+                sails.log('Файл создан: ' + watchFile);
                 watcher.mov(file);
 
             }
         }
     });
 
-    /**
-     * Инициировать мониторинг папки:
-     */
+
     watcher.start();
 
 
-    /**
-     *  После определения класса Watcher можно воспользоваться им,
-     *  создав объект Watcher
-     *  Первый аргумен папка для прослушивания
-     *  Второй аргумент папка назначения файла. Куда он будет перемещён.
-     * @type {Watcher}
-     */
-    const watcher2 = new Watcher(sourceReportSkd, reportFileBad);
+    const watcher2 = new Watcher(targetReportSkd, reportFileBad);
+
+    watcher2.on('process',
+        function process(file) {
+            const watchFile = this.watchDir + '/' + file;
+            const processedFile = this.processedDir + '/' + file;
+            const reportOk = sails.config.skd.targetReportOk + '/' + file;
+            const pathToXlsxFile = watchFile;
+
+            fs.open(pathToXlsxFile, 'r', (err, fd) => {
+                if (err) {
+                    sails.log('Файл не существует или это не файл, а директория.');
+                    return;
+                }
 
 
-    /**
-     * В только что созданном объекте Watcher можно использовать метод on,
-     * унаследованный от класса генератора событий, чтобы создать
-     * логику обработки каждого файла,
-     */
-    watcher2.on('process', function process(file) {
-        const watchFile = this.watchDir + '/' + file;
-        const processedFile = this.processedDir + '/' + file;
-        const reportOk = sails.config.skd.targetReportOk + '/' + file;
-        const pathToXlsxFile = watchFile;
-
-        /**
-         * Путь и название файла отчета по загрузке
-         * @type {string}
-         */
-        const pathToReport = processedFile;
-
-        const date = new Date();
-        const tpl = '%d.%m.%y %H:%M:%S';
-        const tpl2 = '%d.%m.%y_%H-%M-%S';
-        const dateRu = new DateRu(date, tpl);
-        const dateRu2 = new DateRu(date, tpl2);
-
-        /**
-         * Текущая дата
-         */
-        // dateRu.localFormat();
+                /**
+                 * Путь и название файла отчета по загрузке
+                 * @type {string}
+                 */
+                const pathToReport = processedFile;
 
 
-        /**
-         * Именование статусов
-         * @type {string}
-         */
-        const statusSec = 'Принят частично';
-        const statusOk = 'Принят полностью';
-        const statusErr = 'Не принят';
+                /**
+                 *  Массив-шаблон названия столбцов,
+                 *  с его помощью будет проверяться соответствие столбцов в загружаемом файле
+                 * @type {string[]}
+                 */
+                const arrNameColumnsIdeal = [
+                    'Дата',
+                    'Отдел',
+                    'ФИО',
+                    'Таб. №',
+                    'События'
+                ];
 
 
-        /**
-         * Формируем название файла отчёта NEW
-         */
-        const date2 = dateRu.localFormat();
-        const fname = 'report-' + dateRu2 + '.xlsx';
+                // Загрузить существующую книгу xlsx
+                XlsxPopulate.fromFileAsync(pathToXlsxFile)
+                    .then(
+                        function (workbook) {
+                            "use strict";
+
+                            /**
+                             * Название листа.
+                             * @type {Sheet|Sheet|undefined}
+                             */
+                            const nameList = workbook.sheet(0);
 
 
-        /**
-         *  Массив-шаблон названия столбцов,
-         *  с его помощью будет проверяться соответствие столбцов в загружаемом файле
-         * @type {string[]}
-         */
-        const arrNameColumnsIdeal = [
-            'Дата',
-            'Отдел',
-            'ФИО',
-            'Таб. №',
-            'События'
-        ];
+                            /**
+                             * Матрица вся книга.
+                             * @type {Range|undefined}
+                             */
+                            const matrix = workbook.sheet(0).usedRange();
 
 
-        // Загрузить существующую книгу xlsx
-        XlsxPopulate.fromFileAsync(pathToXlsxFile)
-            .then(
-                function (workbook) {
-                    "use strict";
-
-                    /**
-                     * Название листа.
-                     * @type {Sheet|Sheet|undefined}
-                     */
-                    const nameList = workbook.sheet(0);
+                            /**
+                             * Всего строк в книге
+                             */
+                            const allRows = matrix._numRows;
 
 
-                    /**
-                     * Матрица вся книга.
-                     * @type {Range|undefined}
-                     */
-                    const matrix = workbook.sheet(0).usedRange();
+                            /**
+                             * Проверяем наличие данных в книге
+                             */
+                            if (allRows < 2) {
+                                console.log('Книга пустая, проверять нечего! ');
+                                // return res.forbidden({
+                                //     message: 'Книга пустая, проверять нечего! '
+                                // });
+                            }
 
 
-                    /**
-                     * Всего строк в книге
-                     */
-                    const allRows = matrix._numRows;
+                            /**
+                             * Количество колонок в прайсе, которое должно быть по умолчанию
+                             * @type {Number}
+                             */
+                            const countColumnsIdeal = arrNameColumnsIdeal.length;
 
 
-                    /**
-                     * Проверяем наличие данных в книге
-                     */
-                    if (allRows < 2) {
-                        console.log('Книга пустая, проверять нечего! ');
-                        // return res.forbidden({
-                        //     message: 'Книга пустая, проверять нечего! '
-                        // });
-                    }
+                            /**
+                             *  Массив для добавления имён столбцов из загружаемого файла
+                             * @type {Array}
+                             */
+                            const arrNameColumns = [];
 
+                            /**
+                             *  Получить названия колонок в загружаемом файле
+                             */
+                            for (var i = 1; i <= countColumnsIdeal; i++) {
+                                var nameColumn = workbook.sheet(0).row(7).cell(i).value();
+                                if (typeof nameColumn == 'undefined' && arrNameColumns.length < countColumnsIdeal) {
+                                    console.log('Кол-во колонок не совпадает с шаблоном по умолчанию! ');
+                                    // return res.forbidden({
+                                    //     message: 'Кол-во колонок не совпадает с шаблоном по умолчанию! ' +
+                                    //     'Должно быть ' + countColumnsIdeal + ' колонок. '
+                                    // });
+                                }
+                                if (arrNameColumnsIdeal[i - 1] !== nameColumn) {
+                                    console.log('Ошибка! Не верное имя колонки! Файл: ' + pathToXlsxFile);
+                                    workbook.toFileAsync(pathToReport).then((response)=> {
+                                        ///**
+                                        // * Удаляем файл из папки xlsx после того его данные были загружены в бд
+                                        // * При хорошем раскладе, папка xlsx и папка bad должны быть пустыми
+                                        // */
+                                        fs.close(fd, (err)=> {
+                                            if (err) sails.log('Проблемы с закрытием файла V:' + pathToXlsxFile);
+                                            fs.unlink(pathToXlsxFile, (err)=> {
+                                                if (err) sails.log('Не могу удалить файл V: ' + pathToXlsxFile + ' ' + err);
+                                                sails.log('FILE ' + pathToXlsxFile + ' удалён из папки xlsx.');
+                                            })
+                                        });
 
-                    /**
-                     * Количество колонок в прайсе, которое должно быть по умолчанию
-                     * @type {Number}
-                     */
-                    const countColumnsIdeal = arrNameColumnsIdeal.length;
-
-
-                    /**
-                     *  Массив для добавления имён столбцов из загружаемого файла
-                     * @type {Array}
-                     */
-                    const arrNameColumns = [];
-
-                    /**
-                     *  Получить названия колонок в загружаемом файле
-                     */
-                    for (var i = 1; i <= countColumnsIdeal; i++) {
-                        var nameColumn = workbook.sheet(0).row(7).cell(i).value();
-                        if (typeof nameColumn == 'undefined' && arrNameColumns.length < countColumnsIdeal) {
-                            console.log('Кол-во колонок не совпадает с шаблоном по умолчанию! ');
-                            // return res.forbidden({
-                            //     message: 'Кол-во колонок не совпадает с шаблоном по умолчанию! ' +
-                            //     'Должно быть ' + countColumnsIdeal + ' колонок. '
-                            // });
-                        }
-                        if (arrNameColumnsIdeal[i - 1] !== nameColumn) {
-                            console.log('Не верное имя колонки ++++!');
-                            // return res.forbidden({
-                            //     message: 'Не верное имя колонки ' +
-                            //     nameColumn + '! Колонка должна называться ' + arrNameColumnsIdeal[i - 1]
-                            // });
-                        }
-
-                        arrNameColumns.push(workbook.sheet(0).row(7).cell(i).value());
-                    }
-
-
-                    /**
-                     * Инициализация объектов диапазона
-                     * @type {Ranges}
-                     */
-                    // Объект all будет содержать общую информацию по книге
-                    const all = new Ranges(workbook, 'ALL', `A1:J${allRows}`);
-                    const named = new Ranges(workbook, 'NAMED', 'A1:F1');
-                    const info = new Ranges(workbook, 'INFO', 'C3:D5');
-                    const header = new Ranges(workbook, 'HEADER', 'A7:E7');
-                    const headerTwo = new Ranges(workbook, 'HEADERTWO', 'E8:F8');
-                    const dateReport = new Ranges(workbook, 'DATEREPORT', `A9:A${allRows}`);
-                    const department = new Ranges(workbook, 'DEPARTMENT', `B9:B${allRows}`, {
-                        bold: true,
-                        fontFamily: 'Arial',
-                        numberFormat: 4,
-                        fontSize: 8,
-                        fontColor: 'ff0000',
-                        horizontalAlignment: 'center',
-                        verticalAlignment: 'center'
-                    });
-                    const fio = new Ranges(workbook, 'FIO', `C9:C${allRows}`);
-                    const tab = new Ranges(workbook, 'TAB', `D9:D${allRows}`);
-                    const coming = new Ranges(workbook, 'COMING', `E9:E${allRows}`);
-                    const exit = new Ranges(workbook, 'EXIT', `F9:F${allRows}`);
-
-
-                    /**
-                     * Инициализация имён диапазонов в загружаемой книге
-                     */
-
-                        // ALL
-                    workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
-
-                    // NAMED
-                    workbook.definedName(named.getName(), workbook.sheet(0).range(named.getRange()));
-
-                    // INFO
-                    workbook.definedName(info.getName(), workbook.sheet(0).range(info.getRange()));
-
-                    // HEADER
-                    workbook.definedName(header.getName(), workbook.sheet(0).range(header.getRange()));
-
-                    // HEADERTWO
-                    workbook.definedName(headerTwo.getName(), workbook.sheet(0).range(headerTwo.getRange()));
-
-                    // DATEREPORT
-                    workbook.definedName(dateReport.getName(), workbook.sheet(0).range(dateReport.getRange()));
-
-                    // DEPARTMENT
-                    workbook.definedName(department.getName(), workbook.sheet(0).range(department.getRange()));
-
-                    // FIO
-                    workbook.definedName(fio.getName(), workbook.sheet(0).range(fio.getRange()));
-
-                    // TAB
-                    workbook.definedName(tab.getName(), workbook.sheet(0).range(tab.getRange()));
-
-                    // COMING
-                    workbook.definedName(coming.getName(), workbook.sheet(0).range(coming.getRange()));
-
-                    // EXIT
-                    workbook.definedName(exit.getName(), workbook.sheet(0).range(exit.getRange()));
-
-
-                    /**
-                     * VALIDATION
-                     */
-                    dateReport.validationColumn(/^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])|undefined/gi);
-                    fio.validationReplaceStringColumn(/([а-яё]+)\s(\(.*\))\s([а-яё]+)\s([а-яё]+)/gi, '$1 $3 $4');
-                    fio.validationColumn(/^([а-яё]+)\s([а-яё]+)\s([а-яё]+)|undefined/gi);
-                    coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
-                    coming.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
-                    exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
-                    exit.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
-
-
-                    /**
-                     * Применить стили для диапазона
-                     */
-                    department.setStyle();
-
-
-                    /**
-                     * Собираем номера строк, которые имеют ошибки во входящем прайсе
-                     * @type {Array.<T>}
-                     */
-                    all.arrRowsError = all.arrRowsError.concat(
-                        all.arrRowsError,
-                        header.arrRowsError,
-                        headerTwo.arrRowsError,
-                        named.arrRowsError,
-                        info.arrRowsError,
-                        dateReport.arrRowsError,
-                        department.arrRowsError,
-                        fio.arrRowsError,
-                        tab.arrRowsError,
-                        coming.arrRowsError,
-                        exit.arrRowsError
-                    );
-
-
-                    /**
-                     * Сверяет кол-во колонок с шаблоном по умолчанию
-                     */
-                    if (countColumnsIdeal != arrNameColumns.length) {
-                        console.log('Кол-во колонок не совпадает с шаблоном по умолчанию!');
-                        return cb();
-                    }
-
-                    /**
-                     * В загружаемом файле, проверяем соответствие заголовков столбцов шаблону и
-                     * возвращаем массив заголовков не соответствующих шаблону либо пустой массив
-                     *
-                     */
-                    var rs = arrNameColumnsIdeal.diff(arrNameColumns);
-
-                    if (rs.length == 1) {
-                        const cll = workbook.sheet(0).row(7).find(rs[0]);
-                        workbook.sheet(0).row(7).cell(cll[0]._columnNumber).style({bold: true, fontColor: 'f90b0b'});
-                        workbook.toFileAsync(pathToReport);
-                        console.log('Ошибка в названии столбца ');
-                        return cb();
-                    }
-
-                    if (rs.length > 1) {
-                        console.log('Есть ошибки в названии столбцов ' + rs + '!');
-                        return cb();
-                    }
-
-
-                    // !!! НЕ УДАЛЯТЬ !!
-                    console.log('');
-                    console.log('***********************************');
-                    console.log('*    Имя файла                    *');
-                    console.log('***********************************');
-                    console.log(file);
-                    console.log('');
-                    console.log('***********************************');
-                    console.log('*    Всего ошибок                *');
-                    console.log('***********************************');
-                    console.log(all.arrRowsError.length);
-                    console.log('');
-                    console.log('***********************************');
-                    console.log('*    Кол-во ошибок в колонках     *');
-                    console.log('***********************************');
-                    console.log('Header: ' + header.currentError + ' Строки: ' + header.arrRowsError);
-                    console.log('HeaderTwo: ' + headerTwo.currentError + ' Строки: ' + headerTwo.arrRowsError);
-                    console.log('NAMED: ' + named.currentError + ' Строки: ' + named.arrRowsError);
-                    console.log('INFO: ' + info.currentError + ' Строки: ' + info.arrRowsError);
-                    console.log('DateReport: ' + dateReport.currentError + ' Строки: ' + dateReport.arrRowsError);
-                    console.log('Department: ' + department.currentError + ' Строки: ' + department.arrRowsError);
-                    console.log('Fio: ' + fio.currentError + ' Строки: ' + fio.arrRowsError);
-                    console.log('Tab: ' + tab.currentError + ' Строки: ' + tab.arrRowsError);
-                    console.log('Coming: ' + coming.currentError + ' Строки: ' + coming.arrRowsError);
-                    console.log('Exit: ' + exit.currentError + ' Строки: ' + exit.arrRowsError);
-                    console.log('');
-                    console.log('**********************************************');
-                    console.log('* Процентное соотношение загружаемого прайса *');
-                    console.log('**********************************************');
-                    console.log('Валидный на: ' + all.getAllValidPercent() + '%');
-                    console.log('Ошибок: ' + all.getAllErrorPercent() + '%');
-                    console.log('');
-
-
-                    if (all.uniqueArray().length == (allRows - 1)) {
-                        console.log('Книга не валидная! Ни одна строка не записана.');
-                        return cb();
-                    }
-
-                    if (all.arrRowsError.length) {
-                        workbook.toFileAsync(pathToReport).then((response)=> {
-                        }).catch((error) => {
-                            console.log(error, 'Promise error 99933');
-                        });
-                    } else {
-                        fs.readFile(pathToReport, function (err, data) {
-                            if (err) {
-                                workbook.toFileAsync(reportOk).then((response)=> {
-                                }).catch((error) => {
-                                    console.log(error, 'Promise error 9997788');
-                                });
-                                console.error('Файл для удаления из папки bad не найден: ' + err);
-                            } else {
-
-                                fs.unlink(pathToReport, (err)=> {
-                                    if (err) console.log('Ошибка удаления файла! ' + pathToReport);
-                                    workbook.toFileAsync(sails.config.skd.targetReportOk + '/' + file).then((response)=> {
                                     }).catch((error) => {
-                                        console.log(error, 'Promise error 0007788');
+                                        console.log(error, 'Promise error $55w000');
                                     });
+                                    // return res.forbidden({
+                                    //     message: 'Не верное имя колонки ' +
+                                    //     nameColumn + '! Колонка должна называться ' + arrNameColumnsIdeal[i - 1]
+                                    // });
+                                }
+
+                                arrNameColumns.push(workbook.sheet(0).row(7).cell(i).value());
+                            }
+
+
+                            /**
+                             * Инициализация объектов диапазона
+                             * @type {Ranges}
+                             */
+                            // Объект all будет содержать общую информацию по книге
+                            const all = new Ranges(workbook, 'ALL', `A1:J${allRows}`);
+                            const named = new Ranges(workbook, 'NAMED', 'A1:F1');
+                            const info = new Ranges(workbook, 'INFO', 'C3:D5');
+                            const header = new Ranges(workbook, 'HEADER', 'A7:E7');
+                            const headerTwo = new Ranges(workbook, 'HEADERTWO', 'E8:F8');
+                            const dateReport = new Ranges(workbook, 'DATEREPORT', `A9:A${allRows}`);
+                            const department = new Ranges(workbook, 'DEPARTMENT', `B9:B${allRows}`, {
+                                bold: true,
+                                fontFamily: 'Arial',
+                                numberFormat: 4,
+                                fontSize: 8,
+                                fontColor: 'ff0000',
+                                horizontalAlignment: 'center',
+                                verticalAlignment: 'center'
+                            });
+                            const fio = new Ranges(workbook, 'FIO', `C9:C${allRows}`);
+                            const tab = new Ranges(workbook, 'TAB', `D9:D${allRows}`);
+                            const coming = new Ranges(workbook, 'COMING', `E9:E${allRows}`);
+                            const exit = new Ranges(workbook, 'EXIT', `F9:F${allRows}`);
+
+
+                            /**
+                             * Инициализация имён диапазонов в загружаемой книге
+                             */
+
+                                // ALL
+                            workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
+
+                            // NAMED
+                            workbook.definedName(named.getName(), workbook.sheet(0).range(named.getRange()));
+
+                            // INFO
+                            workbook.definedName(info.getName(), workbook.sheet(0).range(info.getRange()));
+
+                            // HEADER
+                            workbook.definedName(header.getName(), workbook.sheet(0).range(header.getRange()));
+
+                            // HEADERTWO
+                            workbook.definedName(headerTwo.getName(), workbook.sheet(0).range(headerTwo.getRange()));
+
+                            // DATEREPORT
+                            workbook.definedName(dateReport.getName(), workbook.sheet(0).range(dateReport.getRange()));
+
+                            // DEPARTMENT
+                            workbook.definedName(department.getName(), workbook.sheet(0).range(department.getRange()));
+
+                            // FIO
+                            workbook.definedName(fio.getName(), workbook.sheet(0).range(fio.getRange()));
+
+                            // TAB
+                            workbook.definedName(tab.getName(), workbook.sheet(0).range(tab.getRange()));
+
+                            // COMING
+                            workbook.definedName(coming.getName(), workbook.sheet(0).range(coming.getRange()));
+
+                            // EXIT
+                            workbook.definedName(exit.getName(), workbook.sheet(0).range(exit.getRange()));
+
+
+                            /**
+                             * VALIDATION
+                             */
+                            dateReport.validationColumn(/^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])|undefined/gi);
+                            fio.validationReplaceStringColumn(/Токаренко Наталья/gi, function myFoo(x){return x+" Генадьевна";});
+                            fio.validationReplaceStringColumn(/([а-яё]+)\s+(\(.*\))\s+([а-яё]+)\s+([а-яё]+)/gi, '$1 $3 $4');
+                            fio.validationColumn(/^([а-яё]+)\s([а-яё]+)\s([а-яё]+)|undefined/gi);
+                            coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
+                            coming.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
+                            exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
+                            exit.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
+
+
+                            /**
+                             * Применить стили для диапазона
+                             */
+                            department.setStyle();
+
+
+                            /**
+                             * Собираем номера строк, которые имеют ошибки во входящем прайсе
+                             * @type {Array.<T>}
+                             */
+                            all.arrRowsError = all.arrRowsError.concat(
+                                all.arrRowsError,
+                                header.arrRowsError,
+                                headerTwo.arrRowsError,
+                                named.arrRowsError,
+                                info.arrRowsError,
+                                dateReport.arrRowsError,
+                                department.arrRowsError,
+                                fio.arrRowsError,
+                                tab.arrRowsError,
+                                coming.arrRowsError,
+                                exit.arrRowsError
+                            );
+
+
+                            /**
+                             * Сверяет кол-во колонок с шаблоном по умолчанию
+                             */
+                            if (countColumnsIdeal != arrNameColumns.length) {
+                                console.log('Кол-во колонок не совпадает с шаблоном по умолчанию!');
+                                return cb();
+                            }
+
+                            /**
+                             * В загружаемом файле, проверяем соответствие заголовков столбцов шаблону и
+                             * возвращаем массив заголовков не соответствующих шаблону либо пустой массив
+                             *
+                             */
+                            var rs = arrNameColumnsIdeal.diff(arrNameColumns);
+
+                            if (rs.length == 1) {
+                                const cll = workbook.sheet(0).row(7).find(rs[0]);
+                                workbook.sheet(0).row(7).cell(cll[0]._columnNumber).style({bold: true, fontColor: 'f90b0b'});
+                                workbook.toFileAsync(pathToReport);
+                                console.log('Ошибка в названии столбца ');
+                                return cb();
+                            }
+
+                            if (rs.length > 1) {
+                                console.log('Есть ошибки в названии столбцов ' + rs + '!');
+                                return cb();
+                            }
+
+
+                            // !!! НЕ УДАЛЯТЬ !!
+                            console.log('');
+                            console.log('***********************************');
+                            console.log('*    Имя файла                    *');
+                            console.log('***********************************');
+                            console.log(file);
+                            console.log('');
+                            console.log('***********************************');
+                            console.log('*    Всего ошибок                *');
+                            console.log('***********************************');
+                            console.log(all.arrRowsError.length);
+                            console.log('');
+                            console.log('***********************************');
+                            console.log('*    Кол-во ошибок в колонках     *');
+                            console.log('***********************************');
+                            console.log('Header: ' + header.currentError + ' Строки: ' + header.arrRowsError);
+                            console.log('HeaderTwo: ' + headerTwo.currentError + ' Строки: ' + headerTwo.arrRowsError);
+                            console.log('NAMED: ' + named.currentError + ' Строки: ' + named.arrRowsError);
+                            console.log('INFO: ' + info.currentError + ' Строки: ' + info.arrRowsError);
+                            console.log('DateReport: ' + dateReport.currentError + ' Строки: ' + dateReport.arrRowsError);
+                            console.log('Department: ' + department.currentError + ' Строки: ' + department.arrRowsError);
+                            console.log('Fio: ' + fio.currentError + ' Строки: ' + fio.arrRowsError);
+                            console.log('Tab: ' + tab.currentError + ' Строки: ' + tab.arrRowsError);
+                            console.log('Coming: ' + coming.currentError + ' Строки: ' + coming.arrRowsError);
+                            console.log('Exit: ' + exit.currentError + ' Строки: ' + exit.arrRowsError);
+                            console.log('');
+                            console.log('**************************************************');
+                            console.log('* Процентное соотношение ошибок к строкам отчёта *');
+                            console.log('**************************************************');
+                            console.log('Валидный на: ' + all.getAllValidPercent() + '%');
+                            console.log('Ошибок: ' + all.getAllErrorPercent() + '%');
+                            console.log('');
+
+
+                            if (all.uniqueArray().length == (allRows - 1)) {
+                                console.log('Книга не валидная! Ни одна строка не записана.');
+                                return cb();
+                            }
+
+                            if (all.arrRowsError.length) {
+                                workbook.toFileAsync(pathToReport).then((response)=> {
+                                }).catch((error) => {
+                                    //console.log(error, 'Promise error 99933');
+                                });
+                            } else {
+                                fs.readFile(pathToReport, function (err, data) {
+                                    if (err) {
+                                        workbook.toFileAsync(reportOk).then((response)=> {
+                                            ///**
+                                            // * Удаляем файл из папки xlsx после того его данные были загружены в бд
+                                            // * При хорошем раскладе, папка xlsx и папка bad должны быть пустыми
+                                            // */
+                                            fs.close(fd, (err)=> {
+                                                if (err) sails.log('Проблемы с закрытием файла:' + pathToXlsxFile);
+                                                fs.unlink(pathToXlsxFile, (err)=> {
+                                                    if (err) sails.log('Не могу удалить файл: ' + pathToXlsxFile + ' ' + err);
+                                                    sails.log('Фай ' + pathToXlsxFile + ' удалён из папки xlsx.');
+                                                })
+                                            });
+
+                                        }).catch((error) => {
+                                            //console.log(error, 'Promise error 9997788');
+                                        });
+                                        //console.error('Файл для удаления из папки bad не найден');
+                                    } else {
+                                        fs.close(fd, (err)=> {
+                                            if (err) sails.log('Проблемы с закрытием файла II:' + pathToXlsxFile);
+                                            fs.unlink(pathToReport, (err)=> {
+                                                if (err) console.log('Ошибка удаления файла! ' + pathToReport);
+                                                workbook.toFileAsync(sails.config.skd.targetReportOk + '/' + file).then((response)=> {
+                                                }).catch((error) => {
+                                                    //console.log(error, 'Promise error 0007788');
+                                                });
+                                            });
+                                        });
+                                    }
                                 });
                             }
-                        });
-                    }
-                }
-            ).catch((error) => {
-            console.log('Promise error 885588');
-        });
-
-    });
+                        }
+                    )
+                    .catch((error) => {
+                        console.log('Promise error 885588');
+                    });
+            });
+        }
+    );
 
 
     /**
@@ -455,55 +454,8 @@ module.exports.bootstrap = function (cb) {
         const watchFile = this.watchDir + '/' + file;
         const processedFile = this.processedDir + '/' + file;
         const pathToXlsxFile = watchFile;
-        fs.open(pathToXlsxFile, 'a+', (err, fd) => {
-            if (err) sails.log();
-        });
-        /**
-         * Путь и название файла отчета по загрузке
-         * @type {string}
-         */
-        const pathToReport = processedFile;
-
-        const date = new Date();
-        const tpl = '%d.%m.%y %H:%M:%S';
-        const tpl2 = '%d.%m.%y_%H-%M-%S';
-        const dateRu = new DateRu(date, tpl);
-        const dateRu2 = new DateRu(date, tpl2);
-
-        /**
-         * Текущая дата
-         */
-        // dateRu.localFormat();
-
-
-        /**
-         * Именование статусов
-         * @type {string}
-         */
-        const statusSec = 'Принят частично';
-        const statusOk = 'Принят полностью';
-        const statusErr = 'Не принят';
-
-
-        /**
-         * Формируем название файла отчёта NEW
-         */
-        const date2 = dateRu.localFormat();
-        const fname = 'report-' + dateRu2 + '.xlsx';
-
-
-        /**
-         *  Массив-шаблон названия столбцов,
-         *  с его помощью будет проверяться соответствие столбцов в загружаемом файле
-         * @type {string[]}
-         */
-        const arrNameColumnsIdeal = [
-            'Дата',
-            'Отдел',
-            'ФИО',
-            'Таб. №',
-            'События'
-        ];
+        fs.open(pathToXlsxFile, 'r', (err, fd) => {
+            if (err) return;
 
 
         // Загрузить существующую книгу xlsx
@@ -525,13 +477,11 @@ module.exports.bootstrap = function (cb) {
                     const allRows = matrix._numRows;
 
 
-                    let report = [];
                     let datePeriod = '';
                     let name = '';
                     let arrName = '';
                     for (let i = 9; i < allRows; i++) {
                         let row = {};
-
                         if (workbook.sheet(0).cell(`A${i}`).value()) {
                             datePeriod = workbook.sheet(0).cell(`A${i}`).value();
                         }
@@ -544,15 +494,11 @@ module.exports.bootstrap = function (cb) {
                         row.startPeriod = workbook.sheet(0).cell(`E${i}`).value();
                         row.endPeriod = workbook.sheet(0).cell(`F${i}`).value();
 
-                        //if(row.name == "Андреев Денис Игоревич"){
-                        sails.log(row.name);
-                        //}
 
                         /**
                          * Проверяем есть ли фамилия
                          */
                         if (arrName[0]) {
-                            //report.push(row);
                             User.findOne({
                                     lastName: arrName[0],
                                     firstName: arrName[1],
@@ -560,21 +506,41 @@ module.exports.bootstrap = function (cb) {
                                 })
                                 .exec(function (err, foundUser) {
                                     if (err) console.log('error 5555');
-                                    if (!foundUser) return console.log('Пользователь не найден.');
+                                    if (!foundUser) return;
                                     row.owner = foundUser.id;
 
                                     Skd.findOrCreate(row)
                                         .exec(function (err, createdTutorial) {
-                                            if (err) return console.log('Ошибка. Строка отчёта не записалась.');
-                                            sails.log('Создана запись: ' + createdTutorial);
+                                            if (err) return;
+                                            //sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
+
+
+
                                         });
                                 });
+                        }
+
+                        if((matrix._numRows-1) == i){
+                            fs.close(fd, (err)=> {
+                                if (err) sails.log('Проблемы с закрытием файла III:' + pathToXlsxFile);
+                                fs.unlink(pathToXlsxFile, (err)=> {
+                                    if (err) sails.log('Не могу удалить файл III: ' + pathToXlsxFile + ' ' + err);
+                                    sails.log('Файл ' + pathToXlsxFile + ' удалён из папки xlsx.');
+                                })
+                            });
                         }
                     }
                 }
             ).catch((error) => {
-            console.log('Promise error 223322: ' + error);
+            console.log('Promise error 223322 ');
         });
+        });
+
+        //sails.log('Ok! Данные загружены в базу.');
+        //fs.unlink(pathToXlsxFile,(err)=>{
+        //    if(err) sails.log('Не могу удалить файл: ' + pathToXlsxFile+' ' +err);
+        //})
+
     });
 
     watcher3.start();

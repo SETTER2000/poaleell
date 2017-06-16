@@ -56,6 +56,9 @@ module.exports.routes = {
     'GET /ed': 'TutorialController.editTutorial',
 
 
+
+
+
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     //'POST /user/signup': 'UserController.signup',
 
@@ -87,6 +90,14 @@ module.exports.routes = {
     'GET /calendars': 'CalendarController.findCalendars',
     'PUT /calendars/:id': 'CalendarController.update',
 
+
+    'GET /skds': 'SkdController.findRows', //получить все записи skd
+    //'GET /skds/:id': 'SkdController.findOneRow', // получить одну строку по ID
+    //'POST /skds': 'SkdController.createRow',
+    //'PUT /users/changePassword': 'UserController.changePassword',
+    //'GET /users/:id': 'UserController.findUsers',
+    //'DELETE /users/:id': 'UserController.destroy',
+    //'PUT /users/:id': 'UserController.update',
 
     'GET /attendance': 'Attendance.timeAll', // для календаря
 
@@ -154,6 +165,7 @@ module.exports.routes = {
     'GET /admin/employees/edit/:id': 'PageController.showHomePage',
     'GET /admin/employee/:id': 'PageController.showHomePage',
 
+    'GET /admin/skds': 'PageController.showHomePage',
 
     //'GET /admin/attendances/calendar': 'PageController.showHomePage',
     //'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',

@@ -9,6 +9,7 @@ const XlsxPopulate = require('xlsx-populate');
 const Ranges = require('named-ranges');
 const DateRu = require('date-ru');
 const Watcher = require('listener-dir');
+const _ = require('lodash');
 
 /**
  *
@@ -21,14 +22,27 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
+    findRows: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me})
+            .exec((err, foundUser) => {
+                if (err) return res.negotiate;
+                if (!foundUser) return res.notFound();
+                let limit = (_.isEmpty(req.param('limit'))) ? 10000 : req.param('limit');
+                Skd.find(req.param('id'))
+                    .paginate({page: req.param('page'), limit: limit, sort: req.param('sort')})
+                    .exec((err, foundSkd)=> {
+                        //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {
+                        if (err) return res.negotiate(err);
+                        res.ok(foundSkd);
+                    });
+            });
+    },
     createReport: function (req, res) {
-        User.findOne({
-                id: req.session.me
-            })
+        User.findOne({id: req.session.me})
             .exec(function (err, foundUser) {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-
                 Skd.findOrCreate({
                         name: req.param('name'),
                         startPeriod: req.param('startPeriod'),
@@ -45,37 +59,32 @@ module.exports = {
     },
 
 
-
     createAttendance: function (req, res) {
 
         User.findOne({
-            lastName: 'Якимов'
-        })
+                lastName: 'Якимов'
+            })
             .exec(function (err, foundUser) {
-            if (err) return res.negotiate;
-            if (!foundUser) return res.notFound();
+                if (err) return res.negotiate;
+                if (!foundUser) return res.notFound();
 
 
-
-
-
-
-            Skd.create({
-                name: req.param('name'),
-                startPeriod: req.param('startPeriod'),
-                owner: foundUser.id
-            }).exec(function (err, createdTutorial) {
-                if (err) return res.negotiate(err);
-
-                foundUser.tutorials.add(createdTutorial.id);
-
-                foundUser.save(function (err) {
+                Skd.create({
+                    name: req.param('name'),
+                    startPeriod: req.param('startPeriod'),
+                    owner: foundUser.id
+                }).exec(function (err, createdTutorial) {
                     if (err) return res.negotiate(err);
 
-                    return res.json({id: createdTutorial.id});
+                    foundUser.tutorials.add(createdTutorial.id);
+
+                    foundUser.save(function (err) {
+                        if (err) return res.negotiate(err);
+
+                        return res.json({id: createdTutorial.id});
+                    });
                 });
             });
-        });
     },
     getReportSkd: function (req, res) {
         function SKD(sourceReportSkd, targetReportSkd) {

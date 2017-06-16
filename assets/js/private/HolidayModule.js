@@ -2,6 +2,7 @@ angular.module('Holiday', [
         'ui.router',
         'ngResource',
         'ngAnimate',
+        'SkdModule',
         'PositionModule',
         'DepartmentModule',
         'EmployeeModule',
@@ -31,7 +32,7 @@ angular.module('Holiday', [
 //                views: {
 //                    'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
 //                    'body@': {templateUrl: '/js/private/tpl/workspace.tpl.html'}
-      
+
 //                }
 //            })
 //            .state('account', {
@@ -114,7 +115,7 @@ angular.module('Holiday', [
         $scope.header = function () {
             return 'Привет, ' + $scope.firstName;
         };
-       
+
     }]);
 
 
