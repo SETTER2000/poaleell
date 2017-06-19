@@ -34,6 +34,7 @@ module.exports.routes = {
     //'GET /ldap': 'UserController.ldapConnect',
     'GET /report/skd': 'SkdController.getReportSkd',
 
+
     'PUT /user/remove-profile': 'UserController.removeProfile',
     'PUT /user/restore-profile': 'UserController.restoreProfile',
     'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
@@ -65,6 +66,8 @@ module.exports.routes = {
     /**
      * RESTful routes
      */
+
+
     'POST /users': 'UserController.createUser',
     'GET /users': 'UserController.findUsers',
     'PUT /users/changePassword': 'UserController.changePassword',
@@ -91,7 +94,10 @@ module.exports.routes = {
     'PUT /calendars/:id': 'CalendarController.update',
 
 
-    'GET /skds': 'SkdController.findRows', //получить все записи skd
+    'GET /skds': 'SkdController.findSkds', //получить все записи skd
+    'POST /skds': 'SkdController.findSkds', //получить все записи skd
+    'GET /skds/:id': 'SkdController.findSkds', //получить все записи skd
+
     //'GET /skds/:id': 'SkdController.findOneRow', // получить одну строку по ID
     //'POST /skds': 'SkdController.createRow',
     //'PUT /users/changePassword': 'UserController.changePassword',

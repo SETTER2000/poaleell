@@ -1,11 +1,11 @@
 <!--<h3>LIST {{filtered.length}}</h1>-->
 <pagination
-
         limit-rows="limitRows"
         default-rows="defaultRows"
         length-object="(items | filter:{$:searchText, fired:false} ).length"
         current-page="currentPage"
         added="added"
+        show-bt="showBt"
         on-select-page="selectCount=selectCount+1">
 </pagination>
 <!--{{(items | filter:{$:searchText, fired:false} ).length}}-->

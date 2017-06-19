@@ -4,13 +4,12 @@
         <h1>{{items[0].scs()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
             <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 всего:
-                <span ng-if="mode">SD{{(items | filter:{fired:true}).length}}</span>
+                <span >{{items.length}}</span>
                 <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->
-                <span ng-if="!mode">{{items.length}}</span>
+                <!--<span ng-if="!mode">{{items.length}}</span>-->
             </a>
             <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">
-
                 <!--<button type="checkbox" ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">-->
                 <!--<span class="glyphicon glyphicon-wrench"></span>-->
                 <!--</button>-->
@@ -28,50 +27,6 @@
                 <!--</button>-->
             </div>
         </h1>
-
-        <!--<span am-time-ago="message.unixTime | amFromUnix">-->
-        <!--<p>{{message.date | amUtc | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}</p>-->
-
-        <!--<p>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
-        <!--<span am-time-ago="message.time| amParse:'DD.MM.YYYY HH:mm:ss'"></span>-->
-        <!--<p>Локально: {{local}}</p>-->
-        <!--<p>Локальное время: {{localTime}}</p>-->
-        <!--<p>Сколько прошло?: {{end}}</p>-->
-        <!--<p>diff: {{diff}}</p>-->
-        <!--<p>days: {{days}}</p>-->
-        <!--<p>Год високосный?  {{yearLeap}}</p>-->
-        <!--<p>hours: {{hours}}</p>-->
-        <!--<p>Month: {{month}}</p>-->
-        <!--<p>Months: {{months}}</p>-->
-        <!--<p>seconds: {{seconds}}</p>-->
-        <!--<p>{{message.date | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
-        <!--<p>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
-        <!--&lt;!&ndash;<p>Message age: {{message.ageInMinutes | amDurationFormat : 'minute' }}</p>&ndash;&gt;-->
-        <!--<p>Message age: {{calendar }}</p>-->
-
-
-        <!--<p>Scheduled {{message.createdAt | amDifference : null : 'days' }} days from now</p>-->
-        <!--<ul class="breadcrumb">-->
-        <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
-        <!--<ng-switch on="$last">-->
-        <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
-        <!--<span ng-switch-default>-->
-        <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
-        <!--</span>-->
-        <!--</ng-switch>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--<ul class="nav">-->
-        <!--<li ng-class="{ active: $state.includes('users') }"><a href="#/users">Contacts</a></li>-->
-        <!--<li ng-class="{ active: $state.includes('about') }"><a href="/about">About</a></li>-->
-        <!--</ul>-->
-        <!--<ol class="breadcrumb">-->
-        <!--<li><a href="#">Home</a></li>-->
-        <!--<li><a href="#">Library</a></li>-->
-        <!--<li class="active">Data</li>-->
-        <!--</ol>-->
-
-
         <div ui-view></div>
         <div ui-view="settings"></div>
     </div>

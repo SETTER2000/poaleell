@@ -89,15 +89,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             //})
         ;
     })
-    .constant('CONF_MODULE', {baseUrl: '/users/:userId'})
+    .constant('CONF_MODULE_USER', {baseUrl: '/users/:userId'})
     .run(function ($rootScope, $state, $stateParams, amMoment) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         amMoment.changeLocale('ru');
     })
-    .factory('Users', function ($resource, $state, CONF_MODULE) {
+    .factory('Users', function ($resource, $state, CONF_MODULE_USER) {
         var Users = $resource(
-            CONF_MODULE.baseUrl,
+            CONF_MODULE_USER.baseUrl,
             {userId: '@id'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
             {
@@ -233,12 +233,14 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             restrict: 'E',
             scope: {
                 //numPages: '=', // кол-во страниц (кнопок)
+                showBt:'=' ,// true|false показывать или нет кнопку добавления объекта, например юзера.
                 defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
                 limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
                 lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
                 currentPage: '=',
                 onSelectPage: '&',
                 added:'='
+
             },
             templateUrl: '/js/private/admin/users/views/pagination.html',
             replace: true,
@@ -246,6 +248,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
 
                 scope.$watch('added', function (value) {
                     scope.added = value;
+                });
+
+                scope.$watch('showBt', function (value) {
+                    scope.showBt = value;
                 });
 
                 scope.$watch('lengthObject', function (value) {
@@ -292,6 +298,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 };
                 scope.isActiveRow = function (row) {
                     return scope.defaultRows === row;
+                };
+
+                scope.showBtn = function () {
+                    return scope.showBt;
                 };
                 scope.selectPage = function (page) {
                     if (!scope.isActive(page)) {
@@ -472,8 +482,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             link: function (scope) {
 
                 scope.$watch('objectName', function (value) {
-                    //console.log('OBJECT NAME33');
-                    //console.log(value);
+                    console.log('OBJECT NAME33');
+                    console.log(value);
 
                     scope.objectName = value;
                     scope.checkArray();
@@ -482,8 +492,13 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 scope.checkArray = function () {
                     var parts = [];
                     var v = scope.objectName;
+                    console.log('obj - v');
+                    console.log(v);
                     for (var key in v) {
                         var obj = v[key];
+
+                        console.log('obj');
+                        console.log(obj);
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
@@ -495,8 +510,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     //console.log('PARTS');
                     //console.log(parts);
                     scope.parts =  scope.uniqueValue(parts).sort();
-                    //console.log('UNIQUE2 PARTS2');
-                    //console.log(scope.parts);
+                    console.log('UNIQUE2 PARTS2');
+                    console.log(scope.parts);
                 };
 
                 scope.uniqueValue = function(arr) {

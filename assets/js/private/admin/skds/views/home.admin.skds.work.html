@@ -3,9 +3,10 @@
 
         limit-rows="limitRows"
         default-rows="defaultRows"
-        length-object="(items | filter:{$:searchText, fired:false} ).length"
+        length-object="(items | filter:{$:searchText} ).length"
         current-page="currentPage"
         added="added"
+        show-bt="showBt"
         on-select-page="selectCount=selectCount+1">
 </pagination>
 <!--{{(items | filter:{$:searchText, fired:false} ).length}}-->
@@ -14,8 +15,8 @@
     <tr>
         <th>#</th>
         <th>
-            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('lastName')">{{fioArea}}
-<span class="sortOrder" ng-show="propertyName === 'lastName'"
+            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('name')">{{fioArea}}
+<span class="sortOrder" ng-show="propertyName === 'name'"
       ng-class="{reverse: reverse}"></span>
             </button>
         </th>
@@ -34,55 +35,63 @@
 
         <!--</th>-->
         <th>
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('departments[0].name')">{{departmentArea}}
-<span class="sortOrder" ng-show="propertyName === 'departments[0].name'"
+            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('date')">{{dateArea}}
+<span class="sortOrder" ng-show="propertyName === 'date'"
       ng-class="{reverse: reverse}"></span>
             </button>
 
         </th>
         <th>
-            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('positions[0].name')">{{positionArea}}
-<span class="sortOrder" ng-show="propertyName === 'positions[0].name'"
+            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('startPeriod')">{{startPeriodArea}}
+<span class="sortOrder" ng-show="propertyName === 'startPeriod'"
       ng-class="{reverse: reverse}"></span>
             </button>
 
         </th>
         <th>
-            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">{{emailArea}}
-<span class="sortOrder" ng-show="propertyName === 'email'"
+            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('endPeriod')">{{endPeriodArea}}
+<span class="sortOrder" ng-show="propertyName === 'endPeriod'"
       ng-class="{reverse: reverse}"></span>
             </button>
 
         </th>
 
-        <th>
-            <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}-->
-            <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
-            <!--ng-class="{reverse: reverse}"></span>-->
-            <!--</button>-->
-            <!-- Single button -->
-            <!-- Split button -->
-            <div class="btn-group">
-                <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('contacts')">
-<span class="sortOrder" ng-show="propertyName === 'contacts'"
+        <th>   <th>
+            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('factTime')">{{factArea}}
+<span class="sortOrder" ng-show="propertyName === 'factTime'"
       ng-class="{reverse: reverse}"></span>
-                    Контакты: {{fieldName}}
-                </button>
-                <button type="button" class="btn btn-sm btn-default  not-border dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Контакты: {{fieldName}}</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <!--<li><a href="#" ng-click="fieldName='Email'">Email</a></li>-->
-                    <li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>
-                    <li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>
-                    <li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>
-                    <!--<li role="separator" class="divider"></li>-->
-                    <!--<li><a href="#">Separated link</a></li>-->
-                </ul>
-            </div>
+            </button>
+
         </th>
+
+        <!--<th>-->
+            <!--&lt;!&ndash;<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="sortOrder" ng-show="propertyName === 'contacts'"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-class="{reverse: reverse}"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</button>&ndash;&gt;-->
+            <!--&lt;!&ndash; Single button &ndash;&gt;-->
+            <!--&lt;!&ndash; Split button &ndash;&gt;-->
+            <!--<div class="btn-group">-->
+                <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('contacts')">-->
+<!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
+      <!--ng-class="{reverse: reverse}"></span>-->
+                    <!--Контакты: {{fieldName}}-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-sm btn-default  not-border dropdown-toggle" data-toggle="dropdown"-->
+                        <!--aria-haspopup="true" aria-expanded="false">-->
+                    <!--<span class="caret"></span>-->
+                    <!--<span class="sr-only">Контакты: {{fieldName}}</span>-->
+                <!--</button>-->
+                <!--<ul class="dropdown-menu">-->
+                    <!--&lt;!&ndash;<li><a href="#" ng-click="fieldName='Email'">Email</a></li>&ndash;&gt;-->
+                    <!--<li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>-->
+                    <!--<li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>-->
+                    <!--<li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>-->
+                    <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#">Separated link</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</th>-->
         <!--<th>-->
         <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">Отработанное время-->
         <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
@@ -96,34 +105,34 @@
     <!--| firstChar:param:charText-->
     <!--ng-class="$even ? 'default' : 'success'"-->
     <!--<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>-->
-    <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:false} |
+    <tr ng-repeat="item in filtered=(items | filter:{$:searchText} |
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
         <td>{{$index+1}}</td>
         <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
         <td>
-            <a href="{{item.getEditUrl(item.id)}}">
+            <a href="{{item.getEditUrl(item.owner)}}">
                 {{item.getFullName()}}
             </a>
         </td>
         <!--<td>{{item.getFullName()}}</td>-->
-        <!--<td>{{item.birthday | date:'dd.MM.yyyy'}}</td>-->
-        <!--<td>{{item.login}}</td>-->
-        <td>
-            <ul class="position" ng-controller="ListDepartmentController" ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">
-                <li ng-repeat="option in items | filter:{$:searchText,id:subdivision.id}">
-                    {{option.name}}
-                </li>
-            </ul>
-        </td>
-        <td>
-            <ul class="position" ng-controller="ListPositionController" ng-repeat="position in item.position">
-                <li ng-repeat="option in items | filter:position.id">
-                    {{option.name}}
-                </li>
-            </ul>
-        </td>
-        <td>{{item.email}}</td>
+        <td>{{item.date | date:'dd.MM.yyyy'}}</td>
+        <td>{{item.startPeriod}}</td>
+        <!--<td>-->
+            <!--<ul class="position" ng-controller="ListDepartmentController" ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">-->
+                <!--<li ng-repeat="option in items | filter:{$:searchText,id:subdivision.id}">-->
+                    <!--{{option.name}}-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--<ul class="position" ng-controller="ListPositionController" ng-repeat="position in item.position">-->
+                <!--<li ng-repeat="option in items | filter:position.id">-->
+                    <!--{{option.name}}-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</td>-->
+        <td>{{item.endPeriod}}</td>
         <td>{{item.getContact(fieldName)}}</td>
         <!--<td>{{item.diff}}</td>-->
         <td class="btn-group-xs">

@@ -37,6 +37,7 @@
             $scope.departmentArea = 'Отдел';
             $scope.positionArea = 'Должность';
             $scope.added = 'Добавить сотрудника';
+            $scope.showBt = 1;
 
             $scope.sort = 'lastName';
             $scope.param = 'lastName';

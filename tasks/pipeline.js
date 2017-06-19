@@ -40,12 +40,12 @@ var jsFilesToInject = [
     'js/dependencies/angular-moment.js',
 
     'js/dependencies/**/*.js',
-
+    'js/private/admin/skds/SkdModule.js',
     'js/private/admin/departments/DepartmentModule.js',
     'js/private/admin/calendars/CalendarModule.js',
     'js/private/admin/employees/EmployeeModule.js',
     'js/private/admin/attendances/AttendanceModule.js',
-    'js/private/admin/skds/SkdModule.js',
+
     'js/private/admin/positions/PositionModule.js',
     'js/public/signup/SignupModule.js',
     'js/private/admin/users/UserModule.js',

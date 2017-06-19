@@ -22,13 +22,13 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
-    findRows: function (req, res) {
+    findSkds: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me})
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-                let limit = (_.isEmpty(req.param('limit'))) ? 10000 : req.param('limit');
+                let limit = (_.isEmpty(req.param('limit'))) ? 1000 : req.param('limit');
                 Skd.find(req.param('id'))
                     .paginate({page: req.param('page'), limit: limit, sort: req.param('sort')})
                     .exec((err, foundSkd)=> {

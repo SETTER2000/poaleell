@@ -1,60 +1,60 @@
 (function (angular) {
     'use strict';
     angular.module('SkdModule')
-        .controller('ListSkdController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Skds','$window',
+        .controller('ListSkdController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Skds', '$window',
             function ($scope, $location, moment, $http, toastr, $rootScope, $state, Skds) {
-            $scope.me = window.SAILS_LOCALS.me;
-            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
-            //toastr.options = {
-            //    "closeButton": false,
-            //    "debug": false,
-            //    "newestOnTop": false,
-            //    "progressBar": false,
-            //    "positionClass": "toast-top-full-width",
-            //    "preventDuplicates": true,
-            //    "onclick": null,
-            //    "showDuration": "300",
-            //    "hideDuration": "1000",
-            //    "timeOut": "5000",
-            //    "extendedTimeOut": "1000",
-            //    "showEasing": "swing",
-            //    "hideEasing": "linear",
-            //    "showMethod": "fadeIn",
-            //    "hideMethod": "fadeOut"
-            //};
+                $scope.me = window.SAILS_LOCALS.me;
+                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+                //toastr.options = {
+                //    "closeButton": false,
+                //    "debug": false,
+                //    "newestOnTop": false,
+                //    "progressBar": false,
+                //    "positionClass": "toast-top-full-width",
+                //    "preventDuplicates": true,
+                //    "onclick": null,
+                //    "showDuration": "300",
+                //    "hideDuration": "1000",
+                //    "timeOut": "5000",
+                //    "extendedTimeOut": "1000",
+                //    "showEasing": "swing",
+                //    "hideEasing": "linear",
+                //    "showMethod": "fadeIn",
+                //    "hideMethod": "fadeOut"
+                //};
 
 
-            /**
-             * PAGINATION
-             */
-            $scope.defaultRows = 50;
-            $scope.limitRows = [30, 50, 70, 100];
-            $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
+                /**
+                 * PAGINATION
+                 */
+                $scope.defaultRows = 50;
+                $scope.limitRows = [30, 50, 70, 100];
+                $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
-            $scope.fioArea = 'ФИО';
-            $scope.drArea = 'ДР11';
-            $scope.loginArea = 'Логин';
-            $scope.emailArea = 'Email';
-            $scope.departmentArea = 'Отдел';
-            $scope.positionArea = 'Должность';
-            $scope.added = 'Добавить сотрудника';
+                $scope.fioArea = 'ФИО';
+                $scope.loginArea = 'Логин';
+                $scope.dateArea = 'Дата';
+                $scope.startPeriodArea = 'Приход';
+                $scope.endPeriodArea = 'Уход';
+                $scope.factArea = 'Фактически отработанное время';
+                $scope.added = 'Добавить сотрудника';
+                $scope.showBt = false; // показать кнопку добавления объекта
 
-            $scope.sort = 'lastName';
-            $scope.param = 'lastName';
-            $scope.fieldName = 'Внутренний телефон';
-            $scope.charText = '';
-            $scope.searchText = '';
-            $scope.page_number = 0;
-            $scope.limitAll = 1000;
-            $scope.where = {};
-            $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
-            $scope.enabledButton = false;
-            $scope.styleObj = {
-                color: false,
-                border: false,
-                size: false
-            };
-
+                $scope.sort = 'date';
+                $scope.param = 'date';
+                $scope.fieldName = 'Внутренний телефон';
+                $scope.charText = '';
+                $scope.searchText = '';
+                $scope.page_number = 0;
+                $scope.limitAll = 1000;
+                $scope.where = {};
+                $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
+                $scope.enabledButton = false;
+                $scope.styleObj = {
+                    color: false,
+                    border: false,
+                    size: false
+                };
 
 
                 if (moment().isLeapYear()) {
@@ -94,13 +94,6 @@
                 $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
                 $scope.workView = "/js/private/admin/skds/views/home.admin.skds.work.html";
 
-                $scope.getLastName = function (item) {
-                    $http.post('/skds', item)
-                        .then(function (attendance) {
-                            $scope.differ(attendance);
-                            $scope.numPages = Math.floor($scope.items.length / $scope.defaultRows) + 1;
-                        });
-                };
 
                 $scope.differ = function (attendance) {
                     var data = [];
@@ -129,6 +122,8 @@
                             });
                         })(); // immediately invoked function expression (IIFE)
                     }
+                    sails.log('data:');
+                    sails.log(data);
                     $scope.items = data;
                 };
 
@@ -165,13 +160,11 @@
 
                 $scope.str = 'Петров';
                 $scope.countChar = '4';
-                $scope.filedName = 'lastName';
+                $scope.filedName = 'name';
 
 
                 $scope.$watch('where', function (value) {
-
                     $scope.refresh(value);
-
                 });
 
                 $scope.refresh = function (where) {
@@ -184,12 +177,15 @@
                         where: $scope.where,
                         sort: $scope.sort,
                         limit: $scope.limitAll,
-                        property: 'lastName',
+                        property: 'name',
                         char: $scope.charText + '%'
                     };
 
-                    $scope.items = Skds.query($scope.query,
+                    $scope.items = $scope.objectName =Skds.query($scope.query,
                         function (skds) {
+                            sails.log('skds:');
+                            sails.log(skds);
+
                             $scope.items = skds;
                             $scope.objectName = skds;
                             //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
@@ -220,7 +216,7 @@
                     })
                 };
 
-                $scope.propertyName = 'lastName';
+                $scope.propertyName = 'name';
 
                 $scope.reverse = false;
 
@@ -234,37 +230,36 @@
                 $scope.selectionMode = $scope.msd[0];
 
 
+                /**
+                 *  Конструктор хлебных крошек
+                 * @constructor
+                 */
+                function BreadCrumb() {
+                    var name;
+                    var path;
+                    this.arr = [];
+                }
 
-            /**
-             *  Конструктор хлебных крошек
-             * @constructor
-             */
-            function BreadCrumb() {
-                var name;
-                var path;
-                this.arr = [];
-            }
+                BreadCrumb.prototype.add = function () {
+                    this.arr.push({name: this.name, path: this.path});
+                };
 
-            BreadCrumb.prototype.add = function () {
-                this.arr.push({name: this.name, path: this.path});
-            };
+                BreadCrumb.prototype.set = function (name, path) {
+                    this.name = name;
+                    this.path = path;
+                    this.add();
+                };
 
-            BreadCrumb.prototype.set = function (name, path) {
-                this.name = name;
-                this.path = path;
-                this.add();
-            };
+                BreadCrumb.prototype.getAll = function () {
+                    return this.arr;
+                };
 
-            BreadCrumb.prototype.getAll = function () {
-                return this.arr;
-            };
+                var breadcrumb = new BreadCrumb();
 
-            var breadcrumb = new BreadCrumb();
+                breadcrumb.set('Home', '/');
+                breadcrumb.set('Admin', '/admin');
+                breadcrumb.set('Skds', '/admin/' + $state.current.url);
+                $scope.breadcrumbs = breadcrumb;
 
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', '/admin');
-            breadcrumb.set('Skds', '/admin/' + $state.current.url);
-            $scope.breadcrumbs = breadcrumb;
-
-        }]);
+            }]);
 })(window.angular);

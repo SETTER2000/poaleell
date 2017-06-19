@@ -39,6 +39,10 @@ module.exports = {
         },
         owner:{
             model:'user'
+        },
+        getLastName: function () {
+            let fio = this.name.split(' ');
+            return fio[0]
         }
     }
 };

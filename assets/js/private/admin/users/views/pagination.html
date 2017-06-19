@@ -19,7 +19,7 @@
                     </ul>
 
 
-                    <button class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create" title="Добавить сотрудника"
+                    <button ng-if="showBtn()" class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create" title="{{added}}"
                             type="button">
                         {{added}}
                     </button>
