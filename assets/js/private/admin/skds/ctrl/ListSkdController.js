@@ -2,7 +2,7 @@
     'use strict';
     angular.module('SkdModule')
         .controller('ListSkdController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Skds', '$window',
-            function ($scope, $location, moment, $http, toastr, $rootScope, $state, Skds) {
+            function ($scope, $location, moment, $http, toastr, vAccordion, $state, Skds) {
                 $scope.me = window.SAILS_LOCALS.me;
                 if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
                 //toastr.options = {
@@ -24,12 +24,93 @@
                 //};
 
 
+                $scope.panesA = [
+                    {
+                        id: 'pane-1a',
+                        header: 'Pane 1',
+                        content: 'Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et interdum adipiscing wisi.',
+                        isExpanded: true
+                    },
+                    {
+                        id: 'pane-2a',
+                        header: 'Pane 2',
+                        content: 'Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies.'
+                    },
+                    {
+                        id: 'pane-3a',
+                        header: 'Pane 3',
+                        content: 'Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla sed, vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non.',
+
+                        subpanes: [
+                            {
+                                id: 'subpane-1a',
+                                header: 'Subpane 1',
+                                content: 'Quisque lorem tortor fringilla sed, vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non.'
+                            },
+                            {
+                                id: 'subpane-2a',
+                                header: 'Subpane 2 (disabled)',
+                                content: 'Curabitur et ligula. Ut molestie a, ultricies porta urna. Quisque lorem tortor fringilla sed, vestibulum id.',
+                                isDisabled: true
+                            }
+                        ]
+                    }
+                ];
+
+                //$scope.panesB = [
+                //    {
+                //        id: 'pane-1b',
+                //        header: 'Pane 1',
+                //        content: 'Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et interdum adipiscing wisi.',
+                //        isExpanded: true
+                //    },
+                //    {
+                //        id: 'pane-2b',
+                //        header: 'Pane 2',
+                //        content: 'Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies.'
+                //    },
+                //    {
+                //        id: 'pane-3b',
+                //        header: 'Pane 3',
+                //        content: 'Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla sed, vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non.',
+                //
+                //        subpanes: [
+                //            {
+                //                id: 'subpane-1b',
+                //                header: 'Subpane 1',
+                //                content: 'Quisque lorem tortor fringilla sed, vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non.'
+                //            },
+                //            {
+                //                id: 'subpane-2b',
+                //                header: 'Subpane 2 (disabled)',
+                //                content: 'Curabitur et ligula. Ut molestie a, ultricies porta urna. Quisque lorem tortor fringilla sed, vestibulum id.',
+                //                isDisabled: true
+                //            }
+                //        ]
+                //    }
+                //];
+
+                $scope.expandCallback = function (index, id) {
+                    console.log('expand:', index, id);
+                };
+
+                $scope.collapseCallback = function (index, id) {
+                    console.log('collapse:', index, id);
+                };
+
+                $scope.$on('accordionA:onReady', function () {
+                    console.log('accordionA is ready!');
+                });
+
+
                 /**
                  * PAGINATION
                  */
-                $scope.defaultRows = 50;
-                $scope.limitRows = [30, 50, 70, 100];
+                $scope.defaultRows = 300;
+                $scope.limitRows = [300, 500, 700, 1000];
                 $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
+
+                $scope.allRowsView = 'загружено:';
 
                 $scope.fioArea = 'ФИО';
                 $scope.loginArea = 'Логин';
@@ -40,13 +121,13 @@
                 $scope.added = 'Добавить сотрудника';
                 $scope.showBt = false; // показать кнопку добавления объекта
 
-                $scope.sort = 'date';
+                $scope.sort = 'lastName';
                 $scope.param = 'date';
                 $scope.fieldName = 'Внутренний телефон';
                 $scope.charText = '';
                 $scope.searchText = '';
                 $scope.page_number = 0;
-                $scope.limitAll = 1000;
+                $scope.limitAll = 1;
                 $scope.where = {};
                 $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
                 $scope.enabledButton = false;
@@ -83,16 +164,20 @@
 
                 $scope.options =
                     [
+                        {display: "Accordion", value: "accordion"},
+                        {display: "Test", value: "test"},
                         {display: "Работают", value: "work"},
                         {display: "Уволены", value: "list"},
                         {display: "Не активированы / Заблокированы", value: "action"},
                         {display: "Все", value: "table"}
                     ];
-                $scope.modeSelect = $scope.options[0];
+                $scope.modeSelect = $scope.options[1];
                 $scope.tableView = "/js/private/admin/skds/views/home.admin.skds.table.html";
                 $scope.listView = "/js/private/admin/skds/views/home.admin.skds.list.html";
                 $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
                 $scope.workView = "/js/private/admin/skds/views/home.admin.skds.work.html";
+                $scope.accordionView = "/js/private/admin/skds/views/home.admin.skds.accordion.html";
+                $scope.testView = "/js/private/admin/skds/views/test.html";
 
 
                 $scope.differ = function (attendance) {
@@ -177,15 +262,13 @@
                         where: $scope.where,
                         sort: $scope.sort,
                         limit: $scope.limitAll,
+                        page: 1,
                         property: 'name',
                         char: $scope.charText + '%'
                     };
 
-                    $scope.items = $scope.objectName =Skds.query($scope.query,
+                    $scope.items = $scope.objectName = Skds.query($scope.query,
                         function (skds) {
-                            sails.log('skds:');
-                            sails.log(skds);
-
                             $scope.items = skds;
                             $scope.objectName = skds;
                             //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
@@ -260,6 +343,155 @@
                 breadcrumb.set('Admin', '/admin');
                 breadcrumb.set('Skds', '/admin/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
+
+                $scope.bats = [];
+                $scope.hums = [];
+
+                var counter = 0;
+
+                $scope.loadMore = function () {
+
+                    for (var i = 0; i < 5; i++) {
+                        //$scope.bats.push({id: counter});
+                        //
+                        //$scope.query.page += 1;
+                        //$scope.query.limitAll = 10;
+                    }
+                };
+
+                //$scope.hums =[
+                //    {id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
+                //    {id:2,lastName:'Petia2'},
+                //    {id:3,lastName:'Petia3'},
+                //    {id:4,lastName:'Petia4'},
+                //    {id:5,lastName:'Petia5'},
+                //    {id:6,lastName:'Petia6'},
+                //    {id:7,lastName:'Petia7'},
+                //    {id:8,lastName:'Petia8'},
+                //    {id:9,lastName:'Petia9'},
+                //    {id:10,lastName:'Petia10'},
+                //    {id:11,lastName:'Petia11'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'},
+                //    {id:12,lastName:'Petia12'}
+                //];
+                //    $scope.hums =   Skds.query({
+                //        sort:'lastName',
+                //        limitAll:100
+                //    },
+                //    function (skds) {
+                //        $scope.hums = skds;
+                //        $scope.objectName = skds;
+                //        //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
+                //    }, function (err) {
+                //        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                //    });
+                $scope.loadMore();
+                var count = 0;
+                $scope.loadMore2 = function () {
+                    for (var i = 0; i < 10; i++) {
+                        Skds.query({
+                                limitAll:10,
+                            page:count
+                            },
+                            function (skds) {
+                                //console.log('IDDDDDDDDDDDDDDDD');
+                                //console.log(skds[0].id);
+                                //console.log(skds[0].lastName);
+
+                                //$scope.hums = skds;
+                                $scope.bats.push({id:skds[0].id,lastName:skds[0].lastName});
+                                $scope.objectName = skds;
+                                //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
+                            }, function (err) {
+                                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                            });
+
+                        //$scope.limitAll += 2;
+                        count += 1;
+                    }
+                };
+
+                $scope.loadMore2();
+
 
             }]);
 })(window.angular);

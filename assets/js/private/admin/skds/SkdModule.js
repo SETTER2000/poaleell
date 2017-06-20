@@ -1,4 +1,4 @@
-angular.module('SkdModule', ['ui.router', 'ngResource', 'ngAnimate'])
+angular.module('SkdModule', ['ui.router', 'ngResource','vAccordion', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.skds', {
@@ -29,6 +29,24 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'ngAnimate'])
                 views: {
                     'list@home.admin.skds': {
                         templateUrl: '/js/private/admin/skds/views/home.admin.skds.work.html',
+                        controller: 'ListSkdController'
+                    }
+                }
+            })
+            .state('home.admin.skds.accordion', {
+                url: '/accordion',
+                views: {
+                    'list@home.admin.skds': {
+                        templateUrl: '/js/private/admin/skds/views/home.admin.skds.accordion.html',
+                        controller: 'ListSkdController'
+                    }
+                }
+            })
+            .state('home.admin.skds.test', {
+                url: '/test',
+                views: {
+                    'list@home.admin.skds': {
+                        templateUrl: '/js/private/admin/skds/views/test.html',
                         controller: 'ListSkdController'
                     }
                 }
@@ -97,6 +115,9 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'ngAnimate'])
             //    }
             //})
         ;
+    })
+    .config(function (accordionConfig) {
+        accordionConfig.expandAnimationDuration = 0.3;
     })
     .constant('CONF_MODULE_SKD', {baseUrl: '/skds/:skdId'})
     .run(function ($rootScope, $state, $stateParams, amMoment) {
@@ -201,6 +222,17 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'ngAnimate'])
             return ' - уволены';
         };
         return Skds;
+    })
+    .directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            var raw = elm[0];
+
+            elm.bind('scroll', function() {
+                if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
     })
     /**
      * Выборка фамилий по первой букве

@@ -22,15 +22,37 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
+    test: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me})
+            .exec((err, foundUser) => {
+                if (err) return res.negotiate;
+                if (!foundUser) return res.notFound();
+                let limit = (_.isEmpty(req.param('limit'))) ? 5 : req.param('limit');
+                User.find(req.param('id'))
+                    .populate ('skds')
+                    .paginate({page: req.param('page'), limit: limit, sort: req.param('sort')})
+                    .exec((err, foundSkd)=> {
+                        //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {
+                        if (err) return res.negotiate(err);
+                        res.ok(foundSkd);
+                    });
+            });
+    },
     findSkds: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me})
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-                let limit = (_.isEmpty(req.param('limit'))) ? 1000 : req.param('limit');
-                Skd.find(req.param('id'))
-                    .paginate({page: req.param('page'), limit: limit, sort: req.param('sort')})
+                let limit = (_.isEmpty(req.param('limit'))) ? 3 : req.param('limit');
+                let sort = (_.isEmpty(req.param('sort'))) ? 'lastName' : req.param('sort');
+                let query = (_.isEmpty(req.param('id'))) ? {where:{},sort:sort,limit:limit} : req.param('id');
+                let page = (_.isEmpty(req.param('page'))) ? 1 : req.param('page');
+
+                User.find(query)
+                    .populate ('skds')
+                    .paginate({page: page, limit: limit, sort: sort})
                     .exec((err, foundSkd)=> {
                         //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {
                         if (err) return res.negotiate(err);
