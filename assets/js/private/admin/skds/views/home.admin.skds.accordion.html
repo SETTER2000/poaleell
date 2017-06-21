@@ -2,65 +2,82 @@
     <div class="Grid-cell u-marginBl">
         <!--<h4 class="u-marginVm">Works with (or without) ng-repeat</h4>-->
 
-            <v-accordion id="accordionA" class="vAccordion--default" control="accordionA"
-                         onexpand="expandCallback(index, id)" oncollapse="collapseCallback(index, id)">
-                <div id="fixed" when-scrolled="loadMore()">
-                <v-pane id="{{ ::pane.id }}" ng-repeat="pane in filtered=(hums | filter:{$:searchText} |
+        <v-accordion id="accordionA" class="vAccordion--default" control="accordionA"
+                     onexpand="expandCallback(index, id)" oncollapse="collapseCallback(index, id)">
+            <div id="fixed" when-scrolled="loadMore()">
+                <v-pane id="{{ ::pane.id }}" ng-repeat="pane in filtered=(bats | filter:{$:searchText} |
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)" expanded="pane.isExpanded">
                     <v-pane-header id="{{ ::pane.id }}-header" aria-controls="{{ ::pane.id }}-content">
                         <div class="row">
                             <div class="col-md-4">{{$index+1}} &nbsp; &nbsp;&nbsp;{{ ::pane.lastName }} {{ ::pane.firstName }} {{
                                 ::pane.patronymicName }}
                             </div>
+                            <!--<div class="col-md-8 pull-right">Email: <a title="Отправить сообщение" class="text-right" href="mailto:{{::pane.email}}">{{::pane.email}}</a></div>-->
                         </div>
                     </v-pane-header>
 
                     <v-pane-content id="{{ ::pane.id }}-content" aria-labelledby="{{ ::pane.id }}-header">
+                        <!--<div class="row">-->
+                        <!--<div class="col-md-2 col-md-offset-2">Логин: {{ ::pane.login}}</div>-->
+                        <!--<div class="col-md-2">{{::pane.contacts[0].type}}: {{::pane.contacts[0].value}}</div>-->
+                        <!--<div class="col-md-2">Email: <a title="Отправить сообщение" href="mailto:{{::pane.email}}">{{::pane.email}}</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-2">Принят: {{::pane.dateInWork|amDateFormat:'DD.MM.YYYY'}}</div>-->
+                        <!--<div class="col-md-2">ДР: {{::pane.birthday|amDateFormat:'DD.MM.YYYY'}}</div>-->
+                        <!--</div>-->
                         <div class="row">
-                            <div class="col-md-2">Логин: {{ ::pane.login}}</div>
-                            <div class="col-md-2">{{::pane.contacts[0].type}}: {{::pane.contacts[0].value}}</div>
-                            <div class="col-md-2">Email: <a title="Отправить сообщение" href="mailto:{{::pane.email}}">{{::pane.email}}</a>
+                            <div class="col-md">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-2">
+                                <div class="row">
+                                    <div class="col-md-2">Дата</div>
+                                    <div class="col-md-2">Приход</div>
+                                    <div class="col-md-2">Уход</div>
+                                    <div class="col-md-2 pull-right">Отработанное время</div>
+                                </div>
                             </div>
-                            <div class="col-md-2">Принят: {{::pane.dateInWork|amDateFormat:'DD.MM.YYYY'}}</div>
-                            <div class="col-md-2">ДР: {{::pane.birthday|amDateFormat:'DD.MM.YYYY'}}</div>
                         </div>
 
+
                         <v-accordion id="nestedAccordionA" ng-if="pane.skds">
-                          {{$index}}
-                                <!--<ul class="position">-->
-                                    <!--<li ng-repeat="y in pane.skds">-->
-                                        <!--{{y.date}}-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                                <!--<v-pane id="{{ ::pane.skds.id }}" ng-repeat="subpane in pane.skds">-->
-                                    <!--<v-pane-header id="{{ ::subpane.date }}-header" aria-controls="{{ ::subpane.date}}-header">-->
-                                        <!--<h5>{{ ::subpane.date |amDateFormat:'DD.MM.YYYY'}}</h5>-->
-                                    <!--</v-pane-header>-->
-                                    <!--&lt;!&ndash;<v-pane-content id="{{ ::subpane.id }}-content" aria-labelledby="{{ ::subpane.id }}-content">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;&lt;!&ndash;<div class="col-md-2">{{ ::skds.date|amDateFormat:'DD.MM.YYYY'}}</div>&ndash;&gt;&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div class="col-md-2">{{::subpane.startPeriod}}</div>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div class="col-md-2">{{::subpane.endPeriod}}</div>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</v-pane-content>&ndash;&gt;-->
-                                <!--</v-pane>-->
+                            <!--{{$index}}-->
+                            <!--<ul class="position">-->
+                            <!--<li ng-repeat="y in pane.skds">-->
+                            <!--{{y.date}}-->
+                            <!--</li>-->
+                            <!--</ul>-->
+                            <div id="fixed2" when-scrolled="loadMore2()">
+                                <v-pane id="{{ ::pane.skds.id }}" ng-repeat="subpane in hums">
+                                    <v-pane-header id="{{ ::subpane.date }}-header" aria-controls="{{ ::subpane.date}}-header">
+                                        <h5>{{ ::subpane.skdsArr.date |amDateFormat:'DD.MM.YYYY'}}</h5>
+                                    </v-pane-header>
+                                    <v-pane-content id="{{ ::subpane.id }}-content" aria-labelledby="{{ ::subpane.id }}-content">
+                                        <!--<div class="row">-->
+                                        <!--&lt;!&ndash;<div class="col-md-2">{{ ::skds.date|amDateFormat:'DD.MM.YYYY'}}</div>&ndash;&gt;-->
+                                        <!--<div class="col-md-2">{{::subpane.startPeriod}}</div>-->
+                                        <!--<div class="col-md-2">{{::subpane.endPeriod}}</div>-->
+                                        <!--</div>-->
+                                    </v-pane-content>
+                                </v-pane>
+                            </div>
+
 
                         </v-accordion>
-
                     </v-pane-content>
                 </v-pane>
-                </div>
-            </v-accordion>
+            </div>
+        </v-accordion>
 
 
-            <!--<div class="ButtonGroup ButtonGroup&#45;&#45;hz ButtonGroup&#45;&#45;collapse u-marginVm">-->
-            <!--<div class="ButtonGroup-item">-->
-            <!--<button class="Button Button&#45;&#45;default" ng-click="accordionA.toggle(panesA[0].id)">Toogle first</button>-->
-            <!--</div>-->
-            <!--<div class="ButtonGroup-item">-->
-            <!--<button class="Button Button&#45;&#45;default" ng-click="accordionA.toggle(panesA[2].id)">Toogle last</button>-->
-            <!--</div>-->
-            <!--</div>-->
+        <!--<div class="ButtonGroup ButtonGroup&#45;&#45;hz ButtonGroup&#45;&#45;collapse u-marginVm">-->
+        <!--<div class="ButtonGroup-item">-->
+        <!--<button class="Button Button&#45;&#45;default" ng-click="accordionA.toggle(panesA[0].id)">Toogle first</button>-->
+        <!--</div>-->
+        <!--<div class="ButtonGroup-item">-->
+        <!--<button class="Button Button&#45;&#45;default" ng-click="accordionA.toggle(panesA[2].id)">Toogle last</button>-->
+        <!--</div>-->
+        <!--</div>-->
 
     </div>
 

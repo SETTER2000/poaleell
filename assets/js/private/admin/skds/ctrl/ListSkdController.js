@@ -92,10 +92,17 @@
 
                 $scope.expandCallback = function (index, id) {
                     console.log('expand:', index, id);
+                    $scope.idUser = id;
+                    console.log('KASSS');
+                    console.log($scope.hums);
+                    $scope.loadMore2();
                 };
 
                 $scope.collapseCallback = function (index, id) {
                     console.log('collapse:', index, id);
+                    $scope.hums = [];
+                    console.log('FASDAAA');
+                    console.log($scope.hums);
                 };
 
                 $scope.$on('accordionA:onReady', function () {
@@ -299,7 +306,7 @@
                     })
                 };
 
-                $scope.propertyName = 'name';
+                $scope.propertyName = 'lastName';
 
                 $scope.reverse = false;
 
@@ -345,153 +352,97 @@
                 $scope.breadcrumbs = breadcrumb;
 
                 $scope.bats = [];
-                $scope.hums = [];
 
-                var counter = 0;
+                var count = 1;
+                var ty = [];
 
                 $scope.loadMore = function () {
-
-                    for (var i = 0; i < 5; i++) {
-                        //$scope.bats.push({id: counter});
-                        //
-                        //$scope.query.page += 1;
-                        //$scope.query.limitAll = 10;
+                    for (var i = 0; i < 15; i++) {
+                        Skds.query({
+                                where: {},
+                                limit: 1,
+                                page: count
+                            },
+                            function (skds) {
+                                $scope.bats.push({
+                                    id: skds[0].id,
+                                    lastName: skds[0].lastName,
+                                    firstName: skds[0].firstName,
+                                    patronymicName: skds[0].patronymicName,
+                                    login: skds[0].login,
+                                    contacts: skds[0].contacts,
+                                    dateInWork: skds[0].dateInWork,
+                                    email: skds[0].email,
+                                    birthday: skds[0].birthday,
+                                    skds: skds[0].skds
+                                });
+                                $scope.objectName = skds;
+                            }, function (err) {
+                                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                            });
+                        count += 1;
                     }
                 };
 
-                //$scope.hums =[
-                //    {id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},{id:1,lastName:'Petia'},
-                //    {id:2,lastName:'Petia2'},
-                //    {id:3,lastName:'Petia3'},
-                //    {id:4,lastName:'Petia4'},
-                //    {id:5,lastName:'Petia5'},
-                //    {id:6,lastName:'Petia6'},
-                //    {id:7,lastName:'Petia7'},
-                //    {id:8,lastName:'Petia8'},
-                //    {id:9,lastName:'Petia9'},
-                //    {id:10,lastName:'Petia10'},
-                //    {id:11,lastName:'Petia11'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'},
-                //    {id:12,lastName:'Petia12'}
-                //];
-                //    $scope.hums =   Skds.query({
-                //        sort:'lastName',
-                //        limitAll:100
+                $scope.loadMore();
+
+
+
+
+
+
+
+
+                $scope.hums = [];
+                var counter = 1;
+                $scope.loadMore2 = function () {
+
+                    //for (var i = 0; i < 10; i++) {
+                    //    $scope.hums.push({date: counter});
+                    //    counter += 10;
+                    //}
+
+
+                    for (let u = 0; u < 10; u++) {
+                        Skds.query({
+                                where: {id:$scope.idUser},
+                                limit: 1,
+                                page: count
+                            },
+                            function (skds) {
+                                $scope.hums.push({
+                                    //id: skds[0].id,
+                                    //lastName: skds[0].lastName,
+                                    //firstName: skds[0].firstName,
+                                    //patronymicName: skds[0].patronymicName,
+                                    //login: skds[0].login,
+                                    //contacts: skds[0].contacts,
+                                    //dateInWork: skds[0].dateInWork,
+                                    //email: skds[0].email,
+                                    //birthday: skds[0].birthday,
+                                    skds: skds[0].skds
+                                });
+                                $scope.objectName = skds;
+                            }, function (err) {
+                                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                            });
+                        count += 1;
+                    }
+                };
+
+                //$scope.hums = Skds.query({
+                //        sort: 'lastName',
+                //        limitAll: 100
                 //    },
                 //    function (skds) {
                 //        $scope.hums = skds;
                 //        $scope.objectName = skds;
                 //        //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
                 //    }, function (err) {
-                //        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                //        toastr.error(err.data.details, 'Ошибка8444! ' + err.data.message);
                 //    });
-                $scope.loadMore();
-                var count = 0;
-                $scope.loadMore2 = function () {
-                    for (var i = 0; i < 10; i++) {
-                        Skds.query({
-                                limitAll:10,
-                            page:count
-                            },
-                            function (skds) {
-                                //console.log('IDDDDDDDDDDDDDDDD');
-                                //console.log(skds[0].id);
-                                //console.log(skds[0].lastName);
-
-                                //$scope.hums = skds;
-                                $scope.bats.push({id:skds[0].id,lastName:skds[0].lastName});
-                                $scope.objectName = skds;
-                                //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
-                            }, function (err) {
-                                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
-                            });
-
-                        //$scope.limitAll += 2;
-                        count += 1;
-                    }
-                };
 
                 $scope.loadMore2();
-
 
             }]);
 })(window.angular);

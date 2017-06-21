@@ -505,16 +505,24 @@ module.exports.bootstrap = function (cb) {
                                     patronymicName: arrName[2]
                                 })
                                 .exec(function (err, foundUser) {
-                                    if (err) console.log('error 5555');
+                                    if (err) console.log('Ошибка поиска в коллекции User!');
                                     if (!foundUser) return;
                                     row.owner = foundUser.id;
 
                                     Skd.findOrCreate(row)
                                         .exec(function (err, createdTutorial) {
-                                            if (err) return;
+                                            if (err) console.log('Ошибка создания записи в коллекции Skd!');
                                             //sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
 
-
+                                            //// Создаём ссылку на skd в атрибуте пользователя
+                                            //foundUser.skds.add(createdTutorial);
+                                            //
+                                            //// Сохраняем изменённый документ
+                                            //foundUser.save(function (err) {
+                                            //    if (err) return res.negotiate(err);
+                                            //
+                                            //    return res.json({id: createdTutorial.id});
+                                            //});
 
                                         });
                                 });

@@ -482,8 +482,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             link: function (scope) {
 
                 scope.$watch('objectName', function (value) {
-                    console.log('OBJECT NAME33');
-                    console.log(value);
+                    //console.log('OBJECT NAME33');
+                    //console.log(value);
 
                     scope.objectName = value;
                     scope.checkArray();
@@ -492,13 +492,13 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 scope.checkArray = function () {
                     var parts = [];
                     var v = scope.objectName;
-                    console.log('obj - v');
-                    console.log(v);
+                    //console.log('obj - v');
+                    //console.log(v);
                     for (var key in v) {
                         var obj = v[key];
-
-                        console.log('obj');
-                        console.log(obj);
+                        //
+                        //console.log('obj');
+                        //console.log(obj);
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
@@ -510,8 +510,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     //console.log('PARTS');
                     //console.log(parts);
                     scope.parts =  scope.uniqueValue(parts).sort();
-                    console.log('UNIQUE2 PARTS2');
-                    console.log(scope.parts);
+                    //console.log('UNIQUE2 PARTS2');
+                    //console.log(scope.parts);
                 };
 
                 scope.uniqueValue = function(arr) {

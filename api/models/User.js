@@ -149,10 +149,10 @@ module.exports = {
             collection: 'skd',
             via: 'owner'
         },
-        tutorials: {
-            collection: 'tutorial',
-            via: 'owner'
-        },
+        //tutorials: {
+        //    collection: 'tutorial',
+        //    via: 'owner'
+        //},
         getFullName: function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         }

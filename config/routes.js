@@ -95,7 +95,7 @@ module.exports.routes = {
 
 
     'GET /skds': 'SkdController.findSkds', //получить все записи skd
-    'GET /test': 'SkdController.test', //получить все записи skd
+    //'GET /test': 'SkdController.test', //получить все записи skd
     'POST /skds': 'SkdController.findSkds', //получить все записи skd
     'GET /skds/:id': 'SkdController.findSkds', //получить все записи skd
 
