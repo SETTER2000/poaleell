@@ -22,24 +22,55 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
-    //test: function (req, res) {
-    //    if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-    //    User.findOne({id: req.session.me})
-    //        .exec((err, foundUser) => {
-    //            if (err) return res.negotiate;
-    //            if (!foundUser) return res.notFound();
-    //            let limit = (_.isEmpty(req.param('limit'))) ? 1 : req.param('limit');
-    //            User.find(req.param('id'))
-    //                //.sort({lastName:1})
-    //                .populate ('skds')
-    //                .paginate({sort:{lastName:1}, limit: limit,page: req.param('page')})
-    //                .exec((err, foundSkd)=> {
-    //                    //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {
-    //                    if (err) return res.negotiate(err);
-    //                    res.ok(foundSkd);
-    //                });
-    //        });
-    //},
+    getAggregateCount:function(req,res){
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me}) .exec((err, foundUser) => {
+            if (err) return res.negotiate;
+            if (!foundUser) return res.notFound();
+            return res.ok('The final point in development');
+        });
+    },
+    getAggregate: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me})
+            .exec((err, foundUser) => {
+                if (err) return res.negotiate;
+                if (!foundUser) return res.notFound();
+
+                Skd.native(function (err, collection) {
+                    if (err) return res.serverError(err);
+                    collection.aggregate([{
+                        $group: {
+                            _id: {owner: "$owner", name: "$name", date: "$date"},
+                            //_id: {name: req.param('name'), date: "$date"},
+                            periods: {
+                                $push: {
+                                    start: "$startPeriod",
+                                    end: "$endPeriod",
+                                    workTimePeriod: {$subtract: ["$endPeriod", "$startPeriod"]}
+                                }
+                            },
+                            maxEnd: {$max: "$endPeriod"},
+                            minStart: {$min: "$startPeriod"},
+                            periodСount: {$sum: 1}
+                        }
+                    }, {
+                        $project: {
+                            minStart: 1,
+                            maxEnd: 1,
+                            periods: 1,
+                            periodСount: 1,
+                            workTime: {$subtract: ["$maxEnd", "$minStart"]}
+                        }
+                    }]).toArray(function (err, results) {
+                        if (err) return res.serverError(err);
+                        return res.ok(results);
+                    });
+                });
+
+
+            });
+    },
     findSkds: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me})
@@ -48,11 +79,11 @@ module.exports = {
                 if (!foundUser) return res.notFound();
                 let limit = (_.isEmpty(req.param('limit'))) ? 3 : req.param('limit');
                 let sort = (_.isEmpty(req.param('sort'))) ? 'lastName' : req.param('sort');
-                let query = (_.isEmpty(req.param('id'))) ? {where:{},sort:sort,limit:limit} : req.param('id');
+                let query = (_.isEmpty(req.param('id'))) ? {where: {}, sort: sort, limit: limit} : req.param('id');
                 let page = (_.isEmpty(req.param('page'))) ? 1 : req.param('page');
 
                 User.find(query)
-                    .populate ('skds')
+                    .populate('skds')
                     .paginate({page: page, limit: limit, sort: sort})
                     .exec((err, foundSkd)=> {
                         //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {

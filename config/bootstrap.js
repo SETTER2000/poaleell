@@ -489,10 +489,13 @@ module.exports.bootstrap = function (cb) {
                             name = workbook.sheet(0).cell(`C${i}`).value();
                             arrName = name.match(/([а-яё]+)/gi);
                         }
+                        // 2017-06-21
                         row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
                         row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
-                        row.startPeriod = workbook.sheet(0).cell(`E${i}`).value();
-                        row.endPeriod = workbook.sheet(0).cell(`F${i}`).value();
+                        // 13:27 > "2017-06-21T13:27:00+00:00"
+                        row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value()+':00+00:00';
+                        // 13:27 > "2017-06-21T13:27:00+00:00"
+                        row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value()+':00+00:00';
 
 
                         /**

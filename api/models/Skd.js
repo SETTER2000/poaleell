@@ -23,10 +23,10 @@ module.exports = {
             type: 'string'
         },
         startPeriod: {
-            type: 'string'
+            type: 'datetime'
         },
         endPeriod: {
-            type: 'string'
+            type: 'datetime'
         },
         headerOneRow: {
             type: 'string'
@@ -35,7 +35,7 @@ module.exports = {
             type: 'string'
         },
         date: {
-            type: 'string'
+            type: 'datetime'
         },
         owner:{
             model:'user'

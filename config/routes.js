@@ -48,6 +48,10 @@ module.exports.routes = {
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
 
+    'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
+    'GET /getAggregate/count': 'SkdController.getAggregateCount', // кол-во объектов
+
+
 
     /**
      * Тестовые роуты
@@ -55,6 +59,7 @@ module.exports.routes = {
     'GET /createReportSkd': 'SkdController.createReport',
     'GET /tut': 'TutorialController.createTutorial',
     'GET /ed': 'TutorialController.editTutorial',
+
 
 
 

@@ -48,15 +48,24 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                             <!--</li>-->
                             <!--</ul>-->
                             <div id="fixed2" when-scrolled="loadMore2()">
-                                <v-pane id="{{ ::pane.skds.id }}" ng-repeat="subpane in hums">
-                                    <v-pane-header id="{{ ::subpane.date }}-header" aria-controls="{{ ::subpane.date}}-header">
-                                        <h5>{{ ::subpane.skdsArr.date |amDateFormat:'DD.MM.YYYY'}}</h5>
+                                <v-pane id="{{ ::pane.skds.id }}" ng-repeat="subpane in hums|orderBy:propertyName2:reverse">
+                                    <v-pane-header id="{{ ::subpane.skds.date }}-header" aria-controls="{{ ::subpane.skds.date}}-header">
+                                        <div class="row">
+                                            <div class="col-md-9 col-md-offset-2">
+                                                <div class="row">
+                                                    <div class="col-md-2">{{ ::subpane.skds.date |amDateFormat:'DD.MM.YYYY'}}</div>
+                                                    <div class="col-md-2">{{::subpane.skds.startPeriod}}</div>
+                                                    <div class="col-md-2">{{::subpane.skds.endPeriod}}</div>
+                                                    <div class="col-md-2 pull-right">{{::subpane.skds.name}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </v-pane-header>
-                                    <v-pane-content id="{{ ::subpane.id }}-content" aria-labelledby="{{ ::subpane.id }}-content">
+                                    <v-pane-content id="{{ ::subpane.skds.id }}-content" aria-labelledby="{{ ::subpane.skds.id }}-content">
                                         <!--<div class="row">-->
                                         <!--&lt;!&ndash;<div class="col-md-2">{{ ::skds.date|amDateFormat:'DD.MM.YYYY'}}</div>&ndash;&gt;-->
-                                        <!--<div class="col-md-2">{{::subpane.startPeriod}}</div>-->
-                                        <!--<div class="col-md-2">{{::subpane.endPeriod}}</div>-->
+                                        <!--<div class="col-md-2">{{::subpane.skds.startPeriod}}</div>-->
+                                        <!--<div class="col-md-2">{{::subpane.skds.endPeriod}}</div>-->
                                         <!--</div>-->
                                     </v-pane-content>
                                 </v-pane>
