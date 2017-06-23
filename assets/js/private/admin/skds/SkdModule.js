@@ -158,9 +158,9 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
 
             for(let i in this.periods){
                 if (!this.periods.hasOwnProperty(i)) continue; // пропустить "не свои" свойства
-                this.periods.start = moment.tz(this.periods[i].start,"Europe/London");
-                this.periods.end = moment.tz(this.periods[i].end,"Europe/London");
-                this.periods.workTime = moment.tz(this.periods[i].workTime,"Europe/London");
+                this.periods.start = moment(this.periods[i].start).utc().format('LT');
+                this.periods.end = moment(this.periods[i].end).utc().format('LT');
+                this.periods.workTime = moment(this.periods[i].workTime).utc().format('LT');
             }
 
 
