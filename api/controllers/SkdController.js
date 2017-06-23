@@ -22,9 +22,9 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
-    getAggregateCount:function(req,res){
+    getAggregateCount: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne({id: req.session.me}) .exec((err, foundUser) => {
+        User.findOne({id: req.session.me}).exec((err, foundUser) => {
             if (err) return res.negotiate;
             if (!foundUser) return res.notFound();
             return res.ok('The final point in development');
@@ -36,6 +36,13 @@ module.exports = {
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
+                let limit = (_.isEmpty(req.param('limit'))) ? 10 : req.param('limit');
+                let page = (_.isEmpty(req.param('page'))) ? 0 : req.param('page');
+                let skip = (+page * +limit);
+
+                sails.log('limit: ' + limit);
+                sails.log('page: ' + page);
+                sails.log('skip: ' + skip);
 
                 Skd.native(function (err, collection) {
                     if (err) return res.serverError(err);
@@ -54,21 +61,24 @@ module.exports = {
                             minStart: {$min: "$startPeriod"},
                             periodСount: {$sum: 1}
                         }
-                    }, {
-                        $project: {
-                            minStart: 1,
-                            maxEnd: 1,
-                            periods: 1,
-                            periodСount: 1,
-                            workTime: {$subtract: ["$maxEnd", "$minStart"]}
-                        }
-                    }]).toArray(function (err, results) {
+                    },
+                        {$sort: {'_id.date': -1, '_id.name': 1}},
+                        {
+                            $project: {
+                                minStart: 1,
+                                maxEnd: 1,
+                                periods: 1,
+                                periodСount: 1,
+                                workTime: {$subtract: ["$maxEnd", "$minStart"]}
+                            }
+                        },
+                        {$skip: +skip},
+                        {$limit: +limit}
+                    ]).toArray(function (err, results) {
                         if (err) return res.serverError(err);
                         return res.ok(results);
                     });
                 });
-
-
             });
     },
     findSkds: function (req, res) {

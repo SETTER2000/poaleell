@@ -53,9 +53,9 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-2">
                                                 <div class="row">
-                                                    <div class="col-md-2">{{ ::subpane.skds.date |amDateFormat:'DD.MM.YYYY'}}</div>
-                                                    <div class="col-md-2">{{::subpane.skds.startPeriod}}</div>
-                                                    <div class="col-md-2">{{::subpane.skds.endPeriod}}</div>
+                                                    <div class="col-md-2">{{ ::subpane.skds.date | amDateFormat:'DD.MM.YYYY'}}</div>
+                                                    <div class="col-md-2">{{::subpane.skds.startPeriod | amDateFormat:'HH:MM:SS'}}</div>
+                                                    <div class="col-md-2">{{::subpane.skds.endPeriod | amDateFormat:'DD.MM.YYYY'}}</div>
                                                     <div class="col-md-2 pull-right">{{::subpane.skds.name}}</div>
                                                 </div>
                                             </div>

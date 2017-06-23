@@ -1,4 +1,4 @@
-angular.module('SkdModule', ['ui.router', 'ngResource','vAccordion', 'ngAnimate'])
+angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.skds', {
@@ -125,7 +125,7 @@ angular.module('SkdModule', ['ui.router', 'ngResource','vAccordion', 'ngAnimate'
         $rootScope.$stateParams = $stateParams;
         amMoment.changeLocale('ru');
     })
-    .factory('Skds', function ($resource, $state, CONF_MODULE_SKD) {
+    .factory('Skds', function ($resource, $state, moment, CONF_MODULE_SKD) {
         var Skds = $resource(
             CONF_MODULE_SKD.baseUrl,
             {skdId: '@id'},
@@ -147,10 +147,55 @@ angular.module('SkdModule', ['ui.router', 'ngResource','vAccordion', 'ngAnimate'
         };
 
         Skds.prototype.getFullName = function () {
-            return this.name;
+            return this._id.name;
+        };
+
+        Skds.prototype.formMinStart = function () {
+            return moment(this.minStart).utc().format('LT');
+        };
+        Skds.prototype.getPeriod = function () {
+            //this.periods.end = moment(this.periods.end, moment.ISO_8601).utc().format('h:mm:ss a');
+
+            for(let i in this.periods){
+                if (!this.periods.hasOwnProperty(i)) continue; // пропустить "не свои" свойства
+                this.periods.start = moment.tz(this.periods[i].start,"Europe/London");
+                this.periods.start     = this.periods.start.clone().tz("Europe/London");
+                //this.periods.end = moment.tz(this.periods[i].end,"Europe/London");
+                //this.periods.workTime = moment.tz(this.periods[i].workTime,"Europe/London");
+            }
+
+
+
+            //this.periods.workTime = moment(this.periods.workTime).utc().format('h:mm:ss a');
+
+            //this.periods.push({
+            //    end: 111,
+            //    start:5555
+            //},{
+            //    end: 112,
+            //    start:355
+            //});
+            return this.periods;
+            //for (let ux in this.periods) {
+            //    //if (!this.periods.hasOwnProperty(ux)) continue; // пропустить "не свои" свойства
+            //    period.push({
+            //        end: moment(this.periods[ux].start).utc().format('LT'),
+            //        start: moment(this.periods[ux].end).utc().format('LT')
+            //    });
+            //}
+            //return period;
+        };
+        Skds.prototype.formMaxEnd = function () {
+            return moment(this.maxEnd).utc().format('LT');
+        };
+        Skds.prototype.formWorkTime = function () {
+            return moment(this.workTime).utc().format('LT');
+        };
+        Skds.prototype.formDate = function () {
+            return moment(this._id.date).utc().format('L');
         };
         Skds.prototype.getShortName = function () {
-            return this.lastName + ' ' + this.firstName.substr(0,1) + '.' + this.patronymicName.substr(0,1)+'.';
+            return this.lastName + ' ' + this.firstName.substr(0, 1) + '.' + this.patronymicName.substr(0, 1) + '.';
         };
         Skds.prototype.sc = function () {
             return this.section;
@@ -223,20 +268,20 @@ angular.module('SkdModule', ['ui.router', 'ngResource','vAccordion', 'ngAnimate'
         };
         return Skds;
     })
-    .directive('whenScrolled', function() {
-        return function(scope, elm, attr) {
+    .directive('whenScrolled', function () {
+        return function (scope, elm, attr) {
             var raw = elm[0];
 
-            elm.bind('scroll', function() {
+            elm.bind('scroll', function () {
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
                     scope.$apply(attr.whenScrolled);
                 }
             });
         };
     })
-    /**
-     * Выборка фамилий по первой букве
-     */
+/**
+ * Выборка фамилий по первой букве
+ */
     //.filter('firstChar', function () {
     //    return function (value, param, char) {
     //        if (char.length > 0) {

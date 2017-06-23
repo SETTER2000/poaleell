@@ -140,7 +140,7 @@
                 $scope.charText = '';
                 $scope.searchText = '';
                 $scope.page_number = 0;
-                $scope.limitAll = 1;
+                $scope.limitAll = 10;
                 $scope.where = {};
                 $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
                 $scope.enabledButton = false;
@@ -184,7 +184,7 @@
                         {display: "Не активированы / Заблокированы", value: "action"},
                         {display: "Все", value: "table"}
                     ];
-                $scope.modeSelect = $scope.options[1];
+                $scope.modeSelect = $scope.options[2];
                 $scope.tableView = "/js/private/admin/skds/views/home.admin.skds.table.html";
                 $scope.listView = "/js/private/admin/skds/views/home.admin.skds.list.html";
                 $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
@@ -275,19 +275,27 @@
                         where: $scope.where,
                         sort: $scope.sort,
                         limit: $scope.limitAll,
-                        page: 1,
+                        page: 0,
                         property: 'name',
                         char: $scope.charText + '%'
                     };
-
-                    $scope.items = $scope.objectName = Skds.query($scope.query,
-                        function (skds) {
-                            $scope.items = skds;
-                            $scope.objectName = skds;
-                            //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
+                    Skds.query($scope.query,
+                        function (aggreg) {
+                            console.log(aggreg);
+                            $scope.items = aggreg;
+                            //$scope.objectName = aggreg;
                         }, function (err) {
                             toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
                         });
+
+                    //$scope.items = $scope.objectName = Skds.query($scope.query,
+                    //    function (skds) {
+                    //        $scope.items = skds;
+                    //        $scope.objectName = skds;
+                    //        //$scope.numPages = Math.floor(skds.length / $scope.defaultRows) + 1;
+                    //    }, function (err) {
+                    //        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                    //    });
                 };
 
                 $scope.getMode = function (t) {
@@ -361,83 +369,70 @@
                 $scope.bats = [];
 
                 var count = 1;
+
+
+                //$scope.loadMore = function () {
+                //    for (var i = 0; i < 15; i++) {
+                //        Skds.query({
+                //                where: {},
+                //                limit: 1,
+                //                page: count
+                //            },
+                //            function (skds) {
+                //                $scope.bats.push({
+                //                    id: skds[0].id,
+                //                    lastName: skds[0].lastName,
+                //                    firstName: skds[0].firstName,
+                //                    patronymicName: skds[0].patronymicName,
+                //                    login: skds[0].login,
+                //                    contacts: skds[0].contacts,
+                //                    dateInWork: skds[0].dateInWork,
+                //                    email: skds[0].email,
+                //                    birthday: skds[0].birthday,
+                //                    skds: skds[0].skds
+                //                });
+                //                $scope.objectName = skds;
+                //            }, function (err) {
+                //                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                //            });
+                //        count += 1;
+                //    }
+                //};
+                var o = function (t) {
+                    return t.getUTCFullYear() + '-' + t.getMonth() + '-' + t.getUTCDate() + 'T' + t.getUTCHours() + ':' + t.getUTCMinutes() + ':' + t.getUTCSeconds();
+                };
+                //var t = new Date("2017-06-22T10:03:00Z");
+                //console.log('DDDDDDDDDDDDDD');
+                ////console.log(t );
+
+                var day = moment("2017-06-22T10:03:00Z").utc().format('LT');
+                console.log(day);
+
+                //$scope.loadMore();
+                var cnt = 0;
                 $scope.ty = [];
 
-                $scope.loadMore = function () {
-                    for (var i = 0; i < 15; i++) {
-                        Skds.query({
-                                where: {},
-                                limit: 1,
-                                page: count
-                            },
-                            function (skds) {
-                                $scope.bats.push({
-                                    id: skds[0].id,
-                                    lastName: skds[0].lastName,
-                                    firstName: skds[0].firstName,
-                                    patronymicName: skds[0].patronymicName,
-                                    login: skds[0].login,
-                                    contacts: skds[0].contacts,
-                                    dateInWork: skds[0].dateInWork,
-                                    email: skds[0].email,
-                                    birthday: skds[0].birthday,
-                                    skds: skds[0].skds
-                                });
-                                $scope.objectName = skds;
-                            }, function (err) {
-                                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
-                            });
-                        count += 1;
-                    }
-                };
-
-                $scope.loadMore();
 
 
-                $scope.loadTest = function () {
-                    for (var i = 0; i < 1; i++) {
+                //$scope.loadTest = function () {
+                //    for (var i = 0; i < 10; i++) {
+                //        Skds.query({
+                //                where: {},
+                //                limit: 10,
+                //                page: 0
+                //            },
+                //            function (aggreg) {
+                //                console.log(aggreg);
+                //                $scope.items = aggreg;
+                //                //$scope.objectName = aggreg;
+                //            }, function (err) {
+                //                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                //            });
+                //        cnt += 1;
+                //    }
+                //};
 
-                        $http.get('/getAggregate', {name:'Петров Александр Вячеславович'})
-                            .then(function successCallback(response) {
-                                //console.log(response.data[0].skds[count].date);
-                                //console.log(response.data.skds[0]);
-                                console.log(response.data);
-                                //$scope.ty.push(response);
-                        }, function errorCallback(response) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                        });
-
-                        //Skds.query({
-                        //        where: {},
-                        //        limit: 1,
-                        //        page: count
-                        //    },
-                        //    function (skds) {
-                        //        $scope.ty.push({
-                        //            id: skds[0].id,
-                        //            lastName: skds[0].lastName,
-                        //            firstName: skds[0].firstName,
-                        //            patronymicName: skds[0].patronymicName,
-                        //            login: skds[0].login,
-                        //            contacts: skds[0].contacts,
-                        //            dateInWork: skds[0].dateInWork,
-                        //            email: skds[0].email,
-                        //            birthday: skds[0].birthday,
-                        //            skds: skds[0].skds
-                        //        });
-                        //        $scope.objectName = skds;
-                        //    }, function (err) {
-                        //        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
-                        //    });
-                        count += 1;
-                    }
-                };
-
-                $scope.loadTest();
-
-
-
+                //$scope.loadTest();
 
 
                 $scope.hums = [];
@@ -450,33 +445,33 @@
                     //}
 
 
-                    for (let u = 0; u < 10; u++) {
-                        Skds.query({
-                                where: {id:$scope.idUser},
-                                limit: 1,
-                                page: counter
-                            },
-                            function (response) {
-                                //console.log(' skds: skds[0]');
-                                //console.log(response[0].skds[0].date);
-                                $scope.hums.push({
-                                    //id: skds[0].id,
-                                    //lastName: skds[0].lastName,
-                                    //firstName: skds[0].firstName,
-                                    //patronymicName: skds[0].patronymicName,
-                                    //login: skds[0].login,
-                                    //contacts: skds[0].contacts,
-                                    //dateInWork: skds[0].dateInWork,
-                                    //email: skds[0].email,
-                                    //birthday: skds[0].birthday,
-                                    skds: response[0].skds[0]
-                                });
-                                $scope.objectName = response;
-                            }, function (err) {
-                                toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
-                            });
-                        counter += 1;
-                    }
+                    //for (let u = 0; u < 10; u++) {
+                    //    Skds.query({
+                    //            where: {id:$scope.idUser},
+                    //            limit: 1,
+                    //            page: counter
+                    //        },
+                    //        function (response) {
+                    //            //console.log(' skds: skds[0]');
+                    //            //console.log(response[0].skds[0].date);
+                    //            $scope.hums.push({
+                    //                //id: skds[0].id,
+                    //                //lastName: skds[0].lastName,
+                    //                //firstName: skds[0].firstName,
+                    //                //patronymicName: skds[0].patronymicName,
+                    //                //login: skds[0].login,
+                    //                //contacts: skds[0].contacts,
+                    //                //dateInWork: skds[0].dateInWork,
+                    //                //email: skds[0].email,
+                    //                //birthday: skds[0].birthday,
+                    //                skds: response[0].skds[0]
+                    //            });
+                    //            $scope.objectName = response;
+                    //        }, function (err) {
+                    //            toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                    //        });
+                    //    counter += 1;
+                    //}
                 };
 
                 //$scope.hums = Skds.query({

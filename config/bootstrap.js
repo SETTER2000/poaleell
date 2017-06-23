@@ -493,9 +493,9 @@ module.exports.bootstrap = function (cb) {
                         row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
                         row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
                         // 13:27 > "2017-06-21T13:27:00+00:00"
-                        row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value()+':00+00:00';
+                        row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value();
                         // 13:27 > "2017-06-21T13:27:00+00:00"
-                        row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value()+':00+00:00';
+                        row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
 
 
                         /**
@@ -514,9 +514,8 @@ module.exports.bootstrap = function (cb) {
 
                                     Skd.findOrCreate(row)
                                         .exec(function (err, createdTutorial) {
-                                            if (err) console.log('Ошибка создания записи в коллекции Skd!');
+                                            if (err) return;
                                             //sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
-
                                             //// Создаём ссылку на skd в атрибуте пользователя
                                             //foundUser.skds.add(createdTutorial);
                                             //
@@ -526,7 +525,6 @@ module.exports.bootstrap = function (cb) {
                                             //
                                             //    return res.json({id: createdTutorial.id});
                                             //});
-
                                         });
                                 });
                         }
