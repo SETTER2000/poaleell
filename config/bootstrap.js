@@ -480,7 +480,7 @@ module.exports.bootstrap = function (cb) {
                     let datePeriod = '';
                     let name = '';
                     let arrName = '';
-                    for (let i = 9; i < allRows; i++) {
+                    for (let i = 9; i <= allRows; i++) {
                         let row = {};
                         if (workbook.sheet(0).cell(`A${i}`).value()) {
                             datePeriod = workbook.sheet(0).cell(`A${i}`).value();
@@ -497,11 +497,12 @@ module.exports.bootstrap = function (cb) {
                         // 13:27 > "2017-06-21T13:27:00+00:00"
                         row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
 
-
+                        sails.log('FM1: '+ arrName[0]);
                         /**
                          * Проверяем есть ли фамилия
                          */
                         if (arrName[0]) {
+                            sails.log('FM2: '+ arrName[0]);
                             User.findOne({
                                     lastName: arrName[0],
                                     firstName: arrName[1],
@@ -509,23 +510,25 @@ module.exports.bootstrap = function (cb) {
                                 })
                                 .exec(function (err, foundUser) {
                                     if (err) console.log('Ошибка поиска в коллекции User!');
-                                    if (!foundUser) return;
-                                    row.owner = foundUser.id;
+                                    if (!foundUser) {
+                                        console.log('ВНИМАНИЕ! Пользователь ' +row.name +' в базе данных не найден.');
+                                    }else{
+                                        row.owner = foundUser.id;
+                                        Skd.findOrCreate(row)
+                                            .exec(function (err, createdTutorial) {
+                                                if (err) return;
+                                                sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
+                                                // Создаём ссылку на skd в атрибуте пользователя
+                                                foundUser.skds.add(createdTutorial);
 
-                                    Skd.findOrCreate(row)
-                                        .exec(function (err, createdTutorial) {
-                                            if (err) return;
-                                            //sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
-                                            //// Создаём ссылку на skd в атрибуте пользователя
-                                            //foundUser.skds.add(createdTutorial);
-                                            //
-                                            //// Сохраняем изменённый документ
-                                            //foundUser.save(function (err) {
-                                            //    if (err) return res.negotiate(err);
-                                            //
-                                            //    return res.json({id: createdTutorial.id});
-                                            //});
-                                        });
+                                                // Сохраняем изменённый документ
+                                                foundUser.save(function (err) {
+                                                    if (err) return res.negotiate(err);
+
+                                                    sails.log('Запись сохранена: ' + createdTutorial.name);
+                                                });
+                                            });
+                                    }
                                 });
                         }
 

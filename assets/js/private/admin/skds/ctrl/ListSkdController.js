@@ -285,7 +285,7 @@
                             $scope.items = aggreg;
                             //$scope.objectName = aggreg;
                         }, function (err) {
-                            toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                            toastr.error(err.data.details, 'Ошибка 77! ' + err.data.message);
                         });
 
                     //$scope.items = $scope.objectName = Skds.query($scope.query,
