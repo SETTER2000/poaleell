@@ -8,8 +8,12 @@
 const XlsxPopulate = require('xlsx-populate');
 const Ranges = require('named-ranges');
 const DateRu = require('date-ru');
+const moment = require('moment');
 const Watcher = require('listener-dir');
 const _ = require('lodash');
+
+
+
 
 /**
  *
@@ -22,6 +26,15 @@ Array.prototype.diff = function (a) {
     });
 };
 module.exports = {
+    getCalendar: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me}).exec((err, foundUser) => {
+            if (err) return res.negotiate;
+            if (!foundUser) return res.notFound();
+            return res.ok('The final point in development');
+        });
+    },
+
     getAggregateCount: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me}).exec((err, foundUser) => {
@@ -36,49 +49,83 @@ module.exports = {
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-                let limit = (_.isEmpty(req.param('limit'))) ? 10 : req.param('limit');
+                let limit = (_.isEmpty(req.param('limit'))) ? 10000 : req.param('limit');
                 let page = (_.isEmpty(req.param('page'))) ? 0 : req.param('page');
+
+                let sort = {'_id.date': -1, '_id.name': 1};
+                if (req.param('sortField') == 'date') {
+                    sort = {'_id.date': +req.param('sortTrend'), '_id.name': 1};
+                }
+                if (req.param('sortField') == 'name') {
+                    sort = {'_id.date': -1, '_id.name': +req.param('sortTrend')};
+                }
+
+                //let sort = (_.isEmpty(req.param('sort'))) ? {'_id.date': -1, '_id.name': 1} : req.param('sort');
                 let skip = (+page * +limit);
-
-                sails.log('limit: ' + limit);
-                sails.log('page: ' + page);
-                sails.log('skip: ' + skip);
-
+                //
+                //sails.log('HHHHHHHHHHHHH');
+                //sails.log(sort);
+                //sails.log('page: ' + page);
                 Skd.native(function (err, collection) {
                     if (err) return res.serverError(err);
-                    collection.aggregate([{
-                        $group: {
-                            _id: {owner: "$owner", name: "$name", date: "$date"},
-                            //_id: {name: req.param('name'), date: "$date"},
-                            periods: {
-                                $push: {
-                                    start: "$startPeriod",
-                                    end: "$endPeriod",
-                                    workTimePeriod: {$subtract: ["$endPeriod", "$startPeriod"]}
-                                }
-                            },
-                            maxEnd: {$max: "$endPeriod"},
-                            minStart: {$min: "$startPeriod"},
-                            periodСount: {$sum: 1}
-                        }
-                    },
-                        {$sort: {'_id.date': -1, '_id.name': 1}},
-                        {
-                            $project: {
-                                minStart: 1,
-                                maxEnd: 1,
-                                periods: 1,
-                                periodСount: 1,
-                                workTime: {$subtract: ["$maxEnd", "$minStart"]}
-                            }
-                        },
-                        {$skip: +skip},
-                        {$limit: +limit}
-                    ]).toArray(function (err, results) {
-                        if (err) return res.serverError(err);
-                        return res.ok(results);
-                    });
+                    collection.find({}, {date: 1, _id: 0}).sort({"date": -1}).limit(1)
+                        .toArray(function (err, dateLast) {
+                            if (err) return res.serverError(err);
+                            //sails.log('DATE LAST');
+                            //console.log(dateLast[0].date);
+                            //sails.log('SDDD');
+                            //console.log(req.param('sd'));
+
+                            Skd.native(function (err, collection) {
+                                if (err) return res.serverError(err);
+                                //"2017-06-23"
+                                let searchDate = (req.param('sd')) ? new Date(req.param('sd')) : '';
+                                let mat = (searchDate) ? {$match: {date: {$gte: new Date(searchDate)}}} : {$match: {date: {$gt: new Date("2013-01-01")}}};
+                                //mat = {$match: {date: searchDate}};
+                                //sails.log('searchDate');
+                                //sails.log(searchDate);
+                                collection.aggregate([mat,
+                                    {
+                                        $group: {
+                                            _id: {owner: "$owner", name: "$name", date: "$date"},
+                                            //_id: {name: req.param('name'), date: "$date"},
+                                            periods: {
+                                                $push: {
+                                                    start: "$startPeriod",
+                                                    end: "$endPeriod",
+                                                    workTimePeriod: {$subtract: ["$endPeriod", "$startPeriod"]}
+                                                }
+                                            },
+                                            maxEnd: {$max: "$endPeriod"},
+                                            minStart: {$min: "$startPeriod"},
+                                            periodСount: {$sum: 1}
+                                        }
+                                    },
+                                    {$sort: sort},
+                                    {
+                                        $project: {
+                                            minStart: 1,
+                                            maxEnd: 1,
+                                            periods: 1,
+                                            sections: 1,
+                                            section: 1,
+                                            periodСount: 1,
+                                            workTime: {$subtract: ["$maxEnd", "$minStart"]}
+                                        }
+                                    },
+                                    {$skip: +skip},
+                                    {$limit: +limit}
+                                ]).toArray(function (err, results) {
+                                    if (err) return res.serverError(err);
+                                    return res.ok(results);
+                                });
+                            });
+
+
+                        });
                 });
+
+
             });
     },
     findSkds: function (req, res) {

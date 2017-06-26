@@ -502,7 +502,7 @@ module.exports.bootstrap = function (cb) {
                          * Проверяем есть ли фамилия
                          */
                         if (arrName[0]) {
-                            sails.log('FM2: '+ arrName[0]);
+                            //sails.log('FM2: '+ arrName[0]);
                             User.findOne({
                                     lastName: arrName[0],
                                     firstName: arrName[1],

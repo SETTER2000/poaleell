@@ -153,37 +153,10 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
         Skds.prototype.formMinStart = function () {
             return moment(this.minStart).utc().format('LT');
         };
-        Skds.prototype.getPeriod = function () {
-            //this.periods.end = moment(this.periods.end, moment.ISO_8601).utc().format('h:mm:ss a');
-
-            for(let i in this.periods){
-                if (!this.periods.hasOwnProperty(i)) continue; // пропустить "не свои" свойства
-                this.periods.start = moment(this.periods[i].start).utc().format('LT');
-                this.periods.end = moment(this.periods[i].end).utc().format('LT');
-                this.periods.workTime = moment(this.periods[i].workTime).utc().format('LT');
-            }
-
-
-
-            //this.periods.workTime = moment(this.periods.workTime).utc().format('h:mm:ss a');
-
-            //this.periods.push({
-            //    end: 111,
-            //    start:5555
-            //},{
-            //    end: 112,
-            //    start:355
-            //});
-            return this.periods;
-            //for (let ux in this.periods) {
-            //    //if (!this.periods.hasOwnProperty(ux)) continue; // пропустить "не свои" свойства
-            //    period.push({
-            //        end: moment(this.periods[ux].start).utc().format('LT'),
-            //        start: moment(this.periods[ux].end).utc().format('LT')
-            //    });
-            //}
-            //return period;
+        Skds.prototype.getPeriodTime = function (e) {
+                return moment(e).utc().format('LT');
         };
+
         Skds.prototype.formMaxEnd = function () {
             return moment(this.maxEnd).utc().format('LT');
         };
@@ -313,98 +286,98 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
     //        }
     //    }
     //})
-    //.directive('pagination', function () { // функция компиляции директивы (фабричная функция)
-    //    return {
-    //        restrict: 'E',
-    //        scope: {
-    //            //numPages: '=', // кол-во страниц (кнопок)
-    //            defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
-    //            limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
-    //            lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
-    //            currentPage: '=',
-    //            onSelectPage: '&',
-    //            added:'='
-    //        },
-    //        templateUrl: '/js/private/admin/skds/views/pagination.html',
-    //        replace: true,
-    //        link: function (scope) {
-    //
-    //            scope.$watch('added', function (value) {
-    //                scope.added = value;
-    //            });
-    //
-    //            scope.$watch('lengthObject', function (value) {
-    //                scope.numPages = Math.floor(value / scope.defaultRows) + 1;
-    //                //scope.pages = [];
-    //                //for (var i = 1; i <= value; i++) {
-    //                //    scope.pages.push(i);
-    //                //}
-    //                //if (scope.currentPage > value) {
-    //                //    scope.selectPage(value);
-    //                //}
-    //            });
-    //
-    //
-    //            scope.$watch('numPages', function (value) {
-    //                scope.pages = [];
-    //                for (var i = 1; i <= value; i++) {
-    //                    scope.pages.push(i);
-    //                }
-    //                if (scope.currentPage > value) {
-    //                    scope.selectPage(value);
-    //                }
-    //            });
-    //            scope.$watch('limitRows', function (value) {
-    //                scope.rows = [];
-    //                for (var i = 0; i <= value.length; i++) {
-    //                    scope.rows.push(value[i]);
-    //                }
-    //            });
-    //            scope.$watch('defaultRows', function (value, oldValue) {
-    //                if (value > 0) {
-    //                    scope.defaultRows = value;
-    //                    scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-    //                }
-    //            });
-    //            scope.noPrevious = function () {
-    //                return scope.currentPage === 1;
-    //            };
-    //            scope.noNext = function () {
-    //                return scope.currentPage === scope.numPages;
-    //            };
-    //            scope.isActive = function (page) {
-    //                return scope.currentPage === page;
-    //            };
-    //            scope.isActiveRow = function (row) {
-    //                return scope.defaultRows === row;
-    //            };
-    //            scope.selectPage = function (page) {
-    //                if (!scope.isActive(page)) {
-    //                    scope.currentPage = page;
-    //                    scope.onSelectPage({page: page});
-    //                }
-    //            };
-    //            scope.selectPrevious = function () {
-    //                if (!scope.noPrevious()) {
-    //                    scope.selectPage(scope.currentPage - 1);
-    //                }
-    //            };
-    //            scope.selectNext = function () {
-    //                if (!scope.noNext()) {
-    //                    scope.selectPage(scope.currentPage + 1);
-    //                }
-    //            };
-    //            scope.getLimitRows = function (limitRows) {
-    //                scope.defaultRows = limitRows;
-    //                if (scope.lengthObject <= scope.defaultRows) {
-    //                    scope.numPages = 1;
-    //                } else {
-    //                    scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-    //                }
-    //            };
-    //        }
-    //    };
-    //})
+    .directive('pagination2', function () { // функция компиляции директивы (фабричная функция)
+        return {
+            restrict: 'E',
+            scope: {
+                //numPages: '=', // кол-во страниц (кнопок)
+                defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
+                limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
+                lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
+                currentPage: '=',
+                onSelectPage: '&',
+                added:'='
+            },
+            templateUrl: '/js/private/admin/skds/views/pagination.html',
+            replace: true,
+            link: function (scope) {
+
+                scope.$watch('added', function (value) {
+                    scope.added = value;
+                });
+
+                scope.$watch('lengthObject', function (value) {
+                    scope.numPages = Math.floor(value / scope.defaultRows) + 1;
+                    //scope.pages = [];
+                    //for (var i = 1; i <= value; i++) {
+                    //    scope.pages.push(i);
+                    //}
+                    //if (scope.currentPage > value) {
+                    //    scope.selectPage(value);
+                    //}
+                });
+
+
+                scope.$watch('numPages', function (value) {
+                    scope.pages = [];
+                    for (var i = 1; i <= value; i++) {
+                        scope.pages.push(i);
+                    }
+                    if (scope.currentPage > value) {
+                        scope.selectPage(value);
+                    }
+                });
+                scope.$watch('limitRows', function (value) {
+                    scope.rows = [];
+                    for (var i = 0; i <= value.length; i++) {
+                        scope.rows.push(value[i]);
+                    }
+                });
+                scope.$watch('defaultRows', function (value, oldValue) {
+                    if (value > 0) {
+                        scope.defaultRows = value;
+                        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+                    }
+                });
+                scope.noPrevious = function () {
+                    return scope.currentPage === 1;
+                };
+                scope.noNext = function () {
+                    return scope.currentPage === scope.numPages;
+                };
+                scope.isActive = function (page) {
+                    return scope.currentPage === page;
+                };
+                scope.isActiveRow = function (row) {
+                    return scope.defaultRows === row;
+                };
+                scope.selectPage = function (page) {
+                    if (!scope.isActive(page)) {
+                        scope.currentPage = page;
+                        scope.onSelectPage({page: page});
+                    }
+                };
+                scope.selectPrevious = function () {
+                    if (!scope.noPrevious()) {
+                        scope.selectPage(scope.currentPage - 1);
+                    }
+                };
+                scope.selectNext = function () {
+                    if (!scope.noNext()) {
+                        scope.selectPage(scope.currentPage + 1);
+                    }
+                };
+                scope.getLimitRows = function (limitRows) {
+                    scope.defaultRows = limitRows;
+                    if (scope.lengthObject <= scope.defaultRows) {
+                        scope.numPages = 1;
+                    } else {
+                        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+                    }
+                };
+            }
+        };
+    })
     //.directive('wordPart', function () {
     //    return {
     //        restrict: 'E',

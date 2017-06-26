@@ -31,7 +31,8 @@
     "moment-precise-range": "^1.0.1",
     "xlsx-populate": "^1.6.1",
     "v-accordion": "^1.6.0",
-    "moment-timezone": "^0.5.13"
+    "moment-timezone": "^0.5.13",
+    "flatpickr": "flatpickr-calendar#^2.6.3"
   },
   "devDependencies": {
     "angular-translate": "^2.15.0",

@@ -118,14 +118,8 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             </a>
 
             <ul>
-                <li ng-repeat=" p in item.getPeriod()">
-                    {{p.start | amDateFormat:'HH:MM:SS' }}
-                    {{p.end | amDateFormat:'HH:MM:SS' }}
-                    {{p.workTime | amDateFormat:'HH:MM:SS'}}
-
-                    <!--{{p.start }}-->
-                    <!--{{p.end}}-->
-                    <!--{{p.workTime }}-->
+                <li ng-repeat=" p in item.periods">
+                    {{item.getPeriodTime(p.start)}}  {{item.getPeriodTime(p.end)}} {{item.getPeriodTime(p.workTimePeriod)}}
                 </li>
             </ul>
         </td>
