@@ -381,7 +381,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
-                                chars = obj[prop].substr(0,3);
+                                chars = obj[prop].substr(0,4);
                                 parts.push(chars);
                             }
                         }

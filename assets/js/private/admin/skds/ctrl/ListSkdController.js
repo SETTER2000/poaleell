@@ -61,7 +61,7 @@
                 $scope.dateArea = 'Дата';
                 $scope.startPeriodArea = 'Приход';
                 $scope.endPeriodArea = 'Уход';
-                $scope.factArea = 'Фактически отработанное время';
+                $scope.factArea = 'Отработанное время';
                 $scope.added = 'Добавить сотрудника';
                 $scope.showBt = false; // показать кнопку добавления объекта
 
@@ -98,6 +98,8 @@
 
                 $scope.sortRevers = function (field) {
                     $scope.sortTrend = (+$scope.sortTrend > 0) ? -1 : 1;
+                    // $scope.reverse = ($scope.sortTrend) ? !$scope.reverse : false;
+                    // $scope.propertyName = field;
                     $scope.sortField = field;
                     $scope.refresh();
                 };
@@ -115,20 +117,21 @@
 
                 $scope.options =
                     [
-                        {display: "Accordion", value: "accordion"},
-                        {display: "Test", value: "test"},
-                        {display: "Работают", value: "work"},
-                        {display: "Уволены", value: "list"},
-                        {display: "Не активированы / Заблокированы", value: "action"},
-                        {display: "Все", value: "table"}
+                        {display: "Отработанное время", value: "accordion"},
+                        {display: "Работают", value: "work"}
+                        // {display: "Test", value: "test"},
+                        // {display: "Уволены", value: "list"},
+                        // {display: "Не активированы / Заблокированы", value: "action"},
+                        // {display: "Все", value: "table"}
                     ];
                 $scope.modeSelect = $scope.options[0];
-                $scope.tableView = "/js/private/admin/skds/views/home.admin.skds.table.html";
-                $scope.listView = "/js/private/admin/skds/views/home.admin.skds.list.html";
-                $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
+
                 $scope.workView = "/js/private/admin/skds/views/home.admin.skds.work.html";
                 $scope.accordionView = "/js/private/admin/skds/views/home.admin.skds.accordion.html";
-                $scope.testView = "/js/private/admin/skds/views/test.html";
+                // $scope.testView = "/js/private/admin/skds/views/test.html";
+                // $scope.tableView = "/js/private/admin/skds/views/home.admin.skds.table.html";
+                // $scope.listView = "/js/private/admin/skds/views/home.admin.skds.list.html";
+                // $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
 
 
                 $scope.differ = function (attendance) {
@@ -196,7 +199,7 @@
 
                 $scope.str = 'Петров';
                 $scope.countChar = '4';
-                $scope.filedName = 'name';
+                $scope.filedName = '_id.name';
 
 
                 $scope.$watch('where', function (value) {
@@ -227,10 +230,10 @@
                         char: $scope.charText + '%'
                     };
                     Skds.query($scope.query,
-                        function (aggreg) {
-                            console.log(aggreg);
-                            $scope.items = aggreg;
-                            //$scope.objectName = aggreg;
+                        function (response) {
+                            console.log(response);
+                            $scope.items = response;
+                            $scope.objectName = response;
                         }, function (err) {
                             toastr.error(err.data.details, 'Ошибка 77! ' + err.data.message);
                         });

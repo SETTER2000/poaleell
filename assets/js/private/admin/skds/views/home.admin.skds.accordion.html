@@ -10,15 +10,31 @@
 <ul class="pagination">
     <li><input type="date" ng-model="mx" ng-click="toggleBlur(mx)" class="form-control"></li>
 </ul>
-<div id="myID"></div>
-<div class="myClass"></div>
-<div class="row sort-my">
+
+
+
+<div class="row small sort-my">
     <div class="col-md-13">&nbsp;</div>
-    <div class="col-md-3 "><h4 class="srt" ng-click="sortRevers('name')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ФИО</h4></div>
-    <div class="col-md-2"><h4  class="srt"  ng-click="sortRevers('date')">Дата</h4></div>
-    <div class="col-md-2"><h4>Приход</h4></div>
-    <div class="col-md-2"><h4>Уход</h4></div>
-    <div class="col-md-3 pull-right"><h4>Отработанное время</h4></div>
+
+    <div class="col-md-3 ">
+        #<button class="btn btn-sm sdv btn-default  not-border" ng-click="sortRevers('name')">{{fioArea}}
+            <span class="sortOrder" ng-show="sortField === 'name'" ng-class="{reverse: reverse}"></span>
+        </button>
+    </div>
+    <!--<div class="col-md-3 "><span class="srt sdv" ng-click="sortRevers('name')">ФИО</span></div>-->
+    <div class="col-md-2">
+        <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('date')">{{dateArea}}
+        <span class="sortOrder" ng-show="propertyName === 'date'"
+              ng-class="{reverse: reverse}"></span>
+        </button>
+    </div>
+    <!--<div class="col-md-2"><span class="srt" ng-click="sortRevers('date')">Дата</span></div>-->
+    <div class="col-md-2">
+        <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{startPeriodArea}}</button>
+    </div>
+    <div class="col-md-2"> <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{endPeriodArea}}</button></div>
+    <div class="col-md-3 pull-right"> <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{factArea}}</button></div>
+    <div class="col-md-13">&nbsp;</div>
 </div>
 <div class="Grid Grid--gutters md-Grid--2col">
     <div class="Grid-cell u-marginBl">
@@ -30,7 +46,7 @@
                 <v-pane id="{{ ::item._id }}" ng-repeat="item in filtered=(items | filter:{$:searchText} |
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)" expanded="item.isExpanded">
                     <v-pane-header id="{{ ::item._id }}-header" aria-controls="{{ ::item._id }}-content">
-                        <div class="row">
+                        <div class="row ">
                             <div class="col-md-3">
                                 {{$index+1}} &nbsp; &nbsp;&nbsp;{{ ::item.getFullName() }}
                             </div>
@@ -43,23 +59,25 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                     </v-pane-header>
 
                     <v-pane-content id="{{ ::item.periods }}-content" aria-labelledby="{{ ::item.periods }}-header">
-                            <div class="row small">
-                                <div class="col-md-2 col-md-offset-3">Дата</div>
-                                <div class="col-md-2">Приход</div>
-                                <div class="col-md-2">Уход</div>
-                                <div class="col-md-3 pull-right">Отработанное время</div>
-                                <div class="col-md-13">&nbsp;</div>
-                            </div>
-                            <div class="row bg-success"  ng-repeat="content in item.periods |orderBy:propertyName2:reverse">
-                                <div class="col-md-13">&nbsp;</div>
-                                <div class="col-md-3"> &nbsp; </div>
-                                <div class="col-md-2">{{ ::item.formDate() }}</div>
-                                <div class="col-md-2"> {{item.getPeriodTime(content.start)}}</div>
-                                <div class="col-md-2">{{item.getPeriodTime(content.end)}}</div>
-                                <div class="col-md-3"> {{item.getPeriodTime(content.workTimePeriod)}}</div>
-                                <div class="col-md-13">&nbsp;</div>
-                            </div>
-                        <div class="row"><div class="col-md-13">&nbsp;</div></div>
+                        <div class="row small">
+                            <div class="col-md-2 col-md-offset-3">Дата</div>
+                            <div class="col-md-2">Приход</div>
+                            <div class="col-md-2">Уход</div>
+                            <div class="col-md-3 pull-right">Отработанное время</div>
+                            <div class="col-md-13">&nbsp;</div>
+                        </div>
+                        <div class="row bg-success" ng-repeat="content in item.periods |orderBy:propertyName2:reverse">
+                            <div class="col-md-13">&nbsp;</div>
+                            <div class="col-md-3"> &nbsp; </div>
+                            <div class="col-md-2">{{ ::item.formDate() }}</div>
+                            <div class="col-md-2"> {{item.getPeriodTime(content.start)}}</div>
+                            <div class="col-md-2">{{item.getPeriodTime(content.end)}}</div>
+                            <div class="col-md-3"> {{item.getPeriodTime(content.workTimePeriod)}}</div>
+                            <div class="col-md-13">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-13">&nbsp;</div>
+                        </div>
 
                         <!--<v-accordion id="nestedAccordionA" ng-if="item.periods">-->
                         <!--<div id="fixed2" when-scrolled="loadMore2()">-->
