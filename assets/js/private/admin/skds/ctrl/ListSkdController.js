@@ -50,7 +50,7 @@
                 /**
                  * PAGINATION
                  */
-                $scope.defaultRows = 10;
+                $scope.defaultRows = 100;
                 $scope.limitRows = [300, 500, 700, 1000];
                 $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
@@ -202,6 +202,12 @@
                 $scope.$watch('where', function (value) {
                     $scope.refresh(value);
                 });
+                $scope.sd = '';
+
+                $scope.toggleBlur = function (mx) {
+                    $scope.start = moment(mx).hours(0).minutes(0).seconds(0).milliseconds(0);
+                    $scope.refresh();
+                };
 
                 $scope.refresh = function (where) {
                     if (where) {
@@ -215,8 +221,8 @@
                         sortTrend: $scope.sortTrend,
                         limit: $scope.limitAll,
                         page: 0,
-                        sd:'',
-                        //sd:'2017-06-20',
+                        //sd:'',
+                        sd:  $scope.start,
                         property: 'name',
                         char: $scope.charText + '%'
                     };

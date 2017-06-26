@@ -19,7 +19,8 @@
                     </ul>
 
 
-                    <button ng-if="showBtn()" class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create" title="{{added}}"
+                    <button ng-if="showBtn()" class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create"
+                            title="{{added}}"
                             type="button">
                         {{added}}
                     </button>
@@ -27,8 +28,14 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-8">
+    <div class="col-md-2">
+        <nav class="pull-right">
+            <ul class="pagination">
+                <li><input type="date" ng-model="mx" ng-blur="toggleBlur(mx)" class="form-control"></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-6">
         <nav class="pull-right">
             <ul class="pagination">
                 <li ng-class="{disabled: noPrevious()}">
@@ -38,6 +45,7 @@
                         </span>
                     </a>
                 </li>
+
                 <li ng-repeat="page in pages"
                     ng-class="{active: isActive(page)}">
                     <a href="#" ng-click="selectPage(page)">
@@ -45,10 +53,10 @@
                     </a>
                 </li>
                 <!--<li ng-repeat="page in pages | limitTo: 2"-->
-                    <!--ng-class="{active: isActive(page)}">-->
-                    <!--<a href="#" ng-click="selectPage(page)">-->
-                        <!--{{page}}-->
-                    <!--</a>-->
+                <!--ng-class="{active: isActive(page)}">-->
+                <!--<a href="#" ng-click="selectPage(page)">-->
+                <!--{{page}}-->
+                <!--</a>-->
                 <!--</li>-->
                 <li ng-class="{disabled: noNext()}">
                     <a href="#" ng-click="selectNext()">

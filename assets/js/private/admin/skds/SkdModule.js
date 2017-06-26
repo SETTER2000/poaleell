@@ -302,6 +302,7 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
             replace: true,
             link: function (scope) {
 
+
                 scope.$watch('added', function (value) {
                     scope.added = value;
                 });

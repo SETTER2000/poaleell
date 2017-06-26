@@ -7,6 +7,9 @@
         show-bt="showBt"
         on-select-page="selectCount=selectCount+1">
 </pagination2>
+<ul class="pagination">
+    <li><input type="date" ng-model="mx" ng-click="toggleBlur(mx)" class="form-control"></li>
+</ul>
 <div id="myID"></div>
 <div class="myClass"></div>
 <div class="row sort-my">
@@ -56,6 +59,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                                 <div class="col-md-3"> {{item.getPeriodTime(content.workTimePeriod)}}</div>
                                 <div class="col-md-13">&nbsp;</div>
                             </div>
+                        <div class="row"><div class="col-md-13">&nbsp;</div></div>
 
                         <!--<v-accordion id="nestedAccordionA" ng-if="item.periods">-->
                         <!--<div id="fixed2" when-scrolled="loadMore2()">-->
