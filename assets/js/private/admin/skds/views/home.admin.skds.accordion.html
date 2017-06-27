@@ -7,17 +7,29 @@
         show-bt="showBt"
         on-select-page="selectCount=selectCount+1">
 </pagination2>
-<ul class="pagination">
-    <li><input type="date" ng-model="mx" ng-click="toggleBlur(mx)" class="form-control"></li>
-</ul>
 
+<!--!!! НЕ УДАЛЯТЬ-->
+<div class="row btn-sm">
+    <div class="col-md-2">
+        <input type="date" ng-model="mx"   ng-click="toggleBlur(mx)"  class="form-control btn"></li>
+    </div>
+<div class="col-md-2">
+    <button class="btn btn-success btn-xs" ng-click="currentReport()">Последний отчёт</button>
+</div>
+    <!--<div class="col-md-1">-->
+        <!--<select class="btn form-control" name="mySelect" id="mySelect"-->
+                <!--ng-options="option.year for option in data.data track by option._id"-->
+                <!--ng-model="data.selectedOption"></select>-->
+    <!--</div>-->
+</div>
 
 
 <div class="row small sort-my">
     <div class="col-md-13">&nbsp;</div>
 
     <div class="col-md-3 ">
-        #<button class="btn btn-sm sdv btn-default  not-border" ng-click="sortRevers('name')">{{fioArea}}
+        #
+        <button class="btn btn-sm sdv btn-default  not-border" ng-click="sortRevers('name')">{{fioArea}}
             <span class="sortOrder" ng-show="sortField === 'name'" ng-class="{reverse: reverse}"></span>
         </button>
     </div>
@@ -32,8 +44,12 @@
     <div class="col-md-2">
         <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{startPeriodArea}}</button>
     </div>
-    <div class="col-md-2"> <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{endPeriodArea}}</button></div>
-    <div class="col-md-3 pull-right"> <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{factArea}}</button></div>
+    <div class="col-md-2">
+        <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{endPeriodArea}}</button>
+    </div>
+    <div class="col-md-3 pull-right">
+        <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{factArea}}</button>
+    </div>
     <div class="col-md-13">&nbsp;</div>
 </div>
 <div class="Grid Grid--gutters md-Grid--2col">
@@ -50,7 +66,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                             <div class="col-md-3">
                                 {{$index+1}} &nbsp; &nbsp;&nbsp;{{ ::item.getFullName() }}
                             </div>
-                            <div class="col-md-2">{{ ::item.formDate() }}</div>
+                            <div class="col-md-2">{{ ::item.formDate() }} {{::item.formDayOfWeek()}}</div>
                             <div class="col-md-2">{{ ::item.formMinStart() }}</div>
                             <div class="col-md-2">{{::item.formMaxEnd()}}</div>
                             <div class="col-md-3">{{ item.formWorkTime() }}</div>

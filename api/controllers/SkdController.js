@@ -13,8 +13,6 @@ const Watcher = require('listener-dir');
 const _ = require('lodash');
 
 
-
-
 /**
  *
  * @param a
@@ -43,13 +41,126 @@ module.exports = {
             return res.ok('The final point in development');
         });
     },
+    getListMonth: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me}).exec((err, foundUser) => {
+            if (err) return res.negotiate;
+            if (!foundUser) return res.notFound();
+            Skd.native(function (err, collection) {
+                if (err) return res.serverError(err);
+                collection.aggregate([{
+                        $project: {
+                            month: {$month: "$date"},
+                            _id: 0
+                        }
+                    },
+                        {$group: {_id: "$month"}},
+                        {$project: {month: "$_id"}},
+                        {$sort: {month: -1}}
+                    ])
+                    .toArray(function (err, results) {
+                        if (err) return res.serverError(err);
+                        return res.ok(results);
+                    });
+            });
+
+        });
+    },
+    getListData: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me}).exec((err, foundUser) => {
+            if (err) return res.negotiate;
+            if (!foundUser) return res.notFound();
+            Skd.native(function (err, collection) {
+                if (err) return res.serverError(err);
+                collection.aggregate([{
+                        $project: {
+                            year: {$year: "$date"},
+                            month: {$month: "$date"},
+                            day: {$dayOfMonth: "$date"},
+                            hour: {$hour: "$date"},
+                            minutes: {$minute: "$date"},
+                            seconds: {$second: "$date"},
+                            milliseconds: {$millisecond: "$date"},
+                            dayOfYear: {$dayOfYear: "$date"},
+                            dayOfWeek: {$dayOfWeek: "$date"},
+                            week: {$week: "$date"},
+                            date: 1,
+                            name: 1,
+                            _id: 0
+                        }
+                    },
+                        {
+                            $group: {
+                                _id: {
+                                    day: {$dayOfYear: "$date"},
+                                    year: {$year: "$date"},
+                                    month: {$month: "$date"},
+                                    name:"$name"
+                                },
+                                //months: {
+                                //    $push: {
+                                //        date: "$date",
+                                //        name: "$name"
+                                //    }
+                                //},
+                                count: {$sum: 1}
+                            }
+                        },
+                        {$project: {
+                            year: "$_id",
+                            //months: 1
+                        }},
+                        {$sort: {year: -1}}
+                    ])
+                    .toArray(function (err, results) {
+                        if (err) return res.serverError(err);
+                        return res.ok(results);
+                    });
+            });
+
+        });
+    },
+    getListYear: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        User.findOne({id: req.session.me}).exec((err, foundUser) => {
+            if (err) return res.negotiate;
+            if (!foundUser) return res.notFound();
+            Skd.native(function (err, collection) {
+                if (err) return res.serverError(err);
+                collection.aggregate([{
+                        $project: {
+                            year: {$year: "$date"},
+                            _id: 0
+                        }
+                    },
+                        {
+                            $group: {
+                                _id: "$year",
+                            }
+                        },
+                        {$project: {year: "$_id", months: 1}},
+                        {$sort: {year: -1}}
+                    ])
+                    .toArray(function (err, results) {
+                        if (err) return res.serverError(err);
+                        return res.ok(results);
+                    });
+            });
+
+        });
+    },
+
+
     getAggregate: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me})
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-                let limit = (_.isEmpty(req.param('limit'))) ? 10000 : req.param('limit');
+                
+                let selectedYear = (_.isEmpty(req.param('year'))) ? '' : req.param('year');
+                let limit = (_.isEmpty(req.param('limit'))) ? 100000 : req.param('limit');
                 let page = (_.isEmpty(req.param('page'))) ? 0 : req.param('page');
 
                 let sort = {'_id.date': -1, '_id.name': 1};
@@ -60,6 +171,11 @@ module.exports = {
                     sort = {'_id.date': -1, '_id.name': +req.param('sortTrend')};
                 }
 
+
+                sails.log('selectedYear');
+                sails.log(selectedYear);
+                
+                
                 //let sort = (_.isEmpty(req.param('sort'))) ? {'_id.date': -1, '_id.name': 1} : req.param('sort');
                 let skip = (+page * +limit);
                 //
@@ -79,15 +195,19 @@ module.exports = {
                             Skd.native(function (err, collection) {
                                 if (err) return res.serverError(err);
 
-                                sails.log(req.param('SDDDDDD'));
+                                sails.log('SDDDDDD');
                                 sails.log(req.param('sd'));
                                 //"2017-06-23"
-                                let searchDate = (req.param('sd')) ? new Date(req.param('sd')) : '';
-                                let mat = (searchDate) ? {$match: {date: {$gte: new Date(searchDate)}}} : {$match: {date: {$gt: new Date("2013-01-01")}}};
+                                let searchDate = (req.param('sd')) ? req.param('sd') : '';
+                                let mat = (searchDate) ? {$match: {date: {$gte: new Date(searchDate)}}} : {$match: {date: {$gte: dateLast[0].date}}};
                                 //mat = {$match: {date: searchDate}};
                                 //sails.log('searchDate');
-                                //sails.log(searchDate);
+                                sails.log('searchDate', searchDate);
+                                sails.log(mat);
+                                sails.log('new Date(searchDate)');
+                                sails.log(moment(searchDate));
                                 collection.aggregate([mat,
+                                    {$sort: {startPeriod: 1}},
                                     {
                                         $group: {
                                             _id: {owner: "$owner", name: "$name", date: "$date"},
@@ -102,6 +222,7 @@ module.exports = {
                                             maxEnd: {$max: "$endPeriod"},
                                             minStart: {$min: "$startPeriod"},
                                             periodСount: {$sum: 1}
+
                                         }
                                     },
                                     {$sort: sort},
@@ -127,8 +248,6 @@ module.exports = {
 
                         });
                 });
-
-
             });
     },
     findSkds: function (req, res) {

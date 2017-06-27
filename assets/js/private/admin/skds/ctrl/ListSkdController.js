@@ -72,7 +72,7 @@
                 $scope.charText = '';
                 $scope.searchText = '';
                 $scope.page_number = 0;
-                $scope.limitAll = 3000;
+                $scope.limitAll = '';
                 $scope.where = {};
                 $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
                 $scope.enabledButton = false;
@@ -81,6 +81,28 @@
                     border: false,
                     size: false
                 };
+
+                $scope.data =[];
+                $scope.data['selectedOption']={};
+                $http.get('/getListYear')
+                    .then(function (attendance) {
+                        console.log('attendance');
+                        console.log(attendance);
+
+
+                        attendance.selectedOption = {"_id": 2017, "year": 2017};
+                        $scope.data = attendance;
+
+                        console.log(attendance);
+
+                    }).catch(function (reason) {
+                    console.log('REASON: ', reason);
+                });
+
+
+                $scope.$watch('data.selectedOption', function (value) {
+                    $scope.refresh();
+                });
 
 
                 if (moment().isLeapYear()) {
@@ -161,8 +183,8 @@
                             });
                         })(); // immediately invoked function expression (IIFE)
                     }
-                    sails.log('data:');
-                    sails.log(data);
+                    //console.log('data:');
+                    //console.log(data);
                     $scope.items = data;
                 };
 
@@ -208,8 +230,13 @@
                 $scope.sd = '';
 
                 $scope.toggleBlur = function (mx) {
-                    $scope.start = moment(mx).hours(0).minutes(0).seconds(0).milliseconds(0);
+                    $scope.start = moment(mx).format();
                     $scope.refresh();
+                };
+
+                $scope.currentReport = function () {
+                    $scope.start = $scope.yu;
+                   $scope.refresh();
                 };
 
                 $scope.refresh = function (where) {
@@ -223,16 +250,22 @@
                         sortField: $scope.sortField,
                         sortTrend: $scope.sortTrend,
                         limit: $scope.limitAll,
+                        year: $scope.data.selectedOption, // выбранный год
                         page: 0,
                         //sd:'',
-                        sd:  $scope.start,
+                        sd: $scope.start,
                         property: 'name',
                         char: $scope.charText + '%'
                     };
+
                     Skds.query($scope.query,
                         function (response) {
                             console.log(response);
                             $scope.items = response;
+                            console.log(' $scope.items');
+                            console.log( $scope.items[0]._id.date);
+                            $scope.yu = new Date($scope.items[0]._id.date);
+                            $scope.mx = new Date($scope.items[0]._id.date);
                             $scope.objectName = response;
                         }, function (err) {
                             toastr.error(err.data.details, 'Ошибка 77! ' + err.data.message);

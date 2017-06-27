@@ -163,6 +163,10 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
         Skds.prototype.formWorkTime = function () {
             return moment(this.workTime).utc().format('LT');
         };
+        Skds.prototype.formDayOfWeek = function () {
+
+            return moment(this._id.date).format('dd');
+        };
         Skds.prototype.formDate = function () {
             return moment(this._id.date).utc().format('L');
         };

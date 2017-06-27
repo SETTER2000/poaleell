@@ -60,7 +60,13 @@ module.exports.routes = {
     'GET /ed': 'TutorialController.editTutorial',
     'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
     'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
-    'GET /getAggregate/count': 'SkdController.getAggregateCount', // кол-во объектов
+    'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
+
+
+
+
+    'GET /getListYear': 'SkdController.getListYear',
+    'GET /getListMonth': 'SkdController.getListMonth',
 
 
 
