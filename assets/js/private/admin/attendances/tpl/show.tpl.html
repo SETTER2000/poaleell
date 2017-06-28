@@ -1,7 +1,7 @@
 <!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 CalendarAttendanceController ng-scope">-->
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
-        <h1>{{items[0].sc()}} {{items[0].name}}{{statName}}
+        <h2>{{items[0].sc()}} {{items[0].name}}{{statName}}
             <div class="btn-group-xs pull-right">
                 <a ng-href="{{items[0].getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
@@ -10,7 +10,7 @@
                 <!--<span class="glyphicon glyphicon-pencil"></span>-->
                 <!--</a>-->
             </div>
-        </h1>
+        </h2>
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">

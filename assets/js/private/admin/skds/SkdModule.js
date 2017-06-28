@@ -156,6 +156,9 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
         Skds.prototype.getPeriodTime = function (e) {
                 return moment(e).utc().format('LT');
         };
+        Skds.prototype.getOwner = function () {
+                return this._id.owner;
+        };
 
         Skds.prototype.formMaxEnd = function () {
             return moment(this.maxEnd).utc().format('LT');

@@ -9,36 +9,51 @@
 </pagination2>
 
 <!--!!! НЕ УДАЛЯТЬ-->
-<div class="row btn-sm">
-    <div class="col-md-2">
-        <input type="date" ng-model="mx"   ng-click="toggleBlur(mx)"  class="form-control btn"></li>
-    </div>
-<div class="col-md-2">
-    <button class="btn btn-success btn-xs" ng-click="currentReport()">Последний отчёт</button>
-</div>
-    <!--<div class="col-md-1">-->
-        <!--<select class="btn form-control" name="mySelect" id="mySelect"-->
-                <!--ng-options="option.year for option in data.data track by option._id"-->
-                <!--ng-model="data.selectedOption"></select>-->
-    <!--</div>-->
-</div>
+<!--<div class="row btn-sm">-->
+    <!--&lt;!&ndash;{{mx|date:"dd.MM.yyyy"}}&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="col-md-2">&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<input type="date" ng-model="mx"    class="form-control btn"></li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<input type="date" ng-model="mx"  ng-click="toggleBlur(mx)" ng-blur="toggleBlur(mx)" aria-describedby="sizing-addon1" class="form-control ">&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="col-md-2">&ndash;&gt;-->
+    <!--&lt;!&ndash;<button class="btn btn-success btn-xs" ng-click="currentReport()">Последний отчёт</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="col-md-1">&ndash;&gt;-->
+    <!--&lt;!&ndash;<select class="btn form-control" name="mySelect" id="mySelect"&ndash;&gt;-->
+    <!--&lt;!&ndash;ng-options="option.year for option in data.data track by option._id"&ndash;&gt;-->
+    <!--&lt;!&ndash;ng-model="data.selectedOption"></select>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
 
 
-<div class="row small sort-my">
+<div id="avatar" class="row small sort-my">
     <div class="col-md-13">&nbsp;</div>
 
     <div class="col-md-3 ">
         #
-        <button class="btn btn-sm sdv btn-default  not-border" ng-click="sortRevers('name')">{{fioArea}}
-            <span class="sortOrder" ng-show="sortField === 'name'" ng-class="{reverse: reverse}"></span>
+        <button class="btn  btn-sm btn-default sdv not-border" ng-click="sortBy('_id.name')">{{fioArea}}
+        <span class="sortOrder" ng-show="propertyName === '_id.name'"
+              ng-class="{reverse: reverse}"></span>
         </button>
+        <!--<button class="btn btn-sm sdv btn-default  not-border" ng-click="sortRevers('name')">{{fioArea}}-->
+        <!--<span class="sortOrder" ng-show="sortField === 'name'" ng-class="{reverse: reverse}"></span>-->
+        <!--</button>-->
     </div>
     <!--<div class="col-md-3 "><span class="srt sdv" ng-click="sortRevers('name')">ФИО</span></div>-->
     <div class="col-md-2">
-        <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('date')">{{dateArea}}
-        <span class="sortOrder" ng-show="propertyName === 'date'"
-              ng-class="{reverse: reverse}"></span>
-        </button>
+
+        <div class="input-group input-group-sm">
+            <input type="date" ng-model="mx" ng-click="toggleBlur(mx)" ng-blur="toggleBlur(mx)" class="form-control"
+                   aria-describedby="sizing-addon3">
+            <span class="input-group-btn">
+                <button class="btn  btn-xs btn-default" type="button" ng-click="sortBy('date')">
+                        <span class="sortOrder"  ng-class="{reverse: reverse}"></span>
+                </button>
+             </span>
+
+        </div><!-- /input-group -->
+
+
     </div>
     <!--<div class="col-md-2"><span class="srt" ng-click="sortRevers('date')">Дата</span></div>-->
     <div class="col-md-2">
@@ -52,6 +67,7 @@
     </div>
     <div class="col-md-13">&nbsp;</div>
 </div>
+
 <div class="Grid Grid--gutters md-Grid--2col">
     <div class="Grid-cell u-marginBl">
         <!--<h4 class="u-marginVm">Works with (or without) ng-repeat</h4>-->
@@ -63,13 +79,26 @@
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)" expanded="item.isExpanded">
                     <v-pane-header id="{{ ::item._id }}-header" aria-controls="{{ ::item._id }}-content">
                         <div class="row ">
-                            <div class="col-md-3">
+                            <div class="col-md-3" ng-mouseover="vis=1"  ng-mouseleave="vis=0">
                                 {{$index+1}} &nbsp; &nbsp;&nbsp;{{ ::item.getFullName() }}
+
+                                <span ng-if="vis" class="text-right">
+
+                                    <div class="btn-group-xs pull-right ">
+                                        <!--<a ng-href="/admin/users" class="btn btn-default not-border" href="/admin/users">-->
+                                            <!--<span class="glyphicon glyphicon-list"></span>-->
+                                        <!--</a>-->
+                                        <a class="btn not-border  btn-default" href="/admin/users/edit/{{::item.getOwner()}}">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                    </div>
+
+                          </span>
                             </div>
-                            <div class="col-md-2">{{ ::item.formDate() }} {{::item.formDayOfWeek()}}</div>
-                            <div class="col-md-2">{{ ::item.formMinStart() }}</div>
-                            <div class="col-md-2">{{::item.formMaxEnd()}}</div>
-                            <div class="col-md-3">{{ item.formWorkTime() }}</div>
+                            <div class="col-md-2 ">{{ ::item.formDate() }} {{::item.formDayOfWeek()}}</div>
+                            <div class="col-md-2 "><span class="sdvig">{{ ::item.formMinStart() }}</span></div>
+                            <div class="col-md-2 "><span class="sdvig">{{::item.formMaxEnd()}}</span></div>
+                            <div class="col-md-3 "><span class="sdvig">{{ item.formWorkTime() }}</span></div>
                             <!--<div class="col-md-8 pull-right">Email: <a title="Отправить сообщение" class="text-right" href="mailto:{{::pane.email}}">{{::pane.email}}</a></div>-->
                         </div>
                     </v-pane-header>
@@ -183,3 +212,44 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
     <!--</div>-->
     <!--</div>-->
 </div>
+<a href="#toTop" class="button">↑</a>
+<pagination2
+        limit-rows="limitRows"
+        default-rows="defaultRows"
+        length-object="(items | filter:{$:searchText} ).length"
+        current-page="currentPage"
+        added="added"
+        show-bt="showBt"
+        on-select-page="selectCount=selectCount+1">
+</pagination2>
+<script>
+        var avatarElem = document.getElementById('avatar');
+        var searchElem = document.getElementById('search');
+
+        var avatarSourceBottom = avatarElem.getBoundingClientRect().bottom + (window.pageYOffset-80);
+        var searchSourceBottom = searchElem.getBoundingClientRect().bottom + (window.pageYOffset-100);
+
+        window.onscroll = function() {
+            if (searchElem.classList.contains('fixed') && window.pageYOffset < searchSourceBottom) {
+                searchElem.classList.remove('fixed');
+            } else if (window.pageYOffset > searchSourceBottom) {
+                searchElem.classList.add('fixed');
+            }
+            if (avatarElem.classList.contains('fixed') && window.pageYOffset < avatarSourceBottom) {
+                avatarElem.classList.remove('fixed');
+            } else if (window.pageYOffset > avatarSourceBottom) {
+                avatarElem.classList.add('fixed');
+            }
+        };
+
+
+        (function($scrollButton, $win){
+            $(document).scroll(function(){
+                $scrollButton.toggleClass("visible", $win.scrollTop() > 300);
+            });
+            $scrollButton.click(function(e){
+                e.preventDefault();
+                $("body, html").animate({scrollTop : 0}, 500);
+            });
+        })( $(".button"), $(window) );
+</script>

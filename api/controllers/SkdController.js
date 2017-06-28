@@ -195,8 +195,8 @@ module.exports = {
                             Skd.native(function (err, collection) {
                                 if (err) return res.serverError(err);
 
-                                sails.log('SDDDDDD');
-                                sails.log(req.param('sd'));
+                                sails.log('Поисковая дата:', req.param('sd'));
+
                                 //"2017-06-23"
                                 let searchDate = (req.param('sd')) ? req.param('sd') : '';
                                 let mat = (searchDate) ? {$match: {date: {$gte: new Date(searchDate)}}} : {$match: {date: {$gte: dateLast[0].date}}};
