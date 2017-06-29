@@ -46,21 +46,22 @@
                 <!--</div>-->
                 <!--
                                         get-char-text="getCharText(ch)"-->
-                <alfavit
+                <!--{{objectName[0]}}-->
+                <alfavit2
                         object-name="objectName"
                         get-char-text="getCharText(ch)"
                         filed-name="filedName"
                         where="where"
                         char-text="charText"
-                        count-char="countChar">
-                </alfavit>
-                <word-part object-name="objectName"
+                        count-char="countChar" ng-cloak>
+                </alfavit2>
+                <word-part2 object-name="objectName"
                            filed-name="filedName"
                            where="where"
                            count-char="countChar"
                            char-text="charText"
-                           get-char-text="getCharText(ch)">
-                </word-part>
+                           get-char-text="getCharText(ch)" ng-cloak >
+                </word-part2>
 
                 <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm"
                      role="group" aria-label="4">

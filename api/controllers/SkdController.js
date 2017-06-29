@@ -96,7 +96,7 @@ module.exports = {
                                     day: {$dayOfYear: "$date"},
                                     year: {$year: "$date"},
                                     month: {$month: "$date"},
-                                    name:"$name"
+                                    name: "$name"
                                 },
                                 //months: {
                                 //    $push: {
@@ -107,10 +107,12 @@ module.exports = {
                                 count: {$sum: 1}
                             }
                         },
-                        {$project: {
-                            year: "$_id",
-                            //months: 1
-                        }},
+                        {
+                            $project: {
+                                year: "$_id",
+                                //months: 1
+                            }
+                        },
                         {$sort: {year: -1}}
                     ])
                     .toArray(function (err, results) {
@@ -158,7 +160,11 @@ module.exports = {
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-                
+                sails.log('req.param(regex): ', req.param('regex'));
+
+                let reg = {$regex: req.param('regex'), $options: "si"};
+
+
                 let selectedYear = (_.isEmpty(req.param('year'))) ? '' : req.param('year');
                 let limit = (_.isEmpty(req.param('limit'))) ? 100000 : req.param('limit');
                 let page = (_.isEmpty(req.param('page'))) ? 0 : req.param('page');
@@ -174,8 +180,8 @@ module.exports = {
 
                 sails.log('selectedYear');
                 sails.log(selectedYear);
-                
-                
+
+
                 //let sort = (_.isEmpty(req.param('sort'))) ? {'_id.date': -1, '_id.name': 1} : req.param('sort');
                 let skip = (+page * +limit);
                 //
@@ -199,14 +205,22 @@ module.exports = {
 
                                 //"2017-06-23"
                                 let searchDate = (req.param('sd')) ? req.param('sd') : '';
-                                let mat = (searchDate) ? {$match: {date: {$gte: new Date(searchDate)}}} : {$match: {date: {$gte: dateLast[0].date}}};
+                                let match = (searchDate) ? {
+                                    $match: {
+                                        date: {$gte: new Date(searchDate)}, name: reg
+                                    }
+                                } : {
+                                    $match: {
+                                        date: {$gte: dateLast[0].date}, name: reg
+                                    }
+                                };
                                 //mat = {$match: {date: searchDate}};
                                 //sails.log('searchDate');
                                 sails.log('searchDate', searchDate);
-                                sails.log(mat);
+                                sails.log(match);
                                 sails.log('new Date(searchDate)');
                                 sails.log(moment(searchDate));
-                                collection.aggregate([mat,
+                                collection.aggregate([match,
                                     {$sort: {startPeriod: 1}},
                                     {
                                         $group: {

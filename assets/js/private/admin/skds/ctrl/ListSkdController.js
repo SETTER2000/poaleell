@@ -33,9 +33,9 @@
                     page: 0,
                     //sd:'',
                     sd: $scope.start,
-                    //sd: '2017-06-20T10:56:10+03:00',
-                    property: 'name',
-                    char: $scope.charText + '%'
+                    regex:'',
+                    property: 'name'
+                    //char: $scope.charText + '%'
                 };
                 $scope.expandCallback = function (index, id) {
                     ////console.log('expand:', index, id);
@@ -83,7 +83,7 @@
                 $scope.searchText = '';
                 $scope.page_number = 0;
                 $scope.limitAll = '';
-                $scope.where = {};
+                $scope.where = '^.';
                 //$scope.start={};
                 $scope.alfavit = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
                 $scope.enabledButton = false;
@@ -119,9 +119,9 @@
                 //};
 
 
-                $scope.$watch('data.selectedOption', function (value) {
-                    //$scope.refresh();
-                });
+                //$scope.$watch('data.selectedOption', function (value) {
+                //    //$scope.refresh();
+                //});
 
 
                 if (moment().isLeapYear()) {
@@ -238,26 +238,31 @@
                     return milliseconds;
                 };
 
-                $scope.str = 'Петров';
-                $scope.countChar = '4';
-                $scope.filedName = '_id.name';
+                //$scope.str = 'Петров';
+                // Кол-во знаков от фамилии
+                $scope.countChar = 3;
+                $scope.filedName = '_id';
 
 
-                $scope.$watch('where', function (value) {
-                    //$scope.refresh(value);
+                $scope.$watch('where', function (value,old) {
+
+                    console.log('New val: ',value);
+                    console.log('Old val: ',old);
+                    $scope.query.regex = value;
+                   $scope.refresh();
                 });
                 $scope.sd = '';
 
 
                 //console.log('$scope.mx: ', $scope.mx);
-                $scope.$watch('mx', function (value, old) {
-
-                    //console.log('MX в $watch new: ', value);
-                    //console.log('MX в $watch old: ', old);
-
-
-                    //$scope.toggleBlur();
-                });
+                //$scope.$watch('mx', function (value, old) {
+                //
+                //    //console.log('MX в $watch new: ', value);
+                //    //console.log('MX в $watch old: ', old);
+                //
+                //
+                //    //$scope.toggleBlur();
+                //});
 
                 $scope.toggleBlur = function (mx) {
 
@@ -469,6 +474,7 @@
 
 
                 $scope.refresh = function () {
+                    //$scope.query.regex=/пет*/;
                     //console.log('$scope.QUERY: ', $scope.query);
                     Skds.query($scope.query,
                         function (skds) {
