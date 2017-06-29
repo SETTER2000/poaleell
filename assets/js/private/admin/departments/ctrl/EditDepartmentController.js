@@ -1,5 +1,5 @@
 angular.module('DepartmentModule')
-    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'Departments', '$stateParams', 'CONF_MODULE',
+    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'Departments', '$stateParams', 'CONF_MODULE_DEPARTMENT',
         function ($scope, $http,toastr, $state, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             $scope.edit = $state.includes('home.admin.departments.edit');
