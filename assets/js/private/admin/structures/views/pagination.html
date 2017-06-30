@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="pull-left">
+            <div class="pagination">
+                <div class="btn-toolbar " role="toolbar">
+
+                    <button type="button" class="btn btn-default btn-group dropdown-toggle" role="group" data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        Количество: {{defaultRows}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><input ng-model="defaultRows" class="form-control"></li>
+                        <li ng-repeat="row in rows" ng-class="{active: isActiveRow(row)}">
+                            <a href="#" ng-click="getLimitRows(row)">{{row}}</a>
+                        </li>
+                        <li><a ng-click="getLimitRows(lengthObject)" href="#">Все</a></li>
+                    </ul>
+
+
+                    <button ng-if="showBtn()" class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create"
+                            title="{{added}}"
+                            type="button">
+                        {{added}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-md-2">-->
+        <!--&lt;!&ndash;<nav class="pull-right">&ndash;&gt;-->
+            <!--&lt;!&ndash;<ul class="pagination">&ndash;&gt;-->
+               <!--&lt;!&ndash;<li> <input type="date" ng-model="mx"  ng-click="toggleBlur(mx)" ng-blur="toggleBlur(mx)" aria-describedby="sizing-addon1" class="form-control "></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;</nav>&ndash;&gt;-->
+    <!--</div>-->
+    <div class="col-md-8">
+        <nav class="pull-right">
+            <ul class="pagination">
+                <li ng-class="{disabled: noPrevious()}">
+                    <a href="#" ng-click="selectPrevious()">
+                        <span aria-hidden="true">
+                            &laquo;
+                        </span>
+                    </a>
+                </li>
+
+                <li ng-repeat="page in pages"
+                    ng-class="{active: isActive(page)}">
+                    <a href="#" ng-click="selectPage(page)">
+                        {{page}}
+                    </a>
+                </li>
+                <!--<li ng-repeat="page in pages | limitTo: 2"-->
+                <!--ng-class="{active: isActive(page)}">-->
+                <!--<a href="#" ng-click="selectPage(page)">-->
+                <!--{{page}}-->
+                <!--</a>-->
+                <!--</li>-->
+                <li ng-class="{disabled: noNext()}">
+                    <a href="#" ng-click="selectNext()">
+                        <span aria-hidden="true">
+                            &raquo;
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

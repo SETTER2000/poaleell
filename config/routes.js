@@ -23,7 +23,7 @@
 module.exports.routes = {
 
     /*************************************************************
-     * JSON API ENDPOINTS                                                    *
+     *                 JSON API ENDPOINTS                        *
      *************************************************************/
 
     // 'PUT /login': 'UserController.loginLDAP',
@@ -49,37 +49,41 @@ module.exports.routes = {
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
 
 
-
-
-
     /**
      * Тестовые роуты
      */
-    'GET /createReportSkd': 'SkdController.createReport',
-    'GET /tut': 'TutorialController.createTutorial',
-    'GET /ed': 'TutorialController.editTutorial',
-    'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
-    'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
-    'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
+    // 'GET /createReportSkd': 'SkdController.createReport',
+    // 'GET /tut': 'TutorialController.createTutorial',
+    // 'GET /ed': 'TutorialController.editTutorial',
+    // // 'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
+    // // 'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
+    // 'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
 
-
-
-
+    /**
+     * Skds
+     */
     'GET /getListYear': 'SkdController.getListYear',
-    'GET /getListMonth': 'SkdController.getListMonth',
+    // 'GET /getListMonth': 'SkdController.getListMonth',
 
 
-
-
-
+    /**
+     * Department
+     */
+    'Get /getRootDepartment':'DepartmentController.getRootDepartment',
+    
+    
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     //'POST /user/signup': 'UserController.signup',
 
+
+
+    /***************************************
+     *         RESTful routes              *
+     ***************************************/
+
     /**
-     * RESTful routes
+     * User
      */
-
-
     'POST /users': 'UserController.createUser',
     'GET /users': 'UserController.findUsers',
     'PUT /users/changePassword': 'UserController.changePassword',
@@ -87,13 +91,19 @@ module.exports.routes = {
     'DELETE /users/:id': 'UserController.destroy',
     'PUT /users/:id': 'UserController.update',
 
-
+    /**
+     * Position
+     */
     'GET /positions/:id': 'PositionController.findPositions',
     'GET /positions': 'PositionController.findPositions',
     'PUT /positions/:id': 'PositionController.update',
     'DELETE /positions/:id': 'PositionController.destroy',
     'POST /positions': 'PositionController.createPosition',
 
+
+    /**
+     * Department
+     */
     'POST /departments': 'DepartmentController.createDepartment',
     'GET /departments': 'DepartmentController.findDepartments',
     'PUT /departments/:id': 'DepartmentController.update',
@@ -101,23 +111,33 @@ module.exports.routes = {
     'DELETE /departments/:id': 'DepartmentController.destroy',
 
 
+    /**
+     * Calendar
+     */
     'GET /calendars/:id': 'CalendarController.findCalendars',
     'GET /calendars': 'CalendarController.findCalendars',
     'PUT /calendars/:id': 'CalendarController.update',
 
 
-    'GET /skds': 'SkdController.getAggregate', //получить все записи skd
-    //'GET /test': 'SkdController.test', //получить все записи skd
-    'POST /skds': 'SkdController.getAggregate', //получить все записи skd
-    'GET /skds/:id': 'SkdController.getAggregate', //получить все записи skd
+    /**
+     * Skds
+     */
+    'GET /skds': 'SkdController.get', //получить все записи skd
+    'POST /skds': 'SkdController.get', //получить все записи skd
+    'GET /skds/:id': 'SkdController.get', //получить все записи skd
 
-    //'GET /skds/:id': 'SkdController.findOneRow', // получить одну строку по ID
-    //'POST /skds': 'SkdController.createRow',
-    //'PUT /users/changePassword': 'UserController.changePassword',
-    //'GET /users/:id': 'UserController.findUsers',
-    //'DELETE /users/:id': 'UserController.destroy',
-    //'PUT /users/:id': 'UserController.update',
 
+    /**
+     * Structure
+     */
+    'GET /structures': 'StructureController.get', //получить все записи
+    // 'POST /structures': 'StructureController.post', //получить все записи
+    'GET /structures/:id': 'StructureController.get', //получить все записи
+
+
+    /**
+     * Attendance
+     */
     'GET /attendance': 'Attendance.timeAll', // для календаря
 
 
@@ -185,6 +205,7 @@ module.exports.routes = {
     'GET /admin/employee/:id': 'PageController.showHomePage',
 
     'GET /admin/skds': 'PageController.showHomePage',
+    'GET /admin/structures': 'PageController.showHomePage',
 
     //'GET /admin/attendances/calendar': 'PageController.showHomePage',
     //'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',

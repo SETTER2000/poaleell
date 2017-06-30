@@ -3,6 +3,7 @@ angular.module('Holiday', [
         'ngResource',
         'ngAnimate',
         'SkdModule',
+        'StructureModule',
         'PositionModule',
         'DepartmentModule',
         'EmployeeModule',

@@ -12,117 +12,94 @@ const moment = require('moment');
 const Watcher = require('listener-dir');
 const _ = require('lodash');
 
-
-/**
- *
- * @param a
- * @returns {Array.<T>}
- */
 Array.prototype.diff = function (a) {
     return this.filter(function (i) {
         return a.indexOf(i) < 0;
     });
 };
 module.exports = {
-    getCalendar: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne({id: req.session.me}).exec((err, foundUser) => {
-            if (err) return res.negotiate;
-            if (!foundUser) return res.notFound();
-            return res.ok('The final point in development');
-        });
-    },
-
-    getAggregateCount: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne({id: req.session.me}).exec((err, foundUser) => {
-            if (err) return res.negotiate;
-            if (!foundUser) return res.notFound();
-            return res.ok('The final point in development');
-        });
-    },
-    getListMonth: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne({id: req.session.me}).exec((err, foundUser) => {
-            if (err) return res.negotiate;
-            if (!foundUser) return res.notFound();
-            Skd.native(function (err, collection) {
-                if (err) return res.serverError(err);
-                collection.aggregate([{
-                        $project: {
-                            month: {$month: "$date"},
-                            _id: 0
-                        }
-                    },
-                        {$group: {_id: "$month"}},
-                        {$project: {month: "$_id"}},
-                        {$sort: {month: -1}}
-                    ])
-                    .toArray(function (err, results) {
-                        if (err) return res.serverError(err);
-                        return res.ok(results);
-                    });
-            });
-
-        });
-    },
-    getListData: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne({id: req.session.me}).exec((err, foundUser) => {
-            if (err) return res.negotiate;
-            if (!foundUser) return res.notFound();
-            Skd.native(function (err, collection) {
-                if (err) return res.serverError(err);
-                collection.aggregate([{
-                        $project: {
-                            year: {$year: "$date"},
-                            month: {$month: "$date"},
-                            day: {$dayOfMonth: "$date"},
-                            hour: {$hour: "$date"},
-                            minutes: {$minute: "$date"},
-                            seconds: {$second: "$date"},
-                            milliseconds: {$millisecond: "$date"},
-                            dayOfYear: {$dayOfYear: "$date"},
-                            dayOfWeek: {$dayOfWeek: "$date"},
-                            week: {$week: "$date"},
-                            date: 1,
-                            name: 1,
-                            _id: 0
-                        }
-                    },
-                        {
-                            $group: {
-                                _id: {
-                                    day: {$dayOfYear: "$date"},
-                                    year: {$year: "$date"},
-                                    month: {$month: "$date"},
-                                    name: "$name"
-                                },
-                                //months: {
-                                //    $push: {
-                                //        date: "$date",
-                                //        name: "$name"
-                                //    }
-                                //},
-                                count: {$sum: 1}
-                            }
-                        },
-                        {
-                            $project: {
-                                year: "$_id",
-                                //months: 1
-                            }
-                        },
-                        {$sort: {year: -1}}
-                    ])
-                    .toArray(function (err, results) {
-                        if (err) return res.serverError(err);
-                        return res.ok(results);
-                    });
-            });
-
-        });
-    },
+    // getListMonth: function (req, res) {
+    //     if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //     User.findOne({id: req.session.me}).exec((err, foundUser) => {
+    //         if (err) return res.negotiate;
+    //         if (!foundUser) return res.notFound();
+    //         Skd.native(function (err, collection) {
+    //             if (err) return res.serverError(err);
+    //             collection.aggregate([{
+    //                     $project: {
+    //                         month: {$month: "$date"},
+    //                         _id: 0
+    //                     }
+    //                 },
+    //                     {$group: {_id: "$month"}},
+    //                     {$project: {month: "$_id"}},
+    //                     {$sort: {month: -1}}
+    //                 ])
+    //                 .toArray(function (err, results) {
+    //                     if (err) return res.serverError(err);
+    //                     return res.ok(results);
+    //                 });
+    //         });
+    //
+    //     });
+    // },
+    // getListData: function (req, res) {
+    //     if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //     User.findOne({id: req.session.me}).exec((err, foundUser) => {
+    //         if (err) return res.negotiate;
+    //         if (!foundUser) return res.notFound();
+    //         Skd.native(function (err, collection) {
+    //             if (err) return res.serverError(err);
+    //             collection.aggregate([{
+    //                     $project: {
+    //                         year: {$year: "$date"},
+    //                         month: {$month: "$date"},
+    //                         day: {$dayOfMonth: "$date"},
+    //                         hour: {$hour: "$date"},
+    //                         minutes: {$minute: "$date"},
+    //                         seconds: {$second: "$date"},
+    //                         milliseconds: {$millisecond: "$date"},
+    //                         dayOfYear: {$dayOfYear: "$date"},
+    //                         dayOfWeek: {$dayOfWeek: "$date"},
+    //                         week: {$week: "$date"},
+    //                         date: 1,
+    //                         name: 1,
+    //                         _id: 0
+    //                     }
+    //                 },
+    //                     {
+    //                         $group: {
+    //                             _id: {
+    //                                 day: {$dayOfYear: "$date"},
+    //                                 year: {$year: "$date"},
+    //                                 month: {$month: "$date"},
+    //                                 name: "$name"
+    //                             },
+    //                             //months: {
+    //                             //    $push: {
+    //                             //        date: "$date",
+    //                             //        name: "$name"
+    //                             //    }
+    //                             //},
+    //                             count: {$sum: 1}
+    //                         }
+    //                     },
+    //                     {
+    //                         $project: {
+    //                             year: "$_id",
+    //                             //months: 1
+    //                         }
+    //                     },
+    //                     {$sort: {year: -1}}
+    //                 ])
+    //                 .toArray(function (err, results) {
+    //                     if (err) return res.serverError(err);
+    //                     return res.ok(results);
+    //                 });
+    //         });
+    //
+    //     });
+    // },
     getListYear: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me}).exec((err, foundUser) => {
@@ -149,22 +126,18 @@ module.exports = {
                         return res.ok(results);
                     });
             });
-
+    
         });
     },
-
-
-    getAggregate: function (req, res) {
+    get: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne({id: req.session.me})
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
                 sails.log('req.param(regex): ', req.param('regex'));
-
                 let reg = {$regex: req.param('regex'), $options: "si"};
-
-
+                
                 let selectedYear = (_.isEmpty(req.param('year'))) ? '' : req.param('year');
                 let limit = (_.isEmpty(req.param('limit'))) ? 100000 : req.param('limit');
                 let page = (_.isEmpty(req.param('page'))) ? 0 : req.param('page');
@@ -176,18 +149,10 @@ module.exports = {
                 if (req.param('sortField') == 'name') {
                     sort = {'_id.date': -1, '_id.name': +req.param('sortTrend')};
                 }
-
-
-                sails.log('selectedYear');
-                sails.log(selectedYear);
-
-
-                //let sort = (_.isEmpty(req.param('sort'))) ? {'_id.date': -1, '_id.name': 1} : req.param('sort');
+                
+                // sails.log('selectedYear');
+                // sails.log(selectedYear);
                 let skip = (+page * +limit);
-                //
-                //sails.log('HHHHHHHHHHHHH');
-                //sails.log(sort);
-                //sails.log('page: ' + page);
                 Skd.native(function (err, collection) {
                     if (err) return res.serverError(err);
                     collection.find({}, {date: 1, _id: 0}).sort({"date": -1}).limit(1)
@@ -264,39 +229,39 @@ module.exports = {
                 });
             });
     },
-    findSkds: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne({id: req.session.me})
-            .exec((err, foundUser) => {
-                if (err) return res.negotiate;
-                if (!foundUser) return res.notFound();
-                let limit = (_.isEmpty(req.param('limit'))) ? 3 : req.param('limit');
-                let sort = (_.isEmpty(req.param('sort'))) ? 'lastName' : req.param('sort');
-                let query = (_.isEmpty(req.param('id'))) ? {where: {}, sort: sort, limit: limit} : req.param('id');
-                let page = (_.isEmpty(req.param('page'))) ? 1 : req.param('page');
-
-                User.find(query)
-                    .populate('skds')
-                    .paginate({page: page, limit: limit, sort: sort})
-                    .exec((err, foundSkd)=> {
-                        //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {
-                        if (err) return res.negotiate(err);
-                        res.ok(foundSkd);
-                    });
-            });
-    },
+    // findSkds: function (req, res) {
+    //     if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //     User.findOne({id: req.session.me})
+    //         .exec((err, foundUser) => {
+    //             if (err) return res.negotiate;
+    //             if (!foundUser) return res.notFound();
+    //             let limit = (_.isEmpty(req.param('limit'))) ? 3 : req.param('limit');
+    //             let sort = (_.isEmpty(req.param('sort'))) ? 'lastName' : req.param('sort');
+    //             let query = (_.isEmpty(req.param('id'))) ? {where: {}, sort: sort, limit: limit} : req.param('id');
+    //             let page = (_.isEmpty(req.param('page'))) ? 1 : req.param('page');
+    //
+    //             User.find(query)
+    //                 .populate('skds')
+    //                 .paginate({page: page, limit: limit, sort: sort})
+    //                 .exec((err, foundSkd)=> {
+    //                     //Skd.find({sort:req.param('sort')}).paginate({page: 1, limit: 3}).exec((err,foundSkd)=> {
+    //                     if (err) return res.negotiate(err);
+    //                     res.ok(foundSkd);
+    //                 });
+    //         });
+    // },
     createReport: function (req, res) {
         User.findOne({id: req.session.me})
             .exec(function (err, foundUser) {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
                 Skd.findOrCreate({
-                        name: req.param('name'),
-                        startPeriod: req.param('startPeriod'),
-                        endPeriod: req.param('endPeriod'),
-                        date: req.param('date'),
-                        owner: foundUser.id
-                    })
+                    name: req.param('name'),
+                    startPeriod: req.param('startPeriod'),
+                    endPeriod: req.param('endPeriod'),
+                    date: req.param('date'),
+                    owner: foundUser.id
+                })
                     .exec(function (err, createdTutorial) {
                         if (err) return res.negotiate(err);
 
@@ -306,33 +271,33 @@ module.exports = {
     },
 
 
-    createAttendance: function (req, res) {
-
-        User.findOne({
-                lastName: 'Якимов'
-            })
-            .exec(function (err, foundUser) {
-                if (err) return res.negotiate;
-                if (!foundUser) return res.notFound();
-
-
-                Skd.create({
-                    name: req.param('name'),
-                    startPeriod: req.param('startPeriod'),
-                    owner: foundUser.id
-                }).exec(function (err, createdTutorial) {
-                    if (err) return res.negotiate(err);
-
-                    foundUser.tutorials.add(createdTutorial.id);
-
-                    foundUser.save(function (err) {
-                        if (err) return res.negotiate(err);
-
-                        return res.json({id: createdTutorial.id});
-                    });
-                });
-            });
-    },
+    // createAttendance: function (req, res) {
+    //
+    //     User.findOne({
+    //             lastName: 'Якимов'
+    //         })
+    //         .exec(function (err, foundUser) {
+    //             if (err) return res.negotiate;
+    //             if (!foundUser) return res.notFound();
+    //
+    //
+    //             Skd.create({
+    //                 name: req.param('name'),
+    //                 startPeriod: req.param('startPeriod'),
+    //                 owner: foundUser.id
+    //             }).exec(function (err, createdTutorial) {
+    //                 if (err) return res.negotiate(err);
+    //
+    //                 foundUser.tutorials.add(createdTutorial.id);
+    //
+    //                 foundUser.save(function (err) {
+    //                     if (err) return res.negotiate(err);
+    //
+    //                     return res.json({id: createdTutorial.id});
+    //                 });
+    //             });
+    //         });
+    // },
     getReportSkd: function (req, res) {
         function SKD(sourceReportSkd, targetReportSkd) {
             this.name = {};
@@ -519,7 +484,7 @@ module.exports = {
                          * Инициализация имён диапазонов в загружаемой книге
                          */
 
-                            // ALL
+                        // ALL
                         workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
 
                         // NAMED
@@ -770,21 +735,23 @@ module.exports = {
         // });
 
     },
-    getList: function (req, res) {
-        User.find({}).exec(function getUser(err, users) {
-            if (err) return res.negotiate(err);
-            if (users) {
-                async.each(users, function (userRow, next) {
-                        console.log(userRow);
-                        return next();
-                    },
-                    function (err) {
-                        sails.log(err);
-                        if (err) return res.negotiate('uhu' + err);
-                    });
-                res.ok();
-            }
-        });
-    }
+//     getList: function (req, res) {
+//         User.find({}).exec(function getUser(err, users) {
+//             if (err) return res.negotiate(err);
+//             if (users) {
+//                 async.each(users, function (userRow, next) {
+//                         console.log(userRow);
+//                         return next();
+//                     },
+//                     function (err) {
+//                         sails.log(err);
+//                         if (err) return res.negotiate('uhu' + err);
+//                     });
+//                 res.ok();
+//             }
+//         });
+//     }
+    
+
 };
 

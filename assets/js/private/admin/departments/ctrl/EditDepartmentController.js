@@ -5,20 +5,24 @@ angular.module('DepartmentModule')
             $scope.edit = $state.includes('home.admin.departments.edit');
             //if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
-            // $scope.refresh = function () {
-            // return console.log($stateParams.id);
-            $scope.refresh = function () {
-                var item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
-                    $scope.departments = departments;
-                    // кол-во пользователей
-                    //console.log($scope.departments.length);
-                    //console.log($scope.departments);
-                    // console.log('USSS1: ' +  $scope.newBirthday);
-                    // console.log('USSS2: ' + $scope.item.dt());
-                    // // $scope.item.birthday = $scope.newBirthday;
-                    // console.log('USSS3: ' + item.birthday);
-                    // console.log('USSS4: ' + $scope.item.birthday);
 
+
+            $http.get(`/getRootDepartment?id=${$stateParams.depId}`)
+                .then(function (res) {
+                    console.log('res');
+                    console.log(res.data);
+                    $scope.items = res;
+                }).catch(function (reason) {
+            });
+            // $scope.getRootDepartment = function () {
+            //   $http.get();
+            // };
+            
+            
+            
+            $scope.refresh = function () {
+                $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                    $scope.departments = departments;
                 }, function (err) {
                     if (err) console.log(err.message);
                 });
@@ -45,15 +49,13 @@ angular.module('DepartmentModule')
 
                 }
             };
-
-            // $scope.item.contacts = [{type:'phone', value:'1(234) 555-1212'}];
-
-            // $scope.state = /^\w\w$/;
-            // $scope.zip = /^\d\d\d\d\d$/;
+            
 
             $scope.addContact = function () {
                 item.contacts.push({type: 'телефон', value: ''});
             };
+            
+            
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
                 for (var i = 0, ii = contacts.length; i < ii; i++) {
@@ -62,14 +64,18 @@ angular.module('DepartmentModule')
                     }
                 }
             };
+            
+            
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);
             };
 
+            
             $scope.isSaveDisabled = function () {
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
 
+            
             $scope.delete = function (item) {
                 item.$delete(item, function (success) {
                     toastr.success('Объект удалён.','OK! ');
@@ -78,5 +84,6 @@ angular.module('DepartmentModule')
                     toastr.error(err,'Ошибка 3 EditDepartmentController!');
                 })
             };
+            
             $scope.refresh();
         }]);
