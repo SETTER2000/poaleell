@@ -41,6 +41,7 @@ var jsFilesToInject = [
 
     'js/dependencies/**/*.js',
     'js/private/admin/skds/SkdModule.js',
+    'js/private/admin/structures/StructureModule.js',
     'js/private/admin/departments/DepartmentModule.js',
     'js/private/admin/calendars/CalendarModule.js',
     'js/private/admin/employees/EmployeeModule.js',
