@@ -64,6 +64,7 @@
     </div>
     <div class="col-md-3 pull-right">
         <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{factArea}}</button>
+
     </div>
     <div class="col-md-13">&nbsp;</div>
 </div>
@@ -212,7 +213,8 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
     <!--</div>-->
     <!--</div>-->
 </div>
-<a href="#toTop" class="button">↑</a>
+<!--<a href="#toTop" class="button">↑</a>-->
+<a href="#toTop2" class="button2">↑</a>
 <pagination2
         limit-rows="limitRows"
         default-rows="defaultRows"
@@ -242,7 +244,15 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             }
         };
 
-
+        (function($scrollButton, $win){
+            $(document).scroll(function(){
+                $scrollButton.toggleClass("visible2", $win.scrollTop() > 300);
+            });
+            $scrollButton.click(function(e){
+                e.preventDefault();
+                $("body, html").animate({scrollTop : 0}, 500);
+            });
+        })( $(".button2"), $(window) );
         (function($scrollButton, $win){
             $(document).scroll(function(){
                 $scrollButton.toggleClass("visible", $win.scrollTop() > 300);

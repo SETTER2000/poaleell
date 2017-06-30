@@ -247,17 +247,17 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
         };
         return Skds;
     })
-    //.directive('whenScrolled', function () {
-    //    return function (scope, elm, attr) {
-    //        var raw = elm[0];
-    //
-    //        elm.bind('scroll', function () {
-    //            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
-    //                scope.$apply(attr.whenScrolled);
-    //            }
-    //        });
-    //    };
-    //})
+    .directive('whenScrolled', function () {
+        return function (scope, elm, attr) {
+            var raw = elm[0];
+
+            elm.bind('scroll', function () {
+                if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    })
 /**
  * Выборка фамилий по первой букве
  */
