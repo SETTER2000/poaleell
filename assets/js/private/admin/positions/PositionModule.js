@@ -14,7 +14,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                 url: '/edit/:positionId',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/departments/tpl/edit.tpl.html',
+                        templateUrl: '/js/private/admin/positions/tpl/edit.tpl.html',
                         controller: 'EditPositionController'
                     }
                 }
@@ -37,7 +37,7 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                 url: '/create/:positionId',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/departments/tpl/edit.tpl.html',
+                        templateUrl: '/js/private/admin/positions/tpl/edit.tpl.html',
                         controller: 'EditPositionController'
                     }
                 }
