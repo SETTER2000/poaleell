@@ -6,18 +6,33 @@
  */
 
 module.exports = {
-
-    getRootDepartment:function (req,res) {
+    //test: function (req,res) {
+    //
+    //    Department.findOne(req.param('department')).exec(function(err, department) {
+    //        if(err) return console.log('ERRROr! ', err);
+    //
+    //        // Queue up a record to be inserted into the join table
+    //        department.subdivision.add(req.param('subdivision'));
+    //
+    //        // Save the user, creating the new associations in the join table
+    //        department.save(function(err,response) {
+    //            if(err) return console.log('Не сохранилась! ', err);
+    //
+    //            res.ok(response);
+    //
+    //        });
+    //        res.ok(department);
+    //    });
+    //},
+    getRootDepartment: function (req, res) {
         // if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         // sails.log(req.param('id'));
-        Department.find({id:{'!': req.param('id')},sort:'name'}).exec(function (err, foundList) {
+        Department.find({id: {'!': req.param('id')}, sort: 'name'}).exec(function (err, foundList) {
             if (err) return res.negotiate;
             if (!foundList) return res.notFound();
 
             return res.ok(foundList);
         });
-
-
     },
 
 
@@ -41,6 +56,7 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
             Department.findOne(req.param('id'))
+                .populate('subdivision')
                 .exec(function foundUser(err, department) {
                     if (err) return res.serverError(err);
                     if (!department) return res.notFound();
@@ -48,6 +64,7 @@ module.exports = {
                 });
         } else {
             Department.find()
+                .populate('subdivision')
                 .exec(function foundUser(err, departments) {
                     if (err) return res.serverError(err);
                     if (!departments) return res.notFound();
@@ -59,12 +76,12 @@ module.exports = {
     createDepartment: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
-        if (!_.isString( req.param('name') ) ) {
+        if (!_.isString(req.param('name'))) {
             sails.log(req.param('name'));
             sails.log('is not string');
             return res.badRequest('Наименование не заполнено.');
         }
-        if(req.param('name').length < 2 || req.param('name').length > 150){
+        if (req.param('name').length < 2 || req.param('name').length > 150) {
             return res.badRequest('Наименование должно быть от 2 до 35 знаков!');
         }
         Department.create(req.body).exec(function (err, finn) {

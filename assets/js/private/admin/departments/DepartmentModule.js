@@ -70,9 +70,9 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
             }
         );
 
-        //Departments.prototype.getFullName = function () {
-        //    return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
-        //};
+        Departments.prototype.getFullName = function () {
+            return this.name;
+        };
 
          Departments.prototype.sc = function () {
              return this.section;

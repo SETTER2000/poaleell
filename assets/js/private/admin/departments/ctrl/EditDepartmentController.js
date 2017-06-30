@@ -7,21 +7,18 @@ angular.module('DepartmentModule')
             // $state.transitionTo('admin.users.show.id');
 
 
-            $http.get(`/getRootDepartment?id=${$stateParams.depId}`)
-                .then(function (res) {
-                    console.log('res');
-                    console.log(res.data);
-                    $scope.items = res;
-                }).catch(function (reason) {
-            });
-            // $scope.getRootDepartment = function () {
-            //   $http.get();
-            // };
-            
-            
+            //$http.get(`/getRootDepartment?id=${$stateParams.depId}`)
+            //    .then(function (res) {
+            //        console.log('res');
+            //        console.log(res.data);
+            //        $scope.items = res;
+            //    }).catch(function (reason) {
+            //});
+
             
             $scope.refresh = function () {
                 $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                    console.log('DEPPPARTMEN', departments);
                     $scope.departments = departments;
                 }, function (err) {
                     if (err) console.log(err.message);
@@ -29,7 +26,9 @@ angular.module('DepartmentModule')
             };
             $scope.saveEdit = function (item) {
                 if (angular.isDefined(item.id)) {
+                    console.log('ITEM:', item);
                     item.$update(item, function (success) {
+                            console.log('success:', success);
                             toastr.success('Данные обновлены!');
                             $scope.refresh();
                         },
@@ -49,12 +48,29 @@ angular.module('DepartmentModule')
 
                 }
             };
-            
 
-            $scope.addContact = function () {
-                item.contacts.push({type: 'телефон', value: ''});
+            //$scope.addContact = function () {
+            //    if (angular.isArray($scope.item.owner)) {
+            //        $scope.item.owner.push({type: "телефон", value: ""});
+            //    } else {
+            //        $scope.item.owner = [{type: "телефон", value: ""}];
+            //    }
+            //};
+            $scope.addSubdivision = function () {
+                if (angular.isArray($scope.item.subdivision)) {
+                    $scope.item.subdivision.push({});
+                } else {
+                    $scope.item.subdivision = [{}];
+                }
             };
-            
+            $scope.removeSubdivision = function (department) {
+                for (var i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
+                    if ($scope.item.subdivision[i].id === department.id) {
+                        $scope.item.subdivision.splice(i, 1);
+                        return;
+                    }
+                }
+            };
             
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;

@@ -40,13 +40,19 @@ module.exports = {
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)
         },
-        owner:{
-            model:'department'
+        subdivision:{
+            collection:'department',
+            via: 'owner',
+            dominant:true
         },
-        root: {
+        owner: {
             collection: 'department',
-            via: 'owner'
+            via: 'subdivision'
         },
+        //root: {
+        //    collection: 'department',
+        //
+        //},
         // Добавить ссылку на пользователя
         users: {
             collection: 'user',
