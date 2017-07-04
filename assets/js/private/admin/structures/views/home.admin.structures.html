@@ -1,0 +1,105 @@
+
+<div id="avatar" class="row small sort-my">
+
+</div>
+
+<div id="container">
+    <ul>
+        <li>Root node
+            <ul>
+                <li>Child node 1</li>
+                <li>Child node 2</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<a href="#toTop" class="button">↑</a>
+
+<script>
+        var avatarElem = document.getElementById('avatar');
+        var searchElem = document.getElementById('search');
+
+        var avatarSourceBottom = avatarElem.getBoundingClientRect().bottom + (window.pageYOffset-80);
+        var searchSourceBottom = searchElem.getBoundingClientRect().bottom + (window.pageYOffset-100);
+
+        window.onscroll = function() {
+            if (searchElem.classList.contains('fixed') && window.pageYOffset < searchSourceBottom) {
+                searchElem.classList.remove('fixed');
+            } else if (window.pageYOffset > searchSourceBottom) {
+                searchElem.classList.add('fixed');
+            }
+            if (avatarElem.classList.contains('fixed') && window.pageYOffset < avatarSourceBottom) {
+                avatarElem.classList.remove('fixed');
+            } else if (window.pageYOffset > avatarSourceBottom) {
+                avatarElem.classList.add('fixed');
+            }
+        };
+
+
+        (function($scrollButton, $win){
+            $(document).scroll(function(){
+                $scrollButton.toggleClass("visible", $win.scrollTop() > 300);
+            });
+            $scrollButton.click(function(e){
+                e.preventDefault();
+                $("body, html").animate({scrollTop : 0}, 500);
+            });
+        })( $(".button"), $(window) );
+
+
+
+
+        $(function () {
+            $('#container').jstree({
+                'core': {
+                    "check_callback": true, // enable all modifications
+                    'data': {
+                        'url': '/struc',
+                        'dataType': "json"
+//                    "data" : function (node) {
+//                        return { "id" : node.id };
+//                    },
+//                    "multiple" : true,
+//                    "themes" : {
+//                        "dots" : true // no connecting dots between dots
+//                    },
+
+                    }
+//                'data': [
+//                    {
+//                        "text": "Root node x", "children": [
+//                        {"text": "Child node 1x"},
+//                        {"text": "Child node 2x"}
+//                    ]
+//                    }
+//                ]
+                },
+                "types": {
+                    "default": {
+                        "icon": "glyphicon glyphicon-star-empty"
+                    },
+                    "demo": {
+                        "icon": "glyphicon glyphicon-user"
+                    },
+                    "findep": {
+                        "icon": "glyphicon glyphicon-ruble"
+                    },
+                    "ahd": {
+                        "icon": "glyphicon glyphicon-text-color"
+                    }
+                },
+                "state": {"key": "state_demo"},
+                "plugins": ["dnd", "contextmenu", "checkbox", "search", "state", "types"]
+            });
+//        $('button').on("click", function () {
+//            var instance = $('#container').jstree(true);
+//            instance.deselect_all();
+//            instance.select_node('1');
+//        });
+            $("#s").submit(function (e) {
+                e.preventDefault();
+                $("#container").jstree(true).search($("#q").val());
+            });
+        });
+</script>

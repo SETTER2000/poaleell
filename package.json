@@ -27,6 +27,7 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
+    "jstree": "^3.3.4",
     "ldapjs": "^1.0.1",
     "listener-dir": "^0.2.0",
     "machinepack-datetime": "^1.4.0",

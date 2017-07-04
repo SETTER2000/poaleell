@@ -39,7 +39,7 @@
                     <div class="form-inline">
 
                         <div class="form-group">
-                            <label class="control-label" >Подчинённый отдел</label>
+                            <label class="control-label" ></label>
                             <input type="text" class="form-control" ng-model="item.name">
 
 
@@ -56,32 +56,14 @@
                             </a>
                         </div>
                         <div class="form-group " style="margin-left:50px" ng-controller="ListDepartmentController">
-                            <div ng-repeat="department in item.subdivision">
+                            <div ng-repeat="department in item.children">
+                                <!--{{department.id}}-->
                                 <select class="form-control" ng-model="department.id">
                                     <option ng-repeat="option in items | orderBy:'name'" value="{{option.id}}">{{option.name}}</option>
                                 </select>
                                 <button type="button" class="btn btn-default" ng-click="removeSubdivision(department)">x</button>
                             </div>
                         </div>
-
-                        <!--<div class="form-inline" ng-repeat="contact in item.owner">-->
-                        <!--<div class="form-group">-->
-                        <!--&lt;!&ndash;<select class="form-control" ng-model="contact.type">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option>Мобильный</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option>Телефон</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option>Внутренний телефон</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<label class="sr-only" for="exampleInputEmail3">Email address</label>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">&ndash;&gt;-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                        <!--<label class="sr-only" for="exampleInputPassword3">Password</label>-->
-                        <!--<input class="form-control" type="text" id="exampleInputPassword3" ng-model="contact.value" required>-->
-                        <!--</div>-->
-
-                        <!--<button type="button" class="btn btn-default" ng-click="removeContact(contact)">x</button>-->
-                        <!--</div>-->
-
 
                     </div>
 

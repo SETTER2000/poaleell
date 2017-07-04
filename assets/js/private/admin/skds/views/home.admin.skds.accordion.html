@@ -224,7 +224,14 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         show-bt="showBt"
         on-select-page="selectCount=selectCount+1">
 </pagination2>
+
+
+
 <script>
+
+
+
+
         var avatarElem = document.getElementById('avatar');
         var searchElem = document.getElementById('search');
 
@@ -262,4 +269,6 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                 $("body, html").animate({scrollTop : 0}, 500);
             });
         })( $(".button"), $(window) );
+
+
 </script>

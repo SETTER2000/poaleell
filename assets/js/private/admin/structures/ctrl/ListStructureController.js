@@ -17,19 +17,10 @@
                     // property: 'name'
                 };
 
-                $scope.expandCallback = function (index, id) {
-                    $scope.idUser = id;
-                };
 
 
-                $scope.$on('accordionA:onReady', function () {
-                    //console.log('accordionA is ready!');
-                });
 
-                $scope.$on('nestedAccordionA:onReady', function (id) {
-                    //console.log('nestedAccordionA is ready!');
-                    //console.log(id);
-                });
+
 
 
                 /**
@@ -72,13 +63,6 @@
                 $scope.countChar = 3;  // Кол-во знаков от фамилии
                 $scope.filedName = '_id';
 
-                $http.get('/getListYear')
-                    .then(function (attendance) {
-                        attendance.selectedOption = {"_id": 2017, "year": 2017};
-                        $scope.data = attendance;
-                    }).catch(function (reason) {
-                });
-
 
                 $scope.sortRevers = function (field) {
                     $scope.sortTrend = (+$scope.sortTrend > 0) ? -1 : 1;
@@ -86,25 +70,17 @@
                 };
 
 
-                $scope.calendar = moment().calendar(null, {
-                    sameDay: function (now) {
-                        if (this.isBefore(now)) {
-                            return '[Случится Сегодня]';
-                        } else {
-                            return '[Произошло сегодня]';
-                        }
-                    }
-                });
+
 
 
                 $scope.options =
                     [
-                        {display: "Отработанное время", value: "accordion"}
+                        {display: "Древовидная структура", value: "structure"}
                     ];
 
 
                 $scope.modeSelect = $scope.options[0];
-                $scope.accordionView = "/js/private/admin/skds/views/home.admin.skds.accordion.html";
+                $scope.structureView = "/js/private/admin/structures/views/home.admin.structures.html";
                 //$scope.workView = "/js/private/admin/skds/views/home.admin.skds.work.html";
                 // $scope.testView = "/js/private/admin/skds/views/test.html";
                 // $scope.tableView = "/js/private/admin/skds/views/home.admin.skds.table.html";
@@ -173,10 +149,8 @@
                     Structures.query($scope.query,
                         function (structures) {
                             $scope.items = structures;
-                            $scope.mx = new Date($scope.items[0]._id.date);
-                            $scope.objectName = structures;
                         }, function (err) {
-                            toastr.error(err.data.details, 'Ошибка 77! ' + err.data.message);
+                            toastr.error(err.data.details, 'Ошибка 7700! ' + err.data.message);
                         });
                 };
                 $scope.refresh();

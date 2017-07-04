@@ -56,7 +56,7 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
             Department.findOne(req.param('id'))
-                .populate('subdivision')
+                //.populate('subdivision')
                 .exec(function foundUser(err, department) {
                     if (err) return res.serverError(err);
                     if (!department) return res.notFound();
@@ -64,7 +64,7 @@ module.exports = {
                 });
         } else {
             Department.find()
-                .populate('subdivision')
+                //.populate('subdivision')
                 .exec(function foundUser(err, departments) {
                     if (err) return res.serverError(err);
                     if (!departments) return res.notFound();

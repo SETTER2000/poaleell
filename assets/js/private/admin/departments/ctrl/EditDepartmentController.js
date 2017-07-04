@@ -26,8 +26,8 @@ angular.module('DepartmentModule')
             };
             $scope.saveEdit = function (item) {
                 if (angular.isDefined(item.id)) {
-                    console.log('ITEM:', item);
-                    item.$update(item, function (success) {
+                    console.log('ITEMMMMM: ',item);
+                    item.$update(item.id, function (success) {
                             console.log('success:', success);
                             toastr.success('Данные обновлены!');
                             $scope.refresh();
@@ -37,7 +37,7 @@ angular.module('DepartmentModule')
                         }
                     );
                 } else {
-                    item.$save(item, function (success) {
+                    item.$save(item.id, function (success) {
                         toastr.success('Новый отдел создан.');
                         // /admin/user/
                         //$location.path('/profile') ;
@@ -57,16 +57,16 @@ angular.module('DepartmentModule')
             //    }
             //};
             $scope.addSubdivision = function () {
-                if (angular.isArray($scope.item.subdivision)) {
-                    $scope.item.subdivision.push({});
+                if (angular.isArray($scope.item.children)) {
+                    $scope.item.children.push({});
                 } else {
-                    $scope.item.subdivision = [{}];
+                    $scope.item.children = [{}];
                 }
             };
             $scope.removeSubdivision = function (department) {
-                for (var i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
-                    if ($scope.item.subdivision[i].id === department.id) {
-                        $scope.item.subdivision.splice(i, 1);
+                for (var i = 0, ii = $scope.item.children.length; i < ii; i++) {
+                    if ($scope.item.children[i].id === department.id) {
+                        $scope.item.children.splice(i, 1);
                         return;
                     }
                 }
