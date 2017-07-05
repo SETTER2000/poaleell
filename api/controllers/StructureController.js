@@ -17,15 +17,27 @@ module.exports = {
 
                         //sails.log('Поисковая дата:', req.param('sd'));
 
-                        collection.aggregate([{$match: {'children.id': {$gt: ""}}}, {
+                        collection.aggregate([{
+                            $match: {
+                                'children.id': {$gt: ""},
+                                name: 'Генеральный директор'
+                            }
+                        }, {$unwind: "$children"}, {
+                            $group: {
+                                _id: {id: "$_id", text: "$name"},
+                                children: {$push: "$children.id"}
+                            }
+                        }, {
                             $project: {
                                 _id: 0,
-                                text: "$name",
-                                id: "$_id",
+                                id: "$_id.id",
+                                text: "$_id.text",
                                 children: "$children"
                             }
                         }]).toArray(function (err, results) {
                             if (err) return res.serverError(err);
+                            //console.log(results);
+
                             return res.send(results);
 
 
@@ -81,7 +93,23 @@ module.exports = {
                             //        },
                             //        {
                             //            "id": 9,
-                            //            "text": "Главный бухгалтер"
+                            //            "text": "Главный бухгалтер",
+                            //            "children": [
+                            //                {
+                            //                    "id": 13,
+                            //                    "text":"Бухгалтерия",
+                            //                    "children": [
+                            //                        {
+                            //                            "id": 14,
+                            //                            "text":"Группа контроля учета реализации"
+                            //                        },{
+                            //                            "id": 15,
+                            //                            "text":"Группа учета затрат и формирования прибыли"
+                            //                        }
+                            //                    ]
+                            //
+                            //                }
+                            //            ]
                             //        }
                             //    ]
                             //});

@@ -114,7 +114,12 @@ module.exports = {
 
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        //req.params.all()
+
+        //var c =  req.param('children');
+        //console.log('NAME: ', req.param('name'));
+        //console.log('NAME2: ', c[0].id);
+        console.log('BODY: ', req.body);
+
         Department.update(req.param('id'))
             .set(
                 // {

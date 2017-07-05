@@ -43,6 +43,9 @@ module.exports = {
         children:{
           type:'array'
         },
+        childrenObj:{
+            type:'array'
+        },
         //subdivision:{
         //    collection:'department',
         //    via: 'owner',

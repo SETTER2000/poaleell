@@ -59,6 +59,7 @@ module.exports.routes = {
     // // 'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
     // 'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
     'GET /struc': 'StructureController.get',
+    'GET /struc/:id': 'StructureController.get',
 
 
     /**

@@ -49,21 +49,25 @@
                         &nbsp;
 
                         <div class="form-group">
-                            <a style="text-decoration: none" title="кому подчиняется" href="#" ng-click="addSubdivision()">
+                            <a style="text-decoration: none" title="добавить подчинённый департамент" href="#" ng-click="addSubdivision()">
+                                <!--<span class="glyphicon glyphicon-plus"></span>-->
                                 <span class="glyphicon glyphicon-menu-right"></span>
                                 <span class="glyphicon glyphicon-menu-right"></span>
                                 <span class="glyphicon glyphicon-menu-right"></span>
                             </a>
                         </div>
                         <div class="form-group " style="margin-left:50px" ng-controller="ListDepartmentController">
-                            <div ng-repeat="department in item.children">
+                            <div ng-repeat="child in item.children">
                                 <!--{{department.id}}-->
-                                <select class="form-control" ng-model="department.id">
-                                    <option ng-repeat="option in items | orderBy:'name'" value="{{option.id}}">{{option.name}}</option>
+                                <select class="form-control" ng-model="child.id">
+                                    <option ng-repeat="option in items | orderBy:'name'" value="{{option.id}}">
+                                        {{option.name}}
+                                    </option>
                                 </select>
-                                <button type="button" class="btn btn-default" ng-click="removeSubdivision(department)">x</button>
+                                <button type="button" class="btn btn-default" ng-click="removeSubdivision(child)">x</button>
                             </div>
                         </div>
+
 
                     </div>
 

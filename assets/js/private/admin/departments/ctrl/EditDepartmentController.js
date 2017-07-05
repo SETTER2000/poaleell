@@ -18,7 +18,7 @@ angular.module('DepartmentModule')
             
             $scope.refresh = function () {
                 $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
-                    console.log('DEPPPARTMEN', departments);
+                    //console.log('DEPPPARTMEN', departments);
                     $scope.departments = departments;
                 }, function (err) {
                     if (err) console.log(err.message);
@@ -26,9 +26,23 @@ angular.module('DepartmentModule')
             };
             $scope.saveEdit = function (item) {
                 if (angular.isDefined(item.id)) {
-                    console.log('ITEMMMMM: ',item);
+                    //console.log('FFF: ', $scope.item.children[0].id);
+
+
+                    //Departments.get({id: $scope.item.children[0].id}, function (dep) {
+                    //    console.log('DEPPPARTMEN', dep);
+                    //   item.childrenObj.push(dep);
+                    //
+                    //    console.log('ITEM: ' , item);
+                    //
+                    //
+                    //}, function (err) {
+                    //    if (err) console.log(err.message);
+                    //});
+
+
                     item.$update(item.id, function (success) {
-                            console.log('success:', success);
+                            console.log('UPDATE ITEM: ',item);
                             toastr.success('Данные обновлены!');
                             $scope.refresh();
                         },
@@ -36,8 +50,11 @@ angular.module('DepartmentModule')
                             toastr.error(err,'Ошибка 1 EditDepartmentController!');
                         }
                     );
+
+
                 } else {
                     item.$save(item.id, function (success) {
+                        console.log('SAVE ITEM: ',item);
                         toastr.success('Новый отдел создан.');
                         // /admin/user/
                         //$location.path('/profile') ;
