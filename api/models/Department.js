@@ -43,7 +43,14 @@ module.exports = {
         children:{
           type:'array'
         },
+        parent:{
+          type:'string'
+
+        },
         childrenObj:{
+            type:'array'
+        },
+        ancestors:{
             type:'array'
         },
         //subdivision:{
