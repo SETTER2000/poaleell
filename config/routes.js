@@ -52,7 +52,7 @@ module.exports.routes = {
     /**
      * Тестовые роуты
      */
-     //'GET /test': 'DepartmentController.test',
+     //'GET /test': 'StructureController.test',
     // 'GET /tut': 'TutorialController.createTutorial',
     // 'GET /ed': 'TutorialController.editTutorial',
     // // 'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости

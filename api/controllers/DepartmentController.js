@@ -134,7 +134,7 @@ module.exports = {
             req.body.childrenObj = [];
             _.forEach(child, function (value) {
                 console.log(value);
-                req.body.childrenObj.push(value.name);
+                req.body.childrenObj.push(value.id);
                 req.body.parent = value.name;
             });
 
