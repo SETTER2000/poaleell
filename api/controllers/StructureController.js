@@ -129,92 +129,93 @@ module.exports = {
                                                                 });
                                                             });
 
-                                                            // Пятый  уровень вложенности
-                                                            if (pt4.length > 0) {
 
-                                                                Department.find(pt4)
-                                                                    .exec(function (err, foundChildren5) {
-                                                                        if (err) return res.negotiate;
-                                                                        if (!foundChildren5.length)  return res.send(root);
-                                                                        //console.log('foundChildren5: ', foundChildren5);
-                                                                        let pt5 = []; // Предки
-                                                                        _.forEach(foundChildren5, (value, key)=> {
-                                                                            let level5 = {};
-                                                                            level5.children = [];
-                                                                            level5.type = ''; // Предки
-                                                                            level5.text = value.name;
-                                                                            level5.id = value.id;
-                                                                            level5.parent = value.parent;
-                                                                            pt5.push({parent: value.name});
+                                                        });
 
-                                                                            //console.log('level5: ', level5);
+                                                        // Пятый  уровень вложенности
+                                                        if (pt4.length > 0) {
+                                                            Department.find(pt4)
+                                                                .exec(function (err, foundChildren5) {
+                                                                    if (err) return res.negotiate;
+                                                                    if (!foundChildren5.length)  return res.send(root);
+                                                                    //console.log('foundChildren5: ', foundChildren5);
+                                                                    let pt5 = []; // Предки
+                                                                    _.forEach(foundChildren5, (value, key)=> {
+                                                                        let level5 = {};
+                                                                        level5.children = [];
+                                                                        level5.type = ''; // Предки
+                                                                        level5.text = value.name;
+                                                                        level5.id = value.id;
+                                                                        level5.parent = value.parent;
+                                                                        pt5.push({parent: value.name});
 
-                                                                            _.forEach(root.children, (v, k)=> {
-                                                                                _.forEach(v.children, (va, ke)=> {
-                                                                                    _.forEach(va.children, (val, key)=> {
-                                                                                        _.forEach(val.children, (valu, key)=> {
-                                                                                            if (valu.text == level5.parent) {
-                                                                                                valu.children.push(level5);
-                                                                                            }
-                                                                                        });
+                                                                        //console.log('level5: ', level5);
+
+                                                                        _.forEach(root.children, (v, k)=> {
+                                                                            _.forEach(v.children, (va, ke)=> {
+                                                                                _.forEach(va.children, (val, key)=> {
+                                                                                    _.forEach(val.children, (valu, key)=> {
+                                                                                        if (valu.text == level5.parent) {
+                                                                                            valu.children.push(level5);
+                                                                                        }
                                                                                     });
                                                                                 });
                                                                             });
+                                                                        });
 
 
-                                                                            // Шестой  уровень вложенности
-                                                                            if (pt5.length > 0) {
+                                                                        // Шестой  уровень вложенности
+                                                                        if (pt5.length > 0) {
 
 
-                                                                                Department.find(pt5)
-                                                                                    .exec(function (err, foundChildren6) {
-                                                                                        if (err) return res.negotiate;
-                                                                                        if (!foundChildren6.length)  return res.send(root);
-                                                                                        console.log('foundChildren6: ', foundChildren6);
-                                                                                        let pt6 = []; // Предки
-                                                                                        _.forEach(foundChildren6, (value, key)=> {
-                                                                                            let level6 = {};
-                                                                                            level6.children = [];
-                                                                                            level6.type = ''; // Предки
-                                                                                            level6.text = value.name;
-                                                                                            level6.id = value.id;
-                                                                                            level6.parent = value.parent;
-                                                                                            pt6.push({parent: value.name});
+                                                                            Department.find(pt5)
+                                                                                .exec(function (err, foundChildren6) {
+                                                                                    if (err) return res.negotiate;
+                                                                                    if (!foundChildren6.length)  return res.send(root);
+                                                                                    console.log('foundChildren6: ', foundChildren6);
+                                                                                    let pt6 = []; // Предки
+                                                                                    _.forEach(foundChildren6, (value, key)=> {
+                                                                                        let level6 = {};
+                                                                                        level6.children = [];
+                                                                                        level6.type = ''; // Предки
+                                                                                        level6.text = value.name;
+                                                                                        level6.id = value.id;
+                                                                                        level6.parent = value.parent;
+                                                                                        pt6.push({parent: value.name});
 
-                                                                                            console.log('level6: ', level6);
+                                                                                        console.log('level6: ', level6);
 
-                                                                                            _.forEach(root.children, (v, k)=> {
-                                                                                                _.forEach(v.children, (va, ke)=> {
-                                                                                                    _.forEach(va.children, (val, key)=> {
-                                                                                                        _.forEach(val.children, (valu, key)=> {
-                                                                                                            _.forEach(valu.children, (value, key)=> {
-                                                                                                                if (value.text == level6.parent) {
-                                                                                                                    value.children.push(level6);
-                                                                                                                }
-                                                                                                            });
+                                                                                        _.forEach(root.children, (v, k)=> {
+                                                                                            _.forEach(v.children, (va, ke)=> {
+                                                                                                _.forEach(va.children, (val, key)=> {
+                                                                                                    _.forEach(val.children, (valu, key)=> {
+                                                                                                        _.forEach(valu.children, (values, key)=> {
+                                                                                                            if (values.text == level6.parent) {
+                                                                                                                values.children.push(level6);
+                                                                                                            }
                                                                                                         });
                                                                                                     });
                                                                                                 });
                                                                                             });
-
-                                                                                            if (pt6.length > 0) {
-                                                                                                return res.send(root);
-                                                                                            } else {
-                                                                                                return res.send(root);
-                                                                                            }
                                                                                         });
+
+                                                                                        if (pt6.length > 0) {
+                                                                                            return res.send(root);
+                                                                                        } else {
+                                                                                            return res.send(root);
+                                                                                        }
                                                                                     });
+                                                                                });
 
 
-                                                                            } else {
-                                                                                return res.send(root);
-                                                                            }
-                                                                        });
+                                                                        } else {
+                                                                            return res.send(root);
+                                                                        }
                                                                     });
-                                                            } else {
-                                                                return res.send(root);
-                                                            }
-                                                        });
+                                                                });
+                                                        } else {
+                                                            return res.send(root);
+                                                        }
                                                     });
                                             } else {
                                                 return res.send(root);
@@ -225,7 +226,7 @@ module.exports = {
                                 }
                             });
                     } else {
-                        return res.ok(root);
+                        return res.send(root);
                     }
 
                     // Второй уровень вложенности
