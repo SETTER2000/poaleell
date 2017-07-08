@@ -102,22 +102,23 @@
                             <div class="form-inline" ng-repeat="department in item.subdivision">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="department.id">
-                                        <option ng-repeat="option in items" value="{{option.id}}">{{option.name}}</option>
+                                        <option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">{{option.name}}</option>
                                     </select>
                                 </div>
                                 <button type="button" class="btn btn-default" ng-click="removeSubdivision(department)">x</button>
                             </div>
+                            <!--<pre id="default-spacing">{{items | json}}</pre>-->
                             <!--<pre>D E P A R T M E N T S : {{items | limitTo:5 | json}}</pre>-->
                         </div>
 
                         <!--< N E W  P O S I T I O N -->
                         <div ng-controller="ListPositionController" class="form-group ">
                             <label class="control-label" ng-bind="items[0].sc()"></label>
-                            [ <a href="#" ng-click="addPosition()">добавить</a> ]
-                            <div class="form-inline" ng-repeat="position in item.position">
+                            <span ng-if="!item.positions.length>0">[ <a href="#"  ng-click="addPosition()">добавить</a> ]</span>
+                            <div class="form-inline" ng-repeat="position in item.positions">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="position.id">
-                                        <option ng-repeat="option in items" value="{{option.id}}">{{option.name}}</option>
+                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}</option>
                                     </select>
                                 </div>
                                 <button type="button" class="btn btn-default" ng-click="removePosition(position)">x</button>

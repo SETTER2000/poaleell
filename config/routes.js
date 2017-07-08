@@ -47,6 +47,8 @@ module.exports.routes = {
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
+    // 'GET /user/getUsersDepartment': 'UserController.getUsersDepartment',
+    'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
 
 
     /**
@@ -58,8 +60,7 @@ module.exports.routes = {
     // // 'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
     // // 'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
     // 'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
-    'GET /struc': 'StructureController.get',
-    'GET /struc/:id': 'StructureController.get',
+
 
 
     /**
@@ -74,8 +75,15 @@ module.exports.routes = {
      * Department
      */
     'Get /getRootDepartment':'DepartmentController.getRootDepartment',
-    
-    
+
+
+    /**
+     * Structure
+     */
+    'GET /getStructure': 'StructureController.get',
+    'GET /getStructure/:id': 'StructureController.get',
+
+
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     //'POST /user/signup': 'UserController.signup',
 

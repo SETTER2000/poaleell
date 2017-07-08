@@ -490,6 +490,7 @@ module.exports = {
     findOne: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
+            .populate('positions')
             .exec(function foundUser(err, user) {
                 if (err) return res.serverError(err);
                 if (!user) return res.notFound();
@@ -510,6 +511,7 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
             User.findOne(req.param('id'))
+                .populate('positions')
                 .exec(function foundUser(err, user) {
                     if (err) return res.serverError(err);
                     if (!user) return res.notFound();
@@ -568,15 +570,16 @@ module.exports = {
      */
     edit: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne(req.param('id'), function foundUser(err, user) {
-
-            if (err)return next(err);
-            if (!user)return next('User doesn\'t exists.');
-            //user.birthday = Sugar.Date.format(user.birthday, '%d.%m.%Y');
-            res.view({
-                user: user, me: req.session.me
+        User.find(req.param('id'))
+            .populate('positions')
+            .exec((err, user) => {
+                if (err)return next(err);
+                if (!user)return next('User doesn\'t exists.');
+                //user.birthday = Sugar.Date.format(user.birthday, '%d.%m.%Y');
+                res.view({
+                    user: user, me: req.session.me
+                });
             });
-        });
     },
 
     /**
@@ -604,50 +607,52 @@ module.exports = {
 
         };
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
-            if (err) {
-                sails.log('ERROR');
-                sails.log(err);
-                return res.redirect('/admin/users/edit/' + req.param('id'));
-            }
+            if (err)  return res.redirect('/admin/users/edit/' + req.param('id'));
 
             sails.log('subdivision');
             //sails.log(req.param('subdivision').length);
             sails.log(req.param('subdivision'));
 
 
-            sails.log('position');
-            //sails.log(req.param('position').length);
-            sails.log(req.param('position'));
+            // sails.log('position', req.param('position')[0].id);
             //sails.log(req.param('subdivision')[0].length);
 
 
-            //if (req.param('subdivision').length > 0) {
-            //    User.findOne(req.param('id')).exec(function (err, user) {
-            //        if(err) return res.negotiate(err);
-            //        user.departments.add(req.param('subdivision'));
-            //        if (req.param('removeDivision')) {
-            //            user.departments.remove(req.param('removeDivision'));
-            //        }
-            //        user.save(function (err) {
-            //            if (err) return res.negotiate(err);
-            //            res.ok();
-            //        });
-            //    });
-            //}
-            //if (req.param('position')) {
-            //    User.findOne(req.param('id')).exec(function (err, user) {
-            //        user.positions.add(req.param('position'));
-            //        if (req.param('removePosition')) {
-            //            user.positions.remove(req.param('removePosition'));
-            //        }
-            //        user.save(function (err) {
-            //            if (err) return res.negotiate(err);
-            //            res.ok();
-            //        });
-            //    });
-            //}
+            /*  if (req.param('subdivision').length > 0) {
+             User.findOne(req.param('id')).exec(function (err, user) {
+             if (err) return res.negotiate(err);
+             user.departments.add(req.param('subdivision'));
+             if (req.param('removeDivision')) {
+             user.departments.remove(req.param('removeDivision'));
+             }
+             user.save(function (err) {
+             if (err) return res.negotiate(err);
+             res.ok();
+             });
+             });
+             }*/
 
-            res.ok();
+            User.findOne(req.param('id'))
+                .populate('positions')
+                .exec(function (err, user) {
+                    if (err) return res.negotiate(err);
+                    if (!user) return res.notFound();
+
+                    // console.log('positionRemove:', req.param('positionRemove'));
+                    user.positions.add(req.param('positions'));
+
+                    // if (_.isEmpty(req.param('position'))) {
+                    //     user.positions.add({})
+                    // }
+                    if (req.param('positionRemove')) {
+                        user.positions.remove(req.param('positionRemove'));
+                    }
+
+                    user.save(function (err) {
+                        if (err) return res.negotiate('ERR: ' +err);
+                        res.ok();
+                    });
+                });
         });
     },
 
@@ -930,6 +935,51 @@ module.exports = {
             if (err) return res.negotiate(err);
             return res.ok();
         });
+    },
+
+
+    /**
+     * Получить всех сотрудников по ID департамента
+     */
+    getUsersDepartment: function (req, res) {
+        // if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        // db.user.find({subdivision:{id:'589b22e8789b83a241b55fd1'}})
+        if (req.param('id')) {
+            User.find({where: {subdivision: {id: req.param('id')}, fired: false}})
+                .populate('positions')
+                .exec(function foundUser(err, user) {
+                    if (err) return res.serverError(err);
+                    if (!user) return res.notFound();
+                    res.ok(user);
+
+                });
+        }
+
+
+        // else {
+        //     if (!_.isUndefined(req.param('where')) && req.param('char').length > 0) {
+        //         var q = {
+        //             limit: req.params.limit,
+        //             sort: req.params.sort
+        //         };
+        //         var y = {};
+        //         y[req.param('property')] = {'like': req.param('char')};
+        //         q.where = y;
+        //         User.find(q)
+        //             .exec(function foundUser(err, users) {
+        //                 if (err) return res.serverError(err);
+        //                 if (!users) return res.notFound();
+        //                 return res.ok(users);
+        //             });
+        //     } else {
+        //         User.find()
+        //             .exec(function foundUser(err, users) {
+        //                 if (err) return res.serverError(err);
+        //                 if (!users) return res.notFound();
+        //                 res.ok(users);
+        //             });
+        //     }
+        // }
     }
 };
 

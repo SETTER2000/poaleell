@@ -1,8 +1,8 @@
 (function (angular) {
     'use strict';
     angular.module('DepartmentModule')
-        .controller('ListDepartmentController', ['$scope', 'toastr','Departments', '$state',
-            function ($scope,toastr, Departments, $state) {
+        .controller('ListDepartmentController', ['$scope', 'toastr', 'Departments', '$state',
+            function ($scope, toastr, Departments, $state) {
 
 
                 // var ups = $scope.ups =  Departments.query();
@@ -31,12 +31,11 @@
                      * RESTful: query, get, save и delete.
                      */
                     // Сортировка наоборот sort: 'name DESC'
-                    $scope.items = Departments.query({limit:300, sort: 'name'},function (departments) {
-                        console.log(departments);
-
+                    $scope.items = Departments.query({limit: 300, sort: 'name'}, (departments) => {
+                        console.log('DEPARTMENTS:', departments);
                         $scope.items = departments;
-                    }, function(err){
-                        toastr.error(err,'Ошибка ListDepartmentController!');
+                    }, function (err) {
+                        toastr.error(err, 'Ошибка ListDepartmentController!');
                     });
                 };
 

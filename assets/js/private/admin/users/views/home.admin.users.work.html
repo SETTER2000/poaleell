@@ -64,8 +64,7 @@
             <!-- Split button -->
             <div class="btn-group">
                 <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('contacts')">
-<span class="sortOrder" ng-show="propertyName === 'contacts'"
-      ng-class="{reverse: reverse}"></span>
+                    <span class="sortOrder" ng-show="propertyName === 'contacts'" ng-class="{reverse: reverse}"></span>
                     Контакты: {{fieldName}}
                 </button>
                 <button type="button" class="btn btn-sm btn-default  not-border dropdown-toggle" data-toggle="dropdown"
@@ -110,7 +109,8 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <!--<td>{{item.birthday | date:'dd.MM.yyyy'}}</td>-->
         <!--<td>{{item.login}}</td>-->
         <td>
-            <ul class="position" ng-controller="ListDepartmentController" ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">
+            <ul class="position" ng-controller="ListDepartmentController"
+                ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">
                 <li ng-repeat="option in items | filter:{$:searchText,id:subdivision.id}">
                     {{option.name}}
                 </li>

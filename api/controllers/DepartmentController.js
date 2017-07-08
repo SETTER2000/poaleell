@@ -63,7 +63,7 @@ module.exports = {
                     res.ok(department);
                 });
         } else {
-            Department.find()
+            Department.find({sort:'name'})
                 //.populate('subdivision')
                 .exec(function foundUser(err, departments) {
                     if (err) return res.serverError(err);

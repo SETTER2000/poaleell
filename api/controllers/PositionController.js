@@ -34,7 +34,7 @@ module.exports = {
 
                 });
         }else{
-            Position.find()
+            Position.find({sort:'name'})
                 .exec(function foundPosition(err, positions) {
                     if (err) return res.serverError(err);
                     if (!positions) return res.notFound();

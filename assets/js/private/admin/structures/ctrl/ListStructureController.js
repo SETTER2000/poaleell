@@ -16,11 +16,20 @@
                     // regex:'',
                     // property: 'name'
                 };
+   
 
 
-
-
-
+                $scope.changed = function () {
+                    let quest = '';
+                    quest = angular.element(document.querySelector(".quest")).text();
+                    if (!quest) return;
+                    $http.get('/user/getUsersDepartment/' + quest)
+                        .then(function (response) {
+                            console.log('response: ', response);
+                            $scope.users = response.data;
+                        });
+                    console.log('ups22:', quest);
+                };
 
 
                 /**
@@ -70,9 +79,6 @@
                 };
 
 
-
-
-
                 $scope.options =
                     [
                         {display: "Древовидная структура", value: "structure"}
@@ -88,11 +94,11 @@
                 // $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
 
 
-                $scope.$watch('where', function (value,old) {
-                    console.log('New val: ',value);
-                    console.log('Old val: ',old);
+                $scope.$watch('where', function (value, old) {
+                    // console.log('New val: ',value);
+                    // console.log('Old val: ',old);
                     $scope.query.regex = value;
-                   $scope.refresh();
+                    $scope.refresh();
                 });
 
 

@@ -147,6 +147,8 @@ angular.module('UserModule')
 
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];
+
+                console.log('ITEM###: ', item);
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             //toastr.success(success);
@@ -224,17 +226,20 @@ angular.module('UserModule')
             };
 
             $scope.addPosition = function () {
-                if (angular.isArray($scope.item.position)) {
-                    $scope.item.position.push({});
+                if (angular.isArray($scope.item.positions)) {
+                    $scope.item.positions.push({});
                 } else {
-                    $scope.item.position = [{}];
+                    $scope.item.positions = [{}];
                 }
             };
-
+           
             $scope.removePosition = function (position) {
-                for (var i = 0, ii = $scope.item.position.length; i < ii; i++) {
-                    if ($scope.item.position[i].id === position.id) {
-                        $scope.item.position.splice(i, 1);
+                $scope.item.positionRemove =[];
+                if(!position.id) $scope.item.positions =[];
+                for (var i = 0, ii = $scope.item.positions.length; i < ii; i++) {
+                    if ($scope.item.positions[i].id === position.id) {
+                        $scope.item.positions.splice(i, 1);
+                        $scope.item.positionRemove.push(position.id);
                         return;
                     }
                 }
