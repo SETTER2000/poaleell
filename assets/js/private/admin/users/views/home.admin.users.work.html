@@ -117,7 +117,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             </ul>
         </td>
         <td>
-            <ul class="position" ng-controller="ListPositionController" ng-repeat="position in item.position">
+            <ul class="position" ng-controller="ListPositionController" ng-repeat="position in item.positions">
                 <li ng-repeat="option in items | filter:position.id">
                     {{option.name}}
                 </li>

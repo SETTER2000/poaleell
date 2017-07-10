@@ -33,7 +33,7 @@ module.exports = {
 
             // Первый уровень вложенности
             Department.find(root.pt)
-                .exec(function (err, foundChildren1) {
+                .exec((err, foundChildren1) =>{
                     if (err) return res.negotiate;
                     if (!foundChildren1.length)  return res.send(root);
                     let pt1 = []; // Предки

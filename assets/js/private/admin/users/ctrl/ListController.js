@@ -205,8 +205,8 @@
                     char: $scope.charText + '%'
                 };
 
-                $scope.items = Users.query($scope.query,
-                    function (users) {
+                $scope.items = Users.query($scope.query, function (users) {
+                    console.log('USER ITEMS:', users);
                         $scope.items = users;
                         $scope.objectName = users;
                         //$scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;

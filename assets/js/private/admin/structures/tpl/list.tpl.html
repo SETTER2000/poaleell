@@ -33,7 +33,7 @@
         <!--</span>-->
         <!--</div>&lt;!&ndash; /input-group &ndash;&gt;-->
         <!--</form>-->
-        <div class="col-md-6">  <form id="s">
+        <div class="col-md-12">  <form id="s">
             <div id="search" class="input-group ">
 
                     <input type="text" class="form-control" id="q" ng-model="searchText" placeholder="Поиск ...">
@@ -45,12 +45,12 @@
 
             </div> </form>
         </div>
-        <div class="col-md-3 pull-right">
+        <!--<div class="col-md-3 pull-right">-->
 
-                <select class="form-control" role="group"
-                        ng-model="modeSelect" ng-options="item.display for item in options track by item.value"></select>
+                <!--<select class="form-control" role="group"-->
+                        <!--ng-model="modeSelect" ng-options="item.display for item in options track by item.value"></select>-->
 
-        </div>
+        <!--</div>-->
     </div>
     <div ng-switch on="modeSelect.value" style="margin-top:20px;">
         <div ng-switch-when="structure">

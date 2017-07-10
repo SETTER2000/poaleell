@@ -43,7 +43,8 @@
                      */
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Positions.query({limit:$scope.limit, sort: $scope.sort},function (positions) {
-                        $scope.positions = positions;
+                        console.log('POSITIONS ITEMS:', positions);
+                        $scope.items = positions;
                     }, function(err){
                         toastr.error(err,'Ошибка ListPositionController!');
                     });

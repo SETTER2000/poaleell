@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div>
-                <a href="/profile/edit" class="btn btn-sm btn-primary">Edit</a>
+                <a ng-if="(me.admin)" href="/profile/edit" class="btn btn-sm btn-primary">Edit</a>
                 <a ng-if="(me.admin)" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
 
 

@@ -9,14 +9,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/#" class="pull-left brighten"><img height="29" width="29" src="/images/logo.png" style="margin: 10px; "></a>
-                <a class="navbar-brand " href="/"> КС</a>
+                <a href="/#" class="pull-left brighten">
+                    <!--<img height="29" width="29" src="/images/logo.png" style="margin: 10px; ">-->
+                    <img height="21" width="100" src="/images/logo.png" style="margin: 15px; ">
+                </a>
+                <!--<a class="navbar-brand " href="/"> КС</a>-->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!--<li><a href="/">Home</a></li>-->
                     <!--<li><a ui-sref="home.admin.calendars">Посещаемость</a></li>-->
-                    <li><a href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>
+                    <!--<li><a href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>-->
                     <!--<li><a ui-sref="account">Выход нового сотрудника</a></li>-->
                     <!--<li><a ui-sref="account">Аккаунт</a></li>-->
                     <!--<li><a ui-sref="contact.detail">Detail</a></li>-->
@@ -41,6 +44,7 @@
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.structures">Структура компании</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.skds">Отработанное время</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>

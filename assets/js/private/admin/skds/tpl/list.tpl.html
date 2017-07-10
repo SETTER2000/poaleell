@@ -2,7 +2,7 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>{{items[0].scs()}} Отработанное время {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
-            <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
+            <a ng-cloak href="#" ng-if="(me.admin)" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 {{allRowsView}}
                 <span>{{items.length}}</span>
                 <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->

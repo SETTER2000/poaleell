@@ -148,7 +148,7 @@ angular.module('UserModule')
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];
 
-                console.log('ITEM###: ', item);
+                //console.log('ITEM###: ', item);
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             //toastr.success(success);
@@ -172,6 +172,9 @@ angular.module('UserModule')
                      angular.isDefined(item.birthday) &&
                      angular.isDefined(item.email)*/
                     ) {
+
+                        item.password='111111';
+
                         item.$save(item, function (success) {
                                 //console.log(success);
                                 //location.reload();

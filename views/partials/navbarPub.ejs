@@ -8,8 +8,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="pull-left brighten"><img height="29" width="29" src="/images/logo.png" style="margin: 10px; "></a>
-            <a class="navbar-brand" href="/">КС</a>
+            <a href="/" class="pull-left brighten">
+                <!--<img height="29" width="29" src="/images/logo.png" style="margin: 10px; ">-->
+                <img height="21" width="100" src="/images/logo.png" style="margin: 15px; ">
+            </a>
+            <!--<a class="navbar-brand" href="/">КС</a>-->
         </div>
         <div id="navbar" class="navbar-collapse collapse" ng-class="!navCollapsed && 'in'">
             <!--<ul class="nav navbar-nav navbar-right">-->
@@ -17,21 +20,21 @@
                     <!--<a title="Восстановить пароль" href="/password-recovery-email"><span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a>-->
                 <!--</li>-->
             <!--</ul>-->
-            <form ng-submit="submitLoginForm()" class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">
-                    <span ng-show="!loginForm.loading">Войти</span>
-                    <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
-                    <span ng-show="loginForm.loading">Секунду...</span>
-                </button>
+            <!--<form ng-submit="submitLoginForm()" class="navbar-form navbar-right">-->
+                <!--<div class="form-group">-->
+                    <!--<input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control">-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">-->
+                <!--</div>-->
+                <!--<button type="submit" class="btn btn-success">-->
+                    <!--<span ng-show="!loginForm.loading">Войти</span>-->
+                    <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
+                    <!--<span ng-show="loginForm.loading">Секунду...</span>-->
+                <!--</button>-->
 
-                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-            </form>
+                <!--<input type="hidden" name="_csrf" value="<%= _csrf %>"/>-->
+            <!--</form>-->
 
 
         </div>

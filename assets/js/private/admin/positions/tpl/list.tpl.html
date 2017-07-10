@@ -60,18 +60,22 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <button ui-sref="home.admin.positions.create" type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </h3>
-                </div>
-                <div class="panel-body">
+            <!--<div class="panel panel-info">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">-->
+                        <!--<button ui-sref="home.admin.positions.create" type="button" class="btn btn-default btn-sm">-->
+                            <!--<span class="glyphicon glyphicon-plus"></span>-->
+                        <!--</button>-->
+                    <!--</h3>-->
+                <!--</div>-->
+
+                <p>  <button ui-sref="home.admin.positions.create" type="button" class="btn btn-default btn-sm">
+                    Добавить должность
+                </button></p>
+                <!--<div class="panel-body">-->
                     <table class="table table-hover">
                         <tr>
-                            <th>#</th>
+                            <!--<th>#</th>-->
                             <th>
                                 <button class="btn btn-default not-border" ng-click="sortBy('name')">Наименование
                                 <span class="sortOrder" ng-show="propertyName === 'name'"
@@ -101,7 +105,7 @@
                             <th></th>
                         </tr>
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
-                            <td>{{$index+1}}</td>
+                            <!--<td>{{$index+1}}</td>-->
                             <td>
                                 <a ng-href="{{item.getEditUrl(item.id)}}">
                                     {{item.name}}
@@ -139,8 +143,8 @@
                         </tr>
                     </table>
 
-                </div>
-            </div>
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 

@@ -135,6 +135,10 @@ module.exports = {
             type: 'string'
         },
 
+        avatarUrl: {
+            type: 'string'
+        },
+
         departments: {
             collection: 'department',
             via: 'users',
