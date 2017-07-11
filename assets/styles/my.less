@@ -4,6 +4,20 @@
 @gray-light: lighten(#000, 79.7%); // #777
 @gray-lighter: lighten(#000, 93.5%); // #eee
 
+@gray-darker: lighten(#000, 13.5%); // #222
+@gray-dark: lighten(#000, 20%); // #333
+@gray: lighten(#000, 33.5%); // #555
+@gray-light: lighten(#000, 79.7%); // #777
+@gray-lighter: lighten(#000, 93.5%); // #eee
+@brand-primary: white; // #337ab7
+//@brand-primary: #337ab7; // #337ab7
+@brand-primary-border: #cccccc; // #2e6da4
+//@brand-primary-border: #2e6da4; // #2e6da4
+@link-color:       @brand-primary;
+@link-hover-color: #e6e6e6;
+//@link-hover-color: #286090;
+@link-hover-border-color: #cccccc;
+
 .fired {
   //color: @gray-lighter;
   color: @gray-light;
@@ -230,27 +244,50 @@ a.button2{
 #container{
   font-size: 1.1em;
 }
-//
-//ul.position {
-//  margin: 0;
-//  padding: 0;
-//  display: inline;
-//}
-//ul.position li{
-//  list-style-type:none;
-//}
-//ul.position li {
-//  height: 120px;
-//  border-bottom: 1px solid gray;
-//}
 
 
+/* BuTTON FILE */
 
-//#fixed {
-//  height: 600px;
-//  overflow: auto;
-//}
-//#fixed2 {
-//  height: 400px;
-//  overflow: auto;
-//}
+.file-upload input[type="file"]{
+  display: none;/* скрываем input file */
+}
+/* задаем стили кнопки выбора файла*/
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  padding: 5px 10px;
+  //max-width: 40px;
+  height: 40px;
+  //color: #fff;
+  text-align: center;
+}
+.file-upload span:hover {
+  background: hsl(0, 0%, 96%);
+  //border: 1px solid  @link-hover-border-color;
+}
+/* Растягиваем label на всю область блока .file-upload */
+.file-upload label {
+  display: block;
+  //position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  cursor: pointer;
+  font-weight: lighter;
+}
+/* стиль текста на кнопке*/
+.file-upload span {
+  padding: 5px 12px;
+  //border-radius: 4px;
+  display: block;
+  background: @brand-primary;
+  //border: 1px solid  @brand-primary-border;
+
+}
+
+table.table.not-margin{
+  margin: 0;
+}
+
+/* BuTTON FILE  END */

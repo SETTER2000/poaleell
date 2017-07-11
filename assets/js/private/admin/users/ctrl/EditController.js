@@ -1,6 +1,6 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
-        function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
+    .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
 
@@ -17,58 +17,140 @@ angular.module('UserModule')
             //if (emAdmin == 'apetrov@landata.ru') {
             //    $scope.loginAdmin = true;
             //}
+            var userData = [$stateParams.userId];
+            var uploader = $scope.uploader = new FileUploader({
+                url: '/file/upload',
+                autoUpload: true,
+                removeAfterUpload: true,
+                queueLimit: 1
 
-            // $scope.deleteEdit = function (item) {
-            //     // $emit - отправка события от текущего scope к родительским scope
-            //     // $scope.$emit("deleteUser", item);
-            //     // $broadcast - отправка события всем scope от rootScope
-            //     // $rootScope.$broadcast("deleteUser", {
-            //     //     message: 'GOOOO'
-            //     // });
-            //     $rootScope.$broadcast("deleteUser", {
-            //         message: 'GOOOO'
-            //     });
-            // };
-            //
-            // $scope.$on("deleteUser", function (event, args) {
-            //     //event.stopPropagation(); // останавливаем распространение события
-            //     // $scope.info = args.message;
-            //     // $scope.delete(args);
-            //     $scope.info = args.message;
-            // });
+            });
 
-            // console.log('EEEE:');
-            // io.socket.on('User', function (event){
-            //     console.log(event);
-            //     // => see below
-            // });
-            //
-            // io.socket.on('user', function (event) {
-            //     console.log('EVA:');
-            //     console.log(event);
-            // });
-            // //io.socket.on('message', function (data){
-            // //    console.log(data.greeting);
-            // //});
-            //
-            // io.socket.on('user', function (event) {
-            //     console.log('DEPAR:');
-            //     console.log(event);
-            // });
-            //
-            //
+            uploader.filters.push({
+                name: 'syncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options) {
+                    //console.log('syncFilter');
+                    return this.queue.length < 10;
+                }
+            });
 
 
-            // $scope.items = Departments.query({limit: 300}, function (posts) {
-            //     $scope.posts = posts;
-            //     console.log(posts);
-            // }, function (err) {
-            //     if (err) console.log(err.message);
-            // });
+            uploader.filters.push({
+                name: 'asyncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
+                    //console.log('asyncFilter');
+                    setTimeout(deferred.resolve, 1e3);
+                }
+            });
 
-            //console.log('STATE2: ');
-            //console.log($state);
-            //console.log($state.$current.url.source);
+
+            /**
+             * Фильтр проверяет рассширение
+             * Доступны для загрузки только xlsx файлы
+             */
+            uploader.filters.push({
+                name: 'expFilter',
+                fn: function (item) {
+                    if (item.name.slice(-3) !== 'jpg') {
+                        toastr.error('Расширение файла должно быть jpg.', 'Ошибка!');
+                        return false;
+                    }
+                    $scope.uploaderButtonPrice = true;
+                    return true;
+                }
+            });
+
+            // CALLBACKS
+
+            uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploader.onAfterAddingFile = function (fileItem) {
+                console.info('onAfterAddingFile', fileItem);
+            };
+            uploader.onAfterAddingAll = function (addedFileItems) {
+                console.info('onAfterAddingAll', addedFileItems);
+
+            };
+            uploader.onBeforeUploadItem = function (item) {
+                console.info('onBeforeUploadItem', item);
+                item.formData.push({ id: $stateParams.userId });
+
+            };
+
+
+
+            uploader.onProgressItem = function (fileItem, progress) {
+                console.info('onProgressItem', fileItem, progress);
+
+            };
+            uploader.onProgressAll = function (progress) {
+                console.info('onProgressAll', progress);
+
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                console.info('onSuccessItem', fileItem);
+                console.info('onSuccessItem2', response);
+                console.info('onSuccessItem3', status);
+                console.info('onSuccessItem4', headers);
+
+
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                $scope.pathToReport = response.avatarFd;
+                $scope.goReport = response.goReport;
+                $scope.statusErr = 'Отклонено';
+                toastr.error(response.message, 'Ошибка! Статус ' + status);
+            };
+            uploader.onCancelItem = function (fileItem, response, status, headers) {
+                console.log('uploader.onCancelItem');
+                console.log(status);
+                console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                //console.info('onCompleteItem', fileItem, response, status, headers);
+                console.info('onCompleteItem', fileItem);
+                console.info('status', status);
+
+
+                if (status == 200) {
+                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
+                    fileItem.goReport = response.goReport;
+                    fileItem.dateUpload = response.dateUpload;
+                    toastr.success(response.message, 'Ok! ');
+                    fileItem.progress = response.progress;
+                    fileItem.errorPercent = '0';
+                    fileItem.statusOk = response.message;
+
+                    $scope.refresh();
+                    // fileItem.allEr = response.allEr;
+                }
+                switch (response.status) {
+                    case 202:
+                        //toastr.success(response.message, ' Статус ' + response.status);
+                        fileItem.progress = response.progress;
+                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
+                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
+                        fileItem.goReport = response.goReport;
+                        fileItem.statusOk = response.message;
+                        fileItem.allEr = response.allEr;
+
+                        break;
+                }
+            };
+            uploader.onCompleteAll = function (fileItem, response, status, headers) {
+                //$scope.getDatePrice();
+                $scope.uploaderButtonPrice = false;
+            };
+
+
+            $scope.options =
+                [
+                    {display: "Загрузить файл", value: "uploader"}
+                ];
+            $scope.modeSelect = $scope.options[0];
+            $scope.uploaderView = "/js/private/admin/users/views/uploader.html";
+
 
             $scope.closed = function () {
                 if ($scope.close) {
@@ -173,7 +255,7 @@ angular.module('UserModule')
                      angular.isDefined(item.email)*/
                     ) {
 
-                        item.password='111111';
+                        item.password = '111111';
 
                         item.$save(item, function (success) {
                                 //console.log(success);
@@ -235,10 +317,10 @@ angular.module('UserModule')
                     $scope.item.positions = [{}];
                 }
             };
-           
+
             $scope.removePosition = function (position) {
-                $scope.item.positionRemove =[];
-                if(!position.id) $scope.item.positions =[];
+                $scope.item.positionRemove = [];
+                if (!position.id) $scope.item.positions = [];
                 for (var i = 0, ii = $scope.item.positions.length; i < ii; i++) {
                     if ($scope.item.positions[i].id === position.id) {
                         $scope.item.positions.splice(i, 1);

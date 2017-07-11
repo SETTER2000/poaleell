@@ -144,9 +144,9 @@ module.exports = {
             }
 
             // if (!user.admin) return res.backToHomePage();
-            if (!user.admin) {
+            if (!user.admin && !user.kadr) {
                 req.session.me = user.id;
-                return res.forbidden("Нет прав для просмотра данной страницы.");
+                return res.forbidden("Нет прав для просмотра данной страницы x.");
             }
 
             user.fullName = user.lastName + ' ' + user.firstName + ' ' + user.patronymicName;

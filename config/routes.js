@@ -26,7 +26,7 @@ module.exports.routes = {
      *                 JSON API ENDPOINTS                        *
      *************************************************************/
 
-     'PUT /login': 'UserController.loginLDAP',
+    'PUT /login': 'UserController.loginLDAP',
     //'PUT /login': 'UserController.login',
     'GET /logout': 'PageController.logout',
     'POST /logout': 'UserController.logout',
@@ -47,7 +47,7 @@ module.exports.routes = {
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-
+    'POST /file/upload': 'UserController.upload',
     // 'GET /user/getUsersDepartment': 'UserController.getUsersDepartment',
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
 
@@ -55,7 +55,7 @@ module.exports.routes = {
     /**
      * Тестовые роуты
      */
-     //'GET /test': 'StructureController.test',
+    //'GET /test': 'StructureController.test',
     // 'GET /tut': 'TutorialController.createTutorial',
     // 'GET /ed': 'TutorialController.editTutorial',
     // // 'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
@@ -63,7 +63,7 @@ module.exports.routes = {
     // 'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
 
     //'POST /user/avatar' : 'UserController.upload',
-    'POST /user/avatarUpload' : 'UserController.uploadAvatar',
+    //'POST /user/avatarUpload': 'UserController.uploadAvatar',
 
     /**
      * Skds
@@ -76,7 +76,7 @@ module.exports.routes = {
     /**
      * Department
      */
-    'Get /getRootDepartment':'DepartmentController.getRootDepartment',
+    'Get /getRootDepartment': 'DepartmentController.getRootDepartment',
 
 
     /**
@@ -88,7 +88,6 @@ module.exports.routes = {
 
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     //'POST /user/signup': 'UserController.signup',
-
 
 
     /***************************************
@@ -153,7 +152,6 @@ module.exports.routes = {
      * Attendance
      */
     'GET /attendance': 'Attendance.timeAll', // для календаря
-
 
 
     /*************************************************************

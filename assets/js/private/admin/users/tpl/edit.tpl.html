@@ -31,19 +31,36 @@
 
 
 
-        <!--<form action="/user/avatar" enctype="multipart/form-data" method="post">-->
-            <!--<input type="file" name="avatar" multiple="multiple"><br>-->
-            <!--<input type="submit" value="Загрузить">-->
-        <!--</form>-->
-        <!--avatarUpload-->
+  <!---->
+      <!---->
         <!--<form action="/user/avatarUpload" enctype="multipart/form-data" method="post">-->
             <!--<input type="file" name="avatar" multiple="multiple"><br>-->
             <!--<input type="submit" value="Загрузить">-->
         <!--</form>-->
 
+        <!--<div ng-show="uploader.isHTML5">-->
+            <!--&lt;!&ndash; 3. nv-file-over uploader="link" over-class="className" &ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="well my-drop-zone" nv-file-over="" uploader="uploader">&ndash;&gt;-->
+            <!--&lt;!&ndash;Зона перетаскивания без фильтра&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+            <!--&lt;!&ndash; Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" &ndash;&gt;-->
+            <!--<div nv-file-drop="" uploader="uploader" options="{ url: '/file/upload' }">-->
+                <!--<div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">-->
+                    <!--Перетащи аватар сюда-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
 
 
+        <!--<div ui-view="uploader"></div>-->
+        <!--<div class="file-upload">-->
+            <!--<label>-->
+                <!--<input type="file"  nv-file-select="" uploader="uploader" multiple />-->
+                <!--<span>Выбрать прайс</span>-->
+            <!--</label>-->
+        <!--</div>-->
 
 
 
@@ -64,7 +81,7 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form name="userForm" novalidate ng-submit="saveEdit(item)">
+                    <form name="userForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
@@ -87,32 +104,32 @@
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group ">
                                     <label ng-if="!item.birthday" class="control-label" for="inputSuccess12">
                                         Установить дату рождения
                                     </label>
                                     <label ng-if="item.birthday" class="control-label" for="inputSuccess4">
-                                        Редактировать дату рождения
+                                        Дата рождения
                                     </label>
                                     <input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">
 
                                     <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group " ng-if="item.birthday">
-                                    <label class="control-label" for="inputSuccess5">Дата рождения </label>
+                            <!--<div class="col-md-6">-->
+                                <!--<div class="form-group " ng-if="item.birthday">-->
+                                    <!--<label class="control-label" for="inputSuccess5">Дата рождения </label>-->
 
-                                    <div><a href="#" class="btn btn-default  disabled" role="button">
-                                     <span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"
-                                           aria-hidden="true"></span>
-                                        {{item.birthday | date:'dd.MM.yyyy'}}
-                                    </a></div>
+                                    <!--<div><a href="#" class="btn btn-default  disabled" role="button">-->
+                                     <!--<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"-->
+                                           <!--aria-hidden="true"></span>-->
+                                        <!--{{item.birthday | date:'dd.MM.yyyy'}}-->
+                                    <!--</a></div>-->
 
-                                    <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                </div>
-                            </div>
+                                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess6">Логин</label>
@@ -157,10 +174,17 @@
                         </div>
 
 
-                        <div class="form-group ">
-                            <label class="control-label" for="inputSuccess10">Фото</label>
-                            <input type="file" class="form-control"  fileread="item.avatar" />
-                        </div>
+                        <!--<div class="form-group ">-->
+                            <!--<label class="control-label" for="inputSuccess10">Фото</label>-->
+                            <!--&lt;!&ndash;<input type="file" class="form-control"  />&ndash;&gt;-->
+
+
+
+                            <!--&lt;!&ndash;<form action="/user/avatarUpload" enctype="multipart/form-data" method="post">&ndash;&gt;-->
+                                <!--<input type="file" name="item.avatar" multiple="multiple"><br>-->
+                                <!--<input type="submit" value="Загрузить">-->
+                            <!--&lt;!&ndash;</form>&ndash;&gt;-->
+                        <!--</div>-->
 
 
                         <div class="form-group ">
@@ -304,7 +328,7 @@
 <!--<span class="help-block has-error" data-ng-if="item.password.$dirty">-->
 <!--<span data-ng-show="item.password.$error.required">Поле обязательно к заполнению.</span>-->
 <!--<span data-ng-show="item.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>-->
-</span>
+<!--</span>-->
                                 </div>
                             </div>
 
@@ -358,72 +382,84 @@
             </div>
 
         </div>
-        <div ng-show="me.admin" class="col-md-6" ng-if="close">
-
-            <div class="panel"
-                 ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Сменить пароль
-
-                    </h3>
+        <div class="col-md-6">
+            <div ng-switch on="modeSelect.value" >
+                <div ng-switch-when="uploader">
+                    <ng-include src="uploaderView"></ng-include>
                 </div>
-                <!-- Error state -->
-                <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
-                    <h4>Oops!</h4>
-                    <code>
-                        {{editProfile.changePassword.errorMsg}}
-                    </code>
-                </div>
-                <form ng-submit="changeMyPassword()" name="changePassword">
-                    <div class="control-group form-group col-md-6"
-                         ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
-                        <label>Новый пароль</label>
-                        <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
-                               ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
-                               compare-to="editProfile.properties.confirmPassword">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-show="me.admin" class="col-md-6" ng-if="close">
+
+                <div class="panel"
+                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Сменить пароль
+
+                        </h3>
+                    </div>
+                    <!-- Error state -->
+                    <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
+                        <h4>Oops!</h4>
+                        <code>
+                            {{editProfile.changePassword.errorMsg}}
+                        </code>
+                    </div>
+                    <form ng-submit="changeMyPassword()" name="changePassword">
+                        <div class="control-group form-group col-md-6"
+                             ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
+                            <label>Новый пароль</label>
+                            <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
+                                   ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
+                                   compare-to="editProfile.properties.confirmPassword">
                 <span class="help-block has-error" ng-if="changePassword.password.$dirty">
                   <span ng-show="changePassword.password.$error.required">Введите пароль.</span>
                   <span ng-show="changePassword.password.$error.minlength">Пароль должен содержать не менее 6 символов.</span>
                 </span>
-                    </div>
-                    <div class="control-group form-group col-md-6">
-                        <label>Повторить пароль</label>
-                        <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
-                               ng-model="editProfile.properties.confirmPassword" required>
+                        </div>
+                        <div class="control-group form-group col-md-6">
+                            <label>Повторить пароль</label>
+                            <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
+                                   ng-model="editProfile.properties.confirmPassword" required>
                 <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
                   <span ng-show="changePassword.password.$error.compareTo">Password must match.</span>
                   <span ng-show="changePassword.confirmation.$error.required">Confirmation password is required.</span>
                 </span>
-                    </div>
-                    <button type="submit" class="btn btn-lg not-border btn-default btn-block" ng-disabled="changePassword.$invalid">
-                        <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
-                        <span ng-show="changePasswordForm.saving">Сохраняю...</span>
-                        <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
-                    </button>
-                </form>
-            </div>
-
-
-            <div class="panel"
-                 ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Информация
-
-                    </h3>
+                        </div>
+                        <button type="submit" class="btn btn-lg not-border btn-default btn-block" ng-disabled="changePassword.$invalid">
+                            <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
+                            <span ng-show="changePasswordForm.saving">Сохраняю...</span>
+                            <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
+                        </button>
+                    </form>
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr ng-repeat="(key, value) in item">
-                                <th>{{key}}</th>
-                                <td>{{value | date:'dd.MM.yyyy' }}</td>
-                            </tr>
-                        </table>
+
+
+                <div class="panel"
+                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Информация
+
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr ng-repeat="(key, value) in item">
+                                    <th>{{key}}</th>
+                                    <td>{{value | date:'dd.MM.yyyy' }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
+
             </div>
-
-
         </div>
     </div>
 </div>
