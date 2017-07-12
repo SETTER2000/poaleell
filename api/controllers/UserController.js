@@ -178,7 +178,7 @@ module.exports = {
                     }
                     if (!user.action) {
                         return res.forbidden("Ваша учетная запись заблокирована, " +
-                            "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
+                            "пожалуйста свяжитесь с администратором: "+ sails.config.admin.email);
                     }
 
                     req.session.me = user.id;
@@ -620,7 +620,8 @@ module.exports = {
             contacts: req.param('contacts'),
             firedDate: req.param('firedDate'),
             action: req.param('action'),
-            pfr: req.param('pfr')
+            pfr: req.param('pfr'),
+            avatarUrl: req.param('avatarUrl')
 
         };
 
@@ -1004,7 +1005,8 @@ module.exports = {
 
                 User.update(req.body.id, {
                         avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
-                        avatarFd: files[0].fd
+                        avatarFd: files[0].fd,
+                        fileNameAvatar: fileName
                     })
                     .exec(function (err) {
                         if (err) return res.negotiate(err);

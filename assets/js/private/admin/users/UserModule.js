@@ -146,6 +146,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         Users.prototype.getAvatar = function () {
             return this.avatarUrl;
         };
+        //Users.prototype.delFoto= function () {
+        //    return this.avatarUrl = '';
+        //};
         Users.prototype.lastDateSetting = function () {
             return new Date();
         };
@@ -393,7 +396,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
-                                chars = obj[prop].substr(0,4);
+                                chars = obj[prop].substr(0,3); // Кол-во первых знаков от фамилии
                                 parts.push(chars);
                             }
                         }

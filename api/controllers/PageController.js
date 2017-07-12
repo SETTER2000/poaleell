@@ -102,25 +102,7 @@ module.exports = {
             //});
 
 
-            // return res.forbidden("У Вас нет прав для просмотра данной страницы, " +
-            //     "пожалуйста свяжитесь с администратором: apetrov@landata.ru");
 
-            // return res.view({
-            //     me: {
-            //         id: user.id,
-            //         firstName: user.firstName,
-            //         lastName: user.lastName,
-            //         patronymicName: user.patronymicName,
-            //         birthday: user.birthday,
-            //         email: user.email,
-            //         login: user.login,
-            //         subdivision: user.subdivision,
-            //         admin: user.admin,
-            //         gravatarUrl: user.gravatarUrl,
-            //         lastLoggedIn: user.lastLoggedIn,
-            //         fullName: user.lastName + ' ' + user.firstName + ' ' + user.patronymicName
-            //     }
-            // });
 
 
         });

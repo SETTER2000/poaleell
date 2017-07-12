@@ -1,6 +1,6 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
-        function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
+    .controller('EditController', ['$scope', '$http', 'toastr', '$interval','$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $interval, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
 
@@ -14,9 +14,7 @@ angular.module('UserModule')
             //var emAdmin = SAILS_LOCALS.me.email;
 
             var t = [];
-            //if (emAdmin == 'apetrov@landata.ru') {
-            //    $scope.loginAdmin = true;
-            //}
+
             var userData = [$stateParams.userId];
             var uploader = $scope.uploader = new FileUploader({
                 url: '/file/upload',
@@ -107,6 +105,13 @@ angular.module('UserModule')
                 console.log(status);
                 console.info('onCancelItem', fileItem, response, status, headers);
             };
+            $scope.$watch('item.avatarUrl',function (value) {
+                $scope.item.avatarUrl = value;
+            });
+
+
+
+
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                 //console.info('onCompleteItem', fileItem, response, status, headers);
                 console.info('onCompleteItem', fileItem);
@@ -121,8 +126,11 @@ angular.module('UserModule')
                     fileItem.progress = response.progress;
                     fileItem.errorPercent = '0';
                     fileItem.statusOk = response.message;
+                    $interval(function() {
+                        $scope.refresh();
+                        //location.reload()
+                    }, 2000,1);
 
-                    $scope.refresh();
                     // fileItem.allEr = response.allEr;
                 }
                 switch (response.status) {
@@ -226,6 +234,25 @@ angular.module('UserModule')
                         $scope.editProfile.loading = false;
                     });
             };
+
+            $scope.delFoto= function (item) {
+                item.avatarUrl = '';
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            //toastr.success(success);
+                            //toastr.options.closeButton = true;
+                            toastr.success('Изменения сохранены!');
+                            $scope.refresh();
+                        },
+                        function (err) {
+                            console.log(err);
+                            toastr.error(err.data, 'Ошибка! EditController User');
+                        }
+                    );
+                }
+
+            };
+
 
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];

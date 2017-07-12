@@ -1,6 +1,4 @@
-<div id="avatar" class="row small sort-my">
-
-</div>
+<div id="avatar" class="row small sort-my"></div>
 <div class="col-md-6">
     <div id="container">
         <ul id="ups" bn-delegate="li a | selectFriend( friend )">
@@ -14,9 +12,9 @@
     </div>
 
 </div>
-<div class="col-md-6">
+<div class="col-md-6" id="table-run">
     <div id="log" ng-hide="true" class="quest"></div>
-    <div class="table">
+    <div  class="table">
         <table class="table table-condensed">
             <thead>
             <tr>
@@ -49,9 +47,11 @@
 <script>
     var avatarElem = document.getElementById('avatar');
     var searchElem = document.getElementById('search');
+    var tableRunElem = document.getElementById('table-run');
 
     var avatarSourceBottom = avatarElem.getBoundingClientRect().bottom + (window.pageYOffset - 80);
     var searchSourceBottom = searchElem.getBoundingClientRect().bottom + (window.pageYOffset - 100);
+    var tableRunBottom = tableRunElem.getBoundingClientRect().bottom + (window.pageYOffset - 250);
 
     window.onscroll = function () {
         if (searchElem.classList.contains('fixed') && window.pageYOffset < searchSourceBottom) {
@@ -63,6 +63,12 @@
             avatarElem.classList.remove('fixed');
         } else if (window.pageYOffset > avatarSourceBottom) {
             avatarElem.classList.add('fixed');
+        }
+
+        if (tableRunElem.classList.contains('fixed') && window.pageYOffset < tableRunBottom) {
+            tableRunElem.classList.remove('fixed');
+        } else if (window.pageYOffset > tableRunBottom) {
+            tableRunElem.classList.add('fixed');
         }
     };
 
@@ -130,6 +136,8 @@
             e.preventDefault();
             $("#container").jstree(true).search($("#q").val());
         });
+
+
 
         $('#container').on("changed.jstree", function (e, data) {
 
