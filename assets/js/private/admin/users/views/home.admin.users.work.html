@@ -14,7 +14,8 @@
     <tr>
         <th>#</th>
         <th>
-            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('lastName')">{{fioArea}}
+            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('lastName')">
+                {{fioArea}}
 <span class="sortOrder" ng-show="propertyName === 'lastName'"
       ng-class="{reverse: reverse}"></span>
             </button>
@@ -34,21 +35,24 @@
 
         <!--</th>-->
         <th>
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('departments[0].name')">{{departmentArea}}
+            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('departments[0].name')">
+                {{departmentArea}}
 <span class="sortOrder" ng-show="propertyName === 'departments[0].name'"
       ng-class="{reverse: reverse}"></span>
             </button>
 
         </th>
         <th>
-            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('positions[0].name')">{{positionArea}}
+            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('positions[0].name')">
+                {{positionArea}}
 <span class="sortOrder" ng-show="propertyName === 'positions[0].name'"
       ng-class="{reverse: reverse}"></span>
             </button>
 
         </th>
         <th>
-            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">{{emailArea}}
+            <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">
+                {{emailArea}}
 <span class="sortOrder" ng-show="propertyName === 'email'"
       ng-class="{reverse: reverse}"></span>
             </button>
@@ -105,9 +109,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                 {{item.getFullName()}}
             </a>
         </td>
-        <!--<td>{{item.getFullName()}}</td>-->
-        <!--<td>{{item.birthday | date:'dd.MM.yyyy'}}</td>-->
-        <!--<td>{{item.login}}</td>-->
+
         <td>
             <ul class="position" ng-controller="ListDepartmentController"
                 ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">

@@ -1,5 +1,5 @@
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', 'toastr', '$interval','$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
+    .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
         function ($scope, $http, toastr, $interval, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
@@ -72,10 +72,9 @@ angular.module('UserModule')
             };
             uploader.onBeforeUploadItem = function (item) {
                 console.info('onBeforeUploadItem', item);
-                item.formData.push({ id: $stateParams.userId });
+                item.formData.push({id: $stateParams.userId});
 
             };
-
 
 
             uploader.onProgressItem = function (fileItem, progress) {
@@ -105,12 +104,24 @@ angular.module('UserModule')
                 console.log(status);
                 console.info('onCancelItem', fileItem, response, status, headers);
             };
-            $scope.$watch('item.avatarUrl',function (value) {
+            $scope.$watch('item.avatarUrl', function (value) {
                 $scope.item.avatarUrl = value;
+
             });
 
 
+            $scope.getLdap = function () {
+                $http.get('/ldap/?name=' + $scope.item.lastName).then(function (response) {
+                    console.log(3);
+                    console.log('response.data: ' , response.data);
+                    $scope.item = response.data;
+                }, function (response) {
+                    console.log(32);
+                    console.log('response.data2: ' , response.data);
+                });
 
+
+            };
 
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                 //console.info('onCompleteItem', fileItem, response, status, headers);
@@ -126,10 +137,10 @@ angular.module('UserModule')
                     fileItem.progress = response.progress;
                     fileItem.errorPercent = '0';
                     fileItem.statusOk = response.message;
-                    $interval(function() {
+                    $interval(function () {
                         $scope.refresh();
                         //location.reload()
-                    }, 2000,1);
+                    }, 2000, 1);
 
                     // fileItem.allEr = response.allEr;
                 }
@@ -235,7 +246,7 @@ angular.module('UserModule')
                     });
             };
 
-            $scope.delFoto= function (item) {
+            $scope.delFoto = function (item) {
                 item.avatarUrl = '';
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
