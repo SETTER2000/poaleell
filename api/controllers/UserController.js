@@ -1,3 +1,4 @@
+'use strict';
 /**
  * UserController
  *
@@ -12,28 +13,28 @@
  * res.forbidden () [403 ошибки], res.notFound () [404 ошибки] или res.serverError () [500 ошибок].
  */
 //var Emailaddresses = require('machinepack-emailaddresses');
-var Passwords = require('machinepack-passwords');
-var Gravatar = require('machinepack-gravatar');
-var _ = require('lodash');
-var Email = require('machinepack-email');
-var ldap = require('ldapjs');
-var assert = require('assert');
-var fs = require('fs');
+const Passwords = require('machinepack-passwords');
+const Gravatar = require('machinepack-gravatar');
+const _ = require('lodash');
+const Email = require('machinepack-email');
+const ldap = require('ldapjs');
+const assert = require('assert');
+const fs = require('fs');
 const path = require('path');
-var URI = require('urijs');
-var URITemplate = require('urijs/src/URITemplate');
+//var URI = require('urijs');
+const URITemplate = require('urijs/src/URITemplate');
 const clientLDAP = ldap.createClient({
     url: sails.config.ldap.uri
 });
 
 
-var DateRu = require('date-ru');
-var dt = new Date();
-var dateRuTpl = "%d.%m.%y %H:%M:%S";
-var dateRuTpl2 = "%d.%m.%y_%H-%M-%S";
-var timeRuTpl = '%H:%M:%S';
-var dateRu = new DateRu(dt, dateRuTpl);
-var dateRu2 = new DateRu(dt, dateRuTpl2);
+//var DateRu = require('date-ru');
+//var dt = new Date();
+//var dateRuTpl = "%d.%m.%y %H:%M:%S";
+//var dateRuTpl2 = "%d.%m.%y_%H-%M-%S";
+//var timeRuTpl = '%H:%M:%S';
+//var dateRu = new DateRu(dt, dateRuTpl);
+//var dateRu2 = new DateRu(dt, dateRuTpl2);
 
 
 module.exports = {
@@ -84,6 +85,7 @@ module.exports = {
                             if (err) return res.negotiate(err);
                         });
                         ldapUser.on('end', function (result) {
+                            //if (err) return res.negotiate(err);
                             //sails.log('status: ' + result.status);
                             if (result.status == 0) {
                                 //sails.log('Успешная авторизация ' + JSON.stringify(user));
@@ -707,6 +709,7 @@ module.exports = {
      * @returns {*}
      */
     restoreGravatarURL: function (req, res) {
+        let gravatarUrl;
         try {
 
             var restoredGravatarURL = gravatarUrl = Gravatar.getImageUrl({
@@ -946,36 +949,37 @@ module.exports = {
      * @param req
      * @param res
      */
-    upload: function (req, res) {
-        console.log('formData: ', req.body);
-        const dir = require('util').format('%s/images/user/avatar/%s', sails.config.appUrl.rootDir, req.body.id);
-        var fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
-        console.log('fileName', fileName);
-        req.file('file').upload({
-                dirname: dir,
-                saveAs: fileName
-            },
-            function (err, files) {
-                if (err) return res.serverError(err);
-                if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
-                //if (files.length === 0) {
-                //    return res.badRequest('Файл не загружен');
-                //}
-                console.log("files: ", files);
-
-                User.update(req.body.id, {
-                        avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
-                        avatarFd: files[0].fd,
-                        fileNameAvatar: fileName
-                    })
-                    .exec(function (err) {
-                        if (err) return res.negotiate(err);
-                        console.log(' avatarUrl: ', dir);
-                        console.log(' avatarUrl2: ', require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName));
-                        return res.ok();
-                    });
-            });
-    },
+    //upload: function (req, res) {
+    //    if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //    console.log('formData: ', req.body);
+    //    const dir = require('util').format('%s/images/user/avatar/%s', sails.config.appUrl.rootDir, req.body.id);
+    //    let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
+    //    //console.log('fileName', fileName);
+    //    req.file('file').upload({
+    //            dirname: dir,
+    //            saveAs: fileName
+    //        },
+    //        function (err, files) {
+    //            if (err) return res.serverError(err);
+    //            if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
+    //            //if (files.length === 0) {
+    //            //    return res.badRequest('Файл не загружен');
+    //            //}
+    //            console.log("files: ", files);
+    //
+    //            User.update(req.body.id, {
+    //                    avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
+    //                    avatarFd: files[0].fd,
+    //                    fileNameAvatar: fileName
+    //                })
+    //                .exec(function (err) {
+    //                    if (err) return res.negotiate(err);
+    //                    console.log(' avatarUrl: ', dir);
+    //                    console.log(' avatarUrl2: ', require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName));
+    //                    return res.ok();
+    //                });
+    //        });
+    //},
 
     /**
      * Поиск пользователей по LDAP
@@ -983,7 +987,10 @@ module.exports = {
      * @param res
      */
     searchLDAP: function (req, res) {
-        var opts = {
+
+        console.log('SEARCH: ', req.param('name'));
+
+        let opts = {
             scope: 'sub',
             filter: '(displayName=*' + req.param('name') + '*)',
             //filter: '(mail=apetrov@landata.ru)',
@@ -999,14 +1006,15 @@ module.exports = {
             function (err) {
                 if (err) return res.negotiate(err);
             });
-        var userAr = [];
+        let userAr = [];
         /**
          * Поиск по dn
          */
         clientLDAP.search(sails.config.ldap.dn, opts, function (err, ldapUser) {
             if (err) return res.negotiate(err);
 
-            ldapUser.on('searchEntry', function (entry) {
+            ldapUser.on('searchEntry', function (err, entry) {
+                if (err) return res.negotiate(err);
                 //var userLD = entry.object.displayName;
                 //var userLD = entry.object.displayName + ' ' +
                 //    entry.object.mail + ' ' + entry.object.telephoneNumber +
@@ -1034,76 +1042,20 @@ module.exports = {
             //
             ldapUser.on('error', function (err) {
                 //assert.ifError(resErr);
-                console.error('ОШибка-222: ' + err.message);
                 if (err) return res.negotiate(err);
+                console.error('ОШибка-222: ' + err.message);
                 //if (!clientLDAP) return res.notFound();
             });
             //
-            ldapUser.on('end', function (result) {
+            ldapUser.on('end', function (err, result) {
+                if (err) return res.negotiate(err);
                 //sails.log('status: ' + result.status);
                 if (result.status == 0) {
                     sails.log('Ok!');
-
                     if (!userAr.length) {
-
-
                         return res.notFound('Нет таких!');
                     }
-
-
-                    //clientLDAP.unbind(function (err) {
-                    //    assert.ifError(err);
-                    //});
-
-                    //
-                    //var data = userAr[0].thumbnailPhoto;
-                    //
-                    //
-                    //
-                    //function decodeBase64Image(dataString) {
-                    //    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-                    //        response = {};
-                    //
-                    //    if (matches.length !== 3) {
-                    //        return new Error('Invalid input string');
-                    //    }
-                    //
-                    //    response.type = matches[1];
-                    //    response.data = new Buffer(matches[2], 'base64');
-                    //
-                    //    return response;
-                    //}
-                    //
-                    //var imageBuffer = decodeBase64Image(data);
-                    //console.log(imageBuffer);
-
-
-                    //fs.stat(userAr[0].thumbnailPhoto, function (err, stat) {
-                    //   if(err) console.log(err);
-                    //    console.log(stat);
-                    //});
-
-                    //const buf = Buffer.allocUnsafe(userAr[0].thumbnailPhoto);
-                    //
-                    //const len = buf.write(userAr[0].thumbnailPhoto, 0);
-                    //var imageBuffer = new Buffer(userAr[0].thumbnailPhoto, 'base64');
-                    //fs.writeFile('message.jpg',imageBuffer,(err) => {
-                    //    if (err) throw err;
-                    //    console.log('The file has been saved!');
-                    //});
-                    //console.log(`${len} bytes: ${buf.toString('utf8', 0, len)}`);
-
-//res.writeHead(200,{ContentType:})
-//                    return res.write(buf.toString('utf8', 0, len));
-                    return res.ok(userAr);
-                    //return res.ok(userAr[0].thumbnailPhoto);
-                    //res.writeHead(200, { 'Content-Type': 'text/plain' });
-                    //return  res.write(userAr[0].thumbnailPhoto,'binary');
-                    //clientLDAP.unbind(function (err) {
-                    //    assert.ifError(err);
-                    //});
-                    //sails.log('Успешная авторизация ' + JSON.stringify(user));
-
+                   return  res.ok(userAr);
                 }
             });
         });

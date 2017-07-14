@@ -1,3 +1,4 @@
+'use strict';
 angular.module('UserModule')
     .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
         function ($scope, $http, toastr, $interval, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
@@ -13,9 +14,6 @@ angular.module('UserModule')
             //console.log(SAILS_LOCALS.me.email);
             //var emAdmin = SAILS_LOCALS.me.email;
 
-            var t = [];
-
-            var userData = [$stateParams.userId];
             var uploader = $scope.uploader = new FileUploader({
                 url: '/file/upload',
                 autoUpload: true,
@@ -108,17 +106,36 @@ angular.module('UserModule')
                 $scope.item.avatarUrl = value;
 
             });
-
-
+            //
+            //$scope.$watch('item.lastName', function (value) {
+            //    console.log(value);
+            //    $scope.getLdap();
+            //});
             $scope.getLdap = function () {
-                $http.get('/ldap/?name=' + $scope.item.lastName).then(function (response) {
-                    console.log(3);
-                    console.log('response.data: ' , response.data);
-                    $scope.item = response.data;
-                }, function (response) {
-                    console.log(32);
-                    console.log('response.data2: ' , response.data);
-                });
+                console.log($scope.item.lastName);
+                $http.post('/users/ldap', {
+                        name: $scope.item.lastName
+                    })
+                    .then(function onSuccess(sailsResponse) {
+                        console.log('sailsResponse: ');
+                        console.log(sailsResponse);
+                        // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
+                        // window.location = '#/profile/' + $scope.editProfile.properties.id;
+                        //window.location = '/profile';
+                        toastr.success('Пароль обновлён!');
+                        $scope.editProfile.loading = false;
+                    }, (err)=>{
+                        console.log('ERRROR!: ', err);
+                    })
+                    .catch(function onError(sailsResponse) {
+                        // console.log('sailsresponse: ', sailsResponse)
+                        // Otherwise, display generic error if the error is unrecognized.
+                        $scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
+                        toastr.error($scope.editProfile.changePassword.errorMsg);
+                    })
+                    .finally(function eitherWay() {
+                        $scope.editProfile.loading = false;
+                    });
 
 
             };
@@ -182,7 +199,7 @@ angular.module('UserModule')
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             $scope.refresh = function () {
-                var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
+                let item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                         $scope.users = users;
                         console.log(users);
                         item.getBirthday();
@@ -323,8 +340,8 @@ angular.module('UserModule')
             };
 
             $scope.removeContact = function (contact) {
-                var contacts = $scope.item.contacts;
-                for (var i = 0, ii = contacts.length; i < ii; i++) {
+                let contacts = $scope.item.contacts;
+                for (let i = 0, ii = contacts.length; i < ii; i++) {
                     if (contact === contacts[i]) {
                         contacts.splice(i, 1);
                     }
@@ -340,7 +357,7 @@ angular.module('UserModule')
             };
 
             $scope.removeSubdivision = function (department) {
-                for (var i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
+                for (let i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
                     if ($scope.item.subdivision[i].id === department.id) {
                         $scope.item.subdivision.splice(i, 1);
                         return;
@@ -359,7 +376,7 @@ angular.module('UserModule')
             $scope.removePosition = function (position) {
                 $scope.item.positionRemove = [];
                 if (!position.id) $scope.item.positions = [];
-                for (var i = 0, ii = $scope.item.positions.length; i < ii; i++) {
+                for (let i = 0, ii = $scope.item.positions.length; i < ii; i++) {
                     if ($scope.item.positions[i].id === position.id) {
                         $scope.item.positions.splice(i, 1);
                         $scope.item.positionRemove.push(position.id);
@@ -376,7 +393,7 @@ angular.module('UserModule')
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
 
-            var original = angular.copy($scope.item);
+            let original = angular.copy($scope.item);
 
             $scope.revert = function () {
                 $scope.item = angular.copy(original);

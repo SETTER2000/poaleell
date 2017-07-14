@@ -32,7 +32,7 @@
                      */
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Departments.query({limit: 300, sort: 'name'}, (departments) => {
-                        console.log('DEPARTMENTS:', departments);
+                        //console.log('DEPARTMENTS:', departments);
                         $scope.items = departments;
                     }, function (err) {
                         toastr.error(err, 'Ошибка ListDepartmentController!');
