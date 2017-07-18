@@ -45,6 +45,7 @@ module.exports = {
      * @param res - ответ сервера клиенту
      */
     loginLDAP: function (req, res) {
+        console.log(process.memoryUsage());
         User.findOne({
             or: [
                 {email: req.param('email')},
@@ -69,7 +70,8 @@ module.exports = {
                 filter: '(sAMAccountName=' + user.login + ')',
                 attributes: sails.config.ldap.attributes,
                 paged: true,
-                sizeLimit: 50
+                sizeLimit: 50,
+                idleTimeout: 3000
             };
 
             /**
@@ -78,32 +80,33 @@ module.exports = {
             clientLDAP.bind(user.login + '@' + sails.config.admin.company, req.param('password'),
                 function (err) {
                     if (err) return res.negotiate(err);
-
-                    clientLDAP.search(sails.config.ldap.dn, opts, function (err, ldapUser) {
-                        if (err) return res.negotiate(err);
-                        ldapUser.on('error', function (err) {
-                            if (err) return res.negotiate(err);
-                        });
-                        ldapUser.on('end', function (result) {
-                            //if (err) return res.negotiate(err);
-                            //sails.log('status: ' + result.status);
-                            if (result.status == 0) {
-                                //sails.log('Успешная авторизация ' + JSON.stringify(user));
-                                /**
-                                 * Разорвать соединение с LDAP
-                                 */
-                                clientLDAP.unbind(function (err) {
-                                    assert.ifError(err);
-                                    req.session.me = user.id;
-                                    return res.ok();
-                                });
-                            }
-                        });
-                    });
-
-
                 });
 
+            clientLDAP.search(sails.config.ldap.dn, opts, function (err, ldapUser) {
+                assert.ifError(err);
+                //if (err) return res.negotiate(err);
+                ldapUser.on('error', function (err) {
+                    if (err) return res.negotiate(err);
+                });
+                ldapUser.on('end', function (result) {
+                    //if (err) return res.negotiate(err);
+                    //sails.log('status: ' + result.status);
+                    if (result.status == 0) {
+                        //sails.log('Успешная авторизация ' + JSON.stringify(user));
+                        /**
+                         * Разорвать соединение с LDAP
+                         */
+
+                        req.session.me = user.id;
+                        return res.ok();
+                    }
+                });
+            });
+
+
+            //clientLDAP.unbind(function (err) {
+            //    assert.ifError(err);
+            //});
 
         });
 
@@ -949,37 +952,37 @@ module.exports = {
      * @param req
      * @param res
      */
-    //upload: function (req, res) {
-    //    if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-    //    console.log('formData: ', req.body);
-    //    const dir = require('util').format('%s/images/user/avatar/%s', sails.config.appUrl.rootDir, req.body.id);
-    //    let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
-    //    //console.log('fileName', fileName);
-    //    req.file('file').upload({
-    //            dirname: dir,
-    //            saveAs: fileName
-    //        },
-    //        function (err, files) {
-    //            if (err) return res.serverError(err);
-    //            if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
-    //            //if (files.length === 0) {
-    //            //    return res.badRequest('Файл не загружен');
-    //            //}
-    //            console.log("files: ", files);
-    //
-    //            User.update(req.body.id, {
-    //                    avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
-    //                    avatarFd: files[0].fd,
-    //                    fileNameAvatar: fileName
-    //                })
-    //                .exec(function (err) {
-    //                    if (err) return res.negotiate(err);
-    //                    console.log(' avatarUrl: ', dir);
-    //                    console.log(' avatarUrl2: ', require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName));
-    //                    return res.ok();
-    //                });
-    //        });
-    //},
+    upload: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        //console.log('formData: ', req.body);
+        const dir = require('util').format('%s/images/user/avatar/%s', sails.config.appUrl.rootDir, req.body.id);
+        let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
+        //console.log('fileName', fileName);
+        req.file('file').upload({
+                dirname: dir,
+                saveAs: fileName
+            },
+            function (err, files) {
+                if (err) return res.serverError(err);
+                if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
+                //if (files.length === 0) {
+                //    return res.badRequest('Файл не загружен');
+                //}
+                //console.log("files: ", files);
+
+                User.update(req.body.id, {
+                        avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
+                        avatarFd: files[0].fd,
+                        fileNameAvatar: fileName
+                    })
+                    .exec(function (err) {
+                        if (err) return res.negotiate(err);
+                        //console.log(' avatarUrl: ', dir);
+                        //console.log(' avatarUrl2: ', require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName));
+                        return res.ok();
+                    });
+            });
+    },
 
     /**
      * Поиск пользователей по LDAP
@@ -992,7 +995,7 @@ module.exports = {
 
         let opts = {
             scope: 'sub',
-            filter: '(displayName=*' + req.param('name') + '*)',
+            filter: '(displayName=' + req.param('name') + '*)',
             //filter: '(mail=apetrov@landata.ru)',
             //filter: '(sAMAccountName=' + user.login + ')',
             attributes: sails.config.ldap.attributes,
@@ -1002,65 +1005,47 @@ module.exports = {
         /**
          * Соединение с сервером LDAP
          */
-        clientLDAP.bind(sails.config.ldap.username, sails.config.ldap.password,
-            function (err) {
-                if (err) return res.negotiate(err);
-            });
-        let userAr = [];
+        clientLDAP.bind(sails.config.ldap.username, sails.config.ldap.password, function (err) {
+            //if (err) return res.negotiate(err);
+            assert.ifError(err);
+        });
+
+
+        var userAr = [];
+
         /**
          * Поиск по dn
          */
         clientLDAP.search(sails.config.ldap.dn, opts, function (err, ldapUser) {
-            if (err) return res.negotiate(err);
+            assert.ifError(err);
 
-            ldapUser.on('searchEntry', function (err, entry) {
-                if (err) return res.negotiate(err);
-                //var userLD = entry.object.displayName;
-                //var userLD = entry.object.displayName + ' ' +
-                //    entry.object.mail + ' ' + entry.object.telephoneNumber +
-                //    ' ' + entry.object.sAMAccountName + ' ' + entry.object.userAccountControl;
-
-                //var decode = entry.object.thumbnailPhoto.decode();
-                //var decode = base64.b64decode(entry.object.thumbnailPhoto);
-                //entry.object.img_tag = '<img alt="sample" src="data:image/png;base64,{0}">'.format(entry.object.thumbnailPhoto);
-
-
+            ldapUser.on('searchEntry', function(entry) {
+                //console.log('entry: ' + JSON.stringify(entry.object));
                 userAr.push(entry.object);
-
-                //sails.log(userAr);
-                //console.log('Результат: ' + JSON.stringify(userLD));
             });
 
-            //ldapUser.on('searchReference', function (referral) {
-            //    console.log('referral: ' + referral.uris.join());
-            //});
+            ldapUser.on('searchReference', function (referral) {
+                console.log('referral: ' + referral.uris.join());
+            });
 
-            //ldapUser.on('page', function (result) {
-            //    console.log('page end');
-            //    sails.log(result);
-            //});
+            ldapUser.on('page', function (result) {
+                console.log('page end');
+            });
             //
             ldapUser.on('error', function (err) {
-                //assert.ifError(resErr);
-                if (err) return res.negotiate(err);
                 console.error('ОШибка-222: ' + err.message);
-                //if (!clientLDAP) return res.notFound();
             });
             //
-            ldapUser.on('end', function (err, result) {
-                if (err) return res.negotiate(err);
-                //sails.log('status: ' + result.status);
+            ldapUser.on('end', function (result) {
                 if (result.status == 0) {
                     sails.log('Ok!');
                     if (!userAr.length) {
                         return res.notFound('Нет таких!');
                     }
-                   return  res.ok(userAr);
+                    return res.ok(userAr);
                 }
             });
         });
-
-
     }
 };
 

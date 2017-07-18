@@ -47,7 +47,7 @@ module.exports.routes = {
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-    //'POST /file/upload': 'UserController.upload',
+    'POST /file/upload': 'UserController.upload',
     // 'GET /user/getUsersDepartment': 'UserController.getUsersDepartment',
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
 

@@ -18,19 +18,21 @@
         <table class="table table-condensed">
             <thead>
             <tr>
-                <th width="70%">ФИО</th> <th>Контакты</th>
+                <th></th><th width="60%">ФИО</th> <th>Контакты</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-mouseover="vis=1"  ng-mouseleave="vis=0" ng-repeat="user in users">
+                <td><img ng-cloak width="40px" src="{{user.avatarUrl}}" alt=""></td>
                 <td >{{user.lastName}} {{user.firstName}} {{user.patronymicName}}
+                    <br><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;--><strong>{{user.positions | getPosition: 'name' }}</strong>
 
                     <a   ng-if="vis"  class=" btn btn-group-xs pull-right not-border  btn-default text-right" href="/admin/users/edit/{{user.id}}">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>
                 <td>
-                    <div><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;--><strong>{{user.positions | getPosition: 'name' }}</strong></div>
+                    <!--<div>&lt;!&ndash;<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;&ndash;&gt;<strong>{{user.positions | getPosition: 'name' }}</strong></div>-->
                     <div><!--<span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;--><a href="mailto:{{user.email}}">{{user.email }}</a></div>
                     <div><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;-->{{user.contacts | getContact: 'Внутренний телефон' }}</div>
 

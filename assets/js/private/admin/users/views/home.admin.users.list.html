@@ -121,7 +121,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             </ul>
         </td>
         <td>{{item.email}}</td>
-        <td>{{item.getContact(fieldName)}}</td>
+        <td width="250px">{{item.getContact(fieldName)}}</td>
         <!--<td>{{item.diff}}</td>-->
         <td class="btn-group-xs">
             <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
