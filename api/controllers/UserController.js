@@ -192,7 +192,8 @@ module.exports = {
                                 dateInWork: req.param('dateInWork'),
                                 lastLoggedIn: new Date(),
                                 gravatarUrl: gravatarUrl,
-                                avatar: req.param('avatar')
+                                avatar: req.param('avatar'),
+                                room: req.param('room')
                             },
 
                             function userCreated(err, newUser) {
@@ -586,7 +587,8 @@ module.exports = {
             firedDate: req.param('firedDate'),
             action: req.param('action'),
             pfr: req.param('pfr'),
-            avatarUrl: req.param('avatarUrl')
+            avatarUrl: req.param('avatarUrl'),
+            room: req.param('room')
 
         };
 

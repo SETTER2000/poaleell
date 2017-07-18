@@ -76,8 +76,8 @@ module.exports = {
             return res.badRequest('Наименование не строка!');
         }
 
-        if(req.param('name').length < 2 || req.param('name').length > 35){
-            return res.badRequest('Наименование должно быть от 2 до 35 знаков!');
+        if(req.param('name').length < 2 || req.param('name').length > 200){
+            return res.badRequest('Наименование должно быть от 2 до 200 знаков!');
         }
 
         Position.create(req.body).exec(function (err, finn) {

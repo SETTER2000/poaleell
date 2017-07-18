@@ -13,6 +13,7 @@
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
     <tr>
         <th>#</th>
+        <th></th>
         <th>
             <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('lastName')">
                 {{fioArea}}
@@ -103,7 +104,7 @@
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
         <td>{{$index+1}}</td>
-        <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
+        <td><img class="photo" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false" src="{{item.avatarUrl}}" alt=""></td>
         <td>
             <a href="{{item.getEditUrl(item.id)}}">
                 {{item.getFullName()}}

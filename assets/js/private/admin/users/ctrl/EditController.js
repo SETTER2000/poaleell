@@ -10,6 +10,7 @@ angular.module('UserModule')
 
             $scope.edit = $state.includes('home.admin.users.edit');
 
+
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
             //var emAdmin = SAILS_LOCALS.me.email;
@@ -117,12 +118,32 @@ angular.module('UserModule')
                         name: $scope.item.lastName
                     })
                     .then(function onSuccess(sailsResponse) {
-                        console.log('sailsResponse: ');
-                        console.log(sailsResponse);
+                        console.log('sailsResponse: ',sailsResponse);
+
+
+                        let objectContacts = {};
+                        $scope.item.contacts = [];
+                        objectContacts.type = "Внутренний телефон";
+                        objectContacts.value = sailsResponse.data[0].telephoneNumber;
+
+                       let patronymic = sailsResponse.data[0].displayName.split(' ')[2];
+                        //$scope.item.lastName = sailsResponse.data[0].sn;
+                        $scope.item.firstName = sailsResponse.data[0].givenName;
+                        $scope.item.login = sailsResponse.data[0].sAMAccountName;
+                        $scope.item.room = sailsResponse.data[0].physicalDeliveryOfficeName;
+                        $scope.item.email = sailsResponse.data[0].mail;
+                        $scope.item.contacts.push(objectContacts);
+                        $scope.item.patronymicName = patronymic;
+
+                        //[{"type":"Мобильный","value":"8-985-729-37-74"},{"type":"Телефон","value":"+7 (495) 444-18-61"},{"type":"Внутренний телефон","value":"(050) 4322"}]
+                        //$scope.item.patronymicName = patronymic;
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
-                        toastr.success('Пароль обновлён!');
+                        for(let op in sailsResponse.data){
+                            toastr.success('Есть похожий: '+sailsResponse.data[op].displayName);
+                        }
+
                         $scope.editProfile.loading = false;
                     }, (err)=>{
                         console.log('ERRROR!: ', err);
@@ -274,7 +295,7 @@ angular.module('UserModule')
                         },
                         function (err) {
                             console.log(err);
-                            toastr.error(err.data, 'Ошибка! EditController User');
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 87445! EditController User');
                         }
                     );
                 }
@@ -295,7 +316,7 @@ angular.module('UserModule')
                         },
                         function (err) {
                             console.log(err);
-                            toastr.error(err.data, 'Ошибка! EditController User');
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 11445! EditController User');
                         }
                     );
                 } else {
@@ -321,7 +342,7 @@ angular.module('UserModule')
                                 $state.go('home.admin.user', {userId: success.id});
                             },
                             function (err) {
-                                toastr.error(err.data, 'Ошибка! EditController');
+                                toastr.error(err.data.invalidAttributes, 'Ошибка 89336! EditController User');
                             });
                     }
                 }
