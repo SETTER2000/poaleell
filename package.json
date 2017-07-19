@@ -87,6 +87,7 @@
   },
   "homepage": "https://github.com/SETTER2000/kadr#readme",
   "devDependencies": {
-    "angular-translate": "^2.15.0"
+    "angular-translate": "^2.15.0",
+    "memwatch-next": "^0.3.0"
   }
 }

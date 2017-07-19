@@ -26,7 +26,7 @@ const URITemplate = require('urijs/src/URITemplate');
 const clientLDAP = ldap.createClient({
     url: sails.config.ldap.uri
 });
-
+var memwatch = require('memwatch-next');
 
 //var DateRu = require('date-ru');
 //var dt = new Date();
@@ -45,7 +45,21 @@ module.exports = {
      * @param res - ответ сервера клиенту
      */
     loginLDAP: function (req, res) {
-        console.log(process.memoryUsage());
+        //console.log(process.memoryUsage());
+
+        memwatch.on('leak', function(info) {
+
+            console.log('Информация о куче: ', info);
+
+        });
+        memwatch.gc('leak', function(info) {
+
+            console.log('Информация о куче: ', info);
+
+        });
+        memwatch.on('stats', function(stats) {
+            console.log('Информация о куче: ', stats);
+        });
         User.findOne({
             or: [
                 {email: req.param('email')},
