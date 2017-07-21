@@ -104,7 +104,7 @@
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
         <td>{{$index+1}}</td>
-        <td><img class="photo" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false" src="{{item.avatarUrl}}" alt=""></td>
+        <td><img class="photo" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false" ng-src="{{item.avatarUrl}}" alt=""></td>
         <td>
             <a href="{{item.getEditUrl(item.id)}}">
                 {{item.getFullName()}}

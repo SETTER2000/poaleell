@@ -87,16 +87,16 @@
                 time: new Date()
             };
 
-            $scope.calendar = moment().calendar(null, {
-                sameDay: function (now) {
-                    if (this.isBefore(now)) {
-                        return '[Случится сегодня]';
-                    } else {
-                        return '[Произошло сегодня]';
-                    }
-                    /* ... */
-                }
-            });
+            //$scope.calendar = moment().calendar(null, {
+            //    sameDay: function (now) {
+            //        if (this.isBefore(now)) {
+            //            return '[Случится сегодня]';
+            //        } else {
+            //            return '[Произошло сегодня]';
+            //        }
+            //        /* ... */
+            //    }
+            //});
 
             $scope.options =
                 [
@@ -206,7 +206,7 @@
                 };
 
                 $scope.items = Users.query($scope.query, function (users) {
-                    console.log('USER ITEMS:', users);
+                    //console.log('USER ITEMS:', users);
                         $scope.items = users;
                         $scope.objectName = users;
                         //$scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;

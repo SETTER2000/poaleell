@@ -41,7 +41,7 @@ var translationsDE = {
     BUTTON_LANG_RU: 'Russian'
 };
 
-angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pascalprecht.translate', 'angularMoment', 'AttendanceModule'])
+angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pascalprecht.translate', 'angularMoment','AttendanceModule'])
     .config(['$stateProvider', '$translateProvider', function ($stateProvider, $translateProvider) {
         // $translateProvider.translations('en', translations).preferredLanguage('en');
         $translateProvider.translations('en', translationsEN);
@@ -302,14 +302,14 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                 };
 
                 scope.getQuery = function (query) {
-                    console.log('query:');
-                    console.log(query);
+                    //console.log('query:');
+                    //console.log(query);
                     if (!angular.isDefined(query))return;
                     scope.attendance = Attendances.query(
                         query,
                         function (attendanceEmployees, err) {
-                            console.log('QUERY');
-                            console.log(attendanceEmployees);
+                            //console.log('QUERY');
+                            //console.log(attendanceEmployees);
                             scope.attendance = attendanceEmployees;
                             scope.attendance.$promise
                                 .then(function group(result) {
@@ -369,8 +369,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                                             }
                                         }
                                     }
-                                    console.log('result.data');
-                                    console.log(result.data);
+                                    //console.log('result.data');
+                                    //console.log(result.data);
                                     scope.data = result.data;
                                 })
                         }
@@ -389,9 +389,14 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
 
                 scope.restart = function () {
                     var recurrence;
+                  
                     var dForm = [];
                     var daysPeriod = {data: []};
 
+                    //console.log('momentrecur:',  moment().recur({
+                    //    start: "01/01/2014",
+                    //    end: "01/01/2015"
+                    //}));
                     if (angular.isDefined(scope.interval)) {
                         var start = scope.interval.start;
                         var end = scope.interval.end;
@@ -408,7 +413,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                          */
                         daysPeriod.data = recurrence.next(31);
 
-
+                        console.log('daysPeriod.data[0]: ',daysPeriod.data[0]);
                         scope.getQuery({
                             /**
                              *  timeClear: 1 - чистое время прибывания на работе за день
@@ -424,6 +429,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                             // Кол-во строк показываемых на странице
                             //  limit: scope.limit
                         });
+
 
                         // Сегодняшняя дата (16.03.2017)
                         daysPeriod.currentDate = moment().format('DD.MM.YYYY');

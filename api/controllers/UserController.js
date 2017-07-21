@@ -22,7 +22,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 //var URI = require('urijs');
-const URITemplate = require('urijs/src/URITemplate');
+//const URITemplate = require('urijs/src/URITemplate');
 const clientLDAP = ldap.createClient({
     url: sails.config.ldap.uri
 });

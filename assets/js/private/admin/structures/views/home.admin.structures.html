@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             <tr ng-mouseover="vis=1"  ng-mouseleave="vis=0" ng-repeat="user in users">
-                <td><img ng-cloak width="40px" src="{{user.avatarUrl}}" alt=""></td>
+                <td><img ng-cloak width="40px" ng-src="{{user.avatarUrl}}" alt=""></td>
                 <td >{{user.lastName}} {{user.firstName}} {{user.patronymicName}}
                     <br><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;--><strong>{{user.positions | getPosition: 'name' }}</strong>
 

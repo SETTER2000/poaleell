@@ -6,7 +6,7 @@
             <div  class="delete-button" ng-class="{'thumbnail':item.avatarUrl}" ng-mouseover="shows=1" ng-mouseleave="shows=0">
                 <a href="#" ng-click="delFoto(item)" ng-if="shows" class="btn btn-default delete-img" role="button">Удалить</a>
                 <!--<a href="#">-->
-                    <img src="{{item.avatarUrl}}">
+                    <img ng-src="{{item.avatarUrl}}">
                     <!--<img src="/images/user/avatar/58e35656594105801c9d9203/105.jpg" alt="">-->
                     <!--<img src="http://via.placeholder.com/242x200/EEEEEE/AAAAAA">-->
                 <!--</a>-->
