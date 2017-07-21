@@ -113,8 +113,8 @@
 
 
                 $scope.$watch('where', function (value,old) {
-                    console.log('New val: ',value);
-                    console.log('Old val: ',old);
+                    //console.log('New val: ',value);
+                    //console.log('Old val: ',old);
                     $scope.query.regex = value;
                    $scope.refresh();
                 });

@@ -365,10 +365,10 @@
                                 <span class="glyphicon glyphicon-check"></span>
                                 Сохранить
                             </button>
-                            <!--<a ng-href="{{item.getListUrl()}}" class="btn btn-md btn-warning">-->
-                                <!--<span class="glyphicon glyphicon-list"> </span>-->
-                                <!--Список-->
-                            <!--</a>-->
+                            <a ng-if="me.admin" ng-href="{{item.getListUrl()}}" class="btn btn-md btn-warning">
+                                <span class="glyphicon glyphicon-list"> </span>
+                                Список
+                            </a>
                             <!--<button ng-if="!item.id" ng-click="revert()" ng-disabled="!canRevert()" class="btn btn-md btn-primary">-->
                                 <!--<span class="glyphicon glyphicon-erase"> </span>-->
                                 <!--Очистить-->

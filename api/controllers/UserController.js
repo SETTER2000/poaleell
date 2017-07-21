@@ -26,15 +26,7 @@ const URITemplate = require('urijs/src/URITemplate');
 const clientLDAP = ldap.createClient({
     url: sails.config.ldap.uri
 });
-var memwatch = require('memwatch-next');
 
-//var DateRu = require('date-ru');
-//var dt = new Date();
-//var dateRuTpl = "%d.%m.%y %H:%M:%S";
-//var dateRuTpl2 = "%d.%m.%y_%H-%M-%S";
-//var timeRuTpl = '%H:%M:%S';
-//var dateRu = new DateRu(dt, dateRuTpl);
-//var dateRu2 = new DateRu(dt, dateRuTpl2);
 
 
 module.exports = {
@@ -45,21 +37,21 @@ module.exports = {
      * @param res - ответ сервера клиенту
      */
     loginLDAP: function (req, res) {
-        //console.log(process.memoryUsage());
 
-        memwatch.on('leak', function(info) {
+//var DateRu = require('date-ru');
+//var dt = new Date();
+//var dateRuTpl = "%d.%m.%y %H:%M:%S";
+//var dateRuTpl2 = "%d.%m.%y_%H-%M-%S";
+//var timeRuTpl = '%H:%M:%S';
+//var dateRu = new DateRu(dt, dateRuTpl);
+//var dateRu2 = new DateRu(dt, dateRuTpl2);
 
-            console.log('Информация о куче: ', info);
 
-        });
-        memwatch.gc('leak', function(info) {
 
-            console.log('Информация о куче: ', info);
 
-        });
-        memwatch.on('stats', function(stats) {
-            console.log('Информация о куче: ', stats);
-        });
+
+
+
         User.findOne({
             or: [
                 {email: req.param('email')},

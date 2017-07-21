@@ -17,6 +17,30 @@ module.exports.bootstrap = function (cb) {
     const Watcher = require('listener-dir');
     const fs = require('fs');
     const mime = require('mime');
+    const memwatch = require('memwatch-next');
+
+    // Take first snapshot
+    //var hd = new memwatch.HeapDiff();
+    //
+    //
+    //var diff = hd.end();
+    //
+    //
+    //console.log('DIFF: ',diff);
+
+
+
+    memwatch.gc('leak', function(info) {
+        console.log('Информация о куче gc leak: ', info);
+    });
+    memwatch.on('leak', function(info) {
+        console.log('Информация о куче leak: ', info);
+    });
+    memwatch.on('stats', function(stats) {
+        console.log('Информация о куче stats: ', stats);
+    });
+
+
 
     Array.prototype.diff = function (a) {
         return this.filter(function (i) {

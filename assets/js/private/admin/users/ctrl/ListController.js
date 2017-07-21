@@ -26,7 +26,7 @@
             /**
              * PAGINATION
              */
-            $scope.defaultRows = 50;
+            $scope.defaultRows = 20;
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
@@ -90,7 +90,7 @@
             $scope.calendar = moment().calendar(null, {
                 sameDay: function (now) {
                     if (this.isBefore(now)) {
-                        return '[Случится Сегодня]';
+                        return '[Случится сегодня]';
                     } else {
                         return '[Произошло сегодня]';
                     }
@@ -144,7 +144,7 @@
                             'email': attendance.data[local].email,
                             'diff': $scope.getTimeFormatMilliseconds(b.diff(a), 1, 'Неизвестно')
                         });
-                    })(); // immediately invoked function expression (IIFE)
+                    })();
                 }
                 $scope.items = data;
             };

@@ -103,15 +103,12 @@ angular.module('UserModule')
                 console.log(status);
                 console.info('onCancelItem', fileItem, response, status, headers);
             };
-            $scope.$watch('item.avatarUrl', function (value) {
-                $scope.item.avatarUrl = value;
-
-            });
+            //$scope.$watch('item.avatarUrl', function (value) {
+            //    $scope.item.avatarUrl = value;
             //
-            //$scope.$watch('item.lastName', function (value) {
-            //    console.log(value);
-            //    $scope.getLdap();
             //});
+            //
+
             $scope.getLdap = function () {
                 console.log($scope.item.lastName);
                 $http.post('/users/ldap', {
