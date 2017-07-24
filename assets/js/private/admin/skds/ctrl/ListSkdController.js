@@ -86,15 +86,7 @@
                 };
 
 
-                $scope.calendar = moment().calendar(null, {
-                    sameDay: function (now) {
-                        if (this.isBefore(now)) {
-                            return '[Случится Сегодня]';
-                        } else {
-                            return '[Произошло сегодня]';
-                        }
-                    }
-                });
+            
 
 
                 $scope.options =
