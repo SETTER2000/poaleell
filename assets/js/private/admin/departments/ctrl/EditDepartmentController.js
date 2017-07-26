@@ -15,12 +15,13 @@ angular.module('DepartmentModule')
             //    }).catch(function (reason) {
             //});
 
-            
+
             $scope.refresh = function () {
                 $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
-                    //console.log('DEPPPARTMEN', departments);
+
                     $scope.departments = departments;
                 }, function (err) {
+                    console.log('DEPPPARTMEN', departments);
                     if (err) console.log(err.message);
                 });
             };
@@ -88,7 +89,7 @@ angular.module('DepartmentModule')
                     }
                 }
             };
-            
+
             $scope.removeContact = function (contact) {
                 var contacts = $scope.item.contacts;
                 for (var i = 0, ii = contacts.length; i < ii; i++) {
@@ -97,18 +98,18 @@ angular.module('DepartmentModule')
                     }
                 }
             };
-            
-            
+
+
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);
             };
 
-            
+
             $scope.isSaveDisabled = function () {
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
 
-            
+
             $scope.delete = function (item) {
                 item.$delete(item, function (success) {
                     toastr.success('Объект удалён.','OK! ');
@@ -117,6 +118,6 @@ angular.module('DepartmentModule')
                     toastr.error(err,'Ошибка 3 EditDepartmentController!');
                 })
             };
-            
+
             $scope.refresh();
         }]);

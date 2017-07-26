@@ -182,10 +182,10 @@ module.exports = {
                                 };
                                 //mat = {$match: {date: searchDate}};
                                 //sails.log('searchDate');
-                                sails.log('searchDate', searchDate);
-                                sails.log(match);
-                                sails.log('new Date(searchDate)');
-                                sails.log(moment(searchDate));
+                                //sails.log('searchDate', searchDate);
+                                //sails.log(match);
+                                //sails.log('new Date(searchDate)');
+                                //sails.log(moment(searchDate));
                                 collection.aggregate([match,
                                     {$sort: {startPeriod: 1}},
                                     {

@@ -12,7 +12,7 @@
 module.exports.bootstrap = function (cb) {
     const XlsxPopulate = require('xlsx-populate');
     const Ranges = require('named-ranges');
-    const DateRu = require('date-ru');
+    //const DateRu = require('date-ru');
     const XLSX = require('xlsx');
     const Watcher = require('listener-dir');
     const fs = require('fs');
@@ -521,7 +521,7 @@ module.exports.bootstrap = function (cb) {
                         // 13:27 > "2017-06-21T13:27:00+00:00"
                         row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
 
-                        sails.log('FM1: '+ arrName[0]);
+                        //sails.log('FM1: '+ arrName[0]);
                         /**
                          * Проверяем есть ли фамилия
                          */
