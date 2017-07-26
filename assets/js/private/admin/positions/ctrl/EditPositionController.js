@@ -7,14 +7,9 @@ angular.module('PositionModule')
             $scope.refresh = function () {
                 var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
                     $scope.positions = positions;
-
-                    console.log(positions);
-
                     item.getBirthday();
                     item.getDateInWork();
                     item.getFiredDate();
-
-
                 }, function (err) {
                     if (err) console.log(err.message);
                 });
@@ -68,18 +63,6 @@ angular.module('PositionModule')
                     }
                 }
             };
-
-            //$scope.removeDepartment = function (department) {
-            //    $scope.item.removeDivision = [];
-            //    $scope.removeDepart(department);
-            //    var subdivision = $scope.item.subdivision;
-            //    for (var i = 0, ii = subdivision.length; i < ii; i++) {
-            //        if (department.id === subdivision[i]) {
-            //            subdivision.splice(i, 1);
-            //        }
-            //    }
-            //    $scope.item.removeDivision = $scope.item.subdivision;
-            //};
 
             $scope.isCancelDisabled = function () {
                 return angular.equals(master, $scope.form);

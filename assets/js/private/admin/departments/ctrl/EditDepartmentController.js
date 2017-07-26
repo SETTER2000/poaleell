@@ -17,11 +17,11 @@ angular.module('DepartmentModule')
 
 
             $scope.refresh = function () {
+                //if(!angular.isDefined($stateParams.depId)) return;
                 $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
 
                     $scope.departments = departments;
                 }, function (err) {
-                    console.log('DEPPPARTMEN', departments);
                     if (err) console.log(err.message);
                 });
             };
