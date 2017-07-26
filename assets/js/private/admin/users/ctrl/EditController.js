@@ -99,9 +99,9 @@ angular.module('UserModule')
                 toastr.error(response.message, 'Ошибка! Статус ' + status);
             };
             uploader.onCancelItem = function (fileItem, response, status, headers) {
-                console.log('uploader.onCancelItem');
-                console.log(status);
-                console.info('onCancelItem', fileItem, response, status, headers);
+                //console.log('uploader.onCancelItem');
+                //console.log(status);
+                //console.info('onCancelItem', fileItem, response, status, headers);
             };
             //$scope.$watch('item.avatarUrl', function (value) {
             //    $scope.item.avatarUrl = value;
@@ -110,12 +110,12 @@ angular.module('UserModule')
             //
 
             $scope.getLdap = function () {
-                console.log($scope.item.lastName);
+                //console.log($scope.item.lastName);
                 $http.post('/users/ldap', {
                         name: $scope.item.lastName
                     })
                     .then(function onSuccess(sailsResponse) {
-                        console.log('sailsResponse: ',sailsResponse);
+                        //console.log('sailsResponse: ',sailsResponse);
 
 
                         let objectContacts = {};
@@ -143,7 +143,8 @@ angular.module('UserModule')
 
                         $scope.editProfile.loading = false;
                     }, (err)=>{
-                        console.log('ERRROR!: ', err);
+                        toastr.error('ERRROR! : '+err);
+                        //console.log('ERRROR!: ', err);
                     })
                     .catch(function onError(sailsResponse) {
                         // console.log('sailsresponse: ', sailsResponse)
@@ -219,7 +220,7 @@ angular.module('UserModule')
             $scope.refresh = function () {
                 let item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                         $scope.users = users;
-                        console.log(users);
+                        //console.log(users);
                         item.getBirthday();
                         item.getDateInWork();
                         item.getFiredDate();
@@ -230,8 +231,8 @@ angular.module('UserModule')
                     //}
                 );
 
-                console.log($scope.item);
-                console.log($scope.users);
+                //console.log($scope.item);
+                //console.log($scope.users);
             };
 
             $scope.delete2 = function (item) {
@@ -242,7 +243,7 @@ angular.module('UserModule')
                     // $scope.$apply(function() { $location.path("/admin/users"); });
                     // $scope.refresh();
                 }, function (err) {
-                    console.log(err);
+                    //console.log(err);
                     toastr.error(err, 'Ошибка122! ');
                 })
             };
@@ -262,8 +263,8 @@ angular.module('UserModule')
                         password: $scope.editProfile.properties.password
                     })
                     .then(function onSuccess(sailsResponse) {
-                        console.log('sailsResponse: ');
-                        console.log(sailsResponse);
+                        //console.log('sailsResponse: ');
+                        //console.log(sailsResponse);
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
@@ -291,7 +292,7 @@ angular.module('UserModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            console.log(err);
+                            //console.log(err);
                             toastr.error(err.data.invalidAttributes, 'Ошибка 87445! EditController User');
                         }
                     );
@@ -312,7 +313,7 @@ angular.module('UserModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            console.log(err);
+                            //console.log(err);
                             toastr.error(err.data.invalidAttributes, 'Ошибка 11445! EditController User');
                         }
                     );

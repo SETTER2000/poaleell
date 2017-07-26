@@ -66,13 +66,13 @@ module.exports = {
     createPosition: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (!_.isString( req.param('name') ) ) {
-            sails.log(req.param('name'));
-            sails.log('is not string');
+            //sails.log(req.param('name'));
+            //sails.log('is not string');
             return res.badRequest('Наименование не заполнено.');
         }
         if (_.isNumber( req.param('name') ) ) {
-            sails.log(req.param('name'));
-            sails.log('is not string');
+            //sails.log(req.param('name'));
+            //sails.log('is not string');
             return res.badRequest('Наименование не строка!');
         }
 
@@ -82,7 +82,7 @@ module.exports = {
 
         Position.create(req.body).exec(function (err, finn) {
             if(err) {return res.serverError(err);}
-            sails.log('Finn\'s id is:', finn.id);
+            //sails.log('Finn\'s id is:', finn.id);
             return res.send({id: finn.id});
         });
 

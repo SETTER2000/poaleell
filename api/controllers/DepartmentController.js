@@ -78,8 +78,8 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
         if (!_.isString(req.param('name'))) {
-            sails.log(req.param('name'));
-            sails.log('is not string');
+            //sails.log(req.param('name'));
+            //sails.log('is not string');
             return res.badRequest('Наименование не заполнено.');
         }
         if (req.param('name').length < 2 || req.param('name').length > 200) {
@@ -89,7 +89,7 @@ module.exports = {
             if (err) {
                 return res.serverError(err);
             }
-            sails.log('Идентификатор department:', finn.id);
+            //sails.log('Идентификатор department:', finn.id);
             return res.send({id: finn.id});
 
         });

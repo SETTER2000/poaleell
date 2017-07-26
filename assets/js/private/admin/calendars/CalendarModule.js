@@ -41,26 +41,16 @@ var translationsDE = {
     BUTTON_LANG_RU: 'Russian'
 };
 
-angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pascalprecht.translate', 'angularMoment','AttendanceModule'])
-    .config(['$stateProvider', '$translateProvider', function ($stateProvider, $translateProvider) {
-        // $translateProvider.translations('en', translations).preferredLanguage('en');
-        $translateProvider.translations('en', translationsEN);
-        $translateProvider.translations('de', translationsDE);
-        $translateProvider.translations('ru', translationsRU);
-        $translateProvider.preferredLanguage('ru');
-        $translateProvider.useSanitizeValueStrategy('escapeParameters');
+angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate',  'angularMoment','AttendanceModule'])
+    .config(['$stateProvider',  function ($stateProvider) {
+
         $stateProvider
             .state('home.admin.calendars', {
                 url: '/calendars',
-                //template:'<h1>Calendars</h1>'
-                //controller: function () {
-                //
-                //}
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/calendars/tpl/list.tpl.html',
                         controller: 'ListCalendarController'
-                        //template:'<h1>DEPARTAMENT</h1>'
                     }
                 }
             })
@@ -413,7 +403,7 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate', 'pasca
                          */
                         daysPeriod.data = recurrence.next(31);
 
-                        console.log('daysPeriod.data[0]: ',daysPeriod.data[0]);
+                        //console.log('daysPeriod.data[0]: ',daysPeriod.data[0]);
                         scope.getQuery({
                             /**
                              *  timeClear: 1 - чистое время прибывания на работе за день

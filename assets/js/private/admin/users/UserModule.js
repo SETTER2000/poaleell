@@ -1,4 +1,7 @@
 angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule','angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
+    .config(['$qProvider', function ($qProvider) {
+        $qProvider.errorOnUnhandledRejections(false);
+    }])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.users', {
