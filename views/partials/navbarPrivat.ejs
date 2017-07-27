@@ -54,7 +54,8 @@
                 </ul>
                 <ul ng-show="me.id" class="nav navbar-nav navbar-right">
                     <li class="gravatarSm">
-                        <img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>
+                        <img class="gravatarSm" ng-src="{{me.avatarUrl}}" height="30" />
+                        <!--<img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>-->
                     </li>
                     <li class="activityOverlord active">
                         <a href="/profile" class="pointer"> {{me.fullName}} ({{me.phoneInner}})</a>
@@ -67,16 +68,7 @@
 
                     </li>
                 </ul>
-                <!--<ul class="nav navbar-nav navbar-right" ng-class="!navCollapsed && 'in'">-->
 
-                <!--<li><a ><%= me.firstName %> <%= me.patronymicName %> {{me.email}} (<%= me.login %>)</a></li>-->
-
-                <!--<li>-->
-                <!--<form action="/logout" class="navbar-form navbar-right">-->
-                <!--<button class="btn btn-success btn-md" type="submit">Выход</button>-->
-                <!--</form>-->
-                <!--</li>-->
-                <!--</ul>-->
             </div><!--/.nav-collapse -->
         </div>
     </nav>

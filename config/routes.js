@@ -19,15 +19,15 @@
  * For more information on configuring custom routes, check out:
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
-
+'use strict';
 module.exports.routes = {
 
     /*************************************************************
      *                 JSON API ENDPOINTS                        *
      *************************************************************/
 
-     'PUT /login': 'UserController.loginLDAP',
-    //'PUT /login': 'UserController.login',
+    //'PUT /login': 'UserController.loginLDAP',
+    'PUT /login': 'UserController.login',
     'GET /logout': 'PageController.logout',
     'POST /logout': 'UserController.logout',
     // 'GET /mail/send': 'MailController.send',
@@ -47,7 +47,7 @@ module.exports.routes = {
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-
+    'POST /file/upload': 'UserController.upload',
     // 'GET /user/getUsersDepartment': 'UserController.getUsersDepartment',
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
 
@@ -55,15 +55,8 @@ module.exports.routes = {
     /**
      * Тестовые роуты
      */
-     //'GET /test': 'StructureController.test',
-    // 'GET /tut': 'TutorialController.createTutorial',
-    // 'GET /ed': 'TutorialController.editTutorial',
-    // // 'POST /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
-    // // 'GET /getAggregate': 'SkdController.getAggregate', // агрегированные данные из xsls отчётов посещаемости
-    // 'GET /getListData': 'SkdController.getListData', // агрегированные данные из xsls отчётов посещаемости
 
-    //'POST /user/avatar' : 'UserController.upload',
-    'POST /user/avatarUpload' : 'UserController.uploadAvatar',
+    //'POST /users/ldap': 'UserController.searchLDAP',
 
     /**
      * Skds
@@ -76,7 +69,7 @@ module.exports.routes = {
     /**
      * Department
      */
-    'Get /getRootDepartment':'DepartmentController.getRootDepartment',
+    'Get /getRootDepartment': 'DepartmentController.getRootDepartment',
 
 
     /**
@@ -90,7 +83,6 @@ module.exports.routes = {
     //'POST /user/signup': 'UserController.signup',
 
 
-
     /***************************************
      *         RESTful routes              *
      ***************************************/
@@ -101,6 +93,7 @@ module.exports.routes = {
     'POST /users': 'UserController.createUser',
     'GET /users': 'UserController.findUsers',
     'PUT /users/changePassword': 'UserController.changePassword',
+
     'GET /users/:id': 'UserController.findUsers',
     'DELETE /users/:id': 'UserController.destroy',
     'PUT /users/:id': 'UserController.update',
@@ -153,7 +146,6 @@ module.exports.routes = {
      * Attendance
      */
     'GET /attendance': 'Attendance.timeAll', // для календаря
-
 
 
     /*************************************************************

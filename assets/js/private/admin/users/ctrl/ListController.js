@@ -26,7 +26,7 @@
             /**
              * PAGINATION
              */
-            $scope.defaultRows = 50;
+            $scope.defaultRows = 20;
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
@@ -87,16 +87,16 @@
                 time: new Date()
             };
 
-            $scope.calendar = moment().calendar(null, {
-                sameDay: function (now) {
-                    if (this.isBefore(now)) {
-                        return '[Случится Сегодня]';
-                    } else {
-                        return '[Произошло сегодня]';
-                    }
-                    /* ... */
-                }
-            });
+            //$scope.calendar = moment().calendar(null, {
+            //    sameDay: function (now) {
+            //        if (this.isBefore(now)) {
+            //            return '[Случится сегодня]';
+            //        } else {
+            //            return '[Произошло сегодня]';
+            //        }
+            //        /* ... */
+            //    }
+            //});
 
             $scope.options =
                 [
@@ -144,7 +144,7 @@
                             'email': attendance.data[local].email,
                             'diff': $scope.getTimeFormatMilliseconds(b.diff(a), 1, 'Неизвестно')
                         });
-                    })(); // immediately invoked function expression (IIFE)
+                    })();
                 }
                 $scope.items = data;
             };
@@ -206,7 +206,7 @@
                 };
 
                 $scope.items = Users.query($scope.query, function (users) {
-                    console.log('USER ITEMS:', users);
+                    //console.log('USER ITEMS:', users);
                         $scope.items = users;
                         $scope.objectName = users;
                         //$scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;

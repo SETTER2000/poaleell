@@ -1,3 +1,4 @@
+'use strict';
 /**
  * SkdController
  *
@@ -135,7 +136,7 @@ module.exports = {
             .exec((err, foundUser) => {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
-                sails.log('req.param(regex): ', req.param('regex'));
+                //sails.log('req.param(regex): ', req.param('regex'));
                 let reg = {$regex: req.param('regex'), $options: "si"};
                 
                 let selectedYear = (_.isEmpty(req.param('year'))) ? '' : req.param('year');
@@ -166,7 +167,7 @@ module.exports = {
                             Skd.native(function (err, collection) {
                                 if (err) return res.serverError(err);
 
-                                sails.log('Поисковая дата:', req.param('sd'));
+                                //sails.log('Поисковая дата:', req.param('sd'));
 
                                 //"2017-06-23"
                                 let searchDate = (req.param('sd')) ? req.param('sd') : '';
@@ -181,10 +182,10 @@ module.exports = {
                                 };
                                 //mat = {$match: {date: searchDate}};
                                 //sails.log('searchDate');
-                                sails.log('searchDate', searchDate);
-                                sails.log(match);
-                                sails.log('new Date(searchDate)');
-                                sails.log(moment(searchDate));
+                                //sails.log('searchDate', searchDate);
+                                //sails.log(match);
+                                //sails.log('new Date(searchDate)');
+                                //sails.log(moment(searchDate));
                                 collection.aggregate([match,
                                     {$sort: {startPeriod: 1}},
                                     {
@@ -734,7 +735,7 @@ module.exports = {
         //     }
         // });
 
-    },
+    }
 //     getList: function (req, res) {
 //         User.find({}).exec(function getUser(err, users) {
 //             if (err) return res.negotiate(err);
@@ -751,7 +752,7 @@ module.exports = {
 //             }
 //         });
 //     }
-    
+
 
 };
 

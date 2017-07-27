@@ -1,6 +1,7 @@
+'use strict';
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', 'toastr', '$state', 'Users', 'Positions', 'Departments', '$stateParams', '$rootScope',
-        function ($scope, $http, toastr, $state, Users, Positions, Departments, $stateParams, $rootScope) {
+    .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $interval, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
 
@@ -9,66 +10,202 @@ angular.module('UserModule')
 
             $scope.edit = $state.includes('home.admin.users.edit');
 
+
             //console.log('window.SAILS_LOCALS.me.email');
             //console.log(SAILS_LOCALS.me.email);
             //var emAdmin = SAILS_LOCALS.me.email;
 
-            var t = [];
-            //if (emAdmin == 'apetrov@landata.ru') {
-            //    $scope.loginAdmin = true;
-            //}
+            var uploader = $scope.uploader = new FileUploader({
+                url: '/file/upload',
+                autoUpload: true,
+                removeAfterUpload: true,
+                queueLimit: 1
 
-            // $scope.deleteEdit = function (item) {
-            //     // $emit - отправка события от текущего scope к родительским scope
-            //     // $scope.$emit("deleteUser", item);
-            //     // $broadcast - отправка события всем scope от rootScope
-            //     // $rootScope.$broadcast("deleteUser", {
-            //     //     message: 'GOOOO'
-            //     // });
-            //     $rootScope.$broadcast("deleteUser", {
-            //         message: 'GOOOO'
-            //     });
-            // };
-            //
-            // $scope.$on("deleteUser", function (event, args) {
-            //     //event.stopPropagation(); // останавливаем распространение события
-            //     // $scope.info = args.message;
-            //     // $scope.delete(args);
-            //     $scope.info = args.message;
-            // });
+            });
 
-            // console.log('EEEE:');
-            // io.socket.on('User', function (event){
-            //     console.log(event);
-            //     // => see below
-            // });
-            //
-            // io.socket.on('user', function (event) {
-            //     console.log('EVA:');
-            //     console.log(event);
-            // });
-            // //io.socket.on('message', function (data){
-            // //    console.log(data.greeting);
-            // //});
-            //
-            // io.socket.on('user', function (event) {
-            //     console.log('DEPAR:');
-            //     console.log(event);
-            // });
-            //
-            //
+            uploader.filters.push({
+                name: 'syncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options) {
+                    //console.log('syncFilter');
+                    return this.queue.length < 10;
+                }
+            });
 
 
-            // $scope.items = Departments.query({limit: 300}, function (posts) {
-            //     $scope.posts = posts;
-            //     console.log(posts);
-            // }, function (err) {
-            //     if (err) console.log(err.message);
-            // });
+            uploader.filters.push({
+                name: 'asyncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
+                    //console.log('asyncFilter');
+                    setTimeout(deferred.resolve, 1e3);
+                }
+            });
 
-            //console.log('STATE2: ');
-            //console.log($state);
-            //console.log($state.$current.url.source);
+
+            /**
+             * Фильтр проверяет рассширение
+             * Доступны для загрузки только xlsx файлы
+             */
+            uploader.filters.push({
+                name: 'expFilter',
+                fn: function (item) {
+                    if (item.name.slice(-3) !== 'jpg') {
+                        toastr.error('Расширение файла должно быть jpg.', 'Ошибка!');
+                        return false;
+                    }
+                    $scope.uploaderButtonPrice = true;
+                    return true;
+                }
+            });
+
+            // CALLBACKS
+
+            uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploader.onAfterAddingFile = function (fileItem) {
+                console.info('onAfterAddingFile', fileItem);
+            };
+            uploader.onAfterAddingAll = function (addedFileItems) {
+                console.info('onAfterAddingAll', addedFileItems);
+
+            };
+            uploader.onBeforeUploadItem = function (item) {
+                console.info('onBeforeUploadItem', item);
+                item.formData.push({id: $stateParams.userId});
+
+            };
+
+
+            uploader.onProgressItem = function (fileItem, progress) {
+                console.info('onProgressItem', fileItem, progress);
+
+            };
+            uploader.onProgressAll = function (progress) {
+                console.info('onProgressAll', progress);
+
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                console.info('onSuccessItem', fileItem);
+                console.info('onSuccessItem2', response);
+                console.info('onSuccessItem3', status);
+                console.info('onSuccessItem4', headers);
+
+
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                $scope.pathToReport = response.avatarFd;
+                $scope.goReport = response.goReport;
+                $scope.statusErr = 'Отклонено';
+                toastr.error(response.message, 'Ошибка! Статус ' + status);
+            };
+            uploader.onCancelItem = function (fileItem, response, status, headers) {
+                //console.log('uploader.onCancelItem');
+                //console.log(status);
+                //console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            //$scope.$watch('item.avatarUrl', function (value) {
+            //    $scope.item.avatarUrl = value;
+            //
+            //});
+            //
+
+            $scope.getLdap = function () {
+                //console.log($scope.item.lastName);
+                $http.post('/users/ldap', {
+                        name: $scope.item.lastName
+                    })
+                    .then(function onSuccess(sailsResponse) {
+                        //console.log('sailsResponse: ',sailsResponse);
+
+
+                        let objectContacts = {};
+                        $scope.item.contacts = [];
+                        objectContacts.type = "Внутренний телефон";
+                        objectContacts.value = sailsResponse.data[0].telephoneNumber;
+
+                       let patronymic = sailsResponse.data[0].displayName.split(' ')[2];
+                        //$scope.item.lastName = sailsResponse.data[0].sn;
+                        $scope.item.firstName = sailsResponse.data[0].givenName;
+                        $scope.item.login = sailsResponse.data[0].sAMAccountName;
+                        $scope.item.room = sailsResponse.data[0].physicalDeliveryOfficeName;
+                        $scope.item.email = sailsResponse.data[0].mail;
+                        $scope.item.contacts.push(objectContacts);
+                        $scope.item.patronymicName = patronymic;
+
+                        //[{"type":"Мобильный","value":"8-985-729-37-74"},{"type":"Телефон","value":"+7 (495) 444-18-61"},{"type":"Внутренний телефон","value":"(050) 4322"}]
+                        //$scope.item.patronymicName = patronymic;
+                        // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
+                        // window.location = '#/profile/' + $scope.editProfile.properties.id;
+                        //window.location = '/profile';
+                        for(let op in sailsResponse.data){
+                            toastr.success('Есть похожий: '+sailsResponse.data[op].displayName);
+                        }
+
+                        $scope.editProfile.loading = false;
+                    }, (err)=>{
+
+                        console.log('ERRROR!: ', err);
+                    })
+                    .catch(function onError(sailsResponse) {
+                        // console.log('sailsresponse: ', sailsResponse)
+                        // Otherwise, display generic error if the error is unrecognized.
+                        $scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
+                        toastr.error($scope.editProfile.changePassword.errorMsg);
+                    })
+                    .finally(function eitherWay() {
+                        $scope.editProfile.loading = false;
+                    });
+
+
+            };
+
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                //console.info('onCompleteItem', fileItem, response, status, headers);
+                console.info('onCompleteItem', fileItem);
+                console.info('status', status);
+
+
+                if (status == 200) {
+                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
+                    fileItem.goReport = response.goReport;
+                    fileItem.dateUpload = response.dateUpload;
+                    toastr.success(response.message, 'Ok! ');
+                    fileItem.progress = response.progress;
+                    fileItem.errorPercent = '0';
+                    fileItem.statusOk = response.message;
+                    $interval(function () {
+                        $scope.refresh();
+                        //location.reload()
+                    }, 2000, 1);
+
+                    // fileItem.allEr = response.allEr;
+                }
+                switch (response.status) {
+                    case 202:
+                        //toastr.success(response.message, ' Статус ' + response.status);
+                        fileItem.progress = response.progress;
+                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
+                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
+                        fileItem.goReport = response.goReport;
+                        fileItem.statusOk = response.message;
+                        fileItem.allEr = response.allEr;
+
+                        break;
+                }
+            };
+            uploader.onCompleteAll = function (fileItem, response, status, headers) {
+                //$scope.getDatePrice();
+                $scope.uploaderButtonPrice = false;
+            };
+
+
+            $scope.options =
+                [
+                    {display: "Загрузить файл", value: "uploader"}
+                ];
+            $scope.modeSelect = $scope.options[0];
+            $scope.uploaderView = "/js/private/admin/users/views/uploader.html";
+
 
             $scope.closed = function () {
                 if ($scope.close) {
@@ -81,9 +218,9 @@ angular.module('UserModule')
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
             $scope.refresh = function () {
-                var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
+                let item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                         $scope.users = users;
-                        console.log(users);
+                        //console.log(users);
                         item.getBirthday();
                         item.getDateInWork();
                         item.getFiredDate();
@@ -94,8 +231,8 @@ angular.module('UserModule')
                     //}
                 );
 
-                console.log($scope.item);
-                console.log($scope.users);
+                //console.log($scope.item);
+                //console.log($scope.users);
             };
 
             $scope.delete2 = function (item) {
@@ -106,7 +243,7 @@ angular.module('UserModule')
                     // $scope.$apply(function() { $location.path("/admin/users"); });
                     // $scope.refresh();
                 }, function (err) {
-                    console.log(err);
+                    //console.log(err);
                     toastr.error(err, 'Ошибка122! ');
                 })
             };
@@ -126,8 +263,8 @@ angular.module('UserModule')
                         password: $scope.editProfile.properties.password
                     })
                     .then(function onSuccess(sailsResponse) {
-                        console.log('sailsResponse: ');
-                        console.log(sailsResponse);
+                        //console.log('sailsResponse: ');
+                        //console.log(sailsResponse);
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
@@ -145,6 +282,25 @@ angular.module('UserModule')
                     });
             };
 
+            $scope.delFoto = function (item) {
+                item.avatarUrl = '';
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            //toastr.success(success);
+                            //toastr.options.closeButton = true;
+                            toastr.success('Изменения сохранены!');
+                            $scope.refresh();
+                        },
+                        function (err) {
+                            //console.log(err);
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 87445! EditController User');
+                        }
+                    );
+                }
+
+            };
+
+
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];
 
@@ -157,8 +313,8 @@ angular.module('UserModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            console.log(err);
-                            toastr.error(err.data, 'Ошибка! EditController User');
+                            //console.log(err);
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 11445! EditController User');
                         }
                     );
                 } else {
@@ -173,7 +329,7 @@ angular.module('UserModule')
                      angular.isDefined(item.email)*/
                     ) {
 
-                        item.password='111111';
+                        item.password = '111111';
 
                         item.$save(item, function (success) {
                                 //console.log(success);
@@ -184,7 +340,7 @@ angular.module('UserModule')
                                 $state.go('home.admin.user', {userId: success.id});
                             },
                             function (err) {
-                                toastr.error(err.data, 'Ошибка! EditController');
+                                toastr.error(err.data.invalidAttributes, 'Ошибка 89336! EditController User');
                             });
                     }
                 }
@@ -203,8 +359,8 @@ angular.module('UserModule')
             };
 
             $scope.removeContact = function (contact) {
-                var contacts = $scope.item.contacts;
-                for (var i = 0, ii = contacts.length; i < ii; i++) {
+                let contacts = $scope.item.contacts;
+                for (let i = 0, ii = contacts.length; i < ii; i++) {
                     if (contact === contacts[i]) {
                         contacts.splice(i, 1);
                     }
@@ -220,7 +376,7 @@ angular.module('UserModule')
             };
 
             $scope.removeSubdivision = function (department) {
-                for (var i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
+                for (let i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
                     if ($scope.item.subdivision[i].id === department.id) {
                         $scope.item.subdivision.splice(i, 1);
                         return;
@@ -235,11 +391,11 @@ angular.module('UserModule')
                     $scope.item.positions = [{}];
                 }
             };
-           
+
             $scope.removePosition = function (position) {
-                $scope.item.positionRemove =[];
-                if(!position.id) $scope.item.positions =[];
-                for (var i = 0, ii = $scope.item.positions.length; i < ii; i++) {
+                $scope.item.positionRemove = [];
+                if (!position.id) $scope.item.positions = [];
+                for (let i = 0, ii = $scope.item.positions.length; i < ii; i++) {
                     if ($scope.item.positions[i].id === position.id) {
                         $scope.item.positions.splice(i, 1);
                         $scope.item.positionRemove.push(position.id);
@@ -256,7 +412,7 @@ angular.module('UserModule')
                 return $scope.myForm.$invalid || angular.equals(item, $scope.form);
             };
 
-            var original = angular.copy($scope.item);
+            let original = angular.copy($scope.item);
 
             $scope.revert = function () {
                 $scope.item = angular.copy(original);

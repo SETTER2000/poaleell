@@ -15,26 +15,6 @@
                  */
                 $scope.limit = 300;
 
-
-                // var ups = $scope.ups =  Departments.query();
-                //  console.log('UPS1: ');
-                //  console.log(ups);
-                //  // console.log( $scope.ups.then(onFullField));
-                //  ups.$promise.then(onFullField,onReject);
-                //
-                //  function onFullField(succ){
-                //      console.log('DADAD!!!: ');
-                //      console.log(succ);
-                //
-                //      console.log('DADAD!!22!: ');
-                //      console.log(succ.filter(action:1);
-                //  }
-
-                // function onReject(err) {
-                //     console.log('ONreject');
-                //     console.log(err);
-                // }
-
                 $scope.refresh = function () {
                     /**
                      * При обращении к службе $resource возвращается сгенерированный конструктор,
@@ -43,7 +23,7 @@
                      */
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Positions.query({limit:$scope.limit, sort: $scope.sort},function (positions) {
-                        console.log('POSITIONS ITEMS:', positions);
+                        //console.log('POSITIONS ITEMS:', positions);
                         $scope.items = positions;
                     }, function(err){
                         toastr.error(err,'Ошибка ListPositionController!');
@@ -51,17 +31,13 @@
                 };
 
 
-                //$scope.sections =   $scope.departments.sections();
                 $scope.propertyName = 'name';
                 $scope.reverse = false;
-                // $scope.friends = friends;
-
 
                 $scope.sortBy = function (propertyName) {
                     $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
                     $scope.propertyName = propertyName;
                 };
-
 
 
                 $scope.msd = ['settings', 'home', 'options', 'other'];
@@ -78,6 +54,7 @@
                 BreadCrumb.prototype.add = function () {
                     this.arr.push({name: this.name, path: this.path});
                 };
+
                 BreadCrumb.prototype.set = function (name, path) {
                     this.name = name;
                     this.path = path;
@@ -92,21 +69,16 @@
                 breadcrumb.set('Admin', '/admin');
                 breadcrumb.set('Positions', '/positions/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
-
                 $scope.delete = function (item) {
                     console.log(item);
                     item.$delete(item, function (success) {
                         console.log(success);
                         $scope.refresh();
-                        // $scope.items.splice($scope.items.indexOf(item), 1);
                     }, function (err) {
                         console.log(err);
-                        // alert();
                     })
                 };
-
                 $scope.refresh();
-
             }])
     ;
 })(window.angular);

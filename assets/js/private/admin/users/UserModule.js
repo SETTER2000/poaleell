@@ -1,4 +1,7 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule', 'ngAnimate', 'ng-fx', 'angularMoment'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule','angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
+    .config(['$qProvider', function ($qProvider) {
+        $qProvider.errorOnUnhandledRejections(false);
+    }])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.users', {
@@ -78,6 +81,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     }
                 }
             })
+            .state('home.file.upload', {
+                url: 'upload',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/users/views/upload.html',
+                        controller: 'EditController'
+                    }
+                }
+            })
             //.state('home.admin.users.exit', {
             //    url: '/exit',
             //    views: {
@@ -134,6 +146,12 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         Users.prototype.er = function () {
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
+        Users.prototype.getAvatar = function () {
+            return this.avatarUrl;
+        };
+        //Users.prototype.delFoto= function () {
+        //    return this.avatarUrl = '';
+        //};
         Users.prototype.lastDateSetting = function () {
             return new Date();
         };
@@ -377,11 +395,11 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         var obj = v[key];
 
                         //console.log(obj);
-                        
+
                         for (var prop in obj) {
                             var chars;
                             if (prop === scope.filedName) {
-                                chars = obj[prop].substr(0,4);
+                                chars = obj[prop].substr(0,3); // Кол-во первых знаков от фамилии
                                 parts.push(chars);
                             }
                         }
@@ -586,6 +604,20 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             }
         };
     })
+    .directive('file', function () {
+        return {
+            scope: {
+                file: '='
+            },
+            link: function (scope, el, attrs) {
+                el.bind('change', function (event) {
+                    var file = event.target.files[0];
+                    scope.file = file ? file : undefined;
+                    scope.$apply();
+                });
+            }
+        };
+    });
     //.directive("fileread", [function () {
     //    return {
     //        scope: {

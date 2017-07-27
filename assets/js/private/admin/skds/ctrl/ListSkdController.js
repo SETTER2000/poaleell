@@ -86,15 +86,7 @@
                 };
 
 
-                $scope.calendar = moment().calendar(null, {
-                    sameDay: function (now) {
-                        if (this.isBefore(now)) {
-                            return '[Случится Сегодня]';
-                        } else {
-                            return '[Произошло сегодня]';
-                        }
-                    }
-                });
+
 
 
                 $scope.options =
@@ -113,8 +105,8 @@
 
 
                 $scope.$watch('where', function (value,old) {
-                    console.log('New val: ',value);
-                    console.log('Old val: ',old);
+                    //console.log('New val: ',value);
+                    //console.log('Old val: ',old);
                     $scope.query.regex = value;
                    $scope.refresh();
                 });
