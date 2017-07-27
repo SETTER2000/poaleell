@@ -143,8 +143,8 @@ angular.module('UserModule')
 
                         $scope.editProfile.loading = false;
                     }, (err)=>{
-                        toastr.error('ERRROR! : '+err);
-                        //console.log('ERRROR!: ', err);
+
+                        console.log('ERRROR!: ', err);
                     })
                     .catch(function onError(sailsResponse) {
                         // console.log('sailsresponse: ', sailsResponse)

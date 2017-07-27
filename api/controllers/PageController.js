@@ -39,6 +39,7 @@ module.exports = {
         if (!req.session.me) {
             return res.view('public/header', {layout: 'homepage', me: null});
         }
+
         User.findOne(req.session.me, function (err, user) {
             if (err) {
                 return res.negotiate(err);
