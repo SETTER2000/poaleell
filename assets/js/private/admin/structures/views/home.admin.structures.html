@@ -1,6 +1,4 @@
-<div id="avatar" class="row small sort-my">
-
-</div>
+<div id="avatar" class="row small sort-my"></div>
 <div class="col-md-6">
     <div id="container">
         <ul id="ups" bn-delegate="li a | selectFriend( friend )">
@@ -14,25 +12,27 @@
     </div>
 
 </div>
-<div class="col-md-6">
+<div class="col-md-6" id="table-run">
     <div id="log" ng-hide="true" class="quest"></div>
-    <div class="table">
+    <div  class="table">
         <table class="table table-condensed">
             <thead>
             <tr>
-                <th width="70%">ФИО</th> <th>Контакты</th>
+                <th></th><th width="60%">ФИО</th> <th>Контакты</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-mouseover="vis=1"  ng-mouseleave="vis=0" ng-repeat="user in users">
+                <td><img ng-cloak width="40px" ng-src="{{user.avatarUrl}}" alt=""></td>
                 <td >{{user.lastName}} {{user.firstName}} {{user.patronymicName}}
+                    <br><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;--><strong>{{user.positions | getPosition: 'name' }}</strong>
 
                     <a   ng-if="vis"  class=" btn btn-group-xs pull-right not-border  btn-default text-right" href="/admin/users/edit/{{user.id}}">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>
                 <td>
-                    <div><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;--><strong>{{user.positions | getPosition: 'name' }}</strong></div>
+                    <!--<div>&lt;!&ndash;<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;&ndash;&gt;<strong>{{user.positions | getPosition: 'name' }}</strong></div>-->
                     <div><!--<span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;--><a href="mailto:{{user.email}}">{{user.email }}</a></div>
                     <div><!--<span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;&nbsp;-->{{user.contacts | getContact: 'Внутренний телефон' }}</div>
 
@@ -49,9 +49,11 @@
 <script>
     var avatarElem = document.getElementById('avatar');
     var searchElem = document.getElementById('search');
+    var tableRunElem = document.getElementById('table-run');
 
     var avatarSourceBottom = avatarElem.getBoundingClientRect().bottom + (window.pageYOffset - 80);
     var searchSourceBottom = searchElem.getBoundingClientRect().bottom + (window.pageYOffset - 100);
+    var tableRunBottom = tableRunElem.getBoundingClientRect().bottom + (window.pageYOffset - 250);
 
     window.onscroll = function () {
         if (searchElem.classList.contains('fixed') && window.pageYOffset < searchSourceBottom) {
@@ -63,6 +65,12 @@
             avatarElem.classList.remove('fixed');
         } else if (window.pageYOffset > avatarSourceBottom) {
             avatarElem.classList.add('fixed');
+        }
+
+        if (tableRunElem.classList.contains('fixed') && window.pageYOffset < tableRunBottom) {
+            tableRunElem.classList.remove('fixed');
+        } else if (window.pageYOffset > tableRunBottom) {
+            tableRunElem.classList.add('fixed');
         }
     };
 
@@ -130,6 +138,8 @@
             e.preventDefault();
             $("#container").jstree(true).search($("#q").val());
         });
+
+
 
         $('#container').on("changed.jstree", function (e, data) {
 

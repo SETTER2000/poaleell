@@ -1,3 +1,4 @@
+'use strict';
 /**
  * DepartmentController
  *
@@ -77,18 +78,18 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
         if (!_.isString(req.param('name'))) {
-            sails.log(req.param('name'));
-            sails.log('is not string');
+            //sails.log(req.param('name'));
+            //sails.log('is not string');
             return res.badRequest('Наименование не заполнено.');
         }
-        if (req.param('name').length < 2 || req.param('name').length > 150) {
-            return res.badRequest('Наименование должно быть от 2 до 35 знаков!');
+        if (req.param('name').length < 2 || req.param('name').length > 200) {
+            return res.badRequest('Наименование должно быть от 2 до 200 знаков!');
         }
         Department.create(req.body).exec(function (err, finn) {
             if (err) {
                 return res.serverError(err);
             }
-            sails.log('Идентификатор department:', finn.id);
+            //sails.log('Идентификатор department:', finn.id);
             return res.send({id: finn.id});
 
         });

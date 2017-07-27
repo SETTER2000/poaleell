@@ -12,6 +12,7 @@
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
     <tr>
         <th>#</th>
+        <th></th>
         <th>
             <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('lastName')">{{fioArea}}
 <span class="sortOrder" ng-show="propertyName === 'lastName'"
@@ -68,6 +69,7 @@
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
         <td>{{$index+1}}</td>
+        <td><img class="photo" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false" ng-src="{{item.avatarUrl}}" alt=""></td>
         <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
         <td>
             <a href="{{item.getEditUrl(item.id)}}">
@@ -75,21 +77,22 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             </a>
         </td>
         <td>
-            <ul class="position" ng-controller="ListDepartmentController" ng-repeat="subdivision in item.subdivision">
-                <li ng-repeat="option in items | filter:subdivision.id">
+            <ul class="position" ng-controller="ListDepartmentController"
+                ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">
+                <li ng-repeat="option in items | filter:{$:searchText,id:subdivision.id}">
                     {{option.name}}
                 </li>
             </ul>
         </td>
         <td>
-            <ul class="position" ng-controller="ListPositionController" ng-repeat="position in item.position">
+            <ul class="position" ng-controller="ListPositionController" ng-repeat="position in item.positions">
                 <li ng-repeat="option in items | filter:position.id">
                     {{option.name}}
                 </li>
             </ul>
         </td>
         <td>{{item.email}}</td>
-        <td>{{item.getContact(fieldName)}}</td>
+        <td width="250px">{{item.getContact(fieldName)}}</td>
         <!--<td>{{item.diff}}</td>-->
         <td class="btn-group-xs">
             <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"

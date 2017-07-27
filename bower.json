@@ -34,7 +34,8 @@
     "moment-timezone": "^0.5.13",
     "flatpickr": "flatpickr-calendar#^2.6.3",
     "jstree": "^3.3.4",
-    "jquery-ui": "^1.12.1"
+    "jquery-ui": "^1.12.1",
+    "angular-file-upload": "^2.5.0"
   },
   "devDependencies": {
     "angular-translate": "^2.15.0",

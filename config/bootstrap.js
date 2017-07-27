@@ -12,11 +12,30 @@
 module.exports.bootstrap = function (cb) {
     const XlsxPopulate = require('xlsx-populate');
     const Ranges = require('named-ranges');
-    const DateRu = require('date-ru');
+    //const DateRu = require('date-ru');
     const XLSX = require('xlsx');
     const Watcher = require('listener-dir');
     const fs = require('fs');
     const mime = require('mime');
+    const memwatch = require('memwatch-next');
+
+    // Take first snapshot
+    //var hd = new memwatch.HeapDiff();
+    //
+    //
+
+
+    memwatch.gc('leak', function(info) {
+        console.log('Информация о куче gc leak: ', info);
+    });
+    memwatch.on('leak', function(info) {
+        console.log('ВНИМАНИЕ! Память течёт. : ', info);
+    });
+    memwatch.on('stats', function(stats) {
+        console.log('Статистика кучи: ', stats);
+    });
+
+
 
     Array.prototype.diff = function (a) {
         return this.filter(function (i) {
@@ -497,7 +516,7 @@ module.exports.bootstrap = function (cb) {
                         // 13:27 > "2017-06-21T13:27:00+00:00"
                         row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
 
-                        sails.log('FM1: '+ arrName[0]);
+                        //sails.log('FM1: '+ arrName[0]);
                         /**
                          * Проверяем есть ли фамилия
                          */
@@ -556,7 +575,10 @@ module.exports.bootstrap = function (cb) {
     });
 
     watcher3.start();
-
+    //var diff = hd.end();
+    //
+    //
+    //console.log('DIFF: ',diff);
 
     return cb();
 
