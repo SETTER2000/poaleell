@@ -119,7 +119,7 @@ module.exports = {
                         clientLDAP.destroy();
                     });
                     --count;
-                    if (+count)  return res.forbidden('Аккаунт заблокирован! Обращайтесь к системному администратору.');
+                    if (+count)  return res.forbidden('Аккаунт заблокирован! Обращайтесь к системному администратору или через 10 мин. блокировка будет снята автоматически.');
                     switch (+count) {
                         case 1:
                             word = 'попытка';
