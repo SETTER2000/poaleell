@@ -19,7 +19,7 @@ angular.module('HomepageModule').controller('HomepageController', ['$scope', '$h
                     // Handle known error type(s).
                     // Deleted account
                     if (sailsResponse.status == 403) {
-                        toastr.error(sailsResponse.data, 'Ошибка114!', {
+                        toastr.error(sailsResponse.data, 'Ошибка 114!', {
                             closeButton: true
                         });
                         return;

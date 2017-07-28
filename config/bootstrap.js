@@ -19,11 +19,6 @@ module.exports.bootstrap = function (cb) {
     const mime = require('mime');
     const memwatch = require('memwatch-next');
 
-    // Take first snapshot
-    //var hd = new memwatch.HeapDiff();
-    //
-    //
-
 
     memwatch.gc('leak', function(info) {
         console.log('Информация о куче gc leak: ', info);
@@ -31,9 +26,9 @@ module.exports.bootstrap = function (cb) {
     memwatch.on('leak', function(info) {
         console.log('ВНИМАНИЕ! Память течёт. : ', info);
     });
-    memwatch.on('stats', function(stats) {
-        console.log('Статистика кучи: ', stats);
-    });
+    //memwatch.on('stats', function(stats) {
+    //    console.log('Статистика кучи: ', stats);
+    //});
 
 
 
