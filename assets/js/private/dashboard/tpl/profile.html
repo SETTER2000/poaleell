@@ -28,13 +28,19 @@
                             <td>{{me.email}}</td>
                         </tr>
                         <tr>
-                            <th>Должность</th>
-                            <td>{{me.positions[0].name}}</td>
+                            <th>Телефон</th>
+                            <td ng-repeat="contacts in me.contacts | filter : 'Внутренний телефон'">
+                                {{contacts.value}}
+                            </td>
                         </tr>
-                        <tr>
-                            <th>Отдел</th>
-                            <td>{{me.departments[0].name}}</td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<th>Должность</th>-->
+                            <!--<td>{{me.positions[0].name}}</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th>Отдел</th>-->
+                            <!--<td>{{me.departments[0].name}}</td>-->
+                        <!--</tr>-->
                         <tr ng-if="!me.firedDate">
                             <th>Работает с</th>
                             <td>{{me.dateInWork | date: "dd.MM.yyyy"}} {{message}}</td>
