@@ -537,7 +537,7 @@ module.exports.bootstrap = function (cb) {
 
                                                 // Сохраняем изменённый документ
                                                 foundUser.save(function (err) {
-                                                    if (err) return res.negotiate(err);
+                                                    if (err) return sails.log(err);
 
                                                     sails.log('Запись сохранена: ' + createdTutorial.name);
                                                 });
