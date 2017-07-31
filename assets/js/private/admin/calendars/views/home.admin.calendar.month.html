@@ -39,8 +39,10 @@
             <tr>
                 <th colspan="2" class="text-center" width="170px" nowrap>
                     <ul class="pagination pagination-sm">
-                        <li ng-if="solo"><h4 ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}}
-                            {{daysPeriod.periodYear}}</h4></li>
+                        <li ng-if="solo">
+                            <h4 ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}}
+                            {{daysPeriod.periodYear}}</h4>
+                        </li>
                         <li ng-if="!solo"><input type="date" ng-model="mx" ng-blur="toggleBlur(mx)" class="form-control"></li>
                     </ul>
                 </th>

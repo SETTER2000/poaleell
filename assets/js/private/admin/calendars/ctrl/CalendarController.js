@@ -10,7 +10,14 @@
                 this.$stateParams = $stateParams;
                 $scope.solo = true;
                 $scope.inDate = '';
-                moment.locale('ru');
+
+                moment.defineLocale('ru', {
+                    parentLocale: 'ru',
+                    months : [
+                            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                            "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+                        ]
+                });
 
                 $scope.defaultRows = 150;
                 $scope.limitRows = [30, 50, 70, 100];
