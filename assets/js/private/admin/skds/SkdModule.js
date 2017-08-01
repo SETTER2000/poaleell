@@ -1,4 +1,4 @@
-angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate'])
+angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate','angular-flatpickr'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.skds', {

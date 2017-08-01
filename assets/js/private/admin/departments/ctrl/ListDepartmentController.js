@@ -31,7 +31,7 @@
                      * RESTful: query, get, save и delete.
                      */
                     // Сортировка наоборот sort: 'name DESC'
-                    $scope.items = Departments.query({limit: 300, sort: 'name'}, (departments) => {
+                    $scope.items = Departments.query({limit: 300, sort: 'name'}, function(departments) {
                         //console.log('DEPARTMENTS:', departments);
                         $scope.items = departments;
                     }, function (err) {

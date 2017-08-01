@@ -167,13 +167,13 @@ module.exports = {
                             Skd.native(function (err, collection) {
                                 if (err) return res.serverError(err);
 
-                                //sails.log('Поисковая дата:', req.param('sd'));
+                                sails.log('req.param_sd:',req.param('sd'));
 
                                 //"2017-06-23"
                                 let searchDate = (req.param('sd')) ? req.param('sd') : '';
                                 let match = (searchDate) ? {
                                     $match: {
-                                        date: {$gte: new Date(searchDate)}, name: reg
+                                        date: {$gte: new Date(searchDate[0]),$lte:new Date(searchDate[1])}, name: reg
                                     }
                                 } : {
                                     $match: {
@@ -182,7 +182,8 @@ module.exports = {
                                 };
                                 //mat = {$match: {date: searchDate}};
                                 //sails.log('searchDate');
-                                //sails.log('searchDate', searchDate);
+                                sails.log('searchDate', searchDate);
+                                sails.log('match', match);
                                 //sails.log(match);
                                 //sails.log('new Date(searchDate)');
                                 //sails.log(moment(searchDate));

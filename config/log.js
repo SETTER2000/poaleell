@@ -24,8 +24,9 @@ module.exports.log = {
   *                                                                          *
   ***************************************************************************/
 
-   //level: 'info'
-   level: 'error'
+   level: 'info'
+   //level: 'silly'
+   //level: 'error'
 
 };
 

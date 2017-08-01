@@ -142,7 +142,9 @@ angular.module('UserModule')
                         }
 
                         $scope.editProfile.loading = false;
-                    }, (err)=>{
+                    }, function (err) {
+                        
+
 
                         console.log('ERRROR!: ', err);
                     })

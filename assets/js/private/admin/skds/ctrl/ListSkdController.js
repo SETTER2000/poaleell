@@ -13,9 +13,26 @@
                     limit: $scope.limitAll,
                     page: 0,
                     sd: $scope.start,
-                    regex:'',
+                    regex: '',
                     property: 'name'
                 };
+
+                //window.flatpickr = require('flatpickr');
+                $scope.dateOpts = {
+                    locale: 'ru',
+                    mode: "range",
+                    dateFormat: "d.m.Y",
+                    minDate: "01-01-2015"
+                    //defaultDate: 'today'
+                };
+
+                $scope.datePostSetup = function (fpItem) {
+                    console.log('SelectedDates', fpItem.selectedDates);
+                    $scope.toggleBlur(fpItem.selectedDates);
+                    console.log('flatpickr', fpItem);
+                };
+
+                $scope.dates = [{'current':new Date()}];
 
                 $scope.expandCallback = function (index, id) {
                     $scope.idUser = id;
@@ -86,9 +103,6 @@
                 };
 
 
-
-
-
                 $scope.options =
                     [
                         {display: "Отработанное время", value: "accordion"}
@@ -104,11 +118,11 @@
                 // $scope.actionView = "/js/private/admin/skds/views/home.admin.skds.action.html";
 
 
-                $scope.$watch('where', function (value,old) {
+                $scope.$watch('where', function (value, old) {
                     //console.log('New val: ',value);
                     //console.log('Old val: ',old);
                     $scope.query.regex = value;
-                   $scope.refresh();
+                    $scope.refresh();
                 });
 
 
@@ -117,7 +131,6 @@
                     $scope.mx = mx;
                     $scope.refresh();
                 };
-
 
                 $scope.getPage = function (num) {
                     $scope.page_number = num;
