@@ -127,7 +127,7 @@ module.exports = {
                         return res.ok(results);
                     });
             });
-    
+
         });
     },
     get: function (req, res) {
@@ -138,7 +138,7 @@ module.exports = {
                 if (!foundUser) return res.notFound();
                 //sails.log('req.param(regex): ', req.param('regex'));
                 let reg = {$regex: req.param('regex'), $options: "si"};
-                
+
                 let selectedYear = (_.isEmpty(req.param('year'))) ? '' : req.param('year');
                 let limit = (_.isEmpty(req.param('limit'))) ? 100000 : req.param('limit');
                 let page = (_.isEmpty(req.param('page'))) ? 0 : req.param('page');
@@ -150,7 +150,7 @@ module.exports = {
                 if (req.param('sortField') == 'name') {
                     sort = {'_id.date': -1, '_id.name': +req.param('sortTrend')};
                 }
-                
+
                 // sails.log('selectedYear');
                 // sails.log(selectedYear);
                 let skip = (+page * +limit);
@@ -167,7 +167,7 @@ module.exports = {
                             Skd.native(function (err, collection) {
                                 if (err) return res.serverError(err);
 
-                                sails.log('req.param_sd:',req.param('sd'));
+                                sails.log('req.param_sd:', req.param('sd'));
 
                                 //"2017-06-23"
                                 let searchDate = (req.param('sd')) ? req.param('sd') : '';
@@ -179,7 +179,10 @@ module.exports = {
 
                                 let match = (searchDate) ? {
                                     $match: {
-                                        date: {$gte: new Date(moment(searchDate[0],['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD')),$lte:new Date(moment(searchDate[1],['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD'))}, name: reg
+                                        date: {
+                                            $gte: new Date(moment(searchDate[0], ['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD')),
+                                            $lte: new Date(moment(searchDate[1], ['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD'))
+                                        }, name: reg
                                     }
                                 } : {
                                     $match: {
@@ -188,8 +191,8 @@ module.exports = {
                                 };
                                 //mat = {$match: {date: searchDate}};
                                 //sails.log('searchDate');
-                                sails.log('searchDate', searchDate);
-                                sails.log('match', match);
+                                //sails.log('searchDate', searchDate);
+                                //sails.log('match', match);
                                 //sails.log(match);
                                 //sails.log('new Date(searchDate)');
                                 //sails.log(moment(searchDate));
@@ -231,8 +234,6 @@ module.exports = {
                                     return res.ok(results);
                                 });
                             });
-
-
                         });
                 });
             });
@@ -264,12 +265,12 @@ module.exports = {
                 if (err) return res.negotiate;
                 if (!foundUser) return res.notFound();
                 Skd.findOrCreate({
-                    name: req.param('name'),
-                    startPeriod: req.param('startPeriod'),
-                    endPeriod: req.param('endPeriod'),
-                    date: req.param('date'),
-                    owner: foundUser.id
-                })
+                        name: req.param('name'),
+                        startPeriod: req.param('startPeriod'),
+                        endPeriod: req.param('endPeriod'),
+                        date: req.param('date'),
+                        owner: foundUser.id
+                    })
                     .exec(function (err, createdTutorial) {
                         if (err) return res.negotiate(err);
 
@@ -492,7 +493,7 @@ module.exports = {
                          * Инициализация имён диапазонов в загружаемой книге
                          */
 
-                        // ALL
+                            // ALL
                         workbook.definedName(all.getName(), workbook.sheet(0).range(all.getRange()));
 
                         // NAMED

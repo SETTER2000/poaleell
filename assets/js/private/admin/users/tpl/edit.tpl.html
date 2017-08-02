@@ -110,16 +110,32 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group ">
-                                    <label ng-if="!item.birthday" class="control-label" for="inputSuccess12">
-                                        Дата рождения
-                                    </label>
-                                    <label ng-if="item.birthday" class="control-label" for="inputSuccess4">
-                                        Дата рождения
-                                    </label>
-                                    <input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">
 
+                                    <label  class="control-label inline" for="inputSuccess4">
+                                        Дата рождения
+
+                                    <!--<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">-->
+                                    <input   class="form-control  flatpickr " ng-flatpickr
+                                            fp-opts="dateOpts"
+                                            fp-on-setup="toggleBlur(item)"
+                                            ng-model="item.birthday ">
+                                    </label>
                                     <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                 </div>
+                                <!--<div class=flatpickr>-->
+                                    <!--<input ng-flatpickr type="text" placeholder="Select Date.." data-input-->
+                                           <!--fp-opts="dateOpts"-->
+                                           <!--fp-on-setup="toggleBlur(fpItem)"-->
+                                           <!--ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;-->
+
+                                    <!--<a class="input-button" title="toggle" data-toggle>-->
+                                        <!--<i class="icon-calendar"></i>-->
+                                    <!--</a>-->
+
+                                    <!--<a class="input-button" title="clear" data-clear>-->
+                                        <!--<spani class="glyphicon glyphicon-remove" ></spani>-->
+                                    <!--</a>-->
+                                <!--</div>-->
                             </div>
                             <!--<div class="col-md-6">-->
                                 <!--<div class="form-group " ng-if="item.birthday">-->

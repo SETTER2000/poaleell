@@ -1,14 +1,44 @@
 'use strict';
 angular.module('UserModule')
-    .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
-        function ($scope, $http, toastr, $interval, $state, Users, Positions, Departments, $stateParams, FileUploader, $rootScope) {
+    .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'moment', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $interval, $state, Users, moment, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
 
             $scope.close = 1;
+
             $scope.loginAdmin = false;
 
             $scope.edit = $state.includes('home.admin.users.edit');
+
+            $scope.dateOpts = {
+                locale: 'ru',
+                //mode: "range",
+                dateFormat: "d.m.Y",
+                minDate: "01-01-1950",
+                maxDate: "31-12-2002"
+                //defaultDate: 'today'
+            };
+
+            $scope.toggleBlur = function (mx) {
+                //if(!item) item.selectedDates = new Date();
+             /*   let y = {};
+                y = mx;
+                y.birthday = new Date(mx.birthday);
+                console.log('mx.birthday: ', new Date(moment(mx.birthday, ['DD.MM.YYYY  ZZ'])));
+                //console.log('birthday XX7:',moment.parseZone(item.birthday[1]).format());
+                $scope.item = y;
+*/
+                //mx.$save(mx, function (success) {
+                //        toastr.success('Др сохранено.');
+                //        //$state.go('home.admin.user', {userId: success.id});
+                //    },
+                //    function (err) {
+                //        toastr.error(err.data.invalidAttributes, 'Ошибка 8911! EditController User');
+                //    });
+            };
+
+            //$scope.dates = [{'current':new Date()}];
 
 
             //console.log('window.SAILS_LOCALS.me.email');
@@ -116,14 +146,12 @@ angular.module('UserModule')
                     })
                     .then(function onSuccess(sailsResponse) {
                         //console.log('sailsResponse: ',sailsResponse);
-
-
                         let objectContacts = {};
                         $scope.item.contacts = [];
                         objectContacts.type = "Внутренний телефон";
                         objectContacts.value = sailsResponse.data[0].telephoneNumber;
 
-                       let patronymic = sailsResponse.data[0].displayName.split(' ')[2];
+                        let patronymic = sailsResponse.data[0].displayName.split(' ')[2];
                         //$scope.item.lastName = sailsResponse.data[0].sn;
                         $scope.item.firstName = sailsResponse.data[0].givenName;
                         $scope.item.login = sailsResponse.data[0].sAMAccountName;
@@ -137,15 +165,12 @@ angular.module('UserModule')
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
-                        for(let op in sailsResponse.data){
-                            toastr.success('Есть похожий: '+sailsResponse.data[op].displayName);
+                        for (let op in sailsResponse.data) {
+                            toastr.success('Есть похожий: ' + sailsResponse.data[op].displayName);
                         }
 
                         $scope.editProfile.loading = false;
                     }, function (err) {
-                        
-
-
                         console.log('ERRROR!: ', err);
                     })
                     .catch(function onError(sailsResponse) {
@@ -157,8 +182,6 @@ angular.module('UserModule')
                     .finally(function eitherWay() {
                         $scope.editProfile.loading = false;
                     });
-
-
             };
 
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
@@ -302,11 +325,15 @@ angular.module('UserModule')
 
             };
 
-
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];
+                console.log('item.birthday: ',item.birthday);
+                console.log('item.birthday moment: ',moment(item.birthday,['DD.MM.YYYY']).format('YYYY-MM-DD'));
 
                 //console.log('ITEM###: ', item);
+                item.birthday =new Date(moment(item.birthday,['DD.MM.YYYY']).format('YYYY-MM-DD'));
+                //item.birthday = moment(item.birthday,['DD.MM.YYYY']);
+
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             //toastr.success(success);
@@ -330,9 +357,7 @@ angular.module('UserModule')
                      angular.isDefined(item.birthday) &&
                      angular.isDefined(item.email)*/
                     ) {
-
                         item.password = '111111';
-
                         item.$save(item, function (success) {
                                 //console.log(success);
                                 //location.reload();

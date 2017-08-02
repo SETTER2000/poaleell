@@ -159,6 +159,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             if (this.birthday) {
                 var tm;
                 tm = new Date(this.birthday);
+                var month = (tm.getUTCMonth()<10)? '0'+tm.getUTCMonth() : tm.getUTCMonth();
+                //console.log('day: ', tm.getUTCDate());
+                tm =  tm.getUTCDate()+'.'+ month+'.'+ tm.getFullYear();
                 this.birthday = tm;
             }
         };
