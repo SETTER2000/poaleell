@@ -33,12 +33,12 @@
            <!--data-enabletime="true">-->
 <!--</div>-->
 <div ng-repeat="date in dates">
-<input class="form-control  flatpickr " ng-flatpickr
-       fp-opts="dateOpts"
-       fp-on-setup="datePostSetup(fpItem)"
-       ng-model="date.current"
+<!--<input class="form-control  flatpickr " ng-flatpickr-->
+       <!--fp-opts="dateOpts"-->
+       <!--fp-on-setup="toggleBlur(fpItem)"-->
+       <!--ng-model="date.current"-->
 
->
+<!--&gt;-->
 </div>
 <!--<input class="form-control  flatpickr " type="text" placeholder="Select Date.." >-->
 <div id="avatar" class="row small sort-my">
@@ -58,15 +58,27 @@
     <div class="col-md-2">
 
         <div class="input-group input-group-sm">
-            <input type="date" ng-model="mx" ng-click="toggleBlur(mx)" ng-blur="toggleBlur(mx)" class="form-control"
-                   aria-describedby="sizing-addon3">
+            <!--<input type="date" ng-model="mx" ng-click="toggleBlur(mx)" ng-blur="toggleBlur(mx)" class="form-control"-->
+                   <!--aria-describedby="sizing-addon3">-->
+              <span class="input-group-btn">
+                <button  ng-mouseover="toggleBlur(date={})" class="btn  btn-xs btn-default" type="button" ng-click="toggleBlur(date={})">
+                    <span class="glyphicon glyphicon-remove" ></span>
+                </button>
+             </span>
+            <input  ng-init="date.current='выбрать интервал дат'"  ng-mouseleave="s=0" class="form-control  flatpickr " ng-flatpickr
+                   fp-opts="dateOpts"
+                   fp-on-setup="toggleBlur(fpItem)"
+                   ng-model="date.current"
+
+            >
             <span class="input-group-btn">
                 <button class="btn  btn-xs btn-default" type="button" ng-click="sortBy('date')">
                     <span class="sortOrder" ng-class="{reverse: reverse}"></span>
                 </button>
              </span>
 
-        </div><!-- /input-group -->
+
+        </div>
 
 
     </div>

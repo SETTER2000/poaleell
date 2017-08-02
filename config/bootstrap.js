@@ -539,7 +539,7 @@ module.exports.bootstrap = function (cb) {
                                                 foundUser.save(function (err) {
                                                     if (err) return sails.log(err);
 
-                                                    sails.log('Запись сохранена: ' + createdTutorial.name);
+                                                    console.log('Запись сохранена: ' + createdTutorial.name);
                                                 });
                                             });
                                     }

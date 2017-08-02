@@ -171,9 +171,15 @@ module.exports = {
 
                                 //"2017-06-23"
                                 let searchDate = (req.param('sd')) ? req.param('sd') : '';
+
+                                //sails.log('MOMENT: ', moment(searchDate[1],['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD'));
+                                //sails.log('searchDate[1]: ', new Date(moment(searchDate[1],['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD')));
+                                ////sails.log('searchDate[0].moment: ', moment(searchDate[0], ).format('YYYY-MM-DD'));
+
+
                                 let match = (searchDate) ? {
                                     $match: {
-                                        date: {$gte: new Date(searchDate[0]),$lte:new Date(searchDate[1])}, name: reg
+                                        date: {$gte: new Date(moment(searchDate[0],['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD')),$lte:new Date(moment(searchDate[1],['YYYY-MM-DD HH:mm:ss ZZ']).format('YYYY-MM-DD'))}, name: reg
                                     }
                                 } : {
                                     $match: {

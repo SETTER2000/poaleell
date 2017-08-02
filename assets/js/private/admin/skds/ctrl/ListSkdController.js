@@ -22,15 +22,16 @@
                     locale: 'ru',
                     mode: "range",
                     dateFormat: "d.m.Y",
-                    minDate: "01-01-2015"
+                    minDate: "01-01-2015",
+                    maxDate: "today"
                     //defaultDate: 'today'
                 };
 
-                $scope.datePostSetup = function (fpItem) {
-                    console.log('SelectedDates', fpItem.selectedDates);
-                    $scope.toggleBlur(fpItem.selectedDates);
-                    console.log('flatpickr', fpItem);
-                };
+                //$scope.datePostSetup = function (fpItem) {
+                //    console.log('SelectedDates', fpItem.selectedDates);
+                //    $scope.toggleBlur(fpItem.selectedDates);
+                //    console.log('flatpickr', fpItem);
+                //};
 
                 $scope.dates = [{'current':new Date()}];
 
@@ -127,8 +128,12 @@
 
 
                 $scope.toggleBlur = function (mx) {
-                    $scope.query.sd = mx;
-                    $scope.mx = mx;
+                    if(!mx) mx.selectedDates = new Date();
+                    //console.log('mx.selectedDates: ', mx.selectedDates);
+                    //console.log('SelectedDates XX7:',moment.parseZone(mx.selectedDates[1]).format());
+
+                    $scope.query.sd = mx.selectedDates;
+                    $scope.mx = mx.selectedDates;
                     $scope.refresh();
                 };
 
