@@ -661,16 +661,16 @@ module.exports = {
 
         };
 
-        console.log('Param ID: ', req.param('id'));
-        console.log('objEdit555: ', obj);
+        //console.log('Param ID: ', req.param('id'));
+        //console.log('objEdit555: ', obj);
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err) {
-                console.log('VVV err: ', err);
-                console.log('objEdit11: ', objEdit);
+                //console.log('VVV err: ', err);
+                //console.log('objEdit11: ', objEdit);
                 return res.redirect('/admin/users/edit/' + req.param('id'));
             }
 
-            console.log('objEdit: ', objEdit);
+            //console.log('objEdit: ', objEdit);
             User.findOne(req.param('id'))
                 .populate('positions')
                 .exec(function (err, user) {
@@ -686,8 +686,6 @@ module.exports = {
                     if (req.param('positionRemove')) {
                         user.positions.remove(req.param('positionRemove'));
                     }
-
-
                     user.save(function (err) {
                         if (err) return res.negotiate('ERR: ' + err);
                         res.ok();
