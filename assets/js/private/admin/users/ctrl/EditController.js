@@ -3,7 +3,25 @@ angular.module('UserModule')
     .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'moment', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
         function ($scope, $http, toastr, $interval, $state, Users, moment, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
-            if (!$scope.me.admin && !$scope.me.kadr) $state.go('home.admin.users');
+            var info = {
+                changed: 'Изменения сохранены!',
+                passChange: 'Пароль обновлён!',
+                error: 'Ошибка!',
+                requiredJpg: 'Расширение файла должно быть jpg.',
+                isSimilar: 'Есть похожий: ',
+                ok: 'OK!',
+                objectDelete: 'Объект удалён.',
+                newUserOk: 'Новый пользователь создан.',
+                passDefault:'111111',
+                redirectSelf:'home.admin.users',
+                ru:'ru',
+                dateFormat:"d.m.Y",
+                minDate:"01-01-1950",
+                maxDate:"31-12-2002",
+
+            };
+
+            if (!$scope.me.admin && !$scope.me.kadr) $state.go(info.redirectSelf);
 
             $scope.close = 1;
 
@@ -12,27 +30,27 @@ angular.module('UserModule')
             $scope.edit = $state.includes('home.admin.users.edit');
 
             $scope.dateOpts = {
-                locale: 'ru',
+                locale: info.ru,
                 //mode: "range",
-                dateFormat: "d.m.Y",
-                minDate: "01-01-1950",
-                maxDate: "31-12-2002"
+                dateFormat: info.dateFormat,
+                minDate: info.minDate,
+                maxDate: info.maxDate
                 //defaultDate: 'today'
             };
 
             $scope.dateOpts2 = {
-                locale: 'ru',
+                locale:info.ru,
                 //mode: "range",
-                dateFormat: "d.m.Y",
-                minDate: "01-01-1950"
+                dateFormat: info.dateFormat,
+                minDate: info.minDate
                 //defaultDate: 'today'
             };
 
             $scope.dateOpts3 = {
-                locale: 'ru',
+                locale: info.ru,
                 //mode: "range",
-                dateFormat: "d.m.Y",
-                minDate: "01-01-1950"
+                dateFormat: info.dateFormat,
+                minDate: info.minDate
                 //defaultDate: 'today'
             };
 
@@ -46,14 +64,6 @@ angular.module('UserModule')
                 //$scope.refresh();
             };
 
-
-            //$scope.dates = [{'current':new Date()}];
-
-
-            //console.log('window.SAILS_LOCALS.me.email');
-            //console.log(SAILS_LOCALS.me.email);
-            //var emAdmin = SAILS_LOCALS.me.email;
-
             var uploader = $scope.uploader = new FileUploader({
                 url: '/file/upload',
                 autoUpload: true,
@@ -65,7 +75,6 @@ angular.module('UserModule')
             uploader.filters.push({
                 name: 'syncFilter',
                 fn: function (item /*{File|FileLikeObject}*/, options) {
-                    //console.log('syncFilter');
                     return this.queue.length < 10;
                 }
             });
@@ -74,7 +83,6 @@ angular.module('UserModule')
             uploader.filters.push({
                 name: 'asyncFilter',
                 fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
-                    //console.log('asyncFilter');
                     setTimeout(deferred.resolve, 1e3);
                 }
             });
@@ -88,7 +96,7 @@ angular.module('UserModule')
                 name: 'expFilter',
                 fn: function (item) {
                     if (item.name.slice(-3) !== 'jpg') {
-                        toastr.error('Расширение файла должно быть jpg.', 'Ошибка!');
+                        toastr.error(info.requiredJpg, info.error);
                         return false;
                     }
                     $scope.uploaderButtonPrice = true;
@@ -135,7 +143,7 @@ angular.module('UserModule')
                 $scope.pathToReport = response.avatarFd;
                 $scope.goReport = response.goReport;
                 $scope.statusErr = 'Отклонено';
-                toastr.error(response.message, 'Ошибка! Статус ' + status);
+                toastr.error(response.message, info.error + ' Статус ' + status);
             };
             uploader.onCancelItem = function (fileItem, response, status, headers) {
                 //console.log('uploader.onCancelItem');
@@ -175,12 +183,12 @@ angular.module('UserModule')
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
                         for (let op in sailsResponse.data) {
-                            toastr.success('Есть похожий: ' + sailsResponse.data[op].displayName);
+                            toastr.success(info.isSimilar + sailsResponse.data[op].displayName);
                         }
 
                         $scope.editProfile.loading = false;
                     }, function (err) {
-                        console.log('ERRROR!: ', err);
+                        console.log(info.error, err);
                     })
                     .catch(function onError(sailsResponse) {
                         // console.log('sailsresponse: ', sailsResponse)
@@ -195,8 +203,6 @@ angular.module('UserModule')
 
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                 //console.info('onCompleteItem', fileItem, response, status, headers);
-                console.info('onCompleteItem', fileItem);
-                console.info('status', status);
 
 
                 if (status == 200) {
@@ -271,14 +277,14 @@ angular.module('UserModule')
 
             $scope.delete2 = function (item) {
                 item.$delete(item, function (success) {
-                    toastr.success('Объект удалён.', 'OK! ');
-                    $state.go('home.admin.users');
+                    toastr.success(info.objectDelete, info.ok);
+                    $state.go(info.redirectSelf);
                     // $location.path("/table");
                     // $scope.$apply(function() { $location.path("/admin/users"); });
                     // $scope.refresh();
                 }, function (err) {
                     //console.log(err);
-                    toastr.error(err, 'Ошибка122! ');
+                    toastr.error(err, info.error + ' 122! ');
                 })
             };
 
@@ -302,7 +308,7 @@ angular.module('UserModule')
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;
                         //window.location = '/profile';
-                        toastr.success('Пароль обновлён!');
+                        toastr.success(info.passChange);
                         $scope.editProfile.loading = false;
                     })
                     .catch(function onError(sailsResponse) {
@@ -322,12 +328,12 @@ angular.module('UserModule')
                     item.$update(item, function (success) {
                             //toastr.success(success);
                             //toastr.options.closeButton = true;
-                            toastr.success('Изменения сохранены!');
+                            toastr.success(info.changed);
                             $scope.refresh();
                         },
                         function (err) {
                             //console.log(err);
-                            toastr.error(err.data.invalidAttributes, 'Ошибка 87445! EditController User');
+                            toastr.error(err.data.invalidAttributes, info.error + ' 87445!');
                         }
                     );
                 }
@@ -350,11 +356,11 @@ angular.module('UserModule')
                 item = reversValue(item);
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
-                            toastr.success('Изменения сохранены!');
+                            toastr.success(info.changed);
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data.invalidAttributes, 'Ошибка 11445! EditController User');
+                            toastr.error(err.data.invalidAttributes, info.error + ' 11445!');
                         }
                     );
                 } else {
@@ -368,17 +374,17 @@ angular.module('UserModule')
                      angular.isDefined(item.birthday) &&
                      angular.isDefined(item.email)*/
                     ) {
-                        item.password = '111111';
+                        item.password = info.passDefault;
                         item.$save(item, function (success) {
                                 //console.log(success);
                                 //location.reload();
-                                toastr.success('Новый пользователь создан.');
+                                toastr.success(info.newUserOk);
                                 // /admin/user/
                                 //$location.path('/profile') ;
                                 $state.go('home.admin.user', {userId: success.id});
                             },
                             function (err) {
-                                toastr.error(err.data.invalidAttributes, 'Ошибка 89336! EditController User');
+                                toastr.error(err.data.invalidAttributes, info.error + ' 89336!');
                             });
                     }
                 }
@@ -427,12 +433,12 @@ angular.module('UserModule')
 
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
-                            toastr.success('Изменения сохранены!');
+                            toastr.success(info.changed);
                             $scope.refresh();
                         },
                         function (err) {
                             //console.log('ERR: ', err);
-                            toastr.error(err.data.invalidAttributes, 'Ошибка 44006!');
+                            toastr.error(err.data.invalidAttributes, info.error + ' 44006!');
                         });
                 }
             };
@@ -446,11 +452,11 @@ angular.module('UserModule')
 
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
-                            toastr.success('Изменения сохранены!');
+                            toastr.success(info.changed);
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data.invalidAttributes, 'Ошибка 44016!');
+                            toastr.error(err.data.invalidAttributes, info.error + ' 44016!');
                         });
                 }
             };
@@ -463,15 +469,14 @@ angular.module('UserModule')
                 //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
 
                 if (angular.isDefined(item.id)) {
-                    console.log('Vitem: ', item);
                     item.$update(item, function (success) {
-                            toastr.success('Изменения сохранены!');
+                            toastr.success(info.changed);
                             $scope.refresh();
                             //$scope.item.firedDate = success.getFiredDate;
                         },
                         function (err) {
-                            console.log('ERR: ', err);
-                            toastr.error(err.data.invalidAttributes, 'Ошибка 90!');
+                            console.log(info.error, err);
+                            toastr.error(err.data.invalidAttributes, info.error + ' 90!');
                         });
                 }
             };
