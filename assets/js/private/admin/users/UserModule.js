@@ -171,6 +171,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             if (this.dateInWork) {
                 var tm;
                 tm = new Date(this.dateInWork);
+                var month = ((+tm.getMonth()+1)<10)? '0'+(+tm.getMonth()+1) : (+tm.getMonth()+1);
+                var date = (+tm.getDate()<10)? '0'+tm.getDate() : tm.getDate();
+                //console.log('day: ', tm.getUTCDate());
+                tm =  date+'.'+ month+'.'+ tm.getFullYear();
                 this.dateInWork = tm;
             }
         };
@@ -178,6 +182,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             if (this.firedDate) {
                 var tm;
                 tm = new Date(this.firedDate);
+                var month = ((+tm.getMonth()+1)<10)? '0'+(+tm.getMonth()+1) : (+tm.getMonth()+1);
+                var date = (+tm.getDate()<10)? '0'+tm.getDate() : tm.getDate();
+                //console.log('day: ', tm.getUTCDate());
+                tm =  date+'.'+ month+'.'+ tm.getFullYear();
                 this.firedDate = tm;
             }
         };

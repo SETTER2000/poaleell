@@ -119,7 +119,7 @@ module.exports = {
                         clientLDAP.destroy();
                     });
                     --count;
-                    if (+count<0)  return res.forbidden('Аккаунт заблокирован! Обращайтесь к системному администратору или через 10 мин. блокировка будет снята автоматически.');
+                    if (+count < 0)  return res.forbidden('Аккаунт заблокирован! Обращайтесь к системному администратору или через 10 мин. блокировка будет снята автоматически.');
                     switch (+count) {
                         case 1:
                             word = 'попытка';
@@ -221,7 +221,7 @@ module.exports = {
                     console.log('searchLDAP ошибка поиска: ', err);
                     return res.negotiate(err);
                 }
-                ldapUser.on('searchEntry', function(entry) {
+                ldapUser.on('searchEntry', function (entry) {
                     //console.log('entry: ' + JSON.stringify(entry.object));
                     userAr.push(entry.object);
                 });
@@ -640,6 +640,7 @@ module.exports = {
      */
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        let fDt = (req.param('firedDate')) ? req.param('firedDate') : null;
         var obj = {
             login: req.param('login'),
             email: req.param('email'),
@@ -652,7 +653,7 @@ module.exports = {
             dateInWork: req.param('dateInWork'),
             position: req.param('position'),
             contacts: req.param('contacts'),
-            firedDate: req.param('firedDate'),
+            firedDate: fDt,
             action: req.param('action'),
             pfr: req.param('pfr'),
             avatarUrl: req.param('avatarUrl'),
@@ -660,16 +661,21 @@ module.exports = {
 
         };
 
-
+        //console.log('Param ID: ', req.param('id'));
+        //console.log('objEdit555: ', obj);
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
-            if (err)  return res.redirect('/admin/users/edit/' + req.param('id'));
+            if (err) {
+                //console.log('VVV err: ', err);
+                //console.log('objEdit11: ', objEdit);
+                return res.redirect('/admin/users/edit/' + req.param('id'));
+            }
 
-
+            //console.log('objEdit: ', objEdit);
             User.findOne(req.param('id'))
                 .populate('positions')
                 .exec(function (err, user) {
                     if (err) return res.negotiate(err);
-                    if (!user) return res.notFound();
+                    if (!user) return res.notFound('Не могу');
 
                     // console.log('positionRemove:', req.param('positionRemove'));
                     user.positions.add(req.param('positions'));

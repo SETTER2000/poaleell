@@ -20,23 +20,32 @@ angular.module('UserModule')
                 //defaultDate: 'today'
             };
 
-            $scope.toggleBlur = function (mx) {
-                //if(!item) item.selectedDates = new Date();
-             /*   let y = {};
-                y = mx;
-                y.birthday = new Date(mx.birthday);
-                console.log('mx.birthday: ', new Date(moment(mx.birthday, ['DD.MM.YYYY  ZZ'])));
-                //console.log('birthday XX7:',moment.parseZone(item.birthday[1]).format());
-                $scope.item = y;
-*/
-                //mx.$save(mx, function (success) {
-                //        toastr.success('Др сохранено.');
-                //        //$state.go('home.admin.user', {userId: success.id});
-                //    },
-                //    function (err) {
-                //        toastr.error(err.data.invalidAttributes, 'Ошибка 8911! EditController User');
-                //    });
+            $scope.dateOpts2 = {
+                locale: 'ru',
+                //mode: "range",
+                dateFormat: "d.m.Y",
+                minDate: "01-01-1950"
+                //defaultDate: 'today'
             };
+
+            $scope.dateOpts3 = {
+                locale: 'ru',
+                //mode: "range",
+                dateFormat: "d.m.Y",
+                minDate: "01-01-1950"
+                //defaultDate: 'today'
+            };
+
+            $scope.toggleBlur = function (mx) {
+                //if(!mx) mx.selectedDates = new Date();
+                ////console.log('mx.selectedDates: ', mx.selectedDates);
+                ////console.log('SelectedDates XX7:',moment.parseZone(mx.selectedDates[1]).format());
+                //
+                //$scope.query.sd = mx.selectedDates;
+                //$scope.mx = mx.selectedDates;
+                //$scope.refresh();
+            };
+
 
             //$scope.dates = [{'current':new Date()}];
 
@@ -327,11 +336,13 @@ angular.module('UserModule')
 
             $scope.saveEdit = function (item) {
                 //$scope.item.subdivision = [];
-                console.log('item.birthday: ',item.birthday);
-                console.log('item.birthday moment: ',moment(item.birthday,['DD.MM.YYYY']).format('YYYY-MM-DD'));
+                //console.log('item.birthday: ',item.birthday);
+                //console.log('item.birthday moment: ',moment(item.birthday,['DD.MM.YYYY']).format('YYYY-MM-DD'));
 
                 //console.log('ITEM###: ', item);
-                item.birthday =new Date(moment(item.birthday,['DD.MM.YYYY']).format('YYYY-MM-DD'));
+                item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 //item.birthday = moment(item.birthday,['DD.MM.YYYY']);
 
                 if (angular.isDefined(item.id)) {
@@ -410,6 +421,53 @@ angular.module('UserModule')
                     }
                 }
             };
+
+            $scope.removeBirthday = function (item) {
+                item.birthday = null;
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            toastr.success('Изменения сохранены!');
+                            //$scope.item.birthday = success.data.birthday;
+                            item.getBirthday();
+                            //item.getDateInWork();
+                            //item.getFiredDate();
+                        },
+                        function (err) {
+                            //console.log('ERR: ', err);
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 44006!');
+                        });
+                }
+            };
+
+            $scope.removeDateInWork = function (item) {
+                item.dateInWork = null;
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            toastr.success('Изменения сохранены!');
+                            $scope.item.dateInWork = success.data.dateInWork;
+                        },
+                        function (err) {
+                            //console.log('ERR: ', err);
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 44016!');
+                        });
+                }
+            };
+
+            $scope.removeFired = function (item) {
+                item.firedDate = null;
+                if (angular.isDefined(item.id)) {
+                    console.log('Vitem: ', item);
+                    item.$update(item, function (success) {
+                            toastr.success('Изменения сохранены!');
+                            $scope.item.firedDate = success.data.firedDate;
+                        },
+                        function (err) {
+                            console.log('ERR: ', err);
+                            toastr.error(err.data.invalidAttributes, 'Ошибка 90!');
+                        });
+                }
+            };
+
 
             $scope.addPosition = function () {
                 if (angular.isArray($scope.item.positions)) {

@@ -98,6 +98,7 @@ module.exports.routes = {
     'DELETE /users/:id': 'UserController.destroy',
     'PUT /users/:id': 'UserController.update',
 
+
     /**
      * Position
      */

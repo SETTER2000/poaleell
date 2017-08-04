@@ -22,49 +22,35 @@
     <div class="row">
 
 
-
-
-
-
-
-
-
-
-
-  <!---->
-      <!---->
+        <!---->
+        <!---->
         <!--<form action="/user/avatarUpload" enctype="multipart/form-data" method="post">-->
-            <!--<input type="file" name="avatar" multiple="multiple"><br>-->
-            <!--<input type="submit" value="Загрузить">-->
+        <!--<input type="file" name="avatar" multiple="multiple"><br>-->
+        <!--<input type="submit" value="Загрузить">-->
         <!--</form>-->
 
         <!--<div ng-show="uploader.isHTML5">-->
-            <!--&lt;!&ndash; 3. nv-file-over uploader="link" over-class="className" &ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="well my-drop-zone" nv-file-over="" uploader="uploader">&ndash;&gt;-->
-            <!--&lt;!&ndash;Зона перетаскивания без фильтра&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash; 3. nv-file-over uploader="link" over-class="className" &ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="well my-drop-zone" nv-file-over="" uploader="uploader">&ndash;&gt;-->
+        <!--&lt;!&ndash;Зона перетаскивания без фильтра&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-            <!--&lt;!&ndash; Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" &ndash;&gt;-->
-            <!--<div nv-file-drop="" uploader="uploader" options="{ url: '/file/upload' }">-->
-                <!--<div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">-->
-                    <!--Перетащи аватар сюда-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--&lt;!&ndash; Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" &ndash;&gt;-->
+        <!--<div nv-file-drop="" uploader="uploader" options="{ url: '/file/upload' }">-->
+        <!--<div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">-->
+        <!--Перетащи аватар сюда-->
         <!--</div>-->
-
+        <!--</div>-->
+        <!--</div>-->
 
 
         <!--<div ui-view="uploader"></div>-->
         <!--<div class="file-upload">-->
-            <!--<label>-->
-                <!--<input type="file"  nv-file-select="" uploader="uploader" multiple />-->
-                <!--<span>Выбрать прайс</span>-->
-            <!--</label>-->
+        <!--<label>-->
+        <!--<input type="file"  nv-file-select="" uploader="uploader" multiple />-->
+        <!--<span>Выбрать прайс</span>-->
+        <!--</label>-->
         <!--</div>-->
-
-
-
-
 
 
         <div ng-class="{'col-md-6':close, 'col-md-12':!close, 'fx-fade-left':!close, 'fx-fade-right':close}">
@@ -90,11 +76,11 @@
                             </div>
                             <label class="control-label" for="inputSuccess1">Фамилия</label>
                             <!--<input  type="text" class="form-control" ng-model="item.lastName">-->
-                            <input ng-if="!edit" autofocus ng-change="getLdap()" required type="text" class="form-control" ng-model="item.lastName">
-                            <input ng-if="edit" autofocus  required type="text" class="form-control" ng-model="item.lastName">
+                            <input ng-if="!edit" autofocus ng-change="getLdap()" required type="text" class="form-control"
+                                   ng-model="item.lastName">
+                            <input ng-if="edit" autofocus required type="text" class="form-control" ng-model="item.lastName">
                             <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-
 
 
                         <div class="form-group">
@@ -107,50 +93,69 @@
                             <input type="text" class="form-control" required ng-model="item.patronymicName">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group ">
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-3">-->
+                                <!--<div class="form-group ">-->
 
-                                    <label  class="control-label inline" for="inputSuccess4">
-                                        Дата рождения
+                                    <!--<label class="control-label inline" for="inputSuccess4">-->
 
-                                    <!--<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">-->
-                                    <input   class="form-control  flatpickr " ng-flatpickr
-                                            fp-opts="dateOpts"
-                                            fp-on-setup="toggleBlur(item)"
-                                            ng-model="item.birthday ">
-                                    </label>
-                                    <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                </div>
-                                <!--<div class=flatpickr>-->
-                                    <!--<input ng-flatpickr type="text" placeholder="Select Date.." data-input-->
-                                           <!--fp-opts="dateOpts"-->
-                                           <!--fp-on-setup="toggleBlur(fpItem)"-->
-                                           <!--ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;-->
 
-                                    <!--<a class="input-button" title="toggle" data-toggle>-->
-                                        <!--<i class="icon-calendar"></i>-->
-                                    <!--</a>-->
-
-                                    <!--<a class="input-button" title="clear" data-clear>-->
-                                        <!--<spani class="glyphicon glyphicon-remove" ></spani>-->
-                                    <!--</a>-->
-                                <!--</div>-->
-                            </div>
-                            <!--<div class="col-md-6">-->
-                                <!--<div class="form-group " ng-if="item.birthday">-->
-                                    <!--<label class="control-label" for="inputSuccess5">Дата рождения </label>-->
-
-                                    <!--<div><a href="#" class="btn btn-default  disabled" role="button">-->
-                                     <!--<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"-->
-                                           <!--aria-hidden="true"></span>-->
-                                        <!--{{item.birthday | date:'dd.MM.yyyy'}}-->
-                                    <!--</a></div>-->
-
+                                        <!--&lt;!&ndash;<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">&ndash;&gt;-->
+                                        <!--<input class="form-control  flatpickr " ng-flatpickr-->
+                                               <!--fp-opts="dateOpts"-->
+                                               <!--fp-on-setup="toggleBlur(item)"-->
+                                               <!--ng-model="item.birthday ">-->
+                                    <!--</label>-->
                                     <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
                                 <!--</div>-->
+                                <!--&lt;!&ndash;<div class=flatpickr>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input ng-flatpickr type="text" placeholder="Select Date.." data-input&ndash;&gt;-->
+                                <!--&lt;!&ndash;fp-opts="dateOpts"&ndash;&gt;-->
+                                <!--&lt;!&ndash;fp-on-setup="toggleBlur(fpItem)"&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;<a class="input-button" title="toggle" data-toggle>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<i class="icon-calendar"></i>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;<a class="input-button" title="clear" data-clear>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<spani class="glyphicon glyphicon-remove" ></spani>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
                             <!--</div>-->
+                            <!--&lt;!&ndash;<div class="col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group " ng-if="item.birthday">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<label class="control-label" for="inputSuccess5">Дата рождения </label>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<div><a href="#" class="btn btn-default  disabled" role="button">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"&ndash;&gt;-->
+                            <!--&lt;!&ndash;aria-hidden="true"></span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;{{item.birthday | date:'dd.MM.yyyy'}}&ndash;&gt;-->
+                            <!--&lt;!&ndash;</a></div>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+
+
+                        <div class="form-group">
+                            <label class="control-label">
+                                Дата рождения
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control flatpickr" ng-flatpickr
+                                       fp-opts="dateOpts"
+                                       fp-on-setup="toggleBlur(item)"
+                                       ng-model="item.birthday">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span class="glyphicon glyphicon-remove"></span></button>
+                            </span>
+                            </div>
                         </div>
+
+
+
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess6">Логин</label>
                             <input type="text" class="form-control" ng-model="item.login">
@@ -169,7 +174,8 @@
                             <div class="form-inline" ng-repeat="department in item.subdivision">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="department.id">
-                                        <option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">{{option.name}}</option>
+                                        <option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">{{option.name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <button type="button" class="btn btn-default" ng-click="removeSubdivision(department)">x</button>
@@ -181,30 +187,18 @@
                         <!--< N E W  P O S I T I O N -->
                         <div ng-controller="ListPositionController" class="form-group ">
                             <label class="control-label" ng-bind="items[0].sc()"></label>
-                            <span ng-if="!item.positions.length>0">[ <a href="#"  ng-click="addPosition()">добавить</a> ]</span>
+                            <span ng-if="!item.positions.length>0">[ <a href="#" ng-click="addPosition()">добавить</a> ]</span>
                             <div class="form-inline" ng-repeat="position in item.positions">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="position.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}</option>
+                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <button type="button" class="btn btn-default" ng-click="removePosition(position)">x</button>
                             </div>
                             <!--<pre>P O S I T I O N S : {{items | limitTo:5 | json }}</pre>-->
                         </div>
-
-
-                        <!--<div class="form-group ">-->
-                            <!--<label class="control-label" for="inputSuccess10">Фото</label>-->
-                            <!--&lt;!&ndash;<input type="file" class="form-control"  />&ndash;&gt;-->
-
-
-
-                            <!--&lt;!&ndash;<form action="/user/avatarUpload" enctype="multipart/form-data" method="post">&ndash;&gt;-->
-                                <!--<input type="file" name="item.avatar" multiple="multiple"><br>-->
-                                <!--<input type="submit" value="Загрузить">-->
-                            <!--&lt;!&ndash;</form>&ndash;&gt;-->
-                        <!--</div>-->
 
 
                         <div class="form-group ">
@@ -246,34 +240,23 @@
                             <!--[ <a href="#" ng-click="removeContact(contact)">×</a> ]-->
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="control-label" for="inputSuccess11"></label>
-                                    <label ng-if="!item.dateInWork" class="control-label" for="inputSuccess12">
-                                      Дата приёма на работу
-                                    </label>
-                                    <label ng-if="item.dateInWork" class="control-label" for="inputSuccess13">
-                                        Принят на работу
-                                    </label>
-                                    <input type="date" class="form-control" min="1995-01-01" max="{{item.getCurrentDate()}}"
-                                           ng-model="item.dateInWork">
-                                    <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                </div>
-                            </div>
-                            <!--<div class="col-md-6">-->
-                                <!--<div class="form-group " ng-if="item.dateInWork">-->
-                                    <!--<label class="control-label" for="inputSuccess14">Дата приёма на работу</label>-->
-                                    <!--<div><a href="#" class="btn btn-default  disabled" role="button">-->
-                                     <!--<span class="glyphicon " ng-class="{ 'glyphicon-hourglass':item.dateInWork}"-->
-                                           <!--aria-hidden="true"></span>-->
-                                        <!--{{item.dateInWork | date:'dd.MM.yyyy'}}-->
-                                    <!--</a></div>-->
-                                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        </div>
 
+                        <div class="form-group">
+                            <label class="control-label">
+                                Принят на работу
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control flatpickr" ng-flatpickr
+                                       fp-opts="dateOpts3"
+                                       fp-on-setup="toggleBlur(item)"
+                                       ng-model="item.dateInWork">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" ng-click="removeDateInWork(item)">
+                                  <span class="glyphicon glyphicon-remove"></span>
+                              </button>
+                            </span>
+                            </div>
+                        </div>
                         <div class="form-group ">
                             <label class="checkbox-inline">
                                 <input type="checkbox" ng-model="item.fired"> Уволен
@@ -282,35 +265,24 @@
 
                             <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-                        <div ng-if="item.id" class="row">
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label ng-if="!item.firedDate" class="control-label" for="inputSuccess16">
-                                        Дата увольнения
-                                    </label>
-                                    <label ng-if="item.firedDate" class="control-label" for="inputSuccess17">
-                                        Дата увольнения
-                                    </label>
-                                    <input type="date" class="form-control" ng-model="item.firedDate">
-
-                                    <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                </div>
-                            </div>
-                            <!--<div class="col-md-6">-->
-                                <!--<div class="form-group " ng-if="item.firedDate">-->
-                                    <!--<label class="control-label" for="inputSuccess18">Дата увольнения</label>-->
-                                    <!--<div><a href="#" class="btn btn-default  disabled" role="button">-->
-                                     <!--<span class="glyphicon " ng-class="{ 'glyphicon-hourglass':firedDate}"-->
-                                           <!--aria-hidden="true"></span>-->
-                                        <!--{{item.firedDate | date:'dd.MM.yyyy'}}-->
-                                    <!--</a></div>-->
-                                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        <div class="form-group">
+                        <label class="control-label">
+                            Дата увольнения
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control flatpickr" ng-flatpickr
+                                   fp-opts="dateOpts3"
+                                   fp-on-setup="toggleBlur(item)"
+                                   ng-model="item.firedDate">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" ng-click="removeFired(item)"><span class="glyphicon glyphicon-remove"></span></button>
+                            </span>
                         </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess25">Комната</label>
-                            <input required type="text" class="form-control"  ng-model="item.room">
+                            <input required type="text" class="form-control" ng-model="item.room">
                         </div>
                         <div ng-if="(me.admin)" class="row" ng-if="item.id">
                             <div class="col-md-5">
@@ -345,33 +317,33 @@
                         <div ng-show="((me.admin ) && !edit)" class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="control-group form-group">
-                                    <input data-ng-model="item.password"    data-ng-minlength="6"
+                                    <input data-ng-model="item.password" data-ng-minlength="6"
                                            type="password" name="password"
                                            class="form-control" placeholder="Пароль" tabindex="6">
-<!--<span class="help-block has-error" data-ng-if="item.password.$dirty">-->
-<!--<span data-ng-show="item.password.$error.required">Поле обязательно к заполнению.</span>-->
-<!--<span data-ng-show="item.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>-->
-<!--</span>-->
+                                    <!--<span class="help-block has-error" data-ng-if="item.password.$dirty">-->
+                                    <!--<span data-ng-show="item.password.$error.required">Поле обязательно к заполнению.</span>-->
+                                    <!--<span data-ng-show="item.password.$error.minlength">Пароль должен быть не менее 6 символов.</span>-->
+                                    <!--</span>-->
                                 </div>
                             </div>
 
                             <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="control-group form-group">-->
-                                    <!--<input data-ng-model="item.encryptedPassword" required   type="password"-->
-                                           <!--name="confirmation"-->
-                                           <!--class="form-control"-->
-                                           <!--placeholder="Повторить пароль" tabindex="7">-->
-    <!--&lt;!&ndash;<span class="help-block has-error" data-ng-if="item.confirmation.$dirty">&ndash;&gt;-->
-    <!--&lt;!&ndash;<span data-ng-show="item.password.$error.compareTo">Пароли должны совпадать.</span>&ndash;&gt;-->
-<!--&lt;!&ndash;<span data-ng-show="item.password.$error.required">Требуется повторить пароль.</span>&ndash;&gt;-->
-<!--</span>-->
-                                <!--</div>-->
+                            <!--<div class="control-group form-group">-->
+                            <!--<input data-ng-model="item.encryptedPassword" required   type="password"-->
+                            <!--name="confirmation"-->
+                            <!--class="form-control"-->
+                            <!--placeholder="Повторить пароль" tabindex="7">-->
+                            <!--&lt;!&ndash;<span class="help-block has-error" data-ng-if="item.confirmation.$dirty">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span data-ng-show="item.password.$error.compareTo">Пароли должны совпадать.</span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span data-ng-show="item.password.$error.required">Требуется повторить пароль.</span>&ndash;&gt;-->
+                            <!--</span>-->
+                            <!--</div>-->
                             <!--</div>-->
                         </div>
 
 
-                        <div class="form-group" >
-                        <!--<div class="form-group" style=" position: fixed;margin-left: 50px; margin-bottom: 70px; bottom:0; left:0;">-->
+                        <div class="form-group">
+                            <!--<div class="form-group" style=" position: fixed;margin-left: 50px; margin-bottom: 70px; bottom:0; left:0;">-->
                             <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid" class="btn btn-md btn-success">
                                 <span class="glyphicon glyphicon-user"></span>
                                 Сохранить
@@ -386,8 +358,8 @@
                                 Список
                             </a>
                             <!--<button ng-if="!item.id" ng-click="revert()" ng-disabled="!canRevert()" class="btn btn-md btn-primary">-->
-                                <!--<span class="glyphicon glyphicon-erase"> </span>-->
-                                <!--Очистить-->
+                            <!--<span class="glyphicon glyphicon-erase"> </span>-->
+                            <!--Очистить-->
                             <!--</button>-->
 
 
@@ -406,7 +378,7 @@
 
         </div>
         <div class="col-md-6" ng-if="item.id">
-            <div ng-switch on="modeSelect.value" >
+            <div ng-switch on="modeSelect.value">
                 <div ng-switch-when="uploader">
                     <ng-include src="uploaderView"></ng-include>
                 </div>

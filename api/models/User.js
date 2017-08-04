@@ -74,7 +74,8 @@ module.exports = {
         },
 
         birthday: {
-            type: 'date'
+            type: 'date',
+            defaultsTo: null
         },
 
         subdivision: {
@@ -101,11 +102,13 @@ module.exports = {
         },
 
         firedDate: {
-            type: 'date'
+            type: 'date',
+            defaultsTo: null
         },
 
         dateInWork: {
-            type: 'date'
+            type: 'date',
+            defaultsTo: null
         },
 
         room: {
