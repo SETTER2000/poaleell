@@ -160,7 +160,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 var tm;
                 tm = new Date(this.birthday);
                 console.log('TMMM: ', tm);
-                var month = (+tm.getMonth()<10)? '0'+(+tm.getMonth()+1) : tm.getMonth();
+                var month = ((+tm.getMonth()+1)<10)? '0'+(+tm.getMonth()+1) : (+tm.getMonth()+1);
                 var date = (+tm.getDate()<10)? '0'+tm.getDate() : tm.getDate();
                 //console.log('day: ', tm.getUTCDate());
                 tm =  date+'.'+ month+'.'+ tm.getFullYear();

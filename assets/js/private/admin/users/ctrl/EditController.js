@@ -334,26 +334,26 @@ angular.module('UserModule')
 
             };
 
-            $scope.saveEdit = function (item) {
-                //$scope.item.subdivision = [];
-                //console.log('item.birthday: ',item.birthday);
-                //console.log('item.birthday moment: ',moment(item.birthday,['DD.MM.YYYY']).format('YYYY-MM-DD'));
-
-                //console.log('ITEM###: ', item);
+            var reversValue = function (item) {
                 item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.birthday = moment(item.birthday,['DD.MM.YYYY']);
+                return item;
+            };
 
+            $scope.saveEdit = function (item) {
+
+                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+
+                item = reversValue(item);
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
-                            //toastr.success(success);
-                            //toastr.options.closeButton = true;
                             toastr.success('Изменения сохранены!');
                             $scope.refresh();
                         },
                         function (err) {
-                            //console.log(err);
                             toastr.error(err.data.invalidAttributes, 'Ошибка 11445! EditController User');
                         }
                     );
@@ -383,10 +383,6 @@ angular.module('UserModule')
                     }
                 }
             };
-
-
-            //$scope.state = /^\w\w$/;
-            //$scope.zip = /^\d\d\d\d\d$/;
 
             $scope.addContact = function () {
                 if (angular.isArray($scope.item.contacts)) {
@@ -424,13 +420,15 @@ angular.module('UserModule')
 
             $scope.removeBirthday = function (item) {
                 item.birthday = null;
+                item = reversValue(item);
+                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             toastr.success('Изменения сохранены!');
-                            //$scope.item.birthday = success.data.birthday;
-                            item.getBirthday();
-                            //item.getDateInWork();
-                            //item.getFiredDate();
+                            $scope.refresh();
                         },
                         function (err) {
                             //console.log('ERR: ', err);
@@ -441,13 +439,17 @@ angular.module('UserModule')
 
             $scope.removeDateInWork = function (item) {
                 item.dateInWork = null;
+                item = reversValue(item);
+                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             toastr.success('Изменения сохранены!');
-                            $scope.item.dateInWork = success.data.dateInWork;
+                            $scope.refresh();
                         },
                         function (err) {
-                            //console.log('ERR: ', err);
                             toastr.error(err.data.invalidAttributes, 'Ошибка 44016!');
                         });
                 }
@@ -455,11 +457,17 @@ angular.module('UserModule')
 
             $scope.removeFired = function (item) {
                 item.firedDate = null;
+                item = reversValue(item);
+                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+
                 if (angular.isDefined(item.id)) {
                     console.log('Vitem: ', item);
                     item.$update(item, function (success) {
                             toastr.success('Изменения сохранены!');
-                            $scope.item.firedDate = success.data.firedDate;
+                            $scope.refresh();
+                            //$scope.item.firedDate = success.getFiredDate;
                         },
                         function (err) {
                             console.log('ERR: ', err);
