@@ -55,7 +55,7 @@
 
         </th>
 
-        <th>
+        <th class="wdt">
             <!--<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}-->
             <!--<span class="sortOrder" ng-show="propertyName === 'contacts'"-->
             <!--ng-class="{reverse: reverse}"></span>-->
@@ -64,8 +64,8 @@
             <!-- Split button -->
             <div class="btn-group">
                 <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('contacts')">
-<span class="sortOrder" ng-show="propertyName === 'contacts'"
-      ng-class="{reverse: reverse}"></span>
+                    <span class="sortOrder" ng-show="propertyName === 'contacts'"
+                            ng-class="{reverse: reverse}"></span>
                     Контакты: {{fieldName}}
                 </button>
                 <button type="button" class="btn btn-sm btn-default  not-border dropdown-toggle" data-toggle="dropdown"
