@@ -171,11 +171,14 @@ ul.word li {
   //overflow-y: auto;    /* Trigger vertical scroll    */
   //overflow-x: hidden;  /* Hide the horizontal scroll */
 }
+//#table-run.fixed>.table>table>thead{ display:  inline-block; }
 #table-run.fixed>.table>table>tbody{
-  min-height: 100%;       /* Just for the demo          */
-  overflow-y: auto;    /* Trigger vertical scroll    */
+  overflow-y: auto;
   overflow-x: hidden;
+  height: 750px;
+  display: table-caption;
 }
+
 #search.fixed {
   position: fixed;
   top: 50px;
