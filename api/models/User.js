@@ -110,7 +110,10 @@ module.exports = {
             type: 'date',
             defaultsTo: null
         },
-
+        decree:{
+            type: 'date',
+            defaultsTo: null
+        },
         room: {
             type: 'string'
         },
@@ -156,6 +159,7 @@ module.exports = {
             collection: 'skd',
             via: 'owner'
         },
+
         //tutorials: {
         //    collection: 'tutorial',
         //    via: 'owner'
