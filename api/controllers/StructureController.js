@@ -28,6 +28,7 @@ module.exports = {
             _.forEach(foundRoot, (value, key)=> {
                 root.id = value.id;
                 root.text = value.name;
+                root.state= {"opened" : true, "selected" : true  };
                 root.pt.push({parent: value.name});
             });
 
@@ -44,6 +45,7 @@ module.exports = {
                         level.type = ''; // Предки
                         level.text = value.name;
                         level.id = value.id;
+                        level.state= {"opened" : true };
                         level.parent = value.parent;
                         pt1.push({parent: value.name});
                         root.children.push(level);
@@ -63,6 +65,7 @@ module.exports = {
                                     level2.type = ''; // Предки
                                     level2.text = value.name;
                                     level2.id = value.id;
+                                    level2.state= {"opened" : true };
                                     level2.parent = value.parent;
                                     pt2.push({parent: value.name});
                                     _.forEach(root.children, (v, k)=> {
@@ -86,6 +89,7 @@ module.exports = {
                                                 level3.type = ''; // Предки
                                                 level3.text = value.name;
                                                 level3.id = value.id;
+                                                level3.state= {"opened" : true };
                                                 level3.parent = value.parent;
                                                 pt3.push({parent: value.name});
 
@@ -115,6 +119,7 @@ module.exports = {
                                                             level4.type = ''; // Предки
                                                             level4.text = value.name;
                                                             level4.id = value.id;
+                                                            level4.state= {"opened" : true };
                                                             level4.parent = value.parent;
                                                             pt4.push({parent: value.name});
 
@@ -147,6 +152,7 @@ module.exports = {
                                                                         level5.type = ''; // Предки
                                                                         level5.text = value.name;
                                                                         level5.id = value.id;
+                                                                        level5.state= {"opened" : true };
                                                                         level5.parent = value.parent;
                                                                         pt5.push({parent: value.name});
 
@@ -181,6 +187,7 @@ module.exports = {
                                                                                         level6.type = ''; // Предки
                                                                                         level6.text = value.name;
                                                                                         level6.id = value.id;
+                                                                                        level6.state= {"opened" : true };
                                                                                         level6.parent = value.parent;
                                                                                         pt6.push({parent: value.name});
 

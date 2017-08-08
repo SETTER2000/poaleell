@@ -92,7 +92,8 @@
                 "check_callback": true, // enable all modifications
                 'data': {
                     'url': '/getStructure',
-                    'dataType': "json"
+                    'dataType': "json",
+//                    "state" : {"opened" : true },
 //                    "data" : function (node) {
 //                        return { "id" : node.id };
 //                    },
@@ -125,9 +126,10 @@
                     "icon": "glyphicon glyphicon-text-color"
                 }
             },
-            "state": {"key": "state_demo"},
+//            "state": {"key": "state_demo"},
+
 //                "plugins": ["dnd", "contextmenu", "checkbox", "search", "state", "types","wholerow"]
-            "plugins": ["search", "state", "types", "sort"]
+            "plugins": ["search",  "types", "state", "sort"]
         });
 //        $('button').on("click", function () {
 //            var instance = $('#container').jstree(true);
