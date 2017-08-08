@@ -17,8 +17,7 @@ angular.module('UserModule')
                 ru:'ru',
                 dateFormat:"d.m.Y",
                 minDate:"01-01-1950",
-                maxDate:"31-12-2002",
-
+                maxDate:"31-12-2002"
             };
 
             if (!$scope.me.admin && !$scope.me.kadr) $state.go(info.redirectSelf);
@@ -47,6 +46,13 @@ angular.module('UserModule')
             };
 
             $scope.dateOpts3 = {
+                locale: info.ru,
+                //mode: "range",
+                dateFormat: info.dateFormat,
+                minDate: info.minDate
+                //defaultDate: 'today'
+            };
+            $scope.dateOpts4 = {
                 locale: info.ru,
                 //mode: "range",
                 dateFormat: info.dateFormat,
@@ -264,6 +270,7 @@ angular.module('UserModule')
                         item.getBirthday();
                         item.getDateInWork();
                         item.getFiredDate();
+                        item.getDecree();
                     }
                     //    function (err) {
                     //
@@ -344,6 +351,7 @@ angular.module('UserModule')
                 item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                item.decree = ( item.decree) ? new Date(moment(item.decree, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 return item;
             };
 
@@ -460,7 +468,23 @@ angular.module('UserModule')
                         });
                 }
             };
+            $scope.removeDecree = function (item) {
+                item.decree = null;
+                item = reversValue(item);
+                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
 
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            toastr.success(info.changed);
+                            $scope.refresh();
+                        },
+                        function (err) {
+                            toastr.error(err.data.invalidAttributes, info.error + ' 44016!');
+                        });
+                }
+            };
             $scope.removeFired = function (item) {
                 item.firedDate = null;
                 item = reversValue(item);

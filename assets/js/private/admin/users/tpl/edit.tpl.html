@@ -1,4 +1,5 @@
 <!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
@@ -7,6 +8,7 @@
             <p ng-if="!item.lastName">Новый сотрудник</p>
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }}</a>
+            <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"><span class="glyphicon glyphicon-hourglass" title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"></span></a>
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
@@ -257,6 +259,26 @@
                             </span>
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label">
+                                Отпуск по уходу за ребенком c
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control flatpickr" ng-flatpickr
+                                       fp-opts="dateOpts4"
+                                       fp-on-setup="toggleBlur(item)"
+                                       ng-model="item.decree">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" ng-click="removeDecree(item)">
+                                  <span class="glyphicon glyphicon-remove"></span>
+                              </button>
+                            </span>
+                            </div>
+                        </div>
+
+
                         <div class="form-group ">
                             <label class="checkbox-inline">
                                 <input type="checkbox" ng-model="item.fired"> Уволен

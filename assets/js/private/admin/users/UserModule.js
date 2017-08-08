@@ -189,6 +189,17 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 this.firedDate = tm;
             }
         };
+        Users.prototype.getDecree = function () {
+            if (this.decree) {
+                var tm;
+                tm = new Date(this.decree);
+                var month = ((+tm.getMonth()+1)<10)? '0'+(+tm.getMonth()+1) : (+tm.getMonth()+1);
+                var date = (+tm.getDate()<10)? '0'+tm.getDate() : tm.getDate();
+                //console.log('day: ', tm.getUTCDate());
+                tm =  date+'.'+ month+'.'+ tm.getFullYear();
+                this.decree = tm;
+            }
+        };
         Users.prototype.getCreatedAt = function () {
             if (!this.createdAt) {
                 return 'Mongo import';

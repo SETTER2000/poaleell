@@ -651,6 +651,7 @@ module.exports = {
             birthday: req.param('birthday'),
             fired: req.param('fired'),
             dateInWork: req.param('dateInWork'),
+            decree: req.param('decree'),
             position: req.param('position'),
             contacts: req.param('contacts'),
             firedDate: fDt,
