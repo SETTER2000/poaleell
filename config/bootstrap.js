@@ -472,94 +472,94 @@ module.exports.bootstrap = function (cb) {
             if (err) return;
 
 
-        // Загрузить существующую книгу xlsx
-        XlsxPopulate.fromFileAsync(pathToXlsxFile)
-            .then(
-                function (workbook) {
-                    "use strict";
+            // Загрузить существующую книгу xlsx
+            XlsxPopulate.fromFileAsync(pathToXlsxFile)
+                .then(
+                    function (workbook) {
+                        "use strict";
 
-                    /**
-                     * Матрица вся книга.
-                     * @type {Range|undefined}
-                     */
-                    const matrix = workbook.sheet(0).usedRange();
-
-
-                    /**
-                     * Всего строк в книге
-                     */
-                    const allRows = matrix._numRows;
-
-
-                    let datePeriod = '';
-                    let name = '';
-                    let arrName = '';
-                    for (let i = 9; i <= allRows; i++) {
-                        let row = {};
-                        if (workbook.sheet(0).cell(`A${i}`).value()) {
-                            datePeriod = workbook.sheet(0).cell(`A${i}`).value();
-                        }
-                        if (workbook.sheet(0).cell(`C${i}`).value()) {
-                            name = workbook.sheet(0).cell(`C${i}`).value();
-                            arrName = name.match(/([а-яё]+)/gi);
-                        }
-                        // 2017-06-21
-                        row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
-                        row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
-                        // 13:27 > "2017-06-21T13:27:00+00:00"
-                        row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value();
-                        // 13:27 > "2017-06-21T13:27:00+00:00"
-                        row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
-
-                        //sails.log('FM1: '+ arrName[0]);
                         /**
-                         * Проверяем есть ли фамилия
+                         * Матрица вся книга.
+                         * @type {Range|undefined}
                          */
-                        if (arrName[0]) {
-                            //sails.log('FM2: '+ arrName[0]);
-                            User.findOne({
-                                    lastName: arrName[0],
-                                    firstName: arrName[1],
-                                    patronymicName: arrName[2]
-                                })
-                                .exec(function (err, foundUser) {
-                                    if (err) console.log('Ошибка поиска в коллекции User!');
-                                    if (!foundUser) {
-                                        console.log('ВНИМАНИЕ! Пользователь ' +row.name +' в базе данных не найден.');
-                                    }else{
-                                        row.owner = foundUser.id;
-                                        Skd.findOrCreate(row)
-                                            .exec(function (err, createdTutorial) {
-                                                if (err) return;
-                                                sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
-                                                // Создаём ссылку на skd в атрибуте пользователя
-                                                foundUser.skds.add(createdTutorial);
+                        const matrix = workbook.sheet(0).usedRange();
 
-                                                // Сохраняем изменённый документ
-                                                foundUser.save(function (err) {
-                                                    if (err) return sails.log(err);
 
-                                                    console.log('Запись сохранена: ' + createdTutorial.name);
+                        /**
+                         * Всего строк в книге
+                         */
+                        const allRows = matrix._numRows;
+
+
+                        let datePeriod = '';
+                        let name = '';
+                        let arrName = '';
+                        for (let i = 9; i <= allRows; i++) {
+                            let row = {};
+                            if (workbook.sheet(0).cell(`A${i}`).value()) {
+                                datePeriod = workbook.sheet(0).cell(`A${i}`).value();
+                            }
+                            if (workbook.sheet(0).cell(`C${i}`).value()) {
+                                name = workbook.sheet(0).cell(`C${i}`).value();
+                                arrName = name.match(/([а-яё]+)/gi);
+                            }
+                            // 2017-06-21
+                            row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
+                            row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
+                            // 13:27 > "2017-06-21T13:27:00+00:00"
+                            row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value();
+                            // 13:27 > "2017-06-21T13:27:00+00:00"
+                            row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
+
+                            //sails.log('FM1: '+ arrName[0]);
+                            /**
+                             * Проверяем есть ли фамилия
+                             */
+                            if (arrName[0]) {
+                                //sails.log('FM2: '+ arrName[0]);
+                                User.findOne({
+                                        lastName: arrName[0],
+                                        firstName: arrName[1],
+                                        patronymicName: arrName[2]
+                                    })
+                                    .exec(function (err, foundUser) {
+                                        if (err) console.log('Ошибка поиска в коллекции User!');
+                                        if (!foundUser) {
+                                            console.log('ВНИМАНИЕ! Пользователь ' +row.name +' в базе данных не найден.');
+                                        }else{
+                                            row.owner = foundUser.id;
+                                            Skd.findOrCreate(row)
+                                                .exec(function (err, createdTutorial) {
+                                                    if (err) return;
+                                                    sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
+                                                    // Создаём ссылку на skd в атрибуте пользователя
+                                                    foundUser.skds.add(createdTutorial);
+
+                                                    // Сохраняем изменённый документ
+                                                    foundUser.save(function (err) {
+                                                        if (err) return sails.log(err);
+
+                                                        console.log('Запись сохранена: ' + createdTutorial.name);
+                                                    });
                                                 });
-                                            });
-                                    }
-                                });
-                        }
+                                        }
+                                    });
+                            }
 
-                        if((matrix._numRows-1) == i){
-                            fs.close(fd, (err)=> {
-                                if (err) sails.log('Проблемы с закрытием файла III:' + pathToXlsxFile);
-                                fs.unlink(pathToXlsxFile, (err)=> {
-                                    if (err) sails.log('Не могу удалить файл III: ' + pathToXlsxFile + ' ' + err);
-                                    sails.log('Файл ' + pathToXlsxFile + ' удалён из папки xlsx.');
-                                })
-                            });
+                            if((matrix._numRows-1) == i){
+                                fs.close(fd, (err)=> {
+                                    if (err) sails.log('Проблемы с закрытием файла III:' + pathToXlsxFile);
+                                    fs.unlink(pathToXlsxFile, (err)=> {
+                                        if (err) sails.log('Не могу удалить файл III: ' + pathToXlsxFile + ' ' + err);
+                                        sails.log('Файл ' + pathToXlsxFile + ' удалён из папки xlsx.');
+                                    })
+                                });
+                            }
                         }
                     }
-                }
-            ).catch((error) => {
-            console.log('Promise error 223322 ');
-        });
+                ).catch((error) => {
+                console.log('Promise error 223322 ');
+            });
         });
 
         //sails.log('Ok! Данные загружены в базу.');
@@ -578,6 +578,3 @@ module.exports.bootstrap = function (cb) {
     return cb();
 
 };
-
-
-
