@@ -18,6 +18,7 @@ module.exports.bootstrap = function (cb) {
     const fs = require('fs');
     const mime = require('mime');
     const memwatch = require('memwatch-next');
+    const moment = require('moment');
 
 
     memwatch.gc('leak', function(info) {
@@ -468,6 +469,7 @@ module.exports.bootstrap = function (cb) {
         const watchFile = this.watchDir + '/' + file;
         const processedFile = this.processedDir + '/' + file;
         const pathToXlsxFile = watchFile;
+        let arrRows = [];
         fs.open(pathToXlsxFile, 'r', (err, fd) => {
             if (err) return;
 
@@ -494,6 +496,11 @@ module.exports.bootstrap = function (cb) {
                         let datePeriod = '';
                         let name = '';
                         let arrName = '';
+
+
+                        //_.forEach({ 'a': 1, 'b': 2 }, function(value, key) {
+                        //    console.log(key);
+                        //});
                         for (let i = 9; i <= allRows; i++) {
                             let row = {};
                             if (workbook.sheet(0).cell(`A${i}`).value()) {
@@ -502,6 +509,11 @@ module.exports.bootstrap = function (cb) {
                             if (workbook.sheet(0).cell(`C${i}`).value()) {
                                 name = workbook.sheet(0).cell(`C${i}`).value();
                                 arrName = name.match(/([а-яё]+)/gi);
+                                row.user = {
+                                                lastName: arrName[0],
+                                                firstName: arrName[1],
+                                                patronymicName: arrName[2]
+                                            }
                             }
                             // 2017-06-21
                             row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
@@ -510,6 +522,9 @@ module.exports.bootstrap = function (cb) {
                             row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value();
                             // 13:27 > "2017-06-21T13:27:00+00:00"
                             row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
+
+
+                            arrRows.push(row);
 
                             //sails.log('FM1: '+ arrName[0]);
                             /**
@@ -528,23 +543,29 @@ module.exports.bootstrap = function (cb) {
                                             console.log('ВНИМАНИЕ! Пользователь ' +row.name +' в базе данных не найден.');
                                         }else{
                                             row.owner = foundUser.id;
-                                            Skd.findOrCreate(row)
-                                                .exec(function (err, createdTutorial) {
-                                                    if (err) return;
-                                                    sails.log('Создана запись: ' + createdTutorial.date + ' ' + createdTutorial.name);
-                                                    // Создаём ссылку на skd в атрибуте пользователя
-                                                    foundUser.skds.add(createdTutorial);
 
-                                                    // Сохраняем изменённый документ
-                                                    foundUser.save(function (err) {
-                                                        if (err) return sails.log(err);
+                                            Skd.findOrCreate(row).exec(function (err, createdTutorial) {
+                                                if (err) return;
 
-                                                        console.log('Запись сохранена: ' + createdTutorial.name);
-                                                    });
-                                                });
+                                                console.log('Найден или создан: ',createdTutorial );
+
+
+                                                sails.log('Создана запись: ' + moment(createdTutorial.date).format('L') + ' ' + createdTutorial.name);
+                                                // Создаём ссылку на skd в атрибуте пользователя
+                                                //foundUser.skds.add(createdTutorial);
+                                                //
+                                                //// Сохраняем изменённый документ
+                                                //foundUser.save(function (err) {
+                                                //    if (err) return sails.log(err);
+                                                //
+                                                //    console.log('Запись сохранена: ' + createdTutorial.name);
+                                                //});
+                                            });
                                         }
                                     });
                             }
+
+
 
                             if((matrix._numRows-1) == i){
                                 fs.close(fd, (err)=> {
@@ -556,9 +577,13 @@ module.exports.bootstrap = function (cb) {
                                 });
                             }
                         }
+
+                        console.log('arrRows: ', arrRows);
+
                     }
                 ).catch((error) => {
                 console.log('Promise error 223322 ');
+                fs.close(fd);
             });
         });
 

@@ -157,7 +157,8 @@ module.exports = {
         },
         skds: {
             collection: 'skd',
-            via: 'owner'
+            via: 'users',
+            dominant: true
         },
 
         //tutorials: {

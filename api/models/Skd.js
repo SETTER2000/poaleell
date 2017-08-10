@@ -37,8 +37,10 @@ module.exports = {
         date: {
             type: 'datetime'
         },
-        owner:{
-            model:'user'
+        // Добавить ссылку на пользователя
+        users: {
+            collection: 'user',
+            via: 'skds'
         },
         getLastName: function () {
             let fio = this.name.split(' ');
