@@ -307,9 +307,9 @@ module.exports.bootstrap = function (cb) {
                             });
                             fio.validationReplaceStringColumn(/([а-яё]+)\s+(\(.*\))\s+([а-яё]+)\s+([а-яё]+)/gi, '$1 $3 $4');
                             fio.validationColumn(/^([а-яё]+)\s([а-яё]+)\s([а-яё]+)|undefined/gi);
-                            coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
+                            coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, '00:00');
                             coming.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
-                            exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
+                            exit.validationReplaceStringColumn(/(\([а-яё]+\))/gi, '00:00');
                             exit.validationReplaceStringColumn(/(\d\d:\d\d)\s\(\d+\)/gi, '$1');
 
 
@@ -608,12 +608,13 @@ module.exports.bootstrap = function (cb) {
         //})
 
     });
-
+    //
     watcher3.start();
-    //var diff = hd.end();
-    //
-    //
-    //console.log('DIFF: ',diff);
+
+
+
+
+
 
     return cb();
 
