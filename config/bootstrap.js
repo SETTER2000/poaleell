@@ -19,18 +19,18 @@ module.exports.bootstrap = function (cb) {
     const mime = require('mime');
     const memwatch = require('memwatch-next');
     const moment = require('moment');
+    const crypto = require('crypto');
 
 
-    memwatch.gc('leak', function(info) {
+    memwatch.gc('leak', function (info) {
         console.log('Информация о куче gc leak: ', info);
     });
-    memwatch.on('leak', function(info) {
+    memwatch.on('leak', function (info) {
         console.log('ВНИМАНИЕ! Память течёт. : ', info);
     });
     //memwatch.on('stats', function(stats) {
     //    console.log('Статистика кучи: ', stats);
     //});
-
 
 
     Array.prototype.diff = function (a) {
@@ -302,7 +302,9 @@ module.exports.bootstrap = function (cb) {
                              * VALIDATION
                              */
                             dateReport.validationColumn(/^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])|undefined/gi);
-                            fio.validationReplaceStringColumn(/Токаренко Наталья/gi, function myFoo(x){return x+" Генадьевна";});
+                            fio.validationReplaceStringColumn(/Токаренко Наталья/gi, function myFoo(x) {
+                                return x + " Генадьевна";
+                            });
                             fio.validationReplaceStringColumn(/([а-яё]+)\s+(\(.*\))\s+([а-яё]+)\s+([а-яё]+)/gi, '$1 $3 $4');
                             fio.validationColumn(/^([а-яё]+)\s([а-яё]+)\s([а-яё]+)|undefined/gi);
                             coming.validationReplaceStringColumn(/(\([а-яё]+\))/gi, 0);
@@ -510,20 +512,21 @@ module.exports.bootstrap = function (cb) {
                                 name = workbook.sheet(0).cell(`C${i}`).value();
                                 arrName = name.match(/([а-яё]+)/gi);
                                 row.user = {
-                                                lastName: arrName[0],
-                                                firstName: arrName[1],
-                                                patronymicName: arrName[2]
-                                            }
+                                    lastName: arrName[0],
+                                    firstName: arrName[1],
+                                    patronymicName: arrName[2]
+                                }
                             }
                             // 2017-06-21
                             row.date = (workbook.sheet(0).cell(`A${i}`).value()) ? workbook.sheet(0).cell(`A${i}`).value() : datePeriod;
                             row.name = (workbook.sheet(0).cell(`C${i}`).value()) ? workbook.sheet(0).cell(`C${i}`).value() : name;
                             // 13:27 > "2017-06-21T13:27:00+00:00"
-                            row.startPeriod = row.date+'T'+workbook.sheet(0).cell(`E${i}`).value();
+                            row.startPeriod = row.date + 'T' + workbook.sheet(0).cell(`E${i}`).value();
                             // 13:27 > "2017-06-21T13:27:00+00:00"
-                            row.endPeriod = row.date+'T'+workbook.sheet(0).cell(`F${i}`).value();
-
-
+                            row.endPeriod = row.date + 'T' + workbook.sheet(0).cell(`F${i}`).value();
+                            let hash = row.name.trim() + row.date.trim() + row.startPeriod.trim() + row.endPeriod.trim();
+                            row.testHash = hash;
+                            row.hash = crypto.createHash('md5').update(hash).digest("hex");
                             arrRows.push(row);
 
                             //sails.log('FM1: '+ arrName[0]);
@@ -538,36 +541,48 @@ module.exports.bootstrap = function (cb) {
                                         patronymicName: arrName[2]
                                     })
                                     .exec(function (err, foundUser) {
-                                        if (err) console.log('Ошибка поиска в коллекции User!');
+                                        if (err)return;
                                         if (!foundUser) {
-                                            console.log('ВНИМАНИЕ! Пользователь ' +row.name +' в базе данных не найден.');
-                                        }else{
+                                            //console.log('ВНИМАНИЕ! Пользователь ' + row.name + ' в базе данных не найден.');
+                                        } else {
                                             row.owner = foundUser.id;
 
-                                            Skd.findOrCreate(row).exec(function (err, createdTutorial) {
+                                            Skd.findOrCreate({hash:row.hash}, row).exec(function (err, createdTutorial) {
                                                 if (err) return;
 
-                                                console.log('Найден или создан: ',createdTutorial );
+                                                //console.log('Найден или создан: ', createdTutorial);
 
 
-                                                sails.log('Создана запись: ' + moment(createdTutorial.date).format('L') + ' ' + createdTutorial.name);
+                                                //sails.log('Создана запись: ' + moment(createdTutorial.date).format('L') + ' ' + createdTutorial.name);
                                                 // Создаём ссылку на skd в атрибуте пользователя
-                                                //foundUser.skds.add(createdTutorial);
+                                                foundUser.skds.add(createdTutorial);
                                                 //
                                                 //// Сохраняем изменённый документ
-                                                //foundUser.save(function (err) {
-                                                //    if (err) return sails.log(err);
-                                                //
-                                                //    console.log('Запись сохранена: ' + createdTutorial.name);
-                                                //});
+                                                foundUser.save(function (err) {
+                                                    if (err) return sails.log(err);
+
+                                                    console.log('Запись сохранена: ' + createdTutorial.name);
+                                                    //
+                                                    //User.findOne(createdTutorial.user)
+                                                    //    .populate('skds')
+                                                    //    .exec(function foundUser(err, user) {
+                                                    //        if (err) return console.log(err);
+                                                    //        if (!user) console.log('Пользователь не найден...');
+                                                    //        console.log('USERSSS: ',user);
+                                                    //
+                                                    //    });
+
+
+
+
+                                                });
                                             });
                                         }
                                     });
                             }
 
 
-
-                            if((matrix._numRows-1) == i){
+                            if ((matrix._numRows - 1) == i) {
                                 fs.close(fd, (err)=> {
                                     if (err) sails.log('Проблемы с закрытием файла III:' + pathToXlsxFile);
                                     fs.unlink(pathToXlsxFile, (err)=> {
@@ -582,7 +597,7 @@ module.exports.bootstrap = function (cb) {
 
                     }
                 ).catch((error) => {
-                console.log('Promise error 223322 ');
+                console.log('Promise error 223322 ',error);
                 fs.close(fd);
             });
         });
