@@ -20,6 +20,9 @@ angular.module('UserModule')
                 maxDate:"31-12-2002"
             };
 
+
+
+            
             if (!$scope.me.admin && !$scope.me.kadr) $state.go(info.redirectSelf);
 
             $scope.close = 1;

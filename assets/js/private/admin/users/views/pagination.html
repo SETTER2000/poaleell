@@ -3,13 +3,16 @@
         <div class="pull-left">
             <div class="pagination">
                 <div class="btn-toolbar " role="toolbar">
-
-                    <button type="button" class="btn btn-default btn-group dropdown-toggle" role="group" data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                        Количество: {{defaultRows}}
-                        <span class="caret"></span>
+                    <button ng-if="showBtn()" class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create" title="{{added}}"
+                            type="button">
+                        {{added}}
                     </button>
+                    <!--<button type="button" class="btn btn-default btn-group dropdown-toggle" role="group" data-toggle="dropdown"-->
+                            <!--aria-haspopup="true"-->
+                            <!--aria-expanded="false">-->
+                        <!--Количество: {{defaultRows}}-->
+                        <!--<span class="caret"></span>-->
+                    <!--</button>-->
                     <ul class="dropdown-menu">
                         <li><input ng-model="defaultRows" class="form-control"></li>
                         <li ng-repeat="row in rows" ng-class="{active: isActiveRow(row)}">
@@ -19,10 +22,7 @@
                     </ul>
 
 
-                    <button ng-if="showBtn()" class="btn btn-default btn-group" role="group" ui-sref="home.admin.users.create" title="{{added}}"
-                            type="button">
-                        {{added}}
-                    </button>
+
                 </div>
             </div>
         </div>

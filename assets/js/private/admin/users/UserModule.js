@@ -210,6 +210,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             var t = this.formatDate(new Date());
             return t;
         };
+
+        Users.prototype.periodWork = function () {
+            return  moment(this.dateInWork).fromNow(true);
+        };
         Users.prototype.getListUrl = function () {
             return '/admin/users';
         };
