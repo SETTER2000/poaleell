@@ -214,9 +214,9 @@ module.exports.bootstrap = function (cb) {
                                         // * При хорошем раскладе, папка xlsx и папка bad должны быть пустыми
                                         // */
                                         fs.close(fd, (err)=> {
-                                            if (err) sails.log('Проблемы с закрытием файла V:' + pathToXlsxFile);
+                                            if (err) sails.log('Проблемы с закрытием файла:' + pathToXlsxFile);
                                             fs.unlink(pathToXlsxFile, (err)=> {
-                                                if (err) sails.log('Не могу удалить файл V: ' + pathToXlsxFile + ' ' + err);
+                                                if (err) sails.log('Не могу удалить файл: ' + pathToXlsxFile + ' ' + err);
                                                 sails.log('FILE ' + pathToXlsxFile + ' удалён из папки xlsx.');
                                             })
                                         });
