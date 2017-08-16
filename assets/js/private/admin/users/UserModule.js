@@ -212,7 +212,15 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         };
 
         Users.prototype.periodWork = function () {
-            return  moment(this.dateInWork).fromNow(true);
+            var now = moment();
+            var event = moment(this.dateInWork,["DD.MM.YYYY"]);
+
+            console.log('Сегодня: ' + now.format('YYYY-MM-DD HH:mm:ss'));
+            console.log('Дата события: ' + event.format('YYYY-MM-DD HH:mm:ss'));
+            console.log('Событие произошло ' + event.fromNow());
+            console.log('Разница во времени: ' +moment.preciseDiff(now, event));
+            return  moment.preciseDiff(now, event);
+            //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
         Users.prototype.getListUrl = function () {
             return '/admin/users';

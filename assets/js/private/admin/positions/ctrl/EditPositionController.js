@@ -32,7 +32,7 @@ angular.module('PositionModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err,'Ошибка 1 EditPositionController!');
+                            toastr.error(err.data,'Ошибка!');
                         }
                     );
                 } else {

@@ -2,62 +2,80 @@ if (typeof moment === "undefined" && require) {
     moment = require('moment');
 }
 
-(function(moment) {
+(function (moment) {
     var STRINGS = {
         nodiff: '',
-        year: 'year',
-        years: 'years',
-        month: 'month',
-        months: 'months',
-        day: 'day',
-        days: 'days',
-        hour: 'hour',
-        hours: 'hours',
-        minute: 'minute',
-        minutes: 'minutes',
-        second: 'second',
-        seconds: 'seconds',
+        year: ['год', 'года', 'лет'],
+        month: ['месяц', 'месяца', 'месяцев'],
+        day: ['день', 'дня', 'дней'],
+        hour: ['час', 'часа', 'часов'],
+        minute: ['минута', 'минуты', 'минут'],
+        second: ['секунда', 'секунды', 'секунд'],
         delimiter: ' '
     };
 
-    function pluralize(num, word) {
-        return num + ' ' + STRINGS[word + (num === 1 ? '' : 's')];
-    }
 
-    function buildStringFromValues(yDiff, mDiff, dDiff, hourDiff, minDiff, secDiff){
+    function getNumEnding(iNumber, aEndings)
+    {
+        var sEnding, i;
+        iNumber = iNumber % 100;
+        if (iNumber>=11 && iNumber<=19) {
+            sEnding=aEndings[2];
+        }
+        else {
+            i = iNumber % 10;
+            switch (i)
+            {
+                case (1): sEnding = aEndings[0]; break;
+                case (2):
+                case (3):
+                case (4): sEnding = aEndings[1]; break;
+                default: sEnding = aEndings[2];
+            }
+        }
+        return iNumber+' '+sEnding+' ';
+    }
+    //function pluralize(num, word) {
+    //    var u = '';
+    //    u = num + ' ' + STRINGS[word + (num === 1 ? '' : 's')];
+    //    //u = num + ' ' + STRINGS[word + (num === 1 ? '' : 's')];
+    //    return u;
+    //}
+
+    function buildStringFromValues(yDiff, mDiff, dDiff, hourDiff, minDiff, secDiff) {
         var result = [];
 
         if (yDiff) {
-            result.push(pluralize(yDiff, 'year'));
+            result.push(getNumEnding(yDiff, STRINGS.year));
         }
         if (mDiff) {
-            result.push(pluralize(mDiff, 'month'));
+            result.push(getNumEnding(mDiff, STRINGS.month));
         }
         if (dDiff) {
-            result.push(pluralize(dDiff, 'day'));
+            result.push(getNumEnding(dDiff, STRINGS.day));
         }
-        if (hourDiff) {
-            result.push(pluralize(hourDiff, 'hour'));
-        }
-        if (minDiff) {
-            result.push(pluralize(minDiff, 'minute'));
-        }
-        if (secDiff) {
-            result.push(pluralize(secDiff, 'second'));
-        }
+        //if (hourDiff) {
+        //    result.push(getNumEnding(hourDiff, STRINGS.hour));
+        //}
+        //if (minDiff) {
+        //    result.push(getNumEnding(minDiff, STRINGS.minute));
+        //}
+        //if (secDiff) {
+        //    result.push(getNumEnding(secDiff, STRINGS.second));
+        //}
 
         return result.join(STRINGS.delimiter);
     }
 
-    moment.fn.preciseDiff = function(d2, returnValueObject) {
+    moment.fn.preciseDiff = function (d2, returnValueObject) {
         return moment.preciseDiff(this, d2, returnValueObject);
     };
 
-    moment.preciseDiff = function(d1, d2, returnValueObject) {
+    moment.preciseDiff = function (d1, d2, returnValueObject) {
         var m1 = moment(d1), m2 = moment(d2), firstDateWasLater;
-        
+
         m1.add(m2.utcOffset() - m1.utcOffset(), 'minutes'); // shift timezone of m1 to m2
-        
+
         if (m1.isSame(m2)) {
             return STRINGS.nodiff;
         }
@@ -105,13 +123,13 @@ if (typeof moment === "undefined" && require) {
 
         if (returnValueObject) {
             return {
-                "years"   : yDiff,
-                "months"  : mDiff,
-                "days"    : dDiff,
-                "hours"   : hourDiff,
-                "minutes" : minDiff,
-                "seconds" : secDiff,
-                "firstDateWasLater" : firstDateWasLater
+                "years": yDiff,
+                "months": mDiff,
+                "days": dDiff,
+                "hours": hourDiff,
+                "minutes": minDiff,
+                "seconds": secDiff,
+                "firstDateWasLater": firstDateWasLater
             };
         } else {
             return buildStringFromValues(yDiff, mDiff, dDiff, hourDiff, minDiff, secDiff);

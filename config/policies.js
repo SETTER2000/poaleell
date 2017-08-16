@@ -28,18 +28,19 @@ module.exports.policies = {
     // Ограничение действий controllers
     // '*': true,
     UserController: {
+        '*': 'isLoggedIn',
         create: ['isLoggedIn', 'isAdmin'],
         destroy: ['isLoggedIn', 'isAdmin'],
-        update: ['isLoggedIn'],
+        //update: ['isLoggedIn'],
         login: ['isLoggedOut'],
         loginLDAP: ['isLoggedOut'],
-        logout: ['isLoggedIn'],
+        //logout: ['isLoggedIn'],
         signup: ['isLoggedOut'],
-        removeProfile: ['isLoggedIn'],
-        updateProfile: ['isLoggedIn'],
-        restoreGravatarURL: ['isLoggedIn'],
+        //removeProfile: ['isLoggedIn'],
+        //updateProfile: ['isLoggedIn'],
+        //restoreGravatarURL: ['isLoggedIn'],
         restoreProfile: ['isLoggedOut'],
-        changePassword: ['isLoggedIn'],
+        //changePassword: ['isLoggedIn'],
         adminUsers: ['isLoggedIn', 'isAdmin'],
         updateAdmin: ['isLoggedIn', 'isAdmin'],
         updateAction: ['isLoggedIn', 'isAdmin'],
@@ -54,19 +55,24 @@ module.exports.policies = {
     },
 
     DepartmentController: {
-        create: ['isLoggedIn'],
-        delete: ['isLoggedIn'],
-        update: ['isLoggedIn'],
-        find: ['isLoggedIn']
+        '*': 'isLoggedIn',
+        create: ['isLoggedIn', 'isAdminOrKadr'],
+        delete: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr']
+        //create: ['isLoggedIn'],
+        //delete: ['isLoggedIn'],
+        //update: ['isLoggedIn'],
+        //find: ['isLoggedIn']
         //find:   ['isLoggedIn', 'isAdmin','isKadr']
     },
 
     PositionController: {
+        '*': 'isLoggedIn',
         //'*': false,
-        create: ['isLoggedIn', 'isAdmin','isKadr'],
-        delete: ['isAdmin'],
-        update: ['isLoggedIn', 'isAdmin','isKadr'],
-        find: ['isLoggedIn']
+        createPosition: ['isLoggedIn', 'isAdminOrKadr'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr']
+        //find: ['isLoggedIn']
         //find:   ['isLoggedIn', 'isAdmin','isKadr'],
     }
     /***************************************************************************

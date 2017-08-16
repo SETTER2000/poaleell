@@ -54,15 +54,24 @@ angular.module('DepartmentModule')
 
 
                 } else {
-                    item.$save(item.id, function (success) {
-                        console.log('SAVE ITEM: ',item);
-                        toastr.success('Новый отдел создан.');
-                        // /admin/user/
-                        //$location.path('/profile') ;
-                        $state.go('home.admin.department', {depId: success.id});
-                    }, function (err) {
-                        toastr.error(err.data,'Ошибка! EditDepartmentController!');
-                    });
+                    //$scope.refresh();
+                    item.$save(item.id,function (success) {
+                            console.log('success',success.id);
+                            toastr.success('Новый отдел создан.');
+                            $state.go('home.admin.department', {depId: success.id});
+                        },
+                        function (err) {
+                            toastr.error(err.data,'Ошибка! EditDepartmentController!');
+                        });
+                    //item.$save(item.id, function (success) {
+                    //    console.log('SAVE ITEM: ',item);
+                    //    toastr.success('Новый отдел создан.');
+                    //    // /admin/user/
+                    //    //$location.path('/profile') ;
+                    //    $state.go('home.admin.department', {depId: success.id});
+                    //}, function (err) {
+                    //    toastr.error(err.data,'Ошибка! EditDepartmentController!');
+                    //});
 
                 }
             };

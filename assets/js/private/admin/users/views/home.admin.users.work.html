@@ -21,6 +21,15 @@
       ng-class="{reverse: reverse}"></span>
             </button>
         </th>
+
+        <th class="text-center">
+            <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('room')">
+           {{roomArea}}
+<span class="sortOrder" ng-show="propertyName === 'room'"
+      ng-class="{reverse: reverse}"></span>
+            </button>
+
+        </th>
         <!--<th>-->
         <!--<button class="btn  btn-sm btn-default not-border" ng-click="sortBy('birthday')">{{drArea}}-->
         <!--<span class="sortOrder" ng-show="propertyName === 'birthday'"-->
@@ -53,7 +62,7 @@
         </th>
         <th>
             <button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">
-                {{emailArea}}
+               {{emailArea}}
 <span class="sortOrder" ng-show="propertyName === 'email'"
       ng-class="{reverse: reverse}"></span>
             </button>
@@ -94,8 +103,8 @@
         <!--</button>-->
 
         <!--</th>-->
-        <th></th>
-        <th></th>
+        <!--<th></th>-->
+        <!--<th></th>-->
     </tr>
     <!--| firstChar:param:charText-->
     <!--ng-class="$even ? 'default' : 'success'"-->
@@ -110,7 +119,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                 {{item.getFullName()}}
             </a>
         </td>
-
+<td class="text-center">{{item.room}}</td>
         <td>
             <ul style="list-style-type: none; margin: 0; padding: 0" class="position" ng-controller="ListDepartmentController"
                 ng-repeat="subdivision in item.subdivision | filter:{$:searchText}">
@@ -126,29 +135,29 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
                 </li>
             </ul>
         </td>
-        <td>{{item.email}}</td>
+        <td> <a href="mailto:{{item.email}}">{{item.email}}</a></td>
         <td width="250px" class="text-right">{{item.getContact(fieldName)}}</td>
         <!--<td>{{item.diff}}</td>-->
-        <td class="btn-group-xs">
-            <!--<a ng-href="{{item.getShowUrl(item.id)}}" class="btn"-->
-               <!--ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">-->
-            <!--<span class="glyphicon"-->
-                  <!--ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"-->
-                  <!--aria-hidden="true"></span>-->
+        <!--<td class="btn-group-xs">-->
+            <!--&lt;!&ndash;<a ng-href="{{item.getShowUrl(item.id)}}" class="btn"&ndash;&gt;-->
+               <!--&lt;!&ndash;ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="glyphicon"&ndash;&gt;-->
+                  <!--&lt;!&ndash;ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"&ndash;&gt;-->
+                  <!--&lt;!&ndash;aria-hidden="true"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+        <!--</td>-->
+        <!--<td class="btn-group-xs">-->
+            <!--<a href="#">-->
+                <!--<span ng-if="mode" ng-click="delete(item)" class="glyphicon glyphicon-trash"></span>-->
             <!--</a>-->
-            <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
-            <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
-            <!--<span class="glyphicon glyphicon-pencil"></span>-->
-            <!--</a>-->
-            <!--<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">-->
-            <!--<span class="glyphicon glyphicon-pencil"></span>-->
-            <!--</a>-->
-        </td>
-        <td class="btn-group-xs">
-            <a href="#">
-                <span ng-if="mode" ng-click="delete(item)" class="glyphicon glyphicon-trash"></span>
-            </a>
-        </td>
+        <!--</td>-->
     </tr>
 </table>
 
