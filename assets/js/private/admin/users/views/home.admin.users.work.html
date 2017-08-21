@@ -162,3 +162,12 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
 </table>
 
 
+<pagination
+        limit-rows="limitRows"
+        default-rows="defaultRows"
+        length-object="(items | filter:{$:searchText, fired:false} ).length"
+        current-page="currentPage"
+        added="added"
+        show-bt="showBt"
+        on-select-page="selectCount=selectCount+1">
+</pagination>

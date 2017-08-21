@@ -13,7 +13,7 @@
 //@brand-primary: #337ab7; // #337ab7
 @brand-primary-border: #cccccc; // #2e6da4
 //@brand-primary-border: #2e6da4; // #2e6da4
-@link-color:       @brand-primary;
+@link-color: @brand-primary;
 @link-hover-color: #e6e6e6;
 //@link-hover-color: #286090;
 @link-hover-border-color: #cccccc;
@@ -30,6 +30,7 @@
   text-decoration: underline;
   font-weight: 600;
 }
+
 //.tag:before {
 //  content: open-quote; /* Добавляем перед текстом открывающую кавычку */
 //}
@@ -37,57 +38,60 @@
 //  content: close-quote; /* Добавляем после текста закрывающую кавычку */
 //}
 .sortOrder:after {
-  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
-}
-.sortOrder.reverse:after {
-  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+  content: '\25b2'; // BLACK UP-POINTING TRIANGLE
 }
 
+.sortOrder.reverse:after {
+  content: '\25bc'; // BLACK DOWN-POINTING TRIANGLE
+}
 
 .animate-switch-container {
-  position:relative;
-  background:@gray-lighter;
-  border:1px solid @gray-light;
-  height:140px;
-  overflow-y:auto;
+  position: relative;
+  background: @gray-lighter;
+  border: 1px solid @gray-light;
+  height: 140px;
+  overflow-y: auto;
 }
 
 .animate-switch {
-  padding:10px;
+  padding: 10px;
 }
 
 .animate-switch.ng-animate {
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .animate-switch.ng-leave.ng-leave-active,
 .animate-switch.ng-enter {
-  top:-50px;
+  top: -50px;
 }
+
 .animate-switch.ng-leave,
 .animate-switch.ng-enter.ng-enter-active {
-  top:0;
+  top: 0;
 }
+
 ul.word {
   margin: 0; /* Обнуляем значение отступов */
   padding: 4px; /* Значение полей */
 }
+
 ul.word li {
   display: inline; /* Отображать как строчный элемент */
   margin-right: 5px; /* Отступ слева */
   //border: 1px solid #000; /* Рамка вокруг текста */
   padding: 3px; /* Поля вокруг текста */
 }
-.btn.not-border{
+
+.btn.not-border {
   border: none;
 }
-
 
 .gravatarSm {
   line-height: 3.5;
@@ -110,31 +114,38 @@ ul.word li {
 .brighten img:hover {
   -webkit-filter: sepia(100%);
 }
-.jumbotron.white{
+
+.jumbotron.white {
   background: white;
 }
-.str{
+
+.str {
   text-decoration: none; /* Убираем подчеркивание */
   /* Добавляем свою линию */
 }
-.sdv{
-  margin-left:  26px;
+
+.sdv {
+  margin-left: 26px;
 }
-.sdvig{
-  margin-left:  10px;
+
+.sdvig {
+  margin-left: 10px;
 }
-.sort-my{
+
+.sort-my {
   border-top: 1px solid #dedede;
   border-bottom: 1px solid #dedede;
   margin-bottom: 25px;
 
   background: white;
 }
-.sort-my .srt:hover{
+
+.sort-my .srt:hover {
   cursor: pointer;
   color: #2196F3;
   border-bottom: 1px dashed #2196F3;
 }
+
 //#avatar {
 //  float: left;
 //  margin: 0 1em .5em 0;
@@ -149,14 +160,43 @@ ul.word li {
 #avatar.fixed {
   position: fixed;
   top: 84px;
-  left:40px;
-  right:40px;
+  left: 40px;
+  right: 40px;
   background: #EFF0F1;
   z-index: 2;
-  -webkit-box-shadow: -1px 6px 19px -1px rgba(0,0,0,0.2);
-  -moz-box-shadow: -1px 6px 19px -1px rgba(0,0,0,0.2);
-  box-shadow: -1px 6px 19px -1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
 }
+
+#avatar.fixed-thead {
+  position: absolute;
+  top: 52px;
+  background: #EFF0F1;
+  z-index: 2;
+  -webkit-box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  width: inherit;
+}
+
+
+#avatar.fixed-thead  th,
+.table.m-left  tr  th{
+  min-width: 120px;
+  width: 100%;
+}
+#avatar td,
+#avatar.fixed-thead  td,
+.table.m-left  tr  td:nth-child(1),
+#avatar.fixed-thead  td:nth-child(1),
+.table.m-left>tbody > tr  td{
+  width: 42px;
+  min-width: 42px;
+
+}
+
+
 
 #table-run.fixed {
   position: fixed;
@@ -164,36 +204,46 @@ ul.word li {
   right: 20px;
   background: #ffffff;
   z-index: 2;
-  -webkit-box-shadow: -1px 6px 19px -1px rgba(0,0,0,0.2);
-  -moz-box-shadow: -1px 6px 19px -1px rgba(0,0,0,0.2);
-  box-shadow: -1px 6px 19px -1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 6px 19px -1px rgba(0, 0, 0, 0.2);
   //min-height: 100%;       /* Just for the demo          */
   //overflow-y: auto;    /* Trigger vertical scroll    */
   //overflow-x: hidden;  /* Hide the horizontal scroll */
 }
+
 //#table-run.fixed>.table>table>thead{ display:  inline-block; }
-#table-run.fixed>.table>table>tbody{
+#table-run.fixed > .table > table > tbody {
   overflow-y: auto;
   overflow-x: hidden;
   height: 700px;
   display: table-caption;
 }
 
-#search.fixed {
+
+.table.m-left {
+  //margin-left: -15px;
+  font-size: 10px;
+  position: relative;
+  left: -15px;
+}
+
+search.fixed {
   position: fixed;
   top: 50px;
-  left:40px;
-  right:40px;
+  left: 40px;
+  right: 40px;
   background: #EFF0F1;
   z-index: 2;
 
 }
-#search.fixed > .form-control{
-  border:none;
+
+#search.fixed > .form-control {
+  border: none;
   border: 0;
 }
 
-.button{
+.button {
   text-decoration: none;
   opacity: 0;
   position: fixed;
@@ -212,7 +262,7 @@ ul.word li {
   z-index: 10000000000;
 }
 
-.button2{
+.button2 {
   text-decoration: none;
   opacity: 0;
   position: fixed;
@@ -221,57 +271,61 @@ ul.word li {
   visibility: hidden;
   text-align: center;
   transition: all 0.5s;
-
   background: hsla(210, 7%, 74%, .5);
   border-radius: 70px;
   display: inline-block;
-  right: 50px;
+  right: 60px;
   top: 100px;
   width: 30px;
   height: 30px;
   z-index: 10000000000;
 }
-.button:hover{
+
+.button:hover {
   text-decoration: none;
   color: white;
   background: #c1c1c1;
   z-index: 10000000000;
 }
-.button2:hover{
+
+.button2:hover {
   text-decoration: none;
   color: hsla(210, 7%, 74%, 1);
   background: #fff;
   z-index: 10000000000;
-  -webkit-box-shadow: -5px -5px 163px -1px rgba(0,0,0,0.2);
-  -moz-box-shadow: -5px -5px 163px -1px rgba(0,0,0,0.2);
-  box-shadow: -5px -5px 163px -1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: -5px -5px 163px -1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -5px -5px 163px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: -5px -5px 163px -1px rgba(0, 0, 0, 0.2);
 }
-a.button2{
+
+a.button2 {
   text-decoration: none;
 }
 
-.visible{
+.visible {
   visibility: visible;
   text-decoration: none;
   opacity: 1;
   background: hsla(210, 7%, 74%, .5);
 }
-.visible2{
+
+.visible2 {
   visibility: visible;
   text-decoration: none;
   opacity: 1;
   background: #ffffff;
 }
-#container{
+
+#container {
   font-size: 1.1em;
 }
 
-
 /* BuTTON FILE */
 
-.file-upload input[type="file"]{
-  display: none;/* скрываем input file */
+.file-upload input[type="file"] {
+  display: none; /* скрываем input file */
 }
+
 /* задаем стили кнопки выбора файла*/
 .file-upload {
   position: relative;
@@ -282,10 +336,12 @@ a.button2{
   //color: #fff;
   text-align: center;
 }
+
 .file-upload span:hover {
   background: hsl(0, 0%, 96%);
   //border: 1px solid  @link-hover-border-color;
 }
+
 /* Растягиваем label на всю область блока .file-upload */
 .file-upload label {
   display: block;
@@ -297,6 +353,7 @@ a.button2{
   cursor: pointer;
   font-weight: lighter;
 }
+
 /* стиль текста на кнопке*/
 .file-upload span {
   padding: 5px 12px;
@@ -307,39 +364,41 @@ a.button2{
 
 }
 
-table.table.not-margin{
+table.table.not-margin {
   margin: 0;
 }
 
 /* BuTTON FILE  END */
 
-
-
-.delete-button{
+.delete-button {
   position: relative;
 }
 
-.delete-button> .delete-img{
+.delete-button > .delete-img {
   position: absolute;
   top: 35%;
   right: 30%;
   opacity: .4;
 }
 
-.photo{
+.photo {
   width: 20px;
 }
+
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   background-color: #fff;
 }
-.wdt{
+
+.wdt {
   width: 270px
 }
 
-//#table-run>.table{
-//
-//    height: 100px;       /* Just for the demo          */
-//    overflow-y: auto;    /* Trigger vertical scroll    */
-//    overflow-x: hidden;  /* Hide the horizontal scroll */
-//
+//table > thead#avatar.fixed-thead > tr > th:nth-child(1),table > thead#avatar > tr > th:nth-child(1){
+//  border-right: 0;
 //}
+//table > thead#avatar.fixed-thead > tr > th:nth-child(2),table > thead#avatar > tr > th:nth-child(2){
+//  border-left: 0;
+//}
+.red-color{
+  color: red;
+}

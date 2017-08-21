@@ -1,4 +1,5 @@
 <div class="col-sm-11  col-md-12  main ng-scope">
+
     <div class="page-header">
         <h3>{{item.sc()}} "{{item.name}}" {{item.year| date:"yyyy"}}
             <div ng-show="me.admin" class="btn-group-xs pull-right">
@@ -26,5 +27,7 @@
     <!-- current-period="currentPeriod()"-->
     <calendar query="query" refresh="refresh()" days-period="daysPeriod" ></calendar>
     <!--<div ui-view></div>-->
+
+
 </div>
 
