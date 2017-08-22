@@ -150,6 +150,11 @@ module.exports = {
             via: 'users',
             dominant: true
         },
+        //holidays: {
+        //    collection: 'holiday',
+        //    via: 'users',
+        //    dominant: true
+        //},
         positions: {
             collection: 'position',
             via: 'users',

@@ -359,8 +359,8 @@ angular.module('CalendarModule', ['ui.router', 'ngResource', 'ngAnimate',  'angu
                                             }
                                         }
                                     }
-                                    //console.log('result.data');
-                                    //console.log(result.data);
+                                    console.log('result.data',result.data);
+
                                     scope.data = result.data;
                                 })
                         }

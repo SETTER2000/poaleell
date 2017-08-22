@@ -149,6 +149,14 @@ module.exports.routes = {
     'GET /attendance': 'Attendance.timeAll', // для календаря
 
 
+    /**
+     * Furlough
+     */
+    'GET /furloughs': 'FurloughController.getAll', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'POST /furloughs': 'FurloughController.createFur', // создать запись
+    //'PUT /holidays/:id': 'HolidayController.update', // обновить запись
+
+
     /*************************************************************
      * Server-rendered HTML Pages                                *
      *************************************************************/
@@ -177,6 +185,7 @@ module.exports.routes = {
     'GET /admin/attendances': 'PageController.showHomePage',
     'GET /admin/positions': 'PageController.showHomePage',
     'GET /admin/employees': 'PageController.showHomePage',
+    'GET /admin/furloughs': 'PageController.showHomePage',
 
 
     //'GET /admin/users/attendance': 'PageController.showHomePage',

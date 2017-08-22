@@ -53,7 +53,7 @@
                         var y = $(window).scrollTop();
 //    console.log('SCROLL:', y);
                         if (y >= 200) {
-                            $('#avatar').addClass('fixed-thead').css({'top': (y - 180)});
+                            $('#avatar').addClass('fixed-thead').css({'top': (y - 183)});
 
                         }
                         if ($(window).scrollTop() <= 208) {
@@ -87,18 +87,17 @@
                             </ul>
                         </th>
                         <td class="text-center " ng-repeat="op in daysPeriod.data ">
-            <span ng-class="{'red-color':(op.format('dd')==='вс' || op.format('dd')==='сб'),
-            'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')}">
-                {{op.format('DD')}}
-          <span ng-class="{'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
-            </span>
+                              <span ng-class="{'red-color':(op.format('dd')==='вс' || op.format('dd')==='сб'),
+                              'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')}"> {{op.format('DD')}}
+                                <span ng-class="{'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
+                              </span>
                         </td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="(key, item) in data">
                         <td class="text-center">{{key+1}}</td>
-                        <th>{{data[key].fio}}</th>
+                        <th nowrap>{{data[key].fio}}</th>
                         <td ng-repeat="props  in data[key].objData track by $index">{{props.result | timeCut:true}}</td>
                     </tr>
                     </tbody>
