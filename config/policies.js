@@ -45,8 +45,6 @@ module.exports.policies = {
         updateAdmin: ['isLoggedIn', 'isAdmin'],
         updateAction: ['isLoggedIn', 'isAdmin'],
         updateDeleted: ['isLoggedIn', 'isAdmin']
-        //find: ['isLoggedIn']
-        //find: [['isLoggedIn'],['isKadr'], ['isAdmin']]
     },
 
 
@@ -59,11 +57,6 @@ module.exports.policies = {
         create: ['isLoggedIn', 'isAdminOrKadr'],
         delete: ['isLoggedIn', 'isAdmin'],
         update: ['isLoggedIn', 'isAdminOrKadr']
-        //create: ['isLoggedIn'],
-        //delete: ['isLoggedIn'],
-        //update: ['isLoggedIn'],
-        //find: ['isLoggedIn']
-        //find:   ['isLoggedIn', 'isAdmin','isKadr']
     },
 
     PositionController: {
@@ -74,7 +67,22 @@ module.exports.policies = {
         update: ['isLoggedIn', 'isAdminOrKadr']
         //find: ['isLoggedIn']
         //find:   ['isLoggedIn', 'isAdmin','isKadr'],
-    }
+    },
+
+    //FurloughController: {
+    //    '*': 'isLoggedIn',
+    //    //'*': false,
+    //    create: ['isLoggedIn', 'isAdminOrKadr'],
+    //    destroy: ['isLoggedIn', 'isAdmin'],
+    //    update: ['isLoggedIn', 'isAdminOrKadr']
+    //}
+
+
+
+
+
+
+
     /***************************************************************************
      *                                                                          *
      * Here's an example of mapping some policies to run before a controller    *

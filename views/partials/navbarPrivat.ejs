@@ -1,5 +1,5 @@
-<div ng-controller="navPageController" ng-cloak class="container-fluid">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<div ng-controller="navPageController" ng-cloak class="container-fluid" >
+    <nav class="navbar navbar-inverse navbar-fixed-top" ng-if="me">
         <div class="container">
             <div class="navbar-header">
                 <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
@@ -44,6 +44,7 @@
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.structures">Структура компании</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.skds">Отработанное время</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.furloughs">Тип отпуска</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>

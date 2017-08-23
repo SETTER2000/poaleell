@@ -75,7 +75,7 @@
                 <table class="table table-hover table-bordered m-left">
                     <thead id="avatar">
                     <tr>
-                        <td class="text-center">№</td>
+                        <!--<td class="text-center">№</td>-->
                         <th class="text-center" nowrap>
                             <ul class="pagination pagination-sm ">
                                 <li ng-if="solo">
@@ -96,7 +96,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="(key, item) in data">
-                        <td class="text-center">{{key+1}}</td>
+                        <!--<td class="text-center">{{key+1}}</td>-->
                         <th nowrap>{{data[key].fio}}</th>
                         <td ng-repeat="props  in data[key].objData track by $index">{{props.result | timeCut:true}}</td>
                     </tr>

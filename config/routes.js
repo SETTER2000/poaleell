@@ -152,9 +152,10 @@ module.exports.routes = {
     /**
      * Furlough
      */
-    'GET /furloughs': 'FurloughController.getAll', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
-    'POST /furloughs': 'FurloughController.createFur', // создать запись
-    //'PUT /holidays/:id': 'HolidayController.update', // обновить запись
+    'GET /furloughs': 'FurloughController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'POST /furloughs': 'FurloughController.create', // создать запись
+    'DELETE /furloughs/:id': 'FurloughController.destroy', // удалить
+    'PUT /furloughs/:id': 'FurloughController.update', // обновить
 
 
     /*************************************************************
@@ -222,6 +223,11 @@ module.exports.routes = {
 
     'GET /admin/skds': 'PageController.showHomePage',
     'GET /admin/structures': 'PageController.showHomePage',
+
+    'GET /admin/furloughs/edit/:id': 'PageController.showHomePage',
+    'GET /admin/furloughs/create/': 'PageController.showHomePage',
+
+
 
     //'GET /admin/attendances/calendar': 'PageController.showHomePage',
     //'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',

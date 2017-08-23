@@ -5,6 +5,7 @@ angular.module('Holiday', [
         'SkdModule',
         'StructureModule',
         'PositionModule',
+        'FurloughModule',
         'DepartmentModule',
         'EmployeeModule',
         'DashboardModule',

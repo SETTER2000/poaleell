@@ -11,11 +11,13 @@ module.exports = {
         attributes: {
             section: {
                 type: 'string',
-                defaultsTo: 'Отпуск'
+                defaultsTo: 'Отпуск',
+                required: true
             },
             sections: {
                 type: 'string',
-                defaultsTo: 'Отпуска'
+                defaultsTo: 'Отпуска',
+                required: true
             },
             action: {
                 type: 'boolean',
