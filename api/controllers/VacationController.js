@@ -1,26 +1,29 @@
 /**
- * FurloughController
+ * VacationController
  *
- * @description :: Server-side logic for managing holidays
+ * @description :: Server-side logic for managing vacations
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-
 module.exports = {
+    /**
+     * Получить объект
+     * @param req
+     * @param res
+     */
     get: function (req, res) {
         "use strict";
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        Furlough.find(req.param('id')).exec((err, furlough) => {
+        Vacation.find(req.param('id')).exec((err, finds) => {
             if (err) return res.negotiate;
-            if (!furlough) return res.notFound();
+            if (!finds) return res.notFound();
 
             // return res.redirect('/admin/users/edit/' + req.param('id'));
             // return res.backToHomePage();
             //return res.redirect('/admin/users/edit/' + req.param('id'));
-            (req.param('id')) ? res.ok(furlough[0]) : res.ok(furlough);
+            (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
         });
     },
-
     create: function (req, res) {
         //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //if (!_.isString( req.param('name') ) ) {
@@ -33,28 +36,28 @@ module.exports = {
         //    //sails.log('is not string');
         //    return res.badRequest('Наименование не строка!');
         //}
-
-        if (req.param('name').length < 2 || req.param('name').length > 200) {
-            return res.badRequest('Наименование должно быть от 2 до 200 знаков!');
-        }
+        //if (req.param('name').length < 2 || req.param('name').length > 200) {
+        //    return res.badRequest('Наименование должно быть от 2 до 200 знаков!');
+        //}
 
         //console.log('Action', req.param('action'));
         var obj = {
-            section: 'Тип отпуска',
-            sections: 'Типы отпусков',
+            section: 'Отпуск',
+            sections: 'Отпуска',
             name: req.param('name'),
-            tip: req.param('tip'),
-            location: req.param('location'),
+            //tip: req.param('tip'),
             action: (req.param('action')) ? req.param('action') : false
         };
 
-        Furlough.findOne({'name':req.param('name')}).exec((err, findParam)=> {
+        Vacation.findOne({'name':req.param('name')})
+            .populate('furloughs')
+            .exec((err, findParam)=> {
             "use strict";
             if (err)return res.serverError(err);
 
             console.log('findParam', findParam);
             if(findParam) return res.badRequest(req.param('name')+' - дубликат.');
-            Furlough.create(obj).exec(function (err, finn) {
+            Vacation.create(obj).exec(function (err, finn) {
                 if (err) {
                     return res.serverError(err);
                 }
@@ -80,7 +83,7 @@ module.exports = {
             location: req.param('location'),
             action: req.param('action')
         };
-        Furlough.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
+        Vacation.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.negotiate(err);
             res.ok();
         })
@@ -95,10 +98,10 @@ module.exports = {
      */
     destroy: function (req, res, next) {
         //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        Furlough.findOne(req.param('id'), function foundUser(err, user) {
+        Vacation.findOne(req.param('id'), function foundUser(err, user) {
             if (err)return next(err);
             if (!user)return next('User doesn\'t exists.');
-            Furlough.destroy(req.param('id'), function userDestroyed(err) {
+            Vacation.destroy(req.param('id'), function userDestroyed(err) {
                 if (err)return next(err);
             });
             // res.redirect('/admin/users');

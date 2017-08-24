@@ -8,7 +8,8 @@
             <p ng-if="!item.lastName">Новый сотрудник</p>
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button"> Работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }} ({{item.periodWork()}})</a>
-            <a href="#" class="btn btn-info btn-xs " ng-if="item.decree" title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
+            <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
+               title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
@@ -96,48 +97,48 @@
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
                         <!--<div class="row">-->
-                            <!--<div class="col-md-3">-->
-                                <!--<div class="form-group ">-->
+                        <!--<div class="col-md-3">-->
+                        <!--<div class="form-group ">-->
 
-                                    <!--<label class="control-label inline" for="inputSuccess4">-->
+                        <!--<label class="control-label inline" for="inputSuccess4">-->
 
 
-                                        <!--&lt;!&ndash;<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">&ndash;&gt;-->
-                                        <!--<input class="form-control  flatpickr " ng-flatpickr-->
-                                               <!--fp-opts="dateOpts"-->
-                                               <!--fp-on-setup="toggleBlur(item)"-->
-                                               <!--ng-model="item.birthday ">-->
-                                    <!--</label>-->
-                                    <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
-                                <!--</div>-->
-                                <!--&lt;!&ndash;<div class=flatpickr>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input ng-flatpickr type="text" placeholder="Select Date.." data-input&ndash;&gt;-->
-                                <!--&lt;!&ndash;fp-opts="dateOpts"&ndash;&gt;-->
-                                <!--&lt;!&ndash;fp-on-setup="toggleBlur(fpItem)"&ndash;&gt;-->
-                                <!--&lt;!&ndash;ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">&ndash;&gt;-->
+                        <!--<input class="form-control  flatpickr " ng-flatpickr-->
+                        <!--fp-opts="dateOpts"-->
+                        <!--fp-on-setup="toggleBlur(item)"-->
+                        <!--ng-model="item.birthday ">-->
+                        <!--</label>-->
+                        <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class=flatpickr>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input ng-flatpickr type="text" placeholder="Select Date.." data-input&ndash;&gt;-->
+                        <!--&lt;!&ndash;fp-opts="dateOpts"&ndash;&gt;-->
+                        <!--&lt;!&ndash;fp-on-setup="toggleBlur(fpItem)"&ndash;&gt;-->
+                        <!--&lt;!&ndash;ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;&ndash;&gt;-->
 
-                                <!--&lt;!&ndash;<a class="input-button" title="toggle" data-toggle>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<i class="icon-calendar"></i>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="input-button" title="toggle" data-toggle>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<i class="icon-calendar"></i>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
 
-                                <!--&lt;!&ndash;<a class="input-button" title="clear" data-clear>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<spani class="glyphicon glyphicon-remove" ></spani>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash;<div class="col-md-6">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="form-group " ng-if="item.birthday">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<label class="control-label" for="inputSuccess5">Дата рождения </label>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="input-button" title="clear" data-clear>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<spani class="glyphicon glyphicon-remove" ></spani>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="col-md-6">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="form-group " ng-if="item.birthday">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<label class="control-label" for="inputSuccess5">Дата рождения </label>&ndash;&gt;-->
 
-                            <!--&lt;!&ndash;<div><a href="#" class="btn btn-default  disabled" role="button">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"&ndash;&gt;-->
-                            <!--&lt;!&ndash;aria-hidden="true"></span>&ndash;&gt;-->
-                            <!--&lt;!&ndash;{{item.birthday | date:'dd.MM.yyyy'}}&ndash;&gt;-->
-                            <!--&lt;!&ndash;</a></div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div><a href="#" class="btn btn-default  disabled" role="button">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"&ndash;&gt;-->
+                        <!--&lt;!&ndash;aria-hidden="true"></span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;{{item.birthday | date:'dd.MM.yyyy'}}&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a></div>&ndash;&gt;-->
 
-                            <!--&lt;!&ndash;&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
                         <!--</div>-->
 
 
@@ -151,11 +152,11 @@
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.birthday">
                             <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span class="glyphicon glyphicon-remove"></span></button>
+                              <button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span
+                                      class="glyphicon glyphicon-remove"></span></button>
                             </span>
                             </div>
                         </div>
-
 
 
                         <div class="form-group ">
@@ -202,6 +203,66 @@
                             <!--<pre>P O S I T I O N S : {{items | limitTo:5 | json }}</pre>-->
                         </div>
 
+                        <div ng-controller="ListFurloughController" class="form-group ">
+                            <label class="control-label" ng-bind="items[0].sc()"></label>
+                            [ <a href="#" ng-click="addFurlough()">добавить</a> ]
+
+                            <div class="form-inline" ng-repeat="furlough in item.furloughs">
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="furlough.id">
+                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputPassword33"></label>
+                                    <!--<input class="form-control" type="text" id="exampleInputPassword33" ng-model="furlough.value" required>-->
+                                    с
+                                    <input type="text" class="form-control flatpickr" ng-flatpickr
+                                           fp-opts="dateOpts2"
+                                           fp-on-setup="toggleBlur(item)"
+                                           ng-model="furlough.from">
+                                    по
+                                    <input type="text" class="form-control flatpickr" ng-flatpickr
+                                           fp-opts="dateOpts2"
+                                           fp-on-setup="toggleBlur(item)"
+                                           ng-model="furlough.to">
+                                </div>
+                                <button type="button" class="btn btn-default" ng-click="removeFurlough(furlough)">x</button>
+                            </div>
+                        </div>
+
+
+
+                        <!--<div class="form-group ">-->
+                            <!--<label>Отпуск: </label>-->
+                            <!--[ <a href="#" ng-click="addFurlough()">добавить</a> ]-->
+
+                            <!--<div class="form-inline" ng-repeat="furlough in item.fur">-->
+                                <!--<div class="form-group">-->
+                                    <!--<select class="form-control" ng-model="furlough.type">-->
+                                        <!--<option>Очередной отпуск</option>-->
+                                        <!--<option>Отпуск по уходу за ребёнком</option>-->
+                                        <!--<option>Отгул</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="sr-only" for="exampleInputPassword33"></label>-->
+                                    <!--&lt;!&ndash;<input class="form-control" type="text" id="exampleInputPassword33" ng-model="furlough.value" required>&ndash;&gt;-->
+                                    <!--с-->
+                                    <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                           <!--fp-opts="dateOpts2"-->
+                                           <!--fp-on-setup="toggleBlur(item)"-->
+                                           <!--ng-model="furlough.from">-->
+                                    <!--по-->
+                                    <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                           <!--fp-opts="dateOpts2"-->
+                                           <!--fp-on-setup="toggleBlur(item)"-->
+                                           <!--ng-model="furlough.to">-->
+                                <!--</div>-->
+                                <!--<button type="button" class="btn btn-default" ng-click="removeFurlough(furlough)">x</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
                         <div class="form-group ">
                             <label class="control-label" for="inputSuccess10">ПФР</label>
@@ -220,27 +281,16 @@
                                         <option>Телефон</option>
                                         <option>Внутренний телефон</option>
                                     </select>
-                                    <!--<label class="sr-only" for="exampleInputEmail3">Email address</label>-->
-                                    <!--<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">-->
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="exampleInputPassword3">Password</label>
                                     <input class="form-control" type="text" id="exampleInputPassword3" ng-model="contact.value" required>
                                 </div>
-
                                 <button type="button" class="btn btn-default" ng-click="removeContact(contact)">x</button>
                             </div>
-
-                            <!--<select class="form-control" ng-model="contact.type">-->
-                            <!--<option>Email</option>-->
-                            <!--<option>телефон</option>-->
-                            <!--<option>пейджер</option>-->
-                            <!--<option>IM</option>-->
-                            <!--<option>facebook</option>-->
-                            <!--</select>-->
-                            <!--<input class="form-control" type="text" ng-model="contact.value" required>-->
-                            <!--[ <a href="#" ng-click="removeContact(contact)">×</a> ]-->
                         </div>
+
+
 
 
                         <div class="form-group">
@@ -281,36 +331,42 @@
 
                         <div class="form-group ">
                             <label class="checkbox-inline">
-                                <input type="checkbox" ng-model="item.fired"> Уволен
+                                <input type="checkbox" ng-model="item.fired">
+                                Уволен
                             </label>
                             <label class="control-label" for="inputSuccess15"></label>
 
                             <!--<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
                         <div class="form-group">
-                        <label class="control-label">
-                            Дата увольнения
-                        </label>
-                        <div class="input-group">
-                            <input type="text" class="form-control flatpickr" ng-flatpickr
-                                   fp-opts="dateOpts3"
-                                   fp-on-setup="toggleBlur(item)"
-                                   ng-model="item.firedDate">
+                            <label class="control-label">
+                                Дата увольнения
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control flatpickr" ng-flatpickr
+                                       fp-opts="dateOpts3"
+                                       fp-on-setup="toggleBlur(item)"
+                                       ng-model="item.firedDate">
                             <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" ng-click="removeFired(item)"><span class="glyphicon glyphicon-remove"></span></button>
+                              <button class="btn btn-default" type="button" ng-click="removeFired(item)"><span
+                                      class="glyphicon glyphicon-remove"></span></button>
                             </span>
-                        </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label" for="inputSuccess25">Комната</label>
+                            <label class="control-label" for="inputSuccess25">
+                                Комната
+                            </label>
                             <input required type="text" class="form-control" ng-model="item.room">
                         </div>
                         <div ng-if="(me.admin)" class="row" ng-if="item.id">
                             <div class="col-md-5">
                                 <div class="form-group ">
                                     <div class="form-group ">
-                                        <label class="control-label" for="inputSuccess18">Зарегистрирован в системе</label>
+                                        <label class="control-label" for="inputSuccess18">
+                                            Зарегистрирован в системе
+                                        </label>
                                         <div><a href="#" class="btn btn-default  disabled" role="button">
                                      <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.createdAt}"
                                            aria-hidden="true"></span>

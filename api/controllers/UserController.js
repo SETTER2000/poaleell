@@ -540,14 +540,11 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
             .populate('positions')
+            .populate('furloughs')
             .exec(function foundUser(err, user) {
                 if (err) return res.serverError(err);
                 if (!user) return res.notFound();
                 res.ok(user);
-                // res.view({
-                //     user: user,
-                //     me: req.session.me
-                // });
             });
     },
 
@@ -561,6 +558,7 @@ module.exports = {
         if (req.param('id')) {
             User.findOne(req.param('id'))
                 .populate('positions')
+                .populate('furloughs')
                 .exec(function foundUser(err, user) {
                     if (err) return res.serverError(err);
                     if (!user) return res.notFound();
@@ -578,6 +576,7 @@ module.exports = {
                 q.where = y;
                 User.find(q)
                     .populate('positions')
+                    .populate('furloughs')
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
                         if (!users) return res.notFound();
@@ -586,6 +585,7 @@ module.exports = {
             } else {
                 User.find()
                     .populate('positions')
+                    .populate('furloughs')
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
                         if (!users) return res.notFound();
@@ -623,6 +623,7 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.find(req.param('id'))
             .populate('positions')
+            .populate('furloughs')
             .exec((err, user) => {
                 if (err)return next(err);
                 if (!user)return next('User doesn\'t exists.');
@@ -658,34 +659,39 @@ module.exports = {
             action: req.param('action'),
             pfr: req.param('pfr'),
             avatarUrl: req.param('avatarUrl'),
-            room: req.param('room')
+            room: req.param('room'),
+            //fur: req.param('fur'),
+            furlough: req.param('furlough')
 
         };
 
         //console.log('Param ID: ', req.param('id'));
         //console.log('objEdit555: ', obj);
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
-            if (err) {
-                //console.log('VVV err: ', err);
-                //console.log('objEdit11: ', objEdit);
-                return res.redirect('/admin/users/edit/' + req.param('id'));
-            }
+            if (err)return res.redirect('/admin/users/edit/' + req.param('id'));
 
-            //console.log('objEdit: ', objEdit);
+
+            console.log('objEdit: ', objEdit);
+
             User.findOne(req.param('id'))
                 .populate('positions')
+                .populate('furloughs')
                 .exec(function (err, user) {
                     if (err) return res.negotiate(err);
                     if (!user) return res.notFound('Не могу');
 
                     // console.log('positionRemove:', req.param('positionRemove'));
                     user.positions.add(req.param('positions'));
+                    user.furloughs.add(req.param('furloughs'));
 
                     // if (_.isEmpty(req.param('position'))) {
                     //     user.positions.add({})
                     // }
                     if (req.param('positionRemove')) {
                         user.positions.remove(req.param('positionRemove'));
+                    }
+                    if (req.param('furloughRemove')) {
+                        user.furloughs.remove(req.param('furloughRemove'));
                     }
                     user.save(function (err) {
                         if (err) return res.negotiate('ERR: ' + err);
@@ -987,6 +993,7 @@ module.exports = {
         if (req.param('id')) {
             User.find({where: {subdivision: {id: req.param('id')}, fired: false}})
                 .populate('positions')
+                .populate('furloughs')
                 .exec(function foundUser(err, user) {
                     if (err) return res.serverError(err);
                     if (!user) return res.notFound();

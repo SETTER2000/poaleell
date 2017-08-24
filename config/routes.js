@@ -157,6 +157,14 @@ module.exports.routes = {
     'DELETE /furloughs/:id': 'FurloughController.destroy', // удалить
     'PUT /furloughs/:id': 'FurloughController.update', // обновить
 
+    /**
+     * Vacation
+     */
+    'GET /vacations': 'VacationController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'POST /vacations': 'VacationController.create', // создать запись
+    'DELETE /vacations/:id': 'VacationController.destroy', // удалить
+    'PUT /vacations/:id': 'VacationController.update', // обновить
+
 
     /*************************************************************
      * Server-rendered HTML Pages                                *
@@ -187,6 +195,7 @@ module.exports.routes = {
     'GET /admin/positions': 'PageController.showHomePage',
     'GET /admin/employees': 'PageController.showHomePage',
     'GET /admin/furloughs': 'PageController.showHomePage',
+    'GET /admin/vacations': 'PageController.showHomePage',
 
 
     //'GET /admin/users/attendance': 'PageController.showHomePage',
@@ -227,6 +236,8 @@ module.exports.routes = {
     'GET /admin/furloughs/edit/:id': 'PageController.showHomePage',
     'GET /admin/furloughs/create/': 'PageController.showHomePage',
 
+    'GET /admin/vacations/edit/:id': 'PageController.showHomePage',
+    'GET /admin/vacations/create/': 'PageController.showHomePage',
 
 
     //'GET /admin/attendances/calendar': 'PageController.showHomePage',

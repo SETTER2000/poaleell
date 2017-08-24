@@ -269,7 +269,7 @@ angular.module('UserModule')
             $scope.refresh = function () {
                 let item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
                         $scope.users = users;
-                        //console.log(users);
+                        console.log('users', users);
                         item.getBirthday();
                         item.getDateInWork();
                         item.getFiredDate();
@@ -409,6 +409,22 @@ angular.module('UserModule')
                 }
             };
 
+            //$scope.addFurlough = function () {
+            //    if (angular.isArray($scope.item.fur)) {
+            //        $scope.item.fur.push({type: "отпуск", from: "", to:""});
+            //    } else {
+            //        $scope.item.fur = [{type: "отпуск", from: "", to: ""}];
+            //    }
+            //};
+
+            //$scope.removeFurlough = function (obj) {
+            //    let furloughs = $scope.item.fur;
+            //    for (let i = 0, ii = furloughs.length; i < ii; i++) {
+            //        if (obj === furloughs[i]) {
+            //            furloughs.splice(i, 1);
+            //        }
+            //    }
+            //};
             $scope.removeContact = function (contact) {
                 let contacts = $scope.item.contacts;
                 for (let i = 0, ii = contacts.length; i < ii; i++) {
@@ -516,14 +532,32 @@ angular.module('UserModule')
                     $scope.item.positions = [{}];
                 }
             };
+            $scope.addFurlough = function () {
+                if (angular.isArray($scope.item.furloughs)) {
+                    $scope.item.furloughs.push({});
+                } else {
+                    $scope.item.furloughs = [{}];
+                }
+            };
 
-            $scope.removePosition = function (position) {
+            $scope.removePosition = function (obj) {
                 $scope.item.positionRemove = [];
-                if (!position.id) $scope.item.positions = [];
+                if (!obj.id) $scope.item.positions = [];
                 for (let i = 0, ii = $scope.item.positions.length; i < ii; i++) {
-                    if ($scope.item.positions[i].id === position.id) {
+                    if ($scope.item.positions[i].id === obj.id) {
                         $scope.item.positions.splice(i, 1);
-                        $scope.item.positionRemove.push(position.id);
+                        $scope.item.positionRemove.push(obj.id);
+                        return;
+                    }
+                }
+            };
+            $scope.removeFurlough = function (furlough) {
+                $scope.item.furloughRemove = [];
+                if (!furlough.id) $scope.item.furloughs = [];
+                for (let i = 0, ii = $scope.item.furloughs.length; i < ii; i++) {
+                    if ($scope.item.furloughs[i].id === furlough.id) {
+                        $scope.item.furloughs.splice(i, 1);
+                        $scope.item.furloughRemove.push(furlough.id);
                         return;
                     }
                 }

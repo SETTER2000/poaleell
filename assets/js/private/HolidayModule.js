@@ -6,6 +6,7 @@ angular.module('Holiday', [
         'StructureModule',
         'PositionModule',
         'FurloughModule',
+        'VacationModule',
         'DepartmentModule',
         'EmployeeModule',
         'DashboardModule',

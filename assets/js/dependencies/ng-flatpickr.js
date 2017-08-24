@@ -19,7 +19,7 @@
 
         var vp = new FlatpickrInstance(element[0], scope.fpOpts());
         //console.log(attrs);
-        console.log(ngModel);
+        //console.log(ngModel);
 
         scope.$watch('ngModel', function (value) {
           //console.log('XXXXXXXXX: ',vp);

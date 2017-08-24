@@ -5,6 +5,7 @@
         current-page="currentPage"
         added="added"
         show-bt="showBt"
+        url-bt="urlBt"
         on-select-page="selectCount=selectCount+1">
 </pagination2>
 
@@ -56,7 +57,6 @@
     </div>
     <!--<div class="col-md-3 "><span class="srt sdv" ng-click="sortRevers('name')">ФИО</span></div>-->
     <div class="col-md-2">
-
         <div class="input-group input-group-sm">
             <!--<input type="date" ng-model="mx" ng-click="toggleBlur(mx)" ng-blur="toggleBlur(mx)" class="form-control"-->
                    <!--aria-describedby="sizing-addon3">-->
@@ -68,19 +68,13 @@
             <input  ng-init="date.current='выбрать интервал дат'"  ng-mouseleave="s=0" class="form-control  flatpickr " ng-flatpickr
                    fp-opts="dateOpts"
                    fp-on-setup="toggleBlur(fpItem)"
-                   ng-model="date.current"
-
-            >
+                   ng-model="date.current">
             <span class="input-group-btn">
                 <button class="btn  btn-xs btn-default" type="button" ng-click="sortBy('date')">
                     <span class="sortOrder" ng-class="{reverse: reverse}"></span>
                 </button>
              </span>
-
-
         </div>
-
-
     </div>
     <!--<div class="col-md-2"><span class="srt" ng-click="sortRevers('date')">Дата</span></div>-->
     <div class="col-md-2">
@@ -91,7 +85,6 @@
     </div>
     <div class="col-md-3 pull-right">
         <button class="btn  btn-sm btn-default disabled  not-border" ng-click="sortBy('date')">{{factArea}}</button>
-
     </div>
     <div class="col-md-13">&nbsp;</div>
 </div>
@@ -249,6 +242,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         current-page="currentPage"
         added="added"
         show-bt="showBt"
+        url-bt="urlBt"
         on-select-page="selectCount=selectCount+1">
 </pagination2>
 

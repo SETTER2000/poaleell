@@ -86,6 +86,11 @@ module.exports = {
             type: 'array',
             defaultsTo: '[]'
         },
+
+        furlough: {
+            type: 'array',
+            defaultsTo: '[]'
+        },
         encryptedPassword: {
             type: 'string',
             required: true
@@ -110,6 +115,10 @@ module.exports = {
             type: 'date',
             defaultsTo: null
         },
+        //dateFurlough: {
+        //    type: 'date',
+        //    defaultsTo: null
+        //},
         decree:{
             type: 'date',
             defaultsTo: null
@@ -150,11 +159,7 @@ module.exports = {
             via: 'users',
             dominant: true
         },
-        //holidays: {
-        //    collection: 'holiday',
-        //    via: 'users',
-        //    dominant: true
-        //},
+
         positions: {
             collection: 'position',
             via: 'users',
@@ -165,11 +170,18 @@ module.exports = {
             via: 'users',
             dominant: true
         },
+        furloughs: {
+            collection: 'furlough',
+            via: 'users',
+            dominant: true
+        },
 
-        //tutorials: {
-        //    collection: 'tutorial',
-        //    via: 'owner'
+        //// Отпуска тестовый
+        //fur: {
+        //    type: 'array',
+        //    defaultsTo: [{"type": "", "value": ""}]
         //},
+
         getFullName: function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         }

@@ -298,6 +298,8 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
             restrict: 'E',
             scope: {
                 //numPages: '=', // кол-во страниц (кнопок)
+                showBt:'=' ,// true|false показывать или нет кнопку добавления объекта, например юзера.
+                urlBt:'=' ,// ссылка для кнопки.
                 defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
                 limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
                 lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
@@ -309,7 +311,12 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
             replace: true,
             link: function (scope) {
 
-
+                scope.showBtn = function () {
+                    return scope.showBt;
+                };
+                scope.urlBtn = function () {
+                    return scope.urlBt;
+                };
                 scope.$watch('added', function (value) {
                     scope.added = value;
                 });
@@ -358,6 +365,12 @@ angular.module('SkdModule', ['ui.router', 'ngResource', 'vAccordion', 'ngAnimate
                 };
                 scope.isActiveRow = function (row) {
                     return scope.defaultRows === row;
+                };
+                scope.showBtn = function () {
+                    return scope.showBt;
+                };
+                scope.urlBtn = function () {
+                    return scope.urlBt;
                 };
                 scope.selectPage = function (page) {
                     if (!scope.isActive(page)) {

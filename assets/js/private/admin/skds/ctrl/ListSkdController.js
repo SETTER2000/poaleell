@@ -89,6 +89,8 @@
                 $scope.reverse = false;
                 $scope.countChar = 3;  // Кол-во знаков от фамилии
                 $scope.filedName = '_id';
+                $scope.urlBt='home.admin.users.create';
+
 
                 $http.get('/getListYear')
                     .then(function (attendance) {

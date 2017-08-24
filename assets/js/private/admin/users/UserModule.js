@@ -159,7 +159,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             if (this.birthday) {
                 var tm;
                 tm = new Date(this.birthday);
-                console.log('TMMM: ', tm);
+                //console.log('TMMM: ', tm);
                 var month = ((+tm.getMonth()+1)<10)? '0'+(+tm.getMonth()+1) : (+tm.getMonth()+1);
                 var date = (+tm.getDate()<10)? '0'+tm.getDate() : tm.getDate();
                 //console.log('day: ', tm.getUTCDate());
@@ -215,10 +215,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             var now = moment();
             var event = moment(this.dateInWork,["DD.MM.YYYY"]);
 
-            console.log('Сегодня: ' + now.format('YYYY-MM-DD HH:mm:ss'));
-            console.log('Дата события: ' + event.format('YYYY-MM-DD HH:mm:ss'));
-            console.log('Событие произошло ' + event.fromNow());
-            console.log('Разница во времени: ' +moment.preciseDiff(now, event));
+            //console.log('Сегодня: ' + now.format('YYYY-MM-DD HH:mm:ss'));
+            //console.log('Дата события: ' + event.format('YYYY-MM-DD HH:mm:ss'));
+            //console.log('Событие произошло ' + event.fromNow());
+            //console.log('Разница во времени: ' +moment.preciseDiff(now, event));
             return  moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
@@ -288,6 +288,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             scope: {
                 //numPages: '=', // кол-во страниц (кнопок)
                 showBt:'=' ,// true|false показывать или нет кнопку добавления объекта, например юзера.
+                urlBt:'=' ,// ссылка для кнопки.
                 defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
                 limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
                 lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
@@ -306,6 +307,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
 
                 scope.$watch('showBt', function (value) {
                     scope.showBt = value;
+                });
+                scope.$watch('urlBt', function (value) {
+                    scope.urlBt = value;
                 });
 
                 scope.$watch('lengthObject', function (value) {
@@ -356,6 +360,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
 
                 scope.showBtn = function () {
                     return scope.showBt;
+                };
+                scope.urlBtn = function () {
+                    return scope.urlBt;
                 };
                 scope.selectPage = function (page) {
                     if (!scope.isActive(page)) {

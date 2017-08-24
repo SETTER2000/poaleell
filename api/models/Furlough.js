@@ -8,59 +8,67 @@
 module.exports = {
     connection: 'userMongodbServer',
     attributes: {
-        attributes: {
-            section: {
-                type: 'string',
-                defaultsTo: 'Отпуск',
-                required: true
-            },
-            sections: {
-                type: 'string',
-                defaultsTo: 'Отпуска',
-                required: true
-            },
-            action: {
-                type: 'boolean',
-                defaultsTo: true,
-                required: true
-            },
-            name: {
-                type: 'string',
-                unique: true,
-                minLength: 2,
-                maxLength: 150
-            },
-            tip: {
-                type: 'string',
-                defaultsTo: ''
-            },
-            location: {
-                type: 'string',
-                defaultsTo: ''
-            },
-            lastLoggedIn: {
-                type: 'date',
-                required: true,
-                defaultsTo: new Date(0)
-            },
-            children: {
-                type: 'array'
-            },
-            parent: {
-                type: 'string'
-            },
-            childrenObj: {
-                type: 'array'
-            },
-            ancestors: {
-                type: 'array'
-            }
-            // Добавить ссылку на пользователя
-            //users: {
-            //    collection: 'user',
-            //    via: 'holidays'
-            //}
+        section: {
+            type: 'string',
+            defaultsTo: 'Отпуск',
+            required: true
+        },
+        sections: {
+            type: 'string',
+            defaultsTo: 'Отпуска',
+            required: true
+        },
+        action: {
+            type: 'boolean',
+            defaultsTo: true,
+            required: true
+        },
+        name: {
+            type: 'string',
+            unique: true,
+            minLength: 2,
+            maxLength: 150
+        },
+        tip: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        location: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        lastLoggedIn: {
+            type: 'date',
+            required: true,
+            defaultsTo: new Date(0)
+        },
+        children: {
+            type: 'array'
+        },
+        parent: {
+            type: 'string'
+        },
+        childrenObj: {
+            type: 'array'
+        },
+        ancestors: {
+            type: 'array'
+        },
+        users: {
+            collection: 'user',
+            via: 'furloughs'
+        },
+        vacations: {
+            collection: 'vacation',
+            via: 'furloughs'
         }
+        // Добавить ссылку на пользователя
+        //users: {
+        //    collection: 'user',
+        //    via: 'furloughs'
+        //}
+
     }
+
 };
 
