@@ -45,26 +45,30 @@ module.exports = {
             section: 'Отпуск',
             sections: 'Отпуска',
             name: req.param('name'),
+            whomCreated: req.session.me,
+            whomUpdated: null,
             //tip: req.param('tip'),
             action: (req.param('action')) ? req.param('action') : false
         };
 
-        Vacation.findOne({'name':req.param('name')})
+        User.findOne({id: req.session.me})
             .populate('furloughs')
             .exec((err, findParam)=> {
-            "use strict";
-            if (err)return res.serverError(err);
+                "use strict";
+                if (err) return res.serverError(err);
+                if (!findParam) return res.notFound();
 
-            console.log('findParam', findParam);
-            if(findParam) return res.badRequest(req.param('name')+' - дубликат.');
-            Vacation.create(obj).exec(function (err, finn) {
-                if (err) {
-                    return res.serverError(err);
-                }
-                //sails.log('Finn\'s id is:', finn.id);
-                return res.send(finn);
+                console.log('findParam', findParam);
+
+                obj.users = findParam.id;
+                //if(findParam) return res.badRequest(req.param('name')+' - дубликат.');
+                Vacation.create(obj).exec(function (err, finn) {
+                    if (err) return res.serverError(err);
+                    console.log('Отпуск создал:', req.session.me);
+                    console.log('Отпуск новый:',finn);
+                    return res.send(finn);
+                });
             });
-        });
 
     },
 
@@ -74,16 +78,20 @@ module.exports = {
      * @param res
      */
     update: function (req, res) {
-        //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         var obj = {
+            id:req.param('id'),
             section: req.param('section'),
             sections: req.param('sections'),
             name: req.param('name'),
             tip: req.param('tip'),
-            location: req.param('location'),
+            whomCreated: req.param('whomCreated'),
+            whomUpdated: req.session.me,
             action: req.param('action')
         };
-        Vacation.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
+        Vacation.update(req.param('id'),obj).exec(function updateObj(err, objEdit) {
+            console.log('Отпуск обновил:', req.session.me);
+            console.log('Отпуск обновление:',obj);
             if (err)return res.negotiate(err);
             res.ok();
         })
@@ -97,16 +105,23 @@ module.exports = {
      * @param next
      */
     destroy: function (req, res, next) {
-        //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        Vacation.findOne(req.param('id'), function foundUser(err, user) {
-            if (err)return next(err);
-            if (!user)return next('User doesn\'t exists.');
-            Vacation.destroy(req.param('id'), function userDestroyed(err) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        Vacation.findOne(req.param('id')).exec((err, finds)=> {
+            "use strict";
+            if (err) return res.serverError(err);
+            if (!finds) return res.notFound();
+
+            Vacation.destroy(req.param('id'), (err) => {
                 if (err)return next(err);
+                console.log('Отпуск удалил:', req.session.me);
+                console.log('Отпуск удалён:', finds);
+                res.ok();
             });
-            // res.redirect('/admin/users');
-            res.ok();
         });
+
+        // res.redirect('/admin/users');
+
+
     }
 };
 

@@ -30,13 +30,14 @@
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
-            $scope.fioArea = 'ФИО';
+            $scope.fioArea = 'Период с .. по ..';
             $scope.drArea = 'ДР11';
             $scope.loginArea = 'Логин';
             $scope.emailArea = 'Email';
-            $scope.roomArea = 'Комната';
-            $scope.departmentArea = 'Отдел';
-            $scope.positionArea = 'Должность';
+            $scope.createdAt = 'Создан';
+            $scope.updatedAt = 'Обнавлён';
+            $scope.whomUpdatedArea = 'Кем обновлён';
+            $scope.whomCreatedArea = 'Кем создан';
             $scope.added = 'Добавить отпуск';
             $scope.showBt = 1;
             $scope.urlBt = 'home.admin.vacations.create';

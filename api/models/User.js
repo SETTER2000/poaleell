@@ -176,6 +176,12 @@ module.exports = {
             dominant: true
         },
 
+        vacations: {
+            collection: 'vacation',
+            via: 'users',
+            dominant: true
+        },
+
         //// Отпуска тестовый
         //fur: {
         //    type: 'array',

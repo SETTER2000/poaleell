@@ -1,4 +1,4 @@
-angular.module('VacationModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
+angular.module('VacationModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate', 'angularMoment'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.vacations', {

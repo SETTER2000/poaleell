@@ -31,10 +31,20 @@ module.exports = {
       type:'date',
       defaultsTo:null
     },
+    whomUpdated:{
+      type:'string'
+    },
+    whomCreated:{
+      type:'string'
+    },
     furloughs: {
       collection: 'furlough',
       via: 'vacations',
       dominant: true
+    },
+    users: {
+      collection: 'user',
+      via: 'vacations'
     }
   }
 };

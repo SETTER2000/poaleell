@@ -3,9 +3,9 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
-            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
-            </p>
-            <p ng-if="!item.lastName">Добавление планового отпуска</p>
+            <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}} <span ng-if="!item.action"
+                                                                                    ng-bind="item.deactivation()"></span></p>
+
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button"> Работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }} ({{item.periodWork()}})</a>
             <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
@@ -58,12 +58,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="sr-only" for="exampleInputPassword33"></label>
-                            <input ng-init="date.current='выбрать интервал дат'" ng-mouseleave="s=0" class="form-control  flatpickr "
+                            <label  class="sr-only" for="exampleInputPassword33"></label>
+                            <input  required class="form-control  flatpickr flatpickr-calendar"
                                    ng-flatpickr
                                    fp-opts="dateOpts"
-                                   fp-on-setup="toggleBlur(fpItem)"
-                                   ng-model="date.current">
+                                   fp-on-setup="datePostSetup(fpItem)"
+                                   ng-model="item.name">
+                            <span class="input-group-btn">
+                              <!--<button class="btn btn-default" type="button" ng-click="clear()"><span class="glyphicon glyphicon-remove"></span></button>-->
+                            </span>
                         </div>
 
 
@@ -82,6 +85,10 @@
                                 <span class="glyphicon glyphicon-list"> </span>
                                 Список
                             </a>
+                            <button class="btn btn-md btn-primary" type="button" ng-click="clear()">
+                                <span class="glyphicon glyphicon-erase"> </span>
+                                Очистить
+                            </button>
                             <!--<button ng-if="!item.id" ng-click="revert()" ng-disabled="!canRevert()" class="btn btn-md btn-primary">-->
                             <!--<span class="glyphicon glyphicon-erase"> </span>-->
                             <!--Очистить-->
@@ -130,7 +137,7 @@
                             <table class="table">
                                 <tr ng-repeat="(key, value) in item">
                                     <th>{{key}}</th>
-                                    <td>{{value | date:'dd.MM.yyyy' }}</td>
+                                    <td>{{value |date:'dd.MM.yyyy H:mm:ss' }}</td>
                                 </tr>
                             </table>
                         </div>
