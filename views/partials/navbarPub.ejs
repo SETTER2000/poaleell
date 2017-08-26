@@ -1,42 +1,66 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="pull-left brighten">
-                <!--<img height="29" width="29" src="/images/logo.png" style="margin: 10px; ">-->
-                <img height="21" width="100" src="/images/logo.png" style="margin: 15px; ">
-            </a>
-            <!--<a class="navbar-brand" href="/">КС</a>-->
-        </div>
-        <div id="navbar" class="navbar-collapse collapse" ng-class="!navCollapsed && 'in'">
+<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+            <!--<button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"-->
+                    <!--data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">-->
+                <!--<span class="sr-only">Toggle navigation</span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <!--<a href="/" class="pull-left brighten">-->
+                <!--&lt;!&ndash;<img height="29" width="29" src="/images/logo.png" style="margin: 10px; ">&ndash;&gt;-->
+                <!--<img height="21" width="100" src="/images/logo.png" style="margin: 15px; ">-->
+            <!--</a>-->
+            <!--&lt;!&ndash;<a class="navbar-brand" href="/">КС</a>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div id="navbar" class="navbar-collapse collapse" ng-class="!navCollapsed && 'in'">-->
+            <!--&lt;!&ndash;<ul class="nav navbar-nav navbar-right">&ndash;&gt;-->
+                <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a title="Восстановить пароль" href="/password-recovery-email"><span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+            <!--&lt;!&ndash;<form ng-submit="submitLoginForm()" class="navbar-form navbar-right">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control">&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button type="submit" class="btn btn-success">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span ng-show="!loginForm.loading">Войти</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span ng-show="loginForm.loading" class="fa fa-spinner"></span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span ng-show="loginForm.loading">Секунду...</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<input type="hidden" name="_csrf" value="<%= _csrf %>"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->
+
+<!--<div ng-if="(me)" class="navbar navbar navbar-fixed-top">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header ">-->
+            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
+                <!--<span class="icon-bar"><i class="fa fa-bars fa-lg" aria-hidden="true"></i></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <!--<a href="#" class="navbar-brand root"><img src="/images/24x24.png" alt=""></a>-->
+        <!--</div>-->
+        <!--<div class="collapse navbar-collapse" >-->
             <!--<ul class="nav navbar-nav navbar-right">-->
-                <!--<li>-->
-                    <!--<a title="Восстановить пароль" href="/password-recovery-email"><span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a>-->
-                <!--</li>-->
+                <!--<li class="active"><a href="#">Главная <span class="sr-only">(current)</span></a></li>-->
+                <!--<li><a href="#">О нас</a></li>-->
+                <!--<li><a href="#">Выставки</a></li>-->
+                <!--<li><a href="#">Собаки</a></li>-->
+                <!--<li><a href="#">Контакты</a></li>-->
+                <!--<li><a href="mailto:info@poaleell.com"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>-->
             <!--</ul>-->
-            <!--<form ng-submit="submitLoginForm()" class="navbar-form navbar-right">-->
-                <!--<div class="form-group">-->
-                    <!--<input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">-->
-                <!--</div>-->
-                <!--<button type="submit" class="btn btn-success">-->
-                    <!--<span ng-show="!loginForm.loading">Войти</span>-->
-                    <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
-                    <!--<span ng-show="loginForm.loading">Секунду...</span>-->
-                <!--</button>-->
-
-                <!--<input type="hidden" name="_csrf" value="<%= _csrf %>"/>-->
-            <!--</form>-->
-
-
-        </div>
-    </div>
-</nav>
+        <!--</div>-->
+        <!--&lt;!&ndash;<hr>&ndash;&gt;-->
+    <!--</div>-->
+<!--</div>-->

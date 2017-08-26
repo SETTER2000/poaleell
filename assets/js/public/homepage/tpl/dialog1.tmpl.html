@@ -1,0 +1,44 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Авторизация</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/images/icons/svg/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <!--<form  ng-submit="submitLoginForm()" class="navbar-form ">-->
+                <div class="form-group">
+                <p><input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control"></p>
+                <p><input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control"></p>
+                </div>
+
+                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+                <!--</form>-->
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+               Восстановить
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="cancel('Отмена')">
+               Отмена
+            </md-button>
+            <md-button ng-click="answer(loginForm)">
+                Ok
+            </md-button>
+            <!--<md-button ng-click="answer(loginForm)" class="btn btn-success">-->
+                <!--<span ng-show="!loginForm.loading">ВОЙТИ</span>-->
+                <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
+                <!--<span ng-show="loginForm.loading">Секунду...</span>-->
+            <!--</md-button>-->
+        </md-dialog-actions>
+    </form>
+</md-dialog>

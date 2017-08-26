@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Raleway|Roboto|Rubik');
+
+@font-face {
+    font-family: MagistralC;
+    src: url('fonts/MagistralC_29314.ttf');
+}
+
+@font-face {
+    font-family: "Roboto Th";
+    src: url('fonts/Roboto-Thin.ttf');
+}
+
+@font-face {
+    font-family: "Roboto Lt";
+    src: url('fonts/Roboto-Light.ttf');
+}
+
+body, .jumbotron {
+    color: #313F22;
+}
+
+body {
+    /*background-color: hsla(116, 15%, 81%, .5);*/
+    font-size: 16px;
+    line-height: 1.5;
+    /*color: #555;*/
+    font-weight: 300;
+    font-family: "Rubik", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+
+}
+
+a, h1, h2, h3, h4, h5, h6 {
+    font-family: MagistralC;
+    /*color: hsl(138, 44%, 9%);*/
+
+    letter-spacing: 2px;
+}
+
+.jumbotron {
+    background-color: hsla(116, 15%, 93%, .4);
+}
+
+p {
+    line-height: 28px;
+    margin-bottom: 25px;
+}
+
+.centered {
+    text-align: center;
+}
+
+h1.logo-root {
+    font-size: 10em;
+    letter-spacing: 15px;
+
+    text-transform: uppercase;
+    background: linear-gradient(45deg, hsl(138, 44%, 9%) 23%, hsla(138, 44%, 20%, .8) 76%, hsla(138, 44%, 40%, .5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
+    display: table;
+    margin: 20px auto;
+}
+
+.logo {
+    font-size: 1.8em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-family: MagistralC;
+}
+
+/*a{*/
+/*color: hsl(97, 12%, 46%);*/
+/*}*/
+/*a:hover {*/
+/*text-decoration: none;*/
+/*!*color: hsl(110, 20%, 17%);*!*/
+/*color: hsl(346, 7%, 64%);*/
+/*outline: 0;*/
+/*}*/
+
+/*a:focus {*/
+/*color: hsl(138, 8%, 55%);*/
+/*text-decoration: line-through;*/
+/*}*/
+
+hr {
+    display: block;
+    height: 1px;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.navbar {
+    /*font-weight: 800;*/
+    font-size: 16px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: hsla(116, 15%, 81%, .5);
+}
+
+.navbar-brand {
+    padding: 46px 185px;
+    margin-top: -20px;
+    background-image: url('../images/logo.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 200;
+}
+
+.navbar-brand.root {
+    background: none;
+    padding: 12px;
+    margin: 0;
+
+}
+
+.navbar-brand, .navbar-brand, .navbar-nav > li > a {
+    text-shadow: 0 1px 0 rgba(82, 82, 82, 0.25);
+}
+
+.navbar-inverse {
+    background: #2d2d2d;
+    border-color: #2d2d2d;
+}
+
+/*.navbar .navbar-nav > .active > a {*/
+/*background: hsla(110, 14%, 40%, .4);*/
+/*color: #f1f1f1;*/
+/*}*/
+
+header {
+    /*padding-top: 150px;*/
+    min-height: 100%;
+    color: black;
+}
+
+html {
+    /*background: url(images/bg.jpg) no-repeat center center fixed;*/
+    /*background-color: hsla(116, 15%, 81%, .5);*/
+    background-image: url('../images/design/root_page.png'), url("../images/design/root_page2.png");
+    background-position: center center, bottom right;
+    background-repeat: no-repeat, repeat-x, repeat-x;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#headerwrap {
+    /*min-width: 400px;*/
+    height: 100vh;
+    position: relative;
+    /*background-image:  url("media/fishing.svg"), url("media/mermaid.svg"), url("media/sea.png");*/
+
+    background-image: url('../images/design/root_page.png'), url("../images/design/root_page2.png");
+    background-position: center center, bottom right;
+    /*background-repeat: no-repeat, repeat-x, repeat-x;*/
+
+    background-size: cover;
+    padding-top: 20px;
+    text-align: center;
+    /*background-attachment: relative;*/
+
+    /*min-height: 1080px;*/
+    width: 100%;
+}
+
+.jumbotron {
+    padding-top: 200px;
+}
+
+.logo-root-kennel {
+    font-size: 36px;
+    letter-spacing: 4px;
+    padding-top: 100px;
+    padding-bottom: 150px;
+}
+
+.logo-root {
+    font-size: 9.5em;
+    font-family: MagistralC;
+    letter-spacing: 15px;
+}
+
+.logo-root-chinese {
+    font-size: 2em;
+    font-family: 'Roboto Th';
+    letter-spacing: 27px;
+    padding-top: 40px;
+    /*font-weight: bold;*/
+}
+
+.root-nav .navbar {
+    font-size: 18px;
+    border: none;
+    /*color: darkolivegreen;*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus {
+    color: orangered;
+    /*background-color: #c6bcaa;*/
+    border-radius: 11%;
+    opacity: 0.6; /* Значение прозрачности */
+    filter: alpha(Opacity=60); /* Прозрачность в IE */
+}
+
+.otboy {
+    padding: 100px;
+}
+
+#formAuthorize {
+    margin: 25% auto;
+    display: block;
+    position: relative;
+}
+
+.fabToolbardemoBasicUsage md-fab-toolbar.md-right md-fab-trigger.align-with-text {
+    left: 7px;
+}
+md-fab-toolbar md-fab-trigger,md-fab-toolbar md-toolbar {
+    position: absolute;
+    z-index: 30;
+}
+.md-fab-toolbar-background{
+    background-color: rgb(176, 186, 176);
+}
+
+.md-button.md-fab{
+    box-shadow: none;
+}
+
+
+/*md-fab-toolbar-content{*/
+    /*opacity: 0;*/
+/*}*/
+
+
+
+
+
+
+@media screen and (max-width: 770px) {
+    h1.logo-root {
+        font-size: 4.5em;
+        letter-spacing: 7px;
+    }
+
+    .jumbotron {
+        padding-top: 150px;
+    }
+
+    .navbar {
+        background: hsla(116, 15%, 81%, .9);
+        font-size: 1.2em;
+    }
+
+    .logo-root-kennel {
+        font-size: 36px;
+        letter-spacing: 4px;
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+
+    .navbar-brand {
+        padding: 33px 140px;
+        margin-top: -20px;
+        background-images: url('/images/logo.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        z-index: 200;
+    }
+}
+
+

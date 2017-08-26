@@ -31,12 +31,12 @@
   font-weight: 600;
 }
 
-//.tag:before {
-//  content: open-quote; /* Добавляем перед текстом открывающую кавычку */
-//}
-//.tag:after {
-//  content: close-quote; /* Добавляем после текста закрывающую кавычку */
-//}
+html {
+  background-image: none;
+  /*background: url(images/bg.jpg) no-repeat center center fixed;*/
+  background-color: rgba(216, 228, 213, 0.5);
+}
+
 .sortOrder:after {
   content: '\25b2'; // BLACK UP-POINTING TRIANGLE
 }
@@ -180,23 +180,21 @@ ul.word li {
   width: inherit;
 }
 
-
-#avatar.fixed-thead  th,
-.table.m-left  tr  th{
+#avatar.fixed-thead th,
+.table.m-left tr th {
   min-width: 120px;
   width: 100%;
 }
+
 #avatar td,
-#avatar.fixed-thead  td,
-.table.m-left  tr  td:nth-child(1),
-#avatar.fixed-thead  td:nth-child(1),
-.table.m-left>tbody > tr  td{
+#avatar.fixed-thead td,
+.table.m-left tr td:nth-child(1),
+#avatar.fixed-thead td:nth-child(1),
+.table.m-left > tbody > tr td {
   width: 48px;
   min-width: 48px;
 
 }
-
-
 
 #table-run.fixed {
   position: fixed;
@@ -219,7 +217,6 @@ ul.word li {
   height: 700px;
   display: table-caption;
 }
-
 
 .table.m-left {
   //margin-left: -15px;
@@ -399,13 +396,9 @@ table.table.not-margin {
 //table > thead#avatar.fixed-thead > tr > th:nth-child(2),table > thead#avatar > tr > th:nth-child(2){
 //  border-left: 0;
 //}
-.red-color{
+.red-color {
   color: red;
 }
-
-
-
-
 
 .event {
   position: absolute;
@@ -422,3 +415,35 @@ table.table.not-margin {
 .event.busy {
   background: #f64747;
 }
+
+/************************ DIALOGs WINDOW ***************************************/
+
+.dialogdemoBasicUsage #popupContainer {
+  position: relative;
+}
+
+.dialogdemoBasicUsage .footer {
+  width: 100%;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+  font-size: 0.8em;
+  margin-top: 50px;
+}
+
+.dialogdemoBasicUsage button {
+  width: 200px;
+}
+
+.dialogdemoBasicUsage div#status {
+  color: #c60008;
+}
+
+.dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
+  margin-bottom: 0;
+}
+//.md-toolbar-tools{
+//  background: rgb(170, 194, 148);
+//}

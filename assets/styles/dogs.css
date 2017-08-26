@@ -1,0 +1,31 @@
+
+/********************* DOGS PAGE *****************/
+body{
+    background-color: hsla(116, 15%, 95%, .5);
+}
+#headerwrap{
+    background-image: none;
+}
+.navbar{
+    background-image: url('../images/design/four_page_01.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    padding: 60px 0 40px;
+    background-size: cover;
+}
+
+
+.navbar .navbar-nav > .active > a,.nav > li > a:hover, .nav > li > a:focus {
+    background: hsla(110, 12%, 59%, 0.45);
+    color: hsl(138, 64%, 90%);
+}
+/*a{*/
+    /*color: hsl(138, 34%, 70%);*/
+/*}*/
+.nav>li>a:hover{
+    background:hsla(110, 14%, 40%,.5);
+    color: hsl(138, 44%, 90%);
+}
+/*body{*/
+    /*background:  hsl(138, 64%, 90%);*/
+/*}*/

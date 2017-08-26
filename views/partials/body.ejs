@@ -1,44 +1,81 @@
-<!--<div class="row">-->
-    <!--<div class="col-md-4">-->
-        <!--<h2>Heading</h2>-->
-        <!--<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>-->
-        <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
-    <!--</div>-->
-    <!--<div class="col-md-4">-->
-        <!--<h2>Heading</h2>-->
-        <!--<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>-->
-        <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
-    <!--</div>-->
-    <!--<div class="col-md-4">-->
-        <!--<h2>Heading</h2>-->
-        <!--<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>-->
-        <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
-    <!--</div>-->
-<!--</div>-->
-<div class="row"><div class="col-md-offset-4">
-        <!--<h3>Вход в закрытую часть</h3>-->
-    </div></div>
+<md-fab-toolbar md-open="demo.isOpen" count="demo.count"
+                md-direction="{{demo.selectedDirection}}">
+    <md-fab-trigger class="align-with-text">
+        <md-button aria-label="menu" class="md-fab md-primary">
+            <md-icon md-svg-src="/images/icons/svg/menu.svg"></md-icon>
+        </md-button>
+    </md-fab-trigger>
+
+    <md-toolbar>
+        <md-fab-actions class="md-toolbar-tools">
+            <md-button aria-label="comment" class="md-icon-button">
+                <md-icon md-svg-src="/images/icons/svg/ic_comment_24px.svg"></md-icon>
+            </md-button>
+            <md-button aria-label="label" class="md-icon-button">
+                <md-icon md-svg-src="/images/icons/svg/ic_label_24px.svg"></md-icon>
+            </md-button>
+            <md-button aria-label="photo" class="md-icon-button">
+                <md-icon md-svg-src="/images/icons/svg/ic_phone_24px.svg"></md-icon>
+            </md-button>
+        </md-fab-actions>
+    </md-toolbar>
+</md-fab-toolbar>
+<h3 class="logo-root-kennel text-center text-uppercase text-nowrap">KENNEL CLUB</h3>
+
+
+
+
+
+
+
+
+
+
+
+<h1 class="logo-root text-center text-uppercase ">Poale Ell</h1>
+<h4 class="logo-root-chinese text-center text-capitalize">Chinese Crested Dog</h4>
 <div class="row">
     <div class="col-md-4"></div>
-    <div class="col-md-4 text-center" >
+    <div class="col-md-4 text-center">
+        <div class="otboy">
 
-        <form ng-submit="submitLoginForm()" class="navbar-form ">
-
-
-
-            <div class="form-group">
-                <p>  <input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control"></p>
-<p> <input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control"></p>
-
-
+            <md-button ng-click="showAdvanced($event)" class="btn btn-mg btn-success text-center">
+                ВОЙТИ
+            </md-button>
+            <md-button type="submit" class="btn btn-mg btn-warning text-center">
+                <span ng-click="showAdvanced($event)">Регистрация</span>
+            </md-button>
+            <!--<md-button class="md-primary md-raised" ng-click="showPrompt($event)"  >-->
+            <!--Prompt Dialog-->
+            <!--</md-button>-->
+            <div ng-if="status" id="status">
+                <em layout="row" layout-align="center center" class="md-padding">
+                    {{status}}
+                </em>
             </div>
-            <div class="text-center">  <button type="submit" class="btn btn-success">
-                    <span ng-show="!loginForm.loading">ВОЙТИ</span>
-                    <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
-                    <span ng-show="loginForm.loading">Секунду...</span>
-                </button></div>
-            <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-        </form>
+            <!--<button type="submit" class="btn btn-mg btn-warning text-center">-->
+            <!--<span ng-show="!loginForm.loading">Регистрация</span>-->
+            <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
+            <!--<span ng-show="loginForm.loading">Секунду...</span>-->
+            <!--</button>-->
+        </div>
     </div>
     <div class="col-md-4"></div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
