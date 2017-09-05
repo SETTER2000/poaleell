@@ -19,7 +19,7 @@ module.exports = {
         },
         action: {
             type: 'boolean',
-            defaultsTo: false
+            defaultsTo: true
         },
         firstName: {
             type: 'string',

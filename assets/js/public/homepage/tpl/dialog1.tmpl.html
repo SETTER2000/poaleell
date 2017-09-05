@@ -11,34 +11,41 @@
         </md-toolbar>
 
         <md-dialog-content>
-            <div class="md-dialog-content">
-                <!--<form  ng-submit="submitLoginForm()" class="navbar-form ">-->
-                <div class="form-group">
-                <p><input ng-model="loginForm.email" type="text" placeholder="Email or Login" name="email" class="form-control"></p>
-                <p><input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control"></p>
-                </div>
-
+            <md-content class="md-padding">
+                    <div layout-gt-sm="row">
+                        <md-input-container flex>
+                            <label>Логин</label>
+                            <input  ng-model="loginForm.email" type="text"/>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Пароль</label>
+                            <input ng-model="loginForm.password"  type="password"/>
+                        </md-input-container>
+                    </div>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-                <!--</form>-->
-            </div>
+            </md-content>
         </md-dialog-content>
 
-        <md-dialog-actions layout="row">
-            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-               Восстановить
-            </md-button>
-            <span flex></span>
-            <md-button ng-click="cancel('Отмена')">
-               Отмена
-            </md-button>
-            <md-button ng-click="answer(loginForm)">
+        <md-dialog-actions  layout-align="center center" layout="row">
+            <!--<md-button ng-click="cancel('Отмена')" >-->
+                <!--Восстановить-->
+            <!--</md-button>-->
+
+
+            <md-button ng-click="answer(loginForm)" md-autofocus>
                 Ok
+            </md-button><span flex></span>
+            <md-button href="/signup">
+                Регистрация
             </md-button>
             <!--<md-button ng-click="answer(loginForm)" class="btn btn-success">-->
-                <!--<span ng-show="!loginForm.loading">ВОЙТИ</span>-->
-                <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
-                <!--<span ng-show="loginForm.loading">Секунду...</span>-->
+            <!--<span ng-show="!loginForm.loading">ВОЙТИ</span>-->
+            <!--<span ng-show="loginForm.loading" class="fa fa-spinner"></span>-->
+            <!--<span ng-show="loginForm.loading">Секунду...</span>-->
             <!--</md-button>-->
+
+
+
         </md-dialog-actions>
     </form>
 </md-dialog>

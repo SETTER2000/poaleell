@@ -2,9 +2,9 @@
 <!-- S I G N U P  F O R M -->
 <div class="container">
     <div class="page-header">
-        <h1>Регистрация</h1>
+        <h1><img src="/images/design/33x32.png" alt=""> <a href="/" style=" text-decoration: none; "><span class="boggy">POALE ELL</span></a></h1>
     </div>
-    <p class="lead"> Добавить сотрудника в базу данных компании.</p>
+    <p class="lead"> Регистрация</p>
     <p><form data-ng-submit="submitSignupForm()" class="form-signup" novalidate name="signup" id="sign-up-form">
 
         <div class="row">
@@ -165,8 +165,8 @@
 					</span>
             </div>
             <div class="col-xs-9 col-sm-9 col-md-9">
-                Нажатием на кнопку <strong class="label label-primary">Регистрация</strong>, вы соглашаетесь с
-                <a href="#" data-toggle="modal" data-target="#t_and_c_m">Условиями</a>, установленными на данном
+                Нажатием на кнопку <strong class="label label-success">Регистрация</strong>, вы соглашаетесь с
+               <a ng-href="#" ng-click="showAdvanced($event)" class="md-primary">условиями</a>, установленными на данном
                 сайте.
 
             </div>
@@ -178,8 +178,8 @@
 
         <div class="row">
             <!-- Disable signup button until the form has no errors -->
-            <div class="col-xs-12 col-md-12">
-                <button type="submit" class="btn btn-primary btn-block btn-lg"
+            <div class="col-xs-4 col-md-4 col-md-offset-4">
+                <button type="submit" class="btn  btn-default btn-block btn-lg"
                         data-ng-disabled="signup.$invalid" tabindex="10">
                     <span ng-show="!signupForm.loading">Регистрация</span>
                     <span ng-show="signupForm.loading" class="overlord-loading-spinner fa fa-spinner"></span>

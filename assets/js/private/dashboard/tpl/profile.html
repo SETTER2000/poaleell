@@ -1,69 +1,73 @@
 <div ng-controller="ProfileController" ng-cloak ng-hide="loading">
-    <div class="col-md-2 col-md-offset-2">
-        <div class="row placeholders">
-            <div class="placeholder">
-                <img class="gravatarImage" class="img-responsive"  width="200" ng-src="{{me.avatarUrl}}"/>
+    <div class="page-header">
+        <div class="col-md-2 col-md-offset-2">
+            <div class="row placeholders">
+                <div class="placeholder">
+                    <img class="gravatarImage" class="img-responsive" width="200" ng-src="{{me.avatarUrl}}"/>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-5">
-        <div class="page-header">
-            <h1>{{me.fullName}}</h1>
-            <h3>
-                <a href="mailto:{{me.email}}">{{me.email}}</a>
-            </h3>
-            <div class="row">
-                <div class=" col-md-12">
-                    <table class="table">
-                        <tr>
-                            <th>ДР</th>
-                            <td>{{me.birthday | date:'dd.MM.yyyy'}}</td>
+        <div class="col-md-5">
+            <div class="page-header">
+                <h1>{{me.fullName}}</h1>
+                <h3>
+                    <a href="mailto:{{me.email}}">{{me.email}}</a>
+                </h3>
+                <div class="row">
+                    <div class=" col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>ДР</th>
+                                <td>{{me.birthday | date:'dd.MM.yyyy'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Логин</th>
+                                <td>{{me.login}}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{me.email}}</td>
+                            </tr>
+                            <tr ng-if="me.contacts[0].value">
+                                <th>Телефон</th>
+                                <td ng-repeat="contacts in me.contacts | filter : 'Внутренний телефон'">
+                                    {{contacts.value}}
+                                </td>
+                            </tr>
+
+                        <tr ng-if="!me.positions[0].name && me.admin">
+                            <th >Должность</th>
+                            <td>{{me.positions[0].name}}</td>
                         </tr>
-                        <tr>
-                            <th>Логин</th>
-                            <td>{{me.login}}</td>
+                        <tr ng-if="!me.departments[0].name && me.admin">
+                            <th>Отдел</th>
+                            <td>{{me.departments[0].name}}</td>
                         </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td>{{me.email}}</td>
-                        </tr>
-                        <tr>
-                            <th>Телефон</th>
-                            <td ng-repeat="contacts in me.contacts | filter : 'Внутренний телефон'">
-                                {{contacts.value}}
-                            </td>
-                        </tr>
-                        <!--<tr>-->
-                            <!--<th>Должность</th>-->
-                            <!--<td>{{me.positions[0].name}}</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<th>Отдел</th>-->
-                            <!--<td>{{me.departments[0].name}}</td>-->
-                        <!--</tr>-->
-                        <tr ng-if="!me.firedDate">
+                        <tr ng-if="!me.firedDate && me.admin">
                             <th>Работает с</th>
                             <td>{{me.dateInWork | date: "dd.MM.yyyy"}} {{message}}</td>
                         </tr>
-                        <tr ng-if="me.firedDate">
+                        <tr ng-if="me.firedDate && me.admin">
                             <th>Работал</th>
                             <td>{{me.dateInWork | date: "dd.MM.yyyy"}} - {{me.firedDate | date: "dd.MM.yyyy"}}</td>
                         </tr>
-                        <tr ng-if="me.firedDate">
+                        <tr ng-if="me.firedDate && me.admin">
                             <th>Уволен с</th>
                             <td>{{me.firedDate | date: "dd.MM.yyyy"}}</td>
                         </tr>
-                        <tr>
-                            <th colspan="20"></th>
-                        </tr>
-                    </table>
+
+                            <tr>
+                                <th colspan="20"></th>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <a ng-if="(me.admin)" href="/profile/edit" class="btn btn-sm btn-primary">Edit</a>
-                <a ng-if="(me.admin)" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
+                <div>
+                    <a ng-if="(me.admin)" href="/profile/edit" class="btn btn-sm btn-primary">Edit</a>
+                    <a ng-if="(me.admin)" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
 
 
+                </div>
             </div>
         </div>
     </div>

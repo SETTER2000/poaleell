@@ -16,7 +16,7 @@ angular.module('DashboardModule')
             //$scope.itemsResource = $resource(baseUrl);
             console.log($window.SAILS_LOCALS.me);
             $scope.data = $window.SAILS_LOCALS.me;
-
+            $scope.currentNavItem = 'page1';
             $scope.sendRequest = function () {
                 var promise = $http.post('/user');
                 //console.log(promise);

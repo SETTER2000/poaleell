@@ -11,27 +11,11 @@
                 </button>
                 <a href="/#" class="pull-left brighten">
                     <!--<img height="29" width="29" src="/images/logo.png" style="margin: 10px; ">-->
-                    <img height="21" width="100" src="/images/logo.png" style="margin: 15px; ">
+                    <img height="83" width="324" src="/images/logo.png" style="margin: 15px; ">
                 </a>
-                <!--<a class="navbar-brand " href="/"> КС</a>-->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <!--<li><a href="/">Home</a></li>-->
-                    <!--<li><a ui-sref="home.admin.calendars">Посещаемость</a></li>-->
-                    <!--<li><a href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>-->
-                    <!--<li><a ui-sref="account">Выход нового сотрудника</a></li>-->
-                    <!--<li><a ui-sref="account">Аккаунт</a></li>-->
-                    <!--<li><a ui-sref="contact.detail">Detail</a></li>-->
-                    <!--<li><a ui-sref="home.admin">Admin</a></li>-->
-                    <!--<li><a ui-sref="home.admin.users">Users</a></li>-->
-                    <!--<li><a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a></li>-->
-                    <!--<li><a ui-sref="contact">Contact</a>-->
-
-                    <!-- Also a way to navigate -->
-                    <!--<li><a href="/videos">Videos</a></li>-->
-
-
                     <li class="dropdown">
                         <a ng-if="(me.kadr || me.admin || me.leader)" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Справочники
@@ -42,17 +26,16 @@
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Сотрудники</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Подразделения</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.structures">Структура компании</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.skds">Отработанное время</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.vacations">Отпуска</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.furloughs">Тип отпуска</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>
+                            <!-- <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.structures">Структура компании</a></li>
+                          <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.skds">Отработанное время</a></li>
+                          <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.vacations">Отпуска</a></li>
+                          <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.furloughs">Тип отпуска</a></li>
+                          <li><a ng-if="(me.kadr || me.admin)" href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>-->
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>
                     <li>
                     </li>
-
                 </ul>
                 <ul ng-show="me.id" class="nav navbar-nav navbar-right">
                     <li class="gravatarSm">
@@ -60,7 +43,7 @@
                         <!--<img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>-->
                     </li>
                     <li class="activityOverlord active">
-                        <a href="/profile" class="pointer"> {{me.fullName}} ({{me.phoneInner}})</a>
+                        <a href="/profile" class="pointer"> {{me.fullName}} <span ng-if="me.phoneInner">({{me.phoneInner}})</span></a>
                     </li>
                     <li>
 
@@ -70,8 +53,8 @@
 
                     </li>
                 </ul>
-
-            </div><!--/.nav-collapse -->
+            </div>
+          <!--/.nav-collapse -->
         </div>
     </nav>
 </div>

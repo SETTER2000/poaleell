@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Raleway|Roboto|Rubik');
 
 @font-face {
-    font-family: MagistralC;
-    src: url('fonts/MagistralC_29314.ttf');
+    font-family: "MagistralC";
+    src: url('/fonts/MagistralC_29314.ttf');
 }
 
 @font-face {
     font-family: "Roboto Th";
-    src: url('fonts/Roboto-Thin.ttf');
+    src: url('/fonts/Roboto-Thin.ttf');
 }
 
 @font-face {
     font-family: "Roboto Lt";
-    src: url('fonts/Roboto-Light.ttf');
+    src: url('/fonts/Roboto-Light.ttf');
 }
 
 body, .jumbotron {
@@ -30,11 +30,11 @@ body {
     -webkit-overflow-scrolling: touch;
 
 }
-
-a, h1, h2, h3, h4, h5, h6 {
+.boggy{
+    color: hsl(138, 44%, 9%);
+}
+ h1, h2, .logo-root-kennel {
     font-family: MagistralC;
-    /*color: hsl(138, 44%, 9%);*/
-
     letter-spacing: 2px;
 }
 
@@ -101,7 +101,7 @@ hr {
     font-size: 16px;
     padding-top: 15px;
     padding-bottom: 15px;
-    background: hsla(116, 15%, 81%, .5);
+    /*background: hsla(116, 15%, 81%, .5);*/
 }
 
 .navbar-brand {
@@ -124,10 +124,10 @@ hr {
     text-shadow: 0 1px 0 rgba(82, 82, 82, 0.25);
 }
 
-.navbar-inverse {
-    background: #2d2d2d;
-    border-color: #2d2d2d;
-}
+/*.navbar-inverse {*/
+    /*background: #2d2d2d;*/
+    /*border-color: #2d2d2d;*/
+/*}*/
 
 /*.navbar .navbar-nav > .active > a {*/
 /*background: hsla(110, 14%, 40%, .4);*/
@@ -154,7 +154,7 @@ html {
 
 #headerwrap {
     /*min-width: 400px;*/
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     /*background-image:  url("media/fishing.svg"), url("media/mermaid.svg"), url("media/sea.png");*/
 
@@ -184,7 +184,7 @@ html {
 
 .logo-root {
     font-size: 9.5em;
-    font-family: MagistralC;
+    font-family: 'MagistralC';
     letter-spacing: 15px;
 }
 
@@ -223,7 +223,8 @@ html {
 .fabToolbardemoBasicUsage md-fab-toolbar.md-right md-fab-trigger.align-with-text {
     left: 7px;
 }
-md-fab-toolbar md-fab-trigger,md-fab-toolbar md-toolbar {
+md-fab-toolbar md-fab-trigger,
+md-fab-toolbar md-toolbar {
     position: absolute;
     z-index: 30;
 }
@@ -276,5 +277,18 @@ md-fab-toolbar md-fab-trigger,md-fab-toolbar md-toolbar {
         z-index: 200;
     }
 }
+
+.ew{
+color:
+#ffebee,#ffcdd2,#ef9a9a,#e57373,#ef5350,#f44336,#e53935,#d32f2f,#c62828,#b71c1c,#ff8a80,#ff5252,#ff1744,#d50000
+}
+
+
+
+
+
+
+
+
 
 

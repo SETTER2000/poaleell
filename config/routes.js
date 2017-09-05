@@ -80,7 +80,7 @@ module.exports.routes = {
 
 
     // !!!! НЕ УДАЛЯТЬ РОУТ!
-    //'POST /user/signup': 'UserController.signup',
+    'POST /user/signup': 'UserController.signup',
 
 
     /***************************************

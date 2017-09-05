@@ -39,15 +39,19 @@ module.exports = {
                 {login: req.param('email')}
             ]
         }, function foundUser(err, user) {
+          
+            console.log('user',user);
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
             Passwords.checkPassword({
                 passwordAttempt: req.param('password'), encryptedPassword: user.encryptedPassword
             }).exec({
                 error: function (err) {
+                    // console.log('err',err);
                     return res.negotiate(err);
                 },
                 incorrect: function () {
+                    // console.log('NO');
                     return res.notFound();
                 },
                 success: function () {
@@ -59,7 +63,7 @@ module.exports = {
                         return res.forbidden("Ваша учетная запись заблокирована, " +
                             "пожалуйста свяжитесь с администратором: " + sails.config.admin.email);
                     }
-
+                    console.log('Вход в систему: ', new Date()+ ', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
                     req.session.me = user.id;
                     //req.session.admin = user.admin;
                     //req.session.kadr = 11;
@@ -1039,12 +1043,15 @@ module.exports = {
         //console.log('formData: ', req.body);
         const dir = require('util').format('%s/images/user/avatar/%s', sails.config.appUrl.rootDir, req.body.id);
         let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
-        //console.log('fileName', fileName);
+        console.log('fileName', fileName);
+        console.log('dir', dir);
         req.file('file').upload({
                 dirname: dir,
                 saveAs: fileName
             },
             function (err, files) {
+                console.log('err', err);
+                console.log('files', files);
                 if (err) return res.serverError(err);
                 if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
                 //if (files.length === 0) {

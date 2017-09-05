@@ -2,6 +2,7 @@ angular.module('Holiday', [
         'ui.router',
         'ngResource',
         'ngAnimate',
+    'ngMaterial',
         'SkdModule',
         'StructureModule',
         'PositionModule',
