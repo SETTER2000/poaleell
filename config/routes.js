@@ -48,6 +48,7 @@ module.exports.routes = {
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
     'POST /file/upload': 'UserController.upload',
+    'POST /file/uploadDogs': 'CatalogController.upload',
     // 'GET /user/getUsersDepartment': 'UserController.getUsersDepartment',
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
     'POST /users/ldap': 'UserController.searchLDAP',
@@ -134,6 +135,7 @@ module.exports.routes = {
     'POST /skds': 'SkdController.get', //получить все записи skd
     'GET /skds/:id': 'SkdController.get', //получить все записи skd
 
+    
 
     /**
      * Structure
@@ -160,11 +162,18 @@ module.exports.routes = {
     /**
      * Vacation
      */
-    'GET /vacations': 'VacationController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'GET /vacations': 'VacationController.get', // получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
     'POST /vacations': 'VacationController.create', // создать запись
     'DELETE /vacations/:id': 'VacationController.destroy', // удалить
     'PUT /vacations/:id': 'VacationController.update', // обновить
 
+    /**
+     * Catalogs
+     */
+    'GET /catalogs': 'CatalogController.get', // получить все записи или одну по http://localhost:1338/catalogs?id=599c4aefc97f011f70a2359b
+    'POST /catalogs': 'CatalogController.create', // создать запись
+    'DELETE /catalogs/:id': 'CatalogController.destroy', // удалить
+    'PUT /catalogs/:id': 'CatalogController.update', // обновить
 
     /*************************************************************
      * Server-rendered HTML Pages                                *
@@ -237,7 +246,12 @@ module.exports.routes = {
     'GET /admin/furloughs/create/': 'PageController.showHomePage',
 
     'GET /admin/vacations/edit/:id': 'PageController.showHomePage',
-    'GET /admin/vacations/create/': 'PageController.showHomePage',
+    'GET /admin/vacations/create': 'PageController.showHomePage',
+
+
+    'GET /admin/catalogs': 'PageController.showHomePage',
+    'GET /admin/catalogs/create': 'PageController.showHomePage',
+    'GET /admin/catalogs/edit/:id': 'PageController.showHomePage',
 
 
     //'GET /admin/attendances/calendar': 'PageController.showHomePage',
@@ -245,6 +259,10 @@ module.exports.routes = {
 
     'GET /user/adminUsers': 'UserController.adminUsers',
 
+
+    'GET /dashboard/showcases': 'PageController.showHomePage',
+    
+    
     // !!! НЕ УДАЛЯТЬ !!!
     //'GET /att': 'Attendance.getQuery',
     //'POST /att': 'Attendance.getQuery',

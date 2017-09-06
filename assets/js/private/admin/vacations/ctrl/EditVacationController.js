@@ -12,7 +12,6 @@ angular.module('VacationModule')
                 ok: 'OK!',
                 objectDelete: 'Объект удалён.',
                 newUserOk: 'Успешно создан.',
-                passDefault: '111111',
                 redirectSelf: 'home.admin.vacations',
                 ru: 'ru',
                 dateFormat: "d.m.Y",

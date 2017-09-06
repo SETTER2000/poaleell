@@ -1,0 +1,471 @@
+<!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+
+<div class="col-sm-11  col-md-12  main">
+    <div class="page-header">
+        <h2>
+             <p ng-if="item.name" ng-class="{'fired':item.fired}">{{item.getFullName()}}
+                 <span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
+            </p>
+<p ng-if="!item.name">{{newObjectName}}</p>
+            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button"> Работает c {{item.dateInWork |
+                date:'dd.MM.yyyy' }} ({{item.periodWork()}})</a>
+            <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
+               title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
+                date:'dd.MM.yyyy'}}</a>
+            <div class="btn-group-xs pull-right">
+                <button ng-show="edit" ng-click="saveEdit(item)" type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-check"></span> Сохранить
+                </button>
+                <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-list"></span> Список
+                </a>
+            </div>
+        </h2>
+    </div>
+    <div class="row">
+
+
+        <!---->
+        <!---->
+        <!--<form action="/user/avatarUpload" enctype="multipart/form-data" method="post">-->
+        <!--<input type="file" name="avatar" multiple="multiple"><br>-->
+        <!--<input type="submit" value="Загрузить">-->
+        <!--</form>-->
+
+        <!--<div ng-show="uploader.isHTML5">-->
+        <!--&lt;!&ndash; 3. nv-file-over uploader="link" over-class="className" &ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="well my-drop-zone" nv-file-over="" uploader="uploader">&ndash;&gt;-->
+        <!--&lt;!&ndash;Зона перетаскивания без фильтра&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+        <!--&lt;!&ndash; Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" &ndash;&gt;-->
+        <!--<div nv-file-drop="" uploader="uploader" options="{ url: '/file/upload' }">-->
+        <!--<div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">-->
+        <!--Перетащи аватар сюда-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div ui-view="uploader"></div>-->
+        <!--<div class="file-upload">-->
+        <!--<label>-->
+        <!--<input type="file"  nv-file-select="" uploader="uploader" multiple />-->
+        <!--<span>Выбрать прайс</span>-->
+        <!--</label>-->
+        <!--</div>-->
+
+
+        <div ng-class="{'col-md-6':close, 'col-md-12':!close, 'fx-fade-left':!close, 'fx-fade-right':close}">
+            <!--<div  class="fx-fade-right" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <!--<div  class="fx-fade-down" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <!--<div  class="fx-fade-up fx-ease-sine" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <!--<div  class="fx-fade-normal" ng-class="{'col-md-6':close, 'col-md-12':!close}">-->
+            <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Редактировать
+                        <a href="#" ng-click="closed()" class="pull-right">
+                            <span class="glyphicon" ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
+                        </a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form name="userForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div ng-if="(me.admin)" class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="item.action">Активность
+                                </label>
+                            </div>
+                            <label class="control-label" for="inputSuccess1">
+                                Имя
+                                <span class="glyphicon glyphicon-question-sign" ng-mouseover="show=true" ng-mouseleave="show=false"></span>
+                                <small ng-if="show">( та часть имени, которая пишется после названия питомника)</small>
+                            </label>
+                            <input ng-if="!edit" autofocus ng-change="getLdap()" required type="text" class="form-control"
+                                   ng-model="item.name">
+                            <input ng-if="edit" autofocus required type="text" class="form-control" ng-model="item.name">
+                            <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label" for="inputSuccess2">Питомник</label>
+                            <input type="text" class="form-control" required ng-model="item.kennel">
+                            <!--<span id="helpBlock2" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="inputSuccess3">Кличка
+
+                                <span class="glyphicon glyphicon-question-sign" ng-mouseover="showNick=true" ng-mouseleave="showNick=false"></span>
+                                <small ng-if="showNick">(как называете дома, прозвище, ласковое имя)</small>
+                            </label>
+                            <input type="text" class="form-control" required ng-model="item.nickname">
+                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                        <!--<div class="row">-->
+                        <!--<div class="col-md-3">-->
+                        <!--<div class="form-group ">-->
+
+                        <!--<label class="control-label inline" for="inputSuccess4">-->
+
+
+                        <!--&lt;!&ndash;<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">&ndash;&gt;-->
+                        <!--<input class="form-control  flatpickr " ng-flatpickr-->
+                        <!--fp-opts="dateOpts"-->
+                        <!--fp-on-setup="toggleBlur(item)"-->
+                        <!--ng-model="item.birthday ">-->
+                        <!--</label>-->
+                        <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class=flatpickr>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input ng-flatpickr type="text" placeholder="Select Date.." data-input&ndash;&gt;-->
+                        <!--&lt;!&ndash;fp-opts="dateOpts"&ndash;&gt;-->
+                        <!--&lt;!&ndash;fp-on-setup="toggleBlur(fpItem)"&ndash;&gt;-->
+                        <!--&lt;!&ndash;ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<a class="input-button" title="toggle" data-toggle>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<i class="icon-calendar"></i>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<a class="input-button" title="clear" data-clear>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<spani class="glyphicon glyphicon-remove" ></spani>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="col-md-6">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="form-group " ng-if="item.birthday">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<label class="control-label" for="inputSuccess5">Дата рождения </label>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<div><a href="#" class="btn btn-default  disabled" role="button">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"&ndash;&gt;-->
+                        <!--&lt;!&ndash;aria-hidden="true"></span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;{{item.birthday | date:'dd.MM.yyyy'}}&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a></div>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+
+
+                        <div class="form-group">
+                            <label class="control-label">
+                                Дата рождения
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control flatpickr" ng-flatpickr
+                                       fp-opts="dateOpts"
+                                       fp-on-setup="toggleBlur(item)"
+                                       ng-model="item.birthday">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span
+                                      class="glyphicon glyphicon-remove"></span></button>
+                            </span>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="form-group ">-->
+                            <!--<label class="control-label" for="inputSuccess6">Логин</label>-->
+                            <!--<input type="text" class="form-control" ng-model="item.login">-->
+                            <!--&lt;!&ndash;<span id="helpBlock5" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="form-group ">-->
+                            <!--<label class="control-label" for="inputSuccess7">Email</label>-->
+                            <!--<input type="text" class="form-control" ng-model="item.email">-->
+                        <!--</div>-->
+
+                        <!--  E D I T   D E P A R T M E N T S  C O N T R O L L E R -->
+
+                        <!--<div ng-controller="ListDepartmentController" class="form-group ">-->
+                            <!--<label class="control-label" for="inputSuccess8" ng-bind="items[0].sc()"></label>-->
+                            <!--[ <a href="#" ng-click="addSubdivision()">добавить</a> ]-->
+                            <!--<div class="form-inline" ng-repeat="department in item.subdivision">-->
+                                <!--<div class="form-group">-->
+                                    <!--<select class="form-control" ng-model="department.id">-->
+                                        <!--<option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">{{option.name}}-->
+                                        <!--</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                <!--<button type="button" class="btn btn-default" ng-click="removeSubdivision(department)">x</button>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<pre id="default-spacing">{{items | json}}</pre>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<pre>D E P A R T M E N T S : {{items | limitTo:5 | json}}</pre>&ndash;&gt;-->
+                        <!--</div>-->
+
+                        <!--< N E W  P O S I T I O N -->
+                        <!--<div ng-controller="ListPositionController" class="form-group ">-->
+                            <!--<label class="control-label" ng-bind="items[0].sc()"></label>-->
+                            <!--<span ng-if="!item.positions.length>0">[ <a href="#" ng-click="addPosition()">добавить</a> ]</span>-->
+                            <!--<div class="form-inline" ng-repeat="position in item.positions">-->
+                                <!--<div class="form-group">-->
+                                    <!--<select class="form-control" ng-model="position.id">-->
+                                        <!--<option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}-->
+                                        <!--</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                <!--<button type="button" class="btn btn-default" ng-click="removePosition(position)">x</button>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<pre>P O S I T I O N S : {{items | limitTo:5 | json }}</pre>&ndash;&gt;-->
+                        <!--</div>-->
+
+                        <!--<div ng-controller="ListFurloughController" class="form-group ">-->
+                            <!--<label class="control-label" ng-bind="items[0].sc()"></label>-->
+                            <!--[ <a href="#" ng-click="addFurlough()">добавить</a> ]-->
+
+                            <!--<div class="form-inline" ng-repeat="furlough in item.furloughs">-->
+                                <!--<div class="form-group">-->
+                                    <!--<select class="form-control" ng-model="furlough.id">-->
+                                        <!--<option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}-->
+                                        <!--</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="sr-only" for="exampleInputPassword33"></label>-->
+                                    <!--&lt;!&ndash;<input class="form-control" type="text" id="exampleInputPassword33" ng-model="furlough.value" required>&ndash;&gt;-->
+                                    <!--с-->
+                                    <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                           <!--fp-opts="dateOpts2"-->
+                                           <!--fp-on-setup="toggleBlur(item)"-->
+                                           <!--ng-model="furlough.from">-->
+                                    <!--по-->
+                                    <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                           <!--fp-opts="dateOpts2"-->
+                                           <!--fp-on-setup="toggleBlur(item)"-->
+                                           <!--ng-model="furlough.to">-->
+                                <!--</div>-->
+                                <!--<button type="button" class="btn btn-default" ng-click="removeFurlough(furlough)">x</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="form-group ">-->
+                        <!--<label>Отпуск: </label>-->
+                        <!--[ <a href="#" ng-click="addFurlough()">добавить</a> ]-->
+
+                        <!--<div class="form-inline" ng-repeat="furlough in item.fur">-->
+                        <!--<div class="form-group">-->
+                        <!--<select class="form-control" ng-model="furlough.type">-->
+                        <!--<option>Очередной отпуск</option>-->
+                        <!--<option>Отпуск по уходу за ребёнком</option>-->
+                        <!--<option>Отгул</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--<label class="sr-only" for="exampleInputPassword33"></label>-->
+                        <!--&lt;!&ndash;<input class="form-control" type="text" id="exampleInputPassword33" ng-model="furlough.value" required>&ndash;&gt;-->
+                        <!--с-->
+                        <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                        <!--fp-opts="dateOpts2"-->
+                        <!--fp-on-setup="toggleBlur(item)"-->
+                        <!--ng-model="furlough.from">-->
+                        <!--по-->
+                        <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                        <!--fp-opts="dateOpts2"-->
+                        <!--fp-on-setup="toggleBlur(item)"-->
+                        <!--ng-model="furlough.to">-->
+                        <!--</div>-->
+                        <!--<button type="button" class="btn btn-default" ng-click="removeFurlough(furlough)">x</button>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="form-group ">-->
+                            <!--<label class="control-label" for="inputSuccess10">ПФР</label>-->
+                            <!--<input type="text" class="form-control" ng-model="item.pfr">-->
+                        <!--</div>-->
+
+
+                        <!--<div class="form-group ">-->
+                            <!--<label>Телефон:</label>-->
+                            <!--[ <a href="#" ng-click="addContact()">добавить</a> ]-->
+
+                            <!--<div class="form-inline" ng-repeat="contact in item.contacts">-->
+                                <!--<div class="form-group">-->
+                                    <!--<select class="form-control" ng-model="contact.type">-->
+                                        <!--<option>Мобильный</option>-->
+                                        <!--<option>Телефон</option>-->
+                                        <!--<option>Внутренний телефон</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="sr-only" for="exampleInputPassword3">Password</label>-->
+                                    <!--<input class="form-control" type="text" id="exampleInputPassword3" ng-model="contact.value" required>-->
+                                <!--</div>-->
+                                <!--<button type="button" class="btn btn-default" ng-click="removeContact(contact)">x</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="control-label">-->
+                                <!--Принят на работу-->
+                            <!--</label>-->
+                            <!--<div class="input-group">-->
+                                <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                       <!--fp-opts="dateOpts3"-->
+                                       <!--fp-on-setup="toggleBlur(item)"-->
+                                       <!--ng-model="item.dateInWork">-->
+                            <!--<span class="input-group-btn">-->
+                              <!--<button class="btn btn-default" type="button" ng-click="removeDateInWork(item)">-->
+                                  <!--<span class="glyphicon glyphicon-remove"></span>-->
+                              <!--</button>-->
+                            <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="control-label">-->
+                                <!--Отпуск по уходу за ребенком c-->
+                            <!--</label>-->
+                            <!--<div class="input-group">-->
+                                <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                       <!--fp-opts="dateOpts4"-->
+                                       <!--fp-on-setup="toggleBlur(item)"-->
+                                       <!--ng-model="item.decree">-->
+                            <!--<span class="input-group-btn">-->
+                              <!--<button class="btn btn-default" type="button" ng-click="removeDecree(item)">-->
+                                  <!--<span class="glyphicon glyphicon-remove"></span>-->
+                              <!--</button>-->
+                            <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="form-group ">-->
+                            <!--<label class="checkbox-inline">-->
+                                <!--<input type="checkbox" ng-model="item.fired">-->
+                                <!--Уволен-->
+                            <!--</label>-->
+                            <!--<label class="control-label" for="inputSuccess15"></label>-->
+
+                            <!--&lt;!&ndash;<span id="helpBlock6" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="control-label">-->
+                                <!--Дата увольнения-->
+                            <!--</label>-->
+                            <!--<div class="input-group">-->
+                                <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                       <!--fp-opts="dateOpts3"-->
+                                       <!--fp-on-setup="toggleBlur(item)"-->
+                                       <!--ng-model="item.firedDate">-->
+                            <!--<span class="input-group-btn">-->
+                              <!--<button class="btn btn-default" type="button" ng-click="removeFired(item)"><span-->
+                                      <!--class="glyphicon glyphicon-remove"></span></button>-->
+                            <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <div ng-if="(me.admin)" class="row" ng-if="item.id">
+                            <div class="col-md-5">
+                                <div class="form-group ">
+                                    <div class="form-group ">
+                                        <label class="control-label" for="inputSuccess18">
+                                            Зарег. в системе
+                                        </label>
+                                        <div><a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.createdAt}"
+                                           aria-hidden="true"></span>
+                                            {{item.getCreatedAt() | date:'dd.MM.yyyy HH:mm'}}
+                                        </a></div>
+                                        <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group ">
+                                    <div class="form-group " ng-if="item.updatedAt">
+                                        <label class="control-label" for="inputSuccess18">Последнее обновление</label>
+                                        <div><a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-ok':item.updatedAt}"
+                                           aria-hidden="true"></span>
+                                            {{item.updatedAt | date:'dd.MM.yyyy HH:mm'}}
+                                        </a></div>
+                                        <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <!--<div class="form-group" style=" position: fixed;margin-left: 50px; margin-bottom: 70px; bottom:0; left:0;">-->
+                            <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid" class="btn btn-md btn-success">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Сохранить
+                            </button>
+
+                            <button ng-show="edit" type="submit" class="btn btn-md btn-success">
+                                <span class="glyphicon glyphicon-check"></span>
+                                Сохранить
+                            </button>
+                            <a ng-if="me.admin" ng-href="{{item.getListUrl()}}" class="btn btn-md btn-warning">
+                                <span class="glyphicon glyphicon-list"> </span>
+                                Список
+                            </a>
+                            <!--<button ng-if="!item.id" ng-click="revert()" ng-disabled="!canRevert()" class="btn btn-md btn-primary">-->
+                            <!--<span class="glyphicon glyphicon-erase"> </span>-->
+                            <!--Очистить-->
+                            <!--</button>-->
+
+
+                            <!--<button ng-if="item.id" ui-sref="home.admin.users.edit(data.id)"-->
+                            <!--class="btn btn-default btn-md pull-right" role="button">-->
+                            <!--<span class="glyphicon glyphicon-trash"></span>-->
+                            <!--</button>-->
+
+                        </div>
+                    </form>
+                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6" ng-if="item.id">
+            <div ng-switch on="modeSelect.value">
+                <div ng-switch-when="uploader">
+                    <ng-include src="uploaderView"></ng-include>
+                </div>
+            </div>
+
+            <div ng-show="me.admin" ng-if="close">
+                <div class="panel"
+                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Информация
+
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr ng-repeat="(key, value) in item">
+                                    <th>{{key}}</th>
+                                    <td>{{value | date:'dd.MM.yyyy' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--<div ui-view></div>-->
+<!--<div ui-view="users"></div>-->
+

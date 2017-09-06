@@ -1,3 +1,5 @@
+@primary:#5c7457;
+
 @gray-darker: lighten(#000, 13.5%); // #222
 @gray-dark: lighten(#000, 20%); // #333
 @gray: lighten(#000, 33.5%); // #555
@@ -17,7 +19,8 @@
 @link-hover-color: #e6e6e6;
 //@link-hover-color: #286090;
 @link-hover-border-color: #cccccc;
-
+@nav-link-color: hsl(138, 64%, 90%);
+@nav-li-bg:hsla(110, 12%, 59%, 0.45);
 .fired {
   //color: @gray-lighter;
   color: @gray-light;
@@ -94,12 +97,12 @@ ul.word li {
 }
 
 .gravatarSm {
-  line-height: 3.5;
+  line-height: 3.0;
 }
 
 .gravatarImage {
   width: 200px;
-  margin: 30px auto 0px auto;
+  margin: 20px auto 0 auto;
   display: block;
 }
 
@@ -458,3 +461,11 @@ table.table.not-margin {
   background-color: #FFF2E0; }
 
 
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+  background-color: @nav-li-bg;
+  color: @nav-link-color;
+}
+
+.nav>li>a {
+ color: @nav-link-color;
+}

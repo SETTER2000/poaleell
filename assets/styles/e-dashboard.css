@@ -280,7 +280,24 @@ md-fab-toolbar md-toolbar {
 
 .ew{
 color:
-#ffebee,#ffcdd2,#ef9a9a,#e57373,#ef5350,#f44336,#e53935,#d32f2f,#c62828,#b71c1c,#ff8a80,#ff5252,#ff1744,#d50000
+#ffebee,
+#ffcdd2,
+#ef9a9a,
+#e57373,
+#ef5350,
+#f44336, #5C7457, /* 500 */
+#e53935, #b0c2af, /* 600 */
+#d32f2f, #9DBA97, /* 700 */
+#c62828, #4A5747, /* 800 */
+#b71c1c, #244B1C, /* 900 */
+#ff8a80, #A4BAA0, /* A100 */
+#ff5252,
+#ff1744,
+#d50000
+}
+
+.mono{
+    color: #5C7457,	#4A5747	, #244B1C,	#9DBA97	 ,#A4BAA0;
 }
 
 

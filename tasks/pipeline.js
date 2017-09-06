@@ -54,6 +54,7 @@ var jsFilesToInject = [
     'js/private/admin/users/UserModule.js',
     'js/private/admin/AdminModule.js',
     'js/public/homepage/HomepageModule.js',
+    'js/private/dashboard/showcases/ShowcaseModule.js',
     'js/private/dashboard/DashboardModule.js',
     'js/private/HolidayModule.js',
     // All of the rest of your client-side js files

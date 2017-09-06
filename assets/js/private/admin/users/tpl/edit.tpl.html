@@ -461,80 +461,79 @@
                     <ng-include src="uploaderView"></ng-include>
                 </div>
             </div>
-        </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div ng-show="me.admin" class="col-md-6" ng-if="close">
+                    <div ng-show="me.admin"  ng-if="close">
 
-                <div class="panel"
-                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Сменить пароль
+                        <div class="panel"
+                             ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Сменить пароль
 
-                        </h3>
-                    </div>
-                    <!-- Error state -->
-                    <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
-                        <h4>Oops!</h4>
-                        <code>
-                            {{editProfile.changePassword.errorMsg}}
-                        </code>
-                    </div>
-                    <form ng-submit="changeMyPassword()" name="changePassword">
-                        <div class="control-group form-group col-md-6"
-                             ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
-                            <label>Новый пароль</label>
-                            <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
-                                   ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
-                                   compare-to="editProfile.properties.confirmPassword">
+                                </h3>
+                            </div>
+                            <!-- Error state -->
+                            <div class="alert alert-info toggle" ng-show="editProfile.changePassword.errorMsg">
+                                <h4>Oops!</h4>
+                                <code>
+                                    {{editProfile.changePassword.errorMsg}}
+                                </code>
+                            </div>
+                            <form ng-submit="changeMyPassword()" name="changePassword">
+                                <div class="control-group form-group col-md-6"
+                                     ng-class="{'has-error':changePassword.password.$invalid && changePassword.password.$dirty}">
+                                    <label>Новый пароль</label>
+                                    <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
+                                           ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
+                                           compare-to="editProfile.properties.confirmPassword">
                 <span class="help-block has-error" ng-if="changePassword.password.$dirty">
                   <span ng-show="changePassword.password.$error.required">Введите пароль.</span>
                   <span ng-show="changePassword.password.$error.minlength">Пароль должен содержать не менее 6 символов.</span>
                 </span>
-                        </div>
-                        <div class="control-group form-group col-md-6">
-                            <label>Повторить пароль</label>
-                            <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
-                                   ng-model="editProfile.properties.confirmPassword" required>
+                                </div>
+                                <div class="control-group form-group col-md-6">
+                                    <label>Повторить пароль</label>
+                                    <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
+                                           ng-model="editProfile.properties.confirmPassword" required>
                 <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
                   <span ng-show="changePassword.password.$error.compareTo">Password must match.</span>
                   <span ng-show="changePassword.confirmation.$error.required">Confirmation password is required.</span>
                 </span>
+                                </div>
+                                <button type="submit" class="btn btn-lg not-border btn-default btn-block" ng-disabled="changePassword.$invalid">
+                                    <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
+                                    <span ng-show="changePasswordForm.saving">Сохраняю...</span>
+                                    <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
+                                </button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-lg not-border btn-default btn-block" ng-disabled="changePassword.$invalid">
-                            <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
-                            <span ng-show="changePasswordForm.saving">Сохраняю...</span>
-                            <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
-                        </button>
-                    </form>
-                </div>
 
 
-                <div class="panel"
-                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Информация
+                        <div class="panel"
+                             ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Информация
 
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr ng-repeat="(key, value) in item">
-                                    <th>{{key}}</th>
-                                    <td>{{value | date:'dd.MM.yyyy' }}</td>
-                                </tr>
-                            </table>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tr ng-repeat="(key, value) in item">
+                                            <th>{{key}}</th>
+                                            <td>{{value | date:'dd.MM.yyyy' }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
-                </div>
 
-
-            </div>
         </div>
+
     </div>
+
 </div>
 
 

@@ -1,5 +1,5 @@
 <div ng-controller="navPageController" ng-cloak class="container-fluid" >
-    <nav class="navbar navbar-inverse navbar-fixed-top" ng-if="me">
+    <nav class="navbar  navbar-fixed-top" ng-if="me">
         <div class="container">
             <div class="navbar-header">
                 <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
@@ -16,6 +16,11 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li class="active"><a href="#"> О нас <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Кобели</a></li>
+                    <li><a href="#">Суки</a></li>
+                    <li><a href="#">Щенки</a></li>
+                    <li><a ui-sref="home.catalogs">Каталог</a></li>
                     <li class="dropdown">
                         <a ng-if="(me.kadr || me.admin || me.leader)" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Справочники
@@ -26,6 +31,7 @@
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Сотрудники</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Подразделения</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
                             <!-- <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.structures">Структура компании</a></li>
                           <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.skds">Отработанное время</a></li>
                           <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.vacations">Отпуска</a></li>
@@ -34,21 +40,22 @@
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>
-                    <li>
-                    </li>
                 </ul>
                 <ul ng-show="me.id" class="nav navbar-nav navbar-right">
                     <li class="gravatarSm">
-                        <img class="gravatarSm" ng-src="{{me.avatarUrl}}" height="30" />
+                        <img class="gravatarSm" ng-src="{{me.avatarUrl}}" height="48" />
                         <!--<img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>-->
                     </li>
                     <li class="activityOverlord active">
-                        <a href="/profile" class="pointer"> {{me.fullName}} <span ng-if="me.phoneInner">({{me.phoneInner}})</span></a>
+                        <a href="/profile" class="pointer"> {{me.login}} <span ng-if="me.phoneInner">({{me.phoneInner}})</span></a>
                     </li>
                     <li>
 
                         <form  class="navbar-form navbar-right" autocomplete="off">
-                            <button  class="btn btn-success btn-md" ng-click="signOut()" >Выход</button>
+                            <!--<md-button class="md-accent ">or maybe me</md-button>-->
+                            <!--<md-button class="md-warn ">Careful</md-button>-->
+                            <!--<button  class="btn btn-success btn-md" ng-click="signOut()" >Выход</button>-->
+                            <md-button class="md-primary md-hue-3" ng-click="signOut()" >Выход</md-button>
                         </form>
 
                     </li>

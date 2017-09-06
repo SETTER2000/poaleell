@@ -3,8 +3,9 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
-            <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}} <span ng-if="!item.action"
-                                                                                    ng-bind="item.deactivation()"></span></p>
+            <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}}
+                <span ng-if="!item.action"  ng-bind="item.deactivation()"></span>
+            </p>
 
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button"> Работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }} ({{item.periodWork()}})</a>

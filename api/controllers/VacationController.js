@@ -24,6 +24,13 @@ module.exports = {
             (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
         });
     },
+
+    
+    /**
+     * Создать
+     * @param req
+     * @param res
+     */
     create: function (req, res) {
         //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //if (!_.isString( req.param('name') ) ) {
@@ -72,6 +79,7 @@ module.exports = {
 
     },
 
+    
     /**
      * Обновить
      * @param req
