@@ -1,9 +1,11 @@
 (function (angular) {
     'use strict';
     angular.module('VacationModule')
-        .controller('ListVacationController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Vacations', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Vacations, Attendances) {
+        .controller('ListVacationController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Vacations',  '$window', 
+            function ($scope, $location, moment, $http, toastr, $rootScope, $state, Vacations) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+        
             //toastr.options = {
             //    "closeButton": false,
             //    "debug": false,

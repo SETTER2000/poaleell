@@ -3,7 +3,8 @@
     angular.module('CalendarModule')
         .controller('ListCalendarController', ['$scope', 'Calendars', '$state',
             function ($scope, Calendars, $state) {
-
+                $scope.me = window.SAILS_LOCALS.me;
+                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
                 // var ups = $scope.ups =  Calendars.query();
                 //  console.log('UPS1: ');

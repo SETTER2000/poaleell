@@ -3,6 +3,9 @@
     angular.module('EmployeeModule')
         .controller('ListEmployeeController', ['$scope', 'Employees', '$state',
             function ($scope, Employees, $state) {
+                $scope.me = window.SAILS_LOCALS.me;
+                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+                
                 /**
                  * Поле сортировки объекта по умолчанию.
                  * @type {string}

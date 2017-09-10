@@ -22,7 +22,7 @@ module.exports = {
     },
 
     create: function (req, res) {
-        //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         //if (!_.isString( req.param('name') ) ) {
         //    //sails.log(req.param('name'));
         //    //sails.log('is not string');
@@ -71,7 +71,7 @@ module.exports = {
      * @param res
      */
     update: function (req, res) {
-        //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         var obj = {
             section: req.param('section'),
             sections: req.param('sections'),
@@ -94,7 +94,7 @@ module.exports = {
      * @param next
      */
     destroy: function (req, res, next) {
-        //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Furlough.findOne(req.param('id'), function foundUser(err, user) {
             if (err)return next(err);
             if (!user)return next('User doesn\'t exists.');

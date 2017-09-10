@@ -178,6 +178,17 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 this.dateInWork = tm;
             }
         };
+        Users.prototype.Users = function () {
+            var now = moment();
+            var event = moment(this.birthday, ["DD.MM.YYYY"]);
+
+            //console.log('Сегодня: ' + now.format('YYYY-MM-DD HH:mm:ss'));
+            //console.log('Дата события: ' + event.format('YYYY-MM-DD HH:mm:ss'));
+            //console.log('Событие произошло ' + event.fromNow());
+            //console.log('Разница во времени: ' +moment.preciseDiff(now, event));
+            return moment.preciseDiff(now, event);
+            //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
+        };
         Users.prototype.getFiredDate = function () {
             if (this.firedDate) {
                 var tm;
@@ -222,6 +233,17 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             return  moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
+        Users.prototype.age = function () {
+            var now = moment();
+            var event = moment(this.birthday,["DD.MM.YYYY"]);
+
+            //console.log('Сегодня: ' + now.format('YYYY-MM-DD HH:mm:ss'));
+            //console.log('Дата события: ' + event.format('YYYY-MM-DD HH:mm:ss'));
+            //console.log('Событие произошло ' + event.fromNow());
+            //console.log('Разница во времени: ' +moment.preciseDiff(now, event));
+            return  moment.preciseDiff(now, event);
+            //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
+        };
         Users.prototype.getListUrl = function () {
             return '/admin/users';
         };
@@ -241,7 +263,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     //return this.contacts[i].type + ': ' + this.contacts[i].value;
                 }
             }
-        };
+        }; 
+        
         Users.prototype.forrbidden = function () {
             return ' - уволены';
         };

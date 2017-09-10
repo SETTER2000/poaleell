@@ -1,9 +1,9 @@
 angular.module('AttendanceModule')
     .controller('EditAttendanceModule', ['$scope', '$http', '$state', 'Attendances', '$stateParams', 'CONF_MODULE',
         function ($scope, $http, $state, Attendances, $stateParams) {
-            // $state.transitionTo('admin.users.show.id');
-            // $scope.refresh = function () {
-            // return console.log($stateParams.id);
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+            
             $scope.refresh = function () {
                 var item = $scope.item = Attendances.get(
                     {id: $stateParams.attendanceId}, function (attendances) {

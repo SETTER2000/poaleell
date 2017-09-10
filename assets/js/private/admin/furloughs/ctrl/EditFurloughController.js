@@ -2,6 +2,7 @@ angular.module('FurloughModule')
     .controller('EditFurloughController', ['$scope', '$state','toastr', 'Furloughs', '$stateParams', '$rootScope',
         function ($scope, $state,toastr, Furloughs, $stateParams, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.editObj = $state.includes('home.admin.furloughs.edit');
             //if(!$scope.me.admin) $location.path('/') ;
 

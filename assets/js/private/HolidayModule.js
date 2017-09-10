@@ -6,6 +6,7 @@ angular.module('Holiday', [
     'SkdModule',
     'StructureModule',
     'PositionModule',
+    'TitleModule',
     'FurloughModule',
     'VacationModule',
     'DepartmentModule',
@@ -16,7 +17,8 @@ angular.module('Holiday', [
     'AttendanceModule',
     'AdminModule',
     'ShowcaseModule',
-    'CatalogModule'
+    'CatalogModule',
+    'HonorModule'
 ])
     .config(function ($mdThemingProvider) {
         var ob = {

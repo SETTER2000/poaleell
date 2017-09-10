@@ -2,6 +2,7 @@ angular.module('CalendarModule')
     .controller('EditCalendarController', ['$scope', 'toastr', '$rootScope', '$http', '$state', 'Calendars', '$stateParams',
         function ($scope, toastr, $rootScope, $http, $state, Calendars, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             Calendars.get({id: $stateParams.calendarId},function (calendars) {
                     $scope.item =calendars;
                     $scope.calendars = calendars;

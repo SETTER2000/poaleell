@@ -79,6 +79,13 @@ module.exports.routes = {
     'GET /getStructure': 'StructureController.get',
     'GET /getStructure/:id': 'StructureController.get',
 
+    /**
+     * Honor
+     */
+    'POST /honor/upload': 'HonorController.upload',
+    'GET /honor/full': 'HonorController.download',
+    'GET /honor/date': 'HonorController.date',
+
 
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     'POST /user/signup': 'UserController.signup',
@@ -175,6 +182,19 @@ module.exports.routes = {
     'DELETE /catalogs/:id': 'CatalogController.destroy', // удалить
     'PUT /catalogs/:id': 'CatalogController.update', // обновить
 
+
+    /**
+     * Titles
+     */
+    'GET /titles': 'TitleController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'POST /titles': 'TitleController.create', // создать запись
+    'DELETE /titles/:id': 'TitleController.destroy', // удалить
+    'PUT /titles/:id': 'TitleController.update', // обновить
+    
+    
+    
+    
+    
     /*************************************************************
      * Server-rendered HTML Pages                                *
      *************************************************************/
@@ -193,8 +213,8 @@ module.exports.routes = {
 
 
     'GET /admin': 'PageController.showHomePage',
-    'GET /admin/users': 'PageController.getListUserPage',
-    'GET /admin/users/administration': 'PageController.showAdminPage',
+    'GET /admin/users': 'PageController.showHomePage',
+    'GET /admin/users/administration': 'PageController.showHomePage',
     'GET /admin/users/create': 'PageController.showHomePage',
     'GET /admin/users/exit': 'PageController.getExitUserPage',
 
@@ -207,14 +227,13 @@ module.exports.routes = {
     'GET /admin/vacations': 'PageController.showHomePage',
 
 
-    //'GET /admin/users/attendance': 'PageController.showHomePage',
+   
     'GET /admin/positions/create': 'PageController.showHomePage',
-    //'GET /admin/users/list': 'PageController.showHomePage',
     'GET /admin/user/:id': 'PageController.showHomePage',
     'GET /admin/users/show/:id': 'UserController.findOne',
-    //'GET /admin/users/edit': 'PageController.getEditUserPage',
     'PUT /admin/users/edit/changePassword': 'UserController.changePasswordProfile',
-    'GET /admin/users/edit/:id': 'PageController.getEditUserPage',
+    'GET /admin/users/edit/:id': 'PageController.showHomePage',
+ 
 
     'GET /admin/departments/create': 'PageController.showHomePage',
     'GET /admin/departments/:id': 'DepartmentController.findOne',
@@ -250,9 +269,20 @@ module.exports.routes = {
 
 
     'GET /admin/catalogs': 'PageController.showHomePage',
+    'GET /admin/catalog/:id': 'PageController.showHomePage',
     'GET /admin/catalogs/create': 'PageController.showHomePage',
     'GET /admin/catalogs/edit/:id': 'PageController.showHomePage',
 
+
+    'GET /admin/titles': 'PageController.showHomePage',
+    'GET /admin/titles/edit/:id': 'PageController.showHomePage',
+    'GET /admin/titles/create/': 'PageController.showHomePage',
+    'GET /admin/title/:id': 'PageController.showHomePage',
+
+
+    'GET /upload': 'PageController.showHomePage',
+    'GET /admin/honors': 'PageController.showHomePage',
+    'GET /file/upload': 'PageController.showHomePage',
 
     //'GET /admin/attendances/calendar': 'PageController.showHomePage',
     //'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',

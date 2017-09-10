@@ -26,7 +26,7 @@ module.exports.policies = {
      *                                                                          *
      ***************************************************************************/
     // Ограничение действий controllers
-    // '*': true,
+    '*': false,
     UserController: {
         '*': 'isLoggedIn',
         create: ['isLoggedIn', 'isAdmin'],
@@ -49,6 +49,7 @@ module.exports.policies = {
 
 
     PageController: {
+        showHomePage: true,
         showSignupPage: ['isLoggedOut']
     },
 
@@ -65,17 +66,41 @@ module.exports.policies = {
         createPosition: ['isLoggedIn', 'isAdminOrKadr'],
         destroy: ['isLoggedIn', 'isAdmin'],
         update: ['isLoggedIn', 'isAdminOrKadr']
-        //find: ['isLoggedIn']
         //find:   ['isLoggedIn', 'isAdmin','isKadr'],
     },
 
-    //FurloughController: {
-    //    '*': 'isLoggedIn',
-    //    //'*': false,
-    //    create: ['isLoggedIn', 'isAdminOrKadr'],
-    //    destroy: ['isLoggedIn', 'isAdmin'],
-    //    update: ['isLoggedIn', 'isAdminOrKadr']
-    //}
+
+    FurloughController: {
+        '*': 'isLoggedIn',
+        //'*': false,
+        create: ['isLoggedIn', 'isAdminOrKadr'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr']
+    },
+
+    CatalogController: {
+        '*': 'isLoggedIn',
+        //'*': false,
+        create: ['isLoggedIn', 'isAdminOrKadr'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr'],
+        upload: ['isLoggedIn', 'isAdminOrKadr']
+    },
+    
+    TitleController: {
+        '*': 'isLoggedIn',
+        //'*': false,
+        create: ['isLoggedIn', 'isAdminOrKadr'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr']
+    }  ,
+    HonorController: {
+        '*': 'isLoggedIn',
+        //'*': false,
+        date: ['isLoggedIn', 'isAdminOrKadr'],
+        download: ['isLoggedIn', 'isAdmin'],
+        upload: ['isLoggedIn', 'isAdminOrKadr']
+    }
 
 
 

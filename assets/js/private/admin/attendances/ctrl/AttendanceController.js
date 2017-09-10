@@ -1,7 +1,8 @@
 angular.module('AttendanceModule')
     .controller('AttendanceController', ['$scope', 'Attendances', '$stateParams',
         function ($scope, Attendances, $stateParams) {
-
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами

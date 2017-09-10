@@ -31,18 +31,20 @@
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
             $scope.fioArea = 'Имя';
-            $scope.drArea = 'ДР11';
-            $scope.loginArea = 'Логин';
-            $scope.emailArea = 'Email';
-            $scope.roomArea = 'Комната';
-            $scope.departmentArea = 'Отдел';
-            $scope.positionArea = 'Должность';
+            $scope.genderArea = 'Пол';
+            $scope.weightArea = 'Вес';
+            $scope.growthArea = 'Рост';
+            $scope.varietyArea = 'Тип';
+            $scope.colorArea = 'Окрас';
+            $scope.breederArea = 'Заводчик';
+            $scope.ownerArea = 'Владелец';
+            
             $scope.added = 'Добавить собаку';
             $scope.showBt = 1;
             $scope.urlBt = 'home.admin.catalogs.create';
 
-            $scope.sort = 'lastName';
-            $scope.param = 'lastName';
+            $scope.sort = 'name';
+            $scope.param = 'name';
             $scope.fieldName = 'Внутренний телефон';
             $scope.charText = '';
             $scope.searchText = '';
@@ -102,12 +104,12 @@
 
             $scope.options =
                 [
-                    {display: "Работают", value: "work"},
-                    {display: "Уволены", value: "list"},
+                    {display: "Кобели", value: "male"},
+                    {display: "Суки", value: "female"},
                     {display: "Не активированы / Заблокированы", value: "action"},
                     {display: "Все", value: "table"}
                 ];
-            $scope.modeSelect = $scope.options[0];
+            $scope.modeSelect = $scope.options[3];
             $scope.tableView = "/js/private/admin/catalogs/views/home.admin.catalogs.table.html";
             $scope.listView = "/js/private/admin/catalogs/views/home.admin.catalogs.list.html";
             $scope.actionView = "/js/private/admin/catalogs/views/home.admin.catalogs.action.html";
@@ -279,8 +281,8 @@
             var breadcrumb = new BreadCrumb();
 
             breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', '/admin');
-            breadcrumb.set('Catalogs', '/admin/' + $state.current.url);
+            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Catalogs', 'home.admin.catalogs' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

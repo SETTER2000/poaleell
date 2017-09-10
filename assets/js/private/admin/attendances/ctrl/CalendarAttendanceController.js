@@ -1,7 +1,8 @@
 angular.module('AttendanceModule')
     .controller('CalendarAttendanceController', ['$scope', '$rootScope', '$state', '$stateParams', 'Attendances', 'Calendars',
         function ($scope, $rootScope, $state, $stateParams, Attendances, Calendars) {
-
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.statName = 'Календарь посещаемости';
             //$scope.tbody = '/js/private/admin/attendances/tpl/views/view.tbody.html';
 

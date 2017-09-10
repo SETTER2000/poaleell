@@ -3,7 +3,10 @@
     angular.module('AttendanceModule')
         .controller('ListAttendanceController', ['$scope', '$http', 'moment', 'Attendances', '$state',
             function ($scope, $http, moment, Attendances, $state) {
-
+                $scope.me = window.SAILS_LOCALS.me;
+                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+                
+                
                 /**
                  * PAGINATION
                  */

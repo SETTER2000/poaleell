@@ -26,6 +26,12 @@
   color: @gray-light;
 }
 
+.breadcrumb>li+li:before {
+  content: "/\00a0";
+  //content: "\007C";
+  padding: 0 5px;
+  color: #ccc;
+}
 .tag {
   //color: navy; /* Цвет текста */
   //font-family: monospace; /* Моношириный шрифт */
@@ -37,7 +43,7 @@
 html {
   background-image: none;
   /*background: url(images/bg.jpg) no-repeat center center fixed;*/
-  background-color: rgba(216, 228, 213, 0.5);
+  //background-color: rgba(216, 228, 213, 0.5);
 }
 
 .sortOrder:after {
@@ -100,6 +106,11 @@ ul.word li {
   line-height: 3.0;
 }
 
+.avatarImage {
+  width: 100%;
+  margin: auto;
+  display: block;
+}
 .gravatarImage {
   width: 200px;
   margin: 20px auto 0 auto;
@@ -420,6 +431,7 @@ table.table.not-margin {
 }
 .page-header{
   margin-top: 120px;
+  padding-bottom: 0;
 }
 .navbar-nav{
   padding: 35px 0;
@@ -469,3 +481,100 @@ table.table.not-margin {
 .nav>li>a {
  color: @nav-link-color;
 }
+img.object-fit_cover { height: 50px; background-color: #ddd; border-radius: 50%}
+img.object-fit_cover { width: 50px; border-radius: 50%}
+.object-fit_fill { object-fit: fill }
+.object-fit_contain { object-fit: contain}
+.object-fit_cover { object-fit: cover }
+.object-fit_none { object-fit: none }
+.object-fit_scale-down { object-fit: scale-down }
+
+.table tbody tr>td{
+  vertical-align: middle;
+}
+
+/********************************** Shuffle start ******************************/
+//   /* quick grid */
+// .container {
+//   width: 93%;
+//   margin: auto;
+// }
+//
+///* Bootstrap-style columns */
+//.column {
+//  position: relative;
+//  float: left;
+//  min-height: 1px;
+//  width: 25%;
+//  padding-left: 4px;
+//  padding-right: 4px;
+//
+//  /* Space between tiles */
+//  margin-top: 8px;
+//}
+//
+//.col-span {
+//  width: 50%;
+//}
+//
+//.my-sizer-element {
+//  width: 8.33333%;
+//}
+//
+///* default styles so shuffle doesn't have to set them (it will if they're missing) */
+//.my-shuffle {
+//  position: relative;
+//  overflow: hidden;
+//}
+//
+///* Ensure images take up the same space when they load */
+///* https://vestride.github.io/Shuffle/images */
+//.aspect {
+//  position: relative;
+//  width: 100%;
+//  height: 0;
+//  padding-bottom: 100%;
+//  overflow: hidden;
+//}
+//
+//.aspect__inner {
+//  position: absolute;
+//  top: 0;
+//  right: 0;
+//  bottom: 0;
+//  left: 0;
+//}
+//
+//.aspect--16x9 {
+//  padding-bottom: 56.25%;
+//}
+//
+//.aspect--9x80 {
+//  padding-bottom: calc(112.5% + 8px);
+//}
+//
+//.aspect--32x9 {
+//  padding-bottom: calc(28.125% - 3px);
+//}
+//
+//img.slides {
+//  display: block;
+//  width: 100%;
+//
+//  max-width: none;
+//  height: 100%;
+//  object-fit: cover;
+//}
+//
+///* Small reset */
+//*,
+//::before,
+//::after {
+//  box-sizing: border-box;
+//}
+//
+//figure {
+//  margin: 0;
+//  padding: 0;
+//}
+/********************************** Shuffle end ******************************/

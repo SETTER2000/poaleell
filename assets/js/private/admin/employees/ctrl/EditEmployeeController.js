@@ -1,6 +1,8 @@
 angular.module('EmployeeModule')
     .controller('EditEmployeeController', ['$scope', '$http', '$state', 'Employees', '$stateParams',
         function ($scope, $http, $state, Employees, $stateParams) {
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);

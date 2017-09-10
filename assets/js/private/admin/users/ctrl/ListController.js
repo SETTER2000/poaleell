@@ -37,13 +37,13 @@
             $scope.roomArea = 'Комната';
             $scope.departmentArea = 'Отдел';
             $scope.positionArea = 'Должность';
-            $scope.added = 'Добавить сотрудника';
+            $scope.added = 'Добавить пользователя';
             $scope.showBt = 1;
             $scope.urlBt = 'home.admin.users.create';
 
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
-            $scope.fieldName = 'Внутренний телефон';
+            $scope.fieldName = 'Мобильный';
             $scope.charText = '';
             $scope.searchText = '';
             $scope.page_number = 0;
@@ -279,8 +279,8 @@
             var breadcrumb = new BreadCrumb();
 
             breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', '/admin');
-            breadcrumb.set('Users', '/admin/' + $state.current.url);
+            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Users', 'home.admin.users' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

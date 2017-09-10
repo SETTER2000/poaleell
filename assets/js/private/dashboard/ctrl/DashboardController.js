@@ -1,7 +1,8 @@
+
 angular.module('DashboardModule')
 //.constant('baseUrl', 'http://localhost:1337')
-    .controller('DashboardController', ['$scope', '$window','$state', '$stateParams', 'Users', 'toastr', '$resource','$rootScope',
-        function ($scope, $window,$state, $stateParams, Users, toastr, $resource,$rootScope) {
+    .controller('DashboardController', ['$scope', '$window','$state','shuffle', '$stateParams', 'Users', 'toastr', '$resource','$rootScope',
+        function ($scope, $window,$state,shuffle, $stateParams, Users, toastr, $resource,$rootScope) {
             // $scope.deleteEdit = function () {
             //     // $emit - отправка события от текущего scope к родительским scope
             //     // $scope.$emit("deleteUser", item);
@@ -14,6 +15,7 @@ angular.module('DashboardModule')
             //     });
             // };
             //$scope.itemsResource = $resource(baseUrl);
+
             console.log($window.SAILS_LOCALS.me);
             $scope.data = $window.SAILS_LOCALS.me;
             $scope.currentNavItem = 'page1';

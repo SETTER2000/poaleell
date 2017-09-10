@@ -10,7 +10,6 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/#" class="pull-left brighten">
-                    <!--<img height="29" width="29" src="/images/logo.png" style="margin: 10px; ">-->
                     <img height="83" width="324" src="/images/logo.png" style="margin: 15px; ">
                 </a>
             </div>
@@ -20,23 +19,17 @@
                     <li><a href="#">Кобели</a></li>
                     <li><a href="#">Суки</a></li>
                     <li><a href="#">Щенки</a></li>
-                    <li><a ui-sref="home.catalogs">Каталог</a></li>
                     <li class="dropdown">
                         <a ng-if="(me.kadr || me.admin || me.leader)" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Справочники
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <!--<li class="dropdown-header">Редактирование</li>-->
-                            <!--<li><a ng-if="(me.kadr || me.admin || me.leader)" ui-sref="home.admin.users.exit">Выход сотрудника</a></li>-->
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Сотрудники</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Пользователи</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Подразделения</a></li>
                             <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
-                            <!-- <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.structures">Структура компании</a></li>
-                          <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.skds">Отработанное время</a></li>
-                          <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.vacations">Отпуска</a></li>
-                          <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.furloughs">Тип отпуска</a></li>
-                          <li><a ng-if="(me.kadr || me.admin)" href="/admin/calendar/58b92215d19963601fad8fec/месяц">Посещаемость</a></li>-->
+                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.honors">Награды</a></li>
+                            <li><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
                             <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>
@@ -44,24 +37,17 @@
                 <ul ng-show="me.id" class="nav navbar-nav navbar-right">
                     <li class="gravatarSm">
                         <img class="gravatarSm" ng-src="{{me.avatarUrl}}" height="48" />
-                        <!--<img class="gravatarSm" ng-src="{{me.gravatarUrl}}" height="30" width="30"/>-->
                     </li>
                     <li class="activityOverlord active">
                         <a href="/profile" class="pointer"> {{me.login}} <span ng-if="me.phoneInner">({{me.phoneInner}})</span></a>
                     </li>
                     <li>
-
                         <form  class="navbar-form navbar-right" autocomplete="off">
-                            <!--<md-button class="md-accent ">or maybe me</md-button>-->
-                            <!--<md-button class="md-warn ">Careful</md-button>-->
-                            <!--<button  class="btn btn-success btn-md" ng-click="signOut()" >Выход</button>-->
                             <md-button class="md-primary md-hue-3" ng-click="signOut()" >Выход</md-button>
                         </form>
-
                     </li>
                 </ul>
             </div>
-          <!--/.nav-collapse -->
         </div>
     </nav>
 </div>

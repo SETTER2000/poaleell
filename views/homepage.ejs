@@ -6,8 +6,6 @@
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- AngularJS Material CSS using GitCDN to load directly from `bower-material/master` -->
-    <!--<link rel="stylesheet" href="https://gitcdn.link/repo/angular/bower-material/master/angular-material.css">-->
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/angular-material.min.css">
     <link rel="stylesheet" href="/styles/angular-toastr.css">
@@ -26,22 +24,18 @@
     <link rel="stylesheet" href="/styles/z.css">
     <!--STYLES END-->
 
-    <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
     <script type="text/javascript">
         window.SAILS_LOCALS = {_csrf: "<%= _csrf %>"};
     </script>
 </head>
 <body ng-app="HomepageModule" ng-controller="HomepageController" id="popupContainer" ng-cloak>
 
-<%- partial('./partials/navbarPub.ejs') %>
 <%- body %>
-
 <div id="headerwrap">
     <div class="container-fluid">
         <%- partial('./partials/body.ejs') %>
     </div>
 </div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -61,6 +55,7 @@
 <script src="/js/dependencies/angular-animate.min.js"></script>
 <script src="/js/dependencies/angular-aria.min.js"></script>
 <script src="/js/dependencies/angular-file-upload.min.js"></script>
+<script src="/js/dependencies/angular-js-xlsx.js"></script>
 <script src="/js/dependencies/angular-material.min.js"></script>
 <script src="/js/dependencies/angular-mocks.js"></script>
 <script src="/js/dependencies/angular-toastr.js"></script>
@@ -74,6 +69,7 @@
 <script src="/js/dependencies/ng-flatpickr.js"></script>
 <script src="/js/dependencies/ng-fx.min.js"></script>
 <script src="/js/dependencies/ru_flatpicker.js"></script>
+<script src="/js/dependencies/shuffle.min.js"></script>
 <script src="/js/dependencies/v-accordion.min.js"></script>
 <script src="/js/private/admin/skds/SkdModule.js"></script>
 <script src="/js/private/admin/structures/StructureModule.js"></script>
@@ -81,8 +77,10 @@
 <script src="/js/private/admin/calendars/CalendarModule.js"></script>
 <script src="/js/private/admin/employees/EmployeeModule.js"></script>
 <script src="/js/private/admin/attendances/AttendanceModule.js"></script>
+<script src="/js/private/admin/honors/HonorModule.js"></script>
 <script src="/js/private/admin/positions/PositionModule.js"></script>
 <script src="/js/private/admin/furloughs/FurloughModule.js"></script>
+<script src="/js/private/admin/titles/TitleModule.js"></script>
 <script src="/js/private/admin/vacations/VacationModule.js"></script>
 <script src="/js/public/signup/SignupModule.js"></script>
 <script src="/js/private/admin/users/UserModule.js"></script>
@@ -99,6 +97,7 @@
 <script src="/js/private/admin/calendars/ctrl/EditCalendarController.js"></script>
 <script src="/js/private/admin/calendars/ctrl/ListCalendarController.js"></script>
 <script src="/js/private/admin/catalogs/CatalogModule.js"></script>
+<script src="/js/private/admin/catalogs/ctrl/CatalogController.js"></script>
 <script src="/js/private/admin/catalogs/ctrl/EditCatalogController.js"></script>
 <script src="/js/private/admin/catalogs/ctrl/ListCatalogController.js"></script>
 <script src="/js/private/admin/catalogs/ts/controller_test.js"></script>
@@ -113,12 +112,17 @@
 <script src="/js/private/admin/furloughs/ctrl/EditFurloughController.js"></script>
 <script src="/js/private/admin/furloughs/ctrl/FurloughController.js"></script>
 <script src="/js/private/admin/furloughs/ctrl/ListFurloughController.js"></script>
+<script src="/js/private/admin/honors/account/ctrl/AccountController.js"></script>
+<script src="/js/private/admin/honors/ctrl/HonorController.js"></script>
 <script src="/js/private/admin/positions/ctrl/EditPositionController.js"></script>
 <script src="/js/private/admin/positions/ctrl/ListPositionController.js"></script>
 <script src="/js/private/admin/positions/ctrl/PositionController.js"></script>
 <script src="/js/private/admin/skds/ctrl/ListSkdController.js"></script>
 <script src="/js/private/admin/skds/ctrl/SkdController.js"></script>
 <script src="/js/private/admin/structures/ctrl/ListStructureController.js"></script>
+<script src="/js/private/admin/titles/ctrl/EditTitleController.js"></script>
+<script src="/js/private/admin/titles/ctrl/ListTitleController.js"></script>
+<script src="/js/private/admin/titles/ctrl/TitleController.js"></script>
 <script src="/js/private/admin/users/ctrl/AdministrationController.js"></script>
 <script src="/js/private/admin/users/ctrl/DeleteController.js"></script>
 <script src="/js/private/admin/users/ctrl/EditController.js"></script>
@@ -144,12 +148,5 @@
 <script src="/js/public/recovery/resetPasswordPageController.js"></script>
 <script src="/js/public/signup/SignupController.js"></script>
 <!--SCRIPTS END-->
-<!-- AngularJS Material Dependencies -->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>-->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.js"></script>-->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-aria.js"></script>-->
-
-<!--&lt;!&ndash; AngularJS Material Javascript using GitCDN to load directly from `bower-material/master` &ndash;&gt;-->
-<!--<script src="https://gitcdn.link/repo/angular/bower-material/master/angular-material.js"></script>-->
 </body>
 </html>

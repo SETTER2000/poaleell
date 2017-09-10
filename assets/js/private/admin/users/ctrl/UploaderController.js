@@ -3,6 +3,8 @@ angular.module('UserModule')
     .controller('UploaderController', ['$scope', '$http', 'toastr', '$templateCache', '$window', '$state', 'FileUploader', '$interval', '$stateParams', '$resource', '$rootScope',
         function ($scope, $http, toastr, $templateCache, $window, $state, FileUploader, $interval, angularFileUpload, $stateParams, $resource, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+            
             $scope.nameButton = 'Добавить';
             $scope.isMIME = 1;
             $scope.messMimeErr = '';

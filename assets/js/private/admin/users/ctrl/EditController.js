@@ -3,6 +3,8 @@ angular.module('UserModule')
     .controller('EditController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Users', 'moment', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
         function ($scope, $http, toastr, $interval, $state, Users, moment, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+            
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',
@@ -582,6 +584,36 @@ angular.module('UserModule')
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };
+            /**
+             *  Конструктор хлебных крошек
+             * @constructor
+             */
+            function BreadCrumb() {
+                var name;
+                var path;
+                this.arr = [];
+            }
 
+            BreadCrumb.prototype.add = function () {
+                this.arr.push({name: this.name, path: this.path});
+            };
+
+            BreadCrumb.prototype.set = function (name, path) {
+                this.name = name;
+                this.path = path;
+                this.add();
+            };
+
+            BreadCrumb.prototype.getAll = function () {
+                return this.arr;
+            };
+
+            var breadcrumb = new BreadCrumb();
+
+            breadcrumb.set('Home', '/');
+            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Users', 'home.admin.users');
+            breadcrumb.set('Edit', 'home.admin.users.edit' + $state.current.url);
+            $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

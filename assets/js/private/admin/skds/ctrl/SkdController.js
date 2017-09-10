@@ -1,8 +1,8 @@
 angular.module('SkdModule')
-    .controller('SkdController', ['$scope', 'toastr','Skds', '$stateParams',
-        function ($scope,toastr, Skds, $stateParams) {
+    .controller('SkdController', ['$scope', 'toastr','$state','Skds', '$stateParams',
+        function ($scope,toastr,$state, Skds, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
-            if(!$scope.me.admin) $location.path('/') ;
+            if (!$scope.me.admin) $state.go('home');
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами

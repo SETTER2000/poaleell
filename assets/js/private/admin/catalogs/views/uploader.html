@@ -1,45 +1,34 @@
-<div class="panel panel-default" >
+<div class="panel panel-default">
     <div class="panel-header"><h3 class="panel-title"></h3></div>
     <div class="panel-body">
-
-        <div class="col-sm-10 col-md-8" ng-class="{'col-md-offset-4':!item.avatarUrl}">
-            <div  class="delete-button" ng-class="{'thumbnail':item.avatarUrl}" ng-mouseover="shows=1" ng-mouseleave="shows=0">
+        <div class="col-sm-10 col-md-8  col-md-offset-2" ng-class="{'col-md-offset-2':!item.avatarUrl}">
+            <h5 class="text-center"> ТИТУЛЫ: </h5>
+            <ol class="breadcrumb text-center">
+                <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">
+                    <a href="/admin/title/{{item.id}}">
+                        <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
+                    </a>
+                </li>
+            </ol>
+            <div class="delete-button" ng-class="{'thumbnail':item.avatarUrl}" ng-mouseover="shows=1" ng-mouseleave="shows=0">
                 <a href="#" ng-click="delFoto(item)" ng-if="shows" class="btn btn-default delete-img" role="button">Удалить</a>
-                <!--<a href="#">-->
-                    <img ng-src="{{item.avatarUrl}}">
-                    <!--<img src="/images/user/avatar/58e35656594105801c9d9203/105.jpg" alt="">-->
-                    <!--<img src="http://via.placeholder.com/242x200/EEEEEE/AAAAAA">-->
-                <!--</a>-->
+                <img ng-src="{{item.avatarUrl}}">
                 <div class="caption">
-
-                    <!--Прогресс-->
-                    <!--<table class="table not-margin">-->
-                    <!--<tbody>-->
-                    <!--<tr ng-repeat="item in uploader.queue">-->
-                    <!--<td class="text-center" ng-show="uploader.isHTML5">-->
-                    <!--<div class="progress" style="margin-bottom: 0;">-->
-                    <!--<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>-->
-                    <!--</div>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                    <!--</table>-->
-
-                    <div class="file-upload " >
+                    <div class="file-upload ">
                         <label class="text-left">
                             <input type="file" nv-file-select="" uploader="uploader" multiple/>
                             <span ng-if="!item.avatarUrl" class="btn btn-default" role="button">Выбрать фото</span>
                             <span ng-if="item.avatarUrl" class="btn btn-default" role="button">Изменить фото</span>
-
                         </label>
-
                     </div>
-                    <p> </p>
+                    <p></p>
                 </div>
             </div>
+            <h4 class="text-center"><em>
+                <small>CLASSES:</small>
+            </em> <br> {{item.getClasses().join(', ')}}
+            </h4>
         </div>
-
-
     </div>
 </div>
 

@@ -3,10 +3,12 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
-            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}<span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
+            <p ng-if="item.lastName" ng-class="{'fired':item.fired}">{{item.getFullName()}}
+                <span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
             </p>
             <p ng-if="!item.lastName">Новый сотрудник</p>
-            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button"> Работает c {{item.dateInWork |
+            <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
+                Работает c {{item.dateInWork |
                 date:'dd.MM.yyyy' }} ({{item.periodWork()}})</a>
             <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
                title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
@@ -21,6 +23,16 @@
                 </a>
             </div>
         </h2>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+        <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
     </div>
     <div class="row">
 
@@ -72,7 +84,7 @@
                 <div class="panel-body">
                     <form name="userForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
                         <div class="form-group">
-                            <div ng-if="(me.admin)" class="checkbox">
+                            <div ng-if="(me.kadr)" class="checkbox">
                                 <label>
                                     <input type="checkbox" ng-model="item.action">Активность
                                 </label>
@@ -96,50 +108,6 @@
                             <input type="text" class="form-control" required ng-model="item.patronymicName">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-                        <!--<div class="row">-->
-                        <!--<div class="col-md-3">-->
-                        <!--<div class="form-group ">-->
-
-                        <!--<label class="control-label inline" for="inputSuccess4">-->
-
-
-                        <!--&lt;!&ndash;<input type="date" min="1950-01-01" max="2003-01-01" class="form-control" ng-model="item.birthday">&ndash;&gt;-->
-                        <!--<input class="form-control  flatpickr " ng-flatpickr-->
-                        <!--fp-opts="dateOpts"-->
-                        <!--fp-on-setup="toggleBlur(item)"-->
-                        <!--ng-model="item.birthday ">-->
-                        <!--</label>-->
-                        <!--&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class=flatpickr>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<input ng-flatpickr type="text" placeholder="Select Date.." data-input&ndash;&gt;-->
-                        <!--&lt;!&ndash;fp-opts="dateOpts"&ndash;&gt;-->
-                        <!--&lt;!&ndash;fp-on-setup="toggleBlur(fpItem)"&ndash;&gt;-->
-                        <!--&lt;!&ndash;ng-model="date.current"> &lt;!&ndash; input is mandatory &ndash;&gt;&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<a class="input-button" title="toggle" data-toggle>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<i class="icon-calendar"></i>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<a class="input-button" title="clear" data-clear>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<spani class="glyphicon glyphicon-remove" ></spani>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="col-md-6">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="form-group " ng-if="item.birthday">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<label class="control-label" for="inputSuccess5">Дата рождения </label>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<div><a href="#" class="btn btn-default  disabled" role="button">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="glyphicon " ng-class="{ 'glyphicon-gift':item.birthday}"&ndash;&gt;-->
-                        <!--&lt;!&ndash;aria-hidden="true"></span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;{{item.birthday | date:'dd.MM.yyyy'}}&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a></div>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;&lt;!&ndash;<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--</div>-->
 
 
                         <div class="form-group">
@@ -203,34 +171,34 @@
                             <!--<pre>P O S I T I O N S : {{items | limitTo:5 | json }}</pre>-->
                         </div>
 
-                        <div ng-controller="ListFurloughController" class="form-group ">
-                            <label class="control-label" ng-bind="items[0].sc()"></label>
-                            [ <a href="#" ng-click="addFurlough()">добавить</a> ]
+                        <!--<div ng-controller="ListFurloughController" class="form-group ">-->
+                            <!--<label class="control-label" ng-bind="items[0].sc()"></label>-->
+                            <!--[ <a href="#" ng-click="addFurlough()">добавить</a> ]-->
 
-                            <div class="form-inline" ng-repeat="furlough in item.furloughs">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="furlough.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="exampleInputPassword33"></label>
-                                    <!--<input class="form-control" type="text" id="exampleInputPassword33" ng-model="furlough.value" required>-->
-                                    с
-                                    <input type="text" class="form-control flatpickr" ng-flatpickr
-                                           fp-opts="dateOpts2"
-                                           fp-on-setup="toggleBlur(item)"
-                                           ng-model="furlough.from">
-                                    по
-                                    <input type="text" class="form-control flatpickr" ng-flatpickr
-                                           fp-opts="dateOpts2"
-                                           fp-on-setup="toggleBlur(item)"
-                                           ng-model="furlough.to">
-                                </div>
-                                <button type="button" class="btn btn-default" ng-click="removeFurlough(furlough)">x</button>
-                            </div>
-                        </div>
+                            <!--<div class="form-inline" ng-repeat="furlough in item.furloughs">-->
+                                <!--<div class="form-group">-->
+                                    <!--<select class="form-control" ng-model="furlough.id">-->
+                                        <!--<option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}-->
+                                        <!--</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="sr-only" for="exampleInputPassword33"></label>-->
+                                    <!--&lt;!&ndash;<input class="form-control" type="text" id="exampleInputPassword33" ng-model="furlough.value" required>&ndash;&gt;-->
+                                    <!--с-->
+                                    <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                           <!--fp-opts="dateOpts2"-->
+                                           <!--fp-on-setup="toggleBlur(item)"-->
+                                           <!--ng-model="furlough.from">-->
+                                    <!--по-->
+                                    <!--<input type="text" class="form-control flatpickr" ng-flatpickr-->
+                                           <!--fp-opts="dateOpts2"-->
+                                           <!--fp-on-setup="toggleBlur(item)"-->
+                                           <!--ng-model="furlough.to">-->
+                                <!--</div>-->
+                                <!--<button type="button" class="btn btn-default" ng-click="removeFurlough(furlough)">x</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
 
 

@@ -3,6 +3,7 @@ angular.module('VacationModule')
     .controller('EditVacationController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Vacations', 'moment', 'Positions', 'Departments', '$stateParams', 'FileUploader', '$rootScope',
         function ($scope, $http, toastr, $interval, $state, Vacations, moment, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',

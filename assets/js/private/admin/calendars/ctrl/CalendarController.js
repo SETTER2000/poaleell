@@ -4,7 +4,7 @@
         .controller('CalendarController', ['$scope', '$http', 'moment', 'Calendars', '$location', '$stateParams','$state', '$rootScope', 'Attendances',
             function ($scope, $http, moment, Calendars, $location, $stateParams, $state, $rootScope, Attendances) {
                 $scope.me = window.SAILS_LOCALS.me;
-                //if(!$scope.me.admin) $location.path('/') ;
+                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
 
                 this.$stateParams = $stateParams;

@@ -3,6 +3,8 @@ angular.module('CatalogModule')
     .controller('EditCatalogController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Catalogs', 'moment', '$stateParams', 'FileUploader', '$rootScope',
         function ($scope, $http, toastr, $interval, $state, Catalogs, moment, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+            moment.locale('ru');
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',
@@ -18,20 +20,11 @@ angular.module('CatalogModule')
                 dateFormat: "d.m.Y",
                 minDate: "01-01-2002",
                 maxDate: "31-12-2020"
-
             };
-
             $scope.newObjectName = 'Новая собака';
-
-
-            if (!$scope.me.admin && !$scope.me.kadr) $state.go(info.redirectSelf);
-
             $scope.close = 1;
-
             $scope.loginAdmin = false;
-
             $scope.edit = $state.includes('home.admin.catalogs.edit');
-
             $scope.dateOpts = {
                 locale: info.ru,
                 //mode: "range",
@@ -40,7 +33,6 @@ angular.module('CatalogModule')
                 maxDate: 'today'
                 //defaultDate: 'today'
             };
-
             $scope.dateOpts2 = {
                 locale: info.ru,
                 //mode: "range",
@@ -48,7 +40,6 @@ angular.module('CatalogModule')
                 minDate: info.minDate
                 //defaultDate: 'today'
             };
-
             $scope.dateOpts3 = {
                 locale: info.ru,
                 //mode: "range",
@@ -63,7 +54,6 @@ angular.module('CatalogModule')
                 minDate: info.minDate
                 //defaultDate: 'today'
             };
-
             $scope.toggleBlur = function (mx) {
                 //if(!mx) mx.selectedDates = new Date();
                 ////console.log('mx.selectedDates: ', mx.selectedDates);
@@ -74,32 +64,28 @@ angular.module('CatalogModule')
                 //$scope.refresh();
             };
 
+
+
             var uploader = $scope.uploader = new FileUploader({
                 url: '/file/uploadDogs',
                 autoUpload: true,
                 removeAfterUpload: true,
                 queueLimit: 1
-
             });
-
             uploader.filters.push({
                 name: 'syncFilter',
                 fn: function (item /*{File|FileLikeObject}*/, options) {
                     return this.queue.length < 10;
                 }
             });
-
-
             uploader.filters.push({
                 name: 'asyncFilter',
                 fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
                     setTimeout(deferred.resolve, 1e3);
                 }
             });
-
-
             /**
-             * Фильтр проверяет рассширение
+             * Фильтр проверяет расширение
              * Доступны для загрузки только jpg файлы
              */
             uploader.filters.push({
@@ -113,9 +99,7 @@ angular.module('CatalogModule')
                     return true;
                 }
             });
-
             // CALLBACKS
-
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
             };
@@ -131,8 +115,6 @@ angular.module('CatalogModule')
                 item.formData.push({id: $stateParams.catalogId});
 
             };
-
-
             uploader.onProgressItem = function (fileItem, progress) {
                 console.info('onProgressItem', fileItem, progress);
 
@@ -160,14 +142,6 @@ angular.module('CatalogModule')
                 //console.log(status);
                 //console.info('onCancelItem', fileItem, response, status, headers);
             };
-            //$scope.$watch('item.avatarUrl', function (value) {
-            //    $scope.item.avatarUrl = value;
-            //
-            //});
-            //
-
-
-
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                 //console.info('onCompleteItem', fileItem, response, status, headers);
 
@@ -212,8 +186,6 @@ angular.module('CatalogModule')
                 ];
             $scope.modeSelect = $scope.options[0];
             $scope.uploaderView = "/js/private/admin/catalogs/views/uploader.html";
-
-
             $scope.closed = function () {
                 if ($scope.close) {
                     $scope.close = false;
@@ -229,7 +201,7 @@ angular.module('CatalogModule')
                         $scope.catalogs = catalogs;
                         console.log('catalogs', catalogs);
                         item.getBirthday();
-                        item.getDateInWork();
+                        item.getDeath();
                         item.getFiredDate();
                         item.getDecree();
                     }
@@ -242,7 +214,6 @@ angular.module('CatalogModule')
                 //console.log($scope.item);
                 //console.log($scope.catalogs);
             };
-
             $scope.delete2 = function (item) {
                 item.$delete(item, function (success) {
                     toastr.success(info.objectDelete, info.ok);
@@ -255,7 +226,6 @@ angular.module('CatalogModule')
                     toastr.error(err, info.error + ' 122! ');
                 })
             };
-
             $scope.editProfile = {
                 properties: {},
                 errorMsg: '',
@@ -264,9 +234,6 @@ angular.module('CatalogModule')
                 loading: false,
                 changePassword: {}
             };
-
-
-
             $scope.delFoto = function (item) {
                 item.avatarUrl = '';
                 if (angular.isDefined(item.id)) {
@@ -283,16 +250,22 @@ angular.module('CatalogModule')
                     );
                 }
             };
-
             var reversValue = function (item) {
                 item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                item.death = (item.death) ? new Date(moment(item.death, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.decree = ( item.decree) ? new Date(moment(item.decree, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 return item;
             };
-
+            $scope.lengthWeightMin = 2200;
             $scope.saveEdit = function (item) {
+                let lengthNicknameMin = 3;
+
+                if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                if (item.kennel.length < lengthNicknameMin) return toastr.error('Питомник меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
+
                 item = reversValue(item);
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
@@ -300,20 +273,21 @@ angular.module('CatalogModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data.invalidAttributes, info.error + ' 11445!');
+                            toastr.error(err.data, info.error + ' 11445!');
+                            $scope.refresh();
                         }
                     );
                 } else {
-                    if (angular.isDefined(item)
-                    //&& angular.isDefined(item.firstName) &&
-                    //angular.isDefined(item.lastName) &&
-                    //angular.isDefined(item.patronymicName)
-                    /*  &&
-                     angular.isDefined(item.login) &&
-                     angular.isDefined(item.fired) &&
-                     angular.isDefined(item.birthday) &&
-                     angular.isDefined(item.email)*/
+                    if (angular.isDefined(item) &&
+                        angular.isDefined(item.name) &&
+                        angular.isDefined(item.kennel) &&
+                        angular.isDefined(item.color) &&
+                        angular.isDefined(item.growth) &&
+                        angular.isDefined(item.breeder) &&
+                        angular.isDefined(item.owner) &&
+                        angular.isDefined(item.variety)
                     ) {
+                        (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
                         item.password = info.passDefault;
                         item.$save(item, function (success) {
                                 //console.log(success);
@@ -324,12 +298,13 @@ angular.module('CatalogModule')
                                 $state.go('home.admin.catalog', {catalogId: success.id});
                             },
                             function (err) {
-                                toastr.error(err.data.invalidAttributes, info.error + ' 89336!');
+                                toastr.error(err.data, 'Ошибка!');
                             });
+                    } else {
+                        toastr.error('Не все поля заполнены.', 'Ошибка!');
                     }
                 }
             };
-
             $scope.addContact = function () {
                 if (angular.isArray($scope.item.contacts)) {
                     $scope.item.contacts.push({type: "телефон", value: ""});
@@ -383,10 +358,6 @@ angular.module('CatalogModule')
             $scope.removeBirthday = function (item) {
                 item.birthday = null;
                 item = reversValue(item);
-                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
@@ -399,13 +370,9 @@ angular.module('CatalogModule')
                 }
             };
 
-            $scope.removeDateInWork = function (item) {
-                item.dateInWork = null;
+            $scope.removeDeath = function (item) {
+                item.death = null;
                 item = reversValue(item);
-                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
@@ -415,6 +382,9 @@ angular.module('CatalogModule')
                             toastr.error(err.data.invalidAttributes, info.error + ' 44016!');
                         });
                 }
+            };
+            $scope.getMultiplicity = function (option) {
+                if (option.multiplicity !== null && option.multiplicity !== undefined ) return option.multiplicity+'x';
             };
             $scope.removeDecree = function (item) {
                 item.decree = null;
@@ -454,11 +424,11 @@ angular.module('CatalogModule')
             };
 
 
-            $scope.addPosition = function () {
-                if (angular.isArray($scope.item.positions)) {
-                    $scope.item.positions.push({});
+            $scope.addItem = function () {
+                if (angular.isArray($scope.item.titles)) {
+                    $scope.item.titles.push({id: 'x'});
                 } else {
-                    $scope.item.positions = [{}];
+                    $scope.item.titles = [{id: 'x'}];
                 }
             };
             $scope.addFurlough = function () {
@@ -468,14 +438,19 @@ angular.module('CatalogModule')
                     $scope.item.furloughs = [{}];
                 }
             };
+            $scope.addedPhoto = function () {
 
-            $scope.removePosition = function (obj) {
-                $scope.item.positionRemove = [];
-                if (!obj.id) $scope.item.positions = [];
-                for (let i = 0, ii = $scope.item.positions.length; i < ii; i++) {
-                    if ($scope.item.positions[i].id === obj.id) {
-                        $scope.item.positions.splice(i, 1);
-                        $scope.item.positionRemove.push(obj.id);
+            };
+            $scope.removeItem = function (obj) {
+
+                console.log('RUSSS: ', obj);
+                $scope.item.objRemove = [];
+                if (!obj.id) return;
+                // if (!obj.id) $scope.item.titles = [];
+                for (let i = 0, ii = $scope.item.titles.length; i < ii; i++) {
+                    if ($scope.item.titles[i].id === obj.id) {
+                        $scope.item.titles.splice(i, 1);
+                        $scope.item.objRemove.push(obj.id);
                         return;
                     }
                 }
@@ -511,6 +486,37 @@ angular.module('CatalogModule')
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };
+            /**
+             *  Конструктор хлебных крошек
+             * @constructor
+             */
+            function BreadCrumb() {
+                var name;
+                var path;
+                this.arr = [];
+            }
+
+            BreadCrumb.prototype.add = function () {
+                this.arr.push({name: this.name, path: this.path});
+            };
+
+            BreadCrumb.prototype.set = function (name, path) {
+                this.name = name;
+                this.path = path;
+                this.add();
+            };
+
+            BreadCrumb.prototype.getAll = function () {
+                return this.arr;
+            };
+
+            var breadcrumb = new BreadCrumb();
+
+            breadcrumb.set('Home', '/');
+            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Catalogs', 'home.admin.catalogs');
+            breadcrumb.set('Edit', 'home.admin.catalogs.edit' + $state.current.url);
+            $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();
         }]);

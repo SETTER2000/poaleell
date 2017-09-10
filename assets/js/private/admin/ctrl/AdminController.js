@@ -1,7 +1,7 @@
 angular.module("AdminModule")
-    .controller("AdminController", ["$scope", "$rootScope", '$location', function ($scope, $rootScope,$location) {
+    .controller("AdminController", ["$scope", '$state',"$rootScope", '$location', function ($scope,$state, $rootScope,$location) {
         $scope.me = window.SAILS_LOCALS.me;
-        if(!$scope.me.admin) $location.path('/') ;
+        if (!$scope.me.admin) $state.go('home');
 
 
         $scope.options =

@@ -1,7 +1,7 @@
 <!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
-        <h2>{{items[0].scs()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
+        <h2>{{items[0].sc()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
             <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 всего:
                 <span ng-if="mode">SD{{(items | filter:{fired:true}).length}}</span>
@@ -28,69 +28,22 @@
                 <!--</button>-->
             </div>
         </h2>
-
-        <!--<span am-time-ago="message.unixTime | amFromUnix">-->
-        <!--<p>{{message.date | amUtc | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}</p>-->
-
-        <!--<p>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
-        <!--<span am-time-ago="message.time| amParse:'DD.MM.YYYY HH:mm:ss'"></span>-->
-        <!--<p>Локально: {{local}}</p>-->
-        <!--<p>Локальное время: {{localTime}}</p>-->
-        <!--<p>Сколько прошло?: {{end}}</p>-->
-        <!--<p>diff: {{diff}}</p>-->
-        <!--<p>days: {{days}}</p>-->
-        <!--<p>Год високосный?  {{yearLeap}}</p>-->
-        <!--<p>hours: {{hours}}</p>-->
-        <!--<p>Month: {{month}}</p>-->
-        <!--<p>Months: {{months}}</p>-->
-        <!--<p>seconds: {{seconds}}</p>-->
-        <!--<p>{{message.date | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
-        <!--<p>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</p>-->
-        <!--&lt;!&ndash;<p>Message age: {{message.ageInMinutes | amDurationFormat : 'minute' }}</p>&ndash;&gt;-->
-        <!--<p>Message age: {{calendar }}</p>-->
-
-
-        <!--<p>Scheduled {{message.createdAt | amDifference : null : 'days' }} days from now</p>-->
-        <!--<ul class="breadcrumb">-->
-        <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
-        <!--<ng-switch on="$last">-->
-        <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
-        <!--<span ng-switch-default>-->
-        <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
-        <!--</span>-->
-        <!--</ng-switch>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--<ul class="nav">-->
-        <!--<li ng-class="{ active: $state.includes('users') }"><a href="#/users">Contacts</a></li>-->
-        <!--<li ng-class="{ active: $state.includes('about') }"><a href="/about">About</a></li>-->
-        <!--</ul>-->
-        <!--<ol class="breadcrumb">-->
-        <!--<li><a href="#">Home</a></li>-->
-        <!--<li><a href="#">Library</a></li>-->
-        <!--<li class="active">Data</li>-->
-        <!--</ol>-->
-
-
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+        <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
         <div ui-view></div>
         <div ui-view="settings"></div>
     </div>
-    <!--charText: {{charText}}-->
-    <!--searchText: {{searchText}}-->
-    <!--LENGTH: {{charText.length}}-{{searchText.length}}-->
     <div class="row">
         <div class="col-md-9">
             <div class="btn-toolbar" role="toolbar" aria-label="0">
-                <!--<div class="btn-group btn-group-sm " role="group" aria-label="1">-->
-                    <!--<button ng-repeat="ch in alfavit"-->
-                            <!--ng-click="getCharText(ch)" ng-bind="ch" type="button" class="btn btn-default">-->
-                    <!--</button>-->
-                    <!--<button ng-click="getCharText(0)" class="btn btn-default" type="button">-->
-                        <!--<span class="glyphicon glyphicon-remove"></span>-->
-                    <!--</button>-->
-                <!--</div>-->
-                <!--
-                                        get-char-text="getCharText(ch)"-->
                 <alfavit
                         object-name="objectName"
                         get-char-text="getCharText(ch)"
@@ -196,7 +149,7 @@
                 <!--</div>-->
                 <!--<div class="panel-body">-->
                     <div ng-switch on="modeSelect.value" style="margin-top:20px;">
-                        <div ng-switch-when="list">
+                        <div ng-switch-when="female">
                             <ng-include src="listView"></ng-include>
                         </div>
                         <div ng-switch-when="table">
@@ -205,7 +158,7 @@
                         <div ng-switch-when="action">
                             <ng-include src="actionView"></ng-include>
                         </div>
-                        <div ng-switch-when="work">
+                        <div ng-switch-when="male">
                             <ng-include src="workView"></ng-include>
                         </div>
                     </div>

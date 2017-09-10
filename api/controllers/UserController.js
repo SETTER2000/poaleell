@@ -21,6 +21,11 @@ const ldap = require('ldapjs');
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment');
+moment.locale('ru');
+var error = {
+    date: moment().format('LLLL'),
+};
 //var URI = require('urijs');
 //const URITemplate = require('urijs/src/URITemplate');
 var count = 5;
@@ -39,8 +44,8 @@ module.exports = {
                 {login: req.param('email')}
             ]
         }, function foundUser(err, user) {
-          
-            console.log('user',user);
+
+            console.log('user', user);
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
             Passwords.checkPassword({
@@ -63,7 +68,7 @@ module.exports = {
                         return res.forbidden("Ваша учетная запись заблокирована, " +
                             "пожалуйста свяжитесь с администратором: " + sails.config.admin.email);
                     }
-                    console.log('Вход в систему: ', new Date()+ ', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
+                    console.log('Вход в систему: ', error.date +', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
                     req.session.me = user.id;
                     //req.session.admin = user.admin;
                     //req.session.kadr = 11;
@@ -393,7 +398,7 @@ module.exports = {
                 return res.backToHomePage();
             }
             req.session.me = null;
-            console.log('Выход из системы: ', new Date() + ', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
+            console.log('Выход из системы: ', error.date + ', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
             return res.backToHomePage();
         });
     },
@@ -673,10 +678,6 @@ module.exports = {
         //console.log('objEdit555: ', obj);
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.redirect('/admin/users/edit/' + req.param('id'));
-
-
-            console.log('objEdit: ', objEdit);
-
             User.findOne(req.param('id'))
                 .populate('positions')
                 .populate('furloughs')
@@ -1060,10 +1061,10 @@ module.exports = {
                 //console.log("files: ", files);
 
                 User.update(req.body.id, {
-                        avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
-                        avatarFd: files[0].fd,
-                        fileNameAvatar: fileName
-                    })
+                    avatarUrl: require('util').format('/images/user/avatar/%s/%s', req.body.id, fileName),
+                    avatarFd: files[0].fd,
+                    fileNameAvatar: fileName
+                })
                     .exec(function (err) {
                         if (err) return res.negotiate(err);
                         //console.log(' avatarUrl: ', dir);
@@ -1071,7 +1072,7 @@ module.exports = {
                         return res.ok();
                     });
             });
-    },
+    }
 
 
 };

@@ -1,7 +1,9 @@
 angular.module('DepartmentModule')
-    .controller('DepartmentController', ['$scope', 'toastr','Departments', '$stateParams',
-        function ($scope,toastr, Departments, $stateParams) {
+    .controller('DepartmentController', ['$scope',   '$state',' Departments', '$state','$stateParams',
+        function ($scope, $state, toastr, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+            
             //if(!$scope.me.admin) $location.path('/') ;
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,

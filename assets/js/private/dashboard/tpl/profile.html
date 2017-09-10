@@ -30,7 +30,7 @@
                             </tr>
                             <tr ng-if="me.contacts[0].value">
                                 <th>Телефон</th>
-                                <td ng-repeat="contacts in me.contacts | filter : 'Внутренний телефон'">
+                                <td ng-repeat="contacts in me.contacts | filter : 'Мобильный'">
                                     {{contacts.value}}
                                 </td>
                             </tr>
@@ -65,10 +65,7 @@
                 <div>
                     <a ng-if="(me.admin)" href="/profile/edit" class="btn btn-sm btn-primary">Edit</a>
                     <a ng-if="(me.admin)" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
-
-
                 </div>
-
         </div>
     </div>
 </div>

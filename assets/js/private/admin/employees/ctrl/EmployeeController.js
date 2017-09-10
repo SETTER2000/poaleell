@@ -1,7 +1,8 @@
 angular.module('EmployeeModule')
-    .controller('EmployeeController', ['$scope', 'Employees', '$stateParams',
-        function ($scope, Employees, $stateParams) {
-
+    .controller('EmployeeController', ['$scope','$state', 'Employees', '$stateParams',
+        function ($scope,$state, Employees, $stateParams) {
+            $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
              * которая содержит объекты с данными и дополнительными методами

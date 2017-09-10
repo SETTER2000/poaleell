@@ -3,8 +3,8 @@
     angular.module('DepartmentModule')
         .controller('ListDepartmentController', ['$scope', 'toastr', 'Departments', '$state',
             function ($scope, toastr, Departments, $state) {
-
-
+                $scope.me = window.SAILS_LOCALS.me;
+                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
                 // var ups = $scope.ups =  Departments.query();
                 //  console.log('UPS1: ');
                 //  console.log(ups);
