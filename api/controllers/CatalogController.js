@@ -59,15 +59,17 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Catalog.find(req.param('id'))
             .populate('titles')
+            .populate('photos')
+            .populate('reactions')
             .exec((err, finds) => {
-            if (err) return res.negotiate;
-            if (!finds) return res.notFound();
+                if (err) return res.negotiate;
+                if (!finds) return res.notFound();
 
-            // return res.redirect('/admin/users/edit/' + req.param('id'));
-            // return res.backToHomePage();
-            //return res.redirect('/admin/users/edit/' + req.param('id'));
-            (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
-        });
+                // return res.redirect('/admin/users/edit/' + req.param('id'));
+                // return res.backToHomePage();
+                //return res.redirect('/admin/users/edit/' + req.param('id'));
+                (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
+            });
     },
 
 
@@ -154,7 +156,7 @@ module.exports = {
 
         Catalog.create(obj).exec(function (err, finn) {
             if (err) return res.serverError(err);
-            console.log('Соаку создал:', req.session.me);
+            console.log('Собаку создал:', req.session.me);
             console.log('Собака новая:', finn);
             return res.send(finn);
         });
@@ -241,13 +243,18 @@ module.exports = {
             chip: req.param('chip'),
             stamp: req.param('stamp'),
             titles: req.param('titles'),
+            reactions: req.param('reactions')
         };
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.redirect('/admin/catalogs/edit/' + req.param('id'));
-            console.log('Каталог обновил:', req.session.me);
-            console.log('Собака обновление:', obj);
+            // console.log('Каталог обновил:', req.session.me);
+            // console.log('Собака обновление:', obj);
+
+            console.log('req.body: ', req.body);
             Catalog.findOne(req.param('id'))
                 .populate('titles')
+                .populate('photos')
+                .populate('reactions')
                 .exec(function (err, catalog) {
                     if (err) return res.negotiate(err);
                     if (!catalog) return res.notFound('Не могу');
@@ -262,9 +269,14 @@ module.exports = {
                     if (req.param('objRemove')) {
                         catalog.titles.remove(req.param('objRemove'));
                     }
-                    // if (req.param('furloughRemove')) {
-                    //     catalog.furloughs.remove(req.param('furloughRemove'));
-                    // }
+                    if (req.param('objDelReaction')) {
+                        catalog.reactions.remove(req.param('objDelReaction'));
+                    }
+
+                    if (req.param('objDelete')) {
+                        catalog.photos.remove(req.param('objDelete'));
+                    }
+
                     catalog.save(function (err) {
                         if (err) return res.negotiate('ERR: ' + err);
                         res.ok();
@@ -337,6 +349,8 @@ module.exports = {
                         return res.ok();
                     });
             });
-    }
+    },
+
+
 };
 

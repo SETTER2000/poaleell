@@ -8,8 +8,7 @@
             </p>
             <p ng-if="!item.name">{{newObjectName}}</p>
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
-                Возраст
-                {{item.dateInWork | date:'dd.MM.yyyy' }} ({{item.age()}})</a>
+                Возраст: {{item.dateInWork | date:'dd.MM.yyyy' }} {{item.age()}}</a>
             <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
                title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
@@ -260,8 +259,16 @@
                                 <div class="form-group caption">
                                     <div class="file-upload ">
                                         <label class="text-left">
-                                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                            <span class="glyphicon glyphicon-camera" role="button"></span>
+                                            <input type="file" nv-file-select="" uploader="uploadTitles" multiple/>
+
+                                            <div class="form-inline"
+                                                 ng-repeat="foto in filtered=(item.photos | filter:{$:searchText, catalogs:item.id, titles:item.titles[$index].id})">
+                                                <img ng-click="getTitle(title)" width="80" ng-src="{{foto.photoUrl}}" alt="">
+
+                                            </div>
+                                             <span ng-click="getTitle(title)"
+                                                   class="glyphicon glyphicon-camera" role="button"></span>
+
                                         </label>
                                     </div>
                                 </div>
@@ -269,7 +276,46 @@
                                     <small class="text-right">{{title.description}}</small>
                                 </div>
                                 <div class="form-group pull-right">
-                                    <button type="button" class="btn btn-default " ng-click="removeItem(title)"><span
+                                    <button type="button" class="btn btn-default " ng-click="removeItem(title, filtered[0])"><span
+                                            class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--< N E W  T E S T S / R E A C T I O N S -->
+                        <div ng-controller="ListReactionController" class="form-group ">
+                            <label class="control-label" ng-bind="items[0].sc()"></label>
+                            <span>[ <a href="#" ng-click="addReaction()">добавить</a> ]</span>
+                            <div class="form-inline" ng-repeat="reaction in item.reactions">
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="reaction.id">
+                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                           {{option.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group caption">
+                                    <div class="file-upload ">
+                                        <label class="text-left">
+                                            <input type="file" nv-file-select="" uploader="uploadReactions" multiple/>
+
+                                            <div class="form-inline"
+                                                 ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
+                                                <img ng-click="getReaction(reaction)" width="80" ng-src="{{fot.photoUrl}}" alt="">
+
+                                            </div>
+                                             <span ng-click="getReaction(reaction)"
+                                                   class="glyphicon glyphicon-camera" role="button"></span>
+
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <small class="text-right">{{reaction.description}}</small>
+                                </div>
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-default " ng-click="removeReaction(reaction, filtersed[0])"><span
                                             class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>

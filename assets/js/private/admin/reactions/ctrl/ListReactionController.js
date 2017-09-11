@@ -1,8 +1,8 @@
 (function (angular) {
     'use strict';
-    angular.module('TitleModule')
-        .controller('ListTitleController', ['$scope', '$state', 'Titles', 'toastr',
-            function ($scope, $state, Titles, toastr) {
+    angular.module('ReactionModule')
+        .controller('ListReactionController', ['$scope', '$state', 'Reactions', 'toastr',
+            function ($scope, $state, Reactions, toastr) {
                 $scope.me = window.SAILS_LOCALS.me;
                 if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
@@ -24,13 +24,13 @@
                  * Название кнопки в интерфейсе
                  * @type {string}
                  */
-                $scope.addNameButton = 'Добавить титул';
+                $scope.addNameButton = 'Добавить тест';
 
                 /**
                  * URL кнопки в интерфейсе
                  * @type {string}
                  */
-                $scope.urlButton = 'home.admin.titles.create';
+                $scope.urlButton = 'home.admin.reactions.create';
 
 
                 /**
@@ -45,11 +45,11 @@
                      * RESTful: query, get, save и delete.
                      */
                     // Сортировка наоборот sort: 'name DESC'
-                    $scope.items = Titles.query({limit: $scope.limit, sort: $scope.sort}, function (titles) {
-                        // console.log('TITLES ITEMS:', titles);
-                        $scope.items = titles;
+                    $scope.items = Reactions.query({limit: $scope.limit, sort: $scope.sort}, function (reactions) {
+                        // console.log('TITLES ITEMS:', reactions);
+                        $scope.items = reactions;
                     }, function (err) {
-                        toastr.error(err, 'Ошибка ListTitleController!');
+                        toastr.error(err, 'Ошибка ListReactionController!');
                     });
                 };
 
@@ -90,7 +90,7 @@
                 var breadcrumb = new BreadCrumb();
                 breadcrumb.set('Home', '/');
                 breadcrumb.set('Admin', 'home.admin');
-                breadcrumb.set('Titles', 'home.admin.titles' + $state.current.url);
+                breadcrumb.set('Reactions', 'home.admin.reactions' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
                 
                 

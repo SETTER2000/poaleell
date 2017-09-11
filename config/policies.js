@@ -45,6 +45,7 @@ module.exports.policies = {
         updateAdmin: ['isLoggedIn', 'isAdmin'],
         updateAction: ['isLoggedIn', 'isAdmin'],
         updateDeleted: ['isLoggedIn', 'isAdmin']
+
     },
 
 
@@ -85,6 +86,8 @@ module.exports.policies = {
         destroy: ['isLoggedIn', 'isAdmin'],
         update: ['isLoggedIn', 'isAdminOrKadr'],
         upload: ['isLoggedIn', 'isAdminOrKadr']
+       
+
     },
     
     TitleController: {
@@ -93,15 +96,28 @@ module.exports.policies = {
         create: ['isLoggedIn', 'isAdminOrKadr'],
         destroy: ['isLoggedIn', 'isAdmin'],
         update: ['isLoggedIn', 'isAdminOrKadr']
-    }  ,
+    }, 
+    
+    ReactionController: {
+        '*': 'isLoggedIn',
+        //'*': false,
+        create: ['isLoggedIn', 'isAdminOrKadr'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr']
+    },
     HonorController: {
         '*': 'isLoggedIn',
         //'*': false,
         date: ['isLoggedIn', 'isAdminOrKadr'],
         download: ['isLoggedIn', 'isAdmin'],
         upload: ['isLoggedIn', 'isAdminOrKadr']
+    },
+    
+    PhotoController:{
+        '*': 'isLoggedIn',
+        uploadTitlePhoto: ['isLoggedIn', 'isAdminOrKadr']
     }
-
+    
 
 
 

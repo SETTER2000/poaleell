@@ -57,6 +57,10 @@ module.exports = {
       catalogs: {
         collection: 'catalog',
         via: 'titles'
+      },
+      photos: {
+        collection: 'photo',
+        via: 'titles'
       }
       // vacations: {
       //   collection: 'vacation',

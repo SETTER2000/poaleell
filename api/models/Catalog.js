@@ -143,6 +143,15 @@ module.exports = {
             collection: 'title',
             via: 'catalogs'
         },
+
+        photos: {
+            collection: 'photo',
+            via: 'catalogs'
+        },
+        reactions: {
+            collection: 'reaction',
+            via: 'catalogs'
+        },
         getFullName: function () {
             return this.kennel + ' ' + this.name;
         }
