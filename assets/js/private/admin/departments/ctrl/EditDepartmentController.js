@@ -58,7 +58,7 @@ angular.module('DepartmentModule')
                     //$scope.refresh();
                     item.$save(item.id,function (success) {
                             console.log('success',success.id);
-                            toastr.success('Новый отдел создан.');
+                            toastr.success('Объект создан.','OK! ');
                             $state.go('home.admin.department', {depId: success.id});
                         },
                         function (err) {

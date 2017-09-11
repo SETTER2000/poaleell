@@ -372,6 +372,7 @@ module.exports = {
                     position: req.param('position'),
                     pfr: req.param('pfr'),
                     dateInWork: req.param('dateInWork'),
+                    city: req.param('city'),
                     lastLoggedIn: new Date()
                     //gravatarUrl: gravatarUrl
                 }, function (err, newUser) {
@@ -669,7 +670,7 @@ module.exports = {
             pfr: req.param('pfr'),
             avatarUrl: req.param('avatarUrl'),
             room: req.param('room'),
-            //fur: req.param('fur'),
+            city: req.param('city'),
             furlough: req.param('furlough')
 
         };

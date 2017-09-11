@@ -462,7 +462,7 @@ angular.module('CatalogModule')
             $scope.refresh = function () {
                 let item = $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
                         $scope.catalogs = catalogs;
-                        // console.log('catalogs', catalogs);
+                        console.log('catalogs', catalogs);
                         item.getBirthday();
                         item.getDeath();
                         item.getFiredDate();
@@ -524,9 +524,9 @@ angular.module('CatalogModule')
             $scope.saveEdit = function (item) {
                 let lengthNicknameMin = 3;
 
-                if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                if (item.kennel.length < lengthNicknameMin) return toastr.error('Питомник меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.kennel.length < lengthNicknameMin) return toastr.error('Питомник меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
 
                 item = reversValue(item);
@@ -536,21 +536,15 @@ angular.module('CatalogModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data, info.error + ' 1001!');
+                            toastr.error(err, info.error + ' 1001!');
                             $scope.refresh();
                         }
                     );
                 } else {
                     if (angular.isDefined(item) &&
-                        angular.isDefined(item.name) &&
-                        angular.isDefined(item.kennel) &&
-                        angular.isDefined(item.color) &&
-                        angular.isDefined(item.growth) &&
-                        angular.isDefined(item.breeder) &&
-                        angular.isDefined(item.owner) &&
-                        angular.isDefined(item.variety)
+                        angular.isDefined(item.name)
                     ) {
-                        (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
+                        // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
                         item.password = info.passDefault;
                         item.$save(item, function (success) {
                                 //console.log(success);
@@ -687,6 +681,53 @@ angular.module('CatalogModule')
             };
 
 
+          
+         
+            
+            $scope.addOwnerField = function () {
+                if (angular.isArray($scope.item.owners)) {
+                    $scope.item.owners.push({});
+                } else {
+                    $scope.item.owners = [{}];
+                }
+            };
+
+
+            $scope.addBreederField = function () {
+                if (angular.isArray($scope.item.breeders)) {
+                    $scope.item.breeders.push({id: 'x'});
+                } else {
+                    $scope.item.breeders = [{id: 'x'}];
+                }
+            };
+
+
+
+            $scope.addKennelField = function () {
+                if (angular.isArray($scope.item.kennels)) {
+                    $scope.item.kennels.push({id: 'x'});
+                } else {
+                    $scope.item.kennels = [{id: 'x'}];
+                }
+            };
+            
+            $scope.addSireField = function () {
+                if (angular.isArray($scope.item.sires)) {
+                    $scope.item.sires.push({id: 'x'});
+                } else {
+                    $scope.item.sires = [{id: 'x'}];
+                }
+            };
+                
+            $scope.addDamField = function () {
+                if (angular.isArray($scope.item.dams)) {
+                    $scope.item.dams.push({id: 'x'});
+                } else {
+                    $scope.item.dams = [{id: 'x'}];
+                }
+            };
+            
+            
             $scope.addItem = function () {
                 if (angular.isArray($scope.item.titles)) {
                     $scope.item.titles.push({id: 'x'});
@@ -721,7 +762,7 @@ angular.module('CatalogModule')
                 var reactions = [];
 
                 $scope.item.reactions.forEach(function (value, key, mapObj) {
-                    if(obj == undefined) return ;
+                    if (obj == undefined) return;
                     if (value.id === obj.id) {
                         $scope.item.objDelReaction.push(obj.id);
                     } else {
@@ -729,7 +770,7 @@ angular.module('CatalogModule')
                     }
                 });
                 $scope.item.photos.forEach(function (value, key, mapObj) {
-                    if(filtered == undefined) return;
+                    if (filtered == undefined) return;
                     if (value.id === filtered.id) {
                         $scope.item.objDelete.push(filtered.id);
                     } else {
@@ -741,12 +782,23 @@ angular.module('CatalogModule')
                 $scope.item.$save($scope.item, function (success) {
                         toastr.success(info.changed);
                         // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
-                    $scope.refresh();
+                        $scope.refresh();
                     },
                     function (err) {
                         toastr.error(err.data.invalidAttributes, info.error + ' 89336!');
                     });
             };
+
+
+           
+
+
+
+            
+            
+
+
+
 
 
             $scope.removeItem = function (obj, filtered) {
@@ -756,7 +808,7 @@ angular.module('CatalogModule')
                 var titles = [];
 
                 $scope.item.titles.forEach(function (value, key, mapObj) {
-                    if(obj == undefined) return ;
+                    if (obj == undefined) return;
                     if (value.id === obj.id) {
                         $scope.item.objRemove.push(obj.id);
                     } else {
@@ -764,7 +816,7 @@ angular.module('CatalogModule')
                     }
                 });
                 $scope.item.photos.forEach(function (value, key, mapObj) {
-                    if(filtered == undefined) return ;
+                    if (filtered == undefined) return;
                     if (value.id === filtered.id) {
                         $scope.item.objDelete.push(filtered.id);
                     } else {
@@ -782,6 +834,118 @@ angular.module('CatalogModule')
                         toastr.error(err.data.invalidAttributes, info.error + ' 8000!');
                     });
             };
+
+
+            $scope.removeOwnerItem = function (obj) {
+                $scope.item.objRd = [];
+                var owners = [];
+                $scope.item.owners.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRd.push(obj.id);
+                    } else {
+                        owners.push(value);
+                    }
+                });
+                $scope.item.owners = owners;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };
+
+
+            $scope.removeBreederItem = function (obj) {
+                $scope.item.objRm = [];
+                var breeders = [];
+                $scope.item.breeders.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRm.push(obj.id);
+                    } else {
+                        breeders.push(value);
+                    }
+                });
+                $scope.item.breeders = breeders;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9970!');
+                    });
+            };
+            
+
+            $scope.removeKennelItem = function (obj) {
+                $scope.item.objRk = [];
+                var kennels = [];
+                $scope.item.kennels.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRk.push(obj.id);
+                    } else {
+                        kennels.push(value);
+                    }
+                });
+                $scope.item.kennels = kennels;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };   
+            
+            
+            $scope.removeSireItem = function (obj) {
+                $scope.item.objRisir = [];
+                var sires = [];
+                $scope.item.sires.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRisir.push(obj.id);
+                    } else {
+                        sires.push(value);
+                    }
+                });
+                $scope.item.sires = sires;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };     
+            
+            $scope.removeDamItem = function (obj) {
+                $scope.item.objRidam = [];
+                var dams = [];
+                $scope.item.dams.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRidam.push(obj.id);
+                    } else {
+                        dams.push(value);
+                    }
+                });
+                $scope.item.dams = dams;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };
+            
+            
+         
             $scope.removeFurlough = function (furlough) {
                 $scope.item.furloughRemove = [];
                 if (!furlough.id) $scope.item.furloughs = [];
@@ -846,4 +1010,5 @@ angular.module('CatalogModule')
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();
-        }]);
+        }
+    ]);

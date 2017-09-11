@@ -35,7 +35,7 @@
             $scope.loginArea = 'Логин';
             $scope.emailArea = 'Email';
             $scope.roomArea = 'Комната';
-            $scope.departmentArea = 'Отдел';
+            $scope.departmentArea = 'Питомник';
             $scope.positionArea = 'Должность';
             $scope.added = 'Добавить пользователя';
             $scope.showBt = 1;

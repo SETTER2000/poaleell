@@ -128,7 +128,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return yy + '-' + mm + '-' + dd;
         };
         Catalogs.prototype.getFullName = function () {
-            return this.kennel + ' ' + this.name;
+            if(this.kennels.length) return this.kennels[0].name + ' ' + this.name;
+            return this.name;
         };
         Catalogs.prototype.getShortName = function () {
             return this.lastName + ' ' + this.firstName.substr(0, 1) + '.' + this.patronymicName.substr(0, 1) + '.';
@@ -144,6 +145,38 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
         Catalogs.prototype.er = function () {
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
+        };
+
+        Catalogs.prototype.kennelName = function () {
+            if(this.kennels.length) return this.kennels[0].name ;
+            return 'не известно'
+
+        };
+        Catalogs.prototype.breederName = function (int) {
+            var t = '';
+            if (int) {
+                this.breeders.forEach(function (item, i, arr) {
+                    t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName+', ';
+                });
+            } else {
+                this.breeders.forEach(function (item, i, arr) {
+                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0]+'., ' ;
+                });
+            }
+            return t;
+        };
+        Catalogs.prototype.ownerName = function (int) {
+            var t = '';
+            if (int) {
+                this.owners.forEach(function (item, i, arr) {
+                    t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName + ', ';
+                });
+            } else {
+                this.owners.forEach(function (item, i, arr) {
+                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0]+'., ' ;
+                });
+            }
+            return t;
         };
         Catalogs.prototype.getAvatar = function () {
             return this.avatarUrl;
@@ -254,7 +287,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
-        
+
         Catalogs.prototype.age = function () {
             var now = moment();
             var event = moment(this.birthday, ["DD.MM.YYYY"]);

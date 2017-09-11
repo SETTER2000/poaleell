@@ -59,8 +59,13 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Catalog.find(req.param('id'))
             .populate('titles')
+            .populate('kennels')
+            .populate('owners')
+            .populate('breeders')
             .populate('photos')
             .populate('reactions')
+            .populate('sires')
+            .populate('dams')
             .exec((err, finds) => {
                 if (err) return res.negotiate;
                 if (!finds) return res.notFound();
@@ -79,55 +84,51 @@ module.exports = {
      * @param res
      */
     create: function (req, res) {
-        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-
-        if (!_.isString(req.param('name'))) {
-            console.log(error.date, error.name);
-            return res.badRequest(error.name);
-        }
-        if (!_.isString(req.param('kennel'))) {
-            console.log(error.date, error.kennel);
-            return res.badRequest(error.kennel);
-        }
-        if (!_.isString(req.param('birthday'))) {
-            console.log(error.date, error.birthday);
-            return res.badRequest(error.birthday);
-        }
-        if (!_.isString(req.param('gender'))) {
-            console.log(error.date, error.gender);
-            return res.badRequest(error.gender);
-        }
-        if (!_.isNumber(req.param('weight'))) {
-            console.log('req.paramw', req.param('weight'));
-            console.log(error.date, error.weight);
-            return res.badRequest(error.weight);
-        }
-        if (!_.isNumber(req.param('growth'))) {
-            console.log(error.date, error.growth);
-            return res.badRequest(error.growth);
-        }
-        if (!_.isString(req.param('variety'))) {
-            console.log(error.date, error.variety);
-            return res.badRequest(error.variety);
-        }
-        let i = 0;
-        if (_.isString(req.param('color'))) {
-            _.forEach(objectColor, function (value, key) {
-                if (key == req.param('color')) i++;
-            });
-            if (!i) return res.badRequest(error.colorBad);
-        } else {
-            console.log(error.date, error.color);
-            return res.badRequest(error.color);
-        }
-        if (!_.isString(req.param('breeder'))) {
-            console.log(error.date, error.breeder);
-            return res.badRequest(error.breeder);
-        }
-        if (!_.isString(req.param('owner'))) {
-            console.log(error.date, error.owner);
-            return res.badRequest(error.owner);
-        }
+        // if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        // if (!_.isString(req.param('name'))) {
+        //     console.log(error.date, error.name);
+        //     return res.badRequest(error.name);
+        // }
+        // if (!_.isString(req.param('birthday'))) {
+        //     console.log(error.date, error.birthday);
+        //     return res.badRequest(error.birthday);
+        // }
+        // if (!_.isString(req.param('gender'))) {
+        //     console.log(error.date, error.gender);
+        //     return res.badRequest(error.gender);
+        // }
+        // if (!_.isNumber(req.param('weight'))) {
+        //     console.log('req.paramw', req.param('weight'));
+        //     console.log(error.date, error.weight);
+        //     return res.badRequest(error.weight);
+        // }
+        // if (!_.isNumber(req.param('growth'))) {
+        //     console.log(error.date, error.growth);
+        //     return res.badRequest(error.growth);
+        // }
+        // if (!_.isString(req.param('variety'))) {
+        //     console.log(error.date, error.variety);
+        //     return res.badRequest(error.variety);
+        // }
+        // let i = 0;
+        // if (_.isString(req.param('color'))) {
+        //     _.forEach(objectColor, function (value, key) {
+        //         if (key == req.param('color')) i++;
+        //     });
+        //     if (!i) return res.badRequest(error.colorBad);
+        // } else {
+        //     console.log(error.date, error.color);
+        //     return res.badRequest(error.color);
+        // }
+        //
+        // if (!_.isString(req.param('breeder'))) {
+        //     console.log(error.date, error.breeder);
+        //     return res.badRequest(error.breeder);
+        // }
+        // if (!_.isString(req.param('owner'))) {
+        //     console.log(error.date, error.owner);
+        //     return res.badRequest(error.owner);
+        // }
         var obj = {
             action: (req.param('action')) ? req.param('action') : false,
             section: 'Каталог',
@@ -170,53 +171,55 @@ module.exports = {
      */
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        if (!_.isString(req.param('name'))) {
-            console.log(error.date, error.name);
-            return res.badRequest(error.name);
-        }
-        if (!_.isString(req.param('kennel'))) {
-            console.log(error.date, error.kennel);
-            return res.badRequest(error.kennel);
-        }
-        if (!_.isString(req.param('birthday'))) {
-            console.log(error.date, error.birthday);
-            return res.badRequest(error.birthday);
-        }
-        if (!_.isString(req.param('gender'))) {
-            console.log(error.date, error.gender);
-            return res.badRequest(error.gender);
-        }
-        if (!_.isNumber(req.param('weight'))) {
-            console.log('req.paramw', req.param('weight'));
-            console.log(error.date, error.weight);
-            return res.badRequest(error.weight);
-        }
-        if (!_.isNumber(req.param('growth'))) {
-            console.log(error.date, error.growth);
-            return res.badRequest(error.growth);
-        }
-        if (!_.isString(req.param('variety'))) {
-            console.log(error.date, error.variety);
-            return res.badRequest(error.variety);
-        }
-        let i = 0;
-        if (_.isString(req.param('color'))) {
-            _.forEach(objectColor, function (value, key) {
-                if (key == req.param('color')) i++;
-            });
-            if (!i) return res.badRequest(error.colorBad);
-        } else {
-            console.log(error.date, error.color);
-            return res.badRequest(error.color);
-        }
-        if (!_.isString(req.param('breeder'))) {
-            console.log(error.date, error.breeder);
-            return res.badRequest(error.breeder);
-        }
-        if (!_.isString(req.param('owner'))) {
-            console.log(error.date, error.owner);
-            return res.badRequest(error.owner);
-        }
+        // if (!_.isString(req.param('name'))) {
+        //     console.log(error.date, error.name);
+        //     return res.badRequest(error.name);
+        // }
+        // if (!_.isString(req.param('kennel'))) {
+        //     console.log(error.date, error.kennel);
+        //     return res.badRequest(error.kennel);
+        // }
+        // if (!_.isString(req.param('birthday'))) {
+        //     console.log(error.date, error.birthday);
+        //     return res.badRequest(error.birthday);
+        // }
+        // if (!_.isString(req.param('gender'))) {
+        //     console.log(error.date, error.gender);
+        //     return res.badRequest(error.gender);
+        // }
+        // if (!_.isNumber(req.param('weight'))) {
+        //     console.log('req.paramw', req.param('weight'));
+        //     console.log(error.date, error.weight);
+        //     return res.badRequest(error.weight);
+        // }
+        // if (!_.isNumber(req.param('growth'))) {
+        //     console.log(error.date, error.growth);
+        //     return res.badRequest(error.growth);
+        // }
+        // if (!_.isString(req.param('variety'))) {
+        //     console.log(error.date, error.variety);
+        //     return res.badRequest(error.variety);
+        // }
+        // let i = 0;
+        // if (_.isString(req.param('color'))) {
+        //     _.forEach(objectColor, function (value, key) {
+        //         if (key == req.param('color')) i++;
+        //     });
+        //     if (!i) return res.badRequest(error.colorBad);
+        // } else {
+        //     console.log(error.date, error.color);
+        //     return res.badRequest(error.color);
+        // }
+        // if (!_.isString(req.param('breeder'))) {
+        //     console.log(error.date, error.breeder);
+        //     return res.badRequest(error.breeder);
+        // }
+        // if (!_.isString(req.param('owner'))) {
+        //     console.log(error.date, error.owner);
+        //     return res.badRequest(error.owner);
+        // }
+        console.log('BREEDER: ', req.param('breeder'));
+        console.log('OWNER: ', req.param('owner'));
         var obj = {
             id: req.param('id'),
             action: req.param('action'),
@@ -226,14 +229,12 @@ module.exports = {
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
             nickname: req.param('nickname'),
-            kennel: req.param('kennel'),
+            // kennel: req.param('kennel'),
             gender: req.param('gender'),
             weight: req.param('weight'),
             growth: req.param('growth'),
             variety: req.param('variety'),
             color: req.param('color'),
-            breeder: req.param('breeder'),
-            owner: req.param('owner'),
             death: req.param('death'),
             pedigree: req.param('pedigree'),
             rkf: req.param('rkf'),
@@ -243,24 +244,35 @@ module.exports = {
             chip: req.param('chip'),
             stamp: req.param('stamp'),
             titles: req.param('titles'),
-            reactions: req.param('reactions')
+            kennels: req.param('kennels'),
+            reactions: req.param('reactions'),
+            breeders: req.param('breeders'),
+            owners: req.param('owners'),
+            sires: req.param('sires'),
+            dams: req.param('dams')
         };
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.redirect('/admin/catalogs/edit/' + req.param('id'));
             // console.log('Каталог обновил:', req.session.me);
             // console.log('Собака обновление:', obj);
-
+         
             console.log('req.body: ', req.body);
             Catalog.findOne(req.param('id'))
                 .populate('titles')
+                .populate('sires')
+                .populate('dams')
+                .populate('kennels')
                 .populate('photos')
                 .populate('reactions')
+                .populate('owners')
+                .populate('breeders')
                 .exec(function (err, catalog) {
                     if (err) return res.negotiate(err);
                     if (!catalog) return res.notFound('Не могу');
 
                     // console.log('positionRemove:', req.param('positionRemove'));
                     catalog.titles.add(req.param('titles'));
+                    // catalog.kennels.add(req.param('kennels'));
                     // catalog.furloughs.add(req.param('furloughs'));
 
                     // if (_.isEmpty(req.param('position'))) {
@@ -269,9 +281,27 @@ module.exports = {
                     if (req.param('objRemove')) {
                         catalog.titles.remove(req.param('objRemove'));
                     }
+
+                    if (req.param('objRisir')) {
+                        catalog.titles.remove(req.param('objRisir'));
+                    }
+                    if (req.param('objRidam')) {
+                        catalog.titles.remove(req.param('objRidam'));
+                    }
+
+                    if (req.param('objRk')) {
+                        catalog.kennels.remove(req.param('objRk'));
+                    }
                     if (req.param('objDelReaction')) {
                         catalog.reactions.remove(req.param('objDelReaction'));
                     }
+                    if (req.param('objRd')) {
+                        catalog.owners.remove(req.param('objRd'));
+                    }
+                    if (req.param('objRm')) {
+                        catalog.breeders.remove(req.param('objRm'));
+                    }
+
 
                     if (req.param('objDelete')) {
                         catalog.photos.remove(req.param('objDelete'));
@@ -332,10 +362,6 @@ module.exports = {
                 console.log('files', files);
                 if (err) return res.serverError(err);
                 if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
-                //if (files.length === 0) {
-                //    return res.badRequest('Файл не загружен');
-                //}
-                //console.log("files: ", files);
 
                 Catalog.update(req.body.id, {
                     avatarUrl: require('util').format('/images/catalog/dogs/%s/%s', req.body.id, fileName),
@@ -351,6 +377,23 @@ module.exports = {
             });
     },
 
+    /**
+     * Добавить родителей
+     * @param req
+     * @param res
+     */
+    // addParent: function (req, res) {
+    //     if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+    //     Catalog.findOne({})
+    //         .exec(function (err, foundDog) {
+    //             "use strict";
+    //             if (err) return res.negotiate;
+    //             if (!foundDog) return res.notFound();
+    //
+    //
+    //
+    //         });
+    // }
 
 };
 

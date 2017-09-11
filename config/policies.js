@@ -80,24 +80,24 @@ module.exports.policies = {
     },
 
     CatalogController: {
-        '*': 'isLoggedIn',
-        //'*': false,
-        create: ['isLoggedIn', 'isAdminOrKadr'],
-        destroy: ['isLoggedIn', 'isAdmin'],
-        update: ['isLoggedIn', 'isAdminOrKadr'],
-        upload: ['isLoggedIn', 'isAdminOrKadr']
-       
+        // '*': 'isLoggedIn',
+        // //'*': false,
+        // create: ['isLoggedIn', 'isAdminOrKadr'],
+        // destroy: ['isLoggedIn', 'isAdmin'],
+        // update: ['isLoggedIn', 'isAdminOrKadr'],
+        // upload: ['isLoggedIn', 'isAdminOrKadr']
 
+        '*': true
     },
-    
+
     TitleController: {
         '*': 'isLoggedIn',
         //'*': false,
         create: ['isLoggedIn', 'isAdminOrKadr'],
         destroy: ['isLoggedIn', 'isAdmin'],
         update: ['isLoggedIn', 'isAdminOrKadr']
-    }, 
-    
+    },
+
     ReactionController: {
         '*': 'isLoggedIn',
         //'*': false,
@@ -112,12 +112,12 @@ module.exports.policies = {
         download: ['isLoggedIn', 'isAdmin'],
         upload: ['isLoggedIn', 'isAdminOrKadr']
     },
-    
-    PhotoController:{
+
+    PhotoController: {
         '*': 'isLoggedIn',
         uploadTitlePhoto: ['isLoggedIn', 'isAdminOrKadr']
     }
-    
+
 
 
 

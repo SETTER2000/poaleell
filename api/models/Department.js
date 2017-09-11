@@ -11,11 +11,11 @@ module.exports = {
     attributes: {
         section: {
             type: 'string',
-            defaultsTo: 'Отдел'
+            defaultsTo: 'Питомник'
         },
         sections: {
             type: 'string',
-            defaultsTo: 'Отделы'
+            defaultsTo: 'Питомники'
         },
         action: {
             type: 'boolean',
@@ -53,11 +53,11 @@ module.exports = {
         ancestors:{
             type:'array'
         },
-        //subdivision:{
-        //    collection:'department',
-        //    via: 'owner',
-        //    dominant:true
-        //},
+        catalogs:{
+           collection:'catalog',
+           via: 'kennels'
+        },
+ 
         //owner: {
         //    collection: 'department',
         //    via: 'subdivision'
