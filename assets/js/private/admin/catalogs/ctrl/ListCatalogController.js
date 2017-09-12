@@ -210,7 +210,7 @@
                 };
 
                 $scope.items = Catalogs.query($scope.query, function (catalogs) {
-                    console.log('Catalogs ITEMS:', catalogs);
+                    console.log('Catalogs LIST:', catalogs);
                         $scope.items = catalogs;
                         $scope.objectName = catalogs;
                         //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;

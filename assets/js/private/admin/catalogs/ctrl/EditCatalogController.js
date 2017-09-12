@@ -19,7 +19,8 @@ angular.module('CatalogModule')
                 ru: 'ru',
                 dateFormat: "d.m.Y",
                 minDate: "01-01-2002",
-                maxDate: "31-12-2020"
+                maxDate: "31-12-2020",
+
             };
             $scope.newObjectName = 'Новая собака';
             $scope.close = 1;
@@ -64,8 +65,270 @@ angular.module('CatalogModule')
                 //$scope.refresh();
             };
 
+            /**
+             * Загрузка титулов
+             * @type {FileUploader|*}
+             */
+            var uploadTitles = $scope.uploadTitles = new FileUploader({
+                url: '/file/uploadTitles',
+                autoUpload: true,
+                removeAfterUpload: true,
+                queueLimit: 1,
+                withCredentials: true
+            });
+            uploadTitles.filters.push({
+                name: 'syncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options) {
+                    return this.queue.length < 10;
+                }
+            });
+            uploadTitles.filters.push({
+                name: 'asyncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
+                    setTimeout(deferred.resolve, 1e3);
+                }
+            });
+            /**
+             * Фильтр проверяет расширение
+             * Доступны для загрузки только jpg файлы
+             */
+            uploadTitles.filters.push({
+                name: 'expFilter',
+                fn: function (item) {
+                    if (item.name.slice(-3) !== 'jpg') {
+                        toastr.error(info.requiredJpg, info.error);
+                        return false;
+                    }
+                    $scope.uploaderButtonPrice = true;
+                    return true;
+                }
+            });
+            // CALLBACKS
+            uploadTitles.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                //console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploadTitles.onAfterAddingFile = function (fileItem) {
+                //console.info('onAfterAddingFile', fileItem);
+            };
+            uploadTitles.onAfterAddingAll = function (addedFileItems) {
+                //console.info('onAfterAddingAll', addedFileItems);
+
+            };
+
+            $scope.getTitle = function (obj) {
+                $scope.idTitle = obj.id;
+            };
+
+            uploadTitles.onBeforeUploadItem = function (item) {
+                //console.info('onBeforeUploadItem', item);
+                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({idTitle: $scope.idTitle});
+            };
+            // uploadTitles.onBeforeUploadItem = function (item) {
+            //     //console.info('onBeforeUploadItem', item);
+            //     item.formData.push({id: $stateParams.catalogId});
+            //     item.formData.push({idT: $stateParams.catalogId});
+            //
+            // };
+            uploadTitles.onProgressItem = function (fileItem, progress) {
+                //console.info('onProgressItem', fileItem, progress);
+
+            };
+            uploadTitles.onProgressAll = function (progress) {
+                //console.info('onProgressAll', progress);
+
+            };
+            uploadTitles.onSuccessItem = function (fileItem, response, status, headers) {
+                //console.info('onSuccessItem', fileItem);
+                //console.info('onSuccessItem2', response);
+                //console.info('onSuccessItem3', status);
+                //console.info('onSuccessItem4', headers);
 
 
+            };
+            uploadTitles.onErrorItem = function (fileItem, response, status, headers) {
+                $scope.pathToReport = response.avatarFd;
+                $scope.goReport = response.goReport;
+                $scope.statusErr = 'Отклонено';
+                toastr.error(response.message, info.error + ' Статус ' + status);
+            };
+            uploadTitles.onCancelItem = function (fileItem, response, status, headers) {
+                //console.log('uploader.onCancelItem');
+                //console.log(status);
+                ////console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            uploadTitles.onCompleteItem = function (fileItem, response, status, headers) {
+                ////console.info('onCompleteItem', fileItem, response, status, headers);
+
+
+                if (status == 200) {
+                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
+                    fileItem.goReport = response.goReport;
+                    fileItem.dateUpload = response.dateUpload;
+                    toastr.success(response.message, 'Ok! ');
+                    fileItem.progress = response.progress;
+                    fileItem.errorPercent = '0';
+                    fileItem.statusOk = response.message;
+                    $interval(function () {
+                        $scope.refresh();
+                        //location.reload()
+                    }, 2000, 1);
+
+                    // fileItem.allEr = response.allEr;
+                }
+                switch (response.status) {
+                    case 202:
+                        //toastr.success(response.message, ' Статус ' + response.status);
+                        fileItem.progress = response.progress;
+                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
+                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
+                        fileItem.goReport = response.goReport;
+                        fileItem.statusOk = response.message;
+                        fileItem.allEr = response.allEr;
+
+                        break;
+                }
+            };
+            uploadTitles.onCompleteAll = function (fileItem, response, status, headers) {
+                //$scope.getDatePrice();
+                $scope.uploaderButtonPrice = false;
+            };
+
+
+            /**
+             * Загрузка тестов
+             * @type {FileUploader|*}
+             */
+            var uploadReactions = $scope.uploadReactions = new FileUploader({
+                url: '/file/uploadReactions',
+                autoUpload: true,
+                removeAfterUpload: true,
+                queueLimit: 1,
+                withCredentials: true
+            });
+            uploadReactions.filters.push({
+                name: 'syncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options) {
+                    return this.queue.length < 10;
+                }
+            });
+            uploadReactions.filters.push({
+                name: 'asyncFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
+                    setTimeout(deferred.resolve, 1e3);
+                }
+            });
+            /**
+             * Фильтр проверяет расширение
+             * Доступны для загрузки только jpg файлы
+             */
+            uploadReactions.filters.push({
+                name: 'expFilter',
+                fn: function (item) {
+                    if (item.name.slice(-3) !== 'jpg') {
+                        toastr.error(info.requiredJpg, info.error);
+                        return false;
+                    }
+                    $scope.uploaderButtonPrice = true;
+                    return true;
+                }
+            });
+            // CALLBACKS
+            uploadReactions.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                //console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploadReactions.onAfterAddingFile = function (fileItem) {
+                //console.info('onAfterAddingFile', fileItem);
+            };
+            uploadReactions.onAfterAddingAll = function (addedFileItems) {
+                //console.info('onAfterAddingAll', addedFileItems);
+
+            };
+
+
+            $scope.getReaction = function (obj) {
+                $scope.idReaction = obj.id;
+            };
+            uploadReactions.onBeforeUploadItem = function (item) {
+                //console.info('onBeforeUploadItem', item);
+                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({idReaction: $scope.idReaction});
+            };
+            // uploadTitles.onBeforeUploadItem = function (item) {
+            //     //console.info('onBeforeUploadItem', item);
+            //     item.formData.push({id: $stateParams.catalogId});
+            //     item.formData.push({idT: $stateParams.catalogId});
+            //
+            // };
+            uploadReactions.onProgressItem = function (fileItem, progress) {
+                //console.info('onProgressItem', fileItem, progress);
+
+            };
+            uploadReactions.onProgressAll = function (progress) {
+                //console.info('onProgressAll', progress);
+
+            };
+            uploadReactions.onSuccessItem = function (fileItem, response, status, headers) {
+                //console.info('onSuccessItem', fileItem);
+                //console.info('onSuccessItem2', response);
+                //console.info('onSuccessItem3', status);
+                //console.info('onSuccessItem4', headers);
+
+
+            };
+            uploadReactions.onErrorItem = function (fileItem, response, status, headers) {
+                $scope.pathToReport = response.avatarFd;
+                $scope.goReport = response.goReport;
+                $scope.statusErr = 'Отклонено';
+                toastr.error(response.message, info.error + ' Статус ' + status);
+            };
+            uploadReactions.onCancelItem = function (fileItem, response, status, headers) {
+                //console.log('uploader.onCancelItem');
+                //console.log(status);
+                ////console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            uploadReactions.onCompleteItem = function (fileItem, response, status, headers) {
+                ////console.info('onCompleteItem', fileItem, response, status, headers);
+
+
+                if (status == 200) {
+                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
+                    fileItem.goReport = response.goReport;
+                    fileItem.dateUpload = response.dateUpload;
+                    toastr.success(response.message, 'Ok! ');
+                    fileItem.progress = response.progress;
+                    fileItem.errorPercent = '0';
+                    fileItem.statusOk = response.message;
+                    $interval(function () {
+                        $scope.refresh();
+                        //location.reload()
+                    }, 2000, 1);
+
+                    // fileItem.allEr = response.allEr;
+                }
+                switch (response.status) {
+                    case 202:
+                        //toastr.success(response.message, ' Статус ' + response.status);
+                        fileItem.progress = response.progress;
+                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
+                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
+                        fileItem.goReport = response.goReport;
+                        fileItem.statusOk = response.message;
+                        fileItem.allEr = response.allEr;
+
+                        break;
+                }
+            };
+            uploadReactions.onCompleteAll = function (fileItem, response, status, headers) {
+                //$scope.getDatePrice();
+                $scope.uploaderButtonPrice = false;
+            };
+
+
+            /**
+             * Загрузка Аватара
+             * @type {FileUploader|*}
+             */
             var uploader = $scope.uploader = new FileUploader({
                 url: '/file/uploadDogs',
                 autoUpload: true,
@@ -101,33 +364,33 @@ angular.module('CatalogModule')
             });
             // CALLBACKS
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                console.info('onWhenAddingFileFailed', item, filter, options);
+                //console.info('onWhenAddingFileFailed', item, filter, options);
             };
             uploader.onAfterAddingFile = function (fileItem) {
-                console.info('onAfterAddingFile', fileItem);
+                //console.info('onAfterAddingFile', fileItem);
             };
             uploader.onAfterAddingAll = function (addedFileItems) {
-                console.info('onAfterAddingAll', addedFileItems);
+                //console.info('onAfterAddingAll', addedFileItems);
 
             };
             uploader.onBeforeUploadItem = function (item) {
-                console.info('onBeforeUploadItem', item);
+                //console.info('onBeforeUploadItem', item);
                 item.formData.push({id: $stateParams.catalogId});
 
             };
             uploader.onProgressItem = function (fileItem, progress) {
-                console.info('onProgressItem', fileItem, progress);
+                //console.info('onProgressItem', fileItem, progress);
 
             };
             uploader.onProgressAll = function (progress) {
-                console.info('onProgressAll', progress);
+                //console.info('onProgressAll', progress);
 
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                console.info('onSuccessItem', fileItem);
-                console.info('onSuccessItem2', response);
-                console.info('onSuccessItem3', status);
-                console.info('onSuccessItem4', headers);
+                //console.info('onSuccessItem', fileItem);
+                //console.info('onSuccessItem2', response);
+                //console.info('onSuccessItem3', status);
+                //console.info('onSuccessItem4', headers);
 
 
             };
@@ -140,10 +403,10 @@ angular.module('CatalogModule')
             uploader.onCancelItem = function (fileItem, response, status, headers) {
                 //console.log('uploader.onCancelItem');
                 //console.log(status);
-                //console.info('onCancelItem', fileItem, response, status, headers);
+                ////console.info('onCancelItem', fileItem, response, status, headers);
             };
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                //console.info('onCompleteItem', fileItem, response, status, headers);
+                ////console.info('onCompleteItem', fileItem, response, status, headers);
 
 
                 if (status == 200) {
@@ -261,9 +524,9 @@ angular.module('CatalogModule')
             $scope.saveEdit = function (item) {
                 let lengthNicknameMin = 3;
 
-                if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                if (item.kennel.length < lengthNicknameMin) return toastr.error('Питомник меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.kennel.length < lengthNicknameMin) return toastr.error('Питомник меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
 
                 item = reversValue(item);
@@ -273,21 +536,15 @@ angular.module('CatalogModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data, info.error + ' 11445!');
+                            toastr.error(err, info.error + ' 1001!');
                             $scope.refresh();
                         }
                     );
                 } else {
                     if (angular.isDefined(item) &&
-                        angular.isDefined(item.name) &&
-                        angular.isDefined(item.kennel) &&
-                        angular.isDefined(item.color) &&
-                        angular.isDefined(item.growth) &&
-                        angular.isDefined(item.breeder) &&
-                        angular.isDefined(item.owner) &&
-                        angular.isDefined(item.variety)
+                        angular.isDefined(item.name)
                     ) {
-                        (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
+                        // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
                         item.password = info.passDefault;
                         item.$save(item, function (success) {
                                 //console.log(success);
@@ -384,7 +641,7 @@ angular.module('CatalogModule')
                 }
             };
             $scope.getMultiplicity = function (option) {
-                if (option.multiplicity !== null && option.multiplicity !== undefined ) return option.multiplicity+'x';
+                if (option.multiplicity !== null && option.multiplicity !== undefined) return option.multiplicity + 'x';
             };
             $scope.removeDecree = function (item) {
                 item.decree = null;
@@ -417,18 +674,73 @@ angular.module('CatalogModule')
                             //$scope.item.firedDate = success.getFiredDate;
                         },
                         function (err) {
-                            console.log(info.error, err);
+                            // console.log(info.error, err);
                             toastr.error(err.data.invalidAttributes, info.error + ' 90!');
                         });
                 }
             };
 
 
+          
+         
+            
+            $scope.addOwnerField = function () {
+                if (angular.isArray($scope.item.owners)) {
+                    $scope.item.owners.push({});
+                } else {
+                    $scope.item.owners = [{}];
+                }
+            };
+
+
+            $scope.addBreederField = function () {
+                if (angular.isArray($scope.item.breeders)) {
+                    $scope.item.breeders.push({id: 'x'});
+                } else {
+                    $scope.item.breeders = [{id: 'x'}];
+                }
+            };
+
+
+
+            $scope.addKennelField = function () {
+                if (angular.isArray($scope.item.kennels)) {
+                    $scope.item.kennels.push({id: 'x'});
+                } else {
+                    $scope.item.kennels = [{id: 'x'}];
+                }
+            };
+            
+            $scope.addSireField = function () {
+                if (angular.isArray($scope.item.sires)) {
+                    $scope.item.sires.push({id: 'x'});
+                } else {
+                    $scope.item.sires = [{id: 'x'}];
+                }
+            };
+                
+            $scope.addDamField = function () {
+                if (angular.isArray($scope.item.dams)) {
+                    $scope.item.dams.push({id: 'x'});
+                } else {
+                    $scope.item.dams = [{id: 'x'}];
+                }
+            };
+            
+            
             $scope.addItem = function () {
                 if (angular.isArray($scope.item.titles)) {
                     $scope.item.titles.push({id: 'x'});
                 } else {
                     $scope.item.titles = [{id: 'x'}];
+                }
+            };
+
+            $scope.addReaction = function () {
+                if (angular.isArray($scope.item.reactions)) {
+                    $scope.item.reactions.push({id: 'x'});
+                } else {
+                    $scope.item.reactions = [{id: 'x'}];
                 }
             };
             $scope.addFurlough = function () {
@@ -441,20 +753,199 @@ angular.module('CatalogModule')
             $scope.addedPhoto = function () {
 
             };
-            $scope.removeItem = function (obj) {
 
-                console.log('RUSSS: ', obj);
-                $scope.item.objRemove = [];
-                if (!obj.id) return;
-                // if (!obj.id) $scope.item.titles = [];
-                for (let i = 0, ii = $scope.item.titles.length; i < ii; i++) {
-                    if ($scope.item.titles[i].id === obj.id) {
-                        $scope.item.titles.splice(i, 1);
-                        $scope.item.objRemove.push(obj.id);
-                        return;
+            //** Удалить объекты титулов
+            $scope.removeReaction = function (obj, filtered) {
+                $scope.item.objDelReaction = [];
+                $scope.item.objDelete = [];
+                var photos = [];
+                var reactions = [];
+
+                $scope.item.reactions.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objDelReaction.push(obj.id);
+                    } else {
+                        reactions.push(value);
                     }
-                }
+                });
+                $scope.item.photos.forEach(function (value, key, mapObj) {
+                    if (filtered == undefined) return;
+                    if (value.id === filtered.id) {
+                        $scope.item.objDelete.push(filtered.id);
+                    } else {
+                        photos.push(value);
+                    }
+                });
+                $scope.item.reactions = reactions;
+                $scope.item.photos = photos;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 89336!');
+                    });
             };
+
+
+           
+
+
+
+            
+            
+
+
+
+
+
+            $scope.removeItem = function (obj, filtered) {
+                $scope.item.objRemove = [];
+                $scope.item.objDelete = [];
+                var photos = [];
+                var titles = [];
+
+                $scope.item.titles.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRemove.push(obj.id);
+                    } else {
+                        titles.push(value);
+                    }
+                });
+                $scope.item.photos.forEach(function (value, key, mapObj) {
+                    if (filtered == undefined) return;
+                    if (value.id === filtered.id) {
+                        $scope.item.objDelete.push(filtered.id);
+                    } else {
+                        photos.push(value);
+                    }
+                });
+                $scope.item.titles = titles;
+                $scope.item.photos = photos;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                        // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 8000!');
+                    });
+            };
+
+
+            $scope.removeOwnerItem = function (obj) {
+                $scope.item.objRd = [];
+                var owners = [];
+                $scope.item.owners.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRd.push(obj.id);
+                    } else {
+                        owners.push(value);
+                    }
+                });
+                $scope.item.owners = owners;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };
+
+
+            $scope.removeBreederItem = function (obj) {
+                $scope.item.objRm = [];
+                var breeders = [];
+                $scope.item.breeders.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRm.push(obj.id);
+                    } else {
+                        breeders.push(value);
+                    }
+                });
+                $scope.item.breeders = breeders;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9970!');
+                    });
+            };
+            
+
+            $scope.removeKennelItem = function (obj) {
+                $scope.item.objRk = [];
+                var kennels = [];
+                $scope.item.kennels.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRk.push(obj.id);
+                    } else {
+                        kennels.push(value);
+                    }
+                });
+                $scope.item.kennels = kennels;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };   
+            
+            
+            $scope.removeSireItem = function (obj) {
+                $scope.item.objRisir = [];
+                var sires = [];
+                $scope.item.sires.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRisir.push(obj.id);
+                    } else {
+                        sires.push(value);
+                    }
+                });
+                $scope.item.sires = sires;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };     
+            
+            $scope.removeDamItem = function (obj) {
+                $scope.item.objRidam = [];
+                var dams = [];
+                $scope.item.dams.forEach(function (value, key, mapObj) {
+                    if (obj == undefined) return;
+                    if (value.id === obj.id) {
+                        $scope.item.objRidam.push(obj.id);
+                    } else {
+                        dams.push(value);
+                    }
+                });
+                $scope.item.dams = dams;
+                $scope.item.$save($scope.item, function (success) {
+                        toastr.success(info.changed);
+                        $scope.refresh();
+                    },
+                    function (err) {
+                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+                    });
+            };
+            
+            
+         
             $scope.removeFurlough = function (furlough) {
                 $scope.item.furloughRemove = [];
                 if (!furlough.id) $scope.item.furloughs = [];
@@ -519,4 +1010,5 @@ angular.module('CatalogModule')
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();
-        }]);
+        }
+    ]);

@@ -11,11 +11,11 @@ module.exports = {
     attributes: {
         section: {
             type: 'string',
-            defaultsTo: 'Сотрудник'
+            defaultsTo: 'Пользователь'
         },
         sections: {
             type: 'string',
-            defaultsTo: 'Сотрудники'
+            defaultsTo: 'Пользователи'
         },
         action: {
             type: 'boolean',
@@ -119,7 +119,7 @@ module.exports = {
         //    type: 'date',
         //    defaultsTo: null
         //},
-        decree:{
+        decree: {
             type: 'date',
             defaultsTo: null
         },
@@ -175,11 +175,20 @@ module.exports = {
             via: 'users',
             dominant: true
         },
-
+        city: {type: 'string'},
         vacations: {
             collection: 'vacation',
             via: 'users',
             dominant: true
+        },
+        catalogs: {
+            collection: 'catalog',
+            via: 'owners',
+            dominant: true
+        },
+        breederCatalogs: {
+            collection: 'catalog',
+            via: 'breeders'
         },
 
         //// Отпуска тестовый

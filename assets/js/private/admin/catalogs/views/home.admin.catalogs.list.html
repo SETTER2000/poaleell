@@ -134,7 +134,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td class="text-center">{{item.growth}}</td>
         <td>{{item.variety}}</td>
         <td> {{item.color}}</td>
-        <td>{{item.breeder}}</td>
+        <td>{{item.breeders[0].getFullName()}}</td>
         <td>{{item.owner}}</td>
 
         <!--<td>-->

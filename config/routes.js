@@ -43,13 +43,15 @@ module.exports.routes = {
     'PUT /user/generate-recovery-email': 'UserController.generateRecoveryEmail',
     'PUT /user/update-admin/:id': 'UserController.updateAdmin',
     'PUT /user/update-kadr/:id': 'UserController.updateKadr',
-    //'PUT /user/update-leader/:id': 'UserController.updateLeader',
     'PUT /user/update-action/:id': 'UserController.updateAction',
     'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
     'PUT /user/updateProfile/:id': 'UserController.updateProfile',
     'POST /file/upload': 'UserController.upload',
+   
     'POST /file/uploadDogs': 'CatalogController.upload',
-    // 'GET /user/getUsersDepartment': 'UserController.getUsersDepartment',
+    'POST /file/uploadTitles': 'PhotoController.uploadTitlePhoto',
+    'POST /file/uploadReactions': 'PhotoController.uploadReactionPhoto',
+
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
     'POST /users/ldap': 'UserController.searchLDAP',
 
@@ -180,6 +182,7 @@ module.exports.routes = {
     'GET /catalogs': 'CatalogController.get', // получить все записи или одну по http://localhost:1338/catalogs?id=599c4aefc97f011f70a2359b
     'POST /catalogs': 'CatalogController.create', // создать запись
     'DELETE /catalogs/:id': 'CatalogController.destroy', // удалить
+    'POST /catalogs/:id': 'CatalogController.update', // удалить
     'PUT /catalogs/:id': 'CatalogController.update', // обновить
 
 
@@ -190,6 +193,27 @@ module.exports.routes = {
     'POST /titles': 'TitleController.create', // создать запись
     'DELETE /titles/:id': 'TitleController.destroy', // удалить
     'PUT /titles/:id': 'TitleController.update', // обновить
+    
+    
+    
+    /**
+     * Reactions
+     */
+    'GET /reactions': 'ReactionController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'POST /reactions': 'ReactionController.create', // создать запись
+    'DELETE /reactions/:id': 'ReactionController.destroy', // удалить
+    'PUT /reactions/:id': 'ReactionController.update', // обновить
+    
+    
+    
+
+    /**
+     * Photos
+     */
+    'GET /photos': 'PhotoController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    // 'POST /photos': 'PhotoController.create', // создать запись
+    // 'DELETE /photos/:id': 'PhotoController.destroy', // удалить
+    // 'PUT /photos/:id': 'PhotoController.update', // обновить
     
     
     
@@ -278,6 +302,19 @@ module.exports.routes = {
     'GET /admin/titles/edit/:id': 'PageController.showHomePage',
     'GET /admin/titles/create/': 'PageController.showHomePage',
     'GET /admin/title/:id': 'PageController.showHomePage',
+
+
+
+    'GET /admin/reactions': 'PageController.showHomePage',
+    'GET /admin/reactions/edit/:id': 'PageController.showHomePage',
+    'GET /admin/reactions/create/': 'PageController.showHomePage',
+    'GET /admin/reactions/:id': 'PageController.showHomePage',
+
+
+    'GET /admin/photos': 'PageController.showHomePage',
+    'GET /admin/photos/edit/:id': 'PageController.showHomePage',
+    'GET /admin/photos/create/': 'PageController.showHomePage',
+    'GET /admin/photos/:id': 'PageController.showHomePage',
 
 
     'GET /upload': 'PageController.showHomePage',

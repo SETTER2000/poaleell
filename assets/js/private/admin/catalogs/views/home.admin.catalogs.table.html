@@ -134,8 +134,12 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td class="text-center">{{item.growth}}</td>
         <td>{{item.variety}}</td>
         <td> {{item.color}}</td>
-        <td>{{item.breeder}}</td>
-        <td>{{item.owner}}</td>
+        <td>{{item.breederName(1)}}</td>
+        <td>{{item.ownerName(1)}}
+
+            <!--{{item.owners[0].lastName +' '+ item.owners[0].firstName[0]+'. '+ item.owners[0].patronymicName[0]+'.'}}-->
+            <!--<span ng-if="item.owners[1]"> {{'/ '+item.owners[1].lastName +' '+ item.owners[1].firstName[0]+'. '+ item.owners[1].patronymicName[0]+'.'}} </span>-->
+        </td>
 
         <!--<td>-->
         <!--<ul style="list-style-type: none; margin: 0; padding: 0" class="position" ng-controller="ListDepartmentController"-->

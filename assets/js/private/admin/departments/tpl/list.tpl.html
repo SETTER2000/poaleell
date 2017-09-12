@@ -71,7 +71,7 @@
                     <!--<h3 class="panel-title">-->
 
             <p> <button ui-sref="home.admin.departments.create" type="button" class="btn btn-default btn-sm">
-                Добавить подразделение
+               {{added}}
             </button></p>
                     <!--</h3>-->
                 <!--</div>-->
@@ -85,23 +85,23 @@
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
-                            <!--<th>-->
-                                <!--<button class="btn btn-default" ng-click="sortBy('type')">Тип-->
-                                <!--<span class="sortOrder" ng-show="propertyName === 'type'"-->
-                                      <!--ng-class="{reverse: reverse}"></span>-->
-                                <!--</button>-->
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('type')">Тип
+                                <span class="sortOrder" ng-show="propertyName === 'type'"
+                                      ng-class="{reverse: reverse}"></span>
+                                </button>
 
-                            <!--</th>-->
+                            </th>
 
-                            <!--<th>-->
-                                <!--<button class="btn btn-default" ng-click="sortBy('location')">Местоположение-->
-                                 <!--<span class="sortOrder" ng-show="propertyName === 'location'"-->
-                                       <!--ng-class="{reverse: reverse}"></span>-->
-                                <!--</button>-->
+                            <th>
+                                <button class="btn btn-default" ng-click="sortBy('location')">Местоположение
+                                 <span class="sortOrder" ng-show="propertyName === 'location'"
+                                       ng-class="{reverse: reverse}"></span>
+                                </button>
 
-                            <!--</th>-->
-                            <!--<th></th>-->
-                            <!--<th></th>-->
+                            </th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                             <!--<td>{{$index+1}}</td>-->
@@ -110,37 +110,37 @@
                                     {{item.name}}
                                 </a>
                             </td>
-                            <!--<td>{{item.name}}</td>-->
-                            <!--<td>{{item.type }}</td>-->
-                            <!--<td>{{item.location}}</td>-->
+                            <td>{{item.name}}</td>
+                            <td>{{item.type }}</td>
+                            <td>{{item.location}}</td>
 
-                            <!--<td class="btn-group-xs">-->
-                                <!--<a ng-href="{{item.getShowUrl(item.id)}}" class="btn "-->
-                                   <!--ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">-->
-                                    <!--<span class="glyphicon "-->
-                                          <!--ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"-->
-                                          <!--aria-hidden="true"></span>-->
+                            <td class="btn-group-xs">
+                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn "
+                                   ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
+                                    <span class="glyphicon "
+                                          ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
+                                          aria-hidden="true"></span>
+                                </a>
+                                <!--<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>-->
+                                <!--<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
+                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:'588b46b6d20dd30c17b27f03'})">Users Edit</a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a ui-sref="admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                            <!--</td>-->
-                            <!--<td class="btn-group-xs">-->
-                                <!--<form ng-if="mode" action="/user/destroy" method="post">-->
-                                    <!--<input type="hidden" name="_method" value="delete">-->
-                                    <!--<button type="submit" class="btn  btn-default">-->
-                                        <!--<span class="glyphicon glyphicon-trash"></span>-->
-                                    <!--</button>-->
+                                <!--<a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-warning">-->
+                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                <!--</a>-->
+                            </td>
+                            <td class="btn-group-xs">
+                                <form ng-if="mode" action="/user/destroy" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button type="submit" class="btn  btn-default">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
 
-                                    <!--<input type="hidden" name="_csrf" value="<%= _csrf %>">-->
-                                    <!--<input type="hidden" name="id" value="{{item.id}}">-->
+                                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                                    <input type="hidden" name="id" value="{{item.id}}">
 
-                                <!--</form>-->
-                            <!--</td>-->
+                                </form>
+                            </td>
                         </tr>
 
 

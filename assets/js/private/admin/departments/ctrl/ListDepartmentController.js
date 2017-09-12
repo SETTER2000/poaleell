@@ -5,24 +5,9 @@
             function ($scope, toastr, Departments, $state) {
                 $scope.me = window.SAILS_LOCALS.me;
                 if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
-                // var ups = $scope.ups =  Departments.query();
-                //  console.log('UPS1: ');
-                //  console.log(ups);
-                //  // console.log( $scope.ups.then(onFullField));
-                //  ups.$promise.then(onFullField,onReject);
-                //
-                //  function onFullField(succ){
-                //      console.log('DADAD!!!: ');
-                //      console.log(succ);
-                //
-                //      console.log('DADAD!!22!: ');
-                //      console.log(succ.filter(action:1);
-                //  }
-
-                // function onReject(err) {
-                //     console.log('ONreject');
-                //     console.log(err);
-                // }
+                
+                
+                $scope.added = 'Добавить питомник';
 
                 $scope.refresh = function () {
                     /**

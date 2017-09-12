@@ -26,7 +26,7 @@ module.exports = {
     //    });
     //},
     getRootDepartment: function (req, res) {
-        // if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         // sails.log(req.param('id'));
         Department.find({id: {'!': req.param('id')}, sort: 'name'}).exec(function (err, foundList) {
             if (err) return res.negotiate;

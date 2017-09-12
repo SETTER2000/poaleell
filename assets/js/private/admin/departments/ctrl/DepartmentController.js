@@ -1,9 +1,9 @@
 angular.module('DepartmentModule')
-    .controller('DepartmentController', ['$scope',   '$state',' Departments', '$state','$stateParams',
-        function ($scope, $state, toastr, Departments, $stateParams) {
+    .controller('DepartmentController', ['$scope', '$state','toastr', 'moment', 'Departments', '$stateParams',
+        function ($scope,$state,toastr, moment, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
-            
+
             //if(!$scope.me.admin) $location.path('/') ;
             /**
              * Метод query выполняет запрос на сервер и возвращает коллекцию,
@@ -19,7 +19,7 @@ angular.module('DepartmentModule')
                 $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
                     $scope.departments = departments;
                     // кол-во пользователей
-                    // console.log($scope.users.length);
+                    // console.log('departments',departments);
                     // console.log($scope.users);
                 }, function (err) {
                     if (err) console.log(err.message);

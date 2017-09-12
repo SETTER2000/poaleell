@@ -1,8 +1,8 @@
 (function (angular) {
     'use strict';
-    angular.module('TitleModule')
-        .controller('ListTitleController', ['$scope', '$state', 'Titles', 'toastr',
-            function ($scope, $state, Titles, toastr) {
+    angular.module('PhotoModule')
+        .controller('ListPhotoController', ['$scope', '$state', 'Photos', 'toastr',
+            function ($scope, $state, Photos, toastr) {
                 $scope.me = window.SAILS_LOCALS.me;
                 if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
@@ -30,7 +30,7 @@
                  * URL кнопки в интерфейсе
                  * @type {string}
                  */
-                $scope.urlButton = 'home.admin.titles.create';
+                $scope.urlButton = 'home.admin.photos.create';
 
 
                 /**
@@ -45,11 +45,11 @@
                      * RESTful: query, get, save и delete.
                      */
                     // Сортировка наоборот sort: 'name DESC'
-                    $scope.items = Titles.query({limit: $scope.limit, sort: $scope.sort}, function (titles) {
-                        // console.log('TITLES ITEMS:', titles);
-                        $scope.items = titles;
+                    $scope.items = Photos.query({limit: $scope.limit, sort: $scope.sort}, function (photos) {
+                        console.log('Photos ITEMS:', photos);
+                        $scope.items = photos;
                     }, function (err) {
-                        toastr.error(err, 'Ошибка ListTitleController!');
+                        toastr.error(err, 'Ошибка ListPhotoController!');
                     });
                 };
 
@@ -90,7 +90,7 @@
                 var breadcrumb = new BreadCrumb();
                 breadcrumb.set('Home', '/');
                 breadcrumb.set('Admin', 'home.admin');
-                breadcrumb.set('Titles', 'home.admin.titles' + $state.current.url);
+                breadcrumb.set('Photos', 'home.admin.photos' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
                 
                 
