@@ -76,14 +76,14 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SETTER2000/poaleell.git"
+    "url": "git+https://github.com/SETTER2000/kadr.git"
   },
   "author": "SETTER <info@lphp.ru>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SETTER2000/poaleell/issues"
+    "url": "https://github.com/SETTER2000/kadr/issues"
   },
-  "homepage": "https://github.com/SETTER2000/poaleell#readme",
+  "homepage": "https://github.com/SETTER2000/kadr#readme",
   "devDependencies": {
     "longjohn": "^0.2.12"
   }
