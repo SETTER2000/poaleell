@@ -79,7 +79,7 @@
                                 <div class="form-group">
                                     <select class="form-control" ng-model="kennel.id">
                                         <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
-                                            {{option.getFullName()}}
+                                            {{option.name}}
                                         </option>
                                     </select>
                                     <div class="form-group pull-right">

@@ -127,10 +127,18 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             if (yy < 10) yy = '0' + yy;
             return yy + '-' + mm + '-' + dd;
         };
+        Catalogs.prototype.kennelName = function () {
+            console.log('this.kennels',this.kennels);
+            if(this.kennels instanceof Array) return this.kennels[0].name ;
+            return 'не известно'
+
+        };
         Catalogs.prototype.getFullName = function () {
-            if(this.kennels.length) return this.kennels[0].name + ' ' + this.name;
+            console.log('getFullName',this.kennels);
+            if( this.kennels instanceof Array) return this.kennels[0].name + ' ' + this.name;
             return this.name;
         };
+        
         Catalogs.prototype.getShortName = function () {
             return this.lastName + ' ' + this.firstName.substr(0, 1) + '.' + this.patronymicName.substr(0, 1) + '.';
         };
@@ -147,11 +155,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
 
-        Catalogs.prototype.kennelName = function () {
-            if(this.kennels.length) return this.kennels[0].name ;
-            return 'не известно'
-
-        };
+      
         Catalogs.prototype.breederName = function (int) {
             var t = '';
             if (int) {

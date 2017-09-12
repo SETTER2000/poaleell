@@ -33,12 +33,6 @@ module.exports = {
             // minLength: 2,
             // maxLength: 40
         },
-        // kennel: {
-        //     type: 'string',
-        //     // required: true,
-        //     // minLength: 2,
-        //     // maxLength: 40
-        // },
         gender: {
             type: 'string',
             // required: true,
@@ -98,11 +92,9 @@ module.exports = {
             type: 'string'
         },
         pedigree: {
-            type: 'string',
+            type: 'string'
             // maxLength: 15
         },
-
-
         rkf: {
             type: 'string',
             maxLength: 15
@@ -127,11 +119,6 @@ module.exports = {
             type: 'string',
             maxLength: 10
         },
-
-        // catalogs: {
-        //     collection: 'catalog',
-        //     via: 'titles'
-        // },
 
         titles: {
             collection: 'title',
@@ -159,8 +146,6 @@ module.exports = {
         dams: {
             model: 'catalog'
         },
-
-
         photos: {
             collection: 'photo',
             via: 'catalogs'
@@ -168,9 +153,6 @@ module.exports = {
         reactions: {
             collection: 'reaction',
             via: 'catalogs'
-        },
-        getFullName: function () {
-            return this.kennel + ' ' + this.name;
         }
 
     }
