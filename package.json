@@ -7,6 +7,7 @@
   "dependencies": {
     "@uirouter/angularjs": "latest",
     "angular-animate": "^1.6.1",
+    "angular-flatpickr": "^2.5.0",
     "angular-moment": "^1.0.1",
     "assert": "^1.4.1",
     "async": "^2.3.0",
@@ -64,7 +65,7 @@
     "sails-mssqlserver": "^0.14.3",
     "sails-mysql": "^0.11.5",
     "smtp-server": "^3.0.1",
-    "twix": "^1.1.3",
+    "twix": "^1.2.0",
     "xlsx": "^0.11.2",
     "xlsx-populate": "1.8.2"
   },

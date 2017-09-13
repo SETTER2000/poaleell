@@ -129,13 +129,13 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
         Catalogs.prototype.kennelName = function () {
             console.log('this.kennels',this.kennels);
-            if(this.kennels instanceof Array) return this.kennels[0].name ;
-            return 'не известно'
+            if(this.kennels instanceof Array && this.kennels.length>0) return this.kennels[0].name ;
+            return 'неизвестен'
 
         };
         Catalogs.prototype.getFullName = function () {
             console.log('getFullName',this.kennels);
-            if( this.kennels instanceof Array) return this.kennels[0].name + ' ' + this.name;
+            if( this.kennels instanceof Array && this.kennels.length > 0) return this.kennels[0].name + ' ' + this.name;
             return this.name;
         };
         

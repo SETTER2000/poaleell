@@ -137,7 +137,8 @@ module.exports = {
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
             nickname: req.param('nickname'),
-            kennel: req.param('kennel'),
+            kennels: req.param('kennels'),
+            sires: req.param('sires'),
             gender: req.param('gender'),
             weight: req.param('weight'),
             growth: req.param('growth'),
@@ -331,8 +332,8 @@ module.exports = {
 
             Catalog.destroy(req.param('id'), (err) => {
                 if (err)return next(err);
-                console.log('Отпуск удалил:', req.session.me);
-                console.log('Отпуск удалён:', finds);
+                console.log('Собаку удалил:', req.session.me);
+                console.log('Собака удалён:', finds);
                 res.ok();
             });
         });

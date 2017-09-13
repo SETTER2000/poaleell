@@ -521,11 +521,19 @@ angular.module('CatalogModule')
                 return item;
             };
             $scope.lengthWeightMin = 2200;
-            $scope.saveEdit = function (item) {
-                let lengthNicknameMin = 3;
 
+
+            /**
+             * Сохранить изменения
+             * @param item
+             */
+            $scope.saveEdit = function (item) {
+                let lengthNicknameMin = 1;
+                console.log('item-555:', item);
                 // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                // if (item.kennel.length < lengthNicknameMin) return toastr.error('Питомник меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
+                if (!item.kennels) return toastr.error('Питомник не заполнен.', 'Ошибка!');
+                if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
+                console.log('item.sires', item.sires);
                 // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
 
@@ -681,9 +689,6 @@ angular.module('CatalogModule')
             };
 
 
-          
-         
-            
             $scope.addOwnerField = function () {
                 if (angular.isArray($scope.item.owners)) {
                     $scope.item.owners.push({});
@@ -702,7 +707,6 @@ angular.module('CatalogModule')
             };
 
 
-
             $scope.addKennelField = function () {
                 if (angular.isArray($scope.item.kennels)) {
                     $scope.item.kennels.push({id: 'x'});
@@ -710,7 +714,7 @@ angular.module('CatalogModule')
                     $scope.item.kennels = [{id: 'x'}];
                 }
             };
-            
+
             $scope.addSireField = function () {
                 if (angular.isArray($scope.item.sires)) {
                     $scope.item.sires.push({id: 'x'});
@@ -718,7 +722,7 @@ angular.module('CatalogModule')
                     $scope.item.sires = [{id: 'x'}];
                 }
             };
-                
+
             $scope.addDamField = function () {
                 if (angular.isArray($scope.item.dams)) {
                     $scope.item.dams.push({id: 'x'});
@@ -726,8 +730,8 @@ angular.module('CatalogModule')
                     $scope.item.dams = [{id: 'x'}];
                 }
             };
-            
-            
+
+
             $scope.addItem = function () {
                 if (angular.isArray($scope.item.titles)) {
                     $scope.item.titles.push({id: 'x'});
@@ -788,17 +792,6 @@ angular.module('CatalogModule')
                         toastr.error(err.data.invalidAttributes, info.error + ' 89336!');
                     });
             };
-
-
-           
-
-
-
-            
-            
-
-
-
 
 
             $scope.removeItem = function (obj, filtered) {
@@ -878,7 +871,7 @@ angular.module('CatalogModule')
                         toastr.error(err.data.invalidAttributes, info.error + ' 9970!');
                     });
             };
-            
+
 
             $scope.removeKennelItem = function (obj) {
                 $scope.item.objRk = [];
@@ -899,9 +892,9 @@ angular.module('CatalogModule')
                     function (err) {
                         toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
                     });
-            };   
-            
-            
+            };
+
+
             $scope.removeSireItem = function (obj) {
                 $scope.item.objRisir = [];
                 var sires = [];
@@ -921,8 +914,8 @@ angular.module('CatalogModule')
                     function (err) {
                         toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
                     });
-            };     
-            
+            };
+
             $scope.removeDamItem = function (obj) {
                 $scope.item.objRidam = [];
                 var dams = [];
@@ -943,9 +936,8 @@ angular.module('CatalogModule')
                         toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
                     });
             };
-            
-            
-         
+
+
             $scope.removeFurlough = function (furlough) {
                 $scope.item.furloughRemove = [];
                 if (!furlough.id) $scope.item.furloughs = [];
@@ -977,6 +969,7 @@ angular.module('CatalogModule')
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };
+
             /**
              *  Конструктор хлебных крошек
              * @constructor

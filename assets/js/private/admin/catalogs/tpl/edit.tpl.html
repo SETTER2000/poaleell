@@ -14,12 +14,16 @@
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
-                <button ng-show="edit" ng-click="saveEdit(item)" type="button" class="btn btn-success">
+
+                <button  ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span> Сохранить
                 </button>
                 <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span> Список
                 </a>
+                <button ng-show="me.admin" ng-if="!item.action && edit" ng-click="delete2(item)" class="btn btn-sm btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> Удалить
+                </button>
             </div>
         </h2>
         <ul class="breadcrumb">
@@ -65,51 +69,65 @@
                         </div>
 
 
-
-
-
-
-
-
                         <!--< K E N N E L -->
                         <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label"  ng-bind="items[0].sc()"></label>
                             <span>[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
-                            <div class="form-inline" ng-repeat="kennel in item.kennels">
+                            <div class="form-inline" ng-repeat="kennels in item.kennels">
                                 <div class="form-group">
-                                    <select class="form-control" ng-model="kennel.id">
+                                    <select class="form-control" ng-model="kennels.id">
                                         <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
                                             {{option.name}}
                                         </option>
                                     </select>
                                     <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeKennelItem(kennel)"><span
+                                        <button type="button" class="btn btn-default " ng-click="removeKennelItem(kennels)"><span
                                                 class="glyphicon glyphicon-remove"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-                        <!--< S I R E S -->
-                        <div ng-controller="ListCatalogController" class="form-group ">
+                        <!--< S I R E S (EDIT)-->
+                        <div ng-controller="ListCatalogController" ng-if="edit" class="form-group ">
                             <label class="control-label" >Отец</label>
                             <span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>
-                            <div class="form-inline" ng-repeat="sire in item.sires">
+                            <div class="form-inline" ng-repeat="sires in item.sires">
                                 <div class="form-group">
-                                    <select class="form-control" ng-model="sire.id">
+                                    <select class="form-control" ng-model="sires.id">
                                         <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
                                             {{option.getFullName()}}
                                         </option>
                                     </select>
                                     <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeSireItem(sire)"><span
+                                        <button type="button" class="btn btn-default " ng-click="removeSireItem(sires)"><span
                                                 class="glyphicon glyphicon-remove"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+
+                        <div ng-controller="ListCatalogController" ng-if="!edit" class="form-group ">
+                            <label class="control-label" >Отец</label>
+                            <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
+                            <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="item.sires">
+                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                            {{option.getFullName()}}
+                                        </option>
+                                    </select>
+                                    <div class="form-group pull-right">
+                                        <button type="button" class="btn btn-default " ng-click="removeSireItem(sires)"><span
+                                                class="glyphicon glyphicon-remove"></span></button>
+                                    </div>
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+
+<pre>sires: {{sires | json}}</pre>
+<pre>item: {{item | json}}</pre>
 
 
                         <div class="form-group">
