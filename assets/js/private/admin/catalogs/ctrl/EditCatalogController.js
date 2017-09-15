@@ -20,8 +20,41 @@ angular.module('CatalogModule')
                 dateFormat: "d.m.Y",
                 minDate: "01-01-2002",
                 maxDate: "31-12-2020",
-
             };
+
+
+            $scope.name = null;
+
+            $scope.alphabetObj = function () {
+                let obj = [{id: '', name: ''}];
+                let ar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                ar.forEach(function (element, index, array) {
+                    obj.push({id: element, name: element});
+                });
+                return obj;
+            };
+
+            $scope.optionsSelectSymbol = $scope.alphabetObj();
+
+            $scope.optionsSelectGender = [
+                {id: '', name: ''},
+                {id: 'сука', name: 'сука'},
+                {id: 'кобель', name: 'кобель'}];
+
+            $scope.optionsSelectPll = [
+                {id: '', name: ''},
+                {id: 'Чистый', name: 'Чистый'},
+                {id: 'Носитель', name: 'Носитель'},
+                {id: 'Болеет', name: 'Болеет'}];
+
+
+            $scope.optionsSelectPll = [
+                {id: '', name: ''},
+                {id: 'Чистый', name: 'Чистый'},
+                {id: 'Носитель', name: 'Носитель'},
+                {id: 'Болеет', name: 'Болеет'}];
+
+
             $scope.newObjectName = 'Новая собака';
             $scope.close = 1;
             $scope.loginAdmin = false;
@@ -89,6 +122,8 @@ angular.module('CatalogModule')
                     setTimeout(deferred.resolve, 1e3);
                 }
             });
+
+
             /**
              * Фильтр проверяет расширение
              * Доступны для загрузки только jpg файлы
@@ -113,7 +148,6 @@ angular.module('CatalogModule')
             };
             uploadTitles.onAfterAddingAll = function (addedFileItems) {
                 //console.info('onAfterAddingAll', addedFileItems);
-
             };
 
             $scope.getTitle = function (obj) {
@@ -129,7 +163,6 @@ angular.module('CatalogModule')
             //     //console.info('onBeforeUploadItem', item);
             //     item.formData.push({id: $stateParams.catalogId});
             //     item.formData.push({idT: $stateParams.catalogId});
-            //
             // };
             uploadTitles.onProgressItem = function (fileItem, progress) {
                 //console.info('onProgressItem', fileItem, progress);
@@ -137,15 +170,12 @@ angular.module('CatalogModule')
             };
             uploadTitles.onProgressAll = function (progress) {
                 //console.info('onProgressAll', progress);
-
             };
             uploadTitles.onSuccessItem = function (fileItem, response, status, headers) {
                 //console.info('onSuccessItem', fileItem);
                 //console.info('onSuccessItem2', response);
                 //console.info('onSuccessItem3', status);
                 //console.info('onSuccessItem4', headers);
-
-
             };
             uploadTitles.onErrorItem = function (fileItem, response, status, headers) {
                 $scope.pathToReport = response.avatarFd;
@@ -160,8 +190,6 @@ angular.module('CatalogModule')
             };
             uploadTitles.onCompleteItem = function (fileItem, response, status, headers) {
                 ////console.info('onCompleteItem', fileItem, response, status, headers);
-
-
                 if (status == 200) {
                     fileItem.pathToReport = '/images/foto/' + response.avatarFd;
                     fileItem.goReport = response.goReport;
@@ -243,7 +271,6 @@ angular.module('CatalogModule')
             };
             uploadReactions.onAfterAddingAll = function (addedFileItems) {
                 //console.info('onAfterAddingAll', addedFileItems);
-
             };
 
 
@@ -263,19 +290,15 @@ angular.module('CatalogModule')
             // };
             uploadReactions.onProgressItem = function (fileItem, progress) {
                 //console.info('onProgressItem', fileItem, progress);
-
             };
             uploadReactions.onProgressAll = function (progress) {
                 //console.info('onProgressAll', progress);
-
             };
             uploadReactions.onSuccessItem = function (fileItem, response, status, headers) {
                 //console.info('onSuccessItem', fileItem);
                 //console.info('onSuccessItem2', response);
                 //console.info('onSuccessItem3', status);
                 //console.info('onSuccessItem4', headers);
-
-
             };
             uploadReactions.onErrorItem = function (fileItem, response, status, headers) {
                 $scope.pathToReport = response.avatarFd;
@@ -290,8 +313,6 @@ angular.module('CatalogModule')
             };
             uploadReactions.onCompleteItem = function (fileItem, response, status, headers) {
                 ////console.info('onCompleteItem', fileItem, response, status, headers);
-
-
                 if (status == 200) {
                     fileItem.pathToReport = '/images/foto/' + response.avatarFd;
                     fileItem.goReport = response.goReport;
@@ -304,8 +325,6 @@ angular.module('CatalogModule')
                         $scope.refresh();
                         //location.reload()
                     }, 2000, 1);
-
-                    // fileItem.allEr = response.allEr;
                 }
                 switch (response.status) {
                     case 202:
@@ -316,7 +335,6 @@ angular.module('CatalogModule')
                         fileItem.goReport = response.goReport;
                         fileItem.statusOk = response.message;
                         fileItem.allEr = response.allEr;
-
                         break;
                 }
             };
@@ -392,8 +410,6 @@ angular.module('CatalogModule')
                 //console.info('onSuccessItem2', response);
                 //console.info('onSuccessItem3', status);
                 //console.info('onSuccessItem4', headers);
-
-
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {
                 $scope.pathToReport = response.avatarFd;
@@ -408,8 +424,6 @@ angular.module('CatalogModule')
             };
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                 ////console.info('onCompleteItem', fileItem, response, status, headers);
-
-
                 if (status == 200) {
                     fileItem.pathToReport = '/images/foto/' + response.avatarFd;
                     fileItem.goReport = response.goReport;
@@ -434,7 +448,6 @@ angular.module('CatalogModule')
                         fileItem.goReport = response.goReport;
                         fileItem.statusOk = response.message;
                         fileItem.allEr = response.allEr;
-
                         break;
                 }
             };
@@ -521,7 +534,9 @@ angular.module('CatalogModule')
                 item.decree = ( item.decree) ? new Date(moment(item.decree, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 return item;
             };
-            $scope.lengthWeightMin = 2200;
+
+
+            // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
 
 
             /**
@@ -534,14 +549,16 @@ angular.module('CatalogModule')
                 // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 if (!item.kennels) return toastr.error('Питомник не заполнен.', 'Ошибка!');
                 // if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
-                console.log('item.sires', item.sires);
+
                 // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
 
                 item = reversValue(item);
-                if (angular.isDefined(item.id)  &&   (angular.isDefined(item.symbol) || angular.isDefined(item.name)) ) {
+                if (item.id && ( item.symbol || item.name)) {
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
+
+                            console.log('UPDATE2');
                             $scope.refresh();
                         },
                         function (err) {
@@ -550,7 +567,7 @@ angular.module('CatalogModule')
                         }
                     );
                 } else {
-                    if (angular.isDefined(item)  &&   (angular.isDefined(item.symbol) || angular.isDefined(item.name)) ) {
+                    if (!item.id && (item.symbol || item.name)) {
                         // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
                         item.password = info.passDefault;
                         item.$save(item, function (success) {
@@ -559,6 +576,7 @@ angular.module('CatalogModule')
                                 toastr.success(info.newOk);
                                 // /admin/catalog/
                                 //$location.path('/profile') ;
+                                console.log('SAVE - create');
                                 $state.go('home.admin.catalog', {catalogId: success.id});
                             },
                             function (err) {

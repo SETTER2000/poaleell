@@ -28,10 +28,10 @@ module.exports = {
             // maxLength: 20
         },
         name: {
-            type: 'string'
+            type: 'string',
             // required: true,
-            // minLength: 2,
-            // maxLength: 40
+            minLength: 2,
+            maxLength: 70
         },
         gender: {
             type: 'string',
@@ -120,9 +120,7 @@ module.exports = {
             maxLength: 10
         },
         symbol: {
-            type: 'string',
-            maxLength: 1,
-            required: true
+            type: 'string'
         },
         titles: {
             collection: 'title',

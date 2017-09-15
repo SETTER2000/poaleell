@@ -1,20 +1,14 @@
-<!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
-
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
             <p ng-if="item.name || item.symbol" ng-class="{'fired':item.fired}">
-                 <span ng-if="item.name">{{item.getFullName()}}</span>
-
+                <span ng-if="item.name">{{item.getFullName()}}</span>
                 <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}}
                   <span class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
                         ng-mouseleave="symbolNick=false"></span>
                 <small ng-if="symbolNick">(имя не придумано, пока есть только литера)
                 </small>
                 </span>
-
-
-
                 <span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
             </p>
             <p ng-if="!item.name && !item.symbol">{{newObjectName}}</p>
@@ -26,7 +20,6 @@
                 {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
-
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span> Сохранить
                 </button>
@@ -44,8 +37,8 @@
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
                     <span ng-switch-default>
-        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
-        </span>
+                        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                    </span>
                 </ng-switch>
             </li>
         </ul>
@@ -62,112 +55,43 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form name="userForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
+                    <form name="myForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
+
+
+                        <!-- A C T I O N -->
                         <div class="form-group">
                             <div ng-if="(me.kadr)" class="checkbox">
                                 <label>
                                     <input type="checkbox" ng-model="item.action">Активность
-                                </label>
-                            </div>
-
-
-                            <!--S Y M B O L -->
-
-                            <div class="form-group">
-                                <label class="control-label">
-                                    Буква помёта
-                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
-                                          ng-mouseleave="symbolNick=false"></span>
-                                    <small ng-if="symbolNick">( обязательное поле к заполнению )
+                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="actionNick=true"
+                                          ng-mouseleave="actionNick=false"></span>
+                                    <small ng-if="actionNick">(видимость собаки на сайте и использования её в других
+                                        модулях)
                                     </small>
                                 </label>
-                                <div class="form-group form-inline">
-                                <select class="form-control" name="symbol"  ng-model="item.symbol">
-                                    <option value=""></option>
-                                    <option value="A">
-                                        A
-                                    </option>
-                                    <option value="B">
-                                        B
-                                    </option>
-                                    <option value="C">
-                                       C
-                                    </option>
-                                    <option value="D">
-                                       D
-                                    </option>
-                                    <option value="E">
-                                       E
-                                    </option>
-                                    <option value="F">
-                                        F
-                                    </option>
-                                    <option value="G">
-                                        G
-                                    </option>
-                                    <option value="H">
-                                        H
-                                    </option>
-                                    <option value="I">
-                                        I
-                                    </option>
-                                    <option value="J">
-                                        J
-                                    </option>
-                                    <option value="K">
-                                       K
-                                    </option>
-                                    <option value="L">
-                                        L
-                                    </option>
-                                    <option value="M">
-                                        M
-                                    </option>
-                                    <option value="N">
-                                        N
-                                    </option>
-                                    <option value="O">
-                                       O
-                                    </option>
-                                    <option value="P">
-                                       P
-                                    </option>
-                                    <option value="Q">
-                                        Q
-                                    </option>
-                                    <option value="R">
-                                      R
-                                    </option>
-                                    <option value="S">
-                                       S
-                                    </option>
-                                    <option value="T">
-                                        T
-                                    </option>
-                                    <option value="U">
-                                       U
-                                    </option>
-                                    <option value="V">
-                                       V
-                                    </option>
-                                    <option value="W">
-                                       W
-                                    </option>
-                                    <option value="X">
-                                       X
-                                    </option>
-                                    <option value="Y">
-                                       Y
-                                    </option>
-                                    <option value="Z">
-                                        Z
-                                    </option>
-                                </select>
                             </div>
+                        </div>
+
+                        <!--S Y M B O L -->
+
+                        <div class="form-group">
+                            <label for="symbol" class="control-label">
+                                Буква помёта
+                                <span ng-show="myForm.symbol.$error.unknownValue"
+                                      class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
+                                      ng-mouseleave="symbolNick=false"></span>
+                                <small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)</small>
+                            </label>
+                            <div class="form-group form-inline">
+                                <custom-select class="form-control" name="symbol" ng-model="item.symbol"
+                                               options="optionsSelectSymbol"></custom-select>
                             </div>
+                        </div>
 
-                            <!--N A M E-->
 
+                        <!--N A M E-->
+
+                        <div class="form-group">
                             <label class="control-label" for="inputSuccess1">
                                 Имя
                                 <span class="glyphicon glyphicon-question-sign" ng-mouseover="show=true"
@@ -180,7 +104,6 @@
                                    ng-model="item.name">
                             <input ng-if="edit" autofocus minlength="2" maxlength="40" type="text" class="form-control"
                                    ng-model="item.name">
-                            <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
 
@@ -206,6 +129,7 @@
                             </div>
                         </div>
 
+
                         <!-- N I C K N A M E -->
 
                         <div class="form-group">
@@ -219,6 +143,7 @@
                                    ng-model="item.nickname">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
 
                         <!--< S I R E S -->
 
@@ -283,6 +208,9 @@
                             </div>
                         </div>
 
+
+                        <!-- G E N D E R -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 Пол
@@ -290,13 +218,12 @@
                                       ng-mouseleave="genderNick=false"></span>
                                 <small ng-if="genderNick">(какого рода собака: сука-female | кобель-male)</small>
                             </label>
-                            <select class="form-control" name="gender" id="gender" ng-model="item.gender">
-                                <option value=""></option>
-                                <option value="сука">сука</option>
-                                <option value="кобель">кобель</option>
-                            </select>
-                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                            <custom-select class="form-control" name="gender" ng-model="item.gender"
+                                           options="optionsSelectGender"></custom-select>
                         </div>
+
+
+                        <!-- W E I G H T -->
 
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
@@ -309,7 +236,6 @@
                                    ng-model="item.weight">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-
 
 
                         <!-- G R O W T H -->
@@ -326,6 +252,9 @@
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
+
+                        <!-- V A R I E T Y -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 Тип
@@ -333,7 +262,6 @@
                                       ng-mouseleave="varietyNick=false"></span>
                                 <small ng-if="varietyNick">(варианты: голая-hairless | пух-powderpuff)</small>
                             </label>
-
                             <select class="form-control" name="variety" id="variety" ng-model="item.variety">
                                 <option value=""></option>
                                 <option value="пух">пух</option>
@@ -424,6 +352,7 @@
 
 
                         <!--< B R E E D E R -->
+
                         <div ng-controller="ListController" class="form-group ">
                             <label class="control-label">Заводчик</label>
                             <span>[ <a href="#" ng-click="addBreederField()">добавить</a> ]</span>
@@ -446,6 +375,7 @@
 
 
                         <!--< O W N E R  -->
+
                         <div ng-controller="ListController" class="form-group ">
                             <label class="control-label"> Владелец </label>
                             <span>[ <a href="#" ng-click="addOwnerField()">добавить</a> ]</span>
@@ -472,6 +402,7 @@
 
 
                         <!--< N E W  T I T L E S -->
+
                         <div ng-controller="ListTitleController" class="form-group ">
                             <label class="control-label" ng-bind="items[0].sc()"></label>
                             <span>[ <a href="#" ng-click="addItem()">добавить</a> ]</span>
@@ -495,7 +426,6 @@
                                             </div>
                                             <span ng-click="getTitle(title)"
                                                   class="glyphicon glyphicon-camera" role="button"></span>
-
                                         </label>
                                     </div>
                                 </div>
@@ -512,6 +442,7 @@
 
 
                         <!--< N E W  T E S T S / R E A C T I O N S -->
+
                         <div ng-controller="ListReactionController" class="form-group ">
                             <label class="control-label" ng-bind="items[0].sc()"></label>
                             <span>[ <a href="#" ng-click="addReaction()">добавить</a> ]</span>
@@ -528,16 +459,13 @@
                                     <div class="file-upload ">
                                         <label class="text-left">
                                             <input type="file" nv-file-select="" uploader="uploadReactions" multiple/>
-
                                             <div class="form-inline"
                                                  ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
                                                 <img ng-click="getReaction(reaction)" width="80"
                                                      ng-src="{{fot.photoUrl}}" alt="">
-
                                             </div>
                                             <span ng-click="getReaction(reaction)"
                                                   class="glyphicon glyphicon-camera" role="button"></span>
-
                                         </label>
                                     </div>
                                 </div>
@@ -552,6 +480,9 @@
                             </div>
                         </div>
 
+
+                        <!-- P E D I G R E E -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 № Pedigree
@@ -563,6 +494,8 @@
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
+                        <!-- R K F -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 № РКФ
@@ -573,6 +506,10 @@
                             <input type="text" class="form-control" ng-model="item.rkf">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+
+                        <!-- P L L -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 PLL
@@ -580,21 +517,13 @@
                                 <!--ng-mouseleave="pllNick=false"></span>-->
                                 <!--<small ng-if="pllNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
-
-                            <select class="form-control" name="pll" id="pll" ng-model="item.pll">
-                                <option value=""></option>
-                                <option value="Чистый">
-                                    Чистый
-                                </option>
-                                <option value="Носитель">
-                                    Носитель
-                                </option>
-                                <option value="Болеет">
-                                    Болеет
-                                </option>
-                            </select>
+                            <custom-select class="form-control" name="pll" ng-model="item.pll"
+                                           options="optionsSelectPll"></custom-select>
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+                        <!-- P R A -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 PRA
@@ -602,21 +531,15 @@
                                 <!--ng-mouseleave="praNick=false"></span>-->
                                 <!--<small ng-if="praNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
+                            <custom-select class="form-control" name="pra" ng-model="item.pra"
+                                           options="optionsSelectPll"></custom-select>
 
-                            <select class="form-control" name="pra" id="pra" ng-model="item.pra">
-                                <option value=""></option>
-                                <option value="Чистый">
-                                    Чистый
-                                </option>
-                                <option value="Носитель">
-                                    Носитель
-                                </option>
-                                <option value="Болеет">
-                                    Болеет
-                                </option>
-                            </select>
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+
+                        <!-- D M -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 DM
@@ -624,21 +547,12 @@
                                 <!--ng-mouseleave="dmNick=false"></span>-->
                                 <!--<small ng-if="dmNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
-
-                            <select class="form-control" name="dm" id="dm" ng-model="item.dm">
-                                <option value=""></option>
-                                <option value="Чистый">
-                                    Чистый
-                                </option>
-                                <option value="Носитель">
-                                    Носитель
-                                </option>
-                                <option value="Болеет">
-                                    Болеет
-                                </option>
-                            </select>
-                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                            <custom-select class="form-control" name="dm" ng-model="item.dm"
+                                           options="optionsSelectPll"></custom-select>
                         </div>
+
+                        <!-- S T A M P -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 Клеймо
@@ -649,6 +563,10 @@
                             <input type="text" class="form-control" ng-model="item.stamp">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+
+                        <!-- C H I P -->
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
                                 Чип
@@ -659,6 +577,9 @@
                             <input type="text" class="form-control" ng-model="item.chip">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+
+                        <!-- D E A T H -->
 
                         <div class="form-group">
                             <label class="control-label">
@@ -676,6 +597,9 @@
                             </div>
                         </div>
 
+
+                        <!-- R E G I S T R A T I O N  O N  S Y S T E M -->
+
                         <div ng-if="(me.admin)" class="row" ng-if="item.id">
                             <div class="col-md-5">
                                 <div class="form-group ">
@@ -692,6 +616,10 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <!-- L A S T  U P D A T E -->
+
                             <div class="col-md-7">
                                 <div class="form-group ">
                                     <div class="form-group " ng-if="item.updatedAt">
@@ -708,9 +636,11 @@
                         </div>
 
 
+                        <!-- C O N T R O L  B U T T O N S -->
+
                         <div class="form-group">
                             <!--<div class="form-group" style=" position: fixed;margin-left: 50px; margin-bottom: 70px; bottom:0; left:0;">-->
-                            <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid"
+                            <button ng-show="!edit" type="submit" ng-disabled="myForm.$invalid"
                                     class="btn btn-md btn-success">
                                 <span class="glyphicon glyphicon-user"></span>
                                 Сохранить
@@ -745,19 +675,26 @@
             </div>
 
         </div>
-        <div class="col-md-6" >
+
+
+        <!--A V A T A R -->
+
+        <div class="col-md-6">
             <div ng-switch on="modeSelect.value">
                 <div ng-switch-when="uploader">
                     <ng-include src="uploaderView"></ng-include>
                 </div>
             </div>
 
+
+            <!-- I N F O  P A N E L -->
+
             <div ng-show="me.admin" ng-if="close">
                 <div class="panel"
                      ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Информация
-
+                        <h3 class="panel-title">
+                            Информация
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -771,14 +708,9 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 
