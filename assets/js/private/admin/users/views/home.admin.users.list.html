@@ -84,25 +84,13 @@
                 </ul>
             </div>
         </th>
-        <!--<th>-->
-            <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">Отработанное время-->
-<!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
-      <!--ng-class="{reverse: reverse}"></span>-->
-            <!--</button>-->
-
-        <!--</th>-->
-        <!--<th></th>-->
-        <!--<th></th>-->
     </tr>
-    <!--| firstChar:param:charText-->
-    <!--ng-class="$even ? 'default' : 'success'"-->
-    <!--<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>-->
     <tr ng-repeat="item in filtered=(items | filter:{$:searchText, fired:true} |
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
-
         <td>{{$index+1}}</td>
-        <td><img class="photo" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false" ng-src="{{item.avatarUrl}}" alt=""></td>
-        <!--<td><a href='#' ng-click="getLastName(item)">{{item.getFullName()}}</a></td>-->
+        <td>
+            <img class="photo" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false" ng-src="{{item.avatarUrl}}" alt="">
+        </td>
         <td>
             <a href="{{item.getEditUrl(item.id)}}">
             {{item.getFullName()}}

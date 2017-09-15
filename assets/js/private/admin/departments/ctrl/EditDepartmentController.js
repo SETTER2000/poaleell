@@ -1,27 +1,68 @@
 angular.module('DepartmentModule')
-    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'Departments', '$stateParams', 'CONF_MODULE_DEPARTMENT',
-        function ($scope, $http,toastr, $state, Departments, $stateParams) {
+    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state','moment', 'Departments', '$stateParams', 'CONF_MODULE_DEPARTMENT',
+        function ($scope, $http,toastr, $state,moment, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.edit = $state.includes('home.admin.departments.edit');
             //if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
 
+            moment.locale('ru');
+            var info = {
+                changed: 'Изменения сохранены!',
+                passChange: 'Пароль обновлён!',
+                error: 'Ошибка!',
+                requiredJpg: 'Расширение файла должно быть jpg.',
+                isSimilar: 'Есть похожий: ',
+                ok: 'OK!',
+                objectDelete: 'Объект удалён.',
+                newOk: 'Объект создан.',
+                passDefault: '111111',
+                redirectSelf: 'home.admin.catalogs',
+                ru: 'ru',
+                dateFormat: "d.m.Y",
+                minDate: "01-01-1990",
+                maxDate: "31-12-2020",
 
-            //$http.get(`/getRootDepartment?id=${$stateParams.depId}`)
-            //    .then(function (res) {
-            //        console.log('res');
-            //        console.log(res.data);
-            //        $scope.items = res;
-            //    }).catch(function (reason) {
-            //});
+            };
+            let reversValue = function (item) {
+                item.dateCreate = ( item.dateCreate) ? new Date(moment(item.dateCreate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+
+                return item;
+            };
+            $scope.dateOpts = {
+                locale: info.ru,
+                //mode: "range",
+                dateFormat: info.dateFormat,
+                minDate: info.minDate,
+                maxDate: 'today'
+                //defaultDate: 'today'
+            };
+
+
+            $scope.removeDateCreate = function (item) {
+                item.dateCreate = null;
+                item = reversValue(item);
+                if (angular.isDefined(item.id)) {
+                    item.$update(item, function (success) {
+                            toastr.success(info.changed);
+                            $scope.refresh();
+                        },
+                        function (err) {
+                            //console.log('ERR: ', err);
+                            toastr.error(err.data.invalidAttributes, info.error + ' 7006!');
+                        });
+                }
+            };
 
 
             $scope.refresh = function () {
                 //if(!angular.isDefined($stateParams.depId)) return;
-                $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                let item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
 
                     $scope.departments = departments;
+                    item.getDateCreate();
+                    console.log('departments:', departments);
                 }, function (err) {
                     if (err) console.log(err.message);
                 });
@@ -42,14 +83,14 @@ angular.module('DepartmentModule')
                     //    if (err) console.log(err.message);
                     //});
 
-
+                    item = reversValue(item);
                     item.$update(item.id, function (success) {
                             console.log('UPDATE ITEM: ',item);
                             toastr.success('Данные обновлены!');
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err,'Ошибка 1 EditDepartmentController!');
+                            toastr.error(err.data,'Ошибка 1 EditDepartmentController!');
                         }
                     );
 

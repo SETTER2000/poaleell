@@ -225,6 +225,7 @@ module.exports.routes = {
 
     'GET /': 'PageController.showHomePage',
     'GET /profile': 'PageController.showHomePage',
+    'GET /about': 'PageController.showHomePage',
     'GET /administration': 'PageController.showAdminPage',
     'GET /signup': 'PageController.showSignupPage',
     'GET /profile/edit': 'PageController.showHomePage',

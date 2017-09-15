@@ -18,7 +18,7 @@ angular.module('UserModule')
                 redirectSelf:'home.admin.users',
                 ru:'ru',
                 dateFormat:"d.m.Y",
-                minDate:"01-01-1950",
+                minDate:"01-01-1920",
                 maxDate:"31-12-2002"
             };
 
@@ -436,22 +436,35 @@ angular.module('UserModule')
                 }
             };
 
-            $scope.addSubdivision = function () {
-                if (angular.isArray($scope.item.subdivision)) {
-                    $scope.item.subdivision.push({});
+            $scope.addDepartment = function () {
+                if (angular.isArray($scope.item.departments)) {
+                    $scope.item.departments.push({});
                 } else {
-                    $scope.item.subdivision = [{}];
+                    $scope.item.departments = [{}];
                 }
             };
 
-            $scope.removeSubdivision = function (department) {
-                for (let i = 0, ii = $scope.item.subdivision.length; i < ii; i++) {
-                    if ($scope.item.subdivision[i].id === department.id) {
-                        $scope.item.subdivision.splice(i, 1);
+            // $scope.removeSubdivision = function (department) {
+            //     for (let i = 0, ii = $scope.item.departments.length; i < ii; i++) {
+            //         if ($scope.item.departments[i].id === department.id) {
+            //             $scope.item.departments.splice(i, 1);
+            //             return;
+            //         }
+            //     }
+            // };
+
+            $scope.removeDepartment = function (department) {
+                $scope.item.departmentRemove = [];
+                if (!department.id) $scope.item.departments = [];
+                for (let i = 0, ii = $scope.item.departments.length; i < ii; i++) {
+                    if ($scope.item.departments[i].id === department.id) {
+                        $scope.item.departments.splice(i, 1);
+                        $scope.item.departmentRemove.push(department.id);
                         return;
                     }
                 }
             };
+
 
             $scope.removeBirthday = function (item) {
                 item.birthday = null;

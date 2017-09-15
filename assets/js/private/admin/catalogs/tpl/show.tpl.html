@@ -1,6 +1,17 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
-        <h2>{{item.getFullName()}}
+        <h2>
+            <span ng-if="item.name">
+                        {{item.getFullName()}}
+                        </span>
+
+            <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}}
+                  <span class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
+                        ng-mouseleave="symbolNick=false"></span>
+                <small ng-if="symbolNick">(имя не придумано, пока есть только литера)
+                </small>
+                </span>
+
             <div class="btn-group-xs pull-right">
                 <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
@@ -14,7 +25,7 @@
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
-        <span ng-switch-default>
+                    <span ng-switch-default>
         <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
         </span>
                 </ng-switch>
@@ -25,101 +36,235 @@
         <div class="col-md-5">
             <div class="row placeholders">
                 <div class="placeholder">
-                    <img class="avatarImage" width="200" ng-src="{{item.avatarUrl}}">
+                    <a ng-href="/admin/catalogs">
+                        <img ng-if="item.avatarUrl" width="450" ng-src="{{item.avatarUrl}}">
+                        <img ng-if="!item.avatarUrl" src="http://placehold.it/488x730">
+                    </a>
                 </div>
             </div>
         </div>
+        <!--<div class="col-md-5">-->
+        <!--<div class="row placeholders">-->
+        <!--<div class="placeholder">-->
+        <!--<a href="/admin/catalogs">-->
+        <!--<img class="avatarImage" width="200" ng-src="{{item.avatarUrl}}">-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class=" col-md-6 col-md-offset-1">
+            <h5 class="text-center"> ТИТУЛЫ: </h5>
+            <ol class="breadcrumb text-center">
+                <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">
+                    <a href="/admin/title/{{item.id}}">
+                        <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
+                    </a>
+                </li>
+            </ol>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">
+                            Заводчик:
+                        </li>
+                        <li class="list-group-item list-group-item-warning" ng-repeat="breeder in item.breeders">
+
+                            <a ng-href="/admin/user/{{breeder.id}}" class="text-right">
+                                <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
+                                     ng-mouseleave="vid=false"
+                                     ng-src="{{breeder.avatarUrl}}"
+                                     alt=""> </a>
+                            &nbsp; {{breeder.lastName}} {{breeder.firstName[0]}}. {{breeder.patronymicName[0]+'.'}}
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">
+                            Владелец:
+
+                        </li>
+                        <li class="list-group-item list-group-item-warning" ng-repeat="owner in item.owners">
+
+                            <a ng-href="/admin/user/{{owner.id}}">
+                                <img class="object-fit_cover " ng-class="{photoSize:vid}" ng-mouseover="vid=true"
+                                     ng-mouseleave="vid=false"
+                                     ng-src="{{owner.avatarUrl}}"
+                                     alt="">
+                            </a>
+                            &nbsp; {{owner.lastName}} {{owner.firstName[0]}}. {{owner.patronymicName[0]+'.'}}
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <table class="table">
-                <tr>
-                    <th>Класс</th>
-                    <td>!не определён!</td>
-                </tr> <tr>
+                <!--<tr>-->
+                <!--<th>Класс</th>-->
+                <!--<td></td>-->
+                <!--</tr>-->
+                <tr ng-if="item.getFullName()">
                     <th>Имя</th>
-                    <td>{{item.getFullName()}}</td>
+                    <td>
+                        <span ng-if="item.name">
+                        {{item.getFullName()}}
+                        </span>
+
+
+
+                </span> <span ng-if="!item.name">
+                         {{item.kennels[0].name}}   {{item.symbol }}<small> (имя не придумано, пока есть только литера)</small>
+                        </span>
+                    </td>
                 </tr>
-                <tr>
+                <tr ng-if="item.kennelName()">
                     <th>Питомник</th>
                     <td>{{item.kennelName()}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.nickname">
                     <th>Кличка</th>
                     <td>{{item.nickname}}</td>
                 </tr>
-                <tr>
-                    <th>Отец</th>
-                    <td>{{item.sires | json}}</td>
-                </tr>
-                <tr>
+                <tr ng-if="item.birthday">
                     <th>ДР</th>
                     <td>{{item.birthday | date:'dd.MM.yyyy'}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.gender">
                     <th>Пол</th>
                     <td>{{item.gender}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.weight">
                     <th>Вес гр</th>
                     <td>{{item.weight | currency:"":0}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.growth">
                     <th>Рост см</th>
                     <td>{{item.growth }}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.variety">
                     <th>Тип</th>
                     <td>{{item.variety }}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.color">
                     <th>Окрас</th>
                     <td>{{item.color}}</td>
                 </tr>
-                <tr>
-                    <th>Заводчик</th>
-                    <td>{{item.breeder}}</td>
-                </tr>
-                <tr>
-                    <th>Владелец</th>
-                    <td>{{item.owner}}</td>
-                </tr>
-                <tr>
+                <tr ng-if="item.pedigree">
                     <th>№ Pedigree</th>
                     <td>{{item.pedigree}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.rkf">
                     <th>№ РКФ</th>
                     <td>{{item.rkf}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.pll">
                     <th>PLL</th>
                     <td>{{item.pll}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.pra">
                     <th>PRA</th>
                     <td>{{item.pra}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.dm">
                     <th>DM</th>
                     <td>{{item.dm}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.stamp">
                     <th>Клеймо</th>
                     <td>{{item.stamp}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.chip">
                     <th>Чип</th>
                     <td>{{item.chip}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="item.death">
                     <th>Дата смерти</th>
                     <td>{{item.death | date:'dd.MM.yyyy'}}</td>
                 </tr>
                 <tr>
-                    <th colspan="20"></th>
+                    <th colspan="20">
+
+                        <div class="row">
+                            <div ng-if="item.sires.avatarUrl" class="col-sm-8 col-md-6">
+                                <h4><i class="fa fa-mars" aria-hidden="true"></i>
+                                    Отец {{item.sires.name }} (sire)</h4>
+                                <div class="thumbnail">
+                                    <a href="/admin/catalog/{{item.sires.id}}">
+                                        <img ng-src="{{item.sires.avatarUrl}}" alt="...">
+                                    </a>
+                                    <div class="caption">
+
+                                        <p>
+                                            <small>ДР: {{item.sires.birthday | date: "dd.MM.yyyy"}}
+                                                <br>Рост (см): {{item.sires.growth}}
+                                                <br>Вес (гр): {{item.sires.weight}}
+                                            </small>
+                                        </p>
+                                        <!--<p>{{item.sires | json}}</p>-->
+                                        <p class="text-center">
+                                            <a href="/admin/catalog/{{item.sires.id}}" class="btn btn-primary btn-sm"
+                                               role="button">
+                                                Родословная
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="item.dams.avatarUrl" class="col-sm-8 col-md-6">
+                                <h4><i class="fa fa-venus" aria-hidden="true"></i>
+                                    Мать {{item.dams.name }} (dam)</h4>
+                                <div class="thumbnail">
+                                    <a href="/admin/catalog/{{item.dams.id}}">
+                                        <img ng-src="{{item.dams.avatarUrl}}" alt="...">
+                                    </a>
+                                    <div class="caption">
+                                        <p>
+                                            <small>ДР: {{item.dams.birthday | date: "dd.MM.yyyy"}}
+                                                <br>Рост (см): {{item.dams.growth}}
+                                                <br>Вес (гр): {{item.dams.weight}}
+                                            </small>
+                                        </p>
+                                        <p class="text-center">
+                                            <a href="/admin/catalog/{{item.dams.id}}" class="btn btn-sm btn-primary"
+                                               role="button">
+                                                Родословная
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="row">-->
+                        <!--<div class="col-xs-6 col-md-3">-->
+                        <!--<a href="#" class="thumbnail">-->
+                        <!--<img ng-src="{{item.sires.avatarUrl}}" alt="...">-->
+                        <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-6 col-md-3">-->
+                        <!--<a href="#" class="thumbnail">-->
+                        <!--<img ng-src="{{item.dams.avatarUrl}}" alt="...">-->
+                        <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-6 col-md-3">-->
+                        <!--<a href="#" class="thumbnail">-->
+                        <!--&lt;!&ndash;<img ng-src="{{item.sires.avatarUrl}}" alt="...">&ndash;&gt;-->
+                        <!--<img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"-->
+                        <!--ng-mouseleave="vid=false"-->
+                        <!--ng-src="{{item.sires.avatarUrl}}"-->
+                        <!--alt="">-->
+                        <!--</a>-->
+                        <!--</div>-->
+                        <!--...-->
+                        <!--</div>-->
+                    </th>
                 </tr>
 
             </table>
         </div>
+
     </div>
+</div>
 </div>
 

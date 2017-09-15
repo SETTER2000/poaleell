@@ -139,13 +139,16 @@ module.exports = {
             nickname: req.param('nickname'),
             kennels: req.param('kennels'),
             sires: req.param('sires'),
+            dams: req.param('dams'),
             gender: req.param('gender'),
             weight: req.param('weight'),
             growth: req.param('growth'),
             variety: req.param('variety'),
             color: req.param('color'),
-            breeder: req.param('breeder'),
-            owner: req.param('owner'),
+            breeders: req.param('breeders'),
+            owners: req.param('owners'),
+            reactions: req.param('reactions'),
+            titles: req.param('titles'),
             death: req.param('death'),
             pedigree: req.param('pedigree'),
             rkf: req.param('rkf'),
@@ -154,6 +157,7 @@ module.exports = {
             dm: req.param('dm'),
             chip: req.param('chip'),
             stamp: req.param('stamp'),
+            symbol: req.param('symbol'),
         };
 
         Catalog.create(obj).exec(function (err, finn) {
@@ -224,13 +228,12 @@ module.exports = {
         var obj = {
             id: req.param('id'),
             action: req.param('action'),
-            section: 'Раздел',
-            sections: 'Разделы',
+            section: 'Каталог',
+            sections: 'Каталоги',
             name: req.param('name'),
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
             nickname: req.param('nickname'),
-            // kennel: req.param('kennel'),
             gender: req.param('gender'),
             weight: req.param('weight'),
             growth: req.param('growth'),
@@ -250,12 +253,13 @@ module.exports = {
             breeders: req.param('breeders'),
             owners: req.param('owners'),
             sires: req.param('sires'),
-            dams: req.param('dams')
+            dams: req.param('dams'),
+            symbol: req.param('symbol')
         };
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.redirect('/admin/catalogs/edit/' + req.param('id'));
-            // console.log('Каталог обновил:', req.session.me);
-            // console.log('Собака обновление:', obj);
+            console.log('Каталог обновил:', req.session.me);
+            console.log('Собака обновление:', obj);
          
             console.log('req.body: ', req.body);
             Catalog.findOne(req.param('id'))
@@ -349,8 +353,9 @@ module.exports = {
      */
     upload: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        let path = '/images/catalog/dogs';
         //console.log('formData: ', req.body);
-        const dir = require('util').format('%s/images/catalog/dogs/%s', sails.config.appUrl.rootDir, req.body.id);
+        const dir = require('util').format('%s'+path+'/%s', sails.config.appUrl.rootDir, req.body.id);
         let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
         console.log('fileName', fileName);
         console.log('dir', dir);
@@ -365,7 +370,7 @@ module.exports = {
                 if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
 
                 Catalog.update(req.body.id, {
-                    avatarUrl: require('util').format('/images/catalog/dogs/%s/%s', req.body.id, fileName),
+                    avatarUrl: require('util').format(path+'/%s/%s', req.body.id, fileName),
                     avatarFd: files[0].fd,
                     fileNameAvatar: fileName
                 })

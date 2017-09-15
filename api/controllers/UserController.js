@@ -550,7 +550,11 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'))
             .populate('positions')
+            .populate('subdivision')
+            .populate('departments')
             .populate('furloughs')
+            .populate('breederCatalogs')
+            .populate('catalogs')
             .exec(function foundUser(err, user) {
                 if (err) return res.serverError(err);
                 if (!user) return res.notFound();
@@ -569,6 +573,9 @@ module.exports = {
             User.findOne(req.param('id'))
                 .populate('positions')
                 .populate('furloughs')
+                .populate('departments')
+                .populate('breederCatalogs')
+                .populate('catalogs')
                 .exec(function foundUser(err, user) {
                     if (err) return res.serverError(err);
                     if (!user) return res.notFound();
@@ -587,6 +594,8 @@ module.exports = {
                 User.find(q)
                     .populate('positions')
                     .populate('furloughs')
+                    .populate('breederCatalogs')
+                    .populate('catalogs')
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
                         if (!users) return res.notFound();
@@ -613,7 +622,11 @@ module.exports = {
      */
     show: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        User.findOne(req.param('id'), function foundUser(err, user) {
+        User.findOne(req.param('id'))
+            .populate('departments')
+            .populate('breederCatalogs')
+            .populate('catalogs')
+            .exec(function foundUser(err, user) {
             if (err) return next(err);
             if (!user) return next();
 
@@ -658,7 +671,7 @@ module.exports = {
             firstName: req.param('firstName'),
             lastName: req.param('lastName'),
             patronymicName: req.param('patronymicName'),
-            subdivision: req.param('subdivision'),
+            departments: req.param('departments'),
             birthday: req.param('birthday'),
             fired: req.param('fired'),
             dateInWork: req.param('dateInWork'),
@@ -682,12 +695,14 @@ module.exports = {
             User.findOne(req.param('id'))
                 .populate('positions')
                 .populate('furloughs')
+                .populate('departments')
                 .exec(function (err, user) {
                     if (err) return res.negotiate(err);
                     if (!user) return res.notFound('Не могу');
 
                     // console.log('positionRemove:', req.param('positionRemove'));
                     user.positions.add(req.param('positions'));
+                    user.departments.add(req.param('departments'));
                     user.furloughs.add(req.param('furloughs'));
 
                     // if (_.isEmpty(req.param('position'))) {
@@ -698,6 +713,9 @@ module.exports = {
                     }
                     if (req.param('furloughRemove')) {
                         user.furloughs.remove(req.param('furloughRemove'));
+                    }
+                    if (req.param('departmentRemove')) {
+                        user.departments.remove(req.param('departmentRemove'));
                     }
                     user.save(function (err) {
                         if (err) return res.negotiate('ERR: ' + err);

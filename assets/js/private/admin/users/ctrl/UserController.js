@@ -15,6 +15,7 @@ angular.module('UserModule')
             $scope.fieldName = 'Мобильный';
             $scope.refresh = function () {
                 $scope.item = Users.get({id: $stateParams.userId}, function (users) {
+                    console.log('users SHOW: ', users);
                     $scope.users = users;
                 }, function (err) {
                     toastr.error(err.data.details, 'Ошибка - 889! ' + err.data.message);

@@ -6,11 +6,12 @@ body{
 #headerwrap{
     background-image: none;
 }
-.navbar{
+.navbar.custom{
     background-image: url('../images/design/four_page_01.jpg');
     background-position: center top;
     background-repeat: no-repeat;
-    padding: 60px 0 40px;
+    padding-top: 10px;
+    /*padding: 60px 0 40px;*/
     background-size: cover;
 }
 

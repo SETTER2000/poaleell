@@ -99,7 +99,18 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
         Departments.prototype.deactivation = function () {
             return  ' - деактивирован';
         };
-
+        Departments.prototype.getDateCreate = function () {
+            if (this.dateCreate) {
+                var tm;
+                tm = new Date(this.dateCreate);
+                //console.log('TMMM: ', tm);
+                var month = ((+tm.getMonth() + 1) < 10) ? '0' + (+tm.getMonth() + 1) : (+tm.getMonth() + 1);
+                var date = (+tm.getDate() < 10) ? '0' + tm.getDate() : tm.getDate();
+                //console.log('day: ', tm.getUTCDate());
+                tm = date + '.' + month + '.' + tm.getFullYear();
+                this.dateCreate = tm;
+            }
+        };
         return Departments;
     })
 ;

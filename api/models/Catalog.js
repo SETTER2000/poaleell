@@ -119,7 +119,11 @@ module.exports = {
             type: 'string',
             maxLength: 10
         },
-
+        symbol: {
+            type: 'string',
+            maxLength: 1,
+            required: true
+        },
         titles: {
             collection: 'title',
             via: 'catalogs'
@@ -138,7 +142,7 @@ module.exports = {
             collection: 'user',
             via: 'catalogs'
         },
-        
+
         sires: {
             model: 'catalog'
         },
@@ -153,6 +157,10 @@ module.exports = {
         reactions: {
             collection: 'reaction',
             via: 'catalogs'
+        },
+        getFullName: function () {
+            return 'XXXX-NAME';
+            // return this.kennels[0].name + this.name ;
         }
 
     }

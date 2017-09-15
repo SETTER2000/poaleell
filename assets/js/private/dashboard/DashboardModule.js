@@ -42,6 +42,16 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                     }
                 }
             })
+            .state('home.about', {
+                url: 'about',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/dashboard/tpl/about.html',
+                        controller: 'AboutController'
+                    }
+                }
+
+            })
             // .state('home.profile.restore', {
             //     url: 'restore',
             //     views: {

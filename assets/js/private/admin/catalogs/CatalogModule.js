@@ -128,17 +128,55 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return yy + '-' + mm + '-' + dd;
         };
         Catalogs.prototype.kennelName = function () {
-            console.log('this.kennels',this.kennels);
-            if(this.kennels instanceof Array && this.kennels.length>0) return this.kennels[0].name ;
+            // console.log('this.kennels',this.kennels);
+            if (this.kennels instanceof Array && this.kennels.length > 0) return this.kennels[0].name;
             return 'неизвестен'
 
         };
-        Catalogs.prototype.getFullName = function () {
-            console.log('getFullName',this.kennels);
-            if( this.kennels instanceof Array && this.kennels.length > 0) return this.kennels[0].name + ' ' + this.name;
-            return this.name;
+
+        Catalogs.prototype.sireName = function () {
+            console.log('this.sires', this.sires);
+            // if(this.kennels instanceof Array && this.kennels.length>0) return this.kennels[0].name ;
+            return this.sires.kennelName() + ' ' + this.sires.name
+
         };
-        
+        Catalogs.prototype.getClasses = function () {
+            let arr = [];
+            let periods = [];
+            let current = moment();
+            let birthday = this.birthday;
+            periods.push({name: 'baby', step: 'months', start: 3, end: 6});
+            periods.push({name: 'puppy', step: 'months', start: 6, end: 9});
+            periods.push({name: 'junior', step: 'months', start: 9, end: 18});
+            periods.push({name: 'intermediate', step: 'months', start: 15, end: 24});
+            periods.push({name: 'open', step: 'months', start: 15, end: 200});
+            periods.push({name: 'winner', step: 'months', start: 15, end: 200});
+            periods.push({name: 'champion', step: 'months', start: 15, end: 200});
+            periods.push({name: 'nkp', step: 'months', start: 15, end: 200});
+            periods.push({name: 'veteran', step: 'years', start: 8, end: 20});
+
+            _.forEach(periods, function (value, key) {
+                let nStart = periods[key].name + 'Start';
+                let nEnd = periods[key].name + 'End';
+                periods[key][nStart] = moment(birthday, ["DD.MM.YYYY"]).add(periods[key].start, periods[key].step);
+                periods[key][nEnd] = moment(birthday, ["DD.MM.YYYY"]).add(periods[key].end, periods[key].step);
+                if (periods[key][nStart].diff(current) < 0 && periods[key][nEnd].diff(current) > 0) {
+                    arr.push(periods[key].name.toUpperCase());
+                }
+            });
+            return arr;
+        };
+
+        Catalogs.prototype.getFullName = function () {
+            if (this.kennels instanceof Array && (this.kennels.length > 0) ) {
+                return this.kennels[0].name + ' ' + this.name;
+            } else {
+                return this.name;
+            }
+
+
+        };
+
         Catalogs.prototype.getShortName = function () {
             return this.lastName + ' ' + this.firstName.substr(0, 1) + '.' + this.patronymicName.substr(0, 1) + '.';
         };
@@ -155,29 +193,29 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
 
-      
+
         Catalogs.prototype.breederName = function (int) {
-            var t = '';
+            let t = '';
             if (int) {
                 this.breeders.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName+', ';
+                    t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName + ', ';
                 });
             } else {
                 this.breeders.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0]+'., ' ;
+                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0] + '., ';
                 });
             }
             return t;
         };
         Catalogs.prototype.ownerName = function (int) {
-            var t = '';
+            let t = '';
             if (int) {
                 this.owners.forEach(function (item, i, arr) {
                     t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName + ', ';
                 });
             } else {
                 this.owners.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0]+'., ' ;
+                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0] + '., ';
                 });
             }
             return t;
@@ -243,43 +281,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             var t = this.formatDate(new Date());
             return t;
         };
-        Catalogs.prototype.getClasses = function () {
-            let arr = [];
-            let periods = [];
-            let current = moment();
-            let birthday = this.birthday;
-            periods.push({name: 'baby', step: 'months', start: 3, end: 6});
-            periods.push({name: 'puppy', step: 'months', start: 6, end: 9});
-            periods.push({name: 'junior', step: 'months', start: 9, end: 18});
-            periods.push({name: 'intermediate', step: 'months', start: 15, end: 24});
-            periods.push({name: 'open', step: 'months', start: 15, end: 200});
-            periods.push({name: 'winner', step: 'months', start: 15, end: 200});
-            periods.push({name: 'champion', step: 'months', start: 15, end: 200});
-            periods.push({name: 'nkp', step: 'months', start: 15, end: 200});
-            periods.push({name: 'veteran', step: 'years', start: 8, end: 20});
-            // console.log(periods);
 
-            _.forEach(periods, function (value, key) {
-                // console.log('this.birthday',birthday);
-                // console.log('periods[key].end[1]', periods[key].end[1]);
-                let nStart = periods[key].name + 'Start';
-                let nEnd = periods[key].name + 'End';
-                // console.log('XXXXXXXXX', moment(birthday, ["DD.MM.YYYY"]).add(periods[key].start, periods[key].step));
-                periods[key][nStart] = moment(birthday, ["DD.MM.YYYY"]).add(periods[key].start, periods[key].step);
-                periods[key][nEnd] = moment(birthday, ["DD.MM.YYYY"]).add(periods[key].end, periods[key].step);
-                // console.log('DIFF ' + periods[key].name + 'StartPeriod: ', periods[key][nStart].diff(current));
-                // console.log('DIFF ' + periods[key].name + ' EndPeriod: ', periods[key][nEnd].diff(current));
-                if (periods[key][nStart].diff(current) < 0 && periods[key][nEnd].diff(current) > 0) {
-                    // console.log('CLASSES: ', periods[key].name.toUpperCase());
-                    arr.push(periods[key].name.toUpperCase());
-                }
-            });
-            // console.log('V-periods', periods);
-            return arr;
-        };
-        Catalogs.prototype.getTitles = function () {
 
-        };
         Catalogs.prototype.periodWork = function () {
             var now = moment();
             var event = moment(this.dateInWork, ["DD.MM.YYYY"]);

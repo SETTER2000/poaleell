@@ -1,5 +1,5 @@
 <div ng-controller="navPageController" ng-cloak class="container-fluid" >
-    <nav class="navbar  navbar-fixed-top" ng-if="me">
+    <nav class="navbar custom navbar-fixed-top" ng-if="me">
         <div class="container">
             <div class="navbar-header">
                 <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle collapsed"
@@ -15,23 +15,23 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#"> О нас <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Кобели</a></li>
-                    <li><a href="#">Суки</a></li>
-                    <li><a href="#">Щенки</a></li>
+                    <li ng-class="{active:active('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
+                    <li ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
+
+
                     <li class="dropdown">
                         <a ng-if="(me.kadr || me.admin || me.leader)" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Справочники
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Пользователи</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Питомники</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.honors">Награды</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
-                            <li><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.reactions">Тесты</a></li>
-                            <li><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
+                            <li ng-class="{active:active('home.admin.catalogs')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
+                            <li ng-class="{active:active('home.admin.users')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Пользователи</a></li>
+                            <li ng-class="{active:active('home.admin.departments')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Питомники</a></li>
+                            <li ng-class="{active:active('home.admin.positions')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
+                            <li ng-class="{active:active('home.admin.honors')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.honors">Награды</a></li>
+                            <li ng-class="{active:active('home.admin.titles')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
+                            <li ng-class="{active:active('home.admin.reactions')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.reactions">Тесты</a></li>
+                            <li ng-class="{active:active('home.admin.administration')}"><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>
                 </ul>

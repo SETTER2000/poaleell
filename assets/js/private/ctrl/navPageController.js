@@ -1,5 +1,5 @@
 angular.module('Holiday').controller('navPageController',
-    ['$location', '$scope', '$http', 'toastr', function ($location, $scope, $http, toastr) {
+    ['$location', '$scope', '$http', '$state','toastr', function ($location, $scope, $http,$state, toastr) {
 
         $scope.signOut = function () {
             $http.post('/logout')
@@ -12,14 +12,25 @@ angular.module('Holiday').controller('navPageController',
                 .finally(function eitherWay() {
                 });
         };
+        $scope.active = function (str) {
+            return ($state.includes(str)) ? true : false;
 
+        };
         $scope.loginForm = {};
         $scope.me = window.SAILS_LOCALS.me;
-        for(var index in $scope.me.contacts){
-            if($scope.me.contacts[index].type === 'Внутренний телефон')   $scope.me.phoneInner=$scope.me.contacts[index].value;
+        for (var index in $scope.me.contacts) {
+            if ($scope.me.contacts[index].type === 'Внутренний телефон') $scope.me.phoneInner = $scope.me.contacts[index].value;
         }
 
-
+        $scope.u = [];
+        $scope.u.push({'url': "http://placehold.it/200x300"});
+        $scope.u.push({'url': "http://placehold.it/200x200"});
+        $scope.u.push({'url': "http://placehold.it/200x400"});
+        $scope.u.push({'url': "http://placehold.it/200x500"});
+        $scope.u.push({'url': "http://placehold.it/200x900"});
+        $scope.u.push({'url': "http://placehold.it/200x300"});
+        $scope.u.push({'url': "http://placehold.it/200x500"});
+        $scope.u.push({'url': "http://placehold.it/200x800"});
 
 
         $scope.submitLoginForm = function () {

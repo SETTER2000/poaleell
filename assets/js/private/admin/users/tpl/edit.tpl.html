@@ -146,15 +146,15 @@
 
                         <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" for="inputSuccess8" ng-bind="items[0].sc()"></label>
-                            [ <a href="#" ng-click="addSubdivision()">добавить</a> ]
-                            <div class="form-inline" ng-repeat="department in item.subdivision">
+                            [ <a href="#" ng-click="addDepartment()">добавить</a> ]
+                            <div class="form-inline" ng-repeat="department in item.departments">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="department.id">
                                         <option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">{{option.name}}
                                         </option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-default" ng-click="removeSubdivision(department)">x</button>
+                                <button type="button" class="btn btn-default" ng-click="removeDepartment(department)">x</button>
                             </div>
                             <!--<pre id="default-spacing">{{items | json}}</pre>-->
                             <!--<pre>D E P A R T M E N T S : {{items | limitTo:5 | json}}</pre>-->

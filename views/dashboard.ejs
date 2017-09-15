@@ -34,7 +34,9 @@
 <div class="container">
     <%- body %>
 </div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
 <%- partial('./partials/footer.ejs') %>
+</nav>
 <script type="text/javascript">
 
     window.SAILS_LOCALS = {
@@ -148,6 +150,7 @@
 <script src="/js/private/ctrl/navPageController.js"></script>
 <script src="/js/private/ctrl/signoutPageController.js"></script>
 <script src="/js/private/dashboard/account/ctrl/AccountController.js"></script>
+<script src="/js/private/dashboard/ctrl/AboutController.js"></script>
 <script src="/js/private/dashboard/ctrl/DashboardController.js"></script>
 <script src="/js/private/dashboard/ctrl/EditProfileController.js"></script>
 <script src="/js/private/dashboard/ctrl/ProfileController.js"></script>
@@ -161,9 +164,15 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
 <script src="/vendor/flatpickr/dist/l10n/ru.js"></script>
 
+<script src="http://malsup.github.io/min/jquery.cycle2.min.js"></script>
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover();
+
+          $('#slider').cycle({
+                fx:     'fade',
+                rev: 1,
+            });
     });
 </script>
 

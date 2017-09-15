@@ -126,7 +126,9 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         </td>
         <td>
             <a href="{{item.getEditUrl(item.id)}}">
-                {{item.getFullName()}}
+                <span ng-if="item.name">{{item.getFullName()}}</span>
+                <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}}
+                </span>
             </a>
         </td>
         <td>{{item.gender}}</td>
@@ -134,8 +136,8 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td class="text-center">{{item.growth}}</td>
         <td>{{item.variety}}</td>
         <td> {{item.color}}</td>
-        <td>{{item.breederName(1)}}</td>
-        <td>{{item.ownerName(1)}}
+        <td>{{item.breederName(0)}}</td>
+        <td>{{item.ownerName(0)}}
 
             <!--{{item.owners[0].lastName +' '+ item.owners[0].firstName[0]+'. '+ item.owners[0].patronymicName[0]+'.'}}-->
             <!--<span ng-if="item.owners[1]"> {{'/ '+item.owners[1].lastName +' '+ item.owners[1].firstName[0]+'. '+ item.owners[1].patronymicName[0]+'.'}} </span>-->

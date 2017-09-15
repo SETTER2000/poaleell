@@ -77,6 +77,8 @@ module.exports = {
     createDepartment: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
+
+
         if (!_.isString(req.param('name'))) {
             //sails.log(req.param('name'));
             //sails.log('is not string');
@@ -85,11 +87,14 @@ module.exports = {
         if (req.param('name').length < 2 || req.param('name').length > 200) {
             return res.badRequest('Наименование должно быть от 2 до 200 знаков!');
         }
+
+        console.log('createDepartmen222t', req.body);
         Department.create(req.body).exec(function (err, finn) {
             if (err) {
                 return res.serverError(err);
             }
             //sails.log('Идентификатор department:', finn.id);
+            console.log('Создан:', finn);
             return res.send({id: finn.id});
 
         });
@@ -118,7 +123,7 @@ module.exports = {
 
         //var c =  req.param('children');
         //console.log('NAME: ', req.param('name'));
-        //console.log('NAME2: ', c[0].id);
+        // console.log('NAME2: ', c[0].id);
         console.log('BODY: ', req.body);
 
 

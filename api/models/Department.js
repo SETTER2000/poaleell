@@ -33,6 +33,13 @@ module.exports = {
             type: 'string',
             defaultsTo: ''
         },
+        dateCreate: {
+            type: 'date'
+        },
+        registerNumber:{
+            type:'string'
+        },
+
         location: {
             type: 'string',
             defaultsTo: ''
@@ -58,10 +65,6 @@ module.exports = {
            via: 'kennels'
         },
  
-        //owner: {
-        //    collection: 'department',
-        //    via: 'subdivision'
-        //},
 
         // Добавить ссылку на пользователя
         users: {

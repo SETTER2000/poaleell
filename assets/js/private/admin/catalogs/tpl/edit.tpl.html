@@ -3,25 +3,38 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
-            <p ng-if="item.name" ng-class="{'fired':item.fired}">{{item.getFullName()}}
+            <p ng-if="item.name || item.symbol" ng-class="{'fired':item.fired}">
+                 <span ng-if="item.name">{{item.getFullName()}}</span>
+
+                <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}}
+                  <span class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
+                        ng-mouseleave="symbolNick=false"></span>
+                <small ng-if="symbolNick">(имя не придумано, пока есть только литера)
+                </small>
+                </span>
+
+
+
                 <span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
             </p>
-            <p ng-if="!item.name">{{newObjectName}}</p>
+            <p ng-if="!item.name && !item.symbol">{{newObjectName}}</p>
             <a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 Возраст: {{item.dateInWork | date:'dd.MM.yyyy' }} {{item.age()}}</a>
             <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
                title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
-            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен
+                {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
 
-                <button  ng-click="saveEdit(item)" type="button" class="btn btn-success">
+                <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span> Сохранить
                 </button>
                 <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span> Список
                 </a>
-                <button ng-show="me.admin" ng-if="!item.action && edit" ng-click="delete2(item)" class="btn btn-sm btn-danger">
+                <button ng-show="me.admin" ng-if="!item.action && edit" ng-click="delete2(item)"
+                        class="btn btn-sm btn-danger">
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
             </div>
@@ -30,7 +43,7 @@
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
-        <span ng-switch-default>
+                    <span ng-switch-default>
         <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
         </span>
                 </ng-switch>
@@ -43,7 +56,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать
                         <a href="#" ng-click="closed()" class="pull-right">
-                            <span class="glyphicon" ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
+                            <span class="glyphicon"
+                                  ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
                         </a>
                     </h3>
                 </div>
@@ -55,80 +69,144 @@
                                     <input type="checkbox" ng-model="item.action">Активность
                                 </label>
                             </div>
+
+
+                            <!--S Y M B O L -->
+
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Буква помёта
+                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
+                                          ng-mouseleave="symbolNick=false"></span>
+                                    <small ng-if="symbolNick">( обязательное поле к заполнению )
+                                    </small>
+                                </label>
+                                <div class="form-group form-inline">
+                                <select class="form-control" name="symbol"  ng-model="item.symbol">
+                                    <option value=""></option>
+                                    <option value="A">
+                                        A
+                                    </option>
+                                    <option value="B">
+                                        B
+                                    </option>
+                                    <option value="C">
+                                       C
+                                    </option>
+                                    <option value="D">
+                                       D
+                                    </option>
+                                    <option value="E">
+                                       E
+                                    </option>
+                                    <option value="F">
+                                        F
+                                    </option>
+                                    <option value="G">
+                                        G
+                                    </option>
+                                    <option value="H">
+                                        H
+                                    </option>
+                                    <option value="I">
+                                        I
+                                    </option>
+                                    <option value="J">
+                                        J
+                                    </option>
+                                    <option value="K">
+                                       K
+                                    </option>
+                                    <option value="L">
+                                        L
+                                    </option>
+                                    <option value="M">
+                                        M
+                                    </option>
+                                    <option value="N">
+                                        N
+                                    </option>
+                                    <option value="O">
+                                       O
+                                    </option>
+                                    <option value="P">
+                                       P
+                                    </option>
+                                    <option value="Q">
+                                        Q
+                                    </option>
+                                    <option value="R">
+                                      R
+                                    </option>
+                                    <option value="S">
+                                       S
+                                    </option>
+                                    <option value="T">
+                                        T
+                                    </option>
+                                    <option value="U">
+                                       U
+                                    </option>
+                                    <option value="V">
+                                       V
+                                    </option>
+                                    <option value="W">
+                                       W
+                                    </option>
+                                    <option value="X">
+                                       X
+                                    </option>
+                                    <option value="Y">
+                                       Y
+                                    </option>
+                                    <option value="Z">
+                                        Z
+                                    </option>
+                                </select>
+                            </div>
+                            </div>
+
+                            <!--N A M E-->
+
                             <label class="control-label" for="inputSuccess1">
                                 Имя
-                                <span class="glyphicon glyphicon-question-sign" ng-mouseover="show=true" ng-mouseleave="show=false"></span>
+                                <span class="glyphicon glyphicon-question-sign" ng-mouseover="show=true"
+                                      ng-mouseleave="show=false"></span>
                                 <small ng-if="show">( та часть имени, которая пишется после названия питомника)</small>
                             </label>
-                            <input ng-if="!edit" autofocus minlength="2" maxlength="40" ng-change="getLdap()"  type="text"
+                            <input ng-if="!edit" autofocus minlength="2" maxlength="40" ng-change="getLdap()"
+                                   type="text"
                                    class="form-control"
                                    ng-model="item.name">
-                            <input ng-if="edit" autofocus  minlength="2" maxlength="40" type="text" class="form-control"
+                            <input ng-if="edit" autofocus minlength="2" maxlength="40" type="text" class="form-control"
                                    ng-model="item.name">
                             <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
 
                         <!--< K E N N E L -->
+
                         <div ng-controller="ListDepartmentController" class="form-group ">
-                            <label class="control-label"  ng-bind="items[0].sc()"></label>
+                            <label class="control-label" ng-bind="items[0].sc()"></label>
                             <span>[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
                             <div class="form-inline" ng-repeat="kennels in item.kennels">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="kennels.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">
                                             {{option.name}}
                                         </option>
                                     </select>
                                     <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeKennelItem(kennels)"><span
+                                        <button type="button" class="btn btn-default "
+                                                ng-click="removeKennelItem(kennels)"><span
                                                 class="glyphicon glyphicon-remove"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!--< S I R E S (EDIT)-->
-                        <div ng-controller="ListCatalogController" ng-if="edit" class="form-group ">
-                            <label class="control-label" >Отец</label>
-                            <span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>
-                            <div class="form-inline" ng-repeat="sires in item.sires">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="sires.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
-                                            {{option.getFullName()}}
-                                        </option>
-                                    </select>
-                                    <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeSireItem(sires)"><span
-                                                class="glyphicon glyphicon-remove"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div ng-controller="ListCatalogController" ng-if="!edit" class="form-group ">
-                            <label class="control-label" >Отец</label>
-                            <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
-                            <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="item.sires">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
-                                            {{option.getFullName()}}
-                                        </option>
-                                    </select>
-                                    <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeSireItem(sires)"><span
-                                                class="glyphicon glyphicon-remove"></span></button>
-                                    </div>
-                                <!--</div>-->
-                            <!--</div>-->
-                        </div>
-
-<pre>sires: {{sires | json}}</pre>
-<pre>item: {{item | json}}</pre>
-
+                        <!-- N I C K N A M E -->
 
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">Кличка
@@ -137,9 +215,57 @@
                                       ng-mouseleave="showNick=false"></span>
                                 <small ng-if="showNick">(как называете дома, прозвище, ласковое имя)</small>
                             </label>
-                            <input type="text" class="form-control" minlength="2" maxlength="70"  ng-model="item.nickname">
+                            <input type="text" class="form-control" minlength="2" maxlength="70"
+                                   ng-model="item.nickname">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+                        <!--< S I R E S -->
+
+                        <div ng-controller="ListCatalogController" class="form-group ">
+                            <label class="control-label">Отец</label>
+                            <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
+                            <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
+                            <div class="form-group form-inline">
+                                <select class="form-control" ng-model="item.sires.id">
+                                    <option ng-repeat="option in items | filter:{action:true, gender:'кобель'}"
+                                            value="{{option.id}}">
+                                        {{option.getFullName()}}
+                                    </option>
+                                </select>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default "
+                                            ng-click="removeSireItem(sires)"><span
+                                            class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+
+
+                        <!--< D A M S -->
+
+                        <div ng-controller="ListCatalogController" class="form-group ">
+                            <label class="control-label">Мать</label>
+                            <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
+                            <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
+                            <div class="form-group form-inline">
+                                <select class="form-control" ng-model="item.dams.id">
+                                    <option ng-repeat="option in items | filter:{action:true, gender:'сука'}"
+                                            value="{{option.id}}">
+                                        {{option.getFullName()}}
+                                    </option>
+                                </select>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default " ng-click="removeSireItem(dams)"><span
+                                            class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+
+
+                        <!-- B I R T H D A Y -->
 
                         <div class="form-group">
                             <label class="control-label">
@@ -150,9 +276,9 @@
                                        fp-opts="dateOpts"
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.birthday">
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                               <!--<button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span-->
-                                <!--class="glyphicon glyphicon-remove"></span></button>-->
+                                    <!--class="glyphicon glyphicon-remove"></span></button>-->
                             </span>
                             </div>
                         </div>
@@ -179,9 +305,14 @@
                                       ng-mouseleave="weightNick=false"></span>
                                 <small ng-if="weightNick">(граммы 4300)</small>
                             </label>
-                            <input type="number" class="form-control" min="{{lengthWeightMin}}" max="9999"  ng-model="item.weight">
+                            <input type="number" class="form-control" min="{{lengthWeightMin}}" max="9999"
+                                   ng-model="item.weight">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
+
+
+
+                        <!-- G R O W T H -->
 
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
@@ -190,7 +321,8 @@
                                       ng-mouseleave="growthNick=false"></span>
                                 <small ng-if="growthNick">(рост устанавливается в сантиметрах)</small>
                             </label>
-                            <input type="number" maxlength="2" max="35" min="22" class="form-control"  ng-model="item.growth">
+                            <input type="number" maxlength="2" max="35" min="22" class="form-control"
+                                   ng-model="item.growth">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
@@ -202,7 +334,7 @@
                                 <small ng-if="varietyNick">(варианты: голая-hairless | пух-powderpuff)</small>
                             </label>
 
-                            <select  class="form-control" name="variety" id="variety" ng-model="item.variety">
+                            <select class="form-control" name="variety" id="variety" ng-model="item.variety">
                                 <option value=""></option>
                                 <option value="пух">пух</option>
                                 <option value="голая">голая</option>
@@ -210,14 +342,19 @@
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
+
+                        <!-- C O L O R -->
+
                         <div class="form-group">
                             <label class="control-label">
                                 Окрас
                                 <span class="glyphicon glyphicon-question-sign" ng-mouseover="colorNick=true"
                                       ng-mouseleave="colorNick=false"></span>
-                                <small ng-if="colorNick">(цвета помеченные "на рассмотрении", пока официально не приняты)</small>
+                                <small ng-if="colorNick">(цвета помеченные "на рассмотрении", пока официально не
+                                    приняты)
+                                </small>
                             </label>
-                            <select  class="form-control" name="color" id="color" ng-model="item.color">
+                            <select class="form-control" name="color" id="color" ng-model="item.color">
                                 <option value=""></option>
                                 <option value="Бело-бронзовый">
                                     Бело-бронзовый
@@ -286,10 +423,6 @@
                         </div>
 
 
-
-
-
-
                         <!--< B R E E D E R -->
                         <div ng-controller="ListController" class="form-group ">
                             <label class="control-label">Заводчик</label>
@@ -297,13 +430,15 @@
                             <div class="form-inline" ng-repeat="breeder in item.breeders">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="breeder.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">
                                             {{option.getFullName()}}
                                         </option>
                                     </select>
                                     <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeBreederItem(breeder)">
-                                            <span  class="glyphicon glyphicon-remove"></span></button>
+                                        <button type="button" class="btn btn-default "
+                                                ng-click="removeBreederItem(breeder)">
+                                            <span class="glyphicon glyphicon-remove"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -312,31 +447,28 @@
 
                         <!--< O W N E R  -->
                         <div ng-controller="ListController" class="form-group ">
-                            <label class="control-label">  Владелец  </label>
+                            <label class="control-label"> Владелец </label>
                             <span>[ <a href="#" ng-click="addOwnerField()">добавить</a> ]</span>
-                                <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="ownerNick=true"-->
-                                      <!--ng-mouseleave="ownerNick=false"></span>-->
-                                <!--<small ng-if="ownerNick">(название питомника если нет, то имя хозяина)</small>-->
+                            <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="ownerNick=true"-->
+                            <!--ng-mouseleave="ownerNick=false"></span>-->
+                            <!--<small ng-if="ownerNick">(название питомника если нет, то имя хозяина)</small>-->
                             <div class="form-inline" ng-repeat="owner in item.owners">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="owner.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">
                                             {{option.getFullName()}}
                                         </option>
                                     </select>
                                     <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default " ng-click="removeOwnerItem(owner)"><span
+                                        <button type="button" class="btn btn-default "
+                                                ng-click="removeOwnerItem(owner)"><span
                                                 class="glyphicon glyphicon-remove"></span></button>
                                     </div>
                                     <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
 
 
                         <!--< N E W  T I T L E S -->
@@ -346,7 +478,8 @@
                             <div class="form-inline" ng-repeat="title in item.titles">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="title.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">
                                             {{getMultiplicity(option)}}{{option.name}}
                                         </option>
                                     </select>
@@ -357,10 +490,11 @@
                                             <input type="file" nv-file-select="" uploader="uploadTitles" multiple/>
                                             <div class="form-inline"
                                                  ng-repeat="foto in filtered=(item.photos | filter:{$:searchText, catalogs:item.id, titles:item.titles[$index].id})">
-                                                <img ng-click="getTitle(title)" width="80" ng-src="{{foto.photoUrl}}" alt="">
+                                                <img ng-click="getTitle(title)" width="80" ng-src="{{foto.photoUrl}}"
+                                                     alt="">
                                             </div>
-                                             <span ng-click="getTitle(title)"
-                                                   class="glyphicon glyphicon-camera" role="button"></span>
+                                            <span ng-click="getTitle(title)"
+                                                  class="glyphicon glyphicon-camera" role="button"></span>
 
                                         </label>
                                     </div>
@@ -369,22 +503,12 @@
                                     <small class="text-right">{{title.description}}</small>
                                 </div>
                                 <div class="form-group pull-right">
-                                    <button type="button" class="btn btn-default " ng-click="removeItem(title, filtered[0])"><span
+                                    <button type="button" class="btn btn-default "
+                                            ng-click="removeItem(title, filtered[0])"><span
                                             class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
                         <!--< N E W  T E S T S / R E A C T I O N S -->
@@ -394,7 +518,8 @@
                             <div class="form-inline" ng-repeat="reaction in item.reactions">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="reaction.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">
                                             {{option.name}}
                                         </option>
                                     </select>
@@ -406,11 +531,12 @@
 
                                             <div class="form-inline"
                                                  ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
-                                                <img ng-click="getReaction(reaction)" width="80" ng-src="{{fot.photoUrl}}" alt="">
+                                                <img ng-click="getReaction(reaction)" width="80"
+                                                     ng-src="{{fot.photoUrl}}" alt="">
 
                                             </div>
-                                             <span ng-click="getReaction(reaction)"
-                                                   class="glyphicon glyphicon-camera" role="button"></span>
+                                            <span ng-click="getReaction(reaction)"
+                                                  class="glyphicon glyphicon-camera" role="button"></span>
 
                                         </label>
                                     </div>
@@ -419,7 +545,8 @@
                                     <small class="text-right">{{reaction.description}}</small>
                                 </div>
                                 <div class="form-group pull-right">
-                                    <button type="button" class="btn btn-default " ng-click="removeReaction(reaction, filtersed[0])"><span
+                                    <button type="button" class="btn btn-default "
+                                            ng-click="removeReaction(reaction, filtersed[0])"><span
                                             class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>
@@ -454,7 +581,7 @@
                                 <!--<small ng-if="pllNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
 
-                            <select  class="form-control" name="pll" id="pll" ng-model="item.pll">
+                            <select class="form-control" name="pll" id="pll" ng-model="item.pll">
                                 <option value=""></option>
                                 <option value="Чистый">
                                     Чистый
@@ -476,7 +603,7 @@
                                 <!--<small ng-if="praNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
 
-                            <select  class="form-control" name="pra" id="pra" ng-model="item.pra">
+                            <select class="form-control" name="pra" id="pra" ng-model="item.pra">
                                 <option value=""></option>
                                 <option value="Чистый">
                                     Чистый
@@ -498,7 +625,7 @@
                                 <!--<small ng-if="dmNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
 
-                            <select  class="form-control" name="dm" id="dm" ng-model="item.dm">
+                            <select class="form-control" name="dm" id="dm" ng-model="item.dm">
                                 <option value=""></option>
                                 <option value="Чистый">
                                     Чистый
@@ -542,7 +669,7 @@
                                        fp-opts="dateOpts"
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.death">
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                               <button class="btn btn-default" type="button" ng-click="removeDeath(item)"><span
                                       class="glyphicon glyphicon-remove"></span></button>
                             </span>
@@ -583,7 +710,8 @@
 
                         <div class="form-group">
                             <!--<div class="form-group" style=" position: fixed;margin-left: 50px; margin-bottom: 70px; bottom:0; left:0;">-->
-                            <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid" class="btn btn-md btn-success">
+                            <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid"
+                                    class="btn btn-md btn-success">
                                 <span class="glyphicon glyphicon-user"></span>
                                 Сохранить
                             </button>
@@ -609,14 +737,15 @@
 
                         </div>
                     </form>
-                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right">
+                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)"
+                            class="btn btn-sm btn-default pull-right">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>
             </div>
 
         </div>
-        <div class="col-md-6" ng-if="item.id">
+        <div class="col-md-6" >
             <div ng-switch on="modeSelect.value">
                 <div ng-switch-when="uploader">
                     <ng-include src="uploaderView"></ng-include>

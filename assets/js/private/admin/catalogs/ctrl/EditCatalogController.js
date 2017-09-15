@@ -31,7 +31,8 @@ angular.module('CatalogModule')
                 //mode: "range",
                 dateFormat: info.dateFormat,
                 minDate: info.minDate,
-                maxDate: 'today'
+                maxDate: info.maxDate
+                // maxDate: 'today'
                 //defaultDate: 'today'
             };
             $scope.dateOpts2 = {
@@ -532,13 +533,13 @@ angular.module('CatalogModule')
                 console.log('item-555:', item);
                 // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 if (!item.kennels) return toastr.error('Питомник не заполнен.', 'Ошибка!');
-                if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
+                // if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
                 console.log('item.sires', item.sires);
                 // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
 
                 item = reversValue(item);
-                if (angular.isDefined(item.id)) {
+                if (angular.isDefined(item.id)  &&   (angular.isDefined(item.symbol) || angular.isDefined(item.name)) ) {
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
                             $scope.refresh();
@@ -549,9 +550,7 @@ angular.module('CatalogModule')
                         }
                     );
                 } else {
-                    if (angular.isDefined(item) &&
-                        angular.isDefined(item.name)
-                    ) {
+                    if (angular.isDefined(item)  &&   (angular.isDefined(item.symbol) || angular.isDefined(item.name)) ) {
                         // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
                         item.password = info.passDefault;
                         item.$save(item, function (success) {
@@ -566,7 +565,7 @@ angular.module('CatalogModule')
                                 toastr.error(err.data, 'Ошибка!');
                             });
                     } else {
-                        toastr.error('Не все поля заполнены.', 'Ошибка!');
+                        toastr.error('Нужно заполнить одно из полей, букву помёта или имя собаки, можно и то и другое вместе.', 'Ошибка!');
                     }
                 }
             };
@@ -654,9 +653,6 @@ angular.module('CatalogModule')
             $scope.removeDecree = function (item) {
                 item.decree = null;
                 item = reversValue(item);
-                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
 
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
@@ -671,9 +667,6 @@ angular.module('CatalogModule')
             $scope.removeFired = function (item) {
                 item.firedDate = null;
                 item = reversValue(item);
-                //item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.dateInWork = (item.dateInWork) ? new Date(moment(item.dateInWork, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
-                //item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
 
                 if (angular.isDefined(item.id)) {
                     item.$update(item, function (success) {
