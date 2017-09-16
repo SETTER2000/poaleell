@@ -80,14 +80,12 @@ module.exports.policies = {
     },
 
     CatalogController: {
-        // '*': 'isLoggedIn',
+        '*': 'isLoggedIn',
         // //'*': false,
-        // create: ['isLoggedIn', 'isAdminOrKadr'],
-        // destroy: ['isLoggedIn', 'isAdmin'],
-        // update: ['isLoggedIn', 'isAdminOrKadr'],
-        // upload: ['isLoggedIn', 'isAdminOrKadr']
-
-        '*': true
+        create: ['isLoggedIn', 'isAdminOrKadr'],
+        destroy: ['isLoggedIn', 'isAdmin'],
+        update: ['isLoggedIn', 'isAdminOrKadr'],
+        // '*': true
     },
 
     TitleController: {
@@ -121,6 +119,12 @@ module.exports.policies = {
 
     AboutController: {
         '*': 'isLoggedIn',
+    },
+
+
+    DiaryController: {
+        // '*': 'isLoggedIn',
+        '*': true
     }
 
 

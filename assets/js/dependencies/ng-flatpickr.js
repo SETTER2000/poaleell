@@ -21,18 +21,19 @@
         //console.log(attrs);
         //console.log(ngModel);
 
-        scope.$watch('ngModel', function (value) {
-          //console.log('XXXXXXXXX: ',vp);
-          scope.fpOnSetup({
-            fpItem : vp
-          });
-        });
+        // scope.$watch('ngModel', function (value) {
+        //   //console.log('XXXXXXXXX: ',vp);
+        //     console.log('VPPP11: ', vp);
+        //   scope.fpOnSetup({
+        //     fpItem : vp
+        //   });
+        // });
 
-        //if (scope.fpOnSetup) {
-        //  scope.fpOnSetup({
-        //    fpItem : vp
-        //  });
-        //}
+        if (scope.fpOnSetup) {
+         scope.fpOnSetup({
+           fpItem : vp
+         });
+        }
 
         // destroy the flatpickr instance when the dom element is removed
         element.on('$destroy',function(){

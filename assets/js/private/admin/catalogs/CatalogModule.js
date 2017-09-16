@@ -54,6 +54,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                     }
                 }
             })
+
             .state('home.admin.catalog', {
                 url: '/catalog/:catalogId',
                 views: {
@@ -168,7 +169,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
 
         Catalogs.prototype.getFullName = function () {
-            if (this.kennels instanceof Array && (this.kennels.length > 0) ) {
+            if (this.kennels instanceof Array && (this.kennels.length > 0)) {
                 return this.kennels[0].name + ' ' + this.name;
             } else {
                 return this.name;
@@ -191,6 +192,10 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
         Catalogs.prototype.er = function () {
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
+        };
+        Catalogs.prototype.getTimeBirthday = function () {
+            console.log('this.timeBirthday:', this.timeBirthday);
+            return this.timeBirthday;
         };
 
 
@@ -331,18 +336,18 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
         return Catalogs;
     })
-    .directive('unknownValueError', function() {
+    .directive('unknownValueError', function () {
         return {
             require: ['ngModel', 'select'],
-            link: function(scope, element, attrs, ctrls) {
+            link: function (scope, element, attrs, ctrls) {
                 let ngModelCtrl = ctrls[0]; // ангулар модель выбрана элемента select
                 /**
                  *  выбран сам элемент select со страницы, т.е. его контроллер (SelectController),
                  *  для внесения изменений в логику контроллера(управления) выбором (option)
                  */
                 let selectCtrl = ctrls[1];
-                console.log('ngModelCtrl',ngModelCtrl);
-                console.log('selectCtrl',selectCtrl);
+                console.log('ngModelCtrl', ngModelCtrl);
+                console.log('selectCtrl', selectCtrl);
 
                 /**
                  *  ВНИАМАНИЕ!!
@@ -351,27 +356,27 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                  *  они не актуальны, следует смотреть методы конкретно по объекту.
                  *  $isUnknownOptionSelected() в 1.6  это unselectEmptyOption()
                  */
-                ngModelCtrl.$validators.unknownValue = function(modelValue, viewValue) {
+                ngModelCtrl.$validators.unknownValue = function (modelValue, viewValue) {
                     console.log('selectCtrl.readValue()', selectCtrl.readValue());
                     console.log('selectCtrl.unselectEmptyOption()', selectCtrl.unselectEmptyOption());
                     console.log('selectCtrl.unknownOption', selectCtrl.unknownOption);
-                    return  (selectCtrl.readValue());
+                    return (selectCtrl.readValue());
                     // condition?true:false or condition?false:true. These expressions may be safely simplified to condition or !condition , respectively.
                 };
             }
         }
     })
-    .directive('unknownValueRequired', function() {
+    .directive('unknownValueRequired', function () {
         return {
             priority: 1, // This directive must run after the required directive has added its validator
             require: ['ngModel', 'select'],
-            link: function(scope, element, attrs, ctrls) {
+            link: function (scope, element, attrs, ctrls) {
                 var ngModelCtrl = ctrls[0];
                 var selectCtrl = ctrls[1];
 
                 var originalRequiredValidator = ngModelCtrl.$validators.required;
 
-                ngModelCtrl.$validators.required = function() {
+                ngModelCtrl.$validators.required = function () {
                     if (attrs.required && selectCtrl.$isUnknownOptionSelected()) {
                         return false;
                     }
@@ -383,19 +388,19 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
     })
     .directive('customSelect', function () {
         return {
-            restrict    : "E",
-            replace     : true,
-            scope : {
-                'ngModel'     : '=',
-                'options'     : '=',
+            restrict: "E",
+            replace: true,
+            scope: {
+                'ngModel': '=',
+                'options': '=',
             },
-            templateUrl : '/js/private/admin/catalogs/views/select.view.html',
-            link : function (scope, $element, attributes) {
+            templateUrl: '/js/private/admin/catalogs/views/select.view.html',
+            link: function (scope, $element, attributes) {
                 scope.selectable_options = scope.options;
             }
         };
     })
-        /**
+/**
  * Выборка фамилий по первой букве
  */
 // .filter('firstChar', function () {

@@ -8,6 +8,7 @@ angular.module('Holiday', [
     'PositionModule',
     'TitleModule',
     'PhotoModule',
+    'DiaryModule',
     'FurloughModule',
     'VacationModule',
     'ReactionModule',

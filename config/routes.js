@@ -204,7 +204,17 @@ module.exports.routes = {
     'DELETE /reactions/:id': 'ReactionController.destroy', // удалить
     'PUT /reactions/:id': 'ReactionController.update', // обновить
     
-    
+
+
+    /**
+     * Diarys
+     */
+    'GET /diarys': 'DiaryController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
+    'POST /diarys': 'DiaryController.create', // создать запись
+    'DELETE /diarys/:id': 'DiaryController.destroy', // удалить
+    'PUT /diarys/:id': 'DiaryController.update', // обновить
+
+
     
 
     /**
@@ -293,6 +303,8 @@ module.exports.routes = {
     'GET /admin/vacations/create': 'PageController.showHomePage',
 
 
+    // 'GET /admin/catalog/:id/diary/:id': 'PageController.showHomePage',
+    // 'GET /admin/catalog/:id/diary/': 'PageController.showHomePage',
     'GET /admin/catalogs': 'PageController.showHomePage',
     'GET /admin/catalog/:id': 'PageController.showHomePage',
     'GET /admin/catalogs/create': 'PageController.showHomePage',
@@ -316,6 +328,14 @@ module.exports.routes = {
     'GET /admin/photos/edit/:id': 'PageController.showHomePage',
     'GET /admin/photos/create/': 'PageController.showHomePage',
     'GET /admin/photos/:id': 'PageController.showHomePage',
+
+    'GET /admin/diarys/catalog/:id': 'PageController.showHomePage',
+    'GET /admin/diarys/catalog/': 'PageController.showHomePage',
+    'GET /admin/diarys': 'PageController.showHomePage',
+    'GET /admin/diarys/edit/:id': 'PageController.showHomePage',
+    'GET /admin/diarys/create/': 'PageController.showHomePage',
+    'GET /admin/diarys/:id': 'PageController.showHomePage',
+
 
 
     'GET /upload': 'PageController.showHomePage',

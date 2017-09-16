@@ -22,6 +22,8 @@ angular.module('CatalogModule')
                 maxDate: "31-12-2020",
             };
 
+            // console.log('$STATE catalog: ', $state);
+
 
             $scope.name = null;
 
@@ -59,12 +61,35 @@ angular.module('CatalogModule')
             $scope.close = 1;
             $scope.loginAdmin = false;
             $scope.edit = $state.includes('home.admin.catalogs.edit');
+
+
+            $scope.timeOpts = {
+                enableTime: true,
+                noCalendar: true,
+
+                enableSeconds: false, // disabled by default
+
+                time_24hr: true, // AM/PM time picker is used by default
+
+                // default format
+                dateFormat: "H:i",
+
+                // initial values for time. don't use these to preload a date
+                // defaultHour: 12,
+                // defaultMinute: 0,
+
+                // Preload time with defaultDate instead:
+                defaultDate: "13:00"
+            };
+
+
             $scope.dateOpts = {
                 locale: info.ru,
                 //mode: "range",
                 dateFormat: info.dateFormat,
                 minDate: info.minDate,
-                maxDate: info.maxDate
+                maxDate: info.maxDate,
+                // defaultDate: '2016-03-01 03:30:00 -0300'
                 // maxDate: 'today'
                 //defaultDate: 'today'
             };
@@ -89,15 +114,12 @@ angular.module('CatalogModule')
                 minDate: info.minDate
                 //defaultDate: 'today'
             };
-            $scope.toggleBlur = function (mx) {
-                //if(!mx) mx.selectedDates = new Date();
-                ////console.log('mx.selectedDates: ', mx.selectedDates);
-                ////console.log('SelectedDates XX7:',moment.parseZone(mx.selectedDates[1]).format());
-                //
-                //$scope.query.sd = mx.selectedDates;
-                //$scope.mx = mx.selectedDates;
-                //$scope.refresh();
+
+
+            $scope.datePostSetup = function (fpItem) {
+                console.log('flatpickr', fpItem);
             };
+
 
             /**
              * Загрузка титулов
@@ -471,25 +493,36 @@ angular.module('CatalogModule')
                     $scope.close = true;
                 }
             };
-            //console.log( $stateParams.catalogId);
-            //var item = $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
+
+
+            $scope.rating1 = 3;
+            $scope.rating2 = 2;
+            $scope.rating3 = 4;
+
+            $scope.disabled1 = Math.floor(Math.random() * 100);
+            $scope.disabled2 = 0;
+            $scope.disabled3 = 70;
+
+            $scope.invert = Math.floor(Math.random() * 100);
+
+            $scope.isDisabled = false;
+
+
             $scope.refresh = function () {
                 let item = $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
-                        $scope.catalogs = catalogs;
-                        console.log('catalogs', catalogs);
-                        item.getBirthday();
-                        item.getDeath();
-                        item.getFiredDate();
-                        item.getDecree();
-                    }
-                    //    function (err) {
-                    //
-                    //    toastr.error(err, 'Ошибка! User.EditController.refresh ');
-                    //}
-                );
+                    $scope.catalogs = catalogs;
+                    // console.log('ITEM-+++5-SYMBOL',$scope.item.symbol );
+                    // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
+                    console.log('catalogs входящий: ', catalogs);
+                    console.log('TYYYU: ', item.getTimeBirthday());
 
-                //console.log($scope.item);
-                //console.log($scope.catalogs);
+                    // item.getTimeBirthday();
+                    item.getBirthday();
+                    item.getDeath();
+                    item.getFiredDate();
+                    item.getDecree();
+                });
+
             };
             $scope.delete2 = function (item) {
                 item.$delete(item, function (success) {
@@ -532,13 +565,18 @@ angular.module('CatalogModule')
                 item.death = (item.death) ? new Date(moment(item.death, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.decree = ( item.decree) ? new Date(moment(item.decree, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
+                // item.timeBirthday= (item.timeBirthday) ? item.timeBirthday : item.getBirthday();
                 return item;
             };
 
-
-            // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
-
-
+            $scope.saveDiary = function (item) {
+                $state.go('home.admin.diarys.catalog',{'catalogId':item.id});
+                // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
+            };
+            $scope.saveJournal = function (item) {
+                $state.go('home.admin.catalog.diary',{'catalogId':item.id, 'diaryId':item.id});
+                // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
+            };
             /**
              * Сохранить изменения
              * @param item
@@ -558,7 +596,7 @@ angular.module('CatalogModule')
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
 
-                            console.log('UPDATE2');
+                            // console.log('UPDATE2');
                             $scope.refresh();
                         },
                         function (err) {

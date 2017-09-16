@@ -56,13 +56,13 @@
                 </div>
                 <div class="panel-body">
                     <form name="myForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
-
-
                         <!-- A C T I O N -->
                         <div class="form-group">
                             <div ng-if="(me.kadr)" class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="item.action">Активность
+                                    <!--<input type="checkbox" ng-model="item.action">-->
+                                    <md-checkbox ng-model="item.action"> Активность</md-checkbox>
+
                                     <span class="glyphicon glyphicon-question-sign" ng-mouseover="actionNick=true"
                                           ng-mouseleave="actionNick=false"></span>
                                     <small ng-if="actionNick">(видимость собаки на сайте и использования её в других
@@ -72,23 +72,100 @@
                             </div>
                         </div>
 
-                        <!--S Y M B O L -->
 
-                        <div class="form-group">
-                            <label for="symbol" class="control-label">
-                                Буква помёта
-                                <span ng-show="myForm.symbol.$error.unknownValue"
-                                      class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
-                                      ng-mouseleave="symbolNick=false"></span>
-                                <small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)</small>
-                            </label>
-                            <div class="form-group form-inline">
-                                <custom-select class="form-control" name="symbol" ng-model="item.symbol"
-                                               options="optionsSelectSymbol"></custom-select>
+                        <!--< K E N N E L -->
+
+                        <div ng-controller="ListDepartmentController" class="form-group ">
+                            <label class="control-label" ng-bind="items[0].sc()"></label>
+                            <span>[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
+                            <div class="form-inline" ng-repeat="kennels in item.kennels">
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="kennels.id">
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">
+                                            {{option.name}}
+                                        </option>
+                                    </select>
+                                    <!--<div class="form-group pull-right">-->
+                                        <!--<button type="button" class="btn btn-default "-->
+                                                <!--ng-click="removeKennelItem(kennels)"><span-->
+                                                <!--class="glyphicon glyphicon-remove"></span></button>-->
+                                    <!--</div>-->
+                                </div>
                             </div>
                         </div>
 
 
+                        <!--S Y M B O L / ALIAS-->
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="symbol" class="control-label">
+                                        Буква помёта
+                                        <span ng-show="myForm.symbol.$error.unknownValue"
+                                              class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
+                                              ng-mouseleave="symbolNick=false"></span>
+                                        <small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)
+                                        </small>
+                                    </label>
+                                    <div class="form-group form-inline">
+                                        <custom-select class="form-control" name="symbol" ng-model="item.symbol"
+                                                       options="optionsSelectSymbol"></custom-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" ng-if="item.symbol">
+                                <div class="form-group">
+                                    <label for="symbol" class="control-label">
+                                        Псевдоним при рождении
+                                        <span ng-show="myForm.symbol.$error.unknownValue"
+                                              class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
+                                              ng-mouseleave="symbolNick=false"></span>
+                                        <small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)
+                                        </small>
+                                    </label>
+                                    <input minlength="2" maxlength="40" type="text"
+                                           class="form-control offset-2"
+                                           ng-model="item.alias">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="item.symbol">
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label for="symbol" class="control-label">
+                                        Время рождения
+                                        <!--<span ng-show="myForm.symbol.$error.unknownValue"-->
+                                        <!--class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"-->
+                                        <!--ng-mouseleave="symbolNick=false"></span>-->
+                                        <!--<small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)-->
+                                        <!--</small>-->
+                                    </label>
+                                    <input class="form-control flatpickr" ng-flatpickr fp-opts="timeOpts" fp-on-setup="datePostSetup(fpItem)"
+                                           ng-model="item.timeBirthday" data-enabletime="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="symbol" class="control-label">
+                                        Продолжить вносить данные ...
+                                        <!--<span ng-show="myForm.symbol.$error.unknownValue"-->
+                                        <!--class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"-->
+                                        <!--ng-mouseleave="symbolNick=false"></span>-->
+                                        <!--<small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)-->
+                                        <!--</small>-->
+                                    </label>
+                                    <button ng-click="saveDiary(item)" type="button" class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-check"></span> Дневник
+                                    </button>
+                                    <button ng-click="saveJournal(item)" type="button" class="btn btn-warning btn-sm">
+                                        <span class="glyphicon glyphicon-check"></span> Журнал
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <!--N A M E-->
 
                         <div class="form-group">
@@ -106,28 +183,6 @@
                                    ng-model="item.name">
                         </div>
 
-
-                        <!--< K E N N E L -->
-
-                        <div ng-controller="ListDepartmentController" class="form-group ">
-                            <label class="control-label" ng-bind="items[0].sc()"></label>
-                            <span>[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
-                            <div class="form-inline" ng-repeat="kennels in item.kennels">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="kennels.id">
-                                        <option ng-repeat="option in items | filter:{action:true}"
-                                                value="{{option.id}}">
-                                            {{option.name}}
-                                        </option>
-                                    </select>
-                                    <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default "
-                                                ng-click="removeKennelItem(kennels)"><span
-                                                class="glyphicon glyphicon-remove"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
                         <!-- N I C K N A M E -->
@@ -227,31 +282,61 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
-                                Вес
-                                <span class="glyphicon glyphicon-question-sign" ng-mouseover="weightNick=true"
-                                      ng-mouseleave="weightNick=false"></span>
+                                Вес <span class="glyphicon glyphicon-question-sign" ng-mouseover="weightNick=true"
+                                          ng-mouseleave="weightNick=false"></span>
                                 <small ng-if="weightNick">(граммы 4300)</small>
                             </label>
-                            <input type="number" class="form-control" min="{{lengthWeightMin}}" max="9999"
-                                   ng-model="item.weight">
-                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                            <md-slider-container ng-disabled="isDisabled">
+                                <!--<i class="fa fa-text-height" aria-hidden="true"></i>-->
+                                <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                                <md-slider ng-model="item.weight" step="100" min="100" max="9999"
+                                           aria-label="Disabled 1" flex md-discrete ng-readonly="readonly"></md-slider>
+                                <md-input-container>
+                                    <input flex type="number" step="100" min="100" max="9999" ng-model="item.weight"
+                                           aria-label="green" aria-controls="green-slider">
+                                </md-input-container>
+                            </md-slider-container>
+                            <!--<md-checkbox ng-model="isDisabled">Is disabled</md-checkbox>-->
+                            <!--<md-slider ng-model="disabled2" ng-disabled="true" aria-label="Disabled 2"></md-slider>-->
+                            <div style="margin-top: 50px;"></div>
                         </div>
 
 
                         <!-- G R O W T H -->
 
+                        <!--<div class="form-group">-->
+                        <!--<label class="control-label" for="inputSuccess3">-->
+                        <!--Рост-->
+                        <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="growthNick=true"-->
+                        <!--ng-mouseleave="growthNick=false"></span>-->
+                        <!--<small ng-if="growthNick">(рост устанавливается в сантиметрах)</small>-->
+                        <!--</label>-->
+                        <!--<input type="number" maxlength="2" max="35" min="22" class="form-control"-->
+                        <!--ng-model="item.growth">-->
+                        <!--&lt;!&ndash;<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                        <!--</div>-->
+
+
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">
-                                Рост
-                                <span class="glyphicon glyphicon-question-sign" ng-mouseover="growthNick=true"
-                                      ng-mouseleave="growthNick=false"></span>
+                                Рост <span class="glyphicon glyphicon-question-sign" ng-mouseover="growthNick=true"
+                                           ng-mouseleave="growthNick=false"></span>
                                 <small ng-if="growthNick">(рост устанавливается в сантиметрах)</small>
                             </label>
-                            <input type="number" maxlength="2" max="35" min="22" class="form-control"
-                                   ng-model="item.growth">
-                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                            <md-slider-container ng-disabled="isDisabled">
+                                <i class="fa fa-text-height" aria-hidden="true"></i>
+                                <!--<i class="fa fa-balance-scale" aria-hidden="true"></i>-->
+                                <md-slider class="md-warn" ng-model="item.growth" step="1" max="35" min="22"
+                                           aria-label="Disabled 1" flex md-discrete ng-readonly="readonly"></md-slider>
+                                <md-input-container>
+                                    <input flex type="number" step="1" max="35" min="22" ng-model="item.growth"
+                                           aria-label="green" aria-controls="green-slider">
+                                </md-input-container>
+                            </md-slider-container>
+                            <!--<md-checkbox ng-model="isDisabled">Is disabled</md-checkbox>-->
+                            <!--<md-slider ng-model="disabled2" ng-disabled="true" aria-label="Disabled 2"></md-slider>-->
+                            <div style="margin-top: 50px;"></div>
                         </div>
-
 
                         <!-- V A R I E T Y -->
 

@@ -71,16 +71,23 @@ module.exports = {
             type: 'date',
             // required: true
         },
+        timebirt: {
+            type: 'string',
+            // required: true
+        },
 
+        alias: {
+            type: 'string'
+        },
         location: {
             type: 'string'
         },
 
-        lastLoggedIn: {
-            type: 'date',
-            // required: true,
-            defaultsTo: new Date(0)
-        },
+        // lastLoggedIn: {
+        //     type: 'date',
+        //     // required: true,
+        //     defaultsTo: new Date(0)
+        // },
         death: {
             type: 'date',
             defaultsTo: null
@@ -128,7 +135,8 @@ module.exports = {
         },
         kennels: {
             collection: 'department',
-            via: 'catalogs'
+            via: 'catalogs',
+            required: true
         },
 
         breeders: {
@@ -147,6 +155,9 @@ module.exports = {
 
         dams: {
             model: 'catalog'
+        },
+        diarys:{
+            model:'diary'
         },
         photos: {
             collection: 'photo',
