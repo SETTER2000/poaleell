@@ -14,7 +14,7 @@ moment.locale('ru');
 var error = {
     date: moment().format('LLLL'),
     name: 'Имя не заполнено.',
-    kennel: 'Питомник не заполнен.',
+    kennel: 'Питомник не заполнен. backend',
     gender: 'Пол не заполнен.',
     birthday: 'ДР не заполнен.',
     death: 'Дата смерти не число.',
@@ -90,6 +90,8 @@ module.exports = {
      */
     create: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+
+        console.log('REQ входной: ', req );
         // if (!_.isString(req.param('name'))) {
         //     console.log(error.date, error.name);
         //     return res.badRequest(error.name);
@@ -98,10 +100,11 @@ module.exports = {
         //     console.log(error.date, error.birthday);
         //     return res.badRequest(error.birthday);
         // }
-        if (!_.isString(req.param('kennel'))) {
-            console.log(error.date, error.kennel);
-            return res.badRequest(error.kennel);
-        }
+        // console.log("KEMMM", req.param('kennels'));
+        // if (_.isEmpty(req.param('kennels'))) {
+        //     console.log(error.date, error.kennel);
+        //     return res.badRequest(error.kennel);
+        // }
         // if (!_.isString(req.param('gender'))) {
         //     console.log(error.date, error.gender);
         //     return res.badRequest(error.gender);
@@ -191,10 +194,10 @@ module.exports = {
         //     console.log(error.date, error.name);
         //     return res.badRequest(error.name);
         // }
-        if (!_.isString(req.param('kennel'))) {
-            console.log(error.date, error.kennel);
-            return res.badRequest(error.kennel);
-        }
+        // if (!_.isString(req.param('kennel'))) {
+        //     console.log(error.date, error.kennel);
+        //     return res.badRequest(error.kennel);
+        // }
         // if (!_.isString(req.param('birthday'))) {
         //     console.log(error.date, error.birthday);
         //     return res.badRequest(error.birthday);

@@ -14,7 +14,7 @@ angular.module('TitleModule')
                 $scope.item = Titles.get({id: $stateParams.titleId}, function (titles) {
                     $scope.users = titles;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 2781! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 201! ' + err.data.message);
                 });
             };
 

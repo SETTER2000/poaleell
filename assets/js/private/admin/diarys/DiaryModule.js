@@ -52,11 +52,11 @@ angular.module('DiaryModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
 
         ;
     })
-    .constant('CONF_MODULE_TITLE', {baseUrl: '/diarys/:diaryId'})
-    .factory('Diarys', function ($resource, CONF_MODULE_TITLE) {
+    .constant('CONF_MODULE_DIARY', {baseUrl: '/diarys/:diaryId'})
+    .factory('Diarys', function ($resource, CONF_MODULE_DIARY) {
 
         var Diarys = $resource(
-            CONF_MODULE_TITLE.baseUrl,
+            CONF_MODULE_DIARY.baseUrl,
             {diaryId: '@id'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
             {

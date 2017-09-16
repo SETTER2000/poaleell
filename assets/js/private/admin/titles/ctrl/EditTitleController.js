@@ -18,7 +18,7 @@ angular.module('TitleModule')
             };
 
             $scope.delete = function (item) {
-                console.log(item);
+                console.log('DELETE TITLE', item);
                 item.$delete(item, function (success) {
                     toastr.success('Объект удалён.','OK! ');
                     $state.go('home.admin.titles');

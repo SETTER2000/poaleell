@@ -584,8 +584,9 @@ angular.module('CatalogModule')
             $scope.saveEdit = function (item) {
                 let lengthNicknameMin = 1;
                 console.log('item-555:', item);
+                console.log('KENNELS 33: ', item.kennels);
                 // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                if (!item.kennels) return toastr.error('Питомник не заполнен.', 'Ошибка!');
+                // if (!item.kennels.id) return toastr.error('Питомник не заполнен.', 'Ошибка!');
                 // if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
 
                 // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');

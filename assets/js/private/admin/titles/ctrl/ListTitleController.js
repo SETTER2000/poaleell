@@ -46,7 +46,7 @@
                      */
                     // Сортировка наоборот sort: 'name DESC'
                     $scope.items = Titles.query({limit: $scope.limit, sort: $scope.sort}, function (titles) {
-                        // console.log('TITLES ITEMS:', titles);
+                        console.log('TITLES ITEMS:', titles);
                         $scope.items = titles;
                     }, function (err) {
                         toastr.error(err, 'Ошибка ListTitleController!');
