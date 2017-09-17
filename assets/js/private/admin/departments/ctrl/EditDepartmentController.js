@@ -1,13 +1,18 @@
 angular.module('DepartmentModule')
-    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state','moment', 'Departments', '$stateParams', 'CONF_MODULE_DEPARTMENT',
-        function ($scope, $http,toastr, $state,moment, Departments, $stateParams) {
+    .controller('EditDepartmentController', ['$scope', '$http', 'toastr', '$state', 'moment', 'Departments', '$stateParams', 'CONF_MODULE_DEPARTMENT',
+        function ($scope, $http, toastr, $state, moment, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.edit = $state.includes('home.admin.departments.edit');
             //if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
-
+            $scope.closeInfo = 0; // скрыть панель информации
+           // $scope.inlinePanel = 0; // растянуть панель редактирования
             moment.locale('ru');
+
+            $scope.registerArea = 'Номер питомника';
+            $scope.dateCreateArea = 'Дата регистрации';
+
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',
@@ -85,25 +90,25 @@ angular.module('DepartmentModule')
 
                     item = reversValue(item);
                     item.$update(item.id, function (success) {
-                            console.log('UPDATE ITEM: ',item);
+                            console.log('UPDATE ITEM: ', item);
                             toastr.success('Данные обновлены!');
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data,'Ошибка 1 EditDepartmentController!');
+                            toastr.error(err.data, 'Ошибка 1 EditDepartmentController!');
                         }
                     );
 
 
                 } else {
                     //$scope.refresh();
-                    item.$save(item.id,function (success) {
-                            console.log('success',success.id);
-                            toastr.success('Объект создан.','OK! ');
+                    item.$save(item.id, function (success) {
+                            console.log('success', success.id);
+                            toastr.success('Объект создан.', 'OK! ');
                             $state.go('home.admin.department', {depId: success.id});
                         },
                         function (err) {
-                            toastr.error(err.data,'Ошибка! EditDepartmentController!');
+                            toastr.error(err.data, 'Ошибка! EditDepartmentController!');
                         });
                     //item.$save(item.id, function (success) {
                     //    console.log('SAVE ITEM: ',item);
@@ -163,10 +168,10 @@ angular.module('DepartmentModule')
 
             $scope.delete = function (item) {
                 item.$delete(item, function (success) {
-                    toastr.success('Объект удалён.','OK! ');
+                    toastr.success('Объект удалён.', 'OK! ');
                     $state.go('home.admin.departments');
                 }, function (err) {
-                    toastr.error(err,'Ошибка 3 EditDepartmentController!');
+                    toastr.error(err, 'Ошибка 3 EditDepartmentController!');
                 })
             };
 

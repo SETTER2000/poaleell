@@ -183,6 +183,7 @@ module.exports = {
      */
     searchLDAP: function (req, res) {
         console.log('Поиск пользователя в LDAP: ', req.param('name'));
+
         const clientSearchLDAP = ldap.createClient({
             url: sails.config.ldap.uri
         });
@@ -332,9 +333,9 @@ module.exports = {
         if (!_.isString(req.param('firstName'))) {
             return res.badRequest('Имя не заполнено.');
         }
-        if (!_.isString(req.param('patronymicName'))) {
-            return res.badRequest('Отчество не заполнено.');
-        }
+        // if (!_.isString(req.param('patronymicName'))) {
+        //     return res.badRequest('Отчество не заполнено.');
+        // }
         if (!_.isString(req.param('login'))) {
             return res.badRequest('Логин не заполнен.');
         }
@@ -342,9 +343,9 @@ module.exports = {
             return res.badRequest('Email не заполнен.');
         }
 
-        if (req.param('patronymicName').length < 2 || req.param('patronymicName').length > 15) {
-            return res.badRequest('Отчество должно быть от 2 до 15 знаков!');
-        }
+        // if (req.param('patronymicName').length < 2 || req.param('patronymicName').length > 15) {
+        //     return res.badRequest('Отчество должно быть от 2 до 15 знаков!');
+        // }
         if (req.param('firstName').length < 2 || req.param('firstName').length > 15) {
             return res.badRequest('Имя должно быть от 2 до 15 знаков!');
         }

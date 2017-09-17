@@ -5,6 +5,42 @@ angular.module('CatalogModule')
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             moment.locale('ru');
+            $scope.newObjectName = 'Новая собака';
+            $scope.closeInfo = 0; // скрыть панель информации
+
+            $scope.loginAdmin = false;
+            $scope.edit = $state.includes('home.admin.catalogs.edit');
+
+            $scope.inline = function () {
+                $scope.item.inlinePanel = (!$scope.item.inlinePanel);
+                // $scope.closeInfo = (!$scope.closeInfo) ? true : false;
+
+                if (angular.isDefined( $scope.item.id)) {
+                    $scope.item.$update( $scope.item, function (success) {
+                            toastr.success(info.changed);
+                            $scope.refresh();
+                        },
+                        function (err) {
+                            toastr.error(err, info.error + ' 905!');
+                        }
+                    );
+                }
+
+
+                // $scope.item.$save(
+                // $scope.item, function (success) {
+                //         //console.log(success);
+                //         //location.reload();
+                //         toastr.success(info.newOk);
+                //         // /admin/catalog/
+                //         //$location.path('/profile') ;
+                //         console.log('SAVE - create');
+                //         $state.go('home.admin.catalog', {catalogId: success.id});
+                //     },
+                //     function (err) {
+                //         toastr.error(err.data, 'Ошибка!');
+                //     });
+            };
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',
@@ -55,12 +91,6 @@ angular.module('CatalogModule')
                 {id: 'Чистый', name: 'Чистый'},
                 {id: 'Носитель', name: 'Носитель'},
                 {id: 'Болеет', name: 'Болеет'}];
-
-
-            $scope.newObjectName = 'Новая собака';
-            $scope.close = 1;
-            $scope.loginAdmin = false;
-            $scope.edit = $state.includes('home.admin.catalogs.edit');
 
 
             $scope.timeOpts = {
@@ -485,14 +515,6 @@ angular.module('CatalogModule')
                 ];
             $scope.modeSelect = $scope.options[0];
             $scope.uploaderView = "/js/private/admin/catalogs/views/uploader.html";
-            $scope.closed = function () {
-                if ($scope.close) {
-                    $scope.close = false;
-                }
-                else {
-                    $scope.close = true;
-                }
-            };
 
 
             $scope.rating1 = 3;
@@ -570,11 +592,11 @@ angular.module('CatalogModule')
             };
 
             $scope.saveDiary = function (item) {
-                $state.go('home.admin.diarys.catalog',{'catalogId':item.id});
+                $state.go('home.admin.diarys.catalog', {'catalogId': item.id});
                 // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
             };
             $scope.saveJournal = function (item) {
-                $state.go('home.admin.catalog.diary',{'catalogId':item.id, 'diaryId':item.id});
+                $state.go('home.admin.catalog.diary', {'catalogId': item.id, 'diaryId': item.id});
                 // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
             };
             /**

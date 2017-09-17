@@ -39,7 +39,9 @@ module.exports = {
             // minLength: 4,
             // maxLength: 15
         },
-
+        inlinePanel:{
+          type:'boolean'
+        },
         weight: {
             type: 'integer',
             // required: true
@@ -104,7 +106,7 @@ module.exports = {
         },
         rkf: {
             type: 'string',
-            maxLength: 15
+            maxLength: 25
         },
         pll: {
             type: 'string',
@@ -112,19 +114,19 @@ module.exports = {
         },
         pra: {
             type: 'string',
-            maxLength: 15
+            maxLength: 25
         },
         dm: {
             type: 'string',
-            maxLength: 15
+            maxLength: 25
         },
         stamp: {
             type: 'string',
-            maxLength: 10
+            maxLength: 25
         },
         chip: {
             type: 'string',
-            maxLength: 10
+            maxLength: 25
         },
         symbol: {
             type: 'string'

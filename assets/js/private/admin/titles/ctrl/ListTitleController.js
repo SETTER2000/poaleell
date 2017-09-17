@@ -7,6 +7,7 @@
                 if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
                 $scope.nameArea = 'Наименование';
+                $scope.tipArea = 'Тип';
                 $scope.descriptionArea = 'Описание';
                 $scope.descriptionEnArea = 'Описание на английском';
 

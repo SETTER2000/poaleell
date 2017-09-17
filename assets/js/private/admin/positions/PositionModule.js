@@ -19,20 +19,21 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
                     }
                 }
             })
-            .state('home.admin.positions.settings', {
-                url: '/settings',
-                templateUrl: '/js/private/admin/positions/views/home.admin.positions.settings.html',
-                controller: 'ListPositionController'
-            })
+            // .state('home.admin.positions.settings', {
+            //     url: '/settings',
+            //     templateUrl: '/js/private/admin/positions/views/home.admin.positions.settings.html',
+            //     controller: 'ListPositionController'
+            // })
             .state('home.admin.position', {
                 url: '/position/:positionId',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/departments/tpl/show.tpl.html',
+                        templateUrl: '/js/private/admin/positions/tpl/show.tpl.html',
                         controller: 'PositionController'
                     }
                 }
             })
+
             .state('home.admin.positions.create', {
                 url: '/create/:positionId',
                 views: {
@@ -77,6 +78,10 @@ angular.module('PositionModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimat
 
         Positions.prototype.getFullName = function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
+        };
+
+        Positions.prototype.getName = function () {
+            return this.name ;
         };
 
         Positions.prototype.sc = function () {

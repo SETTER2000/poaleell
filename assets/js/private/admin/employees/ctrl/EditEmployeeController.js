@@ -6,6 +6,8 @@ angular.module('EmployeeModule')
             // $state.transitionTo('admin.users.show.id');
             // $scope.refresh = function () {
             // return console.log($stateParams.id);
+            $scope.closeInfo = 0; // скрыть панель информации
+            // $scope.inlinePanel = 0; // растянуть панель редактирования
             $scope.refresh = function () {
                 var item = $scope.item = Employees.get({id: $stateParams.employeeId}, function (employees) {
                     $scope.employees = employees;

@@ -26,7 +26,7 @@
             </li>
         </ul>
     </div>
-    <div class="row">
+    <div class="row"  >
         <div class="col-md-6">
             <div class="panel" ng-class="{'panel-warning':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
@@ -38,8 +38,16 @@
                             <input type="checkbox" ng-model="item.action">Активность
                         </label>
                     </div>
-                    <div class="form-group">
 
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess1">Тип</label>
+                        <div class="form-group form-inline">
+                            <custom-select class="form-control" name="tip" ng-model="item.tip"
+                                           options="optionsSelectTip"></custom-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <div class="row">
                             <div class="col-md-3">
                                 <label class="control-label" for="inputSuccess22">Кратность</label>
@@ -114,23 +122,23 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-md-6">-->
-        <!--<div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">-->
-        <!--<div class="panel-heading">-->
-        <!--<h3 class="panel-title">Информация</h3>-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-        <!--<div class="table-responsive">-->
-        <!--<table class="table">-->
-        <!--<tr ng-repeat="(key, value) in item">-->
-        <!--<th>{{key}}</th>-->
-        <!--<td>{{value | date:'dd.MM.yyyy' }}</td>-->
-        <!--</tr>-->
-        <!--</table>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+        <div class="col-md-6" ng-show="me.admin" ng-if="!closeInfo">
+        <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
+        <div class="panel-heading">
+        <h3 class="panel-title">Информация</h3>
+        </div>
+        <div class="panel-body">
+        <div class="table-responsive">
+        <table class="table">
+        <tr ng-repeat="(key, value) in item">
+        <th>{{key}}</th>
+        <td>{{value | date:'dd.MM.yyyy' }}</td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+        </div>
     </div>
 </div>
 

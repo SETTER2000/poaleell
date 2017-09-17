@@ -86,16 +86,16 @@
                                 </button>
                             </th>
                             <th>
-                                <button class="btn btn-default" ng-click="sortBy('type')">Тип
-                                <span class="sortOrder" ng-show="propertyName === 'type'"
+                                <button class="btn btn-default not-border" ng-click="sortBy('type')">{{registerArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'registerNumber'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
 
                             </th>
 
-                            <th>
-                                <button class="btn btn-default" ng-click="sortBy('location')">Местоположение
-                                 <span class="sortOrder" ng-show="propertyName === 'location'"
+                            <th class="text-center">
+                                <button class="btn btn-default not-border" ng-click="sortBy('location')">{{dateCreateArea}}
+                                 <span class="sortOrder" ng-show="propertyName === 'dateCreate'"
                                        ng-class="{reverse: reverse}"></span>
                                 </button>
 
@@ -110,9 +110,9 @@
                                     {{item.name}}
                                 </a>
                             </td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.type }}</td>
-                            <td>{{item.location}}</td>
+                            <td>{{item.registerNumber}}</td>
+                            <td class="text-center">{{item.dateCreate | date:'dd.MM.yyyy'}}</td>
+                            <!--<td>{{item.location}}</td>-->
 
                             <td class="btn-group-xs">
                                 <a ng-href="{{item.getShowUrl(item.id)}}" class="btn "

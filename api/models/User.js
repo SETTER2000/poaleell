@@ -36,7 +36,6 @@ module.exports = {
         },
         patronymicName: {
             type: 'string',
-            required: true,
             minLength: 2,
             maxLength: 15
         },

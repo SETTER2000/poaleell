@@ -4,6 +4,7 @@ angular.module('TitleModule')
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
+            $scope.tipArea = 'Тип';
             $scope.nameArea = 'Наименование';
             $scope.descriptionArea = 'Описание';
             $scope.descriptionEnArea = 'Описание на английском';

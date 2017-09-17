@@ -6,7 +6,8 @@ angular.module('ReactionModule')
             $scope.editObj = $state.includes('home.admin.reactions.edit');
             //if(!$scope.me.admin) $location.path('/') ;
             $scope.namePage = 'Новый тест';
-
+            $scope.closeInfo = 0; // скрыть панель информации
+            // $scope.inlinePanel = 0; // растянуть панель редактирования
             $scope.refresh = function () {
                 var item = $scope.item = Reactions.get({id: $stateParams.reactionId}, function (reactions) {
                     $scope.reactions = reactions;

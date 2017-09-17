@@ -5,7 +5,8 @@ angular.module('FurloughModule')
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.editObj = $state.includes('home.admin.furloughs.edit');
             //if(!$scope.me.admin) $location.path('/') ;
-
+            $scope.closeInfo = 0; // скрыть панель информации
+            // $scope.inlinePanel = 0; // растянуть панель редактирования
             $scope.refresh = function () {
                 var item = $scope.item = Furloughs.get({id: $stateParams.furloughId}, function (furloughs) {
                     $scope.furloughs = furloughs;

@@ -5,6 +5,12 @@ angular.module('TitleModule')
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.editObj = $state.includes('home.admin.titles.edit');
             //if(!$scope.me.admin) $location.path('/') ;
+            $scope.closeInfo = 0; // скрыть панель информации
+            // $scope.inlinePanel = 0; // растянуть панель редактирования
+            $scope.optionsSelectTip = [
+                {id: '', name: ''},
+                {id: 'сертификат', name: 'Cертификат'},
+                {id: 'титул', name: 'Титул'}];
 
             $scope.refresh = function () {
                 var item = $scope.item = Titles.get({id: $stateParams.titleId}, function (titles) {

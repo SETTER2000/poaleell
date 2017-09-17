@@ -1,7 +1,7 @@
  <div class="panel panel-default">
     <div class="panel-header"><h3 class="panel-title"></h3></div>
     <div class="panel-body">
-        <div class="col-sm-10 col-md-8  col-md-offset-2" ng-class="{'col-md-offset-2':!item.avatarUrl}">
+        <div class="col-sm-10 col-md-10  col-md-offset-1" ng-class="{'col-md-offset-2':!item.avatarUrl}">
             <h5 class="text-center"> ТИТУЛЫ: </h5>
             <ol class="breadcrumb text-center">
                 <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">

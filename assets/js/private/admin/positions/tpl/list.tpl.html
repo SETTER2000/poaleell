@@ -27,17 +27,16 @@
                 </small>
                 </span>
         </h2>
-
-        <!--<ul class="breadcrumb">-->
-        <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
-        <!--<ng-switch on="$last">-->
-        <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
-        <!--<span ng-switch-default>-->
-        <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
-        <!--</span>-->
-        <!--</ng-switch>-->
-        <!--</li>-->
-        <!--</ul>-->
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                    <span ng-switch-default>
+                    <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                    </span>
+                </ng-switch>
+            </li>
+        </ul>
         <div ui-view></div>
         <div ui-view="settings"></div>
     </div>
@@ -114,17 +113,17 @@
                             <!--<td>{{item.name}}</td>-->
                             <!--<td>{{item.type }}</td>-->
                             <!--<td>{{item.location}}</td>-->
-                            <!--<td class="btn-group-xs">-->
-                                <!--<a ng-href="{{item.getShowUrl(item.id)}}" class="btn"-->
-                                   <!--ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">-->
-                                    <!--<span class="glyphicon "-->
-                                          <!--ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"-->
-                                          <!--aria-hidden="true"></span>-->
+                            <td class="btn-group-xs text-right">
+                                <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
+                                   ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
+                                    <span class="glyphicon "
+                                          ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"
+                                          aria-hidden="true"></span>
+                                </a>
+                                <!--<a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-warning">-->
+                                <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                 <!--</a>-->
-                                <!--&lt;!&ndash;<a ng-href="{{item.getEditUrl(item.id)}}"  class="btn btn-warning">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                            <!--</td>-->
+                            </td>
                             <!--<td class="btn-group-xs">-->
                                 <!--<a ng-if="mode" ng-click="delete(item)" class="btn btn-default">-->
                                     <!--<span class="glyphicon glyphicon-trash"></span>-->

@@ -279,7 +279,7 @@ module.exports.routes = {
 
     'GET /admin/positions/:id': 'PositionController.findOne',
     'GET /admin/positions/edit/:id': 'PageController.showHomePage',
-    'GET /admin/position/:id': 'PositionController.findOne',
+    'GET /admin/position/:id': 'PageController.showHomePage',
 
     'GET /admin/calendars': 'PageController.showHomePage',
     'GET /admin/calendars/:id': 'CalendarController.findOne',

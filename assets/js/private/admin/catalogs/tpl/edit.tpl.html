@@ -44,11 +44,11 @@
         </ul>
     </div>
     <div class="row">
-        <div ng-class="{'col-md-6':close, 'col-md-12':!close, 'fx-fade-left':!close, 'fx-fade-right':close}">
+        <div ng-class="{'col-md-6':!item.inlinePanel, 'col-md-12':item.inlinePanel, 'fx-fade-left':item.inlinePanel, 'fx-fade-right':!item.inlinePanel}">
             <div class="panel" ng-class="{'panel-warning':!item.fired, 'panel-default':item.fired}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать
-                        <a href="#" ng-click="closed()" class="pull-right">
+                        <a href="#" ng-click="inline()" class="pull-right">
                             <span class="glyphicon"
                                   ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
                         </a>
@@ -758,7 +758,6 @@
                     </button>
                 </div>
             </div>
-
         </div>
 
 
@@ -774,9 +773,9 @@
 
             <!-- I N F O  P A N E L -->
 
-            <div ng-show="me.admin" ng-if="close">
+            <div ng-show="me.admin" ng-if="!closeInfo" >
                 <div class="panel"
-                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':close, 'fx-fade-left':!close}">
+                     ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':!item.inlinePanel, 'fx-fade-left':item.inlinePanel}">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Информация

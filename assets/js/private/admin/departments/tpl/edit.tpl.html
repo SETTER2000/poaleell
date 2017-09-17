@@ -68,23 +68,32 @@
                     </div>
 
                     <!--<div class="form-group">-->
-                        <!--<label class="control-label" for="inputSuccess3">Дата регистрации-->
-                            <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="createNick=true"-->
-                                  <!--ng-mouseleave="createNick=false"></span>-->
-                            <!--<small ng-if="createNick">(официальная дата регистрации питомника)</small>-->
-                        <!--</label>-->
-                        <!--<input type="date" class="form-control"  ng-model="item.dateCreate">-->
-                        <!--&lt;!&ndash;<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--<label class="control-label" for="inputSuccess3">Дата регистрации-->
+                    <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="createNick=true"-->
+                    <!--ng-mouseleave="createNick=false"></span>-->
+                    <!--<small ng-if="createNick">(официальная дата регистрации питомника)</small>-->
+                    <!--</label>-->
+                    <!--<input type="date" class="form-control"  ng-model="item.dateCreate">-->
+                    <!--&lt;!&ndash;<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
                     <!--</div>-->
 
 
-                    <br>
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">
+                            {{registerArea}}
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="registerNick=true"
+                                  ng-mouseleave="registerNick=false"></span>
+                            <small ng-if="registerNick">(официально зарегистрированный номер питомника)</small>
+                        </label>
+                        <input class="form-control" ng-model="item.registerNumber">
+                    </div>
+
                     <div class="form-group">
                         <label class="control-label">
-                            Дата регистрации
+                            {{dateCreateArea}}
 
                             <span class="glyphicon glyphicon-question-sign" ng-mouseover="createNick=true"
-                            ng-mouseleave="createNick=false"></span>
+                                  ng-mouseleave="createNick=false"></span>
                             <small ng-if="createNick">(официальная дата регистрации питомника)</small>
                         </label>
                         <div class="input-group">
@@ -93,23 +102,13 @@
                                    fp-on-setup="toggleBlur(item)"
                                    ng-model="item.dateCreate">
                             <span class="input-group-btn">
-                              <!--<button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span-->
-                                <!--class="glyphicon glyphicon-remove"></span></button>-->
+                              <button class="btn btn-default" type="button" ng-click="removeDateCreate(item)"><span
+                                class="glyphicon glyphicon-remove"></span></button>
                             </span>
                         </div>
                     </div>
 
 
-
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess3">Номер питомника
-                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="registerNick=true"
-                                  ng-mouseleave="registerNick=false"></span>
-                            <small ng-if="registerNick">(официально зарегистрированный номер питомника)</small>
-                        </label>
-                        <input  class="form-control"  ng-model="item.registerNumber">
-                        <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                    </div>
                     <div class="row">
                         <div class="col-md-12">&nbsp;</div>
                     </div>
@@ -160,7 +159,7 @@
             </div>
         </div>
         <!--{{item | json}}-->
-        <div ng-if="(me.admin)" class="col-md-6">
+        <div class="col-md-6" ng-show="me.admin" ng-if="!closeInfo">
             <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Информация</h3>
@@ -170,7 +169,7 @@
                         <table class="table">
                             <tr ng-repeat="(key, value) in item">
                                 <th>{{key}}</th>
-                                <td>{{value  }}</td>
+                                <td>{{value }}</td>
                             </tr>
                         </table>
                     </div>

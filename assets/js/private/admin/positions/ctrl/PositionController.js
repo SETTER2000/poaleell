@@ -11,5 +11,33 @@ angular.module('PositionModule')
                     toastr.error(err.data.details, 'Ошибка - 211! ' + err.data.message);
                 });
             };
+
+            // конструктор хлебных крошек
+            function BreadCrumb() {
+                var name;
+                var path;
+                this.arr = [];
+            }
+
+            BreadCrumb.prototype.add = function () {
+                this.arr.push({name: this.name, path: this.path});
+            };
+
+            BreadCrumb.prototype.set = function (name, path) {
+                this.name = name;
+                this.path = path;
+                this.add();
+            };
+            BreadCrumb.prototype.getAll = function () {
+                return this.arr;
+            };
+
+            var breadcrumb = new BreadCrumb();
+            breadcrumb.set('Home', '/');
+            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Positions', 'home.admin.positions');
+            breadcrumb.set('Edit', 'home.admin.positions' + $state.current.url);
+            $scope.breadcrumbs = breadcrumb;
+
             $scope.refresh();
         }]);

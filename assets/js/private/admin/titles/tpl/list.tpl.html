@@ -72,6 +72,13 @@
                     <th>#</th>
 
                     <th >
+                        <button class="btn btn-default not-border" ng-click="sortBy('tip')">
+                            {{tipArea}}
+                                <span class="sortOrder" ng-show="propertyTip === 'tip'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
+                    <th >
                         <button class="btn btn-default not-border" ng-click="sortBy('name')">
                             {{nameArea}}
                                 <span class="sortOrder" ng-show="propertyName === 'name'"
@@ -96,7 +103,7 @@
                 </tr>
                 <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                     <td>{{$index+1}}</td>
-
+                    <td>{{item.tip}}</td>
                     <td >
                         <a ng-href="{{item.getEditUrl(item.id)}}">
                             <span ng-if="item.multiplicity">{{item.multiplicity}}x</span>{{item.name}}

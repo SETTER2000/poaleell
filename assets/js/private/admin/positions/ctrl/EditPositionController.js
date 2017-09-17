@@ -5,6 +5,8 @@ angular.module('PositionModule')
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.editPosition = $state.includes('home.admin.positions.edit');
             //if(!$scope.me.admin) $location.path('/') ;
+            $scope.closeInfo = 0; // скрыть панель информации
+            // $scope.inlinePanel = 0; // растянуть панель редактирования
             $scope.refresh = function () {
                 var item = $scope.item = Positions.get({id: $stateParams.positionId}, function (positions) {
                     $scope.positions = positions;
@@ -84,6 +86,36 @@ angular.module('PositionModule')
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };
+
+
+            // конструктор хлебных крошек
+            function BreadCrumb() {
+                var name;
+                var path;
+                this.arr = [];
+            }
+
+            BreadCrumb.prototype.add = function () {
+                this.arr.push({name: this.name, path: this.path});
+            };
+
+            BreadCrumb.prototype.set = function (name, path) {
+                this.name = name;
+                this.path = path;
+                this.add();
+            };
+            BreadCrumb.prototype.getAll = function () {
+                return this.arr;
+            };
+
+            var breadcrumb = new BreadCrumb();
+            breadcrumb.set('Home', '/');
+            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Positions', 'home.admin.positions');
+            breadcrumb.set('Edit', 'home.admin.positions' + $state.current.url);
+            $scope.breadcrumbs = breadcrumb;
+
+
 
             $scope.refresh();
         }]);

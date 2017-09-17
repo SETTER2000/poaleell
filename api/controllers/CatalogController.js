@@ -91,7 +91,7 @@ module.exports = {
     create: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
 
-        console.log('REQ входной: ', req );
+        // console.log('REQ входной: ', req );
         // if (!_.isString(req.param('name'))) {
         //     console.log(error.date, error.name);
         //     return res.badRequest(error.name);
@@ -172,6 +172,7 @@ module.exports = {
             symbol: req.param('symbol'),
             alias: req.param('alias'),
             timeBirthday: req.param('timeBirthday'),
+            inlinePanel: req.param('inlinePanel'),
         };
 
         Catalog.create(obj).exec(function (err, finn) {
@@ -237,8 +238,10 @@ module.exports = {
         //     console.log(error.date, error.owner);
         //     return res.badRequest(error.owner);
         // }
-        console.log('BREEDER: ', req.param('breeder'));
-        console.log('OWNER: ', req.param('owner'));
+        // console.log('UPDATE: ', req.body);
+
+        // console.log('BREEDER: ', req.param('breeder'));
+        // console.log('OWNER: ', req.param('owner'));
         let obj = {
             id: req.param('id'),
             action: req.param('action'),
@@ -271,13 +274,14 @@ module.exports = {
             symbol: req.param('symbol'),
             alias: req.param('alias'),
             timeBirthday: req.param('timeBirthday'),
+            inlinePanel: req.param('inlinePanel'),
         };
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.redirect('/admin/catalogs/edit/' + req.param('id'));
             console.log('Каталог обновил:', req.session.me);
             console.log('Собака обновление:', obj);
-         
-            console.log('req.body: ', req.body);
+            console.log('inlinePanel: ', req.param('inlinePanel'));
+            // console.log('req.body: ', req.body);
             Catalog.findOne(req.param('id'))
                 .populate('titles')
                 .populate('sires')

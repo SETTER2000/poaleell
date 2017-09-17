@@ -1,19 +1,9 @@
 <!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
-        <h2>{{item.getFullName()}}
+        <h2>{{item.getName()}}
 
             <div class="btn-group-xs pull-right">
-                <!--<small>-->
-
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
-                    <!--</label>-->
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
-                    <!--</label>-->
-
-                <!--</small>-->
                 <a ng-href="{{item.getListUrl()}}"  class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
@@ -29,14 +19,25 @@
             </div>
 
         </h2>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                    <span ng-switch-default>
+                    <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                    </span>
+                </ng-switch>
+            </li>
+        </ul>
     </div>
     <div class="row">
         <div class=" col-md-12">
+
+
+
             <table class="table">
-                <tr> <th>ФИО</th> <td>{{item.getFullName()}}</td></tr>
-                    <tr><th>ДР</th><td>{{item.birthday | date:'dd.MM.yyyy'}}</td></tr>
-                    <tr><th>Логин</th><td>{{item.login}}</td></tr>
-                    <tr><th>Email</th> <td>{{item.email}}</td></tr>
+                <tr> <th>Наименование</th> <td>{{item.getName()}}</td></tr>
+
                     <tr><th colspan="20"></th></tr>
 
 

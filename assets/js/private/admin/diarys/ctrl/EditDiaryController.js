@@ -5,7 +5,8 @@ angular.module('DiaryModule')
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.editObj = $state.includes('home.admin.diarys.edit');
             //if(!$scope.me.admin) $location.path('/') ;
-
+            $scope.closeInfo = 0; // скрыть панель информации
+            // $scope.inlinePanel = 0; // растянуть панель редактирования
             console.log('$STATE DIARYS: ', $state);
 console.log('$state.params.catalogId:',$state.params.catalogId);
 

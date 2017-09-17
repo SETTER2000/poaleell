@@ -8,6 +8,8 @@
                 
                 
                 $scope.added = 'Добавить питомник';
+                $scope.registerArea = 'Номер питомника';
+                $scope.dateCreateArea = 'Дата регистрации';
 
                 $scope.refresh = function () {
                     /**

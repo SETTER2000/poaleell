@@ -4,7 +4,8 @@ angular.module('UserModule')
         function ($scope, $http, toastr, $interval, $state, Users, moment, Positions, Departments, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
-            
+            $scope.closeInfo = 0; // скрыть панель информации
+            $scope.inlinePanel = 0; // растянуть панель редактирования
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',
@@ -14,20 +15,17 @@ angular.module('UserModule')
                 ok: 'OK!',
                 objectDelete: 'Объект удалён.',
                 newUserOk: 'Новый пользователь создан.',
-                passDefault:'111111',
-                redirectSelf:'home.admin.users',
-                ru:'ru',
-                dateFormat:"d.m.Y",
-                minDate:"01-01-1920",
-                maxDate:"31-12-2002"
+                passDefault: '111111',
+                redirectSelf: 'home.admin.users',
+                ru: 'ru',
+                dateFormat: "d.m.Y",
+                minDate: "01-01-1920",
+                maxDate: "31-12-2002"
             };
 
 
-
-            
             if (!$scope.me.admin && !$scope.me.kadr) $state.go(info.redirectSelf);
 
-            $scope.close = 1;
 
             $scope.loginAdmin = false;
 
@@ -43,7 +41,7 @@ angular.module('UserModule')
             };
 
             $scope.dateOpts2 = {
-                locale:info.ru,
+                locale: info.ru,
                 //mode: "range",
                 dateFormat: info.dateFormat,
                 minDate: info.minDate
@@ -170,8 +168,8 @@ angular.module('UserModule')
             $scope.getLdap = function () {
                 //console.log($scope.item.lastName);
                 $http.post('/users/ldap', {
-                        name: $scope.item.lastName
-                    })
+                    name: $scope.item.lastName
+                })
                     .then(function onSuccess(sailsResponse) {
                         //console.log('sailsResponse: ',sailsResponse);
                         let objectContacts = {};
@@ -258,13 +256,9 @@ angular.module('UserModule')
             $scope.uploaderView = "/js/private/admin/users/views/uploader.html";
 
 
-            $scope.closed = function () {
-                if ($scope.close) {
-                    $scope.close = false;
-                }
-                else {
-                    $scope.close = true;
-                }
+            $scope.inline = function () {
+                $scope.inlinePanel = ($scope.inlinePanel) ? false : true;
+                $scope.closeInfo =  (!$scope.closeInfo) ?  true : false;
             };
             //console.log( $stateParams.userId);
             //var item = $scope.item = Users.get({id: $stateParams.userId}, function (users) {
@@ -311,9 +305,9 @@ angular.module('UserModule')
 
             $scope.changeMyPassword = function () {
                 $http.put('/users/changePassword', {
-                        id: $scope.item.id,
-                        password: $scope.editProfile.properties.password
-                    })
+                    id: $scope.item.id,
+                    password: $scope.editProfile.properties.password
+                })
                     .then(function onSuccess(sailsResponse) {
                         //console.log('sailsResponse: ');
                         //console.log(sailsResponse);
@@ -397,7 +391,7 @@ angular.module('UserModule')
                                 $state.go('home.admin.user', {userId: success.id});
                             },
                             function (err) {
-                                toastr.error(err.data.invalidAttributes, info.error + ' 89336!');
+                                toastr.error(err.data, info.error + ' 89336!');
                             });
                     }
                 }
@@ -597,6 +591,7 @@ angular.module('UserModule')
             $scope.canRevert = function () {
                 return !angular.equals($scope.item, original);
             };
+
             /**
              *  Конструктор хлебных крошек
              * @constructor

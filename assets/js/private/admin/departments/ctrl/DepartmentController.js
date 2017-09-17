@@ -3,6 +3,8 @@ angular.module('DepartmentModule')
         function ($scope,$state,toastr, moment, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+            $scope.registerArea = 'Номер питомника';
+            $scope.dateCreateArea = 'Дата регистрации';
 
             //if(!$scope.me.admin) $location.path('/') ;
             /**

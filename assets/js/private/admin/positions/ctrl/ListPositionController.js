@@ -70,6 +70,9 @@
                 breadcrumb.set('Admin', '/admin');
                 breadcrumb.set('Positions', '/positions/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
+
+
+
                 $scope.delete = function (item) {
                     console.log(item);
                     item.$delete(item, function (success) {
@@ -79,6 +82,10 @@
                         console.log(err);
                     })
                 };
+
+
+
+
                 $scope.refresh();
             }])
     ;
