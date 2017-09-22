@@ -109,7 +109,7 @@
 
                         <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" for="inputSuccess8" ng-bind="items[0].sc()"></label>
-                            [ <a href="#" ng-click="addDepartment()">добавить</a> ]
+                            <span ng-if="!item.departments[0].name">   [ <a href="#" ng-click="addDepartment()">добавить</a> ]</span>
                             <div class="form-inline" ng-repeat="department in item.departments">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="department.id">
@@ -396,12 +396,11 @@
             </div>
 
             <div ng-show="me.admin" ng-if="!closeInfo">
-
                 <div class="panel"
                      ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':!inlinePanel, 'fx-fade-left':inlinePanel}">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Сменить пароль
-
+                        <h3 class="panel-title">
+                            Сменить пароль
                         </h3>
                     </div>
                     <!-- Error state -->

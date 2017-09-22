@@ -595,6 +595,7 @@ module.exports = {
                 User.find(q)
                     .populate('positions')
                     .populate('furloughs')
+                    .populate('departments')
                     .populate('breederCatalogs')
                     .populate('catalogs')
                     .exec(function foundUser(err, users) {

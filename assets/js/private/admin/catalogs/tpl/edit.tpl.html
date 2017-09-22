@@ -77,7 +77,7 @@
 
                         <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" ng-bind="items[0].sc()"></label>
-                            <span>[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
+                            <span ng-if="!item.kennels[0].id">[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
                             <div class="form-inline" ng-repeat="kennels in item.kennels">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="kennels.id">
@@ -429,9 +429,7 @@
                                 <option value="Шоколадный">
                                     Шоколадный
                                 </option>
-                                <option value="ds">
-                                    Шокоddddладный
-                                </option>
+
                             </select>
                         </div>
 
@@ -504,13 +502,14 @@
                                     <div class="file-upload ">
                                         <label class="text-left">
                                             <input type="file" nv-file-select="" uploader="uploadTitles" multiple/>
-                                            <div class="form-inline"
+                                            <div   class="form-inline"
                                                  ng-repeat="foto in filtered=(item.photos | filter:{$:searchText, catalogs:item.id, titles:item.titles[$index].id})">
                                                 <img ng-click="getTitle(title)" width="80" ng-src="{{foto.photoUrl}}"
                                                      alt="">
+
                                             </div>
-                                            <span ng-click="getTitle(title)"
-                                                  class="glyphicon glyphicon-camera" role="button"></span>
+                                            <span ng-if="title.name " ng-click="getTitle(title)"
+                                                   class="glyphicon glyphicon-camera" role="button"></span>
                                         </label>
                                     </div>
                                 </div>
@@ -549,7 +548,7 @@
                                                 <img ng-click="getReaction(reaction)" width="80"
                                                      ng-src="{{fot.photoUrl}}" alt="">
                                             </div>
-                                            <span ng-click="getReaction(reaction)"
+                                            <span ng-if="title.name " ng-click="getReaction(reaction)"
                                                   class="glyphicon glyphicon-camera" role="button"></span>
                                         </label>
                                     </div>

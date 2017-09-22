@@ -107,7 +107,7 @@
                     {display: "Не активированы / Заблокированы", value: "action"},
                     {display: "Все", value: "table"}
                 ];
-            $scope.modeSelect = $scope.options[0];
+            $scope.modeSelect = $scope.options[3];
             $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
             $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
             $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
