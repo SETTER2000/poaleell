@@ -21,7 +21,7 @@ module.exports = {
             type: 'boolean',
             defaultsTo: true,
             required: true
-            
+
         },
         name: {
             type: 'string',
@@ -36,8 +36,8 @@ module.exports = {
         dateCreate: {
             type: 'date'
         },
-        registerNumber:{
-            type:'string'
+        registerNumber: {
+            type: 'string'
         },
 
         location: {
@@ -47,25 +47,28 @@ module.exports = {
         lastLoggedIn: {
             type: 'date', required: true, defaultsTo: new Date(0)
         },
-        children:{
-          type:'array'
+        children: {
+            type: 'array'
         },
-        parent:{
-          type:'string'
+        parent: {
+            type: 'string'
 
         },
-        childrenObj:{
-            type:'array'
+        childrenObj: {
+            type: 'array'
         },
-        ancestors:{
-            type:'array'
+        ancestors: {
+            type: 'array'
         },
-        catalogs:{
-           collection:'catalog',
-           via: 'kennels'
+        catalogs: {
+            collection: 'catalog',
+            via: 'kennels'
         },
- 
 
+        suite: {
+            type:'string',
+            maxLength: 150
+        },
         // Добавить ссылку на пользователя
         users: {
             collection: 'user',

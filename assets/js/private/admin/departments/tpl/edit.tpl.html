@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-
+<p></p>
                     <!--<div class="form-group">-->
                     <!--<label class="control-label" for="inputSuccess3">Дата регистрации-->
                     <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="createNick=true"-->
@@ -106,6 +106,15 @@
                                 class="glyphicon glyphicon-remove"></span></button>
                             </span>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">
+                            {{suiteArea}} <a ng-if="item.suite" target="_blank" href="{{item.suite}}">перейти на сайт</a>
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="suiteNick=true"
+                                  ng-mouseleave="suiteNick=false"></span>
+                            <small ng-if="suiteNick">(официальный сайт питомника)</small>
+                        </label>
+                        <input class="form-control" ng-model="item.suite">
                     </div>
 
 

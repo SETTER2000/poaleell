@@ -12,6 +12,7 @@ angular.module('DepartmentModule')
 
             $scope.registerArea = 'Номер питомника';
             $scope.dateCreateArea = 'Дата регистрации';
+            $scope.suiteArea = 'Сайт';
 
             var info = {
                 changed: 'Изменения сохранены!',
