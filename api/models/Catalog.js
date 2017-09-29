@@ -39,6 +39,10 @@ module.exports = {
             // minLength: 4,
             // maxLength: 15
         },
+        // optionsSelectGender:{
+        //     type: 'string',
+        //     enum: ['кобель', 'сука']
+        // },
         inlinePanel:{
           type:'boolean'
         },

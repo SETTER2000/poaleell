@@ -72,7 +72,8 @@ module.exports.routes = {
     /**
      * Department
      */
-    'Get /getRootDepartment': 'DepartmentController.getRootDepartment',
+    'GET /getRootDepartment': 'DepartmentController.getRootDepartment',
+    'POST /department/getParent': 'DepartmentController.getParent',
 
 
     /**

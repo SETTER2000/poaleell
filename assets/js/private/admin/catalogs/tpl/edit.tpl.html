@@ -201,14 +201,21 @@
 
 
                         <!--< S I R E S -->
+                        <input type="text" ng-model="nameKennel">
+
+                        <select ng-if="kennels.length"  size="{{kennels.length}}" class="form-control" ng-model="nameKennel">
+                            <option ng-repeat="option in kennels" value="{{option.id}}">
+                                {{option.name}}
+                            </option>
+                        </select>
 
                         <div ng-controller="ListCatalogController" class="form-group ">
                             <label class="control-label">Отец</label>
                             <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
                             <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
                             <div class="form-group form-inline">
-                                <select class="form-control" ng-model="item.sires.id">
-                                    <option ng-repeat="option in items | filter:{action:true, gender:'кобель'}"
+                                <select  class="form-control" ng-model="item.sires.id">
+                                    <option ng-repeat="option in items | filter:{action:true, gender:'кобель'} "
                                             value="{{option.id}}">
                                         {{option.getFullName()}}
                                     </option>

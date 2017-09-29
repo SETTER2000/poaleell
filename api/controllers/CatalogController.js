@@ -366,6 +366,8 @@ module.exports = {
 
 
     },
+
+
     /**
      * Загрузка аватара на сервер
      * @param req
@@ -403,23 +405,7 @@ module.exports = {
             });
     },
 
-    /**
-     * Добавить родителей
-     * @param req
-     * @param res
-     */
-    // addParent: function (req, res) {
-    //     if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-    //     Catalog.findOne({})
-    //         .exec(function (err, foundDog) {
-    //             "use strict";
-    //             if (err) return res.negotiate;
-    //             if (!foundDog) return res.notFound();
-    //
-    //
-    //
-    //         });
-    // }
+
 
 };
 

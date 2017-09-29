@@ -15,8 +15,8 @@ angular.module('CatalogModule')
                 $scope.item.inlinePanel = (!$scope.item.inlinePanel);
                 // $scope.closeInfo = (!$scope.closeInfo) ? true : false;
 
-                if (angular.isDefined( $scope.item.id)) {
-                    $scope.item.$update( $scope.item, function (success) {
+                if (angular.isDefined($scope.item.id)) {
+                    $scope.item.$update($scope.item, function (success) {
                             toastr.success(info.changed);
                             $scope.refresh();
                         },
@@ -75,7 +75,7 @@ angular.module('CatalogModule')
             $scope.optionsSelectSymbol = $scope.alphabetObj();
 
             $scope.optionsSelectGender = [
-                {id: '', name: ''},
+                // {id: '', name: ''},
                 {id: 'сука', name: 'сука'},
                 {id: 'кобель', name: 'кобель'}];
 
@@ -96,18 +96,13 @@ angular.module('CatalogModule')
             $scope.timeOpts = {
                 enableTime: true,
                 noCalendar: true,
-
                 enableSeconds: false, // disabled by default
-
                 time_24hr: true, // AM/PM time picker is used by default
-
                 // default format
                 dateFormat: "H:i",
-
                 // initial values for time. don't use these to preload a date
                 // defaultHour: 12,
                 // defaultMinute: 0,
-
                 // Preload time with defaultDate instead:
                 defaultDate: "13:00"
             };
@@ -145,9 +140,21 @@ angular.module('CatalogModule')
                 //defaultDate: 'today'
             };
 
+            $scope.kennels = '';
+
+            $scope.$watch('nameKennel', function () {
+                $scope.getKennel();
+            });
 
             $scope.datePostSetup = function (fpItem) {
                 console.log('flatpickr', fpItem);
+            };
+
+            $scope.getKennel = function () {
+                $http.post('/department/getParent', {name:$scope.nameKennel}).then(function (response) {
+                    console.log('RESPOOO:', response);
+                    $scope.kennels = response.data;
+                })
             };
 
 

@@ -57,15 +57,15 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         if (req.param('id')) {
             Department.findOne(req.param('id'))
-                //.populate('subdivision')
+            //.populate('subdivision')
                 .exec(function foundUser(err, department) {
                     if (err) return res.serverError(err);
                     if (!department) return res.notFound();
                     res.ok(department);
                 });
         } else {
-            Department.find({sort:'name'})
-                //.populate('subdivision')
+            Department.find({sort: 'name'})
+            //.populate('subdivision')
                 .exec(function foundUser(err, departments) {
                     if (err) return res.serverError(err);
                     if (!departments) return res.notFound();
@@ -76,7 +76,6 @@ module.exports = {
 
     createDepartment: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-
 
 
         if (!_.isString(req.param('name'))) {
@@ -136,7 +135,7 @@ module.exports = {
             //console.log('CHILDRENS: ', child);
             //console.log('CHILDRENS2: ', child[0].name);
 
-            req.body.parent ='';
+            req.body.parent = '';
             req.body.childrenObj = [];
             _.forEach(child, function (value) {
                 console.log(value);
@@ -156,7 +155,7 @@ module.exports = {
                     req.body
                 )
                 .exec(function (err) {
-                    if (err)return res.negotiate(err);
+                    if (err) return res.negotiate(err);
                     //if (err) {
                     //    return res.redirect('/admin/departments/edit/' + req.param('id'));
                     //}
@@ -170,13 +169,35 @@ module.exports = {
     destroy: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         Department.findOne(req.param('id'), function foundUser(err, user) {
-            if (err)return next(err);
-            if (!user)return next('Position doesn\'t exists.');
+            if (err) return next(err);
+            if (!user) return next('Position doesn\'t exists.');
             Department.destroy(req.param('id'), function userDestroyed(err) {
-                if (err)return next(err);
+                if (err) return next(err);
             });
             res.ok();
         });
+    },
+
+    /**
+     * Добавить родителей
+     * @param req
+     * @param res
+     */
+    getParent: function (req, res) {
+        console.log('BODY:', req.param('name'));
+        if (!req.param('name')) return res.ok();
+
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        Department.find({name: {'like': req.param('name') + '%'}})
+            .exec(function (err, foundDog) {
+                "use strict";
+                if (err) return res.negotiate;
+                if (!foundDog) return res.notFound();
+                // console.log('foundDog:', foundDog);
+                return res.ok(foundDog);
+                // res.ok();
+
+            });
     }
 };
 
