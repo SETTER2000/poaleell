@@ -388,7 +388,7 @@
             </div>
 
         </div>
-        <div class="col-md-6" ng-if="item.id">
+        <div ng-class="{'col-md-6':!inlinePanel, 'col-md-12':inlinePanel, 'fx-fade-left':inlinePanel, 'fx-fade-right':!inlinePanel}" ng-if="item.id">
             <div ng-switch on="modeSelect.value">
                 <div ng-switch-when="uploader">
                     <ng-include src="uploaderView"></ng-include>
