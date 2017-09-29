@@ -769,7 +769,7 @@
 
         <!--A V A T A R -->
 
-        <div class="col-md-6">
+        <div ng-class="{'col-md-6':!item.inlinePanel, 'col-md-12':item.inlinePanel, 'fx-fade-left':item.inlinePanel, 'fx-fade-right':!item.inlinePanel}">
             <div ng-switch on="modeSelect.value">
                 <div ng-switch-when="uploader">
                     <ng-include src="uploaderView"></ng-include>

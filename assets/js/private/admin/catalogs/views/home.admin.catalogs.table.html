@@ -14,61 +14,61 @@
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
     <tr>
         <th>#</th>
-        <th></th>
+        <th class="text-center"><span class="badge">{{filtered.length}}</span></th>
         <th>
             <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('name')">
                 {{fioArea}}
-<span class="sortOrder" ng-show="propertyName === 'name'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'name'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th>
             <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('gender')">
                 {{genderArea}}
-<span class="sortOrder" ng-show="propertyName === 'gender'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'gender'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th class="text-center">
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('weight')">
                 {{weightArea}} (гр)
-<span class="sortOrder" ng-show="propertyName === 'weight'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'weight'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th class="text-center">
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('growth')">
                 {{growthArea}} (см)
-<span class="sortOrder" ng-show="propertyName === 'growth'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'growth'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th>
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('variety')">
                 {{varietyArea}}
-<span class="sortOrder" ng-show="propertyName === 'variety'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'variety'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th>
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('color')">
                 {{colorArea}}
-<span class="sortOrder" ng-show="propertyName === 'color'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'color'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th>
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('breeder')">
                 {{breederArea}}
-<span class="sortOrder" ng-show="propertyName === 'breeder'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'breeder'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
         <th>
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('owner')">
                 {{ownerArea}}
-<span class="sortOrder" ng-show="propertyName === 'owner'"
-      ng-class="{reverse: reverse}"></span>
+                <span class="sortOrder" ng-show="propertyName === 'owner'"
+                      ng-class="{reverse: reverse}"></span>
             </button>
         </th>
 
@@ -120,7 +120,8 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td>{{$index+1}}</td>
         <td>
             <a ng-href="{{item.getShowUrl(item.id)}}">
-                <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false"
+                <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
+                     ng-mouseleave="vid=false"
                      ng-src="{{item.avatarUrl}}"
                      alt="">
             </a>
@@ -133,7 +134,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             </a>
         </td>
         <td>{{item.gender}}</td>
-        <td class="text-center">{{item.weight}}</td>
+        <td class="text-center">{{item.weight | number:0}}</td>
         <td class="text-center">{{item.growth}}</td>
         <td>{{item.variety}}</td>
         <td> {{item.color}}</td>
@@ -164,8 +165,10 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <!--<td width="250px" class="text-right">{{item.getContact(fieldName)}}</td>-->
 
         <td class="btn-group-xs">
-            <a ng-href="{{item.getShowUrl(item.id)}}" class="btn" ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
-                <span class="glyphicon" ng-class="{'glyphicon-eye-open': item.action, 'glyphicon-eye-close':!item.action}"
+            <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
+               ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
+                <span class="glyphicon"
+                      ng-class="{'glyphicon-eye-open': item.action, 'glyphicon-eye-close':!item.action}"
                       aria-hidden="true"></span>
             </a>
         </td>

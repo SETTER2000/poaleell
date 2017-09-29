@@ -407,7 +407,7 @@ angular.module('CatalogModule')
              * Загрузка Аватара
              * @type {FileUploader|*}
              */
-            var uploader = $scope.uploader = new FileUploader({
+            const uploader = $scope.uploader = new FileUploader({
                 url: '/file/uploadDogs',
                 autoUpload: true,
                 removeAfterUpload: true,
@@ -589,7 +589,7 @@ angular.module('CatalogModule')
                     );
                 }
             };
-            var reversValue = function (item) {
+            const reversValue = function (item) {
                 item.birthday = ( item.birthday) ? new Date(moment(item.birthday, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.death = (item.death) ? new Date(moment(item.death, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
                 item.firedDate = ( item.firedDate) ? new Date(moment(item.firedDate, ['DD.MM.YYYY']).format('YYYY-MM-DD')) : null;
@@ -635,7 +635,8 @@ angular.module('CatalogModule')
                         }
                     );
                 } else {
-                    if (!item.id && (item.symbol || item.name)) {
+                    if (!item.id &&  (item.symbol || item.name)) {
+                        if (!item.kennels || (item.kennels[0].id === 'x')) return toastr.error('Питомник не заполнен.', 'Ошибка!');
                         // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
                         item.password = info.passDefault;
                         item.$save(item, function (success) {

@@ -203,11 +203,17 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             let t = '';
             if (int) {
                 this.breeders.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName + ', ';
+                    t += (i>=1) ? ', ' : '';
+                    t += item.lastName + ' ' + item.firstName ;
+                    t += (item.patronymicName) ? ' ' + item.patronymicName  : '';
+
                 });
             } else {
                 this.breeders.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0] + '., ';
+                    t += (i>=1) ? ', ' : '';
+                    t += item.lastName + ' ' + item.firstName[0] + '.';
+                    t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
+
                 });
             }
             return t;
@@ -216,11 +222,15 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             let t = '';
             if (int) {
                 this.owners.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName + ' ' + item.patronymicName + ', ';
+                    t += (i>=1) ? ', ' : '';
+                    t += item.lastName + ' ' + item.firstName ;
+                    t += (item.patronymicName) ? ' ' + item.patronymicName  : '';
                 });
             } else {
                 this.owners.forEach(function (item, i, arr) {
-                    t += item.lastName + ' ' + item.firstName[0] + '. ' + item.patronymicName[0] + '., ';
+                    t += (i>=1) ? ', ' : '';
+                    t += item.lastName + ' ' + item.firstName[0] + '.';
+                    t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
                 });
             }
             return t;
