@@ -16,10 +16,10 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.6.0",
+    "angular": "^1.6.6",
     "bootstrap": "^3.3.7",
     "sugar": "^2.0.4",
-    "angular-resource": "^1.6.1",
+    "angular-resource": "^1.6.6",
     "angular-route": "^1.6.1",
     "angular-ui-router": "^0.4.2",
     "angular-animate": "^1.6.1",
@@ -36,7 +36,11 @@
     "jquery-ui": "^1.12.1",
     "angular-file-upload": "^2.5.0",
     "angular-flatpickr": "^2.5.0",
-    "angular-material": "^1.1.4"
+    "angular-aria": "1.6.6",
+    "angular-material": "^1.1.5",
+    "moment": "^2.18.1",
+    "angular-toastr": "^2.1.1",
+    "moment-precise-range": "^1.0.1"
   },
   "devDependencies": {
     "angular-translate": "^2.15.0",

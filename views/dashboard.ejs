@@ -7,23 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!--STYLES-->
-    <link rel="stylesheet" href="/styles/angular-material.min.css">
-    <link rel="stylesheet" href="/styles/angular-toastr.css">
-    <link rel="stylesheet" href="/styles/animate.css">
-    <link rel="stylesheet" href="/styles/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/dependencies/toastr/angular-toastr.css">
+    <link rel="stylesheet" href="/js/dependencies/toastr/angular-toastr.min.css">
+    <link rel="stylesheet" href="/styles/animate.css">
     <link rel="stylesheet" href="/styles/dogs.css">
     <link rel="stylesheet" href="/styles/e-dashboard.css">
     <link rel="stylesheet" href="/styles/flatpickr.min.css">
     <link rel="stylesheet" href="/styles/font-awesome.min.css">
     <link rel="stylesheet" href="/styles/ie10-viewport-bug-workaround.css">
     <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/jstree/default/style.min.css">
     <link rel="stylesheet" href="/styles/navbar_sticky-footer-navbar.css">
     <link rel="stylesheet" href="/styles/style-tree.min.css">
     <link rel="stylesheet" href="/styles/v-accordion.min.css">
     <link rel="stylesheet" href="/styles/z.css">
     <!--STYLES END-->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css"/>
+    <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css"/>-->
     <!--Added this so the client has access to the csrf tag and it's grabbed first service side on every page -->
 
 </head>
@@ -34,7 +34,7 @@
 <div class="container">
     <%- body %>
 </div>
-<nav class="navbar navbar-default navbar-fixed-bottom">
+<nav class="navbar navbar-default navbar-bottom">
 <%- partial('./partials/footer.ejs') %>
 </nav>
 <script type="text/javascript">
@@ -50,15 +50,14 @@
 <script src="/js/dependencies/sails.io.js"></script>
 <script src="/js/dependencies/jquery.min.js"></script>
 <script src="/js/dependencies/bootstrap.min.js"></script>
-<script src="/js/dependencies/angular.js"></script>
-<script src="/js/dependencies/angular-resource.js"></script>
+<script src="/js/dependencies/angular.min.js"></script>
+<script src="/js/dependencies/angular-resource.min.js"></script>
 <script src="/js/dependencies/moment.min.js"></script>
-<script src="/js/dependencies/moment-precise-range.js"></script>
 <script src="/js/dependencies/twix.js"></script>
-<script src="/js/dependencies/moment-recur.min.js"></script>
+<script src="/js/dependencies/moment-recur.js"></script>
 <script src="/js/dependencies/ru.js"></script>
-<script src="/js/dependencies/angular-moment.js"></script>
-<script src="/js/dependencies/angular-animate.min.js"></script>
+<script src="/js/dependencies/angular-moment.min.js"></script>
+<script src="/js/dependencies/angular-animate.js"></script>
 <script src="/js/dependencies/angular-aria.min.js"></script>
 <script src="/js/dependencies/angular-file-upload.min.js"></script>
 <script src="/js/dependencies/angular-js-xlsx.js"></script>
@@ -68,14 +67,20 @@
 <script src="/js/dependencies/angular-ui-router.min.js"></script>
 <script src="/js/dependencies/compareTo.module.js"></script>
 <script src="/js/dependencies/flatpickr.js"></script>
+<script src="/js/dependencies/flatpickr/dist/l10n/ru.js"></script>
 <script src="/js/dependencies/jquery-ui.min.js"></script>
 <script src="/js/dependencies/jstree.min.js"></script>
 <script src="/js/dependencies/lodash.js"></script>
+<script src="/js/dependencies/moment-precise-range.js"></script>
 <script src="/js/dependencies/moment-timezone-with-data-2012-2022.min.js"></script>
 <script src="/js/dependencies/ng-flatpickr.js"></script>
 <script src="/js/dependencies/ng-fx.min.js"></script>
 <script src="/js/dependencies/ru_flatpicker.js"></script>
 <script src="/js/dependencies/shuffle.min.js"></script>
+<script src="/js/dependencies/toastr/angular-toastr.js"></script>
+<script src="/js/dependencies/toastr/angular-toastr.min.js"></script>
+<script src="/js/dependencies/toastr/angular-toastr.tpls.js"></script>
+<script src="/js/dependencies/toastr/angular-toastr.tpls.min.js"></script>
 <script src="/js/dependencies/v-accordion.min.js"></script>
 <script src="/js/private/admin/skds/SkdModule.js"></script>
 <script src="/js/private/admin/structures/StructureModule.js"></script>
@@ -165,8 +170,8 @@
 <script src="/js/public/recovery/resetPasswordPageController.js"></script>
 <script src="/js/public/signup/SignupController.js"></script>
 <!--SCRIPTS END-->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
-<script src="/vendor/flatpickr/dist/l10n/ru.js"></script>
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>-->
+<!--<script src="/vendor/flatpickr/dist/l10n/ru.js"></script>-->
 
 <script src="http://malsup.github.io/min/jquery.cycle2.min.js"></script>
 <script>
