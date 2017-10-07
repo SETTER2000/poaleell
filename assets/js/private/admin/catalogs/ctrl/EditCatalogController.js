@@ -50,7 +50,6 @@ angular.module('CatalogModule')
                 ok: 'OK!',
                 objectDelete: 'Объект удалён.',
                 newOk: 'Объект создан.',
-                passDefault: '111111',
                 redirectSelf: 'home.admin.catalogs',
                 ru: 'ru',
                 dateFormat: "d.m.Y",
@@ -152,7 +151,7 @@ angular.module('CatalogModule')
 
             $scope.getKennel = function () {
                 $http.post('/department/getParent', {name:$scope.nameKennel}).then(function (response) {
-                    console.log('RESPOOO:', response);
+                    // console.log('RESPOOO:', response);
                     $scope.kennels = response.data;
                 })
             };
@@ -542,8 +541,8 @@ angular.module('CatalogModule')
                     $scope.catalogs = catalogs;
                     // console.log('ITEM-+++5-SYMBOL',$scope.item.symbol );
                     // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
-                    console.log('catalogs входящий: ', catalogs);
-                    console.log('TYYYU: ', item.getTimeBirthday());
+                    // console.log('catalogs входящий: ', catalogs);
+                    // console.log('TYYYU: ', item.getTimeBirthday());
 
                     // item.getTimeBirthday();
                     item.getBirthday();
@@ -630,15 +629,15 @@ angular.module('CatalogModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err, info.error + ' 1001!');
-                            $scope.refresh();
+
+                            toastr.error(err.data, 'Ошибка!');
+                            // $scope.refresh();
                         }
                     );
                 } else {
                     if (!item.id &&  (item.symbol || item.name)) {
                         if (!item.kennels || (item.kennels[0].id === 'x')) return toastr.error('Питомник не заполнен.', 'Ошибка!');
                         // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
-                        item.password = info.passDefault;
                         item.$save(item, function (success) {
                                 //console.log(success);
                                 //location.reload();
@@ -650,6 +649,8 @@ angular.module('CatalogModule')
                             },
                             function (err) {
                                 toastr.error(err.data, 'Ошибка!');
+                            // if(err.data['originalError'].code == 11000) return toastr.error('Объект уже существует.',  'Ошибка '+err.data['originalError'].code+'!');
+
                             });
                     } else {
                         toastr.error('Нужно заполнить одно из полей, букву помёта или имя собаки, можно и то и другое вместе.', 'Ошибка!');

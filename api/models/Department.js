@@ -62,7 +62,8 @@ module.exports = {
         },
         catalogs: {
             collection: 'catalog',
-            via: 'kennels'
+            via: 'kennels',
+            dominant: true
         },
 
         suite: {

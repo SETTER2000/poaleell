@@ -86,9 +86,26 @@ module.exports = {
         if (req.param('name').length < 2 || req.param('name').length > 200) {
             return res.badRequest('Наименование должно быть от 2 до 200 знаков!');
         }
-
+        /**
+         * Поднимаем все первые буквы имени в верхний регистр
+         */
+        let name = req.param('name')
+            .split(' ')
+            .map(function (el) {
+                return el.charAt(0).toUpperCase() + el.slice(1);
+            })
+            .join(' ');
+        let obj = {
+            action: (req.param('action')) ? req.param('action') : false,
+            section: 'Питомник',
+            sections: 'Питомники',
+            name: name,
+            registerNumber: req.param('registerNumber'),
+            dateCreate: req.param('dateCreate'),
+            suite: req.param('suite')
+        };
         console.log('createDepartmen222t', req.body);
-        Department.create(req.body).exec(function (err, finn) {
+        Department.create(obj).exec(function (err, finn) {
             if (err) {
                 return res.serverError(err);
             }
@@ -171,7 +188,10 @@ module.exports = {
         Department.findOne(req.param('id'), function foundUser(err, user) {
             if (err) return next(err);
             if (!user) return next('Position doesn\'t exists.');
-            Department.destroy(req.param('id'), function userDestroyed(err) {
+            Department.destroy(req.param('id'))
+                .populate('catalogs')
+                .populate('users')
+                .exec((err) => {
                 if (err) return next(err);
             });
             res.ok();

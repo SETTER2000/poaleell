@@ -188,7 +188,7 @@
                             $scope.mx = new Date($scope.items[0]._id.date);
                             $scope.objectName = skds;
                         }, function (err) {
-                            toastr.error(err.data.details, 'Ошибка 77! ' + err.data.message);
+                            toastr.error(err.data.details, 'Ошибка 717! ' + err.data.message);
                         });
                 };
                 $scope.refresh();

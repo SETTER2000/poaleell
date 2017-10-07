@@ -1,0 +1,59 @@
+
+    <th>#</th>
+    <th class="text-center"><span class="badge">{{filtered.length}}</span></th>
+    <th>
+        <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('kennels[0].name')">
+            {{fioArea}}
+            <span class="sortOrder" ng-show="propertyName === 'kennels[0].name'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th>
+        <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('gender')">
+            {{genderArea}}
+            <span class="sortOrder" ng-show="propertyName === 'gender'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th class="text-center">
+        <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('weight')">
+            {{weightArea}} (гр)
+            <span class="sortOrder" ng-show="propertyName === 'weight'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th class="text-center">
+        <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('growth')">
+            {{growthArea}} (см)
+            <span class="sortOrder" ng-show="propertyName === 'growth'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th>
+        <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('variety')">
+            {{varietyArea}}
+            <span class="sortOrder" ng-show="propertyName === 'variety'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th>
+        <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('color')">
+            {{colorArea}}
+            <span class="sortOrder" ng-show="propertyName === 'color'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th>
+        <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('breeder')">
+            {{breederArea}}
+            <span class="sortOrder" ng-show="propertyName === 'breeder'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>
+    <th>
+        <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('owner')">
+            {{ownerArea}}
+            <span class="sortOrder" ng-show="propertyName === 'owner'"
+                  ng-class="{reverse: reverse}"></span>
+        </button>
+    </th>

@@ -76,7 +76,11 @@ angular.module('TitleModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
         };
 
         Titles.prototype.getFullName = function () {
-            return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
+            let name = (this.multiplicity) ? this.multiplicity+'x' : '';
+            name += this.name;
+            name += (this.year) ? '-'+this.year : '';
+
+            return name;
         };
 
         Titles.prototype.sc = function () {

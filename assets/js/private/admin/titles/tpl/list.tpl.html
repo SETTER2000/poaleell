@@ -106,7 +106,7 @@
                     <td>{{item.tip}}</td>
                     <td >
                         <a ng-href="{{item.getEditUrl(item.id)}}">
-                            <span ng-if="item.multiplicity">{{item.multiplicity}}x</span>{{item.name}}
+                            {{item.getFullName()}}
                         </a>
                     </td>
                     <td>{{item.description}}</td>

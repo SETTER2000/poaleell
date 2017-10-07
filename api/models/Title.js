@@ -26,6 +26,9 @@ module.exports = {
       multiplicity:{
         type:'integer'
       },
+        year:{
+        type:'integer'
+      },
       name: {
         type: 'string',
         unique: true,

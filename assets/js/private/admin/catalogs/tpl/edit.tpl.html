@@ -26,7 +26,7 @@
                 <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span> Список
                 </a>
-                <button  ng-if="!item.action && edit && me.admin" ng-click="delete2(item)"
+                <button ng-if="!item.action && edit && me.admin" ng-click="delete2(item)"
                         class="btn btn-sm btn-danger">
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
@@ -75,9 +75,10 @@
 
                         <!--< K E N N E L -->
 
-                        <div ng-controller="ListDepartmentController" class="form-group ">
+                        <div ng-if="!edit" ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" ng-bind="items[0].sc()"></label>
-                            <span ng-if="!item.kennels[0].id">[ <a href="#" ng-click="addKennelField()">добавить</a> ]</span>
+                            <span ng-if="!item.kennels[0].id">[ <a href="#"
+                                                                   ng-click="addKennelField()">добавить</a> ]</span>
                             <div class="form-inline" ng-repeat="kennels in item.kennels">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="kennels.id">
@@ -87,9 +88,9 @@
                                         </option>
                                     </select>
                                     <!--<div class="form-group pull-right">-->
-                                        <!--<button type="button" class="btn btn-default "-->
-                                                <!--ng-click="removeKennelItem(kennels)"><span-->
-                                                <!--class="glyphicon glyphicon-remove"></span></button>-->
+                                    <!--<button type="button" class="btn btn-default "-->
+                                    <!--ng-click="removeKennelItem(kennels)"><span-->
+                                    <!--class="glyphicon glyphicon-remove"></span></button>-->
                                     <!--</div>-->
                                 </div>
                             </div>
@@ -132,7 +133,7 @@
                             </div>
                         </div>
                         <div class="row" ng-if="item.symbol">
-                            <div class="col-md-6" >
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="symbol" class="control-label">
                                         Время рождения
@@ -142,7 +143,8 @@
                                         <!--<small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)-->
                                         <!--</small>-->
                                     </label>
-                                    <input class="form-control flatpickr" ng-flatpickr fp-opts="timeOpts" fp-on-setup="datePostSetup(fpItem)"
+                                    <input class="form-control flatpickr" ng-flatpickr fp-opts="timeOpts"
+                                           fp-on-setup="datePostSetup(fpItem)"
                                            ng-model="item.timeBirthday" data-enabletime="true">
                                 </div>
                             </div>
@@ -155,11 +157,11 @@
                                         <!--ng-mouseleave="symbolNick=false"></span>-->
                                         <!--<small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)-->
                                         <!--</small>-->
-                                    </label>
-                                    <button ng-click="saveDiary(item)" type="button" class="btn btn-info btn-sm">
+                                    </label><br>
+                                    <button ng-click="saveDiary(item)" type="button" class="btn btn-info btn-md">
                                         <span class="glyphicon glyphicon-check"></span> Дневник
                                     </button>
-                                    <button ng-click="saveJournal(item)" type="button" class="btn btn-warning btn-sm">
+                                    <button ng-click="saveJournal(item)" type="button" class="btn btn-warning btn-md">
                                         <span class="glyphicon glyphicon-check"></span> Журнал
                                     </button>
                                 </div>
@@ -168,21 +170,20 @@
                         <hr>
                         <!--N A M E-->
 
-                        <div class="form-group">
+                        <div ng-if="!edit" class="form-group">
                             <label class="control-label" for="inputSuccess1">
                                 Имя
                                 <span class="glyphicon glyphicon-question-sign" ng-mouseover="show=true"
                                       ng-mouseleave="show=false"></span>
-                                <small ng-if="show">( та часть имени, которая пишется после названия питомника)</small>
+                                <small ng-if="show && (!edit)">( та часть имени, которая пишется после названия
+                                    питомника)
+                                </small>
                             </label>
-                            <input ng-if="!edit" autofocus minlength="2" maxlength="40" ng-change="getLdap()"
+                            <input autofocus minlength="2" maxlength="40" ng-change="getLdap()"
                                    type="text"
                                    class="form-control"
                                    ng-model="item.name">
-                            <input ng-if="edit" autofocus minlength="2" maxlength="40" type="text" class="form-control"
-                                   ng-model="item.name">
                         </div>
-
 
 
                         <!-- N I C K N A M E -->
@@ -201,21 +202,21 @@
 
 
                         <!--< S I R E S -->
-                        <input type="text" ng-model="nameKennel">
+                        <!--<input type="text" ng-model="nameKennel">-->
 
-                        <select ng-if="kennels.length"  size="{{kennels.length}}" class="form-control" ng-model="nameKennel">
-                            <option ng-repeat="option in kennels" value="{{option.id}}">
-                                {{option.name}}
-                            </option>
-                        </select>
+                        <!--<select ng-if="kennels.length"  size="{{kennels.length}}" class="form-control" ng-model="nameKennel">-->
+                        <!--<option ng-repeat="option in kennels" value="{{option.id}}">-->
+                        <!--{{option.name}}-->
+                        <!--</option>-->
+                        <!--</select>-->
 
                         <div ng-controller="ListCatalogController" class="form-group ">
                             <label class="control-label">Отец</label>
                             <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
                             <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
                             <div class="form-group form-inline">
-                                <select  class="form-control" ng-model="item.sires.id">
-                                    <option ng-repeat="option in items | filter:{action:true, gender:'кобель'} "
+                                <select class="form-control" ng-model="item.sires.id">
+                                    <option ng-repeat="option in items | itsNotMe:item.id | filter:{action:true, gender:'кобель'} | orderBy:'kennels[0].name'"
                                             value="{{option.id}}">
                                         {{option.getFullName()}}
                                     </option>
@@ -238,7 +239,7 @@
                             <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
                             <div class="form-group form-inline">
                                 <select class="form-control" ng-model="item.dams.id">
-                                    <option ng-repeat="option in items | filter:{action:true, gender:'сука'}"
+                                    <option ng-repeat="option in items | itsNotMe:item.id | filter:{action:true, gender:'сука'} | orderBy:'kennels[0].name'"
                                             value="{{option.id}}">
                                         {{option.getFullName()}}
                                     </option>
@@ -449,7 +450,7 @@
                             <div class="form-inline" ng-repeat="breeder in item.breeders">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="breeder.id">
-                                        <option ng-repeat="option in items | filter:{action:true}"
+                                        <option ng-repeat="option in items | filter:{action:true} | orderBy:'lastName'"
                                                 value="{{option.id}}">
                                             {{option.getFullName()}}
                                         </option>
@@ -475,7 +476,7 @@
                             <div class="form-inline" ng-repeat="owner in item.owners">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="owner.id">
-                                        <option ng-repeat="option in items | filter:{action:true}"
+                                        <option ng-repeat="option in items | filter:{action:true} | orderBy:'lastName'"
                                                 value="{{option.id}}">
                                             {{option.getFullName()}}
                                         </option>
@@ -499,9 +500,9 @@
                             <div class="form-inline" ng-repeat="title in item.titles">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="title.id">
-                                        <option ng-repeat="option in items | filter:{action:true}"
+                                        <option ng-repeat="option in items | filter:{action:true} | orderBy:'name'"
                                                 value="{{option.id}}">
-                                            {{getMultiplicity(option)}}{{option.name}}
+                                            {{option.getFullName()}}
                                         </option>
                                     </select>
                                 </div>
@@ -509,14 +510,14 @@
                                     <div class="file-upload ">
                                         <label class="text-left">
                                             <input type="file" nv-file-select="" uploader="uploadTitles" multiple/>
-                                            <div   class="form-inline"
+                                            <div class="form-inline"
                                                  ng-repeat="foto in filtered=(item.photos | filter:{$:searchText, catalogs:item.id, titles:item.titles[$index].id})">
                                                 <img ng-click="getTitle(title)" width="80" ng-src="{{foto.photoUrl}}"
                                                      alt="">
 
                                             </div>
                                             <span ng-if="title.name " ng-click="getTitle(title)"
-                                                   class="glyphicon glyphicon-camera" role="button"></span>
+                                                  class="glyphicon glyphicon-camera" role="button"></span>
                                         </label>
                                     </div>
                                 </div>
@@ -779,7 +780,7 @@
 
             <!-- I N F O  P A N E L -->
 
-            <div ng-show="me.admin" ng-if="!closeInfo" >
+            <div ng-show="me.admin" ng-if="!closeInfo">
                 <div class="panel"
                      ng-class="{'panel-success':!item.fired, 'panel-default':item.fired,'fx-fade-right':!item.inlinePanel, 'fx-fade-left':item.inlinePanel}">
                     <div class="panel-heading">

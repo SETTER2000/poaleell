@@ -2,7 +2,7 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
-            <p ng-if="item.name" ng-class="{'fired':item.fired}">{{item.sc()}} : {{item.name}}
+            <p ng-if="item.name" ng-class="{'fired':item.fired}">{{item.sc()}} : {{item.getFullName()}}
                 <span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
             </p>
             <p ng-if="!item.name">Новый титул</p>
@@ -49,17 +49,26 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-3">
-                                <label class="control-label" for="inputSuccess22">Кратность</label>
+                            <div class="col-md-4" ng-if="ko()">
+                                <label class="control-label" for="inputSuccess22">Год</label>
                                 <div class="input-group">
-                                    <input type="number" min="2" class="form-control" ng-model="item.multiplicity"
-                                           aria-describedby="basic-addon2">
+                                    <input type="number" class="form-control" ng-model="item.year" name="quantity"
+                                           min="2000" max="2100" step="1" >
                                     <span class="input-group-addon" id="basic-addon2"><span
                                             class="glyphicon glyphicon-remove"></span></span>
                                 </div>
                             </div>
+                            <div class="col-md-3" ng-if="!ko()">
+                                <label class="control-label" for="inputSuccess22">Кратность</label>
+                                <div class="input-group">
+                                    <input type="number"  min="2" class="form-control" ng-model="item.multiplicity"
+                                           aria-describedby="basic-addon3">
+                                    <span class="input-group-addon" id="basic-addon3"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                </div>
+                            </div>
 
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <div class="input-group">
                                     <label class="control-label" for="inputSuccess1">Наименование</label>
                                     <input type="text" required class="form-control" ng-model="item.name">

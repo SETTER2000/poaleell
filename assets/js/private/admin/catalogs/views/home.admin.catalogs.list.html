@@ -2,7 +2,7 @@
 <pagination
         limit-rows="limitRows"
         default-rows="defaultRows"
-        length-object="(items | filter:{$:searchText, fired:false} ).length"
+        length-object="(items | filter:{$:searchText, gender:'сука',action:true} ).length"
         current-page="currentPage"
         added="added"
         show-bt="showBt"
@@ -12,104 +12,7 @@
 <!--{{(items | filter:{$:searchText, fired:false} ).length}}-->
 <table class="table table-hover">
     <!--<tr><th colspan="100">Найдено: {{filtered.length}}</th></tr>-->
-    <tr>
-        <th>#</th>
-        <th class="text-center"><span class="badge">{{filtered.length}}</span></th>
-        <th>
-            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('name')">
-                {{fioArea}}
-<span class="sortOrder" ng-show="propertyName === 'name'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th>
-            <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('gender')">
-                {{genderArea}}
-<span class="sortOrder" ng-show="propertyName === 'gender'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th class="text-center">
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('weight')">
-                {{weightArea}} (гр)
-<span class="sortOrder" ng-show="propertyName === 'weight'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th class="text-center">
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('growth')">
-                {{growthArea}} (см)
-<span class="sortOrder" ng-show="propertyName === 'growth'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th>
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('variety')">
-                {{varietyArea}}
-<span class="sortOrder" ng-show="propertyName === 'variety'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th>
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('color')">
-                {{colorArea}}
-<span class="sortOrder" ng-show="propertyName === 'color'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th>
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('breeder')">
-                {{breederArea}}
-<span class="sortOrder" ng-show="propertyName === 'breeder'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-        <th>
-            <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('owner')">
-                {{ownerArea}}
-<span class="sortOrder" ng-show="propertyName === 'owner'"
-      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
-
-
-        <!--<th class="wdt">-->
-        <!--&lt;!&ndash;<button class="btn  btn-sm btn-default" ng-click="sortBy('contacts')">Контакты: {{fieldName}}&ndash;&gt;-->
-        <!--&lt;!&ndash;<span class="sortOrder" ng-show="propertyName === 'contacts'"&ndash;&gt;-->
-        <!--&lt;!&ndash;ng-class="{reverse: reverse}"></span>&ndash;&gt;-->
-        <!--&lt;!&ndash;</button>&ndash;&gt;-->
-        <!--&lt;!&ndash; Single button &ndash;&gt;-->
-        <!--&lt;!&ndash; Split button &ndash;&gt;-->
-        <!--<div class="btn-group pull-right">-->
-        <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('contacts')">-->
-        <!--<span class="sortOrder" ng-show="propertyName === 'contacts'" ng-class="{reverse: reverse}"></span>-->
-        <!--Контакты: {{fieldName}}-->
-        <!--</button>-->
-        <!--<button type="button" class="btn btn-sm btn-default  not-border dropdown-toggle" data-toggle="dropdown"-->
-        <!--aria-haspopup="true" aria-expanded="false">-->
-        <!--<span class="caret"></span>-->
-        <!--<span class="sr-only">Контакты: {{fieldName}}</span>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu">-->
-        <!--&lt;!&ndash;<li><a href="#" ng-click="fieldName='Email'">Email</a></li>&ndash;&gt;-->
-        <!--<li><a href="#" ng-click="fieldName='Мобильный'">Мобильный</a></li>-->
-        <!--<li><a href="#" ng-click="fieldName='Телефон'">Телефон</a></li>-->
-        <!--<li><a href="#" ng-click="fieldName='Внутренний телефон'">Внутренний телефон</a></li>-->
-        <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#">Separated link</a></li>&ndash;&gt;-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</th>-->
-        <!--<th>-->
-        <!--<button class="btn  btn-sm btn-default  not-border" ng-click="sortBy('email')">Отработанное время-->
-        <!--<span class="sortOrder" ng-show="propertyName === 'email'"-->
-        <!--ng-class="{reverse: reverse}"></span>-->
-        <!--</button>-->
-
-        <!--</th>-->
-        <!--<th></th>-->
-        <!--<th></th>-->
-    </tr>
+    <tr head-table type="catalog"></tr>
     <!--| firstChar:param:charText-->
     <!--ng-class="$even ? 'default' : 'success'"-->
     <!--<tr><td ng-repeat="(key,property) in item">{{key}}</td></tr>-->
@@ -125,7 +28,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             </a>
         </td>
         <td>
-            <a href="{{item.getEditUrl(item.id)}}">
+            <a class="position" href="{{item.getEditUrl(item.id)}}">
                 {{item.getFullName()}}
             </a>
         </td>
@@ -134,8 +37,8 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td class="text-center">{{item.growth}}</td>
         <td>{{item.variety}}</td>
         <td> {{item.color}}</td>
-        <td>{{item.breeders[0].getFullName()}}</td>
-        <td>{{item.owner}}</td>
+        <td class="position">{{item.breederName(0)}}</td>
+        <td class="position">{{item.ownerName(0)}}</td>
 
         <!--<td>-->
         <!--<ul style="list-style-type: none; margin: 0; padding: 0" class="position" ng-controller="ListDepartmentController"-->

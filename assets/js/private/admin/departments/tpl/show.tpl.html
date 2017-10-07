@@ -19,22 +19,30 @@
                 <tr>
                     <th>Наименование</th>
                     <td>{{item.name}}</td>
-                </tr>  <tr>
-                    <th>  {{registerArea}}</th>
+                </tr>
+                <tr>
+                    <th> {{registerArea}}</th>
                     <td>{{item.registerNumber}}</td>
-                </tr>  <tr>
-                    <th>  {{dateCreateArea}}</th>
-                    <td>{{item.dateCreate | date:'dd.MM.yyyy'}}</td>
+                </tr>
+                <tr>
+                    <th> {{dateCreateArea}}</th>
+                    <td>{{item.dateCreate | date:'MM.dd.yyyy'}}</td>
+                </tr>
+                <tr>
+                    <th> {{suiteArea}}</th>
+                    <td>{{item.suite }}</td>
                 </tr>
                 <!--<tr>-->
-                    <!--<th>Тип</th>-->
-                    <!--<td>{{item.type | date:'dd.MM.yyyy'}}</td>-->
+                <!--<th>Тип</th>-->
+                <!--<td>{{item.type | date:'dd.MM.yyyy'}}</td>-->
                 <!--</tr>-->
                 <!--<tr>-->
-                    <!--<th>Местоположение</th>-->
-                    <!--<td>{{item.location}}</td>-->
+                <!--<th>Местоположение</th>-->
+                <!--<td>{{item.location}}</td>-->
                 <!--</tr>-->
-                <tr><th colspan="30"></th></tr>
+                <tr>
+                    <th colspan="30"></th>
+                </tr>
 
 
             </table>

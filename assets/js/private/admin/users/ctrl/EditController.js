@@ -6,6 +6,7 @@ angular.module('UserModule')
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.closeInfo = 0; // скрыть панель информации
             $scope.inlinePanel = 0; // растянуть панель редактирования
+            $scope.edit = $state.includes('home.admin.users.edit');
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',
@@ -29,7 +30,7 @@ angular.module('UserModule')
 
             $scope.loginAdmin = false;
 
-            $scope.edit = $state.includes('home.admin.users.edit');
+
 
             $scope.dateOpts = {
                 locale: info.ru,

@@ -187,7 +187,8 @@ module.exports = {
         },
         breederCatalogs: {
             collection: 'catalog',
-            via: 'breeders'
+            via: 'breeders',
+            dominant: true
         },
 
         //// Отпуска тестовый

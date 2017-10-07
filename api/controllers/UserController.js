@@ -23,12 +23,12 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 moment.locale('ru');
-var error = {
+const error = {
     date: moment().format('LLLL'),
 };
 //var URI = require('urijs');
 //const URITemplate = require('urijs/src/URITemplate');
-var count = 5;
+let count = 5;
 
 module.exports = {
     /**
@@ -45,7 +45,7 @@ module.exports = {
             ]
         }, function foundUser(err, user) {
 
-            console.log('user', user);
+            // console.log('user', user);
             if (err) return res.negotiate(err);
             if (!user) return res.notFound();
             Passwords.checkPassword({
@@ -68,7 +68,7 @@ module.exports = {
                         return res.forbidden("Ваша учетная запись заблокирована, " +
                             "пожалуйста свяжитесь с администратором: " + sails.config.admin.email);
                     }
-                    console.log('Вход в систему: ', error.date +', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
+                    console.log('Вход в систему: ', error.date + ', ' + user.lastName + ' ' + user.firstName + ' ' + user.patronymicName + ', ' + user.email);
                     req.session.me = user.id;
                     //req.session.admin = user.admin;
                     //req.session.kadr = 11;
@@ -91,7 +91,7 @@ module.exports = {
                 {email: req.param('email')},
                 {login: req.param('email')}
             ]
-        }).exec((err, user)=> {
+        }).exec((err, user) => {
             if (err) return res.negotiate(err);
             if (!user) return res.notFound('Пользователь не найден.');
 
@@ -128,7 +128,7 @@ module.exports = {
                         clientLDAP.destroy();
                     });
                     --count;
-                    if (+count < 0)  return res.forbidden('Аккаунт заблокирован! Обращайтесь к системному администратору или через 10 мин. блокировка будет снята автоматически.');
+                    if (+count < 0) return res.forbidden('Аккаунт заблокирован! Обращайтесь к системному администратору или через 10 мин. блокировка будет снята автоматически.');
                     switch (+count) {
                         case 1:
                             word = 'попытка';
@@ -360,12 +360,36 @@ module.exports = {
                 return res.negotiate(err);
             },
             success: function (encryptedPassword) {
+
+                /**
+                 * Поднимаем все первые буквы имени в верхний регистр
+                 */
+                let firstName = req.param('firstName')
+                    .split(' ')
+                    .map(function (el) {
+                        return el.charAt(0).toUpperCase() + el.slice(1);
+                    })
+                    .join(' ');
+
+                let lastName = req.param('lastName')
+                    .split(' ')
+                    .map(function (el) {
+                        return el.charAt(0).toUpperCase() + el.slice(1);
+                    })
+                    .join(' ');
+                let patronymicName = req.param('patronymicName')
+                    .split(' ')
+                    .map(function (el) {
+                        return el.charAt(0).toUpperCase() + el.slice(1);
+                    })
+                    .join(' ');
+
                 User.create({
                     login: req.param('login'),
                     email: req.param('email'),
-                    firstName: req.param('firstName'),
-                    lastName: req.param('lastName'),
-                    patronymicName: req.param('patronymicName'),
+                    firstName: firstName,
+                    lastName: lastName,
+                    patronymicName: patronymicName,
                     encryptedPassword: encryptedPassword,
                     birthday: req.param('birthday'),
                     contacts: req.param('contacts'),
@@ -570,6 +594,8 @@ module.exports = {
      */
     findUsers: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        console.log("REQUEST BODY USER:", req.body);
+        console.log("REQUEST BODY USER:", req.param('char'));
         if (req.param('id')) {
             User.findOne(req.param('id'))
                 .populate('positions')
@@ -629,13 +655,13 @@ module.exports = {
             .populate('breederCatalogs')
             .populate('catalogs')
             .exec(function foundUser(err, user) {
-            if (err) return next(err);
-            if (!user) return next();
+                if (err) return next(err);
+                if (!user) return next();
 
-            res.view({
-                user: user, me: req.session.me
+                res.view({
+                    user: user, me: req.session.me
+                });
             });
-        });
     },
 
     /**
@@ -650,8 +676,8 @@ module.exports = {
             .populate('positions')
             .populate('furloughs')
             .exec((err, user) => {
-                if (err)return next(err);
-                if (!user)return next('User doesn\'t exists.');
+                if (err) return next(err);
+                if (!user) return next('User doesn\'t exists.');
                 //user.birthday = Sugar.Date.format(user.birthday, '%d.%m.%Y');
                 res.view({
                     user: user, me: req.session.me
@@ -668,8 +694,8 @@ module.exports = {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         let fDt = (req.param('firedDate')) ? req.param('firedDate') : null;
         var obj = {
-            login: req.param('login'),
-            email: req.param('email'),
+            // login: req.param('login'),
+            // email: req.param('email'),
             firstName: req.param('firstName'),
             lastName: req.param('lastName'),
             patronymicName: req.param('patronymicName'),
@@ -693,7 +719,7 @@ module.exports = {
         //console.log('Param ID: ', req.param('id'));
         //console.log('objEdit555: ', obj);
         User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
-            if (err)return res.redirect('/admin/users/edit/' + req.param('id'));
+            if (err) return res.redirect('/admin/users/edit/' + req.param('id'));
             User.findOne(req.param('id'))
                 .populate('positions')
                 .populate('furloughs')
@@ -720,7 +746,7 @@ module.exports = {
                         user.departments.remove(req.param('departmentRemove'));
                     }
                     user.save(function (err) {
-                        if (err) return res.negotiate('ERR: ' + err);
+                        if (err) return res.negotiate('Ошибка при сохранении...');
                         res.ok();
                     });
                 });
@@ -736,10 +762,10 @@ module.exports = {
     destroy: function (req, res, next) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         User.findOne(req.param('id'), function foundUser(err, user) {
-            if (err)return next(err);
-            if (!user)return next('User doesn\'t exists.');
+            if (err) return next(err);
+            if (!user) return next('User doesn\'t exists.');
             User.destroy(req.param('id'), function userDestroyed(err) {
-                if (err)return next(err);
+                if (err) return next(err);
             });
             // res.redirect('/admin/users');
             res.ok();
@@ -1095,6 +1121,6 @@ module.exports = {
             });
     },
 
-    
+
 };
 

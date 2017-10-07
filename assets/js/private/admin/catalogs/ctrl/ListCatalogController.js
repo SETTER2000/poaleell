@@ -42,9 +42,11 @@
             $scope.added = 'Добавить собаку';
             $scope.showBt = 1;
             $scope.urlBt = 'home.admin.catalogs.create';
-
-            $scope.sort = 'name';
-            $scope.param = 'name';
+            $scope.str = 'Петров';
+            $scope.countChar = '3';
+            $scope.filedName = 'kennels';
+            $scope.sort = 'updatedAt';
+            $scope.param = 'updatedAt';
             $scope.fieldName = 'Внутренний телефон';
             $scope.charText = '';
             $scope.searchText = '';
@@ -184,15 +186,8 @@
                 return milliseconds;
             };
 
-            $scope.str = 'Петров';
-            $scope.countChar = '3';
-            $scope.filedName = 'name';
-
-
             $scope.$watch('where', function (value) {
-
                 $scope.refresh(value);
-
             });
 
             $scope.refresh = function (where) {
@@ -210,7 +205,7 @@
                 };
 
                 $scope.items = Catalogs.query($scope.query, function (catalogs) {
-                    console.log('Catalogs LIST:', catalogs);
+                    // console.log('Catalogs LIST:', catalogs);
                         $scope.items = catalogs;
                         $scope.objectName = catalogs;
                         //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;
@@ -243,10 +238,10 @@
 
             $scope.propertyName = 'lastName';
 
-            $scope.reverse = false;
+            $scope.reverse = true;
 
             $scope.sortBy = function (propertyName) {
-                $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+                $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : true;
                 $scope.propertyName = propertyName;
             };
 

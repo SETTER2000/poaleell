@@ -78,14 +78,15 @@
                 <!--<div class="panel-body">-->
                     <table class="table table-hover">
                         <tr>
-                            <!--<th>#</th>-->
+                            <th>#</th>
+                            <th class="text-center"><span class="badge">{{filtered.length}}</span></th>
                             <th>
                                 <button class="btn btn-default not-border" ng-click="sortBy('name')">Наименование
                                 <span class="sortOrder" ng-show="propertyName === 'name'"
                                       ng-class="{reverse: reverse}"></span>
                                 </button>
                             </th>
-                            <th>
+                            <th class="text-center">
                                 <button class="btn btn-default not-border" ng-click="sortBy('type')">{{registerArea}}
                                 <span class="sortOrder" ng-show="propertyName === 'registerNumber'"
                                       ng-class="{reverse: reverse}"></span>
@@ -104,13 +105,20 @@
                             <th></th>
                         </tr>
                         <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
-                            <!--<td>{{$index+1}}</td>-->
+                            <td>{{$index+1}}</td>
+                            <td class="text-center">
+                                <a ng-href="{{item.getShowUrl(item.id)}}">
+                                    <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true" ng-mouseleave="vid=false"
+                                         ng-src="{{item.avatarUrl}}"
+                                         alt="">
+                                </a>
+                            </td>
                             <td>
                                 <a ng-href="{{item.getEditUrl(item.id)}}">
                                     {{item.name}}
                                 </a>
                             </td>
-                            <td>{{item.registerNumber}}</td>
+                            <td class="text-center">{{item.registerNumber}}</td>
                             <td class="text-center">{{item.dateCreate | date:'dd.MM.yyyy'}}</td>
                             <!--<td>{{item.location}}</td>-->
 

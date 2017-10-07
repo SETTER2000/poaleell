@@ -1,12 +1,32 @@
 angular.module('TitleModule')
-    .controller('EditTitleController', ['$scope', '$state','toastr', 'Titles', '$stateParams', '$rootScope',
-        function ($scope, $state,toastr, Titles, $stateParams, $rootScope) {
+    .controller('EditTitleController', ['$scope', '$state', 'toastr', 'Titles', '$stateParams', '$rootScope',
+        function ($scope, $state, toastr, Titles, $stateParams, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.editObj = $state.includes('home.admin.titles.edit');
             //if(!$scope.me.admin) $location.path('/') ;
             $scope.closeInfo = 0; // скрыть панель информации
             // $scope.inlinePanel = 0; // растянуть панель редактирования
+            $scope.arrTitles = [
+                'WORLD WINNER',
+                'EURASIAN CHAMPION',
+                'EUROPEAN WINNER'
+            ];
+            $scope.showOption = false;
+
+            $scope.$watch('item.name', function (value) {
+                $scope.showOption = false;
+                $scope.arrTitles.forEach(function (item, i, arr) {
+                    if (value == item) {
+                       return $scope.showOption = true;
+                    }
+                });
+
+                $scope.ko();
+            });
+            $scope.ko = function () {
+                return $scope.showOption;
+            };
             $scope.optionsSelectTip = [
                 {id: '', name: ''},
                 {id: 'сертификат', name: 'Cертификат'},
@@ -26,10 +46,10 @@ angular.module('TitleModule')
             $scope.delete = function (item) {
                 console.log('DELETE TITLE', item);
                 item.$delete(item, function (success) {
-                    toastr.success('Объект удалён.','OK! ');
+                    toastr.success('Объект удалён.', 'OK! ');
                     $state.go('home.admin.titles');
                 }, function (err) {
-                    toastr.error(err,'Ошибка 3 EditTitleController!');
+                    toastr.error(err, 'Ошибка 3 EditTitleController!');
                 })
             };
 
@@ -40,19 +60,22 @@ angular.module('TitleModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.message,'Ошибка!');
+                            if (err.data['originalError'].code == 11000) return toastr.error('Объект уже существует.', 'Ошибка ' + err.data['originalError'].code + '!');
+                            toastr.error(err.message, 'Ошибка!');
                         }
                     );
                 } else {
-                    $scope.refresh();
-                    item.$save(item,function (success) {
-                            toastr.success('Новая должность создана.');
+
+                    item.$save(item, function (success) {
+                            $scope.refresh();
+                            toastr.success('Новый объект создана.');
                             $state.go('home.admin.title', {titleId: success.id});
-                    },
-                    function (err) {
-                        toastr.error(err.data,'Ошибка 101!');
-                        //toastr.error(err.data.originalError.errmsg,'Ошибка! EditFurloughController!');
-                    });
+                        },
+                        function (err) {
+                            if (err.data['originalError'].code == 11000) return toastr.error('Объект уже существует.', 'Ошибка ' + err.data['originalError'].code + '!');
+                            toastr.error(err.data, 'Ошибка!');
+                            //toastr.error(err.data.originalError.errmsg,'Ошибка! EditFurloughController!');
+                        });
                 }
             };
 

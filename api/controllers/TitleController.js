@@ -52,14 +52,15 @@ module.exports = {
             location: req.param('location'),
             action: (req.param('action')) ? req.param('action') : false,
             multiplicity: req.param('multiplicity'),
+            year: req.param('year'),
         };
 
-        Title.findOne({'name':req.param('name')}).exec((err, findParam)=> {
-            "use strict";
-            if (err)return res.serverError(err);
-
-            console.log('findParam', findParam);
-            if(findParam) return res.badRequest(req.param('name')+' - дубликат.');
+        // Title.findOne({'name':req.param('name')}).exec((err, findParam)=> {
+        //     "use strict";
+        //     if (err)return res.serverError(err);
+        //
+        //     console.log('findParam', findParam);
+        //     if(findParam) return res.badRequest(req.param('name')+' - дубликат.');
             Title.create(obj).exec(function (err, finn) {
                 if (err) {
                     return res.serverError(err);
@@ -67,7 +68,7 @@ module.exports = {
                 //sails.log('Finn\'s id is:', finn.id);
                 return res.send(finn);
             });
-        });
+        // });
 
     },
 
@@ -98,6 +99,7 @@ module.exports = {
             location: req.param('location'),
             action: req.param('action'),
             multiplicity: req.param('multiplicity'),
+            year: req.param('year'),
         };
         Title.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             if (err)return res.negotiate(err);

@@ -203,14 +203,14 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             let t = '';
             if (int) {
                 this.breeders.forEach(function (item, i, arr) {
-                    t += (i>=1) ? ', ' : '';
-                    t += item.lastName + ' ' + item.firstName ;
-                    t += (item.patronymicName) ? ' ' + item.patronymicName  : '';
+                    t += (i >= 1) ? ', ' : '';
+                    t += item.lastName + ' ' + item.firstName;
+                    t += (item.patronymicName) ? ' ' + item.patronymicName : '';
 
                 });
             } else {
                 this.breeders.forEach(function (item, i, arr) {
-                    t += (i>=1) ? ', ' : '';
+                    t += (i >= 1) ? ', ' : '';
                     t += item.lastName + ' ' + item.firstName[0] + '.';
                     t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
 
@@ -222,13 +222,13 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             let t = '';
             if (int) {
                 this.owners.forEach(function (item, i, arr) {
-                    t += (i>=1) ? ', ' : '';
-                    t += item.lastName + ' ' + item.firstName ;
-                    t += (item.patronymicName) ? ' ' + item.patronymicName  : '';
+                    t += (i >= 1) ? ', ' : '';
+                    t += item.lastName + ' ' + item.firstName;
+                    t += (item.patronymicName) ? ' ' + item.patronymicName : '';
                 });
             } else {
                 this.owners.forEach(function (item, i, arr) {
-                    t += (i>=1) ? ', ' : '';
+                    t += (i >= 1) ? ', ' : '';
                     t += item.lastName + ' ' + item.firstName[0] + '.';
                     t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
                 });
@@ -410,26 +410,26 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             }
         };
     })
-/**
- * Выборка фамилий по первой букве
- */
-// .filter('firstChar', function () {
-//     return function (value, param, char) {
-//         if (char.length > 0) {
-//             if (angular.isArray(value) && angular.isString(param)) {
-//                 var arr = [];
-//                 for (var i = 0, ii = value.length; i < ii; i++) {
-//                     // console.log(value[i].getFullName()[0]);
-//                     if (value[i].getFullName()[0] === char) {
-//                         arr.push(value[i]);
-//                     }
-//                 }
-//                 return arr;
-//             }
-//         }
-//         return value;
-//     }
-// })
+    /**
+     * Это не я.
+     * Фильтр выбрасывает меня из папы или из мамы
+     * Я не могу быть сам себе родителем )
+     */
+    .filter('itsNotMe', function () {
+        return function (value, param) {
+            if (angular.isArray(value) && angular.isString(param)) {
+                // console.log('GENDER PAPA77:', value);
+                let ar = [];
+                for(let item in value){
+                    // console.log('GENDER ITEM ID:', value[item].id);
+                    if(value[item].id !== param) ar.push(value[item]);
+                        // console.log('Это оно 101!!:', value[item]);
+                }
+               return ar;
+
+            }
+        }
+    })
 // .filter("skipItems", function () {
 //     return function (value, count) {
 //         // isArray - проверка, что переменная является массивом

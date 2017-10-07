@@ -5,6 +5,7 @@ angular.module('DepartmentModule')
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.registerArea = 'Номер питомника';
             $scope.dateCreateArea = 'Дата регистрации';
+            $scope.suiteArea = 'Сайт';
 
             //if(!$scope.me.admin) $location.path('/') ;
             /**
