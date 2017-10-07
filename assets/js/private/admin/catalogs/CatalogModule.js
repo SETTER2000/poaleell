@@ -410,6 +410,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             }
         };
     })
+
+        
     /**
      * Это не я.
      * Фильтр выбрасывает меня из папы или из мамы
