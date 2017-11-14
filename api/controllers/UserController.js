@@ -377,12 +377,18 @@ module.exports = {
                         return el.charAt(0).toUpperCase() + el.slice(1);
                     })
                     .join(' ');
-                let patronymicName = req.param('patronymicName')
-                    .split(' ')
-                    .map(function (el) {
-                        return el.charAt(0).toUpperCase() + el.slice(1);
-                    })
-                    .join(' ');
+                let    patronymicName = '';
+
+                if (_.isString(req.param('patronymicName'))) {
+                    patronymicName = req.param('patronymicName')
+                        .split(' ')
+                        .map(function (el) {
+                            return el.charAt(0).toUpperCase() + el.slice(1);
+                        })
+                        .join(' ');
+                }
+
+
 
                 User.create({
                     login: req.param('login'),
