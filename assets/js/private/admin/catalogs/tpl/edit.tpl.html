@@ -19,14 +19,14 @@
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен
                 {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
-            <div class="btn-group-xs pull-right">
+            <div class="btn-group-xs pull-right" >
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span> Сохранить
                 </button>
                 <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span> Список
                 </a>
-                <button ng-if="!item.action && edit && me.admin" ng-click="delete2(item)"
+                <button ng-cloak ng-if="!item.action && edit && me.admin" ng-click="delete2(item)"
                         class="btn btn-sm btn-danger">
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
@@ -56,9 +56,11 @@
                 </div>
                 <div class="panel-body">
                     <form name="myForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
-                        <!-- A C T I O N -->
+
                         <div class="form-group">
                             <div ng-if="(me.kadr)" class="checkbox">
+
+                                <!-- A C T I O N -->
                                 <label>
                                     <!--<input type="checkbox" ng-model="item.action">-->
                                     <md-checkbox ng-model="item.action"> Активность</md-checkbox>
@@ -68,6 +70,17 @@
                                     <small ng-if="actionNick">(видимость собаки на сайте и использования её в других
                                         модулях)
                                     </small>
+                                </label>
+
+                                <!-- S A L E S -->
+                                <label class="pull-right">
+
+                                    <md-checkbox ng-model="item.sales">Продаётся</md-checkbox>
+                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="salesNick=true"
+                                          ng-mouseleave="salesNick=false"></span>
+                                    <small ng-if="salesNick">(выставить на продажу)
+                                    </small>
+
                                 </label>
                             </div>
                         </div>
@@ -126,7 +139,7 @@
                                         <small ng-if="symbolNick">(обязательно к заполнению если регистрируете помёт)
                                         </small>
                                     </label>
-                                    <input minlength="2" maxlength="40" type="text"
+                                    <input minlength="1" maxlength="40"
                                            class="form-control offset-2"
                                            ng-model="item.alias">
                                 </div>

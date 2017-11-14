@@ -157,6 +157,7 @@ module.exports = {
          * Поднимаем все первые буквы имени в верхний регистр
          */
         let name = req.param('name')
+            .toLowerCase()
             .split(' ')
             .map(function (el) {
                 return el.charAt(0).toUpperCase() + el.slice(1);
@@ -165,6 +166,7 @@ module.exports = {
         // console.log('KENNELS', req.param('kennels'));
         let obj = {
             action: (req.param('action')) ? req.param('action') : false,
+            sales: req.param('sales'),
             section: 'Каталог',
             sections: 'Каталоги',
             name: name,
@@ -192,7 +194,7 @@ module.exports = {
             chip: req.param('chip'),
             stamp: req.param('stamp'),
             symbol: req.param('symbol'),
-            alias: req.param('alias'),
+            alias: '' + req.param('alias'),
             timeBirthday: req.param('timeBirthday'),
             inlinePanel: req.param('inlinePanel'),
         };
@@ -268,9 +270,11 @@ module.exports = {
         //     console.log(error.date, error.breeder);
         //     return res.badRequest(error.breeder);
         // }
-        // if (!_.isString(req.param('owner'))) {
-        //     console.log(error.date, error.owner);
+        // let alias = req.param('alias');
+        // if (!_.isString(alias)) {
+        //     console.log('ALIAS no staring: ', req.param('alias'));
         //     return res.badRequest(error.owner);
+        //     alias = '"' + req.param('alias') + '"';
         // }
         // console.log('UPDATE: ', req.body);
         /**
@@ -285,9 +289,12 @@ module.exports = {
         // console.log('KENNELS', req.param('kennels'));
         // console.log('BREEDER: ', req.param('breeder'));
         // console.log('OWNER: ', req.param('owner'));
+
+
         let obj = {
             id: req.param('id'),
             action: req.param('action'),
+            sales: req.param('sales'),
             section: 'Каталог',
             sections: 'Каталоги',
             // name: name,
@@ -331,70 +338,70 @@ module.exports = {
         //         if (err) return res.serverError(err);
         //         console.log('findDepartment',findDepartment);
         //         if (findDepartment.catalogs.length) return res.badRequest('Объект уже существует.');
-                Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
-                    // if (err) return res.redirect('/admin/catalogs/edit/' + req.param('id'));
+        Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
+            // if (err) return res.redirect('/admin/catalogs/edit/' + req.param('id'));
+            if (err) return res.negotiate(err);
+            console.log('Каталог обновил:', req.session.me);
+            console.log('Собака обновление:', obj);
+            console.log('inlinePanel: ', req.param('inlinePanel'));
+            // console.log('req.body: ', req.body);
+            Catalog.findOne(req.param('id'))
+                .populate('titles')
+                .populate('sires')
+                .populate('dams')
+                .populate('kennels')
+                .populate('photos')
+                .populate('reactions')
+                .populate('owners')
+                .populate('breeders')
+                .exec(function (err, catalog) {
                     if (err) return res.negotiate(err);
-                    console.log('Каталог обновил:', req.session.me);
-                    console.log('Собака обновление:', obj);
-                    console.log('inlinePanel: ', req.param('inlinePanel'));
-                    // console.log('req.body: ', req.body);
-                    Catalog.findOne(req.param('id'))
-                        .populate('titles')
-                        .populate('sires')
-                        .populate('dams')
-                        .populate('kennels')
-                        .populate('photos')
-                        .populate('reactions')
-                        .populate('owners')
-                        .populate('breeders')
-                        .exec(function (err, catalog) {
-                            if (err) return res.negotiate(err);
-                            if (!catalog) return res.notFound('Не могу');
+                    if (!catalog) return res.notFound('Не могу');
 
-                            // console.log('positionRemove:', req.param('positionRemove'));
-                            catalog.titles.add(req.param('titles'));
-                            // catalog.kennels.add(req.param('kennels'));
-                            // catalog.furloughs.add(req.param('furloughs'));
+                    // console.log('positionRemove:', req.param('positionRemove'));
+                    catalog.titles.add(req.param('titles'));
+                    // catalog.kennels.add(req.param('kennels'));
+                    // catalog.furloughs.add(req.param('furloughs'));
 
-                            // if (_.isEmpty(req.param('position'))) {
-                            //     catalog.titles.add({})
-                            // }
-                            if (req.param('objRemove')) {
-                                catalog.titles.remove(req.param('objRemove'));
-                            }
+                    // if (_.isEmpty(req.param('position'))) {
+                    //     catalog.titles.add({})
+                    // }
+                    if (req.param('objRemove')) {
+                        catalog.titles.remove(req.param('objRemove'));
+                    }
 
-                            if (req.param('objRisir')) {
-                                catalog.titles.remove(req.param('objRisir'));
-                            }
-                            if (req.param('objRidam')) {
-                                catalog.titles.remove(req.param('objRidam'));
-                            }
+                    if (req.param('objRisir')) {
+                        catalog.titles.remove(req.param('objRisir'));
+                    }
+                    if (req.param('objRidam')) {
+                        catalog.titles.remove(req.param('objRidam'));
+                    }
 
-                            if (req.param('objRk')) {
-                                catalog.kennels.remove(req.param('objRk'));
-                            }
-                            if (req.param('objDelReaction')) {
-                                catalog.reactions.remove(req.param('objDelReaction'));
-                            }
-                            if (req.param('objRd')) {
-                                catalog.owners.remove(req.param('objRd'));
-                            }
-                            if (req.param('objRm')) {
-                                catalog.breeders.remove(req.param('objRm'));
-                            }
+                    if (req.param('objRk')) {
+                        catalog.kennels.remove(req.param('objRk'));
+                    }
+                    if (req.param('objDelReaction')) {
+                        catalog.reactions.remove(req.param('objDelReaction'));
+                    }
+                    if (req.param('objRd')) {
+                        catalog.owners.remove(req.param('objRd'));
+                    }
+                    if (req.param('objRm')) {
+                        catalog.breeders.remove(req.param('objRm'));
+                    }
 
 
-                            if (req.param('objDelete')) {
-                                catalog.photos.remove(req.param('objDelete'));
-                            }
+                    if (req.param('objDelete')) {
+                        catalog.photos.remove(req.param('objDelete'));
+                    }
 
-                            catalog.save(function (err) {
-                                if (err) return res.negotiate('ERR: ' + err);
-                                res.ok();
-                            });
-                        });
+                    catalog.save(function (err) {
+                        if (err) return res.negotiate('ERR: ' + err);
+                        res.ok();
+                    });
                 });
-            // });
+        });
+        // });
     },
 
 

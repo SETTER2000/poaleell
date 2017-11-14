@@ -611,8 +611,8 @@ angular.module('CatalogModule')
              */
             $scope.saveEdit = function (item) {
                 let lengthNicknameMin = 1;
-                console.log('item-555:', item);
-                console.log('KENNELS 33: ', item.kennels);
+                // console.log('item-555:', item);
+                // console.log('KENNELS 33: ', item.kennels);
                 // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (!item.kennels.id) return toastr.error('Питомник не заполнен.', 'Ошибка!');
                 // if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
@@ -622,6 +622,9 @@ angular.module('CatalogModule')
 
                 item = reversValue(item);
                 if (item.id && ( item.symbol || item.name)) {
+                    
+                    console.log('UPDATE: ', item);
+                    
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
 

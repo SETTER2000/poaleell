@@ -34,6 +34,9 @@
     </div>
     <!--<td class="position">{{item.breederName(0)}}</td>-->
     <!--<td class="position">{{item.ownerName(0)}}</td>-->
+    <div ng-if="item.sales" class="row">
+        <div class="alert alert-danger text-center" role="alert">AVAILABLE FOR SALES</div>
+    </div>
     <div class="row">
         <div class="col-md-5">
             <div class="row placeholders">
@@ -55,6 +58,7 @@
         <!--</div>-->
         <!--</div>-->
         <div class=" col-md-6 col-md-offset-1">
+
             <h5 class="text-center"> ТИТУЛЫ: </h5>
             <ol class="breadcrumb text-center">
                 <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">

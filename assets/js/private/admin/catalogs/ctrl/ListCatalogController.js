@@ -36,6 +36,7 @@
             $scope.growthArea = 'Рост';
             $scope.varietyArea = 'Тип';
             $scope.colorArea = 'Окрас';
+            $scope.salesArea = 'Продаётся';
             $scope.breederArea = 'Заводчик';
             $scope.ownerArea = 'Владелец';
             
