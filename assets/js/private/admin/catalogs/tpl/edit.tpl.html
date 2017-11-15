@@ -3,7 +3,7 @@
         <h2>
             <p ng-if="item.name || item.symbol" ng-class="{'fired':item.fired}">
                 <span ng-if="item.name">{{item.getFullName()}}</span>
-                <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}}
+                <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}} {{item.alias}}
                   <span class="glyphicon glyphicon-question-sign" ng-mouseover="symbolNick=true"
                         ng-mouseleave="symbolNick=false"></span>
                 <small ng-if="symbolNick">(имя не придумано, пока есть только литера)
@@ -181,9 +181,11 @@
                             </div>
                         </div>
                         <hr>
+
+
                         <!--N A M E-->
 
-                        <div ng-if="!edit" class="form-group">
+                        <div ng-if="!edit || !name" class="form-group">
                             <label class="control-label" for="inputSuccess1">
                                 Имя
                                 <span class="glyphicon glyphicon-question-sign" ng-mouseover="show=true"
@@ -680,6 +682,21 @@
                                 <!--<small ng-if="chipNick">(рост устанавливается в сантиметрах)</small>-->
                             </label>
                             <input type="text" class="form-control" ng-model="item.chip">
+                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+
+
+                        <!-- D E S C R I P T I O N -->
+
+                        <div class="form-group">
+                            <label class="control-label" for="inputSuccess3">
+                                Описание
+                                <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="chipNick=true"-->
+                                <!--ng-mouseleave="chipNick=false"></span>-->
+                                <!--<small ng-if="chipNick">(рост устанавливается в сантиметрах)</small>-->
+                            </label>
+
+                            <textarea class="form-control" ng-model="item.description" rows="3"></textarea>
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 

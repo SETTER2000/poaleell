@@ -156,13 +156,17 @@ module.exports = {
         /**
          * Поднимаем все первые буквы имени в верхний регистр
          */
-        let name = req.param('name')
-            .toLowerCase()
-            .split(' ')
-            .map(function (el) {
-                return el.charAt(0).toUpperCase() + el.slice(1);
-            })
-            .join(' ');
+        let name = '';
+        if (_.isString(req.param('name'))) {
+            name = req.param('name')
+                .toLowerCase()
+                .split(' ')
+                .map(function (el) {
+                    return el.charAt(0).toUpperCase() + el.slice(1);
+                })
+                .join(' ');
+        }
+
         // console.log('KENNELS', req.param('kennels'));
         let obj = {
             action: (req.param('action')) ? req.param('action') : false,
@@ -185,6 +189,7 @@ module.exports = {
             owners: req.param('owners'),
             reactions: req.param('reactions'),
             titles: req.param('titles'),
+            description: req.param('description'),
             death: req.param('death'),
             pedigree: req.param('pedigree'),
             rkf: req.param('rkf'),
@@ -277,15 +282,22 @@ module.exports = {
         //     alias = '"' + req.param('alias') + '"';
         // }
         // console.log('UPDATE: ', req.body);
+
+
         /**
          * Поднимаем все первые буквы имени в верхний регистр
          */
-        let name = req.param('name')
-            .split(' ')
-            .map(function (el) {
-                return el.charAt(0).toUpperCase() + el.slice(1);
-            })
-            .join(' ');
+
+        let name = '';
+        if (_.isString(req.param('name'))) {
+            name = req.param('name')
+                .toLowerCase()
+                .split(' ')
+                .map(function (el) {
+                    return el.charAt(0).toUpperCase() + el.slice(1);
+                })
+                .join(' ');
+        }
         // console.log('KENNELS', req.param('kennels'));
         // console.log('BREEDER: ', req.param('breeder'));
         // console.log('OWNER: ', req.param('owner'));
@@ -297,7 +309,7 @@ module.exports = {
             sales: req.param('sales'),
             section: 'Каталог',
             sections: 'Каталоги',
-            // name: name,
+            name: name,
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
             nickname: req.param('nickname'),
@@ -315,6 +327,7 @@ module.exports = {
             chip: req.param('chip'),
             stamp: req.param('stamp'),
             titles: req.param('titles'),
+            description: req.param('description'),
             // kennels: req.param('kennels'),
             reactions: req.param('reactions'),
             breeders: req.param('breeders'),
@@ -326,6 +339,7 @@ module.exports = {
             timeBirthday: req.param('timeBirthday'),
             inlinePanel: req.param('inlinePanel'),
         };
+
         // Department.findOne(req.param('kennels')[0].id)
         //     .populate('catalogs', {
         //         where: {

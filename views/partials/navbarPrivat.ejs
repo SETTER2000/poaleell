@@ -16,7 +16,9 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li ng-class="{active:active('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
-                    <li ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
+                    <!--<li ng-class="{active:active('home.about')}"><a ui-sref="home.about"> Щенки <span class="sr-only">(current)</span></a></li>-->
+                    <li ng-if="me.kadr || me.admin" ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
+                    <li ng-if="!me.kadr && !me.admin" ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.catalogs">Собаки</a></li>
 
 
                     <li class="dropdown">

@@ -26,6 +26,10 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td>
             <a class="position" href="{{item.getEditUrl(item.id)}}">
                 {{item.getFullName()}}
+                <span ng-if="!item.name" class="text-danger"><md-tooltip
+                        md-direction="top">
+              временное имя, псевдоним
+            </md-tooltip>{{item.symbol}} {{item.alias}}</span>
             </a>
         </td>
         <td>{{item.gender}}</td>

@@ -29,7 +29,7 @@
             $scope.defaultRows = 20;
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
-
+            $scope.debug= false;
             $scope.fioArea = 'Имя';
             $scope.genderArea = 'Пол';
             $scope.weightArea = 'Вес';

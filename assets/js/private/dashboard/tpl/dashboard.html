@@ -1,172 +1,33 @@
 <div ui-view></div>
-<style>
-    /* quick grid */
-    .container {
-        width: 93%;
-        margin: auto;
-    }
 
-    /* Bootstrap-style columns */
-    .column {
-        position: relative;
-        float: left;
-        min-height: 1px;
-        width: 25%;
-        padding-left: 4px;
-        padding-right: 4px;
-
-        /* Space between tiles */
-        margin-top: 8px;
-    }
-
-    .col-span {
-        width: 50%;
-    }
-
-    .my-sizer-element {
-        width: 8.33333%;
-    }
-
-    /* default styles so shuffle doesn't have to set them (it will if they're missing) */
-    .my-shuffle {
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Ensure images take up the same space when they load */
-    /* https://vestride.github.io/Shuffle/images */
-    .aspect {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 100%;
-        overflow: hidden;
-    }
-
-    .aspect__inner {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-
-    .aspect--16x9 {
-        padding-bottom: 56.25%;
-    }
-
-    .aspect--9x80 {
-        padding-bottom: calc(112.5% + 8px);
-    }
-
-    .aspect--32x9 {
-        padding-bottom: calc(28.125% - 3px);
-    }
-
-    img.slaides {
-        display: block;
-        width: 100%;
-
-        max-width: none;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* Small reset */
-    *,
-    ::before,
-    ::after {
-        box-sizing: border-box;
-    }
-
-    figure {
-        margin: 0;
-        padding: 0;
-    }
-</style>
 <div class="col-sm-11  col-md-12  main">
-    <h1 class="page-header">Chinese Crested Dog</h1>
-    <div class="container">
-        <h1><a href="https://vestride.github.io/Shuffle/" target="_blank" rel="noopener">Shuffle</a>Template</h1>
-        <div class="js-grid my-shuffle">
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/uploads/1413142095961484763cf/d141726c?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=86dc2dcb74588b338dfbb15d959c5037" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1465414829459-d228b58caf6e?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=7ab1744fe016fb39feb2972244246359" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column row-span">-->
-                <!--<div class="aspect aspect&#45;&#45;9x80">-->
-                    <!--<div class="aspect__inner"><img src="/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1478033394151-c931d5a4bdd6?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=57a00aabcfaa1b04fd268ea3ad4a4cbb" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column col-span">-->
-                <!--<div class="aspect aspect&#45;&#45;32x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1473175494278-d83ed8459089?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1208&amp;h=338&amp;fit=crop&amp;s=fd1cf1e8eddf88ef87015314f85ce3fb" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1434144893279-2a9fc14e9337?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=d2f930bbb91de7e19e6436f5b03897b0" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1464454709131-ffd692591ee5?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=eda14f45e94e9024f854b1e06708c629" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=70dabb0dcc604c558245b72f3109bbbb" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=4e19022724205e38e491961f50e47d32" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <!--<figure class="js-item column">-->
-                <!--<div class="aspect aspect&#45;&#45;16x9">-->
-                    <!--<div class="aspect__inner"><img src="https://images.unsplash.com/photo-1430026996702-608b84ce9281?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=600&amp;h=338&amp;fit=crop&amp;s=363a88755a7b87635641969a8d66f7aa" obj.alt="obj.alt"/></div>-->
-                <!--</div>-->
-            <!--</figure>-->
-            <div class="column my-sizer-element"></div>
+    <h1 class="page-header text-center">Китайская Хохлатая Собака</h1>
+    <div class="row" ng-controller="ListCatalogController">
+
+        <h2 class="text-center">Купить щенка</h2>
+        <br>
+        <div class="col-sm-6 col-md-4" ng-repeat="item in items | filter:{sales:true} | orderBy:'alias'">
+            <div class="thumbnail">
+                <img src="{{item.avatarUrl}}" alt="...">
+                <div class="caption">
+                    <h3>{{item.getFullName()}} </h3>
+                    <div class="clearfix">{{item.description}}</div>
+
+                    <p>
+                        <em>Имя:</em>   <strong class="pull-right">{{item.nickname}}</strong><br>
+                        <em>Тип:</em>   <strong class="pull-right">{{item.variety}}</strong><br>
+                        <em>Пол:</em>   <strong class="pull-right">{{item.gender}}</strong><br>
+                        <em>День рожд.:</em>    <strong class="pull-right">{{item.birthday | date:'dd.MM.yyyy'}}</strong><br>
+                    </p>
+
+                    <p><a href="#" class="btn btn-default" role="button">Подробнее</a></p>
+                </div>
+            </div>
         </div>
+
+
     </div>
 
-    <script>
-        var Shuffle = window.Shuffle;
-var arr = [
-    "/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg",
-    "/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg",
-    "/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg",
-    "/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg",
-    "/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg",
-    "/images/honor/593d4f13bf850608296e09d4/259da7cb-e67d-42ea-a637-1479fbc6d162.jpg"
-];
-        var myShuffle = new Shuffle(document.querySelector('.my-shuffle'), {
-            itemSelector: '.js-item',
-            sizer: '.my-sizer-element',
-            buffer: 1
-        });
 
-    </script>
+    <!--<div class="slide-animate" ng-include="footerTwo"></div>-->
+</div>

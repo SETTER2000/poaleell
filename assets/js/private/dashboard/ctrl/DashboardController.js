@@ -44,6 +44,6 @@ angular.module('DashboardModule')
                 console.log('Length: ' + response.data);
                 $scope.items = response.data.users;
             }
-
+            $scope.footerTwo = {url:"/js/private/dashboard/tpl/footer-two.html"};
             $scope.refresh();
         }]);

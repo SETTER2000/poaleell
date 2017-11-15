@@ -104,6 +104,10 @@ module.exports = {
         avatarUrl: {
             type: 'string'
         },
+        description: {
+            type: 'string',
+            maxLength: 500
+        },
         pedigree: {
             type: 'string'
             // maxLength: 15

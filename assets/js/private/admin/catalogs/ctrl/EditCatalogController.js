@@ -539,6 +539,7 @@ angular.module('CatalogModule')
             $scope.refresh = function () {
                 let item = $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
                     $scope.catalogs = catalogs;
+                    $scope.name = catalogs.name;
                     // console.log('ITEM-+++5-SYMBOL',$scope.item.symbol );
                     // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
                     // console.log('catalogs входящий: ', catalogs);

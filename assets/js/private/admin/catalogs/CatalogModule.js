@@ -169,10 +169,10 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
 
         Catalogs.prototype.getFullName = function () {
-            if (this.kennels instanceof Array && (this.kennels.length > 0)) {
+            if (this.kennels instanceof Array && (this.kennels.length > 0) && this.name) {
                 return this.kennels[0].name + ' ' + this.name;
             } else {
-                return this.name;
+                return this.kennels[0].name ;
             }
 
 

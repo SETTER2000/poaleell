@@ -82,7 +82,7 @@
                     <th colspan="20">
                         <div ng-if="item.breederCatalogs[0]" class="row">
                             <h4 >Заводчик:</h4>
-                            <div class="col-xs-6 col-md-3" ng-repeat="dog in item.breederCatalogs">
+                            <div class="col-xs-6 col-md-1" ng-repeat="dog in item.breederCatalogs">
                                 <a ng-href="/admin/catalog/{{dog.id}}">
                                     <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
                                          ng-mouseleave="vid=false"

@@ -1,26 +1,33 @@
 angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
-    //.config(function ($routeProvider, $locationProvider) {
-    //    $routeProvider
-    //
-    //        .when('/', {
-    //            templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html',
-    //            controller: 'DashboardController'
-    //        })
-    //
-    //        .when('/account', {
-    //            templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html',
-    //            controller: 'AccountController'
-    //        })
-    //    ;
-    //    $locationProvider.html5Mode({enabled: true, requireBase: false});
-    //})
+//.config(function ($routeProvider, $locationProvider) {
+//    $routeProvider
+//
+//        .when('/', {
+//            templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html',
+//            controller: 'DashboardController'
+//        })
+//
+//        .when('/account', {
+//            templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html',
+//            controller: 'AccountController'
+//        })
+//    ;
+//    $locationProvider.html5Mode({enabled: true, requireBase: false});
+//})
 
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $stateProvider
             .state('home', {
                 url: '/',
                 views: {
+
+
                     //'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
+
+                    // Абсолютное позиционирование вида 'status' в корневом безымянном состоянии.
+                    // <div ui-view='status'/> внутри index.html
+                    // "status@" : { }
+                    'footerTwo@': {templateUrl: '/js/private/dashboard/tpl/footerTwo.html'},
                     '@': {templateUrl: '/js/private/dashboard/tpl/dashboard.html'}
                 }
             })
@@ -52,15 +59,15 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                 }
 
             })
-            // .state('home.profile.restore', {
-            //     url: 'restore',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/dashboard/tpl/restore-profile.html',
-            //             controller: 'RestoreProfileController'
-            //         }
-            //     }
-            // })
+        // .state('home.profile.restore', {
+        //     url: 'restore',
+        //     views: {
+        //         '@': {
+        //             templateUrl: '/js/private/dashboard/tpl/restore-profile.html',
+        //             controller: 'RestoreProfileController'
+        //         }
+        //     }
+        // })
         //    .state('account', {
         //        url: '/account',
         //        templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html'
