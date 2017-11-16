@@ -79,35 +79,72 @@
                             <th></th>
                             <th>#</th>
                             <!--<th>id</th>-->
-                            <th>ФИО</th>
-                            <th>foto</th>
-                            <th>login</th>
-                            <th>email</th>
-                            <th>action</th>
-                            <th>leader</th>
-                            <th>kadr</th>
-                            <th>admin</th>
-                            <th>deleted</th>
+                            <th>
+                                <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('lastName')">
+                                    {{nameHeader.fioArea}}
+                                    <span class="sortOrder" ng-show="propertyName === 'lastName'"
+                                          ng-class="{reverse: reverse}"></span>
+                                </button>
+                            </th>
+                            <th class="text-center">
+                            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('avatarUrl')">
+                                {{nameHeader.fotoArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'avatarUrl'"
+                                      ng-class="{reverse: reverse}"></span>
+                            </button></th>
+                            <th>
+                                <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('login')">
+                                    {{nameHeader.loginArea}}
+                                    <span class="sortOrder" ng-show="propertyName === 'login'"
+                                          ng-class="{reverse: reverse}"></span>
+                                </button>
+                            </th>
+                            <th>
+                                <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('email')">
+                                    {{nameHeader.emailArea}}
+                                    <span class="sortOrder" ng-show="propertyName === 'email'"
+                                          ng-class="{reverse: reverse}"></span>
+                                </button>
+                            </th>
+                            <th class="text-center">action</th>
+                            <th class="text-center">leader</th>
+                            <th class="text-center">kadr</th>
+                            <th class="text-center">admin</th>
+                            <th class="text-center">deleted</th>
 
                         </tr>
 
                         <!--<tr ng-repeat="user in userList.contents">-->
-                        <tr ng-repeat="user in filtered=(userList.contents | filter:{$:searchText} |
-orderBy:propertyName:reverse |  limitTo: 1000)">
+                        <tr ng-repeat="user in filtered=(userList.contents | filter:{$:searchText} | orderBy:propertyName:reverse |  limitTo: 1000)">
                             <td></td>
-                            <td> {{$index+1}}</td>
+                            <td> {{$index+1}} </td>
                             <!--<td> {{user.id}}</td>-->
-                            <td><a href="/admin/users/edit/{{user.id}}">{{user.lastName}} {{user.firstName.substr(0,1)}}.
-                                {{user.patronymicName.substr(0,1)}}.</a></td>
-                            <td> {{user.gravatarURL}}</td>
+                            <td>
+                                <a href="/admin/users/edit/{{user.id}}">{{user.lastName}} {{user.firstName.substr(0,1)}}.
+                                {{user.patronymicName.substr(0,1)}}.</a>
+                            </td>
+                            <td ng-if="user.avatarUrl">
+                                <a ng-href="{{user.getShowUrl(user.id)}}">
+                                    <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
+                                         ng-mouseleave="vid=false"
+                                         ng-src="{{user.avatarUrl}}"
+                                         alt="">
+                                </a>
+                            </td>
+                            <td ng-if="!user.avatarUrl">
+                                <a ng-href="{{item.getShowUrl(user.id)}}" title="нет фото">
+                                    <img class="object-fit_cover" src="http://via.placeholder.com/80x80/f5f5f5/ffffff/" alt="">
+                                </a>
+                            </td>
                             <td> {{user.login}}</td>
                             <td> {{user.email}}</td>
-                            <td><input type="checkbox" ng-model="user.action" ng-click="saveAction(user.id, user.action)"></td>
-                            <td><input type="checkbox" ng-model="user.leader" ng-click="saveLeader(user.id, user.leader)"></td>
-                            <td><input type="checkbox" ng-model="user.kadr" ng-click="saveKadr(user.id, user.kadr)"></td>
-                            <td><input type="checkbox" ng-model="user.admin" ng-click="saveAdmin(user.id, user.admin)"></td>
-                            <td><input type="checkbox" ng-model="user.deleted" ng-click="saveDeleted(user.id, user.deleted)"></td>
+                            <td class="text-center"><input type="checkbox" ng-model="user.action" ng-click="saveAction(user.id, user.action)"></td>
+                            <td class="text-center"><input type="checkbox" ng-model="user.leader" ng-click="saveLeader(user.id, user.leader)"></td>
+                            <td class="text-center"><input type="checkbox" ng-model="user.kadr" ng-click="saveKadr(user.id, user.kadr)"></td>
+                            <td class="text-center"><input type="checkbox" ng-model="user.admin" ng-click="saveAdmin(user.id, user.admin)"></td>
+                            <td class="text-center"><input type="checkbox" ng-model="user.deleted" ng-click="saveDeleted(user.id, user.deleted)"></td>
                     </table>
+                    <!--{{userList.contents|json}}-->
                 </div>
             </div>
 

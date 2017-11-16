@@ -147,7 +147,7 @@ angular.module('AttendanceModule')
             };
 
             var breadcrumb = new BreadCrumb();
-            breadcrumb.set('Home', '/');
+            breadcrumb.set('Home', 'home');
             breadcrumb.set('Admin', '/admin');
             breadcrumb.set('Attendances', '/admin/attendances');
             breadcrumb.set('Calendar', '/admin/attendances/calendar');

@@ -113,8 +113,8 @@ console.log('$state.params.catalogId:',$state.params.catalogId);
             };
 
             var breadcrumb = new BreadCrumb();
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Diarys', 'home.admin.diarys');
             breadcrumb.set('Edit', 'home.admin.diarys' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;

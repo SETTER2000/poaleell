@@ -337,7 +337,9 @@ module.exports.routes = {
     'GET /admin/diarys/create/': 'PageController.showHomePage',
     'GET /admin/diarys/:id': 'PageController.showHomePage',
 
-
+    'GET /dogs': 'PageController.showHomePage',
+    'GET /dogs/catalogs': 'PageController.showHomePage',
+    'GET /dogs/catalog/:id': 'PageController.showHomePage',
 
     'GET /upload': 'PageController.showHomePage',
     'GET /admin/honors': 'PageController.showHomePage',
@@ -350,8 +352,8 @@ module.exports.routes = {
 
 
     'GET /dashboard/showcases': 'PageController.showHomePage',
-    
-    
+    // 'GET /catalogs/dog': 'PageController.showHomePage',
+    // 'GET /dashboard': 'PageController.showHomePage',
     // !!! НЕ УДАЛЯТЬ !!!
     //'GET /att': 'Attendance.getQuery',
     //'POST /att': 'Attendance.getQuery',

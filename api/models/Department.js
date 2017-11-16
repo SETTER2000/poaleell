@@ -70,6 +70,9 @@ module.exports = {
             type:'string',
             maxLength: 150
         },
+        city: {type: 'string'},
+        country: {type: 'string'},
+        address: {type: 'string'},
         // Добавить ссылку на пользователя
         users: {
             collection: 'user',

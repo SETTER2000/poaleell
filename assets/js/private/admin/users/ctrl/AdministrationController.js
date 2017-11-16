@@ -4,10 +4,25 @@ angular.module('UserModule').controller('AdministrationController', ['$scope', '
         $scope.me = window.SAILS_LOCALS.me;
         if (!$scope.me.admin) $state.go('home');
 
+        $scope.nameHeader = {
+            fioArea : 'ФИО',
+            drArea : 'ДР11',
+            loginArea : 'Логин',
+            emailArea : 'Email',
+            roomArea : 'Комната',
+            departmentArea : 'Питомник',
+            positionArea : 'Должность',
+            fotoArea : 'Фото',
+        };
         $scope.recordSave = 'Запись успешно сохранена!';
         // set-up loading state
         $scope.userList = {
             loading: false
+        };
+
+        $scope.sortBy = function (propertyName) {
+            $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : true;
+            $scope.propertyName = propertyName;
         };
 
         $http.get('/user/adminUsers')

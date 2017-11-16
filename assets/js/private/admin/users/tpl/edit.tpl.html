@@ -10,7 +10,8 @@
                 date:'dd.MM.yyyy' }} ({{item.periodWork()}})</a>
             <a href="#" class="btn btn-info btn-xs " ng-if="item.decree"
                title="Отпуск по уходу за ребёнком c {{item.decree|date:'dd.MM.yyyy'}}"> В отпуске </a>
-            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен {{item.firedDate |
+            <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен
+                {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
                 <button ng-show="edit" ng-click="saveEdit(item)" type="button" class="btn btn-success">
@@ -25,7 +26,7 @@
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
-        <span ng-switch-default>
+                    <span ng-switch-default>
         <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
         </span>
                 </ng-switch>
@@ -38,7 +39,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Редактировать
                         <a href="#" ng-click="inline()" class="pull-right">
-                            <span class="glyphicon" ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
+                            <span class="glyphicon"
+                                  ng-class="{'glyphicon-menu-right':close,'glyphicon-menu-left':!close}"></span>
                         </a>
                     </h3>
                 </div>
@@ -52,11 +54,12 @@
                             </div>
                             <label class="control-label" for="inputSuccess1">Фамилия</label>
                             <!--<input  type="text" class="form-control" ng-model="item.lastName">-->
-                            <input ng-if="!edit" autofocus  required type="text" class="form-control"
+                            <input ng-if="!edit" autofocus required type="text" class="form-control"
                                    ng-model="item.lastName">
                             <!--<input ng-if="!edit" autofocus ng-change="getLdap()" required type="text" class="form-control"-->
-                                   <!--ng-model="item.lastName">-->
-                            <input ng-if="edit" autofocus required type="text" class="form-control" ng-model="item.lastName">
+                            <!--ng-model="item.lastName">-->
+                            <input ng-if="edit" autofocus required type="text" class="form-control"
+                                   ng-model="item.lastName">
                             <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
@@ -68,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="inputSuccess3">Отчество</label>
-                            <input type="text" class="form-control"  ng-model="item.patronymicName">
+                            <input type="text" class="form-control" ng-model="item.patronymicName">
                             <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
 
@@ -82,7 +85,7 @@
                                        fp-opts="dateOpts"
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.birthday">
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                               <button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span
                                       class="glyphicon glyphicon-remove"></span></button>
                             </span>
@@ -92,32 +95,45 @@
 
                         <div ng-if="!edit" class="form-group ">
                             <label class="control-label" for="inputSuccess6">Логин</label>
-                            <input type="text" class="form-control" ng-model="item.login">
+                            <input  class="form-control" ng-model="item.login">
                             <!--<span id="helpBlock5" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
-                        <div ng-if="!edit" class="form-group ">
+                        <div class="form-group ">
                             <label class="control-label" for="inputSuccess7">Email</label>
-                            <input type="text" class="form-control" ng-model="item.email">
+                            <!--<input disabled class="form-control" ng-model="item.email">-->
+                            <input  class="form-control" ng-model="item.email">
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label" for="inputSuccess7">Город</label>
-                            <input type="text" class="form-control" ng-model="item.city">
+                            <label class="control-label" >Страна</label>
+                            <input  class="form-control" ng-model="item.country">
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label" >Город</label>
+                            <input  class="form-control" ng-model="item.city">
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label" >Адрес</label>
+                            <input  class="form-control" ng-model="item.address">
                         </div>
 
                         <!--  E D I T   D E P A R T M E N T S  C O N T R O L L E R -->
 
                         <div ng-controller="ListDepartmentController" class="form-group ">
                             <label class="control-label" for="inputSuccess8" ng-bind="items[0].sc()"></label>
-                            <span ng-if="!item.departments[0].name">   [ <a href="#" ng-click="addDepartment()">добавить</a> ]</span>
+                            <span ng-if="!item.departments[0].name">   [ <a href="#"
+                                                                            ng-click="addDepartment()">добавить</a> ]</span>
                             <div class="form-inline" ng-repeat="department in item.departments">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="department.id">
-                                        <option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">{{option.name}}
+                                        <option ng-repeat="option in items| filter:{action:true}" value="{{option.id}}">
+                                            {{option.name}}
                                         </option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-default" ng-click="removeDepartment(department)">x</button>
+                                <button type="button" class="btn btn-default" ng-click="removeDepartment(department)">
+                                    x
+                                </button>
                             </div>
                             <!--<pre id="default-spacing">{{items | json}}</pre>-->
                             <!--<pre>D E P A R T M E N T S : {{items | limitTo:5 | json}}</pre>-->
@@ -130,11 +146,13 @@
                             <div class="form-inline" ng-repeat="position in item.positions">
                                 <div class="form-group">
                                     <select class="form-control" ng-model="position.id">
-                                        <option ng-repeat="option in items | filter:{action:true}" value="{{option.id}}">{{option.name}}
+                                        <option ng-repeat="option in items | filter:{action:true}"
+                                                value="{{option.id}}">{{option.name}}
                                         </option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-default" ng-click="removePosition(position)">x</button>
+                                <button type="button" class="btn btn-default" ng-click="removePosition(position)">x
+                                </button>
                             </div>
                             <!--<pre>P O S I T I O N S : {{items | limitTo:5 | json }}</pre>-->
                         </div>
@@ -199,10 +217,10 @@
                         <!--</div>-->
                         <!--</div>-->
 
-                        <div class="form-group ">
-                            <label class="control-label" for="inputSuccess10">ПФР</label>
-                            <input type="text" class="form-control" ng-model="item.pfr">
-                        </div>
+                        <!--<div class="form-group ">-->
+                            <!--<label class="control-label" for="inputSuccess10">ПФР</label>-->
+                            <!--<input type="text" class="form-control" ng-model="item.pfr">-->
+                        <!--</div>-->
 
 
                         <div class="form-group ">
@@ -219,9 +237,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="exampleInputPassword3">Password</label>
-                                    <input class="form-control" type="text" id="exampleInputPassword3" ng-model="contact.value" >
+                                    <input class="form-control" type="text" id="exampleInputPassword3"
+                                           ng-model="contact.value">
                                 </div>
-                                <button type="button" class="btn btn-default" ng-click="removeContact(contact)">x</button>
+                                <button type="button" class="btn btn-default" ng-click="removeContact(contact)">x
+                                </button>
                             </div>
                         </div>
 
@@ -235,7 +255,7 @@
                                        fp-opts="dateOpts3"
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.dateInWork">
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                               <button class="btn btn-default" type="button" ng-click="removeDateInWork(item)">
                                   <span class="glyphicon glyphicon-remove"></span>
                               </button>
@@ -253,7 +273,7 @@
                                        fp-opts="dateOpts4"
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.decree">
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                               <button class="btn btn-default" type="button" ng-click="removeDecree(item)">
                                   <span class="glyphicon glyphicon-remove"></span>
                               </button>
@@ -280,7 +300,7 @@
                                        fp-opts="dateOpts3"
                                        fp-on-setup="toggleBlur(item)"
                                        ng-model="item.firedDate">
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                               <button class="btn btn-default" type="button" ng-click="removeFired(item)"><span
                                       class="glyphicon glyphicon-remove"></span></button>
                             </span>
@@ -291,7 +311,7 @@
                             <label class="control-label" for="inputSuccess25">
                                 Комната
                             </label>
-                            <input  type="text" class="form-control" ng-model="item.room">
+                            <input type="text" class="form-control" ng-model="item.room">
                         </div>
                         <div ng-if="(me.admin)" class="row" ng-if="item.id">
                             <div class="col-md-5">
@@ -355,7 +375,8 @@
 
                         <div class="form-group">
                             <!--<div class="form-group" style=" position: fixed;margin-left: 50px; margin-bottom: 70px; bottom:0; left:0;">-->
-                            <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid" class="btn btn-md btn-success">
+                            <button ng-show="!edit" type="submit" ng-disabled="userForm.$invalid"
+                                    class="btn btn-md btn-success">
                                 <span class="glyphicon glyphicon-user"></span>
                                 Сохранить
                             </button>
@@ -381,14 +402,16 @@
 
                         </div>
                     </form>
-                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)" class="btn btn-sm btn-default pull-right">
+                    <button ng-show="me.admin" ng-if="!item.action" ng-click="delete2(item)"
+                            class="btn btn-sm btn-default pull-right">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>
             </div>
 
         </div>
-        <div ng-class="{'col-md-6':!inlinePanel, 'col-md-12':inlinePanel, 'fx-fade-left':inlinePanel, 'fx-fade-right':!inlinePanel}" ng-if="item.id">
+        <div ng-class="{'col-md-6':!inlinePanel, 'col-md-12':inlinePanel, 'fx-fade-left':inlinePanel, 'fx-fade-right':!inlinePanel}"
+             ng-if="item.id">
             <div ng-switch on="modeSelect.value">
                 <div ng-switch-when="uploader">
                     <ng-include src="uploaderView"></ng-include>
@@ -417,7 +440,7 @@
                             <input type="password" class="form-control" placeholder="не менее 6 знаков" name="password"
                                    ng-model="editProfile.properties.password" id="password" required ng-minlength="6"
                                    compare-to="editProfile.properties.confirmPassword">
-                <span class="help-block has-error" ng-if="changePassword.password.$dirty">
+                            <span class="help-block has-error" ng-if="changePassword.password.$dirty">
                   <span ng-show="changePassword.password.$error.required">Введите пароль.</span>
                   <span ng-show="changePassword.password.$error.minlength">Пароль должен содержать не менее 6 символов.</span>
                 </span>
@@ -426,13 +449,15 @@
                             <label>Повторить пароль</label>
                             <input type="password" class="form-control" placeholder="ещё раз" name="confirmation"
                                    ng-model="editProfile.properties.confirmPassword" required>
-                <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
+                            <span class="help-block has-error" ng-if="changePassword.confirmation.$dirty">
                   <span ng-show="changePassword.password.$error.compareTo">Password must match.</span>
                   <span ng-show="changePassword.confirmation.$error.required">Confirmation password is required.</span>
                 </span>
                         </div>
-                        <button type="submit" class="btn btn-lg not-border btn-default btn-block" ng-disabled="changePassword.$invalid">
-                            <span ng-show="changePasswordForm.saving" class="overlord-loading-spinner fa fa-spinner"></span>
+                        <button type="submit" class="btn btn-lg not-border btn-default btn-block"
+                                ng-disabled="changePassword.$invalid">
+                            <span ng-show="changePasswordForm.saving"
+                                  class="overlord-loading-spinner fa fa-spinner"></span>
                             <span ng-show="changePasswordForm.saving">Сохраняю...</span>
                             <span ng-hide="changePasswordForm.saving" class="btn-text">Сохранить</span>
                         </button>

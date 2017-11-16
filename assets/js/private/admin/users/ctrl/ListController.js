@@ -30,13 +30,25 @@
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
-            $scope.fioArea = 'ФИО';
-            $scope.drArea = 'ДР11';
-            $scope.loginArea = 'Логин';
-            $scope.emailArea = 'Email';
-            $scope.roomArea = 'Комната';
-            $scope.departmentArea = 'Питомник';
-            $scope.positionArea = 'Должность';
+            // $scope.fioArea = 'ФИО';
+            // $scope.drArea = 'ДР11';
+            // $scope.loginArea = 'Логин';
+            // $scope.emailArea = 'Email';
+            // $scope.roomArea = 'Комната';
+            // $scope.departmentArea = 'Питомник';
+            // $scope.positionArea = 'Должность';
+
+            $scope.nameHeader = {
+                fioArea : 'ФИО',
+                drArea : 'ДР11',
+                loginArea : 'Логин',
+                emailArea : 'Email',
+                roomArea : 'Комната',
+                departmentArea : 'Питомник',
+                positionArea : 'Должность',
+            };
+
+
             $scope.added = 'Добавить пользователя';
             $scope.showBt = 1;
             $scope.urlBt = 'home.admin.users.create';
@@ -89,29 +101,37 @@
                 time: new Date()
             };
 
-            //$scope.calendar = moment().calendar(null, {
-            //    sameDay: function (now) {
-            //        if (this.isBefore(now)) {
-            //            return '[Случится сегодня]';
-            //        } else {
-            //            return '[Произошло сегодня]';
-            //        }
-            //        /* ... */
-            //    }
-            //});
+            $scope.filterTemplate = {
+                all: {fired:false},
+                action: {action: false},
+                list: { fired:true},
+                work: {fired:false},
+            };
+
+            $scope.$watch('modeSelect.value', function (value, old) {
+                console.log('modeSelect OLD', old);
+                console.log('modeSelect NEW', value);
+                $scope.ftObj = $scope.filterTemplate[value];
+            });
+            $scope.$watch('searchText', function (value, old) {
+                console.log('OLD', old);
+                console.log('NEW', value);
+                $scope.searchText = value;
+                // $scope.refresh();
+            });
 
             $scope.options =
                 [
                     {display: "Работают", value: "work"},
                     {display: "Уволены", value: "list"},
                     {display: "Не активированы / Заблокированы", value: "action"},
-                    {display: "Все", value: "table"}
+                    {display: "Все", value: "all"}
                 ];
             $scope.modeSelect = $scope.options[3];
-            $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
-            $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
-            $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
-            $scope.workView = "/js/private/admin/users/views/home.admin.users.work.html";
+            // $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
+            // $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
+            // $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
+            // $scope.workView = "/js/private/admin/users/views/home.admin.users.work.html";
 
             $scope.getLastName = function (item) {
                 $http.post('/att', item)
@@ -278,8 +298,8 @@
 
             var breadcrumb = new BreadCrumb();
 
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Users', 'home.admin.users' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 

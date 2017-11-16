@@ -83,7 +83,7 @@
                 };
 
                 var breadcrumb = new BreadCrumb();
-                breadcrumb.set('Home', '/');
+                breadcrumb.set('Home', 'home');
                 breadcrumb.set('Admin', '/admin');
                 breadcrumb.set('Calendars', '/calendars/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;

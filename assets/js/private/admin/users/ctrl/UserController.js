@@ -47,8 +47,8 @@ angular.module('UserModule')
 
             var breadcrumb = new BreadCrumb();
 
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Users', 'home.admin.users');
             breadcrumb.set('Show', 'home.admin.users.show' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;

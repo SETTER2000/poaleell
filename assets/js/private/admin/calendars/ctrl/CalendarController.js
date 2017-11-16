@@ -111,7 +111,7 @@
                 };
 
                 var breadcrumb = new BreadCrumb();
-                breadcrumb.set('Home', '/');
+                breadcrumb.set('Home', 'home');
                 breadcrumb.set('Admin', '/admin');
                 breadcrumb.set('Calendars', '/admin/calendars' );
                 breadcrumb.set('Месяц', '/admin/calendars/месяц/' + $state.current.url);

@@ -24,22 +24,61 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
 
                     //'sidebar@': {templateUrl: '/js/private/tpl/sidebar.tpl.html'},
 
-                    // Абсолютное позиционирование вида 'status' в корневом безымянном состоянии.
-                    // <div ui-view='status'/> внутри index.html
-                    // "status@" : { }
+                    // Абсолютное позиционирование вида 'footerTwo' в корневом безымянном состоянии.
+                    // <div ui-view='footerTwo'/> внутри index.html
+                    // "footerTwo@" : { }
                     'footerTwo@': {templateUrl: '/js/private/dashboard/tpl/footerTwo.html'},
                     '@': {templateUrl: '/js/private/dashboard/tpl/dashboard.html'}
                 }
             })
-            .state('home.profile', {
-                url: 'profile',
+            .state('home.dogs', {
+                abstract: true, // запрет на вход в этот URL, о при этом dogs отображается в цепочки урла
+                url: 'dogs',
+                template: '<ui-view/>'
+                // templateUrl: '/js/private/dashboard/tpl/dash.html',
+                //controller: function () {
+                //
+                //}
+                // views: {
+                //     '@': {
+                //         // 'footerTwo@': {templateUrl: '/js/private/dashboard/tpl/footerTwo.html'},
+                //        templateUrl: '/js/private/dashboard/tpl/dash.html',
+                //         controller:'DashboardController'
+                //     }
+                //     //'sidebar@': {
+                //     //    templateUrl: '/js/private/tpl/sidebar.tpl.html'
+                //     //}
+                // }
+            })
+
+            .state('home.dogs.catalogs', {
+                url: '/catalogs',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/dashboard/tpl/profile.html',
-                        controller: 'ProfileController'
+                        templateUrl: '/js/private/admin/catalogs/tpl/list.tpl.html',
+                        controller: 'ListCatalogController'
+                    },
+                    "actionView@home.dogs.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
+                }
+            })
+            .state('home.dogs.catalog', {
+                url: '/catalog/:catalogId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
+                        controller: 'CatalogController'
                     }
                 }
             })
+            .state('home.profile', {
+            url: 'profile',
+            views: {
+                '@': {
+                    templateUrl: '/js/private/dashboard/tpl/profile.html',
+                    controller: 'ProfileController'
+                }
+            }
+        })
             .state('home.profile.edit', {
                 url: '/edit',
                 views: {
@@ -99,7 +138,7 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
         //
         //            ////////////////////////////////////////////////////////////////////////////
         //            // Абсолютное позиционирование '@'                                        //
-        //            // Позиционирование любых видов внутри этого состояния илипредшествующего //
+        //            // Позиционирование любых видов внутри этого состояния или предшествующего //
         //            ////////////////////////////////////////////////////////////////////////////
         //
         //            // Абсолютное позиционирование вида 'info' в состоянии 'contacts.detail'.

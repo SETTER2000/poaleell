@@ -15,10 +15,10 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li ng-class="{active:active('home')}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> </a></li>
                     <li ng-class="{active:active('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
-                    <!--<li ng-class="{active:active('home.about')}"><a ui-sref="home.about"> Щенки <span class="sr-only">(current)</span></a></li>-->
                     <li ng-if="me.kadr || me.admin" ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
-                    <li ng-if="!me.kadr && !me.admin" ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.catalogs">Собаки</a></li>
+                    <li ng-if="!me.kadr && !me.admin"  ng-class="{active:active('home.dogs.catalogs')}"><a ui-sref="home.dogs.catalogs">Собаки</a></li>
 
 
                     <li class="dropdown">
@@ -30,7 +30,7 @@
                             <li ng-class="{active:active('home.admin.users')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Пользователи</a></li>
                             <li ng-class="{active:active('home.admin.departments')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.departments">Питомники</a></li>
                             <li ng-class="{active:active('home.admin.positions')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
-                            <li ng-class="{active:active('home.admin.honors')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.honors">Награды</a></li>
+                            <li ng-class="{active:active('home.admin.honors')}"><a ng-if="( me.admin)" ui-sref="home.admin.honors">Награды</a></li>
                             <li ng-class="{active:active('home.admin.titles')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
                             <li ng-class="{active:active('home.admin.reactions')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.reactions">Тесты</a></li>
                             <li ng-class="{active:active('home.admin.administration')}"><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>

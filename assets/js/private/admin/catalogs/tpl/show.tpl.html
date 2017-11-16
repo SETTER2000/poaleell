@@ -16,7 +16,7 @@
                 <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
-                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
+                <a ng-if="me.admin || me.kadr" ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             </div>
@@ -58,15 +58,19 @@
         <!--</div>-->
         <!--</div>-->
         <div class=" col-md-6 col-md-offset-1">
-
-            <h5 class="text-center"> ТИТУЛЫ: </h5>
-            <ol class="breadcrumb text-center">
-                <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">
-                    <a href="/admin/title/{{item.id}}">
-                        <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
-                    </a>
-                </li>
-            </ol>
+            <div class="row" ng-if="item.titles.length">
+                <h5 class="text-center"> ТИТУЛЫ: </h5>
+                <ol class="breadcrumb text-center">
+                    <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">
+                        <a ng-if="me.kadr || me.admin" href="/admin/title/{{item.id}}">
+                            <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
+                        </a>
+                        <a ng-if="!me.kadr && !me.admin" href="#">
+                            <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
+                        </a>
+                    </li>
+                </ol>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-group ">
@@ -74,7 +78,7 @@
                             Заводчик
                         </li>
                         <li class="list-group-item list-group-item-warning" ng-repeat="breeder in item.breeders">
-                            <a ng-href="/admin/user/{{breeder.id}}" >
+                            <a ng-href="/admin/user/{{breeder.id}}">
                                 <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
                                      ng-mouseleave="vid=false"
                                      ng-src="{{breeder.avatarUrl}}"
@@ -85,7 +89,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" ng-if="item.owners.length">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-warning">
                             Владелец
@@ -119,8 +123,7 @@
                         </span>
 
 
-
-                </span> <span ng-if="!item.name">
+                        </span> <span ng-if="!item.name">
                          {{item.kennels[0].name}}   {{item.symbol }}<small> (имя не придумано, пока есть только литера)</small>
                         </span>
                     </td>

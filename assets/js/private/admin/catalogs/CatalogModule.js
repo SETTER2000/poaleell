@@ -10,13 +10,19 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                     '@': {
                         templateUrl: '/js/private/admin/catalogs/tpl/list.tpl.html',
                         controller: 'ListCatalogController'
-                    }
+                    },
+
+
+                    // Абсолютное позиционирование вида 'workView' в  состоянии home.admin.catalogs.
+                    // <div ui-view='workView'/> внутри /js/private/admin/catalogs/tpl/list.tpl.html
+                    // "workView@home.admin.catalogs" : { }
+                    "actionView@home.admin.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
+
                 }
             })
-            // .state('home.admin.catalogs.settings', {
-            //     url: '/settings',
-            //     templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.settings.html',
-            //     controller: 'ListCatalogController'
+            // .state('home.admin.catalogs.work', {
+            //     url: '/work',
+            //     "td@home.admin.catalogs.work": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.work.html'}
             // })
             .state('home.admin.catalogs.list', {
                 url: '/list',
@@ -172,7 +178,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             if (this.kennels instanceof Array && (this.kennels.length > 0) && this.name) {
                 return this.kennels[0].name + ' ' + this.name;
             } else {
-                return this.kennels[0].name ;
+                return this.name;
             }
 
 
@@ -411,7 +417,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
     })
 
-        
+
+
     /**
      * Это не я.
      * Фильтр выбрасывает меня из папы или из мамы
@@ -422,409 +429,17 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             if (angular.isArray(value) && angular.isString(param)) {
                 // console.log('GENDER PAPA77:', value);
                 let ar = [];
-                for(let item in value){
+                for (let item in value) {
                     // console.log('GENDER ITEM ID:', value[item].id);
-                    if(value[item].id !== param) ar.push(value[item]);
-                        // console.log('Это оно 101!!:', value[item]);
+                    if (value[item].id !== param) ar.push(value[item]);
+                    // console.log('Это оно 101!!:', value[item]);
                 }
-               return ar;
+                return ar;
 
             }
         }
     })
-// .filter("skipItems", function () {
-//     return function (value, count) {
-//         // isArray - проверка, что переменная является массивом
-//         // isNumber - проверка, что переменная является числом
-//         if (angular.isArray(value) && angular.isNumber(count)) {
-//             if (count > value.length || count < 1) {
-//                 return value;
-//             } else {
-//                 return value.slice(count);
-//             }
-//         } else {
-//             return value;
-//         }
-//     }
-// })
-// .directive('pagination', function () { // функция компиляции директивы (фабричная функция)
-//     return {
-//         restrict: 'E',
-//         scope: {
-//             //numPages: '=', // кол-во страниц (кнопок)
-//             showBt:'=' ,// true|false показывать или нет кнопку добавления объекта, например юзера.
-//             urlBt:'=' ,// ссылка для кнопки.
-//             defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
-//             limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
-//             lengthObject: '=', // кол-во объектов в обрабатываемой коллекции объектов
-//             currentPage: '=',
-//             onSelectPage: '&',
-//             added:'='
-//
-//         },
-//         templateUrl: '/js/private/admin/catalogs/views/pagination.html',
-//         replace: true,
-//         link: function (scope) {
-//
-//             scope.$watch('added', function (value) {
-//                 scope.added = value;
-//             });
-//
-//             scope.$watch('showBt', function (value) {
-//                 scope.showBt = value;
-//             });
-//             scope.$watch('urlBt', function (value) {
-//                 scope.urlBt = value;
-//             });
-//
-//             scope.$watch('lengthObject', function (value) {
-//                 scope.numPages = Math.floor(value / scope.defaultRows) + 1;
-//                 //scope.pages = [];
-//                 //for (var i = 1; i <= value; i++) {
-//                 //    scope.pages.push(i);
-//                 //}
-//                 //if (scope.currentPage > value) {
-//                 //    scope.selectPage(value);
-//                 //}
-//             });
-//
-//
-//             scope.$watch('numPages', function (value) {
-//                 scope.pages = [];
-//                 for (var i = 1; i <= value; i++) {
-//                     scope.pages.push(i);
-//                 }
-//                 if (scope.currentPage > value) {
-//                     scope.selectPage(value);
-//                 }
-//             });
-//             scope.$watch('limitRows', function (value) {
-//                 scope.rows = [];
-//                 for (var i = 0; i <= value.length; i++) {
-//                     scope.rows.push(value[i]);
-//                 }
-//             });
-//             scope.$watch('defaultRows', function (value, oldValue) {
-//                 if (value > 0) {
-//                     scope.defaultRows = value;
-//                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-//                 }
-//             });
-//             scope.noPrevious = function () {
-//                 return scope.currentPage === 1;
-//             };
-//             scope.noNext = function () {
-//                 return scope.currentPage === scope.numPages;
-//             };
-//             scope.isActive = function (page) {
-//                 return scope.currentPage === page;
-//             };
-//             scope.isActiveRow = function (row) {
-//                 return scope.defaultRows === row;
-//             };
-//
-//             scope.showBtn = function () {
-//                 return scope.showBt;
-//             };
-//             scope.urlBtn = function () {
-//                 return scope.urlBt;
-//             };
-//             scope.selectPage = function (page) {
-//                 if (!scope.isActive(page)) {
-//                     scope.currentPage = page;
-//                     scope.onSelectPage({page: page});
-//                 }
-//             };
-//             scope.selectPrevious = function () {
-//                 if (!scope.noPrevious()) {
-//                     scope.selectPage(scope.currentPage - 1);
-//                 }
-//             };
-//             scope.selectNext = function () {
-//                 if (!scope.noNext()) {
-//                     scope.selectPage(scope.currentPage + 1);
-//                 }
-//             };
-//             scope.getLimitRows = function (limitRows) {
-//                 scope.defaultRows = limitRows;
-//                 if (scope.lengthObject <= scope.defaultRows) {
-//                     scope.numPages = 1;
-//                 } else {
-//                     scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
-//                 }
-//             };
-//         }
-//     };
-// })
-// .directive('wordPart', function () {
-//     return {
-//         restrict: 'E',
-//         // Это изолированый scope.
-//         // имена полей изолированного контекста (свойства объекта), а значение
-//         // определяет имя атрибута элемента с префиксом @, = или &
-//         /** Например:
-//          * scope: {
-//                 isolated1: ‘@attribute1’,
-//                 isolated2: ‘=attribute2’,
-//                 isolated3: ‘&attribute3’
-//                 }
-//
-//          * Если имя атрибута отсутствует в описании значения, предполагается,
-//          * что он имеет то же имя, что и поле изолированного контекста:
-//          * scope: { isolated1: ‘@’ }
-//          * Здесь предполагается, что атрибут имеет имя isolated1.
-//          * (стр. 265)
-//          */
-//         scope: {
-//             objectName: '=', // Массив оъектов с фамилиями
-//             countChar: '=', // по умолчанию сколько строк должно показываться на одной странице
-//             filedName: '=', // из какого поля берутся начальные буквы
-//             onSelectPart: '&',
-//             getCharText: '&',
-//             charText: '=',
-//             where: '='
-//         },
-//         templateUrl: '/js/private/admin/catalogs/views/wordPart.html',
-//         replace: true,
-//         link: function (scope) {
-//             scope.$watch('objectName', function (value) {
-//
-//                 //console.log('OBJECT NAME');
-//                 //console.log(value);
-//
-//                 scope.objectName = value;
-//                 scope.checkArray();
-//             });
-//
-//             scope.checkArray = function () {
-//                 var parts = [];
-//                 var v = scope.objectName;
-//                 for (var key in v) {
-//                     var obj = v[key];
-//
-//                     //console.log(obj);
-//
-//                     for (var prop in obj) {
-//                         var chars;
-//                         if (prop === scope.filedName) {
-//                             chars = obj[prop].substr(0,3); // Кол-во первых знаков от фамилии
-//                             parts.push(chars);
-//                         }
-//                     }
-//                 }
-//                 //console.log('PARTS');
-//                 //console.log(parts);
-//                 scope.parts =  scope.uniqueValue(parts);
-//                 //console.log('UNIQUE PARTS');
-//                 //console.log(scope.parts);
-//             };
-//
-//             scope.uniqueValue = function(arr) {
-//                 var obj = {};
-//
-//                 for (var i = 0; i < arr.length; i++) {
-//                     var str = arr[i];
-//                     obj[str] = true; // запомнить строку в виде свойства объекта
-//                 }
-//
-//                 return Object.keys(obj); // или собрать ключи перебором для IE8-
-//             };
-//
-//             scope.$watch('charText', function (value) {
-//                 scope.charText = value;
-//             });
-//
-//             scope.$watch('where', function (value) {
-//                 scope.where = value;
-//             });
-//
-//             scope.isNumeric = function (n) {
-//                 return !isNaN(parseFloat(n)) && isFinite(n);
-//             };
-//             scope.getPartOfSpeech = function (str, countChar) {
-//                 var cntChar;
-//                 cntChar = (scope.isNumeric(countChar)) ? countChar : 3;
-//                 return str.substr(0, cntChar);
-//             };
-//             scope.isActive = function (part) {
-//                 return scope.currentPart === part;
-//             };
-//             scope.isActiveRow = function (row) {
-//                 return scope.defaultRows === row;
-//             };
-//             scope.getPartText = function (ch) {
-//                 if (angular.isString(ch)) {
-//                     scope.where = {"lastName": {'like': ch + '%'}};
-//                     scope.charText = ch;
-//                     //console.log('WHERE');
-//                     //console.log(scope.where);
-//                 } else {
-//                     // $scope.defaultRows;
-//                     scope.charText = '';
-//                 }
-//             };
-//
-//             scope.selectPart = function (part) {
-//                 if (!scope.isActive(part)) {
-//                     scope.currentPart = part;
-//                     scope.getPartText(part);
-//                     scope.onSelectPart({part: part});
-//                 }
-//             };
-//
-//         }
-//     };
-// })
-// .directive('alfavit', function () {
-//     return {
-//         restrict: 'E',
-//         // Это изолированый scope.
-//         // имена полей изолированного контекста (свойства объекта), а значение
-//         // определяет имя атрибута элемента с префиксом @, = или &
-//         /** Например:
-//          * scope: {
-//                 isolated1: ‘@attribute1’,
-//                 isolated2: ‘=attribute2’,
-//                 isolated3: ‘&attribute3’
-//                 }
-//
-//          * Если имя атрибута отсутствует в описании значения, предполагается,
-//          * что он имеет то же имя, что и поле изолированного контекста:
-//          * scope: { isolated1: ‘@’ }
-//          * Здесь предполагается, что атрибут имеет имя isolated1.
-//          * (стр. 265)
-//          */
-//         scope: {
-//             objectName: '=', // Массив оъектов с фамилиями
-//             countChar: '=', // по умолчанию сколько строк должно показываться на одной странице
-//             filedName: '=', // из какого поля берутся начальные буквы
-//             //onSelectPart: '&',
-//             getCharText: '&',
-//             charText: '=',
-//             where: '='
-//         },
-//         templateUrl: '/js/private/admin/catalogs/views/alfavit.html',
-//         replace: true,
-//         link: function (scope) {
-//
-//             scope.$watch('objectName', function (value) {
-//                 //console.log('OBJECT NAME33');
-//                 //console.log(value);
-//
-//                 scope.objectName = value;
-//                 scope.checkArray();
-//             });
-//
-//             scope.checkArray = function () {
-//                 var parts = [];
-//                 var v = scope.objectName;
-//                 //console.log('obj - v');
-//                 //console.log(v);
-//                 for (var key in v) {
-//                     var obj = v[key];
-//                     //
-//                     //console.log('obj');
-//                     //console.log(obj);
-//                     for (var prop in obj) {
-//                         var chars;
-//                         if (prop === scope.filedName) {
-//                             chars = obj[prop].substr(0,1);
-//                             parts.push(chars);
-//                         }
-//                     }
-//                 }
-//                 //console.log('PARTS');
-//                 //console.log(parts);
-//                 scope.parts =  scope.uniqueValue(parts).sort();
-//                 //console.log('UNIQUE2 PARTS2');
-//                 //console.log(scope.parts);
-//             };
-//
-//             scope.uniqueValue = function(arr) {
-//                 var obj = {};
-//
-//                 for (var i = 0; i < arr.length; i++) {
-//                     var str = arr[i];
-//                     obj[str] = true; // запомнить строку в виде свойства объекта
-//                 }
-//
-//                 return Object.keys(obj); // или собрать ключи перебором для IE8-
-//             };
-//
-//             scope.$watch('charText', function (value) {
-//                 scope.charText = value;
-//             });
-//
-//             scope.$watch('where', function (value) {
-//                 scope.where = value;
-//             });
-//
-//             scope.isNumeric = function (n) {
-//                 return !isNaN(parseFloat(n)) && isFinite(n);
-//             };
-//
-//             scope.getPartOfSpeech = function (str, countChar) {
-//                 var cntChar;
-//                 cntChar = (scope.isNumeric(countChar)) ? countChar : 3;
-//                 return str.substr(0, cntChar);
-//             };
-//
-//             scope.isActive = function (part) {
-//                 return scope.currentPart === part;
-//             };
-//
-//             scope.isActiveRow = function (row) {
-//                 return scope.defaultRows === row;
-//             };
-//
-//             scope.getPartText = function (ch) {
-//                 if (angular.isString(ch)) {
-//                     scope.where = {"lastName": {'like': ch + '%'}};
-//                     scope.charText = ch;
-//                 } else {
-//                     scope.charText = '';
-//                 }
-//
-//             };
-//
-//             scope.getCharText = function (ch) {
-//                 //console.log(ch);
-//
-//                 if (angular.isString(ch) && ch.length>0) {
-//                     scope.where = {lastName: {'like': ch + '%'}};
-//                     scope.charText = ch;
-//                 } else {
-//                     // $scope.defaultRows;
-//                     scope.charText = '';
-//                     scope.where ={};
-//                 }
-//                 //scope.refresh(where);
-//             };
-//
-//             scope.selectPart = function (part) {
-//                 if (!scope.isActive(part)) {
-//                     scope.currentPart = part;
-//                     scope.getPartText(part);
-//                     scope.getCharText(part);
-//                     scope.onSelectPart({part: part});
-//                 }
-//             };
-//         }
-//     };
-// })
-// .directive('file', function () {
-//     return {
-//         scope: {
-//             file: '='
-//         },
-//         link: function (scope, el, attrs) {
-//             el.bind('change', function (event) {
-//                 var file = event.target.files[0];
-//                 scope.file = file ? file : undefined;
-//                 scope.$apply();
-//             });
-//         }
-//     };
-// })
+
+
 
 ;

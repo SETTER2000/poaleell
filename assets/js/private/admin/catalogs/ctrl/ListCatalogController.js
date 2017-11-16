@@ -1,9 +1,10 @@
 (function (angular) {
     'use strict';
     angular.module('CatalogModule')
-        .controller('ListCatalogController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Catalogs',  '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Catalogs) {
+        .controller('ListCatalogController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Catalogs', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Catalogs) {
             $scope.me = window.SAILS_LOCALS.me;
-            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
+
+            // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //toastr.options = {
             //    "closeButton": false,
             //    "debug": false,
@@ -29,19 +30,20 @@
             $scope.defaultRows = 20;
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
-            $scope.debug= false;
-            $scope.fioArea = 'Имя';
-            $scope.genderArea = 'Пол';
-            $scope.weightArea = 'Вес';
-            $scope.growthArea = 'Рост';
-            $scope.varietyArea = 'Тип';
-            $scope.colorArea = 'Окрас';
-            $scope.salesArea = 'Продаётся';
-            $scope.breederArea = 'Заводчик';
-            $scope.ownerArea = 'Владелец';
-            
+            $scope.debug = false;
+            $scope.nameHeader = {
+                fioArea: 'Имя',
+                genderArea: 'Пол',
+                weightArea: 'Вес',
+                growthArea: 'Рост',
+                varietyArea: 'Тип',
+                colorArea: 'Окрас',
+                salesArea: 'Продаётся',
+                breederArea: 'Заводчик',
+                ownerArea: 'Владелец',
+            };
             $scope.added = 'Добавить собаку';
-            $scope.showBt = 1;
+            $scope.showBt = ($scope.me.kadr || $scope.me.admin) ? 1 : 0; // показать кнопку $scope.added
             $scope.urlBt = 'home.admin.catalogs.create';
             $scope.str = 'Петров';
             $scope.countChar = '3';
@@ -104,19 +106,43 @@
             //        /* ... */
             //    }
             //});
+            $scope.filterTemplate = {
+                all: {},
+                action: {action: false},
+                male: {gender: 'кобель', action: true},
+                female: {gender: 'сука', action: true},
+                poaleell: { action: true},
+            };
+             $scope.filterKennel= {
+                poaleell: "star", // задаем логин владельца и заводчика
+            };
+
+            $scope.$watch('modeSelect.value', function (value, old) {
+                $scope.ftObj = $scope.filterTemplate[value];
+                $scope.ftKennel = $scope.filterKennel[value];
+            });
+
+            $scope.$watch('searchText', function (value, old) {
+                $scope.searchText = value;
+            });
 
             $scope.options =
                 [
+                    {display: "Dog kennel Poale Ell", value: "poaleell"},
                     {display: "Кобели", value: "male"},
                     {display: "Суки", value: "female"},
-                    {display: "Не активированы / Заблокированы", value: "action"},
-                    {display: "Все", value: "table"}
+                    {display: "Все", value: "all"},
+
                 ];
-            $scope.modeSelect = $scope.options[3];
-            $scope.tableView = "/js/private/admin/catalogs/views/home.admin.catalogs.table.html";
-            $scope.listView = "/js/private/admin/catalogs/views/home.admin.catalogs.list.html";
-            $scope.actionView = "/js/private/admin/catalogs/views/home.admin.catalogs.action.html";
-            $scope.workView = "/js/private/admin/catalogs/views/home.admin.catalogs.work.html";
+           if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
+
+
+
+            $scope.modeSelect = $scope.options[0];
+            // $scope.tableView = "/js/private/admin/catalogs/views/home.admin.catalogs.table.html";
+            // $scope.listView = "/js/private/admin/catalogs/views/home.admin.catalogs.list.html";
+            // $scope.actionView = "/js/private/admin/catalogs/views/home.admin.catalogs.action.html";
+            // $scope.workView = "/js/private/admin/catalogs/views/home.admin.catalogs.work.html";
 
             $scope.getLastName = function (item) {
                 $http.post('/att', item)
@@ -207,12 +233,12 @@
 
                 $scope.items = Catalogs.query($scope.query, function (catalogs) {
                     // console.log('Catalogs LIST:', catalogs);
-                        $scope.items = catalogs;
-                        $scope.objectName = catalogs;
-                        //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;
-                    }, function (err) {
-                        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
-                    });
+                    $scope.items = catalogs;
+                    $scope.objectName = catalogs;
+                    //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;
+                }, function (err) {
+                    toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                });
             };
 
             $scope.getMode = function (t) {
@@ -241,10 +267,6 @@
 
             $scope.reverse = true;
 
-            $scope.sortBy = function (propertyName) {
-                $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : true;
-                $scope.propertyName = propertyName;
-            };
 
             $scope.msd = ['settings', 'home', 'options', 'other'];
 
@@ -276,9 +298,9 @@
 
             var breadcrumb = new BreadCrumb();
 
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Catalogs', 'home.admin.catalogs' + $state.current.url);
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Catalog', 'home.admin.catalogs' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

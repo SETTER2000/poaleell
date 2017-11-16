@@ -7,7 +7,7 @@
 
 module.exports = {
     connection: 'userMongodbServer',
-    //schema: true,
+    schema: true,
     attributes: {
         section: {
             type: 'string',
@@ -175,6 +175,8 @@ module.exports = {
             dominant: true
         },
         city: {type: 'string'},
+        country: {type: 'string'},
+        address: {type: 'string'},
         vacations: {
             collection: 'vacation',
             via: 'users',

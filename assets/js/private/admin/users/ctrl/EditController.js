@@ -201,8 +201,6 @@ angular.module('UserModule')
                         console.log(info.error, err);
                     })
                     .catch(function onError(sailsResponse) {
-                        // console.log('sailsresponse: ', sailsResponse)
-                        // Otherwise, display generic error if the error is unrecognized.
                         $scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
                         toastr.error($scope.editProfile.changePassword.errorMsg);
                     })
@@ -212,9 +210,6 @@ angular.module('UserModule')
             };
 
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                //console.info('onCompleteItem', fileItem, response, status, headers);
-
-
                 if (status == 200) {
                     fileItem.pathToReport = '/images/foto/' + response.avatarFd;
                     fileItem.goReport = response.goReport;
@@ -368,7 +363,7 @@ angular.module('UserModule')
                             $scope.refresh();
                         },
                         function (err) {
-                            toastr.error(err.data.invalidAttributes, info.error + ' 11445!');
+                            toastr.error(err.data, info.error + ' 11484!');
                         }
                     );
                 } else {
@@ -619,8 +614,8 @@ angular.module('UserModule')
 
             var breadcrumb = new BreadCrumb();
 
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Users', 'home.admin.users');
             breadcrumb.set('Edit', 'home.admin.users.edit' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;

@@ -39,8 +39,8 @@ angular.module('ReactionModule')
             };
 
             var breadcrumb = new BreadCrumb();
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Reactions', 'home.admin.reactions');
             breadcrumb.set('Show', 'home.admin.reactions' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;

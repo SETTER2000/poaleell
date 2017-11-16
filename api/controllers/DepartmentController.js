@@ -90,16 +90,21 @@ module.exports = {
          * Поднимаем все первые буквы имени в верхний регистр
          */
         let name = req.param('name')
+            .toLowerCase()
             .split(' ')
             .map(function (el) {
                 return el.charAt(0).toUpperCase() + el.slice(1);
             })
             .join(' ');
+
         let obj = {
             action: (req.param('action')) ? req.param('action') : false,
             section: 'Питомник',
             sections: 'Питомники',
             name: name,
+            city: req.param('city'),
+            country: req.param('country'),
+            address: req.param('address'),
             registerNumber: req.param('registerNumber'),
             dateCreate: req.param('dateCreate'),
             suite: req.param('suite')

@@ -280,39 +280,51 @@ module.exports = {
                         return res.negotiate(err);
                     },
                     success: function (gravatarUrl) {
-                        User.create({
-                                login: req.param('login'),
-                                email: req.param('email'),
-                                firstName: req.param('firstName'),
-                                lastName: req.param('lastName'),
-                                patronymicName: req.param('patronymicName'),
-                                encryptedPassword: encryptedPassword,
-                                birthday: req.param('birthday'),
-                                contacts: req.param('contacts'),
-                                subdivision: req.param('subdivision'),
-                                position: req.param('position'),
-                                pfr: req.param('pfr'),
-                                dateInWork: req.param('dateInWork'),
-                                lastLoggedIn: new Date(),
-                                gravatarUrl: gravatarUrl,
-                                avatar: req.param('avatar'),
-                                room: req.param('room')
-                            },
-                            function userCreated(err, newUser) {
-                                if (err) {
-                                    console.log('err:', err);
-                                    if (err.invalidAttributes && err.invalidAttributes.email && err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 'unique') {
-                                        return res.emailAddressInUse();
-                                    }
-                                    if (err.invalidAttributes && err.invalidAttributes.login && err.invalidAttributes.login[0] && err.invalidAttributes.login[0].rule === 'unique') {
-                                        console.log('err.invalidAttributes: ', err.invalidAttributes);
-                                        return res.loginInUse();
-                                    }
-                                    return res.negotiate(err);
-                                }
-                                req.session.me = newUser.id;
-                                return res.json(newUser);
+                        User.find({login: req.param('login')}).exec((err, findUsers) => {
+                            if (err) return res.redirect('/');
+                            console.log('findUsers1', findUsers);
+                            if (findUsers.length) return res.loginInUse();
+
+                            User.find({email: req.param('email')}).exec((err, findUsers) => {
+                                if (err) return res.redirect('/');
+                                console.log('findUsers2', findUsers);
+                                if (findUsers.length) return res.emailAddressInUse();
+
+                                User.create({
+                                        login: req.param('login'),
+                                        email: req.param('email'),
+                                        firstName: req.param('firstName'),
+                                        lastName: req.param('lastName'),
+                                        patronymicName: req.param('patronymicName'),
+                                        encryptedPassword: encryptedPassword,
+                                        birthday: req.param('birthday'),
+                                        contacts: req.param('contacts'),
+                                        subdivision: req.param('subdivision'),
+                                        position: req.param('position'),
+                                        pfr: req.param('pfr'),
+                                        dateInWork: req.param('dateInWork'),
+                                        lastLoggedIn: new Date(),
+                                        gravatarUrl: gravatarUrl,
+                                        avatar: req.param('avatar'),
+                                        room: req.param('room')
+                                    },
+                                    function userCreated(err, newUser) {
+                                        if (err) {
+                                            console.log('err:', err);
+                                            if (err.invalidAttributes && err.invalidAttributes.email && err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 'unique') {
+                                                return res.emailAddressInUse();
+                                            }
+                                            if (err.invalidAttributes && err.invalidAttributes.login && err.invalidAttributes.login[0] && err.invalidAttributes.login[0].rule === 'unique') {
+                                                console.log('err.invalidAttributes: ', err.invalidAttributes);
+                                                return res.loginInUse();
+                                            }
+                                            return res.negotiate(err);
+                                        }
+                                        req.session.me = newUser.id;
+                                        return res.json(newUser);
+                                    });
                             });
+                        });
                     }
                 });
             }
@@ -377,7 +389,7 @@ module.exports = {
                         return el.charAt(0).toUpperCase() + el.slice(1);
                     })
                     .join(' ');
-                let    patronymicName = '';
+                let patronymicName = '';
 
                 if (_.isString(req.param('patronymicName'))) {
                     patronymicName = req.param('patronymicName')
@@ -387,10 +399,7 @@ module.exports = {
                         })
                         .join(' ');
                 }
-
-
-
-                User.create({
+                let obj = {
                     login: req.param('login'),
                     email: req.param('email'),
                     firstName: firstName,
@@ -404,12 +413,21 @@ module.exports = {
                     pfr: req.param('pfr'),
                     dateInWork: req.param('dateInWork'),
                     city: req.param('city'),
+                    country: req.param('country'),
+                    address: req.param('address'),
                     lastLoggedIn: new Date()
                     //gravatarUrl: gravatarUrl
-                }, function (err, newUser) {
-                    if (err) return res.negotiate(err);
-                    sails.log('Создан новый пользователь с логином:' + newUser.login);
-                    res.send({id: newUser.id});
+                };
+                User.find({email: req.param('email')}).exec((err, findUsers) => {
+                    if (err) return res.redirect('/admin/users/edit/' + req.param('id'));
+                    console.log('findUsers', findUsers);
+                    if (findUsers.length) return res.notFound('Такой email зарегистрирован.');
+
+                    User.create(obj, function (err, newUser) {
+                        if (err) return res.negotiate(err);
+                        sails.log('Создан новый пользователь с логином:' + newUser.login);
+                        res.send({id: newUser.id});
+                    });
                 });
             }
         });
@@ -699,6 +717,7 @@ module.exports = {
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         let fDt = (req.param('firedDate')) ? req.param('firedDate') : null;
+
         var obj = {
             // login: req.param('login'),
             // email: req.param('email'),
@@ -718,45 +737,54 @@ module.exports = {
             avatarUrl: req.param('avatarUrl'),
             room: req.param('room'),
             city: req.param('city'),
+            country: req.param('country'),
+            address: req.param('address'),
+            email: req.param('email'),
             furlough: req.param('furlough')
 
         };
 
         //console.log('Param ID: ', req.param('id'));
         //console.log('objEdit555: ', obj);
-        User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
+        User.find({email: req.param('email'), id: {'!': req.param('id')}}).exec((err, findUsers) => {
             if (err) return res.redirect('/admin/users/edit/' + req.param('id'));
-            User.findOne(req.param('id'))
-                .populate('positions')
-                .populate('furloughs')
-                .populate('departments')
-                .exec(function (err, user) {
-                    if (err) return res.negotiate(err);
-                    if (!user) return res.notFound('Не могу');
+            console.log('findUsers', findUsers);
+            if (findUsers.length) return res.notFound('Такой email зарегистрирован.');
+            User.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
+                if (err) return res.redirect('/admin/users/edit/' + req.param('id'));
+                User.findOne(req.param('id'))
+                    .populate('positions')
+                    .populate('furloughs')
+                    .populate('departments')
+                    .exec(function (err, user) {
+                        if (err) return res.negotiate(err);
+                        if (!user) return res.notFound('Не могу');
 
-                    // console.log('positionRemove:', req.param('positionRemove'));
-                    user.positions.add(req.param('positions'));
-                    user.departments.add(req.param('departments'));
-                    user.furloughs.add(req.param('furloughs'));
+                        // console.log('positionRemove:', req.param('positionRemove'));
+                        user.positions.add(req.param('positions'));
+                        user.departments.add(req.param('departments'));
+                        user.furloughs.add(req.param('furloughs'));
 
-                    // if (_.isEmpty(req.param('position'))) {
-                    //     user.positions.add({})
-                    // }
-                    if (req.param('positionRemove')) {
-                        user.positions.remove(req.param('positionRemove'));
-                    }
-                    if (req.param('furloughRemove')) {
-                        user.furloughs.remove(req.param('furloughRemove'));
-                    }
-                    if (req.param('departmentRemove')) {
-                        user.departments.remove(req.param('departmentRemove'));
-                    }
-                    user.save(function (err) {
-                        if (err) return res.negotiate('Ошибка при сохранении...');
-                        res.ok();
+                        // if (_.isEmpty(req.param('position'))) {
+                        //     user.positions.add({})
+                        // }
+                        if (req.param('positionRemove')) {
+                            user.positions.remove(req.param('positionRemove'));
+                        }
+                        if (req.param('furloughRemove')) {
+                            user.furloughs.remove(req.param('furloughRemove'));
+                        }
+                        if (req.param('departmentRemove')) {
+                            user.departments.remove(req.param('departmentRemove'));
+                        }
+                        user.save(function (err) {
+                            if (err) return res.negotiate('Ошибка при сохранении...');
+                            res.ok();
+                        });
                     });
-                });
+            });
         });
+
     },
 
     /**

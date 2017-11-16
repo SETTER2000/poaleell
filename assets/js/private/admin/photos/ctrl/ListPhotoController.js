@@ -88,8 +88,8 @@
                 };
 
                 var breadcrumb = new BreadCrumb();
-                breadcrumb.set('Home', '/');
-                breadcrumb.set('Admin', 'home.admin');
+                breadcrumb.set('Home', 'home');
+                if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
                 breadcrumb.set('Photos', 'home.admin.photos' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
                 

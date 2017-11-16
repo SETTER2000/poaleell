@@ -28,11 +28,13 @@
                 <!--</button>-->
             </div>
         </h2>
+
+
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
-        <span ng-switch-default>
+                    <span ng-switch-default>
         <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
         </span>
                 </ng-switch>
@@ -107,11 +109,11 @@
     <!--{{charText}}  {{where}}-->
 
     <!--<pagination num-pages="numPages"-->
-                <!--limit-rows="limitRows"-->
-                <!--default-rows="defaultRows"-->
-                <!--length-object="items.length"-->
-                <!--current-page="currentPage"-->
-                <!--on-select-page="selectCount=selectCount+1">-->
+    <!--limit-rows="limitRows"-->
+    <!--default-rows="defaultRows"-->
+    <!--length-object="items.length"-->
+    <!--current-page="currentPage"-->
+    <!--on-select-page="selectCount=selectCount+1">-->
     <!--</pagination>-->
 
     <div class="row">
@@ -129,47 +131,54 @@
                 <!--</span>-->
 
                 <input type="text" class="form-control" ng-model="searchText" placeholder="Поиск ...">
-                     <span class="input-group-btn">
+                <span class="input-group-btn">
                        <button ng-click="searchText=''" class="btn btn-default" type="button">
                            <span class="glyphicon glyphicon-remove"></span>
                        </button>
                      </span>
             </div>
+
+
+
+
+
         </div>
     </div>
 
     <!--<div class="row" ng-cloak>-->
-        <!--<div class="col-md-12">-->
-            <!--<div class="panel panel-info">-->
-                <!--<div class="panel-heading">-->
+    <!--<div class="col-md-12">-->
+    <!--<div class="panel panel-info">-->
+    <!--<div class="panel-heading">-->
 
 
+    <!--</div>-->
+    <!--<div class="panel-body">-->
 
-
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-                    <div ng-switch on="modeSelect.value" style="margin-top:20px;">
-                        <div ng-switch-when="female">
-                            <ng-include src="listView"></ng-include>
-                        </div>
-                        <div ng-switch-when="table">
-                            <ng-include src="tableView"></ng-include>
-                        </div>
-                        <div ng-switch-when="action">
-                            <ng-include src="actionView"></ng-include>
-                        </div>
-                        <div ng-switch-when="male">
-                            <ng-include src="workView"></ng-include>
-                        </div>
-                    </div>
-                </div>
+    <div ng-switch on="modeSelect.value" style="margin-top:20px;">
+        <div ng-switch-when="all">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="action">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="male">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="female">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="poaleell">
+            <div ui-view="actionView"></div>
+        </div>
+    </div>
+</div>
 <!--</div>-->
 <!--</div>-->
 <!--</div>-->
-    <div ui-view="list"></div>
-    <div ui-view="attendance"></div>
+<div ui-view="list"></div>
+<div ui-view="attendance"></div>
 
 
 <div class="row">
-    <pre  ng-if="debug"><h3>{{items| json}}</h3></pre>
+    <pre ng-if="debug && me.admin"><h3>{{items| json}}</h3></pre>
 </div>

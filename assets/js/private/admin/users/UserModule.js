@@ -10,7 +10,8 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     '@': {
                         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
                         controller: 'ListController'
-                    }
+                    },
+                    "actionView@home.admin.users": {templateUrl: '/js/private/admin/users/views/home.admin.users.action.html'},
                 }
             })
             .state('home.admin.users.settings', {
@@ -305,6 +306,35 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             }
         }
     })
+    .filter("kennel", function () {
+        /**
+         * Возвращает массив с объектами заданного питомника
+         * Фильтр принимает два параметра
+         * объект и login пользователя
+         *
+         */
+        return function (value, name) {
+            if (angular.isArray(value) && angular.isString(name)) {
+                let ar = [];
+                let arId = [];
+                for (let item in value) {
+                    if (value[item]['breeders'][0]) {
+                        if (value[item]['breeders'][0].login === name) {
+                            ar.push(value[item]);
+                            arId.push(value[item].id);
+                        }
+                    }
+                    if (value[item]['owners'][0] && (arId.indexOf( value[item].id ) == -1)) {
+
+                        if (value[item]['owners'][0].login === name) ar.push(value[item]);
+                    }
+                }
+                return ar;
+            } else {
+                return value;
+            }
+        }
+    })
     .directive('pagination', function () { // функция компиляции директивы (фабричная функция)
         return {
             restrict: 'E',
@@ -335,9 +365,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     scope.urlBt = value;
                 });
 
-                scope.$watch('lengthObject', function (value,old) {
-                    console.log('OLD VALUE:', old);
-                    console.log('NEW VALUE:', value);
+                scope.$watch('lengthObject', function (value, old) {
+                    // console.log('OLD VALUE:', old);
+                    // console.log('NEW VALUE:', value);
                     scope.numPages = Math.floor(value / scope.defaultRows) + 1;
                     //scope.pages = [];
                     //for (var i = 1; i <= value; i++) {
@@ -466,10 +496,10 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         // console.log('OBJRECTIONS5: ',obj[scope.filedName]);
                         if (angular.isArray(obj[scope.filedName]) && obj[scope.filedName].length) {
 
-                                console.log('SAUSASSkkkk-:', obj[key]);
-                                if (obj[scope.filedName][0].name === null) return;
-                                chars = obj[scope.filedName][0].name.substr(0, 3);
-                                parts.push(chars);
+                            console.log('SAUSASSkkkk-:', obj[key]);
+                            if (obj[scope.filedName][0].name === null) return;
+                            chars = obj[scope.filedName][0].name.substr(0, 3);
+                            parts.push(chars);
                         }
                         else {
                             for (let prop in obj) {
@@ -722,6 +752,66 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             templateUrl: function (elem, attr) {
                 return '/js/private/admin/users/views/' + attr.type + '-head-table.html';
             }
+        };
+    })
+    .directive('tdTable', function () {
+        return {
+            restrict: "E",
+            scope: {
+                'searchText': '=',
+                'dtItems': '=',
+                'filterObject': '=',
+                'filterKennel': '=',
+                'currentPage': '=',
+                'defaultRows': '=',
+                'nameHeader': '=',
+                'fieldName': '=', // Какой тип контакта показывать по умолчанию
+                'me': '=',
+            },
+
+            templateUrl: function (elem, attr) {
+                return '/js/private/admin/users/views/' + attr.type + '-table.html';
+            },
+            replace: true,
+
+            link: function (scope) {
+                // scope.$watch('searchText', function (value) {
+                //     console.log('searchText:', value);
+                //     scope.searchText = value;
+                //
+                // });
+                // scope.$watch('nameHeader', function (value) {
+                //     console.log('nameHeader:', value);
+                //     scope.nameHeader = value;
+                //
+                // });
+                // scope.$watch('currentPage', function (value) {
+                //     console.log('currentPage:', value);
+                //     scope.currentPage = value;
+                //
+                // });
+                // scope.$watch('defaultRows', function (value) {
+                //     console.log('defaultRows:', value);
+                //     scope.defaultRows = value;
+                //
+                // });
+                scope.$watch('dtItems', function (value) {
+                    console.log('dtItems:', value);
+                    scope.items = value;
+                });
+                // scope.$watch('filterObject', function (value) {
+                //     console.log('filterObject:', value);
+                //     scope.filterObject = value;
+                // });
+                scope.sortBy = function (propertyName) {
+                    scope.reverse = (scope.propertyName === propertyName) ? !scope.reverse : true;
+                    scope.propertyName = propertyName;
+                };
+
+                // scope.items = scope[attributes["dtItems"]];
+                // scope.filterObject = scope[attributes["filterObject"]];
+                // scope.filterObject.searchText = scope[attributes["searchText"]];
+            },
         };
     })
 ;

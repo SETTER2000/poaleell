@@ -15,11 +15,11 @@
                     <div layout-gt-sm="row">
                         <md-input-container flex>
                             <label>Логин</label>
-                            <input  ng-model="loginForm.email" type="text"/>
+                            <input  ng-model="loginForm.email" autofocus required type="text"/>
                         </md-input-container>
                         <md-input-container flex>
                             <label>Пароль</label>
-                            <input ng-model="loginForm.password"  type="password"/>
+                            <input ng-model="loginForm.password" required type="password"/>
                         </md-input-container>
                     </div>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>"/>

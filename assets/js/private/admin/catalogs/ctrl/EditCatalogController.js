@@ -1081,8 +1081,8 @@ angular.module('CatalogModule')
 
             var breadcrumb = new BreadCrumb();
 
-            breadcrumb.set('Home', '/');
-            breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Catalogs', 'home.admin.catalogs');
             breadcrumb.set('Edit', 'home.admin.catalogs.edit' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
