@@ -4,9 +4,9 @@
         <h2>{{items[0].sc()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
             <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
                 всего:
-                <span ng-if="mode">SD{{(items | filter:{fired:true}).length}}</span>
+
                 <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->
-                <span ng-if="!mode">{{items.length}}</span>
+                <span ng-if="!mode">{{(items | filter:filterTemplate.all).length}}</span>
             </a>
             <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">

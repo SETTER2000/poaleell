@@ -61,7 +61,7 @@
             <div class="row" ng-if="item.titles.length">
                 <h5 class="text-center"> ТИТУЛЫ: </h5>
                 <ol class="breadcrumb text-center">
-                    <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">
+                    <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText,tip:'титул'})" title="{{item.description}}">
                         <a ng-if="me.kadr || me.admin" href="/admin/title/{{item.id}}">
                             <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
                         </a>
@@ -71,6 +71,18 @@
                     </li>
                 </ol>
             </div>
+            <div class="row" ng-if="item.titles.length">
+                <h5 class="text-center"> Статистика (победы, заслуги, достижения): </h5>
+                <ol class="breadcrumb text-center">
+                    <li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})" title="{{sert.description}}">
+                        <a ng-if="me.kadr || me.admin" href="/admin/title/{{sert.id}}">
+                            <span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}
+                        </a>
+                        <a ng-if="!me.kadr && !me.admin" href="#">
+                            <span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}
+                        </a>
+                    </li>
+                </ol
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-group ">

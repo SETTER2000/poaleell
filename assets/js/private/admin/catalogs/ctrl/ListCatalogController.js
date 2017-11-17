@@ -107,15 +107,23 @@
             //    }
             //});
             $scope.filterTemplate = {
-                all: {},
+                all: {action:true},
                 action: {action: false},
                 male: {gender: 'кобель', action: true},
                 female: {gender: 'сука', action: true},
                 poaleell: { action: true},
             };
+
              $scope.filterKennel= {
                 poaleell: "star", // задаем логин владельца и заводчика
             };
+
+
+            if ($scope.me.admin || $scope.me.kadr) {
+                $scope.filterTemplate['all'] = {};
+            }
+
+
 
             $scope.$watch('modeSelect.value', function (value, old) {
                 $scope.ftObj = $scope.filterTemplate[value];

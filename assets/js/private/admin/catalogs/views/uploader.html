@@ -2,14 +2,26 @@
     <div class="panel-header"><h3 class="panel-title"></h3></div>
     <div class="panel-body">
         <div class="col-sm-10 col-md-10  col-md-offset-1" ng-class="{'col-md-offset-2':!item.avatarUrl}">
+            <div class="row">
             <h5 class="text-center"> ТИТУЛЫ: </h5>
             <ol class="breadcrumb text-center">
-                <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText})" title="{{item.description}}">
+                <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText, tip:'титул'})" title="{{item.description}}">
                     <a href="/admin/title/{{item.id}}">
                         <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
                     </a>
                 </li>
             </ol>
+            </div>
+            <div class="row" >
+                <h5 class="text-center"> Статистика (победы, заслуги, достижения): </h5>
+                <ol class="breadcrumb text-center">
+                    <li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})" title="{{sert.description}}">
+                        <a href="/admin/title/{{sert.id}}">
+                            <span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}
+                        </a>
+                    </li>
+                </ol>
+            </div>
             <div class="delete-button" ng-class="{'thumbnail':item.avatarUrl}" ng-mouseover="shows=1" ng-mouseleave="shows=0">
                 <a href="#" ng-click="delFoto(item)" ng-if="shows" class="btn btn-default delete-img" role="button">Удалить</a>
                 <img ng-src="{{item.avatarUrl}}">

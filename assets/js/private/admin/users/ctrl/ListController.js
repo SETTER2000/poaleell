@@ -30,13 +30,13 @@
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
-            // $scope.fioArea = 'ФИО';
-            // $scope.drArea = 'ДР11';
-            // $scope.loginArea = 'Логин';
-            // $scope.emailArea = 'Email';
-            // $scope.roomArea = 'Комната';
-            // $scope.departmentArea = 'Питомник';
-            // $scope.positionArea = 'Должность';
+            $scope.fioArea = 'ФИО';
+            $scope.drArea = 'ДР11';
+            $scope.loginArea = 'Логин';
+            $scope.emailArea = 'Email';
+            $scope.roomArea = 'Комната';
+            $scope.departmentArea = 'Питомник';
+            $scope.positionArea = 'Должность';
 
             $scope.nameHeader = {
                 fioArea : 'ФИО',
