@@ -123,11 +123,11 @@ module.exports.routes = {
     /**
      * Department
      */
-    'POST /departments': 'DepartmentController.createDepartment',
-    'GET /departments': 'DepartmentController.findDepartments',
-    'PUT /departments/:id': 'DepartmentController.update',
-    'GET /departments/:id': 'DepartmentController.findDepartments',
-    'DELETE /departments/:id': 'DepartmentController.destroy',
+    'POST /kennels': 'DepartmentController.createDepartment',
+    'GET /kennels': 'DepartmentController.findDepartments',
+    'PUT /kennels/:id': 'DepartmentController.update',
+    'GET /kennels/:id': 'DepartmentController.findDepartments',
+    'DELETE /kennels/:id': 'DepartmentController.destroy',
 
 
     /**
@@ -254,7 +254,7 @@ module.exports.routes = {
     'GET /admin/users/create': 'PageController.showHomePage',
     'GET /admin/users/exit': 'PageController.getExitUserPage',
 
-    'GET /admin/departments': 'PageController.showHomePage',
+    'GET /admin/kennels': 'PageController.showHomePage',
 
     'GET /admin/attendances': 'PageController.showHomePage',
     'GET /admin/positions': 'PageController.showHomePage',
@@ -269,12 +269,12 @@ module.exports.routes = {
     'GET /admin/users/show/:id': 'UserController.findOne',
     'PUT /admin/users/edit/changePassword': 'UserController.changePasswordProfile',
     'GET /admin/users/edit/:id': 'PageController.showHomePage',
- 
 
-    'GET /admin/departments/create': 'PageController.showHomePage',
-    'GET /admin/departments/:id': 'DepartmentController.findOne',
-    'GET /admin/departments/edit/:id': 'PageController.showHomePage',
-    'GET /admin/department/:id': 'PageController.showHomePage',
+
+    'GET /admin/kennels/create': 'PageController.showHomePage',
+    'GET /admin/kennels/:id': 'DepartmentController.findOne',
+    'GET /admin/kennels/edit/:id': 'PageController.showHomePage',
+    'GET /admin/kennel/:id': 'PageController.showHomePage',
     'GET /admin/depart': 'PageController.showHomePage',
     'GET /admin/depart/:id': 'DepartmentController.addDepartment',
 

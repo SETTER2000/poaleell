@@ -11,6 +11,13 @@
             <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
             <div class="btn-group-xs pull-right">
 
+                <!--<span class="md-primary md-raised" ng-click="showAlert($event)">-->
+                <small> <small><a  href="#" ng-click="showPopup(help.dogsOnCatalog,1)">Кто в каталоге?</a></small></small>
+
+
+                <!--</span>-->
+
+
                 <!--<button type="checkbox" ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">-->
                 <!--<span class="glyphicon glyphicon-wrench"></span>-->
                 <!--</button>-->
@@ -137,9 +144,6 @@
                        </button>
                      </span>
             </div>
-
-
-
 
 
         </div>

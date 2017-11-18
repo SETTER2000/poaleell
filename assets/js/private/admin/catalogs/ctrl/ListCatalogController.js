@@ -1,8 +1,120 @@
 (function (angular) {
     'use strict';
     angular.module('CatalogModule')
-        .controller('ListCatalogController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Catalogs', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Catalogs) {
+        .controller('ListCatalogController', ['$scope', '$location', 'moment', '$http', 'toastr', 'toastrConfig',"$rootScope", '$state', 'Catalogs', '$mdDialog', '$window', function ($scope, $location, moment, $http, toastr,toastrConfig, $rootScope, $state, Catalogs, $mdDialog) {
             $scope.me = window.SAILS_LOCALS.me;
+            $scope.status = '  ';
+            $scope.customFullscreen = false;
+
+            $scope.showAlert = function (ev) {
+
+                /**
+                 * Добавление диалога к document.body для покрытия sidenav в приложении docs
+                 * Модальные диалоги должны полностью охватывать приложение
+                 * для предотвращения взаимодействия вне диалога
+                 */
+                $mdDialog.show(
+                    $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title('Это заголовок предупреждения')
+                        .textContent('Здесь вы можете указать текст описания.')
+                        .ariaLabel('Диалоговое окно оповещения')
+                        .ok('Ok!')
+                        .targetEvent(ev)
+                );
+            };
+
+            // $scope.showConfirm = function(ev) {
+            //     // Appending dialog to document.body to cover sidenav in docs app
+            //     var confirm = $mdDialog.confirm()
+            //         .title('Would you like to delete your debt?')
+            //         .textContent('All of the banks have agreed to forgive you your debts.')
+            //         .ariaLabel('Lucky day')
+            //         .targetEvent(ev)
+            //         .ok('Please do it!')
+            //         .cancel('Sounds like a scam');
+            //
+            //     $mdDialog.show(confirm).then(function() {
+            //         $scope.status = 'You decided to get rid of your debt.';
+            //     }, function() {
+            //         $scope.status = 'You decided to keep your debt.';
+            //     });
+            // };
+            //
+            // $scope.showPrompt = function(ev) {
+            //     // Appending dialog to document.body to cover sidenav in docs app
+            //     var confirm = $mdDialog.prompt()
+            //         .title('What would you name your dog?')
+            //         .textContent('Bowser is a common name.')
+            //         .placeholder('Dog name')
+            //         .ariaLabel('Dog name')
+            //         .initialValue('Buddy')
+            //         .targetEvent(ev)
+            //         .required(true)
+            //         .ok('Okay!')
+            //         .cancel('I\'m a cat person');
+            //
+            //     $mdDialog.show(confirm).then(function(result) {
+            //         $scope.status = 'You decided to name your dog ' + result + '.';
+            //     }, function() {
+            //         $scope.status = 'You didn\'t name your dog.';
+            //     });
+            // };
+            //
+            // $scope.showAdvanced = function(ev) {
+            //     $mdDialog.show({
+            //         controller: DialogController,
+            //         templateUrl: 'dialog1.tmpl.html',
+            //         parent: angular.element(document.body),
+            //         targetEvent: ev,
+            //         clickOutsideToClose:true,
+            //         fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            //     })
+            //         .then(function(answer) {
+            //             $scope.status = 'You said the information was "' + answer + '".';
+            //         }, function() {
+            //             $scope.status = 'You cancelled the dialog.';
+            //         });
+            // };
+            //
+            // $scope.showTabDialog = function(ev) {
+            //     $mdDialog.show({
+            //         controller: DialogController,
+            //         templateUrl: 'tabDialog.tmpl.html',
+            //         parent: angular.element(document.body),
+            //         targetEvent: ev,
+            //         clickOutsideToClose:true
+            //     })
+            //         .then(function(answer) {
+            //             $scope.status = 'You said the information was "' + answer + '".';
+            //         }, function() {
+            //             $scope.status = 'You cancelled the dialog.';
+            //         });
+            // };
+            //
+            // $scope.showPrerenderedDialog = function(ev) {
+            //     $mdDialog.show({
+            //         contentElement: '#myDialog',
+            //         parent: angular.element(document.body),
+            //         targetEvent: ev,
+            //         clickOutsideToClose: true
+            //     });
+            // };
+
+            function DialogController($scope, $mdDialog) {
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function (answer) {
+                    $mdDialog.hide(answer);
+                };
+            }
 
             // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //toastr.options = {
@@ -63,7 +175,9 @@
                 border: false,
                 size: false
             };
-
+            $scope.help = {
+                dogsOnCatalog: 'В каталоге представлены собаки питомника Poale Ell, а так же собаки из других питомников.',
+            };
             //$scope.days = moment.duration(2).days();
             //$scope.hours = moment.duration(2).hours();
             //$scope.month = moment.duration().months();
@@ -107,14 +221,14 @@
             //    }
             //});
             $scope.filterTemplate = {
-                all: {action:true},
+                all: {action: true},
                 action: {action: false},
                 male: {gender: 'кобель', action: true},
                 female: {gender: 'сука', action: true},
-                poaleell: { action: true},
+                poaleell: {action: true},
             };
 
-             $scope.filterKennel= {
+            $scope.filterKennel = {
                 poaleell: "star", // задаем логин владельца и заводчика
             };
 
@@ -122,7 +236,6 @@
             if ($scope.me.admin || $scope.me.kadr) {
                 $scope.filterTemplate['all'] = {};
             }
-
 
 
             $scope.$watch('modeSelect.value', function (value, old) {
@@ -142,8 +255,7 @@
                     {display: "Все", value: "all"},
 
                 ];
-           if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
-
+            if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
 
 
             $scope.modeSelect = $scope.options[0];
@@ -249,6 +361,49 @@
                 });
             };
 
+            $scope.showPopup = function (text, num) {
+
+                // angular.extend(toastrConfig, {
+                    // "allowHtml": true,
+                    // autoDismiss: false,
+                    // containerId: 'toast-container',
+                    // maxOpened: 0,
+                    // newestOnTop: true,
+                    // positionClass: 'toast-top-right',
+                    // // positionClass: 'toast-top-left',
+                    // positionClass: 'toast-top-full-width',
+                    // preventDuplicates: false,
+                    // preventOpenDuplicates: true,
+                    // target: 'body',
+                    // // closeButton:true,
+                    // extendedTimeOut:1000,
+                    // "showDuration": "100",
+                    // "hideDuration": "300",
+                    // "timeOut": "5000",
+                    // "progressBar": true,
+                // });
+                if (!angular.isNumber(num)) return;
+                if (num === 1) toastr.info(text , 'Информация!',{
+                    "allowHtml": true,
+                    // iconClass:'toast-pink',
+                    // autoDismiss: false,
+                    // containerId: 'toast-container',
+                    // maxOpened: 0,
+                    // newestOnTop: true,
+                    // positionClass: 'toast-top-right',
+                    // // positionClass: 'toast-top-left',
+                    // positionClass: "toast-top-full-width",
+                    // preventDuplicates: false,
+                    // preventOpenDuplicates: true,
+                    // target: 'body',
+                    // // closeButton:true,
+                    // extendedTimeOut:1000,
+                    // "showDuration": "100",
+                    // "hideDuration": "300",
+                    // "timeOut": "5000",
+                    "progressBar": true,
+                });
+            };
             $scope.getMode = function (t) {
                 if (t) {
                     $scope.refresh({"fired": false});

@@ -13,7 +13,12 @@ angular.module('DepartmentModule')
             $scope.registerArea = 'Номер питомника';
             $scope.dateCreateArea = 'Дата регистрации';
             $scope.suiteArea = 'Сайт';
-
+            $scope.mode=true;
+            // $scope.message = 'false';
+            //
+            // $scope.onChange = function(cbState) {
+            //     $scope.message = cbState;
+            // };
             var info = {
                 changed: 'Изменения сохранены!',
                 passChange: 'Пароль обновлён!',

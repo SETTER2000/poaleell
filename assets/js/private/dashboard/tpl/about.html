@@ -4,6 +4,16 @@
         <div class="col-md-12">
             <div class="page-header">
                 <h1>О питомнике </h1>
+                <ul class="breadcrumb">
+                    <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                        <ng-switch on="$last">
+                            <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                            <span ng-switch-default>
+                                 <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+                             </span>
+                        </ng-switch>
+                    </li>
+                </ul>
             </div>
             <blockquote>
                 <div class="inside">

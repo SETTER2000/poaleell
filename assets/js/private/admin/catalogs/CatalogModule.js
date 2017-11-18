@@ -333,8 +333,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         Catalogs.prototype.getEditUrl = function (id) {
             return '/admin/catalogs/edit/' + id;
         };
-        Catalogs.prototype.getShowUrl = function (id) {
-            return '/admin/catalog/' + id;
+        Catalogs.prototype.getShowUrl = function (id, me) {
+            return (me) ? '/admin/catalog/' + id : '/dogs/catalog/' + id;
         };
         Catalogs.prototype.deactivation = function () {
             return ' - деактивирован';
@@ -439,7 +439,6 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             }
         }
     })
-
 
 
 ;

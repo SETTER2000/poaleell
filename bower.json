@@ -40,7 +40,8 @@
     "angular-material": "^1.1.5",
     "moment": "^2.18.1",
     "angular-toastr": "^2.1.1",
-    "moment-precise-range": "^1.0.1"
+    "moment-precise-range": "^1.0.1",
+    "AngularJS-Toaster": "angularjs-toaster#^2.2.0"
   },
   "devDependencies": {
     "angular-translate": "^2.15.0",

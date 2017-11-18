@@ -1,8 +1,8 @@
 angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('home.admin.departments', {
-                url: '/departments',
+            .state('home.admin.kennels', {
+                url: '/kennels',
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/departments/tpl/list.tpl.html',
@@ -19,7 +19,7 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                 //    }
                 //}
             })
-            .state('home.admin.departments.edit', {
+            .state('home.admin.kennels.edit', {
                 url: '/edit/:depId',
                 views: {
                     '@': {
@@ -28,7 +28,7 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                     }
                 }
             })
-            .state('home.admin.departments.create', {
+            .state('home.admin.kennels.create', {
                 url: '/create/:departmentId',
                 views: {
                     '@': {
@@ -46,8 +46,8 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
                    }
                }
             })
-            .state('home.admin.department', {
-                url: '/department/:depId',
+            .state('home.admin.kennel', {
+                url: '/kennel/:depId',
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/departments/tpl/show.tpl.html',
@@ -57,7 +57,7 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
             })
         ;
     })
-    .constant('CONF_MODULE_DEPARTMENT', {baseUrl: '/departments/:depId'})
+    .constant('CONF_MODULE_DEPARTMENT', {baseUrl: '/kennels/:depId'})
     .factory('Departments', function ($resource, CONF_MODULE_DEPARTMENT) {
         var Departments = $resource(
             CONF_MODULE_DEPARTMENT.baseUrl,
@@ -88,13 +88,13 @@ angular.module('DepartmentModule', ['ui.router', 'ngResource', 'ngAnimate'])
             return alert('ОШИБКА!!! ' + this.name +  ' - изменения не приняты!');
         };
         Departments.prototype.getListUrl = function () {
-            return '/admin/departments';
+            return '/admin/kennels';
         };
         Departments.prototype.getEditUrl = function (id) {
-            return '/admin/departments/edit/'+id;
+            return '/admin/kennels/edit/'+id;
         };
         Departments.prototype.getShowUrl = function (id) {
-            return '/admin/department/'+id;
+            return '/admin/kennel/'+id;
         };
         Departments.prototype.deactivation = function () {
             return  ' - деактивирован';

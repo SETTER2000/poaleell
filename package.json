@@ -11,6 +11,7 @@
     "angular-flatpickr": "^2.5.0",
     "angular-material": "^1.1.5",
     "angular-moment": "^1.0.1",
+    "angularjs-toaster": "^2.2.0",
     "assert": "^1.4.1",
     "async": "^2.3.0",
     "bcrypt-nodejs": "0.0.3",

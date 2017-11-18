@@ -57,10 +57,10 @@
                     return this.arr;
                 };
 
-                var breadcrumb = new BreadCrumb();
+                let breadcrumb = new BreadCrumb();
                 breadcrumb.set('Home', 'home');
-                breadcrumb.set('Admin', '/admin');
-                breadcrumb.set('Departments', '/departments/' + $state.current.url);
+                if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+                breadcrumb.set('Kennels', '/departments/' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
 
 

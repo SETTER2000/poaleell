@@ -32,16 +32,16 @@ angular.module('DashboardModule')
                 return false
             };
 
-            $scope.refresh = function () {
-                $scope.item = Users.get({id: $scope.sendRequest.id}, function (users) {
-                    $scope.users = users;
-                    // кол-во пользователей
-                    // console.log($scope.users.length);
-                    // console.log($scope.users);
-                }, function (err) {
-                    if (err) console.log(err.message);
-                });
-            };
+            // $scope.refresh = function () {
+            //     $scope.item = Users.get({id: $scope.sendRequest.id}, function (users) {
+            //         $scope.users = users;
+            //         // кол-во пользователей
+            //         // console.log($scope.users.length);
+            //         // console.log($scope.users);
+            //     }, function (err) {
+            //         if (err) console.log(err.message);
+            //     });
+            // };
             
             function fullfilled(response) {
                 // console.log('Status: ' + response.status);
@@ -50,6 +50,35 @@ angular.module('DashboardModule')
                 // console.log('Length: ' + response.data);
                 $scope.items = response.data.users;
             }
+            /**
+             *  Конструктор хлебных крошек
+             * @constructor
+             */
+            function BreadCrumb() {
+                var name;
+                var path;
+                this.arr = [];
+            }
 
-            $scope.refresh();
+            BreadCrumb.prototype.add = function () {
+                this.arr.push({name: this.name, path: this.path});
+            };
+
+            BreadCrumb.prototype.set = function (name, path) {
+                this.name = name;
+                this.path = path;
+                this.add();
+            };
+
+            BreadCrumb.prototype.getAll = function () {
+                return this.arr;
+            };
+
+            let breadcrumb = new BreadCrumb();
+
+            breadcrumb.set('Home', 'home');
+            // if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('About', 'home.about' + $state.current.url);
+            $scope.breadcrumbs = breadcrumb;
+            // $scope.refresh();
         }]);

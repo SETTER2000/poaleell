@@ -251,9 +251,11 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         Users.prototype.getEditUrl = function (id) {
             return '/admin/users/edit/' + id;
         };
-        Users.prototype.getShowUrl = function (id) {
-            return '/admin/user/' + id;
+        Users.prototype.getShowUrl = function (id, me) {
+            // return '/admin/user/' + id;
+            return (me) ? '/admin/user/' + id : ''
         };
+
         Users.prototype.deactivation = function () {
             return ' - деактивирован';
         };

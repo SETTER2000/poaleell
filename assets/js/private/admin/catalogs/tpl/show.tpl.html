@@ -41,7 +41,11 @@
         <div class="col-md-5">
             <div class="row placeholders">
                 <div class="placeholder">
-                    <a ng-href="/admin/catalogs">
+                    <a ng-if="(me.kadr || me.admin)" ng-href="/admin/catalogs">
+                        <img ng-if="item.avatarUrl" width="450" ng-src="{{item.avatarUrl}}">
+                        <img ng-if="!item.avatarUrl" src="http://placehold.it/488x730">
+                    </a>
+                    <a ng-if="(!me.kadr && !me.admin)" ng-href="/dogs/catalogs">
                         <img ng-if="item.avatarUrl" width="450" ng-src="{{item.avatarUrl}}">
                         <img ng-if="!item.avatarUrl" src="http://placehold.it/488x730">
                     </a>
@@ -61,7 +65,8 @@
             <div class="row" ng-if="item.titles.length">
                 <h5 class="text-center"> ТИТУЛЫ: </h5>
                 <ol class="breadcrumb text-center">
-                    <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText,tip:'титул'})" title="{{item.description}}">
+                    <li ng-repeat="item in filtered=(item.titles | filter:{$:searchText,tip:'титул'})"
+                        title="{{item.description}}">
                         <a ng-if="me.kadr || me.admin" href="/admin/title/{{item.id}}">
                             <span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}
                         </a>
@@ -74,7 +79,8 @@
             <div class="row" ng-if="item.titles.length">
                 <h5 class="text-center"> Статистика (победы, заслуги, достижения): </h5>
                 <ol class="breadcrumb text-center">
-                    <li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})" title="{{sert.description}}">
+                    <li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})"
+                        title="{{sert.description}}">
                         <a ng-if="me.kadr || me.admin" href="/admin/title/{{sert.id}}">
                             <span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}
                         </a>
@@ -83,6 +89,7 @@
                         </a>
                     </li>
                 </ol>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-group ">
@@ -90,12 +97,19 @@
                             Заводчик
                         </li>
                         <li class="list-group-item list-group-item-warning" ng-repeat="breeder in item.breeders">
-                            <a ng-href="/admin/user/{{breeder.id}}">
+                            <a ng-if="(me.kadr || me.admin)" ng-href="/admin/user/{{breeder.id}}">
+
+
                                 <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
                                      ng-mouseleave="vid=false"
                                      ng-src="{{breeder.avatarUrl}}"
-                                     alt=""> </a>
-
+                                     alt="">
+                            </a>
+                            <img ng-if="(!me.kadr && !me.admin)" class="object-fit_cover" ng-class="{photoSize:vid}"
+                                 ng-mouseover="vid=true"
+                                 ng-mouseleave="vid=false"
+                                 ng-src="{{breeder.avatarUrl}}"
+                                 alt="">
                             &nbsp; {{breeder.lastName}} {{breeder.firstName[0]}}. {{breeder.patronymicName[0]+'.'}}
 
                         </li>
@@ -109,16 +123,49 @@
                         </li>
                         <li class="list-group-item list-group-item-warning" ng-repeat="owner in item.owners">
 
-                            <a ng-href="/admin/user/{{owner.id}}">
+                            <a ng-if="(me.kadr || me.admin)" ng-href="/admin/user/{{owner.id}}">
                                 <img class="object-fit_cover " ng-class="{photoSize:vid}" ng-mouseover="vid=true"
                                      ng-mouseleave="vid=false"
                                      ng-src="{{owner.avatarUrl}}"
                                      alt="">
                             </a>
-
+                            <img ng-if="(!me.kadr && !me.admin)" class="object-fit_cover " ng-class="{photoSize:vid}"
+                                 ng-mouseover="vid=true"
+                                 ng-mouseleave="vid=false"
+                                 ng-src="{{owner.avatarUrl}}"
+                                 alt="">
                             &nbsp; {{owner.lastName}} {{owner.firstName[0]}}. {{owner.patronymicName[0]+'.'}}
 
                         </li>
+                    </ul>
+                </div>
+                <div class="col-md-6" ng-if="!item.owners.length">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-warning">
+                            Владелец где ты?
+
+                        </li>
+                        <li class="list-group-item list-group-item-warning">
+                            <span ng-if="(item.gender === 'кобель')"> Примерный сынуля ищет папу с мамой!</span>
+                            <span ng-if="(item.gender === 'сука')"> Красавица доЦя  ищет родителей!</span>
+
+                        </li>
+                        <!--<li class="list-group-item list-group-item-warning" ng-repeat="owner in item.owners">-->
+
+                            <!--<a ng-if="(me.kadr || me.admin)" ng-href="/admin/user/{{owner.id}}">-->
+                                <!--<img class="object-fit_cover " ng-class="{photoSize:vid}" ng-mouseover="vid=true"-->
+                                     <!--ng-mouseleave="vid=false"-->
+                                     <!--ng-src="{{owner.avatarUrl}}"-->
+                                     <!--alt="">-->
+                            <!--</a>-->
+                            <!--<img ng-if="(!me.kadr && !me.admin)" class="object-fit_cover " ng-class="{photoSize:vid}"-->
+                                 <!--ng-mouseover="vid=true"-->
+                                 <!--ng-mouseleave="vid=false"-->
+                                 <!--ng-src="{{owner.avatarUrl}}"-->
+                                 <!--alt="">-->
+                            <!--&nbsp; {{owner.lastName}} {{owner.firstName[0]}}. {{owner.patronymicName[0]+'.'}}-->
+
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
