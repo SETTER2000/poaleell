@@ -27,7 +27,6 @@
                 </small>
                 </span>
         </h2>
-
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
@@ -78,6 +77,13 @@
                                       ng-class="{reverse: reverse}"></span>
                         </button>
                     </th>
+                    <th >
+                        <button class="btn btn-default not-border" ng-click="sortBy('photoUrl')">
+                            {{photoUrlArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'photoUrl'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
                     <th>
                         <button class="btn btn-default not-border" ng-click="sortBy('description')">
                             {{descriptionArea}}
@@ -99,11 +105,17 @@
 
                     <td >
                         <a ng-href="{{item.getEditUrl(item.id)}}">
-                            <span ng-if="item.multiplicity">{{item.multiplicity}}x</span>{{item.name}}
+                           {{item.fileNamePhoto}}
+                        </a>
+                    </td>
+                    <td >
+                        <a ng-href="{{item.getEditUrl(item.id)}}">
+                            <img width="90" ng-src="{{item.photoUrl}}" alt="">
                         </a>
                     </td>
                     <td>{{item.description}}</td>
-                    <td>{{item.descriptionEn }}</td>
+                    <td>{{item.descriptionEn}}</td>
+
                     <td class="btn-group-xs">
                         <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
                            ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">

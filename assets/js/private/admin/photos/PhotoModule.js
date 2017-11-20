@@ -24,15 +24,15 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
             //     templateUrl: '/js/private/admin/photos/views/home.admin.photos.settings.html',
             //     controller: 'ListPhotoController'
             // })
-            // .state('home.admin.title', {
-            //     url: '/title/:photoId',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/admin/photos/tpl/show.tpl.html',
-            //             controller: 'PhotoController'
-            //         }
-            //     }
-            // })
+            .state('home.admin.photos.album', {
+                url: '/album/:photoId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/photos/tpl/show.tpl.html',
+                        controller: 'PhotoController'
+                    }
+                }
+            })
             // .state('home.admin.photos.create', {
             //     url: '/create/:photoId',
             //     views: {
@@ -99,7 +99,7 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
             return '/admin/photos/edit/' + id;
         };
         Photos.prototype.getShowUrl = function (id) {
-            return '/admin/title/' + id;
+            return '/admin/photo/' + id;
         };
         Photos.prototype.deactivation = function () {
             return ' - деактивирована';
@@ -113,14 +113,14 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
             return item;
         };
         Photos.prototype.arr = [];
-        Photos.prototype.removePosition = function (title, item) {
-            if (angular.isDefined(title) &&
-                angular.isDefined(title.id)) {
-                this.arr.push(title.id);
+        Photos.prototype.removePosition = function (photo, item) {
+            if (angular.isDefined(photo) &&
+                angular.isDefined(photo.id)) {
+                this.arr.push(photo.id);
             }
             var photos = item.photos;
             for (var i = 0, ii = photos.length; i < ii; i++) {
-                if (title === photos[i]) {
+                if (photo === photos[i]) {
                     photos.splice(i, 1);
                 }
             }

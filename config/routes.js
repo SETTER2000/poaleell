@@ -328,7 +328,7 @@ module.exports.routes = {
     'GET /admin/photos': 'PageController.showHomePage',
     'GET /admin/photos/edit/:id': 'PageController.showHomePage',
     'GET /admin/photos/create/': 'PageController.showHomePage',
-    'GET /admin/photos/:id': 'PageController.showHomePage',
+    'GET /admin/photo/:id': 'PageController.showHomePage',
 
     'GET /admin/diarys/catalog/:id': 'PageController.showHomePage',
     'GET /admin/diarys/catalog/': 'PageController.showHomePage',

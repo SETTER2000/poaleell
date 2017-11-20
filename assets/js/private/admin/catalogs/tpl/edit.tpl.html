@@ -566,12 +566,11 @@
                                     <div class="file-upload ">
                                         <label class="text-left">
                                             <input type="file" nv-file-select="" uploader="uploadReactions" multiple/>
-                                            <div class="form-inline"
-                                                 ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
+                                            <div class="form-inline" ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
                                                 <img ng-click="getReaction(reaction)" width="80"
                                                      ng-src="{{fot.photoUrl}}" alt="">
                                             </div>
-                                            <span ng-if="title.name " ng-click="getReaction(reaction)"
+                                            <span ng-if="reaction.name " ng-click="getReaction(reaction)"
                                                   class="glyphicon glyphicon-camera" role="button"></span>
                                         </label>
                                     </div>
