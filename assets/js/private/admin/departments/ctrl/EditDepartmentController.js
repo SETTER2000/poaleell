@@ -3,14 +3,16 @@ angular.module('DepartmentModule')
         function ($scope, $http, toastr, $state, moment, Departments, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
-            $scope.edit = $state.includes('home.admin.departments.edit');
+            $scope.edit = $state.includes('home.admin.kennels.edit');
             //if (!$scope.me.admin) $location.path('/');
             // $state.transitionTo('admin.users.show.id');
             $scope.closeInfo = 0; // скрыть панель информации
            // $scope.inlinePanel = 0; // растянуть панель редактирования
             moment.locale('ru');
 
+            $scope.nameArea = 'Наименование питомника';
             $scope.registerArea = 'Номер питомника';
+            $scope.rightNameArea = 'Наименование питомника писать';
             $scope.dateCreateArea = 'Дата регистрации';
             $scope.suiteArea = 'Сайт';
             $scope.mode=true;
@@ -69,11 +71,11 @@ angular.module('DepartmentModule')
 
             $scope.refresh = function () {
                 //if(!angular.isDefined($stateParams.depId)) return;
-                let item = $scope.item = Departments.get({id: $stateParams.depId}, function (departments) {
+                let item = $scope.item = Departments.get({id: $stateParams.depId}, function (kennels) {
 
-                    $scope.departments = departments;
+                    $scope.kennels = kennels;
                     item.getDateCreate();
-                    console.log('departments:', departments);
+                    console.log('kennels:', kennels);
                 }, function (err) {
                     if (err) console.log(err.message);
                 });
@@ -111,7 +113,7 @@ angular.module('DepartmentModule')
                     item.$save(item.id, function (success) {
                             console.log('success', success.id);
                             toastr.success('Объект создан.', 'OK! ');
-                            $state.go('home.admin.department', {depId: success.id});
+                            $state.go('home.admin.kennel', {depId: success.id});
                         },
                         function (err) {
                             toastr.error(err.data, 'Ошибка! EditDepartmentController!');
@@ -174,12 +176,42 @@ angular.module('DepartmentModule')
 
             $scope.delete = function (item) {
                 item.$delete(item, function (success) {
-                    toastr.success('Объект удалён.', 'OK! ');
-                    $state.go('home.admin.departments');
+                    toastr.success(info.objectDelete,info.ok);
+                    $state.go('home.admin.kennels');
                 }, function (err) {
                     toastr.error(err, 'Ошибка 3 EditDepartmentController!');
                 })
             };
+            /**
+             *  Конструктор хлебных крошек
+             * @constructor
+             */
+            function BreadCrumb() {
+                var name;
+                var path;
+                this.arr = [];
+            }
 
+            BreadCrumb.prototype.add = function () {
+                this.arr.push({name: this.name, path: this.path});
+            };
+
+            BreadCrumb.prototype.set = function (name, path) {
+                this.name = name;
+                this.path = path;
+                this.add();
+            };
+
+            BreadCrumb.prototype.getAll = function () {
+                return this.arr;
+            };
+
+            var breadcrumb = new BreadCrumb();
+
+            breadcrumb.set('Home', 'home');
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Kennels', 'home.admin.kennels');
+            breadcrumb.set('Edit', 'home.admin.kennels.edit' + $state.current.url);
+            $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

@@ -164,6 +164,22 @@ module.exports = {
             via: 'users',
             dominant: true
         },
+
+        recipients: {
+            collection: 'message',
+            via: 'recipientUsers',
+            dominant: true
+            // required: true
+        },
+
+        senders: {
+            collection: 'message',
+            via: 'senderUsers',
+            dominant: true
+            // required: true
+        },
+
+
         skds: {
             collection: 'skd',
             via: 'users',

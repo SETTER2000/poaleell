@@ -23,6 +23,10 @@ module.exports = {
             required: true
 
         },
+        rightName: {
+            type: 'boolean',
+            defaultsTo: false
+        },
         name: {
             type: 'string',
             unique: true,

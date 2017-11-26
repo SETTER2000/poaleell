@@ -8,6 +8,8 @@
                 
                 
                 $scope.added = 'Добавить питомник';
+                $scope.showBt = 1;
+                $scope.urlBt = 'home.admin.kennels.create';
                 $scope.registerArea = 'Номер питомника';
                 $scope.dateCreateArea = 'Дата регистрации';
 
@@ -59,8 +61,8 @@
 
                 let breadcrumb = new BreadCrumb();
                 breadcrumb.set('Home', 'home');
-                if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-                breadcrumb.set('Kennels', '/departments/' + $state.current.url);
+                if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+                breadcrumb.set('Kennels', 'home.admin.kennels' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
 
 

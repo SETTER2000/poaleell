@@ -1,11 +1,21 @@
 <table class="table table-hover" ng-cloak>
     <tr>
-        <th>#</th>
-        <th class="text-center"><span class="badge">{{filtered.length}}</span></th>
-        <th>
-            <button class="btn btn-sm btn-default  not-border" ng-click="sortBy('kennels[0].name')">
+        <th class="text-center"><span class="badge"> {{filtered.length}}</span></th>
+        <th class="text-center">
+            <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('recipientUsers')">
                 {{nameHeader.fioArea}}
-                <span class="sortOrder" ng-show="propertyName === 'kennels[0].name'"
+                <span class="sortOrder" ng-show="propertyName === 'recipientUsers'"
+                      ng-class="{reverse: reverse}"></span>
+            </button>
+            </th>
+        <th>
+
+
+        </th>
+        <th class="text-center">
+            <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('senderUsers')">
+                {{nameHeader.senderArea}}
+                <span class="sortOrder" ng-show="propertyName === 'senderUsers'"
                       ng-class="{reverse: reverse}"></span>
             </button>
         </th>
@@ -16,13 +26,7 @@
                       ng-class="{reverse: reverse}"></span>
             </button>
         </th>
-        <th>
-            <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('gender')">
-                {{nameHeader.genderArea}}
-                <span class="sortOrder" ng-show="propertyName === 'gender'"
-                      ng-class="{reverse: reverse}"></span>
-            </button>
-        </th>
+
         <th class="text-center">
             <button class="btn  btn-sm btn-default not-border" ng-click="sortBy('weight')">
                 {{nameHeader.weightArea}} (гр)
@@ -76,43 +80,27 @@
     </tr>
 
 
-    <tr ng-repeat="item in filtered=(items |filter:{$:searchText} | kennel:filterKennel | filter:filterObject  |
+    <tr ng-repeat="item in filtered=(items |filter:{$:searchText}   |
 orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo: defaultRows)">
 
-        <td>{{$index+1}}</td>
-        <td>
-            <a ng-href="{{item.getShowUrl(item.id, (me.kadr || me.admin))}}">
-                <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
+        <td class="text-center">{{$index+1}}</td>
+        <td class="text-center">
+            <a ng-href="{{item.getEditUrl(item.id)}}"  ng-repeat="recipient in item.recipientUsers">
+                <img class="object-fit_cover" ng-class="{photoSize:vid}" title="{{recipient.lastName}} {{recipient.firstName[0]}}." ng-mouseover="vid=true"
                      ng-mouseleave="vid=false"
-                     ng-src="{{item.avatarUrl}}"
+                     ng-src="{{recipient.avatarUrl}}"
                      alt="">
             </a>
         </td>
         <td ng-if="me.admin || me.kadr">
-            <a href="{{item.getEditUrl(item.id)}}">
-                {{item.getFullName()}}
-                <span ng-if="!item.name" class="text-danger"><md-tooltip
-                        md-direction="top">
-              временное имя, псевдоним
-            </md-tooltip>{{item.symbol}} {{item.alias}}</span>
-            </a>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
         </td>
-        <td ng-if="!me.admin && !me.kadr">
-            {{item.getFullName()}}
-            <span ng-if="!item.name" class="text-danger"><md-tooltip
-                    md-direction="top">
-              временное имя, псевдоним
-            </md-tooltip>{{item.symbol}} {{item.alias}}</span>
 
-        </td>
-        <td class="text-center" ng-if="me.admin || me.kadr" ng-controller="ListMessageController">
-            <div ng-repeat="itm in items | filter:{id:item.id}"></div>
-            <a ng-if="item.messages.length" href="{{item.getEditUrl(itm.id)}}">
-                <md-tooltip md-direction="top">Есть сообщения в адрес {{itm.getFullName()}}</md-tooltip>
-                {{itm.messages.length}}
-            </a>
-        </td>
-        <td>{{item.gender}}</td>
+        <td class="text-center"><img class="object-fit_cover" ng-class="{photoSize:vid}" title="{{item.senderUsers[0].lastName}} {{item.senderUsers[0].firstName[0]}}.{{item.senderUsers[0].patronymicName[0]}}." ng-mouseover="vid=true"
+                                                  ng-mouseleave="vid=false"
+                                                  ng-src="{{item.senderUsers[0].avatarUrl}}"
+                                                  alt=""></td>
+        <td>{{item.message}}</td>
         <td class="text-center">{{item.weight | number:0}}</td>
         <td class="text-center">{{item.growth}}</td>
         <td>{{item.variety}}</td>

@@ -1,6 +1,6 @@
-angular.module('CatalogModule')
-    .controller('CatalogController', ['$scope', '$location','$state', '$http', 'toastr', 'toastrConfig',"$rootScope", 'moment', 'Catalogs', '$stateParams',
-        function ($scope, $location, $state,$http, toastr,toastrConfig,$rootScope, moment, Catalogs, $stateParams) {
+angular.module('MessageModule')
+    .controller('MessageController', ['$scope', '$state', 'toastr', 'moment', 'Messages', '$stateParams',
+        function ($scope, $state, toastr, moment, Messages, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             $scope.newMessage = {
                 email: $scope.me.email,
@@ -9,11 +9,6 @@ angular.module('CatalogModule')
                     this.message = '';
                 }
             };
-
-
-
-
-
             // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
             /**
@@ -22,40 +17,25 @@ angular.module('CatalogModule')
              * которые используются для взаимодействия с данными на сервере $delete, $get, $remove, $save
              *
              * Так же можно определять свои методы для конструктора в фабрике модуля.
-             * В данном конструкторе добавлен метод Catalogs.getFullName()
+             * В данном конструкторе добавлен метод Messages.getFullName()
              */
-            $scope.debug = true;
-
-            /**
-             * Очищает объект
-             */
+            $scope.debug = false;
 
 
 
             $scope.refresh = function () {
-                $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
-                    console.log('catalogs', catalogs);
-                    $scope.catalogs = catalogs;
+                $scope.item = Messages.get({id: $stateParams.messageId}, function (messages) {
+                    console.log('messages', messages);
+                    $scope.messages = messages;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 81189! ' + err.data.message);
+                    toastr.error(err, 'Ошибка - 88987! ');
                 });
             };
             $scope.wind = false;
-            $scope.handshake = function () {
-                $rootScope.$emit('newDogMessage',{
-                    item:$scope.item,
-                });
+            $scope.openWindow = function () {
+                // toastr.success('OK');
                 return $scope.wind = (!$scope.wind);
             };
-
-
-            // слушаем событие в нужном нам $scope
-            $scope.$on('newData', function (event, data) {
-                console.log(data); // Данные, которые нам прислали
-                return $scope.wind = data.wind;
-            });
-
-
             $scope.saveEdit = function (mess) {
                 if (angular.isDefined(mess.email) && angular.isString(mess.email) &&
                     angular.isDefined(mess.message) && mess.message.length) {
@@ -68,13 +48,13 @@ angular.module('CatalogModule')
                         avatarUrl:  $scope.me.avatarUrl,
                         id: $scope.me.id,
                     };
-                    $scope.item.messages.push(mess);
+                    (angular.isArray($scope.item.messages)) ? $scope.item.messages.push(mess) : $scope.item.messages = mess;
                     $scope.item.$update($scope.item, function (success) {
-                            toastr.success( mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено555.');
-                            // $state.go($scope.item.getShowUrl($scope.item.id, me), {catalogId: success.id});
+                            toastr.success( mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено.');
+                            // $state.go($scope.item.getShowUrl($scope.item.id, me), {messageId: success.id});
                         },
                         function (err) {
-                            toastr.error(err.data, 'Ошибка!');
+                            toastr.error(err, 'Ошибка! 6944');
                             // if(err.data['originalError'].code == 11000) return toastr.error('Объект уже существует.',  'Ошибка '+err.data['originalError'].code+'!');
 
                         });
@@ -113,8 +93,8 @@ angular.module('CatalogModule')
 
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Catalog', 'home.admin.catalogs');
-            breadcrumb.set('Show', 'home.admin.catalogs.show' + $state.current.url);
+            breadcrumb.set('Message', 'home.admin.messages');
+            breadcrumb.set('Show', 'home.admin.messages.show' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

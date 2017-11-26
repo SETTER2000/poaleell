@@ -1,4 +1,4 @@
-@primary:#5c7457;
+@primary: #5c7457;
 
 @gray-darker: lighten(#000, 13.5%); // #222
 @gray-dark: lighten(#000, 20%); // #333
@@ -20,20 +20,23 @@
 //@link-hover-color: #286090;
 @link-hover-border-color: #cccccc;
 @nav-link-color: hsl(138, 64%, 90%);
-@nav-li-bg:hsla(110, 12%, 59%, 0.45);
+@nav-li-bg: hsla(110, 12%, 59%, 0.45);
 .fired {
   //color: @gray-lighter;
   color: @gray-light;
 }
-a:hover,a:link{
+
+a:hover, a:link {
   text-decoration: none;
 }
-.breadcrumb>li+li:before {
+
+.breadcrumb > li + li:before {
   content: "/\00a0";
   //content: "\007C";
   padding: 0 5px;
   color: #ccc;
 }
+
 .tag {
   //color: navy; /* Цвет текста */
   //font-family: monospace; /* Моношириный шрифт */
@@ -114,6 +117,7 @@ ul.word li {
   margin: auto;
   display: block;
 }
+
 .gravatarImage {
   width: 200px;
   margin: 20px auto 0 auto;
@@ -432,16 +436,20 @@ table.table.not-margin {
 .event.busy {
   background: #f64747;
 }
-.page-header{
+
+.page-header {
   margin-top: 190px;
   padding-bottom: 0;
 }
-.navbar{
-  margin-bottom:0;
+
+.navbar {
+  margin-bottom: 0;
 }
-.navbar-nav{
+
+.navbar-nav {
   padding: 35px 0;
 }
+
 /************************ DIALOGs WINDOW ***************************************/
 
 .dialogdemoBasicUsage #popupContainer {
@@ -470,91 +478,111 @@ table.table.not-margin {
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
   margin-bottom: 0;
 }
+
 //.md-toolbar-tools{
 //  background: rgb(170, 194, 148);
 //}
 .navBardemoBasicUsage md-content .ext-content {
   padding: 50px;
   margin: 20px;
-  background-color: #FFF2E0; }
+  background-color: #FFF2E0;
+}
 
-
-.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
   background-color: @nav-li-bg;
   color: @nav-link-color;
 }
 
-.nav>li>a {
- color: @nav-link-color;
+.nav > li > a {
+  color: @nav-link-color;
 }
-img.object-fit_cover { height: 50px; background-color: #ddd; border-radius: 50%}
-img.object-fit_cover { width: 50px; border-radius: 50%}
-.object-fit_fill { object-fit: fill }
-.object-fit_contain { object-fit: contain}
-.object-fit_cover { object-fit: cover }
-.object-fit_none { object-fit: none }
-.object-fit_scale-down { object-fit: scale-down }
 
-.table tbody tr>td{
+img.object-fit_cover {
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 50%
+}
+
+img.object-fit_cover {
+  width: 50px;
+  border-radius: 50%
+}
+
+.object-fit_fill {
+  object-fit: fill
+}
+
+.object-fit_contain {
+  object-fit: contain
+}
+
+.object-fit_cover {
+  object-fit: cover
+}
+
+.object-fit_none {
+  object-fit: none
+}
+
+.object-fit_scale-down {
+  object-fit: scale-down
+}
+
+.table tbody tr > td {
   vertical-align: middle;
 }
 
-
 #slider {
-  position:relative;
+  position: relative;
 }
 
 #slider img.slid {
-  width:100%;
-  display:block;
+  width: 100%;
+  display: block;
 }
 
-
-.position{
+.position {
   list-style-type: none;
   margin-left: 7px;
   padding: 0
 }
 
-
-
-.clearfix{
+.clearfix {
   border-bottom: 1px solid #eee;
   padding-bottom: 8px;
   margin-bottom: 10px;
 }
-.fixset{
+
+.fixset {
   margin: 50px 0;
 }
-.text-center .foot2{
+
+.text-center .foot2 {
   margin-bottom: 20px;
   font-size: 1.9em;
 }
 
-
 .animate-if {
-  background:white;
-  border:1px solid black;
-  padding:10px;
+  background: white;
+  border: 1px solid black;
+  padding: 10px;
 }
 
 .animate-if.ng-enter, .animate-if.ng-leave {
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
 
 .animate-if.ng-enter,
 .animate-if.ng-leave.ng-leave-active {
-  opacity:0;
+  opacity: 0;
 }
 
 .animate-if.ng-leave,
 .animate-if.ng-enter.ng-enter-active {
-  opacity:1;
+  opacity: 1;
 }
 
-
-
-#toast-container >div{
+#toast-container > div {
   padding: 0;
   border: 0;
 }
@@ -573,7 +601,95 @@ img.object-fit_cover { width: 50px; border-radius: 50%}
 
 }
 
+.drops {
+  display: block;
+  height: 270px;
+  overflow: hidden;
+}
 
+.bs-callout + .bs-callout {
+  margin-top: -5px;
+}
+
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+
+.bs-callout-danger {
+  border-left-color: #ce4844;
+}
+
+.bs-callout-danger h4 {
+  color: #ce4844;
+}
+
+.bs-callout-info {
+  border-left-color: #1b809e;
+}
+
+.bs-callout-info h4 {
+  color: #1b809e;
+}
+
+.bs-callout-warning {
+  border-left-color: #aa6708;
+}
+
+.bs-callout-warning h4 {
+  color: #aa6708;
+}
+
+.bs-callout-success {
+  border-left-color: #437558;
+}
+
+.bs-callout-success h4 {
+  color: #437558;
+}
+
+md-switch {
+  margin: 0;
+}
+
+md-slider-container md-input-container input[type="number"] {
+  padding-left: 0;
+}
+
+.text-u {
+  text-decoration: underline;
+}
+
+// **********  Анимация ng-if
+
+.animate-if {
+  background: white;
+  border: 0 solid white;
+  padding: 0;
+}
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+// ********** end  Анимация ng-if
+
+.list-unstyled.bord {
+  border-bottom: 1px dashed #9dba97 ;
+}
 
 //#toast-container > .toast:before {
 //  position: fixed;
@@ -597,13 +713,6 @@ img.object-fit_cover { width: 50px; border-radius: 50%}
 //#toast-container > .toast-success:before {
 //  content: "\f002";
 //}
-
-
-
-
-
-
-
 
 /***
 .cb-slideshow,

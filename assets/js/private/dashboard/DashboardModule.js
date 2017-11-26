@@ -1,5 +1,5 @@
 angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
-    .run(['$templateCache', function($templateCache) {
+    .run(['$templateCache', function ($templateCache) {
         $templateCache.put('assets/templates/toast.html',
             "<div>Your template here</div>"
         );
@@ -7,21 +7,21 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
             "<div>Your progressbar here</div>"
         );
     }])
-//.config(function ($routeProvider, $locationProvider) {
-//    $routeProvider
-//
-//        .when('/', {
-//            templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html',
-//            controller: 'DashboardController'
-//        })
-//
-//        .when('/account', {
-//            templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html',
-//            controller: 'AccountController'
-//        })
-//    ;
-//    $locationProvider.html5Mode({enabled: true, requireBase: false});
-//})
+    //.config(function ($routeProvider, $locationProvider) {
+    //    $routeProvider
+    //
+    //        .when('/', {
+    //            templateUrl: '/js/private/dashboard/tpl/dashboard.tpl.html',
+    //            controller: 'DashboardController'
+    //        })
+    //
+    //        .when('/account', {
+    //            templateUrl: '/js/private/dashboard/account/tpl/account.tpl.html',
+    //            controller: 'AccountController'
+    //        })
+    //    ;
+    //    $locationProvider.html5Mode({enabled: true, requireBase: false});
+    //})
 
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $stateProvider
@@ -59,34 +59,42 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                 // }
             })
 
-            .state('home.dogs.catalogs', {
-                url: '/catalogs',
+            // .state('home.dogs.catalogs', {
+            //     url: '/catalogs',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/admin/catalogs/tpl/list.tpl.html',
+            //             controller: 'ListCatalogController'
+            //         },
+            //         "actionView@home.dogs.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
+            //     }
+            // })
+            // .state('home.dogs.catalog', {
+            //     url: '/catalog/:catalogId',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
+            //             controller: 'CatalogController'
+            //         },
+            //         // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.catalogs.
+            //         // <div ui-view='formView'/> внутри /js/private/admin/catalog/tpl/show.tpl.html
+            //         // "formView@home.admin.catalog" : { }
+            //         // "formView@home.dogs.catalog": {
+            //         //     templateUrl: '/js/private/admin/messages/views/min.messages.form.html',
+            //         //     controller: 'EditMessageController'
+            //         // },
+            //     }
+            // })
+
+            .state('home.profile', {
+                url: 'profile',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/catalogs/tpl/list.tpl.html',
-                        controller: 'ListCatalogController'
-                    },
-                    "actionView@home.dogs.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
-                }
-            })
-            .state('home.dogs.catalog', {
-                url: '/catalog/:catalogId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
-                        controller: 'CatalogController'
+                        templateUrl: '/js/private/dashboard/tpl/profile.html',
+                        controller: 'ProfileController'
                     }
                 }
             })
-            .state('home.profile', {
-            url: 'profile',
-            views: {
-                '@': {
-                    templateUrl: '/js/private/dashboard/tpl/profile.html',
-                    controller: 'ProfileController'
-                }
-            }
-        })
             .state('home.profile.edit', {
                 url: '/edit',
                 views: {
@@ -186,7 +194,7 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
         //    })
         ;
     })
-    .config(function(toastrConfig) {
+    .config(function (toastrConfig) {
         angular.extend(toastrConfig, {
             autoDismiss: false,
             containerId: 'toast-container',
@@ -212,7 +220,7 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
             titleClass: 'toast-title',
             toastClass: 'toast',
             // closeButton:true,
-            extendedTimeOut:1000,
+            extendedTimeOut: 1000,
             "showDuration": "100",
             "hideDuration": "300",
             "timeOut": "5000",

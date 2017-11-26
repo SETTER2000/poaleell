@@ -1,6 +1,6 @@
 <div class="col-sm-11  col-md-12  main" ng-cloak>
     <div class="page-header">
-        <h2>
+        <h1>
             <p ng-if="item.name || item.symbol" ng-class="{'fired':item.fired}">
                 <span ng-if="item.name">{{item.getFullName()}}</span>
                 <span ng-if="!item.name">{{item.kennels[0].name}} {{item.symbol}} {{item.alias}}
@@ -19,7 +19,7 @@
             <a href="#" class="btn btn-danger btn-xs disabled" ng-show="item.fired" role="button">сотрудник уволен
                 {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
-            <div class="btn-group-xs pull-right" >
+            <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span> Сохранить
                 </button>
@@ -31,7 +31,7 @@
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
             </div>
-        </h2>
+        </h1>
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
@@ -57,31 +57,125 @@
                 <div class="panel-body">
                     <form name="myForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
 
-                        <div class="form-group">
-                            <div ng-if="(me.kadr)" class="checkbox">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <div ng-if="(me.kadr)" class="checkbox">
 
-                                <!-- A C T I O N -->
-                                <label>
-                                    <!--<input type="checkbox" ng-model="item.action">-->
-                                    <md-checkbox ng-model="item.action"> Активность</md-checkbox>
+                                    <!-- A C T I O N -->
 
-                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="actionNick=true"
-                                          ng-mouseleave="actionNick=false"></span>
-                                    <small ng-if="actionNick">(видимость собаки на сайте и использования её в других
-                                        модулях)
+                                    <label>
+                                        <!--<input type="checkbox" ng-model="item.action">-->
+                                        <md-checkbox ng-model="item.action"> Активность</md-checkbox>
+
+                                        <span class="glyphicon glyphicon-question-sign" ng-mouseover="actionNick=true"
+                                              ng-mouseleave="actionNick=false"></span>
+                                        <small ng-if="actionNick">(видимость собаки на сайте и использования её в других
+                                            модулях)
+                                        </small>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <!-- S A L E S -->
+
+                            <div class="form-group pull-right">
+                                <!--<md-checkbox ng-model="item.sales">Продаётся</md-checkbox>-->
+                                <md-switch ng-model="item.sales" aria-label="Switch 1"
+                                           ng-change="onChange(item.sales)">
+                                    <span ng-if="!item.sales" ng-cloak>Не продаётся</span>
+                                    <span ng-if="item.sales" ng-cloak> Продаётся</span>
+                                    <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="salesNick=true"-->
+                                    <!--ng-mouseleave="salesNick=false"></span>-->
+                                    <!--<small ng-if="salesNick">(выставить на продажу)</small>-->
+                                </md-switch>
+                            </div>
+                        </div>
+                        <!-- S A L E S  D E S C R I P T I O N -->
+
+                        <div class=" clearfix animate-if" ng-if="item.sales">
+                            <textarea class="form-control " ng-model="item.salesDescription"
+                                      placeholder="Напишите здесь что нибудь о товаре, который желаете продать."
+                                      rows="3"></textarea>
+
+                        </div>
+
+                        <!-- P R I C E -->
+
+                        <div class=" animate-if" ng-if="item.sales">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess3">
+                                    Цена
+                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="priceNick=true"
+                                          ng-mouseleave="priceNick=false"></span>
+                                    <small ng-if="priceNick && edit">(установите цену в зависимости от валюты)</small>
+                                    <small ng-if="priceNick && !edit">(настройки цены появятся после сохранения
+                                        собаки)
                                     </small>
                                 </label>
 
-                                <!-- S A L E S -->
-                                <label class="pull-right">
+                                <!--<pre>dd:{{item.price | json}}</pre>-->
+                                <!--<ul ng-repeat="pr in item.price">-->
+                                <!--<li>{{pr.name}}</li>-->
+                                <!--<li>{{pr.name}}</li>-->
+                                <!--</ul>-->
+                                <div ng-repeat="pr in item.price">
+                                    <md-slider-container ng-disabled="pr.isDisabled">
+                                        <!--<i class="fa fa-text-height" aria-hidden="true"></i>-->
+                                        <i class="fa fa-{{pr.name}}" aria-hidden="true">
+                                            <md-tooltip md-direction="top">{{pr.title}}</md-tooltip>
+                                        </i>
 
-                                    <md-checkbox ng-model="item.sales">Продаётся</md-checkbox>
-                                    <span class="glyphicon glyphicon-question-sign" ng-mouseover="salesNick=true"
-                                          ng-mouseleave="salesNick=false"></span>
-                                    <small ng-if="salesNick">(выставить на продажу)
-                                    </small>
+                                        <md-slider ng-model="pr.how" step="{{pr.step}}" min="{{pr.min}}"
+                                                   max="{{pr.max}}"
+                                                   aria-label="Disabled {{$index + 1}}" flex md-discrete
+                                                   ng-readonly="readonly"
+                                                   ng-class="{'md-primary':pr.name==='usd','md-orange':pr.name==='euro'}"></md-slider>
+                                        <md-input-container>
+                                            <input flex type="number" step="{{pr.step}}" min="{{pr.min}}"
+                                                   max="{{pr.max}}" ng-model="pr.how"
+                                                   aria-label="green" aria-controls="green-slider">
+                                        </md-input-container>
+                                    </md-slider-container>
+                                    <md-checkbox ng-model="pr.isDisabled">
+                                        <span title="Выключена валюта"
+                                              ng-class="{'text-danger':pr.isDisabled,'text-u':pr.isDisabled,'text-muted':!pr.isDisabled}">выкл</span>/
+                                        <span title="Валюта включена"
+                                              ng-class="{'text-danger':!pr.isDisabled,'text-muted':pr.isDisabled}">вкл</span>
+                                    </md-checkbox>
+                                    <!--<md-slider-container ng-disabled="isDisabled">-->
+                                    <!--<md-icon md-svg-icon="device:brightness-low"></md-icon>-->
+                                    <!--<md-slider ng-model="disabled1" aria-label="Disabled 1" flex md-discrete ng-readonly="readonly"></md-slider>-->
 
-                                </label>
+                                    <!--<md-input-container>-->
+                                    <!--<input flex type="number" ng-model="disabled1" aria-label="green" aria-controls="green-slider">-->
+                                    <!--</md-input-container>-->
+                                    <!--</md-slider-container>-->
+
+                                </div>
+                                <!--<md-slider-container ng-disabled="isDisabled">-->
+                                <!--&lt;!&ndash;<i class="fa fa-text-height" aria-hidden="true"></i>&ndash;&gt;-->
+                                <!--<i class="fa fa-eur" aria-hidden="true"></i>-->
+                                <!--<md-slider ng-model="item.price[0].euro" step="1000" min="1000" max="200000"-->
+                                <!--aria-label="Disabled 1" flex md-discrete ng-readonly="readonly"></md-slider>-->
+                                <!--<md-input-container>-->
+                                <!--<input flex type="number" step="1000" min="1000" max="200000" ng-model="item.price[0].euro"-->
+                                <!--aria-label="green" aria-controls="green-slider">-->
+                                <!--</md-input-container>-->
+                                <!--</md-slider-container>-->
+                                <!--<md-slider-container ng-disabled="isDisabled">-->
+                                <!--&lt;!&ndash;<i class="fa fa-text-height" aria-hidden="true"></i>&ndash;&gt;-->
+                                <!--<i class="fa fa-usd" aria-hidden="true"></i>-->
+                                <!--<md-slider ng-model="item.price[0].usd" step="1000" min="1000" max="200000"-->
+                                <!--aria-label="Disabled 1" flex md-discrete ng-readonly="readonly"></md-slider>-->
+                                <!--<md-input-container>-->
+                                <!--<input flex type="number" step="1000" min="1000" max="200000" ng-model="item.price[0].usd"-->
+                                <!--aria-label="green" aria-controls="green-slider">-->
+                                <!--</md-input-container>-->
+                                <!--</md-slider-container>-->
+                                <!--<md-checkbox ng-model="isDisabled">Is disabled</md-checkbox>-->
+                                <!--<md-slider ng-model="disabled2" ng-disabled="true" aria-label="Disabled 2"></md-slider>-->
+                                <div style="margin-top: 50px;"></div>
                             </div>
                         </div>
 
@@ -129,7 +223,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" ng-if="item.symbol">
+                            <div class="col-md-6 col-md-offset-2" ng-if="item.symbol">
                                 <div class="form-group">
                                     <label for="symbol" class="control-label">
                                         Псевдоним при рождении
@@ -304,21 +398,59 @@
                         <!-- W E I G H T -->
 
                         <div class="form-group">
-                            <label class="control-label" for="inputSuccess3">
-                                Вес <span class="glyphicon glyphicon-question-sign" ng-mouseover="weightNick=true"
-                                          ng-mouseleave="weightNick=false"></span>
-                                <small ng-if="weightNick">(граммы 4300)</small>
-                            </label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputSuccess3">
+                                        Вес <span class="glyphicon glyphicon-question-sign"
+                                                  ng-mouseover="weightNick=true"
+                                                  ng-mouseleave="weightNick=false"></span>
+                                        <small ng-if="weightNick">(вес в граммах пример: 4300 = 4кг 300г)</small>
+                                    </label>
+                                </div>
+                                <!--<div class="form-group ">-->
+                                <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="weightDatNick=true"-->
+                                <!--ng-mouseleave="weightDatNick=false"></span>-->
+                                <!--<small ng-if="weightDatNick">(дата последнего взвешивания)</small>-->
+                                <!--</div>-->
+                                <div class="form-group pull-right">
+                                    <label class="control-label">
+                                        <i class="fa fa-calendar-check-o" aria-hidden="true">
+
+                                        <md-tooltip md-direction="top">дата последнего взвешивания</md-tooltip>
+                                        </i>
+ <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="weightDatNick=true"-->
+       <!--ng-mouseleave="weightDatNick=false"></span>-->
+                                        <!--<small ng-if="weightDatNick">(дата последнего взвешивания)</small>-->
+                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control flatpickr" ng-flatpickr
+                                               fp-opts="dateOpts"
+                                               fp-on-setup="toggleBlur(item)"
+                                               ng-model="item.dateWeight">
+                                        <span class="input-group-btn">
+                              <!--<button class="btn btn-default" type="button" ng-click="removeBirthday(item)"><span-->
+                                            <!--class="glyphicon glyphicon-remove"></span></button>-->
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <md-slider-container ng-disabled="isDisabled">
                                 <!--<i class="fa fa-text-height" aria-hidden="true"></i>-->
                                 <i class="fa fa-balance-scale" aria-hidden="true"></i>
                                 <md-slider ng-model="item.weight" step="100" min="100" max="9999"
-                                           aria-label="Disabled 1" flex md-discrete ng-readonly="readonly"></md-slider>
+                                           aria-label="Disabled 1" flex md-discrete
+                                           ng-readonly="readonly"></md-slider>
                                 <md-input-container>
                                     <input flex type="number" step="100" min="100" max="9999" ng-model="item.weight"
                                            aria-label="green" aria-controls="green-slider">
                                 </md-input-container>
                             </md-slider-container>
+
                             <!--<md-checkbox ng-model="isDisabled">Is disabled</md-checkbox>-->
                             <!--<md-slider ng-model="disabled2" ng-disabled="true" aria-label="Disabled 2"></md-slider>-->
                             <div style="margin-top: 50px;"></div>
@@ -566,7 +698,8 @@
                                     <div class="file-upload ">
                                         <label class="text-left">
                                             <input type="file" nv-file-select="" uploader="uploadReactions" multiple/>
-                                            <div class="form-inline" ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
+                                            <div class="form-inline"
+                                                 ng-repeat="fot in filtersed=(item.photos | filter:{$:searchText, catalogs:item.id, reactions:item.reactions[$index].id})">
                                                 <img ng-click="getReaction(reaction)" width="80"
                                                      ng-src="{{fot.photoUrl}}" alt="">
                                             </div>
@@ -830,6 +963,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <pre ng-if="debug && me.admin"><h3>{{item| json}}</h3></pre>
     </div>
 </div>
 

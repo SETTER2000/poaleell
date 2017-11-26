@@ -87,6 +87,14 @@ module.exports.policies = {
         update: ['isLoggedIn', 'isAdminOrKadr'],
         // '*': true
     },
+    MessageController: {
+        // '*': 'isLoggedIn',
+        // // //'*': false,
+        // create: ['isLoggedIn', 'isAdminOrKadr'],
+        // destroy: ['isLoggedIn', 'isAdmin'],
+        // update: ['isLoggedIn', 'isAdminOrKadr'],
+        '*': true
+    },
 
     TitleController: {
         '*': 'isLoggedIn',

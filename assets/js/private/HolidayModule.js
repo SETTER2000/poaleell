@@ -20,6 +20,7 @@ angular.module('Holiday', [
     'AttendanceModule',
     'AdminModule',
     'ShowcaseModule',
+    'MessageModule',
     'CatalogModule',
     'HonorModule'
 ])

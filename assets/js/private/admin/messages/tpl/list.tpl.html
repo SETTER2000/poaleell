@@ -1,0 +1,188 @@
+<!--<div ng-cloak class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+<div class="col-sm-11  col-md-12  main">
+    <div class="page-header">
+        <h2>{{items[0].sc()}} {{exampleDate | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}<!--({{filtered.length}})-->
+            <a ng-cloak href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">
+                всего:
+
+                <!--<span ng-if="!mode">{{(items | filter:{fired:false}).length}}</span>-->
+                <span ng-if="!mode">{{(items | filter:filterTemplate.all).length}}</span>
+            </a>
+            <span ng-if="mode" ng-bind="items[0].deactivation()"></span>
+            <div class="btn-group-xs pull-right">
+
+                <!--<span class="md-primary md-raised" ng-click="showAlert($event)">-->
+                <small> <small><a  href="#" ng-click="showPopup(help.dogsOnCatalog,1)">Кто в каталоге?</a></small></small>
+
+
+                <!--</span>-->
+
+
+                <!--<button type="checkbox" ng-click="debug = debug ? false : true" title="отладка" class="btn btn-default">-->
+                <!--<span class="glyphicon glyphicon-wrench"></span>-->
+                <!--</button>-->
+                <!--<button ui-sref="home.admin.users.list" title="Список" type="button" class="btn btn-default">-->
+                <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--</button>-->
+                <!--<button ui-sref="home.admin.users.settings" title="Настройки" type="button" class="btn btn-default">-->
+                <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--</button>-->
+                <!--<button type="checkbox" ng-click="getMode(t)" title="Режимы" class="btn btn-danger">-->
+                <!--<span class="glyphicon glyphicon-off"></span>-->
+                <!--</button>-->
+                <!--<button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">-->
+                <!--<span class="glyphicon glyphicon-plus"></span>-->
+                <!--</button>-->
+            </div>
+        </h2>
+
+
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                    <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
+        <div ui-view></div>
+        <div ui-view="settings"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="btn-toolbar" role="toolbar" aria-label="0">
+                <alfavit
+                        object-name="objectName"
+                        get-char-text="getCharText(ch)"
+                        filed-name="filedName"
+                        where="where"
+                        char-text="charText"
+                        count-char="countChar">
+                </alfavit>
+                <word-part object-name="objectName"
+                           filed-name="filedName"
+                           where="where"
+                           count-char="countChar"
+                           char-text="charText"
+                           get-char-text="getCharText(ch)">
+                </word-part>
+
+                <div ng-if="!searchText" ng-repeat="it in arrButton" class="btn-group btn-group-sm"
+                     role="group" aria-label="4">
+                    <button ng-click="getPage(it.numberPage)" type="button" ng-bind="it.numberPage"
+                            class="btn " ng-class="{'btn-danger':enabledButton, 'btn-default':!enabledButton}"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control" role="group"
+                    ng-model="modeSelect" ng-options="item.display for item in options track by item.value"></select>
+            <!--<div ng-switch on="modeSelect.value" style="margin-top:20px;">-->
+            <!--<table class="table" ng-switch-when="table">-->
+            <!--<thead>-->
+            <!--<tr>-->
+            <!--<th>Name</th>-->
+            <!--<th>Value</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tr ng-repeat="item in items">-->
+            <!--<td>{{item.getFullName()}}</td>-->
+            <!--<td>{{item.login}}</td>-->
+            <!--</tr>-->
+            <!--</table>-->
+            <!--<div class="list-group" ng-switch-when="list">-->
+            <!--<a href="#" class="list-group-item active">-->
+            <!--Список-->
+            <!--</a>-->
+            <!--<a href="#" ng-repeat="item in items" class="list-group-item">-->
+            <!--{{item.getFullName()}}:{{item.login}}-->
+            <!--</a>-->
+            <!--</div>-->
+            <!--<ul class="list-group" ng-switch-when="budges">-->
+            <!--<li ng-repeat="item in items" class="list-group-item">-->
+            <!--<span class="badge">{{item.login}}</span>-->
+            <!--{{item.getFullName()}}-->
+            <!--</li>-->
+            <!--</ul>-->
+
+
+            <!--</div>-->
+
+        </div>
+    </div>
+    <!--<button type="submit" size="large">Click Me!</button>-->
+    <!--{{charText}}  {{where}}-->
+
+    <!--<pagination num-pages="numPages"-->
+    <!--limit-rows="limitRows"-->
+    <!--default-rows="defaultRows"-->
+    <!--length-object="items.length"-->
+    <!--current-page="currentPage"-->
+    <!--on-select-page="selectCount=selectCount+1">-->
+    <!--</pagination>-->
+
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+
+                <!--<span ng-if="(searchText.length>0)" class="input-group-addon" id="basic-addon1">-->
+                <!--{{filtered.length}}-->
+                <!--</span>-->
+
+                <input type="text" class="form-control" ng-model="searchText" placeholder="Поиск ...">
+                <span class="input-group-btn">
+                       <button ng-click="searchText=''" class="btn btn-default" type="button">
+                           <span class="glyphicon glyphicon-remove"></span>
+                       </button>
+                     </span>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!--<div class="row" ng-cloak>-->
+    <!--<div class="col-md-12">-->
+    <!--<div class="panel panel-info">-->
+    <!--<div class="panel-heading">-->
+
+
+    <!--</div>-->
+    <!--<div class="panel-body">-->
+
+    <div ng-switch on="modeSelect.value" style="margin-top:20px;">
+        <div ng-switch-when="all">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="action">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="male">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="female">
+            <div ui-view="actionView"></div>
+        </div>
+        <div ng-switch-when="poaleell">
+            <div ui-view="actionView"></div>
+        </div>
+    </div>
+</div>
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<div ui-view="list"></div>
+<div ui-view="attendance"></div>
+
+
+<div class="row">
+    <pre ng-if="debug && me.admin"><h3>{{items| json}}</h3></pre>
+</div>

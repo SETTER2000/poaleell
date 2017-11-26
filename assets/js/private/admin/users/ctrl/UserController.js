@@ -18,7 +18,7 @@ angular.module('UserModule')
                     console.log('users SHOW: ', users);
                     $scope.users = users;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 889! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 889988! ' + err.data.message);
                 });
             };
             /**

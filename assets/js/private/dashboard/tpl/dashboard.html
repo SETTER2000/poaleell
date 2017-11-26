@@ -20,7 +20,7 @@
                         <em>День рожд.:</em>    <strong class="pull-right">{{item.birthday | date:'dd.MM.yyyy'}}</strong><br>
                     </p>
 
-                    <p><a href="#" class="btn btn-default" role="button">Подробнее</a></p>
+                    <p><a href="{{item.getShowUrl(item.id, me)}}" class="btn btn-default" role="button">Подробнее</a></p>
                 </div>
             </div>
         </div>

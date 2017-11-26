@@ -16,6 +16,16 @@
                 </a>
             </div>
         </h2>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                    <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -37,7 +47,7 @@
                     <!--<select class="form-control " ng-model="item.owner">-->
                     <!--<option ng-repeat="it in items.data" value="{{it.id}}">{{it.name}}</option>-->
                     <!--</select>-->
-
+                    <label class="control-label">{{nameArea}}</label><br>
                     <div class="form-inline">
 
                         <div class="form-group">
@@ -76,7 +86,21 @@
                     <!--<input type="date" class="form-control"  ng-model="item.dateCreate">-->
                     <!--&lt;!&ndash;<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
                     <!--</div>-->
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">
+                            {{rightNameArea}}
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="rightName=true"
+                                  ng-mouseleave="rightName=false"></span>
+                            <small ng-if="rightName">(При написании полного имени собаки, выбрать с какой стороны от имени собаки будет писаться название питомника. По умолчанию слева.)</small>
 
+                        <!--<input class="form-control" ng-model="item.registerNumber">-->
+                        <small>
+                            <md-switch ng-model="item.rightName" aria-label="Switch 1" >
+                                <span ng-if="!item.rightName">слева</span>
+                                <span ng-if="item.rightName"> справа</span>
+                            </md-switch>
+                        </small> </label>
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess3">

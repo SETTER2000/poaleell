@@ -188,6 +188,16 @@ module.exports.routes = {
 
 
     /**
+     * Messages
+     */
+    'GET /messages': 'MessageController.get', // получить все записи или одну по http://localhost:1338/catalogs?id=599c4aefc97f011f70a2359b
+    'POST /messages': 'MessageController.create', // создать запись
+    'DELETE /messages/:id': 'MessageController.destroy', // удалить
+    'POST /messages/:id': 'MessageController.update', // удалить
+    'PUT /messages/:id': 'MessageController.update', // обновить
+
+
+    /**
      * Titles
      */
     'GET /titles': 'TitleController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
@@ -310,6 +320,15 @@ module.exports.routes = {
     'GET /admin/catalog/:id': 'PageController.showHomePage',
     'GET /admin/catalogs/create': 'PageController.showHomePage',
     'GET /admin/catalogs/edit/:id': 'PageController.showHomePage',
+
+
+    'GET /admin/messages': 'PageController.showHomePage',
+    'GET /admin/message/:id': 'PageController.showHomePage',
+    'GET /admin/messages/create': 'PageController.showHomePage',
+    'GET /admin/messages/edit/:id': 'PageController.showHomePage',
+
+
+
 
 
     'GET /admin/titles': 'PageController.showHomePage',

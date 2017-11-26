@@ -107,7 +107,8 @@ module.exports = {
             address: req.param('address'),
             registerNumber: req.param('registerNumber'),
             dateCreate: req.param('dateCreate'),
-            suite: req.param('suite')
+            suite: req.param('suite'),
+            rightName: req.param('rightName')
         };
         console.log('createDepartmen222t', req.body);
         Department.create(obj).exec(function (err, finn) {

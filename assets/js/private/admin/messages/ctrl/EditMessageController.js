@@ -1,15 +1,16 @@
 'use strict';
-angular.module('CatalogModule')
-    .controller('EditCatalogController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Catalogs', 'moment', '$stateParams', 'FileUploader', '$rootScope',
-        function ($scope, $http, toastr, $interval, $state, Catalogs, moment, $stateParams, FileUploader, $rootScope) {
+angular.module('MessageModule')
+    .controller('EditMessageController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Messages', 'moment', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $interval, $state, Messages, moment, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             moment.locale('ru');
-            $scope.newObjectName = 'Новая собака';
+            $scope.newObjectName = 'Новое сообщение';
             $scope.closeInfo = 0; // скрыть панель информации
             $scope.debug = true;
             $scope.loginAdmin = false;
-            $scope.edit = $state.includes('home.admin.catalogs.edit');
+            $scope.edit = $state.includes('home.admin.messages.edit');
+            // $scope.dogs = $state.includes('home.dogs.catalog');
 
 
             $scope.inline = function () {
@@ -33,10 +34,10 @@ angular.module('CatalogModule')
                 //         //console.log(success);
                 //         //location.reload();
                 //         toastr.success(info.newOk);
-                //         // /admin/catalog/
+                //         // /admin/message/
                 //         //$location.path('/profile') ;
                 //         console.log('SAVE - create');
-                //         $state.go('home.admin.catalog', {catalogId: success.id});
+                //         $state.go('home.admin.message', {messageId: success.id});
                 //     },
                 //     function (err) {
                 //         toastr.error(err.data, 'Ошибка!');
@@ -51,14 +52,14 @@ angular.module('CatalogModule')
                 ok: 'OK!',
                 objectDelete: 'Объект удалён.',
                 newOk: 'Объект создан.',
-                redirectSelf: 'home.admin.catalogs',
+                redirectSelf: 'home.admin.messages',
                 ru: 'ru',
                 dateFormat: "d.m.Y",
                 minDate: "01-01-2002",
                 maxDate: "31-12-2020",
             };
 
-            // console.log('$STATE catalog: ', $state);
+            // console.log('$STATE message: ', $state);
 
 
             $scope.name = null;
@@ -215,13 +216,13 @@ angular.module('CatalogModule')
 
             uploadTitles.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.messageId});
                 item.formData.push({idTitle: $scope.idTitle});
             };
             // uploadTitles.onBeforeUploadItem = function (item) {
             //     //console.info('onBeforeUploadItem', item);
-            //     item.formData.push({id: $stateParams.catalogId});
-            //     item.formData.push({idT: $stateParams.catalogId});
+            //     item.formData.push({id: $stateParams.messageId});
+            //     item.formData.push({idT: $stateParams.messageId});
             // };
             uploadTitles.onProgressItem = function (fileItem, progress) {
                 //console.info('onProgressItem', fileItem, progress);
@@ -338,13 +339,13 @@ angular.module('CatalogModule')
             };
             uploadReactions.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.messageId});
                 item.formData.push({idReaction: $scope.idReaction});
             };
             // uploadTitles.onBeforeUploadItem = function (item) {
             //     //console.info('onBeforeUploadItem', item);
-            //     item.formData.push({id: $stateParams.catalogId});
-            //     item.formData.push({idT: $stateParams.catalogId});
+            //     item.formData.push({id: $stateParams.messageId});
+            //     item.formData.push({idT: $stateParams.messageId});
             //
             // };
             uploadReactions.onProgressItem = function (fileItem, progress) {
@@ -453,7 +454,7 @@ angular.module('CatalogModule')
             };
             uploader.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.messageId});
 
             };
             uploader.onProgressItem = function (fileItem, progress) {
@@ -521,7 +522,7 @@ angular.module('CatalogModule')
                     {display: "Загрузить файл", value: "uploader"}
                 ];
             $scope.modeSelect = $scope.options[0];
-            $scope.uploaderView = "/js/private/admin/catalogs/views/uploader.html";
+            $scope.uploaderView = "/js/private/admin/messages/views/uploader.html";
 
 
             $scope.rating1 = 3;
@@ -538,14 +539,14 @@ angular.module('CatalogModule')
 
 
             $scope.refresh = function () {
-                let item = $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
-                    $scope.catalogs = catalogs;
+                let item = $scope.item = Messages.get({id: $stateParams.messageId}, function (messages) {
+                    $scope.messages = messages;
 
-                    console.log('CATALOGS', catalogs);
-                    $scope.name = catalogs.name;
+                    console.log('MESSAGES', messages);
+                    $scope.name = messages.name;
                     // console.log('ITEM-+++5-SYMBOL',$scope.item.symbol );
                     // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
-                    // console.log('catalogs входящий: ', catalogs);
+                    // console.log('messages входящий: ', messages);
                     // console.log('TYYYU: ', item.getTimeBirthday());
 
                     // item.getTimeBirthday();
@@ -562,7 +563,7 @@ angular.module('CatalogModule')
                     toastr.success(info.objectDelete, info.ok);
                     $state.go(info.redirectSelf);
                     // $location.path("/table");
-                    // $scope.$apply(function() { $location.path("/admin/catalogs"); });
+                    // $scope.$apply(function() { $location.path("/admin/messages"); });
                     // $scope.refresh();
                 }, function (err) {
                     //console.log(err);
@@ -604,13 +605,28 @@ angular.module('CatalogModule')
             };
 
             $scope.saveDiary = function (item) {
-                $state.go('home.admin.diarys.catalog', {'catalogId': item.id});
-                // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
+                $state.go('home.admin.diarys.message', {'messageId': item.id});
+                // $state.go('home.admin.messages.diary', {diaryId: success.id});
             };
             $scope.saveJournal = function (item) {
-                $state.go('home.admin.catalog.diary', {'catalogId': item.id, 'diaryId': item.id});
-                // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
+                $state.go('home.admin.message.diary', {'messageId': item.id, 'diaryId': item.id});
+                // $state.go('home.admin.messages.diary', {diaryId: success.id});
             };
+
+
+            $scope.wind = true;
+            $scope.openWindow = function () {
+                $rootScope.$broadcast('newData',{
+                    wind:(!$scope.wind),
+                });
+            };
+            // слушаем событие в нужном нам $scope
+            $rootScope.$on('newDogMessage', function (event, data) {
+                console.log('newDogMessage:',data); // Данные, которые нам прислали
+                $scope.dog = data.item;
+                $scope.newMessage['dogName'] = data.item.getFullName();
+            });
+
             /**
              * Сохранить изменения
              * @param item
@@ -626,8 +642,8 @@ angular.module('CatalogModule')
                 // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
                 // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
 
-                item = reversValue(item);
-                if (item.id && ( item.symbol || item.name)) {
+                // item = reversValue(item);
+                if (item.id) {
 
                     console.log('UPDATE: ', item);
                     // item.price = [
@@ -648,17 +664,26 @@ angular.module('CatalogModule')
                         }
                     );
                 } else {
-                    if (!item.id && (item.symbol || item.name)) {
-                        if (!item.kennels || (item.kennels[0].id === 'x')) return toastr.error('Питомник не заполнен.', 'Ошибка!');
-                        // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
+
+                    // item.recipients = ['593d53194f14e7fc2864c305'];
+                    
+                    // if (!item.id && item.message && item.recipients) {
+                    if (!item.id && item.message ) {
+                        // console.log('ITEM DO', item);
+                        // console.log('item.recipients', item.recipients);
+                        let ar = [];
+                        _.forEach(item.recipients, function (value, key) {
+                            ar.push(value.id);
+                        });
+                       (angular.isArray(item.recipientUsers)) ? item.recipientUsers.push(ar) : item.recipientUsers=ar;
+
                         item.$save(item, function (success) {
-                                //console.log(success);
+                                console.log('POSLE', success);
                                 //location.reload();
                                 toastr.success(info.newOk);
-                                // /admin/catalog/
+                                // /admin/message/
                                 //$location.path('/profile') ;
-                                console.log('SAVE - create');
-                                $state.go('home.admin.catalog', {catalogId: success.id});
+                                $state.go('home.admin.message', {messageId: success.id});
                             },
                             function (err) {
                                 toastr.error(err.data, 'Ошибка!');
@@ -666,7 +691,7 @@ angular.module('CatalogModule')
 
                             });
                     } else {
-                        toastr.error('Нужно заполнить одно из полей, букву помёта или имя собаки, можно и то и другое вместе.', 'Ошибка!');
+                        toastr.error('Нужно заполнить поля: Сообщение, Email.', 'Ошибка!');
                     }
                 }
             };
@@ -783,31 +808,31 @@ angular.module('CatalogModule')
             };
 
 
-            $scope.addOwnerField = function () {
-                if (angular.isArray($scope.item.owners)) {
-                    $scope.item.owners.push({});
+            // $scope.addOwnerField = function () {
+            //     if (angular.isArray($scope.item.owners)) {
+            //         $scope.item.owners.push({});
+            //     } else {
+            //         $scope.item.owners = [{}];
+            //     }
+            // };
+
+
+            $scope.addRecipientField = function () {
+                if (angular.isArray($scope.item.recipients)) {
+                    $scope.item.recipients.push({id: 'x'});
                 } else {
-                    $scope.item.owners = [{}];
+                    $scope.item.recipients = [{id: 'x'}];
                 }
             };
 
 
-            $scope.addBreederField = function () {
-                if (angular.isArray($scope.item.breeders)) {
-                    $scope.item.breeders.push({id: 'x'});
-                } else {
-                    $scope.item.breeders = [{id: 'x'}];
-                }
-            };
-
-
-            $scope.addKennelField = function () {
-                if (angular.isArray($scope.item.kennels)) {
-                    $scope.item.kennels.push({id: 'x'});
-                } else {
-                    $scope.item.kennels = [{id: 'x'}];
-                }
-            };
+            // $scope.addKennelField = function () {
+            //     if (angular.isArray($scope.item.kennels)) {
+            //         $scope.item.kennels.push({id: 'x'});
+            //     } else {
+            //         $scope.item.kennels = [{id: 'x'}];
+            //     }
+            // };
 
             $scope.addSireField = function () {
                 if (angular.isArray($scope.item.sires)) {
@@ -879,7 +904,7 @@ angular.module('CatalogModule')
                 $scope.item.photos = photos;
                 $scope.item.$save($scope.item, function (success) {
                         toastr.success(info.changed);
-                        // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
+                        // $state.go('home.admin.messages.edit', {messageId: success.id});
                         $scope.refresh();
                     },
                     function (err) {
@@ -915,7 +940,7 @@ angular.module('CatalogModule')
                 $scope.item.$save($scope.item, function (success) {
                         toastr.success(info.changed);
                         $scope.refresh();
-                        // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
+                        // $state.go('home.admin.messages.edit', {messageId: success.id});
                     },
                     function (err) {
                         toastr.error(err.data.invalidAttributes, info.error + ' 8000!');
@@ -945,48 +970,48 @@ angular.module('CatalogModule')
             };
 
 
-            $scope.removeBreederItem = function (obj) {
-                $scope.item.objRm = [];
-                var breeders = [];
-                $scope.item.breeders.forEach(function (value, key, mapObj) {
-                    if (obj == undefined) return;
-                    if (value.id === obj.id) {
-                        $scope.item.objRm.push(obj.id);
-                    } else {
-                        breeders.push(value);
-                    }
-                });
-                $scope.item.breeders = breeders;
-                $scope.item.$save($scope.item, function (success) {
-                        toastr.success(info.changed);
-                        $scope.refresh();
-                    },
-                    function (err) {
-                        toastr.error(err.data.invalidAttributes, info.error + ' 9970!');
-                    });
-            };
-
-
-            $scope.removeKennelItem = function (obj) {
-                $scope.item.objRk = [];
-                var kennels = [];
-                $scope.item.kennels.forEach(function (value, key, mapObj) {
-                    if (obj == undefined) return;
-                    if (value.id === obj.id) {
-                        $scope.item.objRk.push(obj.id);
-                    } else {
-                        kennels.push(value);
-                    }
-                });
-                $scope.item.kennels = kennels;
-                $scope.item.$save($scope.item, function (success) {
-                        toastr.success(info.changed);
-                        $scope.refresh();
-                    },
-                    function (err) {
-                        toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
-                    });
-            };
+            // $scope.removeBreederItem = function (obj) {
+            //     $scope.item.objRm = [];
+            //     var breeders = [];
+            //     $scope.item.breeders.forEach(function (value, key, mapObj) {
+            //         if (obj == undefined) return;
+            //         if (value.id === obj.id) {
+            //             $scope.item.objRm.push(obj.id);
+            //         } else {
+            //             breeders.push(value);
+            //         }
+            //     });
+            //     $scope.item.breeders = breeders;
+            //     $scope.item.$save($scope.item, function (success) {
+            //             toastr.success(info.changed);
+            //             $scope.refresh();
+            //         },
+            //         function (err) {
+            //             toastr.error(err.data.invalidAttributes, info.error + ' 9970!');
+            //         });
+            // };
+            //
+            //
+            // $scope.removeKennelItem = function (obj) {
+            //     $scope.item.objRk = [];
+            //     var kennels = [];
+            //     $scope.item.kennels.forEach(function (value, key, mapObj) {
+            //         if (obj == undefined) return;
+            //         if (value.id === obj.id) {
+            //             $scope.item.objRk.push(obj.id);
+            //         } else {
+            //             kennels.push(value);
+            //         }
+            //     });
+            //     $scope.item.kennels = kennels;
+            //     $scope.item.$save($scope.item, function (success) {
+            //             toastr.success(info.changed);
+            //             $scope.refresh();
+            //         },
+            //         function (err) {
+            //             toastr.error(err.data.invalidAttributes, info.error + ' 9900!');
+            //         });
+            // };
 
 
             $scope.removeSireItem = function (obj) {
@@ -1092,9 +1117,9 @@ angular.module('CatalogModule')
 
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Catalogs', 'home.admin.catalogs');
-            if ($scope.edit)  breadcrumb.set('Edit', 'home.admin.catalogs.edit' + $state.current.url);
-            if (!$scope.edit)  breadcrumb.set('Create', 'home.admin.catalogs.edit' + $state.current.url);
+            breadcrumb.set('Messages', 'home.admin.messages');
+            if ($scope.edit) breadcrumb.set('Edit', 'home.admin.messages.edit' + $state.current.url);
+            if (!$scope.edit) breadcrumb.set('Create', 'home.admin.messages.edit' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

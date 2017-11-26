@@ -43,8 +43,8 @@ module.exports = {
         //     type: 'string',
         //     enum: ['кобель', 'сука']
         // },
-        inlinePanel:{
-          type:'boolean'
+        inlinePanel: {
+            type: 'boolean'
         },
         weight: {
             type: 'integer',
@@ -73,7 +73,28 @@ module.exports = {
             type: 'boolean'
         },
 
+        sales: {
+            type: 'boolean'
+        },
+
+        salesDescription: {
+            type: 'string',
+            maxLength: 250
+        },
+        price: {
+            type: 'array',
+            defaultsTo: '[]'
+        },
+        messages: {
+            type: 'array',
+            defaultsTo: '[]'
+        },
+
         birthday: {
+            type: 'date',
+            // required: true
+        },
+        dateWeight: {
             type: 'date',
             // required: true
         },
@@ -166,8 +187,8 @@ module.exports = {
         dams: {
             model: 'catalog'
         },
-        diarys:{
-            model:'diary'
+        diarys: {
+            model: 'diary'
         },
         photos: {
             collection: 'photo',

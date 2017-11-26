@@ -1,9 +1,8 @@
 (function (angular) {
     'use strict';
-    angular.module('CatalogModule')
-        .controller('ListCatalogController', ['$scope', '$location', 'moment', '$http', 'toastr', 'toastrConfig',
-            "$rootScope", '$state', 'Catalogs', '$mdDialog', '$window',
-            function ($scope, $location, moment, $http, toastr,toastrConfig, $rootScope, $state, Catalogs, $mdDialog) {
+    angular.module('MessageModule')
+        .controller('ListMessageController', ['$scope', '$location', 'moment', '$http', 'toastr', 'toastrConfig',"$rootScope", '$state', 'Messages', '$mdDialog', '$window',
+            function ($scope, $location, moment, $http, toastr,toastrConfig, $rootScope, $state, Messages, $mdDialog,$window) {
             $scope.me = window.SAILS_LOCALS.me;
             $scope.status = '  ';
             $scope.customFullscreen = false;
@@ -146,8 +145,8 @@
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
             $scope.debug = false;
             $scope.nameHeader = {
-                fioArea: 'Имя',
-                genderArea: 'Пол',
+                fioArea: 'Кому',
+                senderArea: 'От кого',
                 weightArea: 'Вес',
                 growthArea: 'Рост',
                 varietyArea: 'Тип',
@@ -157,9 +156,9 @@
                 ownerArea: 'Владелец',
                 messagesArea: 'Сообщения',
             };
-            $scope.added = 'Добавить собаку';
+            $scope.added = 'Написать сообщение';
             $scope.showBt = ($scope.me.kadr || $scope.me.admin) ? 1 : 0; // показать кнопку $scope.added
-            $scope.urlBt = 'home.admin.catalogs.create';
+            $scope.urlBt = 'home.admin.messages.create';
             $scope.str = 'Петров';
             $scope.countChar = '3';
             $scope.filedName = 'kennels';
@@ -179,7 +178,7 @@
                 size: false
             };
             $scope.help = {
-                dogsOnCatalog: 'В каталоге представлены собаки питомника Poale Ell, а так же собаки из других питомников.',
+                dogsOnMessage: 'В каталоге представлены собаки питомника Poale Ell, а так же собаки из других питомников.',
             };
             //$scope.days = moment.duration(2).days();
             //$scope.hours = moment.duration(2).hours();
@@ -262,10 +261,10 @@
 
 
             $scope.modeSelect = $scope.options[0];
-            // $scope.tableView = "/js/private/admin/catalogs/views/home.admin.catalogs.table.html";
-            // $scope.listView = "/js/private/admin/catalogs/views/home.admin.catalogs.list.html";
-            // $scope.actionView = "/js/private/admin/catalogs/views/home.admin.catalogs.action.html";
-            // $scope.workView = "/js/private/admin/catalogs/views/home.admin.catalogs.work.html";
+            // $scope.tableView = "/js/private/admin/messages/views/home.admin.messages.table.html";
+            // $scope.listView = "/js/private/admin/messages/views/home.admin.messages.list.html";
+            // $scope.actionView = "/js/private/admin/messages/views/home.admin.messages.action.html";
+            // $scope.workView = "/js/private/admin/messages/views/home.admin.messages.work.html";
 
             $scope.getLastName = function (item) {
                 $http.post('/att', item)
@@ -354,13 +353,13 @@
                     char: $scope.charText + '%'
                 };
 
-                $scope.items = Catalogs.query($scope.query, function (catalogs) {
-                    // console.log('Catalogs LIST:', catalogs);
-                    $scope.items = catalogs;
-                    $scope.objectName = catalogs;
-                    //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;
+                $scope.items = Messages.query({}, function (messages) {
+                    console.log('Messages LIST:', messages);
+                    $scope.items = messages;
+                    $scope.objectName = messages;
+                    //$scope.numPages = Math.floor(messages.length / $scope.defaultRows) + 1;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                    toastr.error(err, 'Ошибка77+++! ');
                 });
             };
 
@@ -466,7 +465,7 @@
 
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Catalog', 'home.admin.catalogs' + $state.current.url);
+            breadcrumb.set('Message', 'home.admin.messages' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

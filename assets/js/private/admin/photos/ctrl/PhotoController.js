@@ -18,7 +18,7 @@ angular.module('PhotoModule')
                     console.log('photos',photos);
                     $scope.photos = photos;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 889! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 889774119! ' + err.data.message);
                 });
             };
             /**

@@ -167,7 +167,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <td width="250px" class="text-right">{{item.getContact(fieldName)}}</td>
         <td>{{item.diff}}</td>
         <td class="btn-group-xs">
-            <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
+            <a ng-href="{{item.getShowUrl(item.id,me )}}" class="btn"
                ng-class="{'btn-primary': !item.fired, ' btn-danger':item.fired}">
             <span class="glyphicon"
                   ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}"

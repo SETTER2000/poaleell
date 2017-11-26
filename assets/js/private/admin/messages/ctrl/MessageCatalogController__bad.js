@@ -1,6 +1,6 @@
-angular.module('CatalogModule')
-    .controller('CatalogController', ['$scope', '$location','$state', '$http', 'toastr', 'toastrConfig',"$rootScope", 'moment', 'Catalogs', '$stateParams',
-        function ($scope, $location, $state,$http, toastr,toastrConfig,$rootScope, moment, Catalogs, $stateParams) {
+angular.module('MessageModule')
+    .controller('MessageCatalogController', ['$scope', '$state', 'toastr', 'moment', 'Catalogs', '$stateParams',
+        function ($scope, $state, toastr, moment, Catalogs, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             $scope.newMessage = {
                 email: $scope.me.email,
@@ -9,11 +9,6 @@ angular.module('CatalogModule')
                     this.message = '';
                 }
             };
-
-
-
-
-
             // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
             /**
@@ -24,12 +19,40 @@ angular.module('CatalogModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Catalogs.getFullName()
              */
-            $scope.debug = true;
+            $scope.debug = false;
 
-            /**
-             * Очищает объект
-             */
+            // $scope.items = [1,2,3,4,5];
+            $scope.selected = [1];
+            $scope.toggle = function (item, list) {
+                var idx = list.indexOf(item);
+                if (idx > -1) {
+                    list.splice(idx, 1);
+                }
+                else {
+                    list.push(item);
+                }
+            };
 
+            $scope.exists = function (item, list) {
+                return list.indexOf(item) > -1;
+            };
+
+            $scope.isIndeterminate = function() {
+                return ($scope.selected.length !== 0 &&
+                    $scope.selected.length !== $scope.item.messages.length);
+            };
+
+            $scope.isChecked = function() {
+                return $scope.selected.length === $scope.item.messages.length;
+            };
+
+            $scope.toggleAll = function() {
+                if ($scope.selected.length === $scope.item.messages.length) {
+                    $scope.selected = [];
+                } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+                    $scope.selected = $scope.item.messages.slice(0);
+                }
+            };
 
 
             $scope.refresh = function () {
@@ -37,40 +60,20 @@ angular.module('CatalogModule')
                     console.log('catalogs', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 81189! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 88900! ' + err.data.message);
                 });
             };
             $scope.wind = false;
-            $scope.handshake = function () {
-                $rootScope.$emit('newDogMessage',{
-                    item:$scope.item,
-                });
+            $scope.openWindow = function () {
+                // toastr.success('OK');
                 return $scope.wind = (!$scope.wind);
             };
-
-
-            // слушаем событие в нужном нам $scope
-            $scope.$on('newData', function (event, data) {
-                console.log(data); // Данные, которые нам прислали
-                return $scope.wind = data.wind;
-            });
-
-
             $scope.saveEdit = function (mess) {
                 if (angular.isDefined(mess.email) && angular.isString(mess.email) &&
                     angular.isDefined(mess.message) && mess.message.length) {
 
-                    mess.user = {
-                        login: $scope.me.login,
-                        fullName: $scope.me.fullName,
-                        lastName: $scope.me.lastName,
-                        contacts:  $scope.me.contacts,
-                        avatarUrl:  $scope.me.avatarUrl,
-                        id: $scope.me.id,
-                    };
-                    $scope.item.messages.push(mess);
                     $scope.item.$update($scope.item, function (success) {
-                            toastr.success( mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено555.');
+                            toastr.success( mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено.');
                             // $state.go($scope.item.getShowUrl($scope.item.id, me), {catalogId: success.id});
                         },
                         function (err) {
@@ -81,9 +84,16 @@ angular.module('CatalogModule')
 
 
 
-                    $scope.wind = false;
+                    // $scope.wind = false;
                 }
             };
+
+
+            $scope.delete=function (selected) {
+                console.log('selected',selected);
+              toastr.success( selected,'Ok!');
+            };
+
 
             /**
              *  Конструктор хлебных крошек
@@ -114,7 +124,7 @@ angular.module('CatalogModule')
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Catalog', 'home.admin.catalogs');
-            breadcrumb.set('Show', 'home.admin.catalogs.show' + $state.current.url);
+            breadcrumb.set('Message', 'home.admin.catalogs.message' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

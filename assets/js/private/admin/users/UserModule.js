@@ -253,7 +253,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         };
         Users.prototype.getShowUrl = function (id, me) {
             // return '/admin/user/' + id;
-            return (me) ? '/admin/user/' + id : ''
+            return (me.admin || me.kadr) ? '/admin/user/' + id : ''
         };
 
         Users.prototype.deactivation = function () {

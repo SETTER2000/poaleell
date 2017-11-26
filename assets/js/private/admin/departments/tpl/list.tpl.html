@@ -1,40 +1,31 @@
 <!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
-        <h2>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{filtered.length}})
+        <div class=" pull-right small">
 
-        </h2>
-        <span class="pull-right small">
-                 <small>
-                     <md-switch ng-model="mode" aria-label="Switch 1">
-                           <span ng-if="!mode">не активные</span>
-                           <span ng-if="mode"> активные</span>
-                     </md-switch>
-                </small>
+            <!--<button ng-click="saveEdit(item)" type="button" class="btn btn-success">-->
+            <!--<span class="glyphicon glyphicon-check"></span>-->
+            <!--</button>-->
+            <!--<a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">-->
+            <!--<span class="glyphicon glyphicon-list"></span>-->
+            <!--</a>-->
+            <small>
+                <md-switch ng-model="mode" aria-label="Switch 1" >
+                    <span ng-if="!mode">не активные</span>
+                    <span ng-if="mode"> активные</span>
+                </md-switch>
+            </small>
 
-            <!--<small>-->
-            <!--<small>-->
-            <!--&lt;!&ndash;<label class="checkbox-inline">&ndash;&gt;-->
-            <!--&lt;!&ndash;<input type="checkbox" ng-model="debug" value="option1"> отладка&ndash;&gt;-->
-            <!--&lt;!&ndash;</label>&ndash;&gt;-->
-            <!--<label class="checkbox-inline">-->
-            <!--<input type="checkbox" ng-model="mode" value="option2"> не активные-->
-            <!--&lt;!&ndash;<span class="glyphicon  glyphicon-eye-open" ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}" aria-hidden="true"></span>&ndash;&gt;-->
-            <!--</label>-->
-            <!--&lt;!&ndash;<label class="checkbox-inline">&ndash;&gt;-->
-            <!--&lt;!&ndash;<a  ui-sref="admin.users.list.settings">&ndash;&gt;-->
-            <!--&lt;!&ndash;<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&ndash;&gt;-->
-            <!--&lt;!&ndash;</a>&ndash;&gt;-->
-            <!--&lt;!&ndash;</label>&ndash;&gt;-->
-            <!--</small>-->
-            <!--</small>-->
-                </span>
+        </div>
+        <h2>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{filtered.length}}) </h2>
+
+
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
                 <ng-switch on="$last">
                     <span ng-switch-when="true">{{breadcrumb.name}}</span>
                     <span ng-switch-default>
-        <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
         </span>
                 </ng-switch>
             </li>
@@ -79,7 +70,7 @@
             <!--<h3 class="panel-title">-->
 
             <p>
-                <button ui-sref="home.admin.departments.create" type="button" class="btn btn-default btn-sm">
+                <button ui-sref="home.admin.kennels.create" type="button" class="btn btn-default btn-sm">
                     {{added}}
                 </button>
             </p>

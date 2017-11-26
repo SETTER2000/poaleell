@@ -67,7 +67,30 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                     '@': {
                         templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
                         controller: 'CatalogController'
-                    }
+                    },
+                    // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.catalogs.
+                    // <div ui-view='formView'/> внутри /js/private/admin/catalog/tpl/show.tpl.html
+                    // "formView@home.admin.catalog" : { }
+                    "formView@home.admin.catalog": {
+                        templateUrl: '/js/private/admin/messages/views/min.messages.form.html'
+                    },
+
+                }
+            })
+            .state('home.dogs.catalog', {
+                url: '/catalog/:catalogId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
+                        controller: 'CatalogController'
+                    },
+                    // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.catalogs.
+                    // <div ui-view='formView'/> внутри /js/private/admin/catalog/tpl/show.tpl.html
+                    // "formView@home.admin.catalog" : { }
+                    "formView@home.admin.catalog": {
+                        templateUrl: '/js/private/admin/messages/views/min.messages.form.html'
+                    },
+
                 }
             })
             .state('home.admin.catalogs.create', {
@@ -79,6 +102,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                     }
                 }
             })
+
+
         // .state('home.admin.catalogs.administration', {
         //     url: '/administration',
         //     views: {
@@ -175,13 +200,19 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
 
         Catalogs.prototype.getFullName = function () {
-            if (this.kennels instanceof Array && (this.kennels.length > 0) && this.name) {
-                return this.kennels[0].name + ' ' + this.name;
+            if (this.kennels instanceof Array && (this.kennels.length > 0) && this.kennels[0].rightName) {
+                if (this.kennels instanceof Array && (this.kennels.length > 0) && this.name) {
+                    return this.name + ' ' + this.kennels[0].name;
+                } else {
+                    return this.kennels[0].name;
+                }
             } else {
-                return this.name;
+                if (this.kennels instanceof Array && (this.kennels.length > 0) && this.name) {
+                    return this.kennels[0].name + ' ' + this.name;
+                } else {
+                    return this.name;
+                }
             }
-
-
         };
 
         Catalogs.prototype.getShortName = function () {
@@ -259,6 +290,18 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                 this.birthday = tm;
             }
         };
+        Catalogs.prototype.getDateWeight = function () {
+            if (this.dateWeight) {
+                var tm;
+                tm = new Date(this.dateWeight);
+                //console.log('TMMM: ', tm);
+                var month = ((+tm.getMonth() + 1) < 10) ? '0' + (+tm.getMonth() + 1) : (+tm.getMonth() + 1);
+                var date = (+tm.getDate() < 10) ? '0' + tm.getDate() : tm.getDate();
+                //console.log('day: ', tm.getUTCDate());
+                tm = date + '.' + month + '.' + tm.getFullYear();
+                this.dateWeight = tm;
+            }
+        };
         Catalogs.prototype.getDeath = function () {
             if (this.death) {
                 var tm;
@@ -334,8 +377,15 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return '/admin/catalogs/edit/' + id;
         };
         Catalogs.prototype.getShowUrl = function (id, me) {
-            return (me) ? '/admin/catalog/' + id : '/dogs/catalog/' + id;
+            if (!me) return '/dogs/catalog/' + id;
+            if ((me.hasOwnProperty('admin') && me.admin ) || (me.hasOwnProperty('kadr') && me.kadr)) {
+                return '/admin/catalog/' + id;
+            }
+
+            return '/dogs/catalog/' + id;
+
         };
+
         Catalogs.prototype.deactivation = function () {
             return ' - деактивирован';
         };
