@@ -67,7 +67,7 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                     // "formView@home.admin.catalog" : { }
                     "formView@home.dogs.catalog": {
                         templateUrl: '/js/private/admin/messages/views/min.messages.form.html',
-                        controller: 'EditMessageController'
+                        // controller: 'EditMessageController'
                     },
                 }
             })
