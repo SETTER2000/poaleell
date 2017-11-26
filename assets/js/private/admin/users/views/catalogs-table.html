@@ -9,7 +9,7 @@
                       ng-class="{reverse: reverse}"></span>
             </button>
         </th>
-        <th>
+        <th ng-if="me.kadr || me.admin">
             <button class="btn  btn-sm btn-default  not-border " ng-click="sortBy('messages[0].message')">
                 {{nameHeader.messagesArea}}
                 <span class="sortOrder" ng-show="propertyName === 'messages[0].message'"
@@ -109,7 +109,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
             <div ng-repeat="itm in items | filter:{id:item.id}"></div>
             <a ng-if="item.messages.length" href="{{item.getEditUrl(itm.id)}}">
                 <md-tooltip md-direction="top">Есть сообщения в адрес {{itm.getFullName()}}</md-tooltip>
-                {{itm.messages.length}}
+             **   {{itm.messages.length}}
             </a>
         </td>
         <td>{{item.gender}}</td>
