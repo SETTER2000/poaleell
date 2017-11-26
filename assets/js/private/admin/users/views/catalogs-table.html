@@ -81,7 +81,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
 
         <td>{{$index+1}}</td>
         <td>
-            <a ng-href="{{item.getShowUrl(item.id, (me.kadr || me.admin))}}">
+            <a ng-href="{{item.getShowUrl(item.id, me)}}">
                 <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
                      ng-mouseleave="vid=false"
                      ng-src="{{item.avatarUrl}}"

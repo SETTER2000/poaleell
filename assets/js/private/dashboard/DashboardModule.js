@@ -43,48 +43,34 @@ angular.module('DashboardModule', ['ui.router', 'toastr', 'ngResource', 'ngAnima
                 abstract: true, // запрет на вход в этот URL, о при этом dogs отображается в цепочки урла
                 url: 'dogs',
                 template: '<ui-view/>'
-                // templateUrl: '/js/private/dashboard/tpl/dash.html',
-                //controller: function () {
-                //
-                //}
-                // views: {
-                //     '@': {
-                //         // 'footerTwo@': {templateUrl: '/js/private/dashboard/tpl/footerTwo.html'},
-                //        templateUrl: '/js/private/dashboard/tpl/dash.html',
-                //         controller:'DashboardController'
-                //     }
-                //     //'sidebar@': {
-                //     //    templateUrl: '/js/private/tpl/sidebar.tpl.html'
-                //     //}
-                // }
             })
 
-            // .state('home.dogs.catalogs', {
-            //     url: '/catalogs',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/admin/catalogs/tpl/list.tpl.html',
-            //             controller: 'ListCatalogController'
-            //         },
-            //         "actionView@home.dogs.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
-            //     }
-            // })
-            // .state('home.dogs.catalog', {
-            //     url: '/catalog/:catalogId',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
-            //             controller: 'CatalogController'
-            //         },
-            //         // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.catalogs.
-            //         // <div ui-view='formView'/> внутри /js/private/admin/catalog/tpl/show.tpl.html
-            //         // "formView@home.admin.catalog" : { }
-            //         // "formView@home.dogs.catalog": {
-            //         //     templateUrl: '/js/private/admin/messages/views/min.messages.form.html',
-            //         //     controller: 'EditMessageController'
-            //         // },
-            //     }
-            // })
+            .state('home.dogs.catalogs', {
+                url: '/catalogs',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/catalogs/tpl/list.tpl.html',
+                        controller: 'ListCatalogController'
+                    },
+                    "actionView@home.dogs.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
+                }
+            })
+            .state('home.dogs.catalog', {
+                url: '/catalog/:catalogId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
+                        controller: 'CatalogController'
+                    },
+                    // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.catalogs.
+                    // <div ui-view='formView'/> внутри /js/private/admin/catalog/tpl/show.tpl.html
+                    // "formView@home.admin.catalog" : { }
+                    "formView@home.dogs.catalog": {
+                        templateUrl: '/js/private/admin/messages/views/min.messages.form.html',
+                        controller: 'EditMessageController'
+                    },
+                }
+            })
 
             .state('home.profile', {
                 url: 'profile',

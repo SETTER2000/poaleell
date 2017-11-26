@@ -37,12 +37,12 @@ angular.module('CatalogModule')
                     console.log('catalogs', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 81189! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 889! ' + err.data.message);
                 });
             };
             $scope.wind = false;
             $scope.handshake = function () {
-                $rootScope.$emit('newDogMessage',{
+                $rootScope.$broadcast('newDogMessage',{
                     item:$scope.item,
                 });
                 return $scope.wind = (!$scope.wind);

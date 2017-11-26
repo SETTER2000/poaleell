@@ -77,22 +77,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
 
                 }
             })
-            .state('home.dogs.catalog', {
-                url: '/catalog/:catalogId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/admin/catalogs/tpl/show.tpl.html',
-                        controller: 'CatalogController'
-                    },
-                    // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.catalogs.
-                    // <div ui-view='formView'/> внутри /js/private/admin/catalog/tpl/show.tpl.html
-                    // "formView@home.admin.catalog" : { }
-                    "formView@home.admin.catalog": {
-                        templateUrl: '/js/private/admin/messages/views/min.messages.form.html'
-                    },
 
-                }
-            })
             .state('home.admin.catalogs.create', {
                 url: '/create/:catalogId',
                 views: {
