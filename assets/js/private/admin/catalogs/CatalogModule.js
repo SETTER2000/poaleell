@@ -16,7 +16,7 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                     // Абсолютное позиционирование вида 'workView' в  состоянии home.admin.catalogs.
                     // <div ui-view='workView'/> внутри /js/private/admin/catalogs/tpl/list.tpl.html
                     // "workView@home.admin.catalogs" : { }
-                    "actionView@home.admin.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.admin.catalogs.action.html'},
+                    "actionView@home.admin.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.catalogs.action.html'},
 
                 }
             })

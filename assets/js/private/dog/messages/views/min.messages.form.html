@@ -1,0 +1,69 @@
+<div class="panel panel-info">
+    <div class="panel-heading ">
+        <a href="#" ng-click="openWindow()"> <i class="fa fa-handshake-o" aria-hidden="true"></i></a> <span
+            class="pull-right">Отправьте ваше предложение</span>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" name="myFormMessage" novalidate ng-submit="saveEdit(newMessage)"
+              enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="inputEmail4" class="col-sm-2 control-label">Собака</label>
+                <div class="col-sm-10">
+                  <input  ng-model="newMessage.dogName" class="form-control" ng-disabled="true" id="inputEmail4" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Обратный адрес</label>
+                <div class="col-sm-10">
+                    <input type="email" ng-model="newMessage.email" class="form-control" id="inputEmail3"
+                           placeholder="Email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">
+                    Предложение
+                    <br>
+                    <small class="text-muted" ng-class="{'text-success':(newMessage.message.length < 200), 'text-warning':(newMessage.message.length >= 200), 'text-danger':(newMessage.message.length == newMessage.maxLength)}">
+                        <span ng-if="(newMessage.message.length == newMessage.maxLength) ">знаков больше нет</span>
+                        <span ng-if="(newMessage.message.length != newMessage.maxLength) ">знак. {{newMessage.maxLength - newMessage.message.length}}
+                    </small>
+                </label>
+
+                <div class="col-sm-10">
+                                <textarea type="text" minlength="3" maxlength="{{newMessage.maxLength}}"
+                                          class="form-control" ng-model="newMessage.message"
+                                          placeholder="Текст сообщения" rows="3" required></textarea>
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<div class="col-sm-offset-2 col-sm-10">-->
+            <!--<div class="checkbox">-->
+            <!--<label>-->
+            <!--<input type="checkbox"> Запомнить меня-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" ng-disabled="myFormMessage.$invalid">
+                        <i class="fa fa-paper-plane-o" ng-if="myFormMessage.$invalid" aria-hidden="true"></i>
+                        <i class="fa fa-paper-plane" ng-if="!myFormMessage.$invalid" aria-hidden="true"></i>
+                        &nbsp
+                        Отправить
+                    </button>
+
+
+                    <!--<button ng-show="edit" type="submit" class="btn btn-md btn-success">-->
+                    <!--<span class="glyphicon glyphicon-check"></span>-->
+                    <!--Сохранить-->
+                    <!--</button>-->
+                    <button  ng-click="newMessage.clear()"  class="btn btn-link pull-right" ng-if="!myFormMessage.$invalid">
+                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

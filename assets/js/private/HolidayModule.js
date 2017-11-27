@@ -22,7 +22,12 @@ angular.module('Holiday', [
     'ShowcaseModule',
     'MessageModule',
     'CatalogModule',
-    'HonorModule'
+
+    /************* FRONT *****************/
+    'CatalogFModule',
+    'UserFModule',
+    'DogModule',
+    'HonorModule',
 ])
     .config(function ($mdThemingProvider) {
         var ob = {

@@ -1,0 +1,113 @@
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3">
+                        <ul class="pagination">
+                            <li>
+                                <a class="btn-sm" href="#" ng-click="currentPeriod()" ng-href="{{section}}">Сегодня</a>
+                            </li>
+                        </ul>
+                        &nbsp;&nbsp;
+                        <ul class="pagination">
+                            <li>
+                                <a class="btn-sm" href="#" ng-click="periodPrevNext(1,-1)" ng-href="{{section}}"> < </a>
+                                <a class="btn-sm" href="#" ng-click="periodPrevNext(1,1)" ng-href="{{section}}"> > </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <ul class="pagination">
+                    <li ng-class="{'active':(section == 'неделя')}">
+                        <a class="btn-sm" ng-click="currentPeriod('week')" ng-href="{{section}}">Неделя</a>
+                    </li>
+                    <li ng-class="{'active':(section == 'месяц')}">
+                        <a class="btn-sm" ng-click="currentPeriod('month')" ng-href="{{section}}">Месяц</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <ui-view class="col-md-12">
+                <script>
+                    //                        var avatarElem = document.getElementById('avatar');
+                    //                        var n=190;
+                    //
+                    //
+                    //                        var avatarSourceBottom = avatarElem.getBoundingClientRect().bottom + (window.pageYOffset -n );
+                    //                        window.onscroll = function () {
+                    //                            if (avatarElem.classList.contains('fixed-thead') && window.pageYOffset < avatarSourceBottom) {
+                    //                                avatarElem.classList.remove('fixed-thead');
+                    //                            } else if (window.pageYOffset > avatarSourceBottom) {
+                    //                                avatarElem.classList.add('fixed-thead');
+                    //                            }
+                    //                        };
+
+                    $(window).scroll(function () {
+                        var y = $(window).scrollTop();
+//    console.log('SCROLL:', y);
+                        if (y >= 200) {
+                            $('#avatar').addClass('fixed-thead').css({'top': (y - 183)});
+
+                        }
+                        if ($(window).scrollTop() <= 208) {
+                            $('#avatar').removeClass('fixed-thead');
+                        }
+                    });
+
+                    (function ($scrollButton, $win) {
+                        $(document).scroll(function () {
+                            $scrollButton.toggleClass("visible2", $win.scrollTop() > 200);
+                        });
+                        $scrollButton.click(function (e) {
+                            e.preventDefault();
+                            $("body, html").animate({scrollTop: 0}, 200);
+                        });
+                    })($(".button2"), $(window));
+                </script>
+                <!--<div id="avatar" class="row small sort-my">42355525</div>-->
+                <table class="table table-hover table-bordered m-left">
+                    <thead id="avatar">
+                    <tr>
+                        <!--<td class="text-center">№</td>-->
+                        <th class="text-center" nowrap>
+                            <ul class="pagination pagination-sm ">
+                                <li ng-if="solo">
+                                    <h5 ng-click="toggleTop()" class="gray-light">{{daysPeriod.periodMonth | uppercase}}
+                                        {{daysPeriod.periodYear}}</h5>
+                                </li>
+                                <li ng-if="!solo"><input type="date" ng-model="mx" ng-blur="toggleBlur(mx)"
+                                                         class="form-control input-group-sm"></li>
+                            </ul>
+                        </th>
+                        <td class="text-center " ng-repeat="op in daysPeriod.data ">
+                              <span ng-class="{'red-color':(op.format('dd')==='вс' || op.format('dd')==='сб'),
+                              'control-label':(op.format('dd')==='вс' || op.format('dd')==='сб')}"> {{op.format('DD')}}
+                                <span ng-class="{'tag':(op.format('DD.MM.YYYY')==daysPeriod.currentDate)}">  {{op.format('dd')}}</span>
+                              </span>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(key, item) in data">
+                        <!--<td class="text-center">{{key+1}}</td>-->
+                        <th nowrap>{{data[key].fio}}</th>
+                        <td ng-repeat="props  in data[key].objData track by $index">{{props.result | timeCut:true}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+
+    </div>
+    <a href="#toTop2" class="button2">↑</a>
+
+
+</div>
+
+

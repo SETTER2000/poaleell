@@ -1,0 +1,113 @@
+<!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+<div class="col-sm-11  col-md-12  main">
+<div class="page-header">
+    <h2>{{items[0].scs()}} {{items[0].getNamePage()}}<span ng-if="mode">не активные</span> ({{filtered.length}})
+            <span class="pull-right">
+                <small>
+                    <small>
+                        <!--<label class="checkbox-inline">-->
+                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
+                        <!--</label>-->
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="mode" value="option2"> не активные
+                            <!--<span class="glyphicon  glyphicon-eye-open" ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}" aria-hidden="true"></span>-->
+                        </label>
+                        <!--<label class="checkbox-inline">-->
+                        <!--<a  ui-sref="admin.users.list.settings">-->
+                        <!--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>-->
+                        <!--</a>-->
+                        <!--</label>-->
+                    </small>
+                </small></span>
+    </h2>
+        <!--<h1>&lt;!&ndash;{{items[0].scs()}}&ndash;&gt;{{items[0].getNamePage()}} <span ng-if="mode">не активные</span> {{filtered.length}}-->
+            <!--<div class="btn-group-xs pull-right">-->
+                <!--&lt;!&ndash;<small>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox-inline">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="checkbox" ng-model="debug" value="option1"> отладка&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox-inline">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="checkbox" ng-model="mode" value="option2"> режимы&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;</small>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button ui-sref="home.admin.attendances.settings" type="button" class="btn btn-success">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-cog"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--<button ui-sref="home.admin.attendances.calendar.месяц"-->
+                        <!--type="button" class="btn btn-primary">-->
+                    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+                <!--</button>-->
+                <!--&lt;!&ndash;<button ui-sref="home.admin.attendances.create" type="button" class="btn btn-warning" >&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-plus"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a ng-href="{{items[0].getCreateUrl()}}" class="btn btn-warning">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-plus"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</h1>-->
+        <!--<ul class="breadcrumb">-->
+            <!--<li ng-repeat="breadcrumb in breadcrumbs.getAll()">-->
+                <!--<ng-switch on="$last">-->
+                    <!--<span ng-switch-when="true">{{breadcrumb.name}}</span>-->
+                        <!--<span ng-switch-default>-->
+                                <!--<a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>-->
+                        <!--</span>-->
+                <!--</ng-switch>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <div ui-view></div>
+        <div ui-view="settings"></div>
+    </div>
+
+    <pagination num-pages="numPages"
+                limit-rows="limitRows"
+                default-rows="defaultRows"
+                length-object="items.length"
+                current-page="currentPage"
+                on-select-page="selectCount=selectCount+1">
+    </pagination>
+
+    <word-part object-name="objectName"
+               filed-name="filedName"
+               where="where"
+               count-char="countChar"
+               char-text="charText"
+               get-char-text="getCharText(ch)">
+    </word-part>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchText" placeholder="Поиск ...">
+                     <span class="input-group-btn">
+                       <button ng-click="searchText=''" class="btn btn-default" type="button">
+                           <span class="glyphicon glyphicon-remove"></span>
+                       </button>
+                     </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div><span  aria-hidden="true"></span>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Посещаемость
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-if="gle" attendance-list="items" ></div>
+                    <div  ng-if="!gle" attendance-list="items" template="table"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
+</div>

@@ -356,28 +356,24 @@ module.exports.routes = {
     'GET /admin/diarys/create/': 'PageController.showHomePage',
     'GET /admin/diarys/:id': 'PageController.showHomePage',
 
-    'GET /dogs': 'PageController.showHomePage',
-    'GET /dogs/catalogs': 'PageController.showHomePage',
-    'GET /dogs/catalog/:id': 'PageController.showHomePage',
+    'GET /dog': 'PageController.showHomePage',
+    'GET /dog/catalogs': 'PageController.showHomePage',
+    'GET /dog/catalog/:id': 'PageController.showHomePage',
+    'GET /dog/catalogs/create': 'PageController.showHomePage',
+    'GET /dog/catalogs/edit/:id': 'PageController.showHomePage',
+
+
 
     'GET /upload': 'PageController.showHomePage',
     'GET /admin/honors': 'PageController.showHomePage',
     'GET /file/upload': 'PageController.showHomePage',
 
-    //'GET /admin/attendances/calendar': 'PageController.showHomePage',
-    //'GET /admin/attendances/calendar/:id': 'PageController.showHomePage',
+
 
     'GET /user/adminUsers': 'UserController.adminUsers',
 
 
     'GET /dashboard/showcases': 'PageController.showHomePage',
-    // 'GET /catalogs/dog': 'PageController.showHomePage',
-    // 'GET /dashboard': 'PageController.showHomePage',
-    // !!! НЕ УДАЛЯТЬ !!!
-    //'GET /att': 'Attendance.getQuery',
-    //'POST /att': 'Attendance.getQuery',
-    //'GET /period': 'Attendance.findPeriod',
-    //'GET /pd': 'Attendance.fPeriod',
 
 
     'GET /:login': {

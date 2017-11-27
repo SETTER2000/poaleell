@@ -1,0 +1,37 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">
+    <div class="page-header">
+        <h2><!--{{item.sc()}}--> {{item.getFullName()}}
+            <div class="btn-group-xs pull-right">
+                <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-list"></span>
+                </a>
+                <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </div>
+        </h2>
+    </div>
+    <div class="row">
+        <div class=" col-md-12">
+            <table class="table">
+
+                <tr>
+                    <th>Наименование</th>
+                    <td>{{item.name}}</td>
+                </tr>
+                <tr>
+                    <th>Тип</th>
+                    <td>{{item.type | date:'dd.MM.yyyy'}}</td>
+                </tr>
+                <tr>
+                    <th>Местоположение</th>
+                    <td>{{item.location}}</td>
+                </tr>
+                <tr><th colspan="30"></th></tr>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+

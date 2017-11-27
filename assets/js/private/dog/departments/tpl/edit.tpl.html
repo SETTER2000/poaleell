@@ -1,0 +1,229 @@
+<!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+<div class="col-sm-11  col-md-12  main">
+    <div class="page-header">
+        <h2>
+            <p ng-class="{'fired':!item.action}">{{item.sc()}}: {{item.name}} <span ng-if="!item.action"
+                                                                                    ng-bind="item.deactivation()"></span>
+            </p>
+            <!--<a href="#" class="btn btn-success btn-xs disabled" ng-hide="item.fired" role="button">-->
+            <!--сотрудников: </a>-->
+            <div class="btn-group-xs pull-right">
+                <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-check"></span>
+                </button>
+                <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-list"></span>
+                </a>
+            </div>
+        </h2>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                    <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel" ng-class="{'panel-warning':item.action, 'panel-default':!item.action}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Редактировать</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="item.action">Активность
+                        </label>
+                    </div>
+
+
+                    <!--<label class="control-label" for="inputSuccess1">Главный отдел</label>-->
+                    <!--[ <a href="#" ng-click="addContact()">добавить</a> ]-->
+
+                    <!--<select class="form-control " ng-model="item.owner">-->
+                    <!--<option ng-repeat="it in items.data" value="{{it.id}}">{{it.name}}</option>-->
+                    <!--</select>-->
+                    <label class="control-label">{{nameArea}}</label><br>
+                    <div class="form-inline">
+
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <input type="text" class="form-control" ng-model="item.name">
+                        </div>
+
+                        <div class="form-group">
+                            <a style="text-decoration: none" title="подчиняется" href="#" ng-click="addSubdivision()">
+                                <!--<span class="glyphicon glyphicon-plus"></span>-->
+                                <span class="glyphicon glyphicon-menu-right"></span>
+                                <span class="glyphicon glyphicon-menu-right"></span>
+                                <span class="glyphicon glyphicon-menu-right"></span>
+                            </a>
+                        </div>
+                        <div class="form-group " style="margin-left:50px" ng-controller="ListDepartmentController">
+                            <div ng-repeat="child in item.children">
+                                <!--{{department.id}}-->
+                                <select class="form-control" ng-model="child.id">
+                                    <option ng-repeat="option in items | orderBy:'name'" value="{{option.id}}">
+                                        {{option.name}}
+                                    </option>
+                                </select>
+                                <button type="button" class="btn btn-default" ng-click="removeSubdivision(child)">x
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+<p></p>
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label" for="inputSuccess3">Дата регистрации-->
+                    <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="createNick=true"-->
+                    <!--ng-mouseleave="createNick=false"></span>-->
+                    <!--<small ng-if="createNick">(официальная дата регистрации питомника)</small>-->
+                    <!--</label>-->
+                    <!--<input type="date" class="form-control"  ng-model="item.dateCreate">-->
+                    <!--&lt;!&ndash;<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>&ndash;&gt;-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">
+                            {{rightNameArea}}
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="rightName=true"
+                                  ng-mouseleave="rightName=false"></span>
+                            <small ng-if="rightName">(При написании полного имени собаки, выбрать с какой стороны от имени собаки будет писаться название питомника. По умолчанию слева.)</small>
+
+                        <!--<input class="form-control" ng-model="item.registerNumber">-->
+                        <small>
+                            <md-switch ng-model="item.rightName" aria-label="Switch 1" >
+                                <span ng-if="!item.rightName">слева</span>
+                                <span ng-if="item.rightName"> справа</span>
+                            </md-switch>
+                        </small> </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">
+                            {{registerArea}}
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="registerNick=true"
+                                  ng-mouseleave="registerNick=false"></span>
+                            <small ng-if="registerNick">(официально зарегистрированный номер питомника)</small>
+                        </label>
+                        <input class="form-control" ng-model="item.registerNumber">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">
+                            {{dateCreateArea}}
+
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="createNick=true"
+                                  ng-mouseleave="createNick=false"></span>
+                            <small ng-if="createNick">(официальная дата регистрации питомника)</small>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control flatpickr" ng-flatpickr
+                                   fp-opts="dateOpts"
+                                   fp-on-setup="toggleBlur(item)"
+                                   ng-model="item.dateCreate">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" ng-click="removeDateCreate(item)"><span
+                                class="glyphicon glyphicon-remove"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess3">
+                            {{suiteArea}} <a ng-if="item.suite" target="_blank" href="{{item.suite}}">перейти на сайт</a>
+                            <span class="glyphicon glyphicon-question-sign" ng-mouseover="suiteNick=true"
+                                  ng-mouseleave="suiteNick=false"></span>
+                            <small ng-if="suiteNick">(официальный сайт питомника)</small>
+                        </label>
+                        <input class="form-control" ng-model="item.suite">
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label" >Страна</label>
+                        <input  class="form-control" ng-model="item.country">
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label" >Город</label>
+                        <input  class="form-control" ng-model="item.city">
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label" >Адрес</label>
+                        <input  class="form-control" ng-model="item.address">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="form-group " ng-if="item.createdAt">
+                            <label class="control-label" for="inputSuccess18">Зарегистрирован в системе</label>
+                            <div><a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-saved':item.createdAt}"
+                                           aria-hidden="true"></span>
+                                {{item.createdAt | date:'dd.MM.yyyy HH:mm'}}
+                            </a></div>
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="form-group " ng-if="item.updatedAt">
+                            <label class="control-label" for="inputSuccess18">Последний раз редактировалось</label>
+                            <div><a href="#" class="btn btn-default  disabled" role="button">
+                                     <span class="glyphicon " ng-class="{ 'glyphicon-ok':item.updatedAt}"
+                                           aria-hidden="true"></span>
+                                {{item.updatedAt | date:'dd.MM.yyyy HH:mm'}}
+                            </a></div>
+                            <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a ng-click="saveEdit(item)" class="btn  btn-success">
+                            <span class="glyphicon glyphicon-check"></span>
+                            Сохранить
+                        </a>
+                        <!--<a ng-href="{{item.getListUrl()}}" class="btn  btn-warning">-->
+                        <!--<span class="glyphicon glyphicon-list"> </span>-->
+                        <!--Список-->
+                        <!--</a>-->
+                        <!--<a href="#" class="btn  btn-default pull-right" ng-click="item.owner='' ">-->
+                        <!--<span class=" glyphicon glyphicon-erase"></span>-->
+                        <!--Главный отдел-->
+                        <!--</a>-->
+
+
+                        <a ng-show="me.admin" ng-if="!item.action" ng-click="delete(item)"
+                           class="btn  btn-default pull-right">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--{{item | json}}-->
+        <div class="col-md-6" ng-show="me.admin" ng-if="!closeInfo">
+            <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Информация</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr ng-repeat="(key, value) in item">
+                                <th>{{key}}</th>
+                                <td>{{value }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div ui-view></div>-->
+<!--<div ui-view="users"></div>-->
+

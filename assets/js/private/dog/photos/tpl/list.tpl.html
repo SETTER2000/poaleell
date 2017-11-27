@@ -1,0 +1,132 @@
+<!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ng-scope">-->
+<div class="col-sm-11  col-md-12  main">
+    <div class="page-header">
+        <h2>{{items[0].scs()}} <span ng-if="mode">не активные</span> ({{filtered.length}})
+            <span class="btn-group-xs pull-right">
+                <small>
+                    <small>
+                        <!--<small>-->
+                        <!--<label class="checkbox-inline">-->
+                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
+                        <!--</label>-->
+                        <!--<label class="checkbox-inline">-->
+                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
+                        <!--</label>-->
+                        <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="mode" value="option2"> не активные
+                            <!--<span class="glyphicon  glyphicon-eye-open" ng-class="{'glyphicon-eye-open': !item.fired, 'glyphicon-eye-close':item.fired}" aria-hidden="true"></span>-->
+                        </label>
+                        <!--</small>-->
+                        <!--<button ui-sref="home.admin.furloughs.settings" type="button" class="btn btn-success">-->
+                        <!--<span class="glyphicon glyphicon-cog"></span>-->
+                        <!--</button>-->
+                        <!--<button ui-sref="home.admin.furloughs.create" type="button" class="btn btn-warning">-->
+                        <!--<span class="glyphicon glyphicon-plus"></span>-->
+                        <!--</button>-->
+                    </small>
+                </small>
+                </span>
+        </h2>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+        <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
+
+        <div ui-view></div>
+        <div ui-view="settings"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchText" placeholder="Поиск ...">
+                     <span class="input-group-btn">
+                       <button ng-click="searchText=''" class="btn btn-default" type="button">
+                           <span class="glyphicon glyphicon-remove"></span>
+                       </button>
+                     </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <button ui-sref="{{urlButton}}" type="button" class="btn btn-default btn-sm">
+                    {{addNameButton}}
+                </button>
+            </p>
+
+            <table class="table table-hover">
+                <tr>
+                    <th>#</th>
+
+                    <th >
+                        <button class="btn btn-default not-border" ng-click="sortBy('name')">
+                            {{nameArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'name'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
+                    <th >
+                        <button class="btn btn-default not-border" ng-click="sortBy('photoUrl')">
+                            {{photoUrlArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'photoUrl'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
+                    <th>
+                        <button class="btn btn-default not-border" ng-click="sortBy('description')">
+                            {{descriptionArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'description'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
+                    <th>
+                        <button class="btn btn-default not-border" ng-click="sortBy('descriptionEn')">
+                            {{descriptionEnArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'descriptionEn'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
+                    <td>{{$index+1}}</td>
+
+                    <td >
+                        <a ng-href="{{item.getEditUrl(item.id)}}">
+                           {{item.fileNamePhoto}}
+                        </a>
+                    </td>
+                    <td >
+                        <a ng-href="{{item.getEditUrl(item.id)}}">
+                            <img width="90" ng-src="{{item.photoUrl}}" alt="">
+                        </a>
+                    </td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.descriptionEn}}</td>
+
+                    <td class="btn-group-xs">
+                        <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
+                           ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
+                <span class="glyphicon" ng-class="{'glyphicon-eye-open': item.action, 'glyphicon-eye-close':!item.action}"
+                      aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <pre class="pull-right" ng-if="debug"><h2>{{items| json}}</h2></pre>
+</div>

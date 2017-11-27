@@ -11,32 +11,32 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         templateUrl: '/js/private/admin/users/tpl/list.tpl.html',
                         controller: 'ListController'
                     },
-                    "actionView@home.admin.users": {templateUrl: '/js/private/admin/users/views/home.admin.users.action.html'},
+                    "actionView@home.admin.users": {templateUrl: '/js/private/admin/users/views/home.users.action.html'},
                 }
             })
-            .state('home.admin.users.settings', {
-                url: '/settings',
-                templateUrl: '/js/private/admin/users/views/home.admin.users.settings.html',
-                controller: 'ListController'
-            })
-            .state('home.admin.users.list', {
-                url: '/list',
-                views: {
-                    'list@home.admin.users': {
-                        templateUrl: '/js/private/admin/users/views/home.admin.users.list.html',
-                        controller: 'ListController'
-                    }
-                }
-            })
-            .state('home.admin.users.work', {
-                url: '/work',
-                views: {
-                    'list@home.admin.users': {
-                        templateUrl: '/js/private/admin/users/views/home.admin.users.work.html',
-                        controller: 'ListController'
-                    }
-                }
-            })
+            // .state('home.admin.users.settings', {
+            //     url: '/settings',
+            //     templateUrl: '/js/private/admin/users/views/home.users.settings.html',
+            //     controller: 'ListController'
+            // })
+            // .state('home.admin.users.list', {
+            //     url: '/list',
+            //     views: {
+            //         'list@home.admin.users': {
+            //             templateUrl: '/js/private/admin/users/views/home.users.list.html',
+            //             controller: 'ListController'
+            //         }
+            //     }
+            // })
+            // .state('home.admin.users.work', {
+            //     url: '/work',
+            //     views: {
+            //         'list@home.admin.users': {
+            //             templateUrl: '/js/private/admin/users/views/home.admin.users.work.html',
+            //             controller: 'ListController'
+            //         }
+            //     }
+            // })
             .state('home.admin.users.attendance', {
                 url: '/attendance',
                 views: {
