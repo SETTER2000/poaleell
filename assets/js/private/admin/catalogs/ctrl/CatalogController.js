@@ -2,6 +2,7 @@ angular.module('CatalogModule')
     .controller('CatalogController', ['$scope', '$location','$state', '$http', 'toastr', 'toastrConfig',"$rootScope", 'moment', 'Catalogs', '$stateParams',
         function ($scope, $location, $state,$http, toastr,toastrConfig,$rootScope, moment, Catalogs, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.newMessage = {
                 email: $scope.me.email,
                 maxLength: 250,

@@ -1,11 +1,10 @@
 (function (angular) {
     'use strict';
-    angular.module('CatalogModule')
-        .controller('ListCatalogController', ['$scope', '$location', 'moment', '$http', 'toastr', 'toastrConfig',
-            "$rootScope", '$state', 'Catalogs', '$mdDialog', '$window',
-            function ($scope, $location, moment, $http, toastr, toastrConfig, $rootScope, $state, Catalogs, $mdDialog) {
+    angular.module('CatalogFModule')
+        .controller('ListCatalogFController', ['$scope', '$location', 'moment', '$http', 'toastr', 'toastrConfig',
+            "$rootScope", '$state', 'CatalogsF', '$mdDialog', '$window',
+            function ($scope, $location, moment, $http, toastr, toastrConfig, $rootScope, $state, CatalogsF, $mdDialog) {
                 $scope.me = window.SAILS_LOCALS.me;
-                if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
                 $scope.status = '  ';
                 $scope.customFullscreen = false;
 
@@ -27,83 +26,6 @@
                             .targetEvent(ev)
                     );
                 };
-
-                // $scope.showConfirm = function(ev) {
-                //     // Appending dialog to document.body to cover sidenav in docs app
-                //     var confirm = $mdDialog.confirm()
-                //         .title('Would you like to delete your debt?')
-                //         .textContent('All of the banks have agreed to forgive you your debts.')
-                //         .ariaLabel('Lucky day')
-                //         .targetEvent(ev)
-                //         .ok('Please do it!')
-                //         .cancel('Sounds like a scam');
-                //
-                //     $mdDialog.show(confirm).then(function() {
-                //         $scope.status = 'You decided to get rid of your debt.';
-                //     }, function() {
-                //         $scope.status = 'You decided to keep your debt.';
-                //     });
-                // };
-                //
-                // $scope.showPrompt = function(ev) {
-                //     // Appending dialog to document.body to cover sidenav in docs app
-                //     var confirm = $mdDialog.prompt()
-                //         .title('What would you name your dog?')
-                //         .textContent('Bowser is a common name.')
-                //         .placeholder('Dog name')
-                //         .ariaLabel('Dog name')
-                //         .initialValue('Buddy')
-                //         .targetEvent(ev)
-                //         .required(true)
-                //         .ok('Okay!')
-                //         .cancel('I\'m a cat person');
-                //
-                //     $mdDialog.show(confirm).then(function(result) {
-                //         $scope.status = 'You decided to name your dog ' + result + '.';
-                //     }, function() {
-                //         $scope.status = 'You didn\'t name your dog.';
-                //     });
-                // };
-                //
-                // $scope.showAdvanced = function(ev) {
-                //     $mdDialog.show({
-                //         controller: DialogController,
-                //         templateUrl: 'dialog1.tmpl.html',
-                //         parent: angular.element(document.body),
-                //         targetEvent: ev,
-                //         clickOutsideToClose:true,
-                //         fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                //     })
-                //         .then(function(answer) {
-                //             $scope.status = 'You said the information was "' + answer + '".';
-                //         }, function() {
-                //             $scope.status = 'You cancelled the dialog.';
-                //         });
-                // };
-                //
-                // $scope.showTabDialog = function(ev) {
-                //     $mdDialog.show({
-                //         controller: DialogController,
-                //         templateUrl: 'tabDialog.tmpl.html',
-                //         parent: angular.element(document.body),
-                //         targetEvent: ev,
-                //         clickOutsideToClose:true
-                //     })
-                //         .then(function(answer) {
-                //             $scope.status = 'You said the information was "' + answer + '".';
-                //         }, function() {
-                //             $scope.status = 'You cancelled the dialog.';
-                //         });
-                // };
-                //
-                // $scope.showPrerenderedDialog = function(ev) {
-                //     $mdDialog.show({
-                //         contentElement: '#myDialog',
-                //         parent: angular.element(document.body),
-                //         targetEvent: ev,
-                //         clickOutsideToClose: true
-                //     });
-                // };
 
                 function DialogController($scope, $mdDialog) {
                     $scope.hide = function () {
@@ -159,7 +81,7 @@
                     messagesArea: 'Сообщения',
                 };
                 $scope.added = 'Добавить собаку';
-                $scope.showBt = ($scope.me.kadr || $scope.me.admin) ? 1 : 0; // показать кнопку $scope.added
+                $scope.showBt = 0; // показать кнопку $scope.added
                 $scope.urlBt = 'home.admin.catalogs.create';
                 $scope.str = 'Петров';
                 $scope.countChar = '3';
@@ -260,7 +182,7 @@
                         {display: "Все", value: "all"},
 
                     ];
-                if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
+                // if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
 
 
                 $scope.modeSelect = $scope.options[0];
@@ -356,8 +278,8 @@
                         char: $scope.charText + '%'
                     };
 
-                    $scope.items = Catalogs.query($scope.query, function (catalogs) {
-                        // console.log('Catalogs LIST:', catalogs);
+                    $scope.items = CatalogsF.query($scope.query, function (catalogs) {
+                        // console.log('CatalogsF LIST:', catalogs);
                         $scope.items = catalogs;
                         $scope.objectName = catalogs;
                         //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;
@@ -467,8 +389,7 @@
                 var breadcrumb = new BreadCrumb();
 
                 breadcrumb.set('Home', 'home');
-                if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-                breadcrumb.set('Catalog', 'home.admin.catalogs' + $state.current.url);
+                breadcrumb.set('Catalog', 'home.dog.catalogs' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
 
                 $scope.refresh();

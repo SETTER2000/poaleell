@@ -1,4 +1,8 @@
 angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
+    .run(function ($rootScope, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    })
     .config(['$qProvider', function ($qProvider) {
         $qProvider.errorOnUnhandledRejections(false);
     }])
@@ -9,113 +13,44 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 views: {
                     '@': {
                         templateUrl: '/js/private/dog/catalogs/tpl/list.tpl.html',
-                        controller: 'ListCatalogController'
+                        controller: 'ListCatalogFController'
                     },
-
 
                     // Абсолютное позиционирование вида 'workView' в  состоянии home.dog.catalogs.
                     // <div ui-view='workView'/> внутри /js/private/dog/catalogs/tpl/list.tpl.html
                     // "workView@home.dog.catalogs" : { }
-                    "actionView@home.dog.catalogs": {templateUrl: '/js/private/dog/catalogs/views/home.catalogs.action.html'},
+                    "actionView@home.dog.catalogs": {
+                        templateUrl: '/js/private/dog/catalogs/views/home.catalogs.action.html'
+                    },
 
                 }
             })
-            // .state('home.dog.catalogs.work', {
-            //     url: '/work',
-            //     "td@home.dog.catalogs.work": {templateUrl: '/js/private/dog/catalogs/views/home.dog.catalogs.work.html'}
-            // })
             .state('home.dog.catalogs.list', {
                 url: '/list',
                 views: {
                     'list@home.dog.catalogs': {
                         templateUrl: '/js/private/dog/catalogs/views/home.dog.catalogs.list.html',
-                        controller: 'ListCatalogController'
+                        controller: 'ListCatalogFController'
                     }
                 }
             })
-            // .state('home.dog.catalogs.work', {
-            //     url: '/work',
-            //     views: {
-            //         'list@home.dog.catalogs': {
-            //             templateUrl: '/js/private/dog/catalogs/views/home.dog.catalogs.work.html',
-            //             controller: 'ListCatalogController'
-            //         }
-            //     }
-            // })
-            // .state('home.dog.catalogs.attendance', {
-            //     url: '/attendance',
-            //     views: {
-            //         'attendance@home.dog.catalogs': {
-            //             templateUrl: '/js/private/dog/attendances/tpl/list.tpl.html',
-            //             controller: 'ListAttendanceController'
-            //         }
-            //     }
-            // })
-            .state('home.dog.catalogs.edit', {
-                url: '/edit/:catalogId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/dog/catalogs/tpl/edit.tpl.html',
-                        controller: 'EditCatalogController'
-                    }
-                }
-            })
-
             .state('home.dog.catalog', {
                 url: '/catalog/:catalogId',
                 views: {
                     '@': {
                         templateUrl: '/js/private/dog/catalogs/tpl/show.tpl.html',
-                        controller: 'CatalogController'
+                        controller: 'CatalogFController'
                     },
                     // Абсолютное позиционирование вида 'formView' в  состоянии home.dog.catalogs.
                     // <div ui-view='formView'/> внутри /js/private/dog/catalog/tpl/show.tpl.html
                     // "formView@home.dog.catalog" : { }
-                    "formView@home.dog.catalog": {
-                        templateUrl: '/js/private/dog/messages/views/min.messages.form.html'
-                    },
+                    // "formView@home.dog.catalog": {
+                    //     templateUrl: '/js/private/dog/messages/views/min.messages.form.html'
+                    // },
 
                 }
             })
 
-            .state('home.dog.catalogs.create', {
-                url: '/create/:catalogId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/dog/catalogs/tpl/edit.tpl.html',
-                        controller: 'EditCatalogController'
-                    }
-                }
-            })
-
-
-        // .state('home.dog.catalogs.dogistration', {
-        //     url: '/dogistration',
-        //     views: {
-        //         '@': {
-        //             templateUrl: '/js/private/dog/catalogs/tpl/dogistration.tpl.html',
-        //             controller: 'AdministrationController'
-        //         }
-        //     }
-        // })
-        // .state('home.file.upload', {
-        //     url: 'upload',
-        //     views: {
-        //         '@': {
-        //             templateUrl: '/js/private/dog/catalogs/views/upload.html',
-        //             controller: 'EditCatalogController'
-        //         }
-        //     }
-        // })
-        //.state('home.dog.catalogs.exit', {
-        //    url: '/exit',
-        //    views: {
-        //        '@': {
-        //            templateUrl: '/js/private/dog/catalogs/tpl/exit.html',
-        //            controller: 'EditCatalogController'
-        //        }
-        //    }
-        //})
         ;
     })
     .constant('CONF_MODULE_CATALOG', {baseUrl: '/catalogs/:catalogId'})
@@ -124,8 +59,8 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
         $rootScope.$stateParams = $stateParams;
         amMoment.changeLocale('ru');
     })
-    .factory('Catalogs', function ($resource, $state, CONF_MODULE_CATALOG) {
-        var Catalogs = $resource(
+    .factory('CatalogsF', function ($resource, $state, CONF_MODULE_CATALOG) {
+        var CatalogsF = $resource(
             CONF_MODULE_CATALOG.baseUrl,
             {catalogId: '@id'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
@@ -135,7 +70,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 }
             }
         );
-        Catalogs.prototype.formatDate = function (date) {
+        CatalogsF.prototype.formatDate = function (date) {
             var dd = date.getDate();
             if (dd < 10) dd = '0' + dd;
             var mm = date.getMonth() + 1;
@@ -144,20 +79,13 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
             if (yy < 10) yy = '0' + yy;
             return yy + '-' + mm + '-' + dd;
         };
-        Catalogs.prototype.kennelName = function () {
+        CatalogsF.prototype.kennelName = function () {
             // console.log('this.kennels',this.kennels);
             if (this.kennels instanceof Array && this.kennels.length > 0) return this.kennels[0].name;
             return 'неизвестен'
 
         };
-
-        Catalogs.prototype.sireName = function () {
-            console.log('this.sires', this.sires);
-            // if(this.kennels instanceof Array && this.kennels.length>0) return this.kennels[0].name ;
-            return this.sires.kennelName() + ' ' + this.sires.name
-
-        };
-        Catalogs.prototype.getClasses = function () {
+        CatalogsF.prototype.getClasses = function () {
             let arr = [];
             let periods = [];
             let current = moment();
@@ -183,8 +111,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
             });
             return arr;
         };
-
-        Catalogs.prototype.getFullName = function () {
+        CatalogsF.prototype.getFullName = function () {
             if (this.kennels instanceof Array && (this.kennels.length > 0) && this.kennels[0].rightName) {
                 if (this.kennels instanceof Array && (this.kennels.length > 0) && this.name) {
                     return this.name + ' ' + this.kennels[0].name;
@@ -199,29 +126,22 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 }
             }
         };
-
-        Catalogs.prototype.getShortName = function () {
+        CatalogsF.prototype.getShortName = function () {
             return this.lastName + ' ' + this.firstName.substr(0, 1) + '.' + this.patronymicName.substr(0, 1) + '.';
         };
-        Catalogs.prototype.sc = function () {
+        CatalogsF.prototype.sc = function () {
             return this.section;
         };
-        Catalogs.prototype.scs = function () {
+        CatalogsF.prototype.scs = function () {
             return this.sections;
         };
-        Catalogs.prototype.ok = function () {
+        CatalogsF.prototype.ok = function () {
             return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
         };
-        Catalogs.prototype.er = function () {
+        CatalogsF.prototype.er = function () {
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
-        Catalogs.prototype.getTimeBirthday = function () {
-            console.log('this.timeBirthday:', this.timeBirthday);
-            return this.timeBirthday;
-        };
-
-
-        Catalogs.prototype.breederName = function (int) {
+        CatalogsF.prototype.breederName = function (int) {
             let t = '';
             if (int) {
                 this.breeders.forEach(function (item, i, arr) {
@@ -240,7 +160,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
             }
             return t;
         };
-        Catalogs.prototype.ownerName = function (int) {
+        CatalogsF.prototype.ownerName = function (int) {
             let t = '';
             if (int) {
                 this.owners.forEach(function (item, i, arr) {
@@ -257,13 +177,13 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
             }
             return t;
         };
-        Catalogs.prototype.getAvatar = function () {
+        CatalogsF.prototype.getAvatar = function () {
             return this.avatarUrl;
         };
-        Catalogs.prototype.lastDateSetting = function () {
+        CatalogsF.prototype.lastDateSetting = function () {
             return new Date();
         };
-        Catalogs.prototype.getBirthday = function () {
+        CatalogsF.prototype.getBirthday = function () {
             if (this.birthday) {
                 var tm;
                 tm = new Date(this.birthday);
@@ -275,7 +195,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 this.birthday = tm;
             }
         };
-        Catalogs.prototype.getDateWeight = function () {
+        CatalogsF.prototype.getDateWeight = function () {
             if (this.dateWeight) {
                 var tm;
                 tm = new Date(this.dateWeight);
@@ -287,7 +207,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 this.dateWeight = tm;
             }
         };
-        Catalogs.prototype.getDeath = function () {
+        CatalogsF.prototype.getDeath = function () {
             if (this.death) {
                 var tm;
                 tm = new Date(this.death);
@@ -298,7 +218,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 this.death = tm;
             }
         };
-        Catalogs.prototype.getFiredDate = function () {
+        CatalogsF.prototype.getFiredDate = function () {
             if (this.firedDate) {
                 var tm;
                 tm = new Date(this.firedDate);
@@ -309,7 +229,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 this.firedDate = tm;
             }
         };
-        Catalogs.prototype.getDecree = function () {
+        CatalogsF.prototype.getDecree = function () {
             if (this.decree) {
                 var tm;
                 tm = new Date(this.decree);
@@ -320,19 +240,17 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 this.decree = tm;
             }
         };
-        Catalogs.prototype.getCreatedAt = function () {
+        CatalogsF.prototype.getCreatedAt = function () {
             if (!this.createdAt) {
                 return 'Mongo import';
             }
             return this.createdAt;
         };
-        Catalogs.prototype.getCurrentDate = function () {
+        CatalogsF.prototype.getCurrentDate = function () {
             var t = this.formatDate(new Date());
             return t;
         };
-
-
-        Catalogs.prototype.periodWork = function () {
+        CatalogsF.prototype.periodWork = function () {
             var now = moment();
             var event = moment(this.dateInWork, ["DD.MM.YYYY"]);
 
@@ -343,8 +261,7 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
             return moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
-
-        Catalogs.prototype.age = function () {
+        CatalogsF.prototype.age = function () {
             var now = moment();
             var event = moment(this.birthday, ["DD.MM.YYYY"]);
 
@@ -355,26 +272,23 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
             return moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
-        Catalogs.prototype.getListUrl = function () {
+        CatalogsF.prototype.getListUrl = function () {
             return '/dog/catalogs';
         };
-        Catalogs.prototype.getEditUrl = function (id) {
+        CatalogsF.prototype.getEditUrl = function (id) {
+            // console.log('getEditUrl /dog/catalogs/edit/', id);
             return '/dog/catalogs/edit/' + id;
         };
-        Catalogs.prototype.getShowUrl = function (id, me) {
-            if (!me) return '/dogs/catalog/' + id;
-            if ((me.hasOwnProperty('dog') && me.dog ) || (me.hasOwnProperty('kadr') && me.kadr)) {
-                return '/dog/catalog/' + id;
-            }
+        CatalogsF.prototype.getShowUrl = function (id) {
+            // console.log('getShowUrl /dog/catalog/', id);
 
-            return '/dogs/catalog/' + id;
+            return '/dog/catalog/' + id;
 
         };
-
-        Catalogs.prototype.deactivation = function () {
+        CatalogsF.prototype.deactivation = function () {
             return ' - деактивирован';
         };
-        Catalogs.prototype.getContact = function (type) {
+        CatalogsF.prototype.getContact = function (type) {
             for (var i in this.contacts) {
                 if (this.contacts[i].type === type) {
                     return this.contacts[i].value;
@@ -382,78 +296,11 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 }
             }
         };
-        Catalogs.prototype.forrbidden = function () {
-            return ' - уволены';
-        };
-        return Catalogs;
+        // CatalogsF.prototype.forrbidden = function () {
+        //     return ' - уволены';
+        // };
+        return CatalogsF;
     })
-    .directive('unknownValueError', function () {
-        return {
-            require: ['ngModel', 'select'],
-            link: function (scope, element, attrs, ctrls) {
-                let ngModelCtrl = ctrls[0]; // ангулар модель выбрана элемента select
-                /**
-                 *  выбран сам элемент select со страницы, т.е. его контроллер (SelectController),
-                 *  для внесения изменений в логику контроллера(управления) выбором (option)
-                 */
-                let selectCtrl = ctrls[1];
-                console.log('ngModelCtrl', ngModelCtrl);
-                console.log('selectCtrl', selectCtrl);
-
-                /**
-                 *  ВНИАМАНИЕ!!
-                 *  https://docs.angularjs.org/api/ng/type/select.SelectController
-                 *  В документации не верно указаны функции контроллера (SelectController), для Angular 1.6
-                 *  они не актуальны, следует смотреть методы конкретно по объекту.
-                 *  $isUnknownOptionSelected() в 1.6  это unselectEmptyOption()
-                 */
-                ngModelCtrl.$validators.unknownValue = function (modelValue, viewValue) {
-                    console.log('selectCtrl.readValue()', selectCtrl.readValue());
-                    console.log('selectCtrl.unselectEmptyOption()', selectCtrl.unselectEmptyOption());
-                    console.log('selectCtrl.unknownOption', selectCtrl.unknownOption);
-                    return (selectCtrl.readValue());
-                    // condition?true:false or condition?false:true. These expressions may be safely simplified to condition or !condition , respectively.
-                };
-            }
-        }
-    })
-    .directive('unknownValueRequired', function () {
-        return {
-            priority: 1, // This directive must run after the required directive has added its validator
-            require: ['ngModel', 'select'],
-            link: function (scope, element, attrs, ctrls) {
-                var ngModelCtrl = ctrls[0];
-                var selectCtrl = ctrls[1];
-
-                var originalRequiredValidator = ngModelCtrl.$validators.required;
-
-                ngModelCtrl.$validators.required = function () {
-                    if (attrs.required && selectCtrl.$isUnknownOptionSelected()) {
-                        return false;
-                    }
-
-                    return originalRequiredValidator.apply(this, arguments);
-                };
-            }
-        };
-    })
-    .directive('customSelect', function () {
-        return {
-            restrict: "E",
-            replace: true,
-            scope: {
-                'ngModel': '=',
-                'options': '=',
-            },
-            templateUrl: '/js/private/dog/catalogs/views/select.view.html',
-            link: function (scope, $element, attributes) {
-                scope.selectable_options = scope.options;
-            }
-        };
-    })
-
-
-
     /**
      * Это не я.
      * Фильтр выбрасывает меня из папы или из мамы

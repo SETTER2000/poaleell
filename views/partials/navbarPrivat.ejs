@@ -14,28 +14,34 @@
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li ng-class="{active:active('home')}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> </a></li>
-                    <li ng-class="{active:active('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
-                    <li ng-if="me.kadr || me.admin" ng-class="{active:active('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
-                    <li ng-if="!me.kadr && !me.admin"  ng-class="{active:active('home.dogs.catalogs')}"><a ui-sref="home.dogs.catalogs">Собаки</a></li>
+                <ul ng-if="!me.kadr && !me.admin" class="nav navbar-nav">
+                    <li ng-class="{active:$state.includes('home')}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> </a></li>
+                    <li ng-class="{active:$state.includes('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
+                    <li ng-class="{active:$state.includes('home.dog.catalogs')}"><a ui-sref="home.dog.catalogs">Собаки</a></li>
 
+                </ul>
+
+
+                <ul ng-if="me.kadr || me.admin" class="nav navbar-nav">
+                    <li ng-class="{active:$state.includes('home')}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> </a></li>
+                    <li ng-class="{active:$state.includes('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
+                    <li  ng-class="{active:$state.includes('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
 
                     <li class="dropdown">
                         <a ng-if="(me.kadr || me.admin || me.leader)" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Справочники
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ng-class="{active:active('home.admin.catalogs')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
-                            <li ng-class="{active:active('home.admin.users')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Пользователи</a></li>
-                            <li ng-class="{active:active('home.admin.kennels')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.kennels">Питомники</a></li>
-                            <li ng-class="{active:active('home.admin.positions')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
-                            <li ng-class="{active:active('home.admin.honors')}"><a ng-if="( me.admin)" ui-sref="home.admin.honors">Награды</a></li>
-                            <li ng-class="{active:active('home.admin.photos')}"><a ng-if="( me.admin)" ui-sref="home.admin.photos">Фото</a></li>
-                            <li ng-class="{active:active('home.admin.titles')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
-                            <li ng-class="{active:active('home.admin.messages')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.messages">Сообщения</a></li>
-                            <li ng-class="{active:active('home.admin.reactions')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.reactions">Тесты</a></li>
-                            <li ng-class="{active:active('home.admin.administration')}"><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.catalogs')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.catalogs">Каталог</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.users')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.users">Пользователи</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.kennels')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.kennels">Питомники</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.positions')}"><a ng-if="(me.kadr || me.admin)" ui-sref="home.admin.positions">Должности</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.honors')}"><a ng-if="( me.admin)" ui-sref="home.admin.honors">Награды</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.photos')}"><a ng-if="( me.admin)" ui-sref="home.admin.photos">Фото</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.titles')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.messages')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.messages">Сообщения</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.reactions')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.reactions">Тесты</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.administration')}"><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>
                         </ul>
                     </li>
                 </ul>

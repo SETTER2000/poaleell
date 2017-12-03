@@ -1,4 +1,8 @@
 angular.module('DogModule', ['ui.router', 'ngResource', 'ngAnimate'])
+    .run(function ($rootScope, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    })
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.dog', {

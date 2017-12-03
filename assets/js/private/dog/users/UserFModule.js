@@ -9,7 +9,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 views: {
                     '@': {
                         templateUrl: '/js/private/dog/users/tpl/list.tpl.html',
-                        controller: 'ListController'
+                        controller: 'ListFController'
                     },
                     "actionView@home.dog.users": {templateUrl: '/js/private/dog/users/views/home.users.action.html'},
                 }
@@ -24,7 +24,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 views: {
                     'list@home.dog.users': {
                         templateUrl: '/js/private/dog/users/views/home.dog.users.list.html',
-                        controller: 'ListController'
+                        controller: 'ListFController'
                     }
                 }
             })
@@ -33,64 +33,64 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 views: {
                     'list@home.dog.users': {
                         templateUrl: '/js/private/dog/users/views/home.dog.users.work.html',
-                        controller: 'ListController'
+                        controller: 'ListFController'
                     }
                 }
             })
-            .state('home.dog.users.attendance', {
-                url: '/attendance',
-                views: {
-                    'attendance@home.dog.users': {
-                        templateUrl: '/js/private/dog/attendances/tpl/list.tpl.html',
-                        controller: 'ListAttendanceController'
-                    }
-                }
-            })
-            .state('home.dog.users.edit', {
-                url: '/edit/:userId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/dog/users/tpl/edit.tpl.html',
-                        controller: 'EditController'
-                    }
-                }
-            })
+            // .state('home.dog.users.attendance', {
+            //     url: '/attendance',
+            //     views: {
+            //         'attendance@home.dog.users': {
+            //             templateUrl: '/js/private/dog/attendances/tpl/list.tpl.html',
+            //             controller: 'ListAttendanceFController'
+            //         }
+            //     }
+            // })
+            // .state('home.dog.users.edit', {
+            //     url: '/edit/:userId',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/dog/users/tpl/edit.tpl.html',
+            //             controller: 'EditController'
+            //         }
+            //     }
+            // })
             .state('home.dog.user', {
                 url: '/user/:userId',
                 views: {
                     '@': {
                         templateUrl: '/js/private/dog/users/tpl/show.tpl.html',
-                        controller: 'UserController'
+                        controller: 'UserFController'
                     }
                 }
             })
-            .state('home.dog.users.create', {
-                url: '/create/:userId',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/dog/users/tpl/edit.tpl.html',
-                        controller: 'EditController'
-                    }
-                }
-            })
-            .state('home.dog.users.administration', {
-                url: '/administration',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/dog/users/tpl/administration.tpl.html',
-                        controller: 'AdministrationController'
-                    }
-                }
-            })
-            .state('home.file.upload', {
-                url: 'upload',
-                views: {
-                    '@': {
-                        templateUrl: '/js/private/dog/users/views/upload.html',
-                        controller: 'EditController'
-                    }
-                }
-            })
+            // .state('home.dog.users.create', {
+            //     url: '/create/:userId',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/dog/users/tpl/edit.tpl.html',
+            //             controller: 'EditController'
+            //         }
+            //     }
+            // })
+            // .state('home.dog.users.administration', {
+            //     url: '/administration',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/dog/users/tpl/administration.tpl.html',
+            //             controller: 'AdministrationController'
+            //         }
+            //     }
+            // })
+            // .state('home.file.upload', {
+            //     url: 'upload',
+            //     views: {
+            //         '@': {
+            //             templateUrl: '/js/private/dog/users/views/upload.html',
+            //             controller: 'EditController'
+            //         }
+            //     }
+            // })
         //.state('home.dog.users.exit', {
         //    url: '/exit',
         //    views: {
@@ -251,7 +251,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
         Users.prototype.getEditUrl = function (id) {
             return '/dog/users/edit/' + id;
         };
-        Users.prototype.getShowUrl = function (id, me) {
+        Users.prototype.getShowUrl = function (id) {
             // return '/dog/user/' + id;
             return (me.dog || me.kadr) ? '/dog/user/' + id : ''
         };

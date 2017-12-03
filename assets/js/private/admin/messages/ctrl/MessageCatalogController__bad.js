@@ -2,6 +2,7 @@ angular.module('MessageModule')
     .controller('MessageCatalogController', ['$scope', '$state', 'toastr', 'moment', 'Catalogs', '$stateParams',
         function ($scope, $state, toastr, moment, Catalogs, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.newMessage = {
                 email: $scope.me.email,
                 maxLength: 250,

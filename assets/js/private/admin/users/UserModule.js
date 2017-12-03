@@ -251,7 +251,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         Users.prototype.getEditUrl = function (id) {
             return '/admin/users/edit/' + id;
         };
-        Users.prototype.getShowUrl = function (id, me) {
+        Users.prototype.getShowUrl = function (id) {
             // return '/admin/user/' + id;
             return (me.admin || me.kadr) ? '/admin/user/' + id : ''
         };

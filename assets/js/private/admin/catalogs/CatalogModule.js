@@ -12,11 +12,12 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
                         controller: 'ListCatalogController'
                     },
 
-
                     // Абсолютное позиционирование вида 'workView' в  состоянии home.admin.catalogs.
                     // <div ui-view='workView'/> внутри /js/private/admin/catalogs/tpl/list.tpl.html
                     // "workView@home.admin.catalogs" : { }
-                    "actionView@home.admin.catalogs": {templateUrl: '/js/private/admin/catalogs/views/home.catalogs.action.html'},
+                    "actionView@home.admin.catalogs": {
+                        templateUrl: '/js/private/admin/catalogs/views/home.catalogs.action.html'
+                    },
 
                 }
             })
@@ -359,15 +360,13 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return '/admin/catalogs';
         };
         Catalogs.prototype.getEditUrl = function (id) {
+            console.log('getEditUrl /admin/catalogs/edit/', id);
             return '/admin/catalogs/edit/' + id;
         };
-        Catalogs.prototype.getShowUrl = function (id, me) {
-            if (!me) return '/dogs/catalog/' + id;
-            if ((me.hasOwnProperty('admin') && me.admin ) || (me.hasOwnProperty('kadr') && me.kadr)) {
-                return '/admin/catalog/' + id;
-            }
+        Catalogs.prototype.getShowUrl = function (id) {
+            console.log('getShowUrl /admin/catalog/', id);
 
-            return '/dogs/catalog/' + id;
+            return '/admin/catalog/' + id;
 
         };
 

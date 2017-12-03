@@ -1,6 +1,6 @@
-angular.module('PhotoModule')
-    .controller('PhotoController', ['$scope', '$state','toastr', 'moment', 'Photos', '$stateParams',
-        function ($scope,$state,toastr, moment, Photos, $stateParams) {
+angular.module('UserFModule')
+    .controller('UserFController', ['$scope', '$state','toastr', 'moment', 'Users', '$stateParams',
+        function ($scope,$state,toastr, moment, Users, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
@@ -10,15 +10,15 @@ angular.module('PhotoModule')
              * которые используются для взаимодействия с данными на сервере $delete, $get, $remove, $save
              *
              * Так же можно определять свои методы для конструктора в фабрике модуля.
-             * В данном конструкторе добавлен метод Photos.getFullName()
+             * В данном конструкторе добавлен метод Users.getFullName()
              */
-
+            $scope.fieldName = 'Мобильный';
             $scope.refresh = function () {
-                $scope.item = Photos.get({id: $stateParams.photoId}, function (photos) {
-                    console.log('photos',photos);
-                    $scope.photos = photos;
+                $scope.item = Users.get({id: $stateParams.userId}, function (users) {
+                    console.log('users SHOW: ', users);
+                    $scope.users = users;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 889774119! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 889988! ' + err.data.message);
                 });
             };
             /**
@@ -49,8 +49,8 @@ angular.module('PhotoModule')
 
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Photo', 'home.admin.photos');
-            breadcrumb.set('Show', 'home.admin.photos.show'+ $state.current.url);
+            breadcrumb.set('Users', 'home.admin.users');
+            breadcrumb.set('Show', 'home.admin.users.show' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

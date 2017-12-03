@@ -81,7 +81,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
 
         <td>{{$index+1}}</td>
         <td>
-            <a ng-href="{{item.getShowUrl(item.id, me)}}">
+            <a ng-href="{{item.getShowUrl(item.id)}}" title="{{more}}">
                 <img class="object-fit_cover" ng-class="{photoSize:vid}" ng-mouseover="vid=true"
                      ng-mouseleave="vid=false"
                      ng-src="{{item.avatarUrl}}"
@@ -140,7 +140,7 @@ orderBy:propertyName:reverse | skipItems: ((currentPage-1)*defaultRows)| limitTo
         <!--<td width="250px" class="text-right">{{item.getContact(fieldName)}}</td>-->
 
         <td class="btn-group-xs">
-            <a ng-href="{{item.getShowUrl(item.id)}}" class="btn"
+            <a ng-href="{{item.getShowUrl(item.id)}}" class="btn" title="{{more}}"
                ng-class="{'btn-primary': item.action, ' btn-danger':!item.action}">
                 <span class="glyphicon"
                       ng-class="{'glyphicon-eye-open': item.action, 'glyphicon-eye-close':!item.action}"

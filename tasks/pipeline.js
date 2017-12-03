@@ -61,13 +61,22 @@ var jsFilesToInject = [
     'js/private/admin/vacations/VacationModule.js',
     'js/private/admin/messages/MessageModule.js',
     'js/private/admin/catalogs/CatalogModule.js',
-
-    'js/public/signup/SignupModule.js',
     'js/private/admin/users/UserModule.js',
     'js/private/admin/AdminModule.js',
-    'js/public/homepage/HomepageModule.js',
+
+
+    'js/private/dog/catalogs/CatalogFModule.js',
+    'js/private/dog/users/UserFModule.js',
+    'js/private/dog/DogModule.js',
+
+
+
     'js/private/dashboard/showcases/ShowcaseModule.js',
     'js/private/dashboard/DashboardModule.js',
+
+    'js/public/signup/SignupModule.js',
+    'js/public/homepage/HomepageModule.js',
+
     'js/private/HolidayModule.js',
     // All of the rest of your client-side js files
     // will be injected here in no particular order.

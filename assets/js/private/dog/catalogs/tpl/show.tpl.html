@@ -13,7 +13,7 @@
                 </span>
 
             <div class="btn-group-xs pull-right">
-                <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
+                <a ng-href="{{item.getListUrl()}}" title="Каталог" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
                 <a ng-if="me.admin || me.kadr" ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
@@ -101,9 +101,9 @@
                             </p>
                             <!--<p>{{item.sires | json}}</p>-->
                             <p class="text-center">
-                                <a href="/admin/catalog/{{item.sires.id}}" class="btn btn-primary btn-sm"
+                                <a href="{{item.getShowUrl(item.sires.id)}}" class="btn btn-primary btn-sm"
                                    role="button">
-                                    Родословная
+                                   {{pedigreeArea}}
                                 </a>
                             </p>
                         </div>
@@ -126,9 +126,9 @@
                                 </small>
                             </p>
                             <p class="text-center">
-                                <a href="/admin/catalog/{{item.dams.id}}" class="btn btn-sm btn-primary"
+                                <a href="{{item.getShowUrl(item.dams.id)}}" class="btn btn-sm btn-primary"
                                    role="button">
-                                    Родословная
+                                    {{pedigreeArea}}
                                 </a>
                             </p>
                         </div>
