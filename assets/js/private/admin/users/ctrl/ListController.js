@@ -51,6 +51,8 @@
 
             $scope.added = 'Добавить пользователя';
             $scope.showBt = 1;
+            $scope.showContIt = ($scope.me.admin) ? 1 : 0;
+            $scope.showStr = 0;
             $scope.urlBt = 'home.admin.users.create';
 
             $scope.sort = 'lastName';

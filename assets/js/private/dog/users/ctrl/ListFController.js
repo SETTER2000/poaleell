@@ -3,6 +3,7 @@
     angular.module('UserFModule')
         .controller('ListFController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'UsersF', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, UsersF, Attendances) {
             $scope.me = window.SAILS_LOCALS.me;
+
             //toastr.options = {
             //    "closeButton": false,
             //    "debug": false,
@@ -25,7 +26,7 @@
             /**
              * PAGINATION
              */
-            $scope.defaultRows = 20;
+
             $scope.limitRows = [30, 50, 70, 100];
             $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
 
@@ -38,19 +39,21 @@
             $scope.positionArea = 'Должность';
 
             $scope.nameHeader = {
-                fioArea : 'ФИО',
-                drArea : 'ДР11',
-                loginArea : 'Логин',
-                emailArea : 'Email',
-                roomArea : 'Комната',
-                departmentArea : 'Питомник',
-                positionArea : 'Должность',
+                fioArea: 'ФИО',
+                drArea: 'ДР11',
+                loginArea: 'Логин',
+                emailArea: 'Email',
+                roomArea: 'Комната',
+                departmentArea: 'Питомник',
+                positionArea: 'Должность',
             };
 
 
             $scope.added = 'Добавить пользователя';
             $scope.showBt = 1;
-            $scope.urlBt = 'home.dog.users.create';
+            $scope.showContIt = ($scope.me.admin) ? 1 : 0;
+            $scope.showStr = 0;
+            $scope.urlBt = 'home.admin.users.create';
 
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
@@ -67,6 +70,42 @@
                 border: false,
                 size: false
             };
+
+            $scope.$on('defaultRowsTable', function (event, data) {
+                console.log('defaultRowsTable', data); // Данные, которые нам прислали
+                return $scope.defaultRows = data.defaultRows;
+            });
+            $scope.defaultRows = ($scope.me.defaultRows) ? $scope.me.defaultRows : 15;
+            $scope.limitRows = [2, 3, 5, 7, 10, 15, 30, 50, 70, 100];
+            $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
+            $scope.$watch('defaultRows', function (value, old) {
+                $http.put('/user/update-rows', {
+                    defaultRows: $scope.defaultRows
+                })
+                    .then(function onSuccess(sailsResponse) {
+                        console.log('sailsResponse in ListController: ', sailsResponse.data[0].defaultRows);
+                        $scope.defaultRows = $scope.me.defaultRows = sailsResponse.data[0].defaultRows;
+
+                        // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
+                        // window.location = '#/profile/' + $scope.editProfile.properties.id;
+                        //window.location = '/profile';
+                        //toastr.success(info.passChange);
+                        //$scope.editProfile.loading = false;
+                    })
+                    .catch(function onError(sailsResponse) {
+                        // console.log('sailsresponse: ', sailsResponse)
+                        // Otherwise, display generic error if the error is unrecognized.
+                        //$scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
+                        toastr.error('ERRDDD!', $scope.editProfile.changePassword.errorMsg);
+                    })
+                    .finally(function eitherWay() {
+                        $scope.editProfile.loading = false;
+                    });
+                //console.log('value NEW', value);
+                //console.log('value OLD', old);
+                //$scope.countDefaultRows();
+            });
+
 
             //$scope.days = moment.duration(2).days();
             //$scope.hours = moment.duration(2).hours();
@@ -101,10 +140,10 @@
             };
 
             $scope.filterTemplate = {
-                all: {fired:false},
+                all: {fired: false},
                 action: {action: false},
-                list: { fired:true},
-                work: {fired:false},
+                list: {fired: true},
+                work: {fired: false},
             };
 
             $scope.$watch('modeSelect.value', function (value, old) {
@@ -127,10 +166,10 @@
                     {display: "Все", value: "all"}
                 ];
             $scope.modeSelect = $scope.options[3];
-            // $scope.tableView = "/js/private/admin/users/views/home.dog.users.table.html";
-            // $scope.listView = "/js/private/admin/users/views/home.dog.users.list.html";
-            // $scope.actionView = "/js/private/admin/users/views/home.dog.users.action.html";
-            // $scope.workView = "/js/private/admin/users/views/home.dog.users.work.html";
+            // $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
+            // $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
+            // $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
+            // $scope.workView = "/js/private/admin/users/views/home.admin.users.work.html";
 
             $scope.getLastName = function (item) {
                 $http.post('/att', item)
@@ -228,12 +267,13 @@
 
                 $scope.items = UsersF.query($scope.query, function (users) {
                     //console.log('USER ITEMS:', users);
-                        $scope.items = users;
-                        $scope.objectName = users;
-                        //$scope.numPages = Math.floor(users.length / $scope.defaultRows) + 1;
-                    }, function (err) {
-                        toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
-                    });
+                    $scope.items = users;
+                    $scope.countCurrentView = users.length;
+                    $scope.objectName = users;
+
+                }, function (err) {
+                    toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
+                });
             };
 
             $scope.getMode = function (t) {
@@ -298,8 +338,8 @@
             var breadcrumb = new BreadCrumb();
 
             breadcrumb.set('Home', 'home');
-            if ($scope.me.admin) breadcrumb.set('Admin', 'home.dog');
-            breadcrumb.set('Users', 'home.dog.users' + $state.current.url);
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('UsersF', 'home.admin.users' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

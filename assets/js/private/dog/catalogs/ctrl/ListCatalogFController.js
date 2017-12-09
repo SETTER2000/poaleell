@@ -172,10 +172,11 @@
                     messagesArea: 'Сообщения',
                 };
                 $scope.added = 'Добавить собаку';
-                $scope.showBt = ($scope.me.kadr || $scope.me.admin) ? 1 : 0; // показать кнопку $scope.added
+                $scope.showBt =  0; // показать кнопку $scope.added
+                $scope.showContIt =1; // показать селектор выбора кол-ва строк
+                $scope.showStr = 0;
                 $scope.urlBt = 'home.admin.catalogs.create';
                 // показать формочку выбора кол-ва строк на странице
-                $scope.showContIt = ($scope.me.admin) ? 1 : 0;
                 $scope.str = 'Петров';
                 $scope.countChar = '3';
                 $scope.filedName = 'kennels';

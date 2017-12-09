@@ -344,6 +344,9 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 //numPages: '=', // кол-во страниц (кнопок)
                 showBt: '=',// true|false показывать или нет кнопку добавления объекта, например юзера.
                 showContIt: '=',// true|false показывать или нет формочку выбора кол-ва строк
+                showStr: '=',// true|false показывать или нет строку об отпусках. =?bind - не обязательная привязка значения
+                days: '=', // кол-во дней взятых на отпуск в текущем году
+                //nextDayYear: '=', // остаток дней на отпуск в следующем году
                 urlBt: '=',// ссылка для кнопки.
                 defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
                 limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
@@ -355,31 +358,31 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             },
             templateUrl: '/js/private/admin/users/views/pagination.html',
             replace: true,
-            link: function (scope) {
-
+            link: function (scope,$rootScope) {
+                scope.countHolidayRF = 28;
                 scope.$watch('added', function (value) {
                     scope.added = value;
                 });
-
                 scope.$watch('showBt', function (value) {
                     scope.showBt = value;
+                });
+                scope.$watch('showContIt', function (value) {
+                    scope.showContIt = value;
+                });
+                scope.$watch('showStr', function (value) {
+                    scope.showStr = value;
+                });
+                scope.$watch('days', function (value, old) {
+                    if(value){
+                        scope.getDays(value);
+                    }
+                });
+                scope.$watch('nextDayYear', function (value) {
+                    scope.nextDayYear = value;
                 });
                 scope.$watch('urlBt', function (value) {
                     scope.urlBt = value;
                 });
-
-                // scope.$watch('lengthObject', function (value, old) {
-                //     // console.log('OLD VALUE:', old);
-                //     // console.log('NEW VALUE:', value);
-                //     scope.numPages = Math.floor(value / scope.defaultRows) + 1;
-                //     //scope.pages = [];
-                //     //for (var i = 1; i <= value; i++) {
-                //     //    scope.pages.push(i);
-                //     //}
-                //     //if (scope.currentPage > value) {
-                //     //    scope.selectPage(value);
-                //     //}
-                // });
                 scope.$watch('lengthObject', function (value) {
                     scope.lengthObject = value;
                     scope.numPage();
@@ -393,28 +396,33 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     if (scope.currentPage > value) {
                         scope.selectPage(value);
                     }
+                    scope.allPages = scope.pages.length;
                 });
+
+
                 scope.$watch('limitRows', function (value) {
                     scope.rows = [];
                     for (var i = 0; i <= value.length; i++) {
                         scope.rows.push(value[i]);
                     }
                 });
+
                 scope.$watch('defaultRows', function (value, old) {
                     if (value > 0) {
                         scope.defaultRows = value;
                         console.log('value NEW в дериктиве pagination', value);
                         console.log('value OLD в дериктиве pagination', old);
-                        scope.$emit('defaultRowsTable', {
-                            defaultRows: scope.defaultRows
+                        scope.$emit('defaultRowsTable',{
+                            defaultRows:scope.defaultRows
                         });
                         scope.numPage();
                     }
                 });
-                scope.numPage = function () {
-                    if (scope.lengthObject || scope.defaultRows) {
-                        scope.numPages = (scope.lengthObject % scope.defaultRows) ? Math.floor(scope.lengthObject / scope.defaultRows) + 1 : Math.floor(scope.lengthObject / scope.defaultRows);
-                    } else {
+
+                scope.numPage= function () {
+                    if(scope.lengthObject || scope.defaultRows){
+                        scope.numPages = (scope.lengthObject % scope.defaultRows) ? Math.floor(scope.lengthObject / scope.defaultRows)+1 : Math.floor(scope.lengthObject / scope.defaultRows) ;
+                    }else{
                         scope.numPages = 1;
                     }
                 };
@@ -430,10 +438,31 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 scope.isActiveRow = function (row) {
                     return scope.defaultRows === row;
                 };
-
                 scope.showBtn = function () {
                     return scope.showBt;
                 };
+                scope.showContItem = function () {
+                    return scope.showContIt;
+                };
+
+                scope.showString = function () {
+                    return scope.showStr;
+                };
+                scope.getDays = function (days) {
+                    //return 0;
+                    scope.selectDays = (scope.countHolidayRF - days.selectDaysYearsPeriod);
+                    scope.nextDayYear = (scope.countHolidayRF - days.diff);
+                    scope.yr = days.yearFrom;
+                    scope.tailMin = days.tailMin;
+                    scope.tail = days.tail;
+                    scope.diff = days.diff;
+                    scope.tailMinInterface = days.tailMinInterface;
+                    scope.tailInterface = days.tailInterface;
+                    scope.yearNext = (+scope.yr + 1);
+                    //return (scope.countHolidayRF - +scope.days.selectDaysYearsPeriod);
+                };
+
+
                 scope.urlBtn = function () {
                     return scope.urlBt;
                 };
