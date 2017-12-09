@@ -27,6 +27,83 @@
                     );
                 };
 
+                // $scope.showConfirm = function(ev) {
+                //     // Appending dialog to document.body to cover sidenav in docs app
+                //     var confirm = $mdDialog.confirm()
+                //         .title('Would you like to delete your debt?')
+                //         .textContent('All of the banks have agreed to forgive you your debts.')
+                //         .ariaLabel('Lucky day')
+                //         .targetEvent(ev)
+                //         .ok('Please do it!')
+                //         .cancel('Sounds like a scam');
+                //
+                //     $mdDialog.show(confirm).then(function() {
+                //         $scope.status = 'You decided to get rid of your debt.';
+                //     }, function() {
+                //         $scope.status = 'You decided to keep your debt.';
+                //     });
+                // };
+                //
+                // $scope.showPrompt = function(ev) {
+                //     // Appending dialog to document.body to cover sidenav in docs app
+                //     var confirm = $mdDialog.prompt()
+                //         .title('What would you name your dog?')
+                //         .textContent('Bowser is a common name.')
+                //         .placeholder('Dog name')
+                //         .ariaLabel('Dog name')
+                //         .initialValue('Buddy')
+                //         .targetEvent(ev)
+                //         .required(true)
+                //         .ok('Okay!')
+                //         .cancel('I\'m a cat person');
+                //
+                //     $mdDialog.show(confirm).then(function(result) {
+                //         $scope.status = 'You decided to name your dog ' + result + '.';
+                //     }, function() {
+                //         $scope.status = 'You didn\'t name your dog.';
+                //     });
+                // };
+                //
+                // $scope.showAdvanced = function(ev) {
+                //     $mdDialog.show({
+                //         controller: DialogController,
+                //         templateUrl: 'dialog1.tmpl.html',
+                //         parent: angular.element(document.body),
+                //         targetEvent: ev,
+                //         clickOutsideToClose:true,
+                //         fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                //     })
+                //         .then(function(answer) {
+                //             $scope.status = 'You said the information was "' + answer + '".';
+                //         }, function() {
+                //             $scope.status = 'You cancelled the dialog.';
+                //         });
+                // };
+                //
+                // $scope.showTabDialog = function(ev) {
+                //     $mdDialog.show({
+                //         controller: DialogController,
+                //         templateUrl: 'tabDialog.tmpl.html',
+                //         parent: angular.element(document.body),
+                //         targetEvent: ev,
+                //         clickOutsideToClose:true
+                //     })
+                //         .then(function(answer) {
+                //             $scope.status = 'You said the information was "' + answer + '".';
+                //         }, function() {
+                //             $scope.status = 'You cancelled the dialog.';
+                //         });
+                // };
+                //
+                // $scope.showPrerenderedDialog = function(ev) {
+                //     $mdDialog.show({
+                //         contentElement: '#myDialog',
+                //         parent: angular.element(document.body),
+                //         targetEvent: ev,
+                //         clickOutsideToClose: true
+                //     });
+                // };
+
                 function DialogController($scope, $mdDialog) {
                     $scope.hide = function () {
                         $mdDialog.hide();
@@ -41,32 +118,46 @@
                     };
                 }
 
-                // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
-                //toastr.options = {
-                //    "closeButton": false,
-                //    "debug": false,
-                //    "newestOnTop": false,
-                //    "progressBar": false,
-                //    "positionClass": "toast-top-full-width",
-                //    "preventDuplicates": true,
-                //    "onclick": null,
-                //    "showDuration": "300",
-                //    "hideDuration": "1000",
-                //    "timeOut": "5000",
-                //    "extendedTimeOut": "1000",
-                //    "showEasing": "swing",
-                //    "hideEasing": "linear",
-                //    "showMethod": "fadeIn",
-                //    "hideMethod": "fadeOut"
-                //};
+
+                $scope.$on('defaultRowsTable', function (event, data) {
+                    console.log('defaultRowsTable', data); // Данные, которые нам прислали
+                    return $scope.defaultRows = data.defaultRows;
+                });
+
+                $scope.defaultRows = ($scope.me.defaultRows) ? $scope.me.defaultRows : 15;
 
 
-                /**
-                 * PAGINATION
-                 */
-                $scope.defaultRows = 20;
-                $scope.limitRows = [30, 50, 70, 100];
+                $scope.limitRows = [2, 3, 5, 7, 10, 15, 30, 50, 70, 100];
                 $scope.currentPage = 1; // инициализируем кнопку постраничной навигации
+
+                $scope.$watch('defaultRows', function (value, old) {
+                    $http.put('/user/update-rows', {
+                        defaultRows: $scope.defaultRows
+                    })
+                        .then(function onSuccess(sailsResponse) {
+                            console.log('sailsResponse in ListController: ', sailsResponse.data[0].defaultRows);
+                            $scope.defaultRows = $scope.me.defaultRows = sailsResponse.data[0].defaultRows;
+
+                            // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
+                            // window.location = '#/profile/' + $scope.editProfile.properties.id;
+                            //window.location = '/profile';
+                            //toastr.success(info.passChange);
+                            //$scope.editProfile.loading = false;
+                        })
+                        .catch(function onError(sailsResponse) {
+                            // console.log('sailsresponse: ', sailsResponse)
+                            // Otherwise, display generic error if the error is unrecognized.
+                            //$scope.editProfile.changePassword.errorMsg = $scope.unexpected + (sailsResponse.data || sailsResponse.status);
+                            toastr.error('ERRDDD!', $scope.editProfile.changePassword.errorMsg);
+                        })
+                        .finally(function eitherWay() {
+                            $scope.editProfile.loading = false;
+                        });
+                    //console.log('value NEW', value);
+                    //console.log('value OLD', old);
+                    //$scope.countDefaultRows();
+                });
+
                 $scope.debug = false;
                 $scope.nameHeader = {
                     fioArea: 'Имя',
@@ -81,8 +172,10 @@
                     messagesArea: 'Сообщения',
                 };
                 $scope.added = 'Добавить собаку';
-                $scope.showBt = 0; // показать кнопку $scope.added
+                $scope.showBt = ($scope.me.kadr || $scope.me.admin) ? 1 : 0; // показать кнопку $scope.added
                 $scope.urlBt = 'home.admin.catalogs.create';
+                // показать формочку выбора кол-ва строк на странице
+                $scope.showContIt = ($scope.me.admin) ? 1 : 0;
                 $scope.str = 'Петров';
                 $scope.countChar = '3';
                 $scope.filedName = 'kennels';
@@ -182,7 +275,7 @@
                         {display: "Все", value: "all"},
 
                     ];
-                // if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
+                if ($scope.me.admin) $scope.options.push({display: "Не активированы / Заблокированы", value: "action"});
 
 
                 $scope.modeSelect = $scope.options[0];
@@ -281,8 +374,10 @@
                     $scope.items = CatalogsF.query($scope.query, function (catalogs) {
                         // console.log('CatalogsF LIST:', catalogs);
                         $scope.items = catalogs;
+                        $scope.countCurrentView = catalogs.length;
                         $scope.objectName = catalogs;
-                        //$scope.numPages = Math.floor(catalogs.length / $scope.defaultRows) + 1;
+
+
                     }, function (err) {
                         toastr.error(err.data.details, 'Ошибка77! ' + err.data.message);
                     });
@@ -389,7 +484,8 @@
                 var breadcrumb = new BreadCrumb();
 
                 breadcrumb.set('Home', 'home');
-                breadcrumb.set('Catalog', 'home.dog.catalogs' + $state.current.url);
+                if ($scope.me.admin) if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+                breadcrumb.set('Catalog', 'home.admin.catalogs' + $state.current.url);
                 $scope.breadcrumbs = breadcrumb;
 
                 $scope.refresh();
