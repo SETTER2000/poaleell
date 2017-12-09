@@ -2,7 +2,7 @@
 <pagination
         limit-rows="limitRows"
         default-rows="defaultRows"
-        length-object="(items | filter:ftObj  ).length"
+        length-object="countCurrentView=((items | filter:ftObj).length)?(items | filter:ftObj ).length:1"
         current-page="currentPage"
         added="added"
         show-bt="showBt"
@@ -18,7 +18,7 @@
 <pagination
         limit-rows="limitRows"
         default-rows="defaultRows"
-        length-object="(items | filter:ftObj  ).length"
+        length-object="countCurrentView"
         current-page="currentPage"
         added="added"
         show-bt="showBt"
