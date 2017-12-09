@@ -346,8 +346,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
         };
 
         Catalogs.prototype.age = function () {
-            var now = moment();
-            var event = moment(this.birthday, ["DD.MM.YYYY"]);
+            let now = moment();
+            let event = moment(this.birthday, ["DD.MM.YYYY"]);
 
             //console.log('Сегодня: ' + now.format('YYYY-MM-DD HH:mm:ss'));
             //console.log('Дата события: ' + event.format('YYYY-MM-DD HH:mm:ss'));
@@ -360,12 +360,10 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
             return '/admin/catalogs';
         };
         Catalogs.prototype.getEditUrl = function (id) {
-            console.log('getEditUrl /admin/catalogs/edit/', id);
+
             return '/admin/catalogs/edit/' + id;
         };
         Catalogs.prototype.getShowUrl = function (id) {
-            console.log('getShowUrl /admin/catalog/', id);
-
             return '/admin/catalog/' + id;
 
         };

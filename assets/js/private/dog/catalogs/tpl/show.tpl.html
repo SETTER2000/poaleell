@@ -71,14 +71,11 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="thumbnail">
-                    <a ng-if="(me.kadr || me.admin)" ng-href="/admin/catalogs">
+                    <a  ng-href="{{item.getListUrl(item.id)}}">
                         <img ng-if="item.avatarUrl" ng-src="{{item.avatarUrl}}">
                         <img ng-if="!item.avatarUrl" src="http://placehold.it/488x730">
                     </a>
-                    <a ng-if="(!me.kadr && !me.admin)" ng-href="/dogs/catalogs">
-                        <img ng-if="item.avatarUrl" ng-src="{{item.avatarUrl}}">
-                        <img ng-if="!item.avatarUrl" src="http://placehold.it/488x730">
-                    </a>
+
                 </div>
             </div>
             <div class="row">
@@ -86,7 +83,7 @@
                     <h4><i class="fa fa-mars" aria-hidden="true"></i>
                         Отец (sire)</h4>
                     <div class="thumbnail">
-                        <a class="drops" href="/admin/catalog/{{item.sires.id}}">
+                        <a class="drops" href="{{item.getShowUrl(item.sires.id)}}">
                             <img ng-src="{{item.sires.avatarUrl}}" alt="...">
                         </a>
                         <div class="caption">
@@ -113,7 +110,7 @@
                     <h4><i class="fa fa-venus" aria-hidden="true"></i>
                         Мать (dam)</h4>
                     <div class="thumbnail">
-                        <a class="drops" href="/admin/catalog/{{item.dams.id}}">
+                        <a class="drops" href="{{item.getShowUrl(item.dams.id)}}">
                             <img ng-src="{{item.dams.avatarUrl}}" alt="...">
                         </a>
                         <div class="caption">

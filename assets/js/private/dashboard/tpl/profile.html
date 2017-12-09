@@ -1,22 +1,46 @@
 <div ng-controller="ProfileController" ng-cloak ng-hide="loading">
     <div class="page-header">
-        <div class="col-md-2 col-md-offset-1">
-            <div class="row placeholders">
-                <div class="placeholder">
-                    <img class="gravatarImage" class="img-responsive" width="200" ng-src="{{me.avatarUrl}}"/>
+        <div class="row">
+            <div class="col-md-4">
+                <div ng-if="me.avatarUrl" class="containerImg" style="background-image: url({{me.avatarUrl}})">
+                    <!--<img ng-src="{{me.avatarUrl}}" alt="Avatar" class="image">-->
+                    <div class="overlay">
+                        <small class="text text-capitalize">I love dogs!<br><small >Poale Ell</small><br>
+                            <a href="/dog/catalogs" style="color: hsl(138, 65%, 90%);"> <span
+                                    class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
+                        </small>
+                        <!--<a href="/dog/catalogs" style="color: hsl(0, 75%, 45%);"> <span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a></div>-->
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-5 col-md-offset-1">
 
-                <h3>{{me.fullName}}</h3>
+                <div ng-if="!me.avatarUrl" class="containerImg" style="background-image: url('http://placehold.it/300x300')">
+                    <!--<img ng-src="{{me.avatarUrl}}" alt="Avatar" class="image">-->
+                    <div class="overlay">
+                        <h4 class="text not-foto text-capitalize">Фото отсутствует!<br><small >Установить фото.</small><br>
+                            <a href="/dog/catalogs" style="color: hsl(138, 65%, 90%);"> </a>
+                        </h4>
+                        <!--<a href="/dog/catalogs" style="color: hsl(0, 75%, 45%);"> <span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a></div>-->
+                    </div>
+                </div>
+                <!--<div class="circle" style="background:url({{me.avatarUrl}})">-->
+                <!--&lt;!&ndash;<img ng-if="me.avatarUrl" class="img-circle"  ng-src="{{me.avatarUrl}}"/>&ndash;&gt;-->
+                <!--<img ng-if="!me.avatarUrl" src="http://placehold.it/300x300">-->
+                <!--</div>-->
+
+            </div>
+            <div class="col-md-8">
+
+                <h1 class="text-capitalize">{{me.fullName}}</h1>
+
                 <h3>
                     <a href="mailto:{{me.email}}">{{me.email}}</a>
                 </h3>
+                <cite ng-if="me.city" class="pull-right">{{me.city}}</cite>
                 <div class="row">
                     <div class=" col-md-12">
+                    <div class=" col-md-12" ng-controller="ListFController" >
                         <table class="table">
-                            <tr>
+                            <tr ng-if="me.birthday">
                                 <th>ДР</th>
                                 <td>{{me.birthday | date:'dd.MM.yyyy'}}</td>
                             </tr>
@@ -35,26 +59,26 @@
                                 </td>
                             </tr>
 
-                        <tr ng-if="!me.positions[0].name && me.admin">
-                            <th >Должность</th>
-                            <td>{{me.positions[0].name}}</td>
-                        </tr>
-                        <tr ng-if="!me.departments[0].name && me.admin">
-                            <th>Отдел</th>
-                            <td>{{me.departments[0].name}}</td>
-                        </tr>
-                        <tr ng-if="!me.firedDate && me.admin">
-                            <th>Работает с</th>
-                            <td>{{me.dateInWork | date: "dd.MM.yyyy"}} {{message}}</td>
-                        </tr>
-                        <tr ng-if="me.firedDate && me.admin">
-                            <th>Работал</th>
-                            <td>{{me.dateInWork | date: "dd.MM.yyyy"}} - {{me.firedDate | date: "dd.MM.yyyy"}}</td>
-                        </tr>
-                        <tr ng-if="me.firedDate && me.admin">
-                            <th>Уволен с</th>
-                            <td>{{me.firedDate | date: "dd.MM.yyyy"}}</td>
-                        </tr>
+                            <tr ng-if="item.positions.length" ng-repeat="item in items | filter:{id:me.id}">
+                                <th>{{item.positions[0].section}}</th>
+                                <td> {{item.positions[0].name}} </td>
+                            </tr>
+                            <tr ng-if="item.departments.length" ng-repeat="item in items | filter:{id:me.id}">
+                                <th> {{item.departments[0].section}} </th>
+                                <td>{{item.departments[0].name}}</td>
+                            </tr>
+                            <tr ng-if="!me.firedDate && me.admin">
+                                <th>Работает с</th>
+                                <td>{{me.dateInWork | date: "dd.MM.yyyy"}} </td>
+                            </tr>
+                            <tr ng-if="me.firedDate && me.admin">
+                                <th>Работал</th>
+                                <td>{{me.dateInWork | date: "dd.MM.yyyy"}} - {{me.firedDate | date: "dd.MM.yyyy"}}</td>
+                            </tr>
+                            <tr ng-if="me.firedDate && me.admin">
+                                <th>Уволен с</th>
+                                <td>{{me.firedDate | date: "dd.MM.yyyy"}}</td>
+                            </tr>
 
                             <tr>
                                 <th colspan="20"></th>
@@ -63,9 +87,11 @@
                     </div>
                 </div>
                 <div>
-                    <a ng-if="(me.admin)" href="/profile/edit" class="btn btn-sm btn-primary">Edit</a>
-                    <a ng-if="(me.admin)" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Delete</a>
+                    <a ng-if="(me.admin)" href="/admin/users/edit/{{me.id}}" class="btn btn-sm btn-primary">Редактировать</a>
+                    <a ng-if="(me.admin)" ng-click="removeProfile()" class="btn btn-sm btn-primary btn-danger">Удалить
+                        профиль</a>
                 </div>
+            </div>
         </div>
     </div>
 </div>

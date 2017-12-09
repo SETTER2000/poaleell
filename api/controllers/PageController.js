@@ -7,7 +7,12 @@
  */
 
 module.exports = {
-
+    /**
+     * Выйти из системы
+     * @param req
+     * @param res
+     * @returns {Returns|*}
+     */
     logout: function (req, res) {
 
         if (!req.session.me) {
@@ -35,6 +40,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Отдать страницу
+     * @param req
+     * @param res
+     */
     showHomePage: function (req, res) {
         if (!req.session.me) {
             return res.view('public/header', {layout: 'homepage', me: null});
@@ -60,6 +70,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Показать страницу администрирования
+     * @param req
+     * @param res
+     */
     showAdminPage: function (req, res) {
 
         if (!req.session.me) {
@@ -313,9 +328,8 @@ module.exports = {
         User.findOne({
             login: req.param('login')
         }).exec(function (err, foundByUsername) {
-            if (err) {
-                return res.negotiate(err);
-            }
+            if (err) return res.negotiate(err);
+
 
             // If no user exists with the username specified in the URL,
             // show the 404 page.
@@ -350,13 +364,9 @@ module.exports = {
                     id: req.session.me
                 })
                 .exec(function (err, foundUser) {
-                    if (err) {
-                        return res.negotiate(err);
-                    }
+                    if (err) return res.negotiate(err);
+                    if (!foundUser) return res.serverError('User record from logged in user is missing?');
 
-                    if (!foundUser) {
-                        return res.serverError('User record from logged in user is missing?');
-                    }
 
                     // We'll provide `me` as a local to the profile page view.
                     // (this is so we can render the logged-in navbar state, etc.)
@@ -438,7 +448,8 @@ module.exports = {
             }
 
             if (!user) {
-                sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
+                sails.log.verbose('Сессия относится к пользователю, который больше не существует, - вы удалили пользователя, ' +
+                    'а затем попытаетесь обновить страницу с открытой вкладкой, зарегистрированной как этот пользователь?');
                 return res.view('homepage');
             }
 
@@ -466,7 +477,7 @@ module.exports = {
 
     showSignupPage: function (req, res) {
         if (req.session.me) {
-            return res.redirect('/');
+            return res.redirect('/profile');
         }
         return res.view('public/signup', {layout: 'signup'});
     },

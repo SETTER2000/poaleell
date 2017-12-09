@@ -688,7 +688,131 @@ md-slider-container md-input-container input[type="number"] {
 // ********** end  Анимация ng-if
 
 .list-unstyled.bord {
-  border-bottom: 1px dashed #9dba97 ;
+  border-bottom: 1px dashed #9dba97;
+}
+
+//.containerImg {
+//  position: relative;
+//  width: 100%;
+//}
+
+.containerImg {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid hsl(138, 65%, 90%);
+  padding: 160px;
+  transition: border-color 1s;
+  -webkit-transition: border-color 1s; /* Safari 3.1 to 6.0 */
+
+  background-size: cover;
+  background-position: center center;
+
+}
+
+.containerImg:hover {
+  border-color: #829285;
+  filter: brightness(103%);
+}
+
+//
+//.image {
+//  display: block;
+//  width: 100%;
+//  height: auto;
+//}
+//
+//.overlay {
+//  position: absolute;
+//  top: 0;
+//  bottom: 0;
+//  left: 0;
+//  right: 0;
+//  height: 100%;
+//  width: 100%;
+//  opacity: 0;
+//  transition: .5s ease;
+//  background-color: #008CBA;
+//}
+//
+//.containerImg:hover .overlay {
+//  opacity: 1;
+//}
+//
+//.text {
+//  color: white;
+//  font-size: 20px;
+//  position: absolute;
+//  top: 50%;
+//  left: 50%;
+//  transform: translate(-50%, -50%);
+//  -ms-transform: translate(-50%, -50%);
+//}
+
+.image {
+  display: block;
+  //width: inherit;
+  // height: inherit;
+  /* clip: auto; */
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: hsla(98, 9%, 51%, .2);
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: .5s ease;
+  border-radius: 50%;
+}
+
+.containerImg:hover .overlay {
+  bottom: 0;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.text {
+  white-space: nowrap;
+  color: #d5f6df;
+  font-size: 40px;
+  //color: hsl(80, 70%, 55%);
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  //text-shadow: 0 0 2px #fff,
+  //  /* выпуклость надписи */
+  //  -1px -1px 0 hsl(80, 70%, 35%),
+  //  -2px -2px 1px hsl(80, 70%, 35%),
+  //  /* переход к подложке */
+  //  -2px -2px 2px hsl(80, 10%, 15%),
+  //  /* подложка */
+  //  -2px -2px 0 7px hsl(60, 80%, 95%),
+  //  -3px -3px 0 7px hsl(60, 10%, 65%),
+  //  -4px -4px 0 7px hsl(60, 10%, 65%),
+  //  -5px -5px 0 7px hsl(60, 10%, 65%),
+  //  -6px -6px 0 7px hsl(60, 10%, 65%),
+  //  /* тень подложки */
+  //  -7px -7px 4px 8px hsl(60, 10%, 40%),
+  //  -8px -8px 6px 9px hsl(60, 10%, 55%);
+}
+
+.text.not-foto {
+  font-size: 20px;
+  top: 100px;
 }
 
 //#toast-container > .toast:before {

@@ -290,9 +290,26 @@ module.exports = {
                                 console.log('findUsers2', findUsers);
                                 if (findUsers.length) return res.emailAddressInUse();
 
+
+                                let potentiallyCorrectedEmail;
+                                try {
+                                    potentiallyCorrectedEmail = EmailService.validateInternalEmailAddress({
+                                        emailAddress: req.param('email') // e.g. 'mikermcneil@gmail.com'
+                                    });
+                                }
+                                catch (err) {
+                                    if (err.code === 'notInternal') {
+                                        return res.badRequest('Failed to create account.  The specified email address does not seem to be from Greaseworthy Enterprises.');
+                                    }
+                                    else { return res.serverError(err); }
+                                }
+
+
+
+
                                 User.create({
                                         login: req.param('login'),
-                                        email: req.param('email'),
+                                        email: potentiallyCorrectedEmail,
                                         firstName: req.param('firstName'),
                                         lastName: req.param('lastName'),
                                         patronymicName: req.param('patronymicName'),
@@ -320,8 +337,21 @@ module.exports = {
                                             }
                                             return res.negotiate(err);
                                         }
-                                        req.session.me = newUser.id;
-                                        return res.json(newUser);
+
+                                        EmailService.sendWelcomeEmail({
+                                            emailAddress: potentiallyCorrectedEmail,
+                                            firstName: req.param('firstName') // e.g. 'Mike'
+                                        }, function (err) {
+                                            if (err) { return res.serverError(err); }
+
+                                            // It worked!  The welcome email was sent.
+                                            req.session.me = newUser.id;
+                                            return res.json(newUser);
+
+                                        });
+
+
+
                                     });
                             });
                         });
@@ -618,8 +648,8 @@ module.exports = {
      */
     findUsers: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        console.log("REQUEST BODY USER:", req.body);
-        console.log("REQUEST BODY USER:", req.param('char'));
+        // console.log("REQUEST BODY USER1:", req.body);
+        // console.log("REQUEST BODY USER2:", req.param('char'));
         if (req.param('id')) {
             User.findOne(req.param('id'))
                 .populate('positions')
@@ -635,13 +665,17 @@ module.exports = {
                 });
         } else {
             if (!_.isUndefined(req.param('where')) && req.param('char').length > 0) {
+
                 var q = {
                     limit: req.params.limit,
                     sort: req.params.sort
                 };
-                var y = {};
+                let y = {};
                 y[req.param('property')] = {'like': req.param('char')};
                 q.where = y;
+
+                // console.log('СДЕСЯ яяяя ++ q!',q);
+
                 User.find(q)
                     .populate('positions')
                     .populate('furloughs')
@@ -651,15 +685,18 @@ module.exports = {
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
                         if (!users) return res.notFound();
+                        console.log('СДЕСЯ яяяя ++ users!',users);
                         return res.ok(users);
                     });
             } else {
+                console.log('СДЕСЯ!');
                 User.find()
                     .populate('positions')
                     .populate('furloughs')
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
                         if (!users) return res.notFound();
+
                         res.ok(users);
                     });
             }
@@ -1155,6 +1192,23 @@ module.exports = {
             });
     },
 
+    /**
+     * Обновить 'кол-во строк в таблице' пользователю
+     * @param req
+     * @param res
+     */
+    updateDefaultRows: function (req, res) {
+        //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        console.log('req in', req.param('defaultRows'));
+        User.update(req.session.me, {
+            defaultRows: req.param('defaultRows')
+        })
+            .exec(function (err, update) {
+                if (err) return res.negotiate(err);
+                console.log('req out', update);
+                return res.ok(update);
+            });
+    },
 
 };
 

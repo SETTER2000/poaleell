@@ -1,25 +1,27 @@
-
+<!--length-object="(items | filter:ftObj ).length"-->
 <pagination
         limit-rows="limitRows"
         default-rows="defaultRows"
-        length-object="(items | filter:ftObj ).length"
+        length-object="countCurrentView=((items | filter:ftObj | kennel:ftKennel).length)?(items | filter:ftObj | kennel:ftKennel).length:1"
         current-page="currentPage"
         added="added"
         show-bt="showBt"
+        show-cont-it="showContIt"
         url-bt="urlBt"
         on-select-page="selectCount=selectCount+1">
 </pagination>
+{{countCurrentView}}
+<td-table dt-items="items" me="me" type="catalogs" name-header="nameHeader" filter-kennel="ftKennel"
+          search-text="searchText" default-rows="defaultRows" current-page="currentPage"
+          filter-object="ftObj"></td-table>
 
-    <td-table dt-items="items" me="me" type="catalogs" name-header="nameHeader" filter-kennel="ftKennel"
-              search-text="searchText" default-rows="defaultRows" current-page="currentPage" filter-object="ftObj"></td-table>
-
-<pagination
-        limit-rows="limitRows"
-        default-rows="defaultRows"
-        length-object="(items | filter:ftObj ).length"
-        current-page="currentPage"
-        added="added"
-        show-bt="showBt"
-        url-bt="urlBt"
-        on-select-page="selectCount=selectCount+1">
-</pagination>
+<!--<pagination-->
+        <!--limit-rows="limitRows"-->
+        <!--default-rows="defaultRows"-->
+        <!--length-object="countCurrentView"-->
+        <!--current-page="currentPage"-->
+        <!--added="added"-->
+        <!--show-bt="showBt"-->
+        <!--url-bt="urlBt"-->
+        <!--on-select-page="selectCount=selectCount+1">-->
+<!--</pagination>-->

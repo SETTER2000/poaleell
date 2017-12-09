@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserFModule')
-        .controller('ListFController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
+        .controller('ListFController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'UsersF', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, UsersF, Attendances) {
             $scope.me = window.SAILS_LOCALS.me;
             //toastr.options = {
             //    "closeButton": false,
@@ -50,7 +50,7 @@
 
             $scope.added = 'Добавить пользователя';
             $scope.showBt = 1;
-            $scope.urlBt = 'home.admin.users.create';
+            $scope.urlBt = 'home.dog.users.create';
 
             $scope.sort = 'lastName';
             $scope.param = 'lastName';
@@ -127,10 +127,10 @@
                     {display: "Все", value: "all"}
                 ];
             $scope.modeSelect = $scope.options[3];
-            // $scope.tableView = "/js/private/admin/users/views/home.admin.users.table.html";
-            // $scope.listView = "/js/private/admin/users/views/home.admin.users.list.html";
-            // $scope.actionView = "/js/private/admin/users/views/home.admin.users.action.html";
-            // $scope.workView = "/js/private/admin/users/views/home.admin.users.work.html";
+            // $scope.tableView = "/js/private/admin/users/views/home.dog.users.table.html";
+            // $scope.listView = "/js/private/admin/users/views/home.dog.users.list.html";
+            // $scope.actionView = "/js/private/admin/users/views/home.dog.users.action.html";
+            // $scope.workView = "/js/private/admin/users/views/home.dog.users.work.html";
 
             $scope.getLastName = function (item) {
                 $http.post('/att', item)
@@ -226,7 +226,7 @@
                     char: $scope.charText + '%'
                 };
 
-                $scope.items = Users.query($scope.query, function (users) {
+                $scope.items = UsersF.query($scope.query, function (users) {
                     //console.log('USER ITEMS:', users);
                         $scope.items = users;
                         $scope.objectName = users;
@@ -298,8 +298,8 @@
             var breadcrumb = new BreadCrumb();
 
             breadcrumb.set('Home', 'home');
-            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Users', 'home.admin.users' + $state.current.url);
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.dog');
+            breadcrumb.set('Users', 'home.dog.users' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

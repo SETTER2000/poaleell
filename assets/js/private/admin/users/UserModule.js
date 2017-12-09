@@ -253,7 +253,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
         };
         Users.prototype.getShowUrl = function (id) {
             // return '/admin/user/' + id;
-            return (me.admin || me.kadr) ? '/admin/user/' + id : ''
+            return 'user/' + id;
         };
 
         Users.prototype.deactivation = function () {
@@ -326,7 +326,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                             arId.push(value[item].id);
                         }
                     }
-                    if (value[item]['owners'][0] && (arId.indexOf( value[item].id ) == -1)) {
+                    if (value[item]['owners'][0] && (arId.indexOf(value[item].id) == -1)) {
 
                         if (value[item]['owners'][0].login === name) ar.push(value[item]);
                     }
@@ -343,6 +343,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             scope: {
                 //numPages: '=', // кол-во страниц (кнопок)
                 showBt: '=',// true|false показывать или нет кнопку добавления объекта, например юзера.
+                showContIt: '=',// true|false показывать или нет формочку выбора кол-ва строк
                 urlBt: '=',// ссылка для кнопки.
                 defaultRows: '=', // по умолчанию сколько строк должно показываться на одной странице
                 limitRows: '=',  // массив содержащий значения кол-ва строк для одной страницы [20,30,50,70,100]
@@ -367,19 +368,22 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                     scope.urlBt = value;
                 });
 
-                scope.$watch('lengthObject', function (value, old) {
-                    // console.log('OLD VALUE:', old);
-                    // console.log('NEW VALUE:', value);
-                    scope.numPages = Math.floor(value / scope.defaultRows) + 1;
-                    //scope.pages = [];
-                    //for (var i = 1; i <= value; i++) {
-                    //    scope.pages.push(i);
-                    //}
-                    //if (scope.currentPage > value) {
-                    //    scope.selectPage(value);
-                    //}
+                // scope.$watch('lengthObject', function (value, old) {
+                //     // console.log('OLD VALUE:', old);
+                //     // console.log('NEW VALUE:', value);
+                //     scope.numPages = Math.floor(value / scope.defaultRows) + 1;
+                //     //scope.pages = [];
+                //     //for (var i = 1; i <= value; i++) {
+                //     //    scope.pages.push(i);
+                //     //}
+                //     //if (scope.currentPage > value) {
+                //     //    scope.selectPage(value);
+                //     //}
+                // });
+                scope.$watch('lengthObject', function (value) {
+                    scope.lengthObject = value;
+                    scope.numPage();
                 });
-
 
                 scope.$watch('numPages', function (value) {
                     scope.pages = [];
@@ -396,12 +400,24 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                         scope.rows.push(value[i]);
                     }
                 });
-                scope.$watch('defaultRows', function (value, oldValue) {
+                scope.$watch('defaultRows', function (value, old) {
                     if (value > 0) {
                         scope.defaultRows = value;
-                        scope.numPages = Math.floor(scope.lengthObject / scope.defaultRows) + 1;
+                        console.log('value NEW в дериктиве pagination', value);
+                        console.log('value OLD в дериктиве pagination', old);
+                        scope.$emit('defaultRowsTable', {
+                            defaultRows: scope.defaultRows
+                        });
+                        scope.numPage();
                     }
                 });
+                scope.numPage = function () {
+                    if (scope.lengthObject || scope.defaultRows) {
+                        scope.numPages = (scope.lengthObject % scope.defaultRows) ? Math.floor(scope.lengthObject / scope.defaultRows) + 1 : Math.floor(scope.lengthObject / scope.defaultRows);
+                    } else {
+                        scope.numPages = 1;
+                    }
+                };
                 scope.noPrevious = function () {
                     return scope.currentPage === 1;
                 };
@@ -707,29 +723,29 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 };
 
                 scope.getCharText = function (ch) {
-                    //console.log(ch);
+                    scope.getCharText = function (ch) {
+                        if (angular.isString(ch) && ch.length > 0) {
+                            scope.where = {lastName: {'like': ch + '%'}};
+                            scope.charText = ch;
+                        } else {
+                            // $scope.defaultRows;
+                            scope.charText = '';
+                            scope.where = {};
+                        }
+                        //scope.refresh(where);
+                    };
 
-                    if (angular.isString(ch) && ch.length > 0) {
-                        scope.where = {lastName: {'like': ch + '%'}};
-                        scope.charText = ch;
-                    } else {
-                        // $scope.defaultRows;
-                        scope.charText = '';
-                        scope.where = {};
-                    }
-                    //scope.refresh(where);
-                };
-
-                scope.selectPart = function (part) {
-                    if (!scope.isActive(part)) {
-                        scope.currentPart = part;
-                        scope.getPartText(part);
-                        scope.getCharText(part);
-                        scope.onSelectPart({part: part});
-                    }
-                };
+                    scope.selectPart = function (part) {
+                        if (!scope.isActive(part)) {
+                            scope.currentPart = part;
+                            scope.getPartText(part);
+                            scope.getCharText(part);
+                            scope.onSelectPart({part: part});
+                        }
+                    };
+                }
             }
-        };
+        }
     })
     .directive('file', function () {
         return {
@@ -797,6 +813,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
                 //     scope.defaultRows = value;
                 //
                 // });
+
                 scope.$watch('dtItems', function (value) {
                     console.log('dtItems:', value);
                     scope.items = value;

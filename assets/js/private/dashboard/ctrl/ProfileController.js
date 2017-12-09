@@ -20,7 +20,7 @@ angular.module('DashboardModule').controller('ProfileController', ['$scope', '$h
     noProfile: false
   };
 
-  $scope.userProfile.loading = true;
+  // $scope.userProfile.loading = true;
 
   // // Build up route
   // var theRoute = '/user/profile/' +  $routeParams.id;
@@ -51,7 +51,7 @@ angular.module('DashboardModule').controller('ProfileController', ['$scope', '$h
   // .catch(function onError(sailsResponse){
   //   // console.log(sailsResponse);
 
-  //   // If no profile found remove interface and show error message.    
+  //   // If no profile found remove interface and show error message.
   //   if(sailsResponse.status === 404) {
   //     $scope.userProfile.noProfile = true;
   //     $scope.userProfile.errorMsg = 'No profile found.';

@@ -108,8 +108,8 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
         $rootScope.$stateParams = $stateParams;
         amMoment.changeLocale('ru');
     })
-    .factory('Users', function ($resource, $state, CONF_MODULE_USER) {
-        var Users = $resource(
+    .factory('UsersF', function ($resource, $state, CONF_MODULE_USER) {
+        var UsersF = $resource(
             CONF_MODULE_USER.baseUrl,
             {userId: '@id'},
             // Определяем собственный метод update на обоих уровнях, класса и экземпляра
@@ -119,7 +119,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 }
             }
         );
-        Users.prototype.formatDate = function (date) {
+        UsersF.prototype.formatDate = function (date) {
             var dd = date.getDate();
             if (dd < 10) dd = '0' + dd;
             var mm = date.getMonth() + 1;
@@ -129,34 +129,34 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
             return yy + '-' + mm + '-' + dd;
         };
 
-        Users.prototype.getFullName = function () {
+        UsersF.prototype.getFullName = function () {
             return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
         };
-        Users.prototype.getShortName = function () {
+        UsersF.prototype.getShortName = function () {
             return this.lastName + ' ' + this.firstName.substr(0, 1) + '.' + this.patronymicName.substr(0, 1) + '.';
         };
-        Users.prototype.sc = function () {
+        UsersF.prototype.sc = function () {
             return this.section;
         };
-        Users.prototype.scs = function () {
+        UsersF.prototype.scs = function () {
             return this.sections;
         };
-        Users.prototype.ok = function () {
+        UsersF.prototype.ok = function () {
             return alert('Сотрудник: ' + this.getFullName() + ' изменён!');
         };
-        Users.prototype.er = function () {
+        UsersF.prototype.er = function () {
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
-        Users.prototype.getAvatar = function () {
+        UsersF.prototype.getAvatar = function () {
             return this.avatarUrl;
         };
-        //Users.prototype.delFoto= function () {
+        //UsersF.prototype.delFoto= function () {
         //    return this.avatarUrl = '';
         //};
-        Users.prototype.lastDateSetting = function () {
+        UsersF.prototype.lastDateSetting = function () {
             return new Date();
         };
-        Users.prototype.getBirthday = function () {
+        UsersF.prototype.getBirthday = function () {
             if (this.birthday) {
                 var tm;
                 tm = new Date(this.birthday);
@@ -168,7 +168,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 this.birthday = tm;
             }
         };
-        Users.prototype.getDateInWork = function () {
+        UsersF.prototype.getDateInWork = function () {
             if (this.dateInWork) {
                 var tm;
                 tm = new Date(this.dateInWork);
@@ -179,7 +179,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 this.dateInWork = tm;
             }
         };
-        Users.prototype.Users = function () {
+        UsersF.prototype.Users = function () {
             var now = moment();
             var event = moment(this.birthday, ["DD.MM.YYYY"]);
 
@@ -190,7 +190,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
             return moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
-        Users.prototype.getFiredDate = function () {
+        UsersF.prototype.getFiredDate = function () {
             if (this.firedDate) {
                 var tm;
                 tm = new Date(this.firedDate);
@@ -201,7 +201,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 this.firedDate = tm;
             }
         };
-        Users.prototype.getDecree = function () {
+        UsersF.prototype.getDecree = function () {
             if (this.decree) {
                 var tm;
                 tm = new Date(this.decree);
@@ -212,18 +212,18 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
                 this.decree = tm;
             }
         };
-        Users.prototype.getCreatedAt = function () {
+        UsersF.prototype.getCreatedAt = function () {
             if (!this.createdAt) {
                 return 'Mongo import';
             }
             return this.createdAt;
         };
-        Users.prototype.getCurrentDate = function () {
+        UsersF.prototype.getCurrentDate = function () {
             var t = this.formatDate(new Date());
             return t;
         };
 
-        Users.prototype.periodWork = function () {
+        UsersF.prototype.periodWork = function () {
             var now = moment();
             var event = moment(this.dateInWork, ["DD.MM.YYYY"]);
 
@@ -234,7 +234,7 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
             return moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
-        Users.prototype.age = function () {
+        UsersF.prototype.age = function () {
             var now = moment();
             var event = moment(this.birthday, ["DD.MM.YYYY"]);
 
@@ -245,21 +245,21 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
             return moment.preciseDiff(now, event);
             //return  moment(this.dateInWork,["DD.MM.YYYY"]).fromNow(true);
         };
-        Users.prototype.getListUrl = function () {
+        UsersF.prototype.getListUrl = function () {
             return '/dog/users';
         };
-        Users.prototype.getEditUrl = function (id) {
-            return '/dog/users/edit/' + id;
+        UsersF.prototype.getEditUrl = function (id) {
+            return 'users/edit/' + id;
         };
-        Users.prototype.getShowUrl = function (id) {
+        UsersF.prototype.getShowUrl = function (id) {
             // return '/dog/user/' + id;
-            return (me.dog || me.kadr) ? '/dog/user/' + id : ''
+            return 'user/' + id ;
         };
 
-        Users.prototype.deactivation = function () {
+        UsersF.prototype.deactivation = function () {
             return ' - деактивирован';
         };
-        Users.prototype.getContact = function (type) {
+        UsersF.prototype.getContact = function (type) {
             for (var i in this.contacts) {
                 if (this.contacts[i].type === type) {
                     return this.contacts[i].value;
@@ -268,10 +268,10 @@ angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceM
             }
         };
 
-        Users.prototype.forrbidden = function () {
+        UsersF.prototype.forrbidden = function () {
             return ' - уволены';
         };
-        return Users;
+        return UsersF;
     })
     /**
      * Выборка фамилий по первой букве

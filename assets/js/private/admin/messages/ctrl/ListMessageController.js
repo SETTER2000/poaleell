@@ -355,7 +355,7 @@
                     };
 
                     $scope.items = Messages.query({}, function (messages) {
-                        console.log('Messages LIST:', messages);
+                        // console.log('Messages LIST:', messages);
                         $scope.items = messages;
                         $scope.objectName = messages;
                         //$scope.numPages = Math.floor(messages.length / $scope.defaultRows) + 1;

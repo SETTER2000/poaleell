@@ -20,6 +20,10 @@
                 <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-list"></span> Список
                 </a>
+                <button ng-cloak ng-if="!item.action && edit && me.admin" ng-click="delete2(item)"
+                        class="btn btn-sm btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> Удалить
+                </button>
             </div>
         </h2>
         <ul class="breadcrumb">
@@ -490,7 +494,9 @@
         </div>
 
     </div>
-
+    <div class="row">
+        <pre ng-if="debug && me.admin"><h3>{{item| json}}</h3></pre>
+    </div>
 </div>
 
 

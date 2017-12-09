@@ -208,7 +208,10 @@ module.exports = {
             via: 'breeders',
             dominant: true
         },
-
+        defaultRows: {
+            type: 'integer',
+            defaultsTo: 10
+        },
         //// Отпуска тестовый
         //fur: {
         //    type: 'array',
