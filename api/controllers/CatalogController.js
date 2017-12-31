@@ -136,7 +136,7 @@ module.exports = {
                     .exec((err, finds) => {
                         if (err) return res.negotiate;
                         if (!finds) return res.notFound();
-                        // console.log('FINDS CATALOG', finds.name);
+                        //console.log('FINDS CATALOG', finds[0].dams.getFullName());
                         // return res.redirect('/admin/users/edit/' + req.param('id'));
                         // return res.backToHomePage();
                         //return res.redirect('/admin/users/edit/' + req.param('id'));

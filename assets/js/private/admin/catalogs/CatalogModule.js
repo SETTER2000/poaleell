@@ -152,6 +152,8 @@ angular.module('CatalogModule', ['ui.router', 'toastr', 'ngResource', 'angularFi
 
         };
 
+
+
         Catalogs.prototype.sireName = function () {
             console.log('this.sires', this.sires);
             // if(this.kennels instanceof Array && this.kennels.length>0) return this.kennels[0].name ;

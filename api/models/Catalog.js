@@ -199,8 +199,7 @@ module.exports = {
             via: 'catalogs'
         },
         getFullName: function () {
-            return 'XXXX-NAME';
-            // return this.kennels[0].name + this.name ;
+            console.log(this.kennels);
         }
 
     }

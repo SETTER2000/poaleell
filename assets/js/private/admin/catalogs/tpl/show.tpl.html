@@ -91,17 +91,43 @@
                         </a>
                         <div class="caption">
 
+                            <!--<h3>{{item.sires.name }}</h3>-->
+
+                            <!--<ul class="list-unstyled bord ng-scope">-->
+                                <!--<li>-->
+                                    <!--&lt;!&ndash;<i class="fa fa-rub" aria-hidden="true" aria-label="рубль"&ndash;&gt;-->
+                                       <!--&lt;!&ndash;md-labeled-by-tooltip="md-tooltip-9"> </i>&ndash;&gt;-->
+                                        <!--ДР:-->
+
+                                    <!--<span class="pull-right ng-binding">{{item.sires.birthday | date: "dd.MM.yyyy"}}</span>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--&lt;!&ndash;<i class="fa fa-rub" aria-hidden="true" aria-label="рубль"&ndash;&gt;-->
+                                       <!--&lt;!&ndash;md-labeled-by-tooltip="md-tooltip-9"> </i>&ndash;&gt;-->
+                                        <!--Рост (см):-->
+
+                                    <!--<span class="pull-right ng-binding">{{item.sires.growth}}</span>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--&lt;!&ndash;<i class="fa fa-rub" aria-hidden="true" aria-label="рубль"&ndash;&gt;-->
+                                       <!--&lt;!&ndash;md-labeled-by-tooltip="md-tooltip-9"> </i>&ndash;&gt;-->
+                                        <!--Вес (гр):-->
+
+                                    <!--<span class="pull-right ng-binding">{{item.sires.weight}}</span>-->
+                                <!--</li>-->
+                            <!--</ul>-->
                             <p>
                                 <small>
-                                    {{item.sires.name }}<br>
-                                    ДР: {{item.sires.birthday | date: "dd.MM.yyyy"}}<br>
-                                    Рост (см): {{item.sires.growth}}<br>
-                                    Вес (гр): {{item.sires.weight}}
+                                    <strong>{{itemParentSire.getFullName()}}</strong> <br>
+                                    ДР: <span class="pull-right">{{item.sires.birthday | date: "mediumDate" }}</span><br>
+                                    Рост (см): <span class="pull-right">{{item.sires.growth}}</span><br>
+                                    Вес (гр): <span class="pull-right">{{item.sires.weight | number:0}}</span><br>
                                 </small>
                             </p>
+
                             <!--<p>{{item.sires | json}}</p>-->
                             <p class="text-center">
-                                <a href="/admin/catalog/{{item.sires.id}}" class="btn btn-primary btn-sm"
+                                <a ui-sref="home.admin.catalog({catalogId:item.sires.id})" class="btn btn-primary btn-sm"
                                    role="button">
                                     Родословная
                                 </a>
@@ -119,14 +145,14 @@
                         <div class="caption">
                             <p>
                                 <small>
-                                    {{item.dams.name }}<br>
-                                    ДР: {{item.dams.birthday | date: "dd.MM.yyyy"}}<br>
-                                    Рост (см): {{item.dams.growth}}<br>
-                                    Вес (гр): {{item.dams.weight}}
+                                   <strong>{{itemParentDams.getFullName()}}</strong> <br>
+                                    ДР: <span class="pull-right">{{item.dams.birthday | date: "mediumDate" }}</span><br>
+                                    Рост (см): <span class="pull-right">{{item.dams.growth}}</span><br>
+                                    Вес (гр): <span class="pull-right">{{item.dams.weight | number:0}}</span><br>
                                 </small>
                             </p>
                             <p class="text-center">
-                                <a href="/admin/catalog/{{item.dams.id}}" class="btn btn-sm btn-primary"
+                                <a ui-sref="home.admin.catalog({catalogId:item.dams.id})" class="btn btn-sm btn-primary"
                                    role="button">
                                     Родословная
                                 </a>
@@ -368,6 +394,12 @@
         </div>
 
     </div>
+</div>
+<div class="jumbotron" ng-if="me.admin && debug">
+    <pre><p>  PARENT SIRES:  {{itemParentSire | json}}</p></pre>
+</div>
+<div class="jumbotron" ng-if="me.admin && debug">
+    <pre><p>  PARENT DAMS:  {{itemParentDams | json}}</p></pre>
 </div>
 <div class="jumbotron" ng-if="me.admin && debug">
     <pre><p>{{item|json}}</p></pre>

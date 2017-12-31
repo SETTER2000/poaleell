@@ -1,6 +1,6 @@
 angular.module('CatalogModule')
-    .controller('CatalogController', ['$scope', '$location','$state', '$http', 'toastr', 'toastrConfig',"$rootScope", 'moment', 'Catalogs', '$stateParams',
-        function ($scope, $location, $state,$http, toastr,toastrConfig,$rootScope, moment, Catalogs, $stateParams) {
+    .controller('CatalogController', ['$scope', '$location', '$state', '$http', 'toastr', 'toastrConfig', "$rootScope", 'moment', 'Catalogs', '$stateParams',
+        function ($scope, $location, $state, $http, toastr, toastrConfig, $rootScope, moment, Catalogs, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.newMessage = {
@@ -10,10 +10,6 @@ angular.module('CatalogModule')
                     this.message = '';
                 }
             };
-
-
-
-
 
             // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
@@ -43,12 +39,37 @@ angular.module('CatalogModule')
             };
             $scope.wind = false;
             $scope.handshake = function () {
-                $rootScope.$broadcast('newDogMessage',{
-                    item:$scope.item,
+                $rootScope.$broadcast('newDogMessage', {
+                    item: $scope.item,
                 });
                 return $scope.wind = (!$scope.wind);
             };
 
+
+            $scope.getNameSire = function () {
+                $scope.itemParentSire = Catalogs.get({id:  $scope.item.sires.id}, function (catalogs) {
+                    console.log('catalogs 2', catalogs);
+                    $scope.catalogs = catalogs;
+                }, function (err) {
+                    toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
+                });
+            };
+            $scope.getNameDams = function () {
+                $scope.itemParentDams = Catalogs.get({id:  $scope.item.dams.id}, function (catalogs) {
+                    console.log('catalogs 2', catalogs);
+                    $scope.catalogs = catalogs;
+                }, function (err) {
+                    toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
+                });
+            };
+
+            $scope.$watch('item.sires.id',function (val) {
+               if(val) $scope.getNameSire();
+            });
+
+            $scope.$watch('item.dams.id',function (val) {
+               if(val) $scope.getNameDams();
+            });
 
             // слушаем событие в нужном нам $scope
             $scope.$on('newData', function (event, data) {
@@ -65,13 +86,13 @@ angular.module('CatalogModule')
                         login: $scope.me.login,
                         fullName: $scope.me.fullName,
                         lastName: $scope.me.lastName,
-                        contacts:  $scope.me.contacts,
-                        avatarUrl:  $scope.me.avatarUrl,
+                        contacts: $scope.me.contacts,
+                        avatarUrl: $scope.me.avatarUrl,
                         id: $scope.me.id,
                     };
                     $scope.item.messages.push(mess);
                     $scope.item.$update($scope.item, function (success) {
-                            toastr.success( mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено555.');
+                            toastr.success(mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено555.');
                             // $state.go($scope.item.getShowUrl($scope.item.id, me), {catalogId: success.id});
                         },
                         function (err) {
@@ -79,7 +100,6 @@ angular.module('CatalogModule')
                             // if(err.data['originalError'].code == 11000) return toastr.error('Объект уже существует.',  'Ошибка '+err.data['originalError'].code+'!');
 
                         });
-
 
 
                     $scope.wind = false;
