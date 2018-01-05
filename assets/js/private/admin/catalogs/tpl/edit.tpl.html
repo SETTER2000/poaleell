@@ -20,7 +20,7 @@
                 {{item.firedDate |
                 date:'dd.MM.yyyy'}}</a>
             <div class="btn-group-xs pull-right">
-                <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
+                <button ng-click="saveEdit(item)" type="button" ng-disabled="myForm.$invalid" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span> Сохранить
                 </button>
                 <a ng-href="{{item.getListUrl()}}" type="button" class="btn btn-warning">
@@ -321,12 +321,14 @@
 
                         <div ng-controller="ListCatalogController" class="form-group ">
                             <label class="control-label">Отец</label>
+
+
+
                             <!--<span>[ <a href="#" ng-click="addSireField()">добавить</a> ]</span>-->
                             <!--<div class="form-inline" ng-repeat="sires in item.sires">-->
                             <div class="form-group form-inline">
                                 <select class="form-control" ng-model="item.sires.id">
-                                    <option ng-repeat="option in items | itsNotMe:item.id | filter:{action:true, gender:'кобель'} | orderBy:'kennels[0].name'"
-                                            value="{{option.id}}">
+                                    <option ng-repeat="option in items  | itsNotMe:item.id |  filter:{action:true, gender:'кобель'}| orderBy:'kennels[0].name'" value="{{option.id}}">
                                         {{option.getFullName()}}
                                     </option>
                                 </select>
@@ -722,15 +724,42 @@
 
                         <!-- P E D I G R E E -->
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputSuccess3">
-                                № Pedigree
-                                <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="pedigreeNick=true"-->
-                                <!--ng-mouseleave="pedigreeNick=false"></span>-->
-                                <!--<small ng-if="pedigreeNick">(рост устанавливается в сантиметрах)</small>-->
-                            </label>
-                            <input type="text" class="form-control" ng-model="item.pedigree">
-                            <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        <div ng-controller="ListController" class="form-group ">
+                            <label class="control-label"> № Pedigree </label>
+                            <span ng-if="!item.pedigrees[0].name">[ <a href="#" ng-click="addPedigree()">добавить</a> ]</span>
+                            <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="ownerNick=true"-->
+                            <!--ng-mouseleave="ownerNick=false"></span>-->
+                            <!--<small ng-if="ownerNick">(название питомника если нет, то имя хозяина)</small>-->
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input  ng-minlength="2" ng-model="item.pedigrees[0].name">
+                                    <div class="form-group caption">
+                                        <div class="file-upload ">
+                                            <label class="text-left">
+                                                <input type="file" nv-file-select="" uploader="uploadPedigrees" multiple/>
+                                                <div class="form-inline"
+                                                     ng-repeat="foto2 in item.photos">
+                                                    <img ng-if="(foto2.pedigrees)" ng-click="getPedigree(item.photos[0])" width="80" ng-src="{{foto2.photoUrl}}"
+                                                         alt="">
+
+                                                </div>
+                                                <span  ng-click="getPedigree(item.pedigrees[0])"
+                                                      class="glyphicon glyphicon-camera" role="button"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div  class="form-group">
+                                        <small class="text-right">{{pedigree.description}}</small>
+                                    </div>
+                                    <div ng-if="item.pedigrees[0].name"  class="form-group pull-right">
+                                        <button type="button" class="btn btn-default "
+                                                ng-click="removePedigreeItem(item.pedigrees[0])"><span
+                                                class="glyphicon glyphicon-remove"></span></button>
+                                    </div>
+                                    <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                                </div>
+                            </div>
+
                         </div>
 
                         <!-- R K F -->

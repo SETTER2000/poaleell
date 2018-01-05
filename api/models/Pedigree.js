@@ -1,5 +1,5 @@
 /**
- * Photo.js
+ * Reaction.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -10,26 +10,27 @@ module.exports = {
     attributes: {
         section: {
             type: 'string',
-            defaultsTo: 'Фото',
+            defaultsTo: 'Родословная',
             required: true
         },
         sections: {
             type: 'string',
-            defaultsTo: 'Фотографии',
+            defaultsTo: 'Родословные',
             required: true
         },
         action: {
             type: 'boolean',
-            defaultsTo: true,
-            required: true
+            defaultsTo: false
         },
         name: {
             type: 'string',
-            maxLength: 170
+            unique: true,
+            minLength: 2,
+            maxLength: 150
         },
-        hash: {
+        tip: {
             type: 'string',
-            maxLength: 122
+            defaultsTo: ''
         },
         description: {
             type: 'string',
@@ -44,30 +45,14 @@ module.exports = {
             required: true,
             defaultsTo: new Date(0)
         },
-        photoUrl: {
-            type: 'string'
-        },
-        photoFd: {
-            type: 'string'
-        },
-        fileNamePhoto: {
-            type: 'string'
-        },
-        titles: {
-            model: 'title'
-        },
         catalogs: {
-            model: 'catalog'
+            collection: 'catalog',
+            via: 'pedigrees'
         },
-        reactions: {
-            model: 'reaction'
-        },
-        pedigrees: {
-            model: 'pedigree'
-        }
-        // titles: {
-        //   model: 'title'
-        // },
+        // photos: {
+        //     collection: 'photo',
+        //     via: 'pedigrees'
+        // }
 
         // vacations: {
         //   collection: 'vacation',

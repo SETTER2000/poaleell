@@ -1,7 +1,8 @@
-angular.module('CatalogFModule')
-    .controller('CatalogFController', ['$scope', '$location', '$state', '$http', 'toastr', 'toastrConfig', "$rootScope", 'moment', 'CatalogsF', '$stateParams',
-        function ($scope, $location, $state, $http, toastr, toastrConfig, $rootScope, moment, CatalogsF, $stateParams) {
+angular.module('CatalogModule')
+    .controller('CatalogController', ['$scope', '$location', '$state', '$http', 'toastr', 'toastrConfig', "$rootScope", 'moment', 'Catalogs', '$stateParams',
+        function ($scope, $location, $state, $http, toastr, toastrConfig, $rootScope, moment, Catalogs, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
+            if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.newMessage = {
                 email: $scope.me.email,
                 maxLength: 250,
@@ -9,9 +10,6 @@ angular.module('CatalogFModule')
                     this.message = '';
                 }
             };
-
-            $scope.pedigreeArea = 'Родословная';
-
 
             // if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //$scope.message = moment({start:'1995-12-25',end:'2000-10-10'}).year(2009).hours(0).minutes(0).seconds(0);
@@ -21,7 +19,7 @@ angular.module('CatalogFModule')
              * которые используются для взаимодействия с данными на сервере $delete, $get, $remove, $save
              *
              * Так же можно определять свои методы для конструктора в фабрике модуля.
-             * В данном конструкторе добавлен метод CatalogsF.getFullName()
+             * В данном конструкторе добавлен метод Catalogs.getFullName()
              */
             $scope.debug = true;
 
@@ -32,7 +30,7 @@ angular.module('CatalogFModule')
 
 
             $scope.refresh = function () {
-                $scope.item = CatalogsF.get({id: $stateParams.catalogId}, function (catalogs) {
+                $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
                     console.log('catalogs', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
@@ -46,27 +44,31 @@ angular.module('CatalogFModule')
                 });
                 return $scope.wind = (!$scope.wind);
             };
+
+
             $scope.getNameSire = function () {
-                $scope.itemParentSire = CatalogsF.get({id:  $scope.item.sires.id}, function (catalogs) {
+                $scope.itemParentSire = Catalogs.get({id:  $scope.item.sires.id}, function (catalogs) {
+                    console.log('catalogs 2', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 8893! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
                 });
             };
             $scope.getNameDams = function () {
-                $scope.itemParentDams = CatalogsF.get({id:  $scope.item.dams.id}, function (catalogs) {
+                $scope.itemParentDams = Catalogs.get({id:  $scope.item.dams.id}, function (catalogs) {
+                    console.log('catalogs 2', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 8894! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
                 });
             };
 
             $scope.$watch('item.sires.id',function (val) {
-                if(val) $scope.getNameSire();
+               if(val) $scope.getNameSire();
             });
 
             $scope.$watch('item.dams.id',function (val) {
-                if(val) $scope.getNameDams();
+               if(val) $scope.getNameDams();
             });
 
             // слушаем событие в нужном нам $scope
@@ -129,13 +131,11 @@ angular.module('CatalogFModule')
             };
 
             var breadcrumb = new BreadCrumb();
-// console.log('STATE.GET', $state.get('home.dog.catalogs'));
-// console.log('current.url', $state.current.url);
-
 
             breadcrumb.set('Home', 'home');
-            breadcrumb.set('Catalog', 'home.dog.catalogs');
-            breadcrumb.set('Show', 'home.dog.catalogs.show' + $state.current.url);
+            if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
+            breadcrumb.set('Catalog', 'home.admin.catalogs');
+            breadcrumb.set('Show', 'home.admin.catalogs.show' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

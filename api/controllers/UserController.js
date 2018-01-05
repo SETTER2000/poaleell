@@ -685,11 +685,9 @@ module.exports = {
                     .exec(function foundUser(err, users) {
                         if (err) return res.serverError(err);
                         if (!users) return res.notFound();
-                        console.log('СДЕСЯ яяяя ++ users!',users);
                         return res.ok(users);
                     });
             } else {
-                console.log('СДЕСЯ!');
                 User.find()
                     .populate('positions')
                     .populate('furloughs')
@@ -1199,13 +1197,11 @@ module.exports = {
      */
     updateDefaultRows: function (req, res) {
         //if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        console.log('req in', req.param('defaultRows'));
         User.update(req.session.me, {
             defaultRows: req.param('defaultRows')
         })
             .exec(function (err, update) {
                 if (err) return res.negotiate(err);
-                console.log('req out', update);
                 return res.ok(update);
             });
     },

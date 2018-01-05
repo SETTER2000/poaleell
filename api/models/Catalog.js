@@ -129,10 +129,10 @@ module.exports = {
             type: 'string',
             maxLength: 500
         },
-        pedigree: {
-            type: 'string'
-            // maxLength: 15
-        },
+        // pedigree: {
+        //     type: 'string'
+        //     // maxLength: 15
+        // },
         rkf: {
             type: 'string',
             maxLength: 25
@@ -159,10 +159,6 @@ module.exports = {
         },
         symbol: {
             type: 'string'
-        },
-        titles: {
-            collection: 'title',
-            via: 'catalogs'
         },
         kennels: {
             collection: 'department',
@@ -197,6 +193,17 @@ module.exports = {
         reactions: {
             collection: 'reaction',
             via: 'catalogs'
+        },
+        titles: {
+            collection: 'title',
+            via: 'catalogs'
+        },
+        // pedigrees: {
+        //     collection: 'pedigree',
+        //     via: 'catalogs'
+        // },
+        pedigrees: {
+            model: 'pedigree'
         },
         getFullName: function () {
             console.log(this.kennels);

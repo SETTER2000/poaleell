@@ -2,10 +2,10 @@
 <div class="col-sm-11  col-md-12  main">
     <div class="page-header">
         <h2>
-            <p ng-if="item.name" ng-class="{'fired':item.fired}">{{item.sc()}} : {{item.name}}
+            <p ng-if="item.photoUrl" ng-class="{'fired':item.fired}">{{item.sc()}} : {{item.name}}
                 <span ng-if="!item.action && me.admin">{{item.deactivation()}}</span>
             </p>
-            <p ng-if="!item.name">Новый титул</p>
+            <p ng-if="!item.photoUrl">Новое фото</p>
             <div class="btn-group-xs pull-right">
                 <button ng-click="saveEdit(item)" type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-check"></span>
@@ -39,19 +39,8 @@
                         </label>
                     </div>
                     <div class="form-group">
-
                         <div class="row">
-                            <div class="col-md-3">
-                                <label class="control-label" for="inputSuccess22">Кратность</label>
-                                <div class="input-group">
-                                    <input type="number" min="2" class="form-control" ng-model="item.multiplicity"
-                                           aria-describedby="basic-addon2">
-                                    <span class="input-group-addon" id="basic-addon2"><span
-                                            class="glyphicon glyphicon-remove"></span></span>
-                                </div>
-                            </div>
-
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="input-group">
                                     <label class="control-label" for="inputSuccess1">Наименование</label>
                                     <input type="text" required class="form-control" ng-model="item.name">
@@ -106,7 +95,8 @@
                         <!--Список-->
                         <!--</a>-->
 
-                        <a ng-show="me.admin" ng-if="!item.action" ng-click="delete(item)" class="btn  btn-default pull-right">
+                        <a ng-show="me.admin" ng-if="!item.action" ng-click="delete(item)"
+                           class="btn  btn-default pull-right">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </div>
@@ -114,24 +104,32 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6" ng-show="admin" ng-if="closeInfo">
-        <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
-        <div class="panel-heading">
-        <h3 class="panel-title">Информация</h3>
-        </div>
-        <div class="panel-body">
-        <div class="table-responsive">
-        <table class="table">
-        <tr ng-repeat="(key, value) in item">
-        <th>{{key}}</th>
-        <td>{{value | date:'dd.MM.yyyy' }}</td>
-        </tr>
-        </table>
-        </div>
-        </div>
-        </div>
+        <div class="col-md-6" ng-if="me.admin" >
+            <a ng-href="{{item.getEditUrl(item.id)}}">
+                <img width="100%" ng-src="{{item.photoUrl}}" alt="">
+            </a>
+            <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Информация</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr ng-repeat="(key, value) in item">
+                                <th>{{key}}</th>
+                                <td>{{value | date:'dd.MM.yyyy' }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="row">
+        <pre ng-if="debug && me.admin"><h3>{{item | json}}</h3></pre>
+    </div>
+
 </div>
 
 

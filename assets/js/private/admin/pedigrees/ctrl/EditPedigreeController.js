@@ -1,15 +1,15 @@
 'use strict';
-angular.module('CatalogModule')
-    .controller('EditCatalogController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Catalogs', 'moment', '$stateParams', 'FileUploader', '$rootScope',
-        function ($scope, $http, toastr, $interval, $state, Catalogs, moment, $stateParams, FileUploader, $rootScope) {
+angular.module('PedigreeModule')
+    .controller('EditPedigreeController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Pedigrees', 'moment', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $interval, $state, Pedigrees, moment, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             moment.locale('ru');
-            $scope.newObjectName = 'Новая собака';
+            $scope.newObjectName = 'Новая родословная';
             $scope.closeInfo = 0; // скрыть панель информации
             $scope.debug = true;
             $scope.loginAdmin = false;
-            $scope.edit = $state.includes('home.admin.catalogs.edit');
+            $scope.edit = $state.includes('home.admin.pedigrees.edit');
 
 
             $scope.inline = function () {
@@ -33,10 +33,10 @@ angular.module('CatalogModule')
                 //         //console.log(success);
                 //         //location.reload();
                 //         toastr.success(info.newOk);
-                //         // /admin/catalog/
+                //         // /admin/pedigree/
                 //         //$location.path('/profile') ;
                 //         console.log('SAVE - create');
-                //         $state.go('home.admin.catalog', {catalogId: success.id});
+                //         $state.go('home.admin.pedigree', {pedigreeId: success.id});
                 //     },
                 //     function (err) {
                 //         toastr.error(err.data, 'Ошибка!');
@@ -51,14 +51,14 @@ angular.module('CatalogModule')
                 ok: 'OK!',
                 objectDelete: 'Объект удалён.',
                 newOk: 'Объект создан.',
-                redirectSelf: 'home.admin.catalogs',
+                redirectSelf: 'home.admin.pedigrees',
                 ru: 'ru',
                 dateFormat: "d.m.Y",
                 minDate: "01-01-2002",
                 maxDate: "31-12-2020",
             };
 
-            // console.log('$STATE catalog: ', $state);
+            // console.log('$STATE pedigree: ', $state);
 
 
             $scope.name = null;
@@ -209,13 +209,13 @@ angular.module('CatalogModule')
 
             uploadTitles.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.pedigreeId});
                 item.formData.push({idTitle: $scope.idTitle});
             };
             // uploadTitles.onBeforeUploadItem = function (item) {
             //     //console.info('onBeforeUploadItem', item);
-            //     item.formData.push({id: $stateParams.catalogId});
-            //     item.formData.push({idT: $stateParams.catalogId});
+            //     item.formData.push({id: $stateParams.pedigreeId});
+            //     item.formData.push({idT: $stateParams.pedigreeId});
             // };
             uploadTitles.onProgressItem = function (fileItem, progress) {
                 //console.info('onProgressItem', fileItem, progress);
@@ -330,7 +330,7 @@ angular.module('CatalogModule')
             };
             uploadReactions.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.pedigreeId});
                 item.formData.push({idReaction: $scope.idReaction});
             };
             uploadReactions.onProgressItem = function (fileItem, progress) {
@@ -441,9 +441,16 @@ angular.module('CatalogModule')
             $scope.getPedigree = function (obj) {
                 $scope.idPedigree = obj.id;
             };
+            //
+            // $scope.$watch('item.pedigrees',function (val,old) {
+            //     console.log('NEW val', val);
+            //     console.log('NEW old', old);
+            //     if(val) $scope.idPedigree  = val[0].id;
+            // });
+            console.log('$scope.idPedigree', $scope.idPedigree);
             uploadPedigrees.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.pedigreeId});
                 item.formData.push({idPedigree: $scope.idPedigree});
             };
             uploadPedigrees.onProgressItem = function (fileItem, progress) {
@@ -552,7 +559,7 @@ angular.module('CatalogModule')
             };
             uploader.onBeforeUploadItem = function (item) {
                 //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.catalogId});
+                item.formData.push({id: $stateParams.pedigreeId});
 
             };
             uploader.onProgressItem = function (fileItem, progress) {
@@ -620,7 +627,7 @@ angular.module('CatalogModule')
                     {display: "Загрузить файл", value: "uploader"}
                 ];
             $scope.modeSelect = $scope.options[0];
-            $scope.uploaderView = "/js/private/admin/catalogs/views/uploader.html";
+            $scope.uploaderView = "/js/private/admin/pedigrees/views/uploader.html";
 
 
             $scope.rating1 = 3;
@@ -637,14 +644,14 @@ angular.module('CatalogModule')
 
 
             $scope.refresh = function () {
-                let item = $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
-                    $scope.catalogs = catalogs;
+                let item = $scope.item = Pedigrees.get({id: $stateParams.pedigreeId}, function (pedigrees) {
+                    $scope.pedigrees = pedigrees;
 
-                    console.log('CATALOGS', catalogs);
-                    $scope.name = catalogs.name;
+                    console.log('PEDIGREES', pedigrees);
+                    $scope.name = pedigrees.name;
                     // console.log('ITEM-+++5-SYMBOL',$scope.item.symbol );
                     // ($scope.item.symbol) ? $scope.lengthWeightMin = 0 : $scope.lengthWeightMin = 2200;
-                    // console.log('catalogs входящий: ', catalogs);
+                    // console.log('pedigrees входящий: ', pedigrees);
                     // console.log('TYYYU: ', item.getTimeBirthday());
 
                     // item.getTimeBirthday();
@@ -661,7 +668,7 @@ angular.module('CatalogModule')
                     toastr.success(info.objectDelete, info.ok);
                     $state.go(info.redirectSelf);
                     // $location.path("/table");
-                    // $scope.$apply(function() { $location.path("/admin/catalogs"); });
+                    // $scope.$apply(function() { $location.path("/admin/pedigrees"); });
                     // $scope.refresh();
                 }, function (err) {
                     //console.log(err);
@@ -703,12 +710,12 @@ angular.module('CatalogModule')
             };
 
             $scope.saveDiary = function (item) {
-                $state.go('home.admin.diarys.catalog', {'catalogId': item.id});
-                // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
+                $state.go('home.admin.diarys.pedigree', {'pedigreeId': item.id});
+                // $state.go('home.admin.pedigrees.diary', {diaryId: success.id});
             };
             $scope.saveJournal = function (item) {
-                $state.go('home.admin.catalog.diary', {'catalogId': item.id, 'diaryId': item.id});
-                // $state.go('home.admin.catalogs.diary', {diaryId: success.id});
+                $state.go('home.admin.pedigree.diary', {'pedigreeId': item.id, 'diaryId': item.id});
+                // $state.go('home.admin.pedigrees.diary', {diaryId: success.id});
             };
             /**
              * Сохранить изменения
@@ -716,56 +723,28 @@ angular.module('CatalogModule')
              */
             $scope.saveEdit = function (item) {
                 let lengthNicknameMin = 1;
-                // console.log('item-555:', item);
-                // console.log('KENNELS 33: ', item.kennels);
-                // if (item.name.length < lengthNicknameMin) return toastr.error('Имя меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                // if (!item.kennels.id) return toastr.error('Питомник не заполнен.', 'Ошибка!');
-                // if (!item.sires) return toastr.error('Отец не установлен.', 'Ошибка!');
-
-                // if (item.nickname.length < lengthNicknameMin) return toastr.error('Кличка меньше ' + lengthNicknameMin + ' символов', 'Ошибка!');
-                // if (item.weight < $scope.lengthWeightMin) return toastr.error('Вес меньше ' + $scope.lengthWeightMin + ' символов', 'Ошибка!');
-
+                if (!item.kennels || (item.kennels[0].id === 'x')) return toastr.error('Питомник не заполнен.', 'Ошибка!');
                 item = reversValue(item);
-                if (item.id && ( item.symbol || item.name)) {
-
-                    console.log('UPDATE: ', item);
-                    // item.price = [
-                    //     {how: 10000, max: 200000, min: 1000, step: 1000, name: 'rub', title:'рубль'},
-                    //     {how: 2000, max: 3000, min: 10, step: 10, name: 'usd', title:'dollar'},
-                    //     {how: 1000, max: 2500, min: 10, step: 10, name: 'euro', title:'euro'}
-                    // ];
+                if (item.id && ( item.name)) {
                     item.$update(item, function (success) {
                             toastr.success(info.changed);
-
-                            // console.log('UPDATE2');
                             $scope.refresh();
                         },
                         function (err) {
-
-                            toastr.error(err.data, 'Ошибка!');
-                            // $scope.refresh();
+                            toastr.error(err, 'Ошибка 66!');
                         }
                     );
                 } else {
-                    if (!item.id && (item.symbol || item.name)) {
-                        if (!item.kennels || (item.kennels[0].id === 'x')) return toastr.error('Питомник не заполнен.', 'Ошибка!');
-                        // (item.variety.length < 5 && item.variety.length > 5) ? toastr.error('Не корректная длинна типа собаки.', 'Ошибка!') : '';
+                    if (!item.id && item.name) {
                         item.$save(item, function (success) {
-                                //console.log(success);
-                                //location.reload();
                                 toastr.success(info.newOk);
-                                // /admin/catalog/
-                                //$location.path('/profile') ;
-                                console.log('SAVE - create');
-                                $state.go('home.admin.catalog', {catalogId: success.id});
+                                $state.go('home.admin.pedigree', {pedigreeId: success.id});
                             },
                             function (err) {
                                 toastr.error(err.data, 'Ошибка!');
-                                // if(err.data['originalError'].code == 11000) return toastr.error('Объект уже существует.',  'Ошибка '+err.data['originalError'].code+'!');
-
                             });
                     } else {
-                        toastr.error('Нужно заполнить одно из полей, букву помёта или имя собаки, можно и то и другое вместе.', 'Ошибка!');
+                        toastr.error('Не заполнен номер родословной.', 'Ошибка!');
                     }
                 }
             };
@@ -777,22 +756,6 @@ angular.module('CatalogModule')
                 }
             };
 
-            //$scope.addFurlough = function () {
-            //    if (angular.isArray($scope.item.fur)) {
-            //        $scope.item.fur.push({type: "отпуск", from: "", to:""});
-            //    } else {
-            //        $scope.item.fur = [{type: "отпуск", from: "", to: ""}];
-            //    }
-            //};
-
-            //$scope.removeFurlough = function (obj) {
-            //    let furloughs = $scope.item.fur;
-            //    for (let i = 0, ii = furloughs.length; i < ii; i++) {
-            //        if (obj === furloughs[i]) {
-            //            furloughs.splice(i, 1);
-            //        }
-            //    }
-            //};
             $scope.removeContact = function (contact) {
                 let contacts = $scope.item.contacts;
                 for (let i = 0, ii = contacts.length; i < ii; i++) {
@@ -985,7 +948,7 @@ angular.module('CatalogModule')
                 $scope.item.photos = photos;
                 $scope.item.$save($scope.item, function (success) {
                         toastr.success(info.changed);
-                        // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
+                        // $state.go('home.admin.pedigrees.edit', {pedigreeId: success.id});
                         $scope.refresh();
                     },
                     function (err) {
@@ -1021,7 +984,7 @@ angular.module('CatalogModule')
                 $scope.item.$save($scope.item, function (success) {
                         toastr.success(info.changed);
                         $scope.refresh();
-                        // $state.go('home.admin.catalogs.edit', {catalogId: success.id});
+                        // $state.go('home.admin.pedigrees.edit', {pedigreeId: success.id});
                     },
                     function (err) {
                         toastr.error(err.data.invalidAttributes, info.error + ' 8000!');
@@ -1219,9 +1182,9 @@ angular.module('CatalogModule')
 
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Catalogs', 'home.admin.catalogs');
-            if ($scope.edit)  breadcrumb.set('Edit', 'home.admin.catalogs.edit' + $state.current.url);
-            if (!$scope.edit)  breadcrumb.set('Create', 'home.admin.catalogs.edit' + $state.current.url);
+            breadcrumb.set('Pedigrees', 'home.admin.pedigrees');
+            if ($scope.edit)  breadcrumb.set('Edit', 'home.admin.pedigrees.edit' + $state.current.url);
+            if (!$scope.edit)  breadcrumb.set('Create', 'home.admin.pedigrees.edit' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

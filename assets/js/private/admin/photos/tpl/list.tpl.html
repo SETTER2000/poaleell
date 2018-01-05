@@ -78,6 +78,13 @@
                         </button>
                     </th>
                     <th >
+                        <button class="btn btn-default not-border" ng-click="sortBy('fileNamePhoto')">
+                            {{fileNamePhotoArea}}
+                                <span class="sortOrder" ng-show="propertyName === 'fileNamePhoto'"
+                                      ng-class="{reverse: reverse}"></span>
+                        </button>
+                    </th>
+                    <th >
                         <button class="btn btn-default not-border" ng-click="sortBy('photoUrl')">
                             {{photoUrlArea}}
                                 <span class="sortOrder" ng-show="propertyName === 'photoUrl'"
@@ -103,6 +110,11 @@
                 <tr ng-repeat="item in filtered=(items | filter:{$:searchText, action:!mode}| orderBy:propertyName:reverse)">
                     <td>{{$index+1}}</td>
 
+                    <td >
+                        <a ng-href="{{item.getEditUrl(item.id)}}">
+                           {{item.name}}
+                        </a>
+                    </td>
                     <td >
                         <a ng-href="{{item.getEditUrl(item.id)}}">
                            {{item.fileNamePhoto}}

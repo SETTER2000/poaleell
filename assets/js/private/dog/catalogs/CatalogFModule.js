@@ -306,21 +306,21 @@ angular.module('CatalogFModule', ['ui.router', 'toastr', 'ngResource', 'angularF
      * Фильтр выбрасывает меня из папы или из мамы
      * Я не могу быть сам себе родителем )
      */
-    .filter('itsNotMe', function () {
-        return function (value, param) {
-            if (angular.isArray(value) && angular.isString(param)) {
-                // console.log('GENDER PAPA77:', value);
-                let ar = [];
-                for (let item in value) {
-                    // console.log('GENDER ITEM ID:', value[item].id);
-                    if (value[item].id !== param) ar.push(value[item]);
-                    // console.log('Это оно 101!!:', value[item]);
-                }
-                return ar;
-
-            }
-        }
-    })
+    // .filter('itsNotMe', function () {
+    //     return function (value, param) {
+    //         if (angular.isArray(value) && angular.isString(param)) {
+    //             // console.log('GENDER PAPA77:', value);
+    //             let ar = [];
+    //             for (let item in value) {
+    //                 // console.log('GENDER ITEM ID:', value[item].id);
+    //                 if (value[item].id !== param) ar.push(value[item]);
+    //                 // console.log('Это оно 101!!:', value[item]);
+    //             }
+    //             return ar;
+    //
+    //         }
+    //     }
+    // })
 
 
 ;

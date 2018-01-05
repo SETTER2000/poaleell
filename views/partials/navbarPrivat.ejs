@@ -39,6 +39,7 @@
                             <li ng-class="{active:$state.includes('home.admin.honors')}"><a ng-if="( me.admin)" ui-sref="home.admin.honors">Награды</a></li>
                             <li ng-class="{active:$state.includes('home.admin.photos')}"><a ng-if="( me.admin)" ui-sref="home.admin.photos">Фото</a></li>
                             <li ng-class="{active:$state.includes('home.admin.titles')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.titles">Титулы</a></li>
+                            <li ng-class="{active:$state.includes('home.admin.pedigrees')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.pedigrees">Родословные</a></li>
                             <li ng-class="{active:$state.includes('home.admin.messages')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.messages">Сообщения</a></li>
                             <li ng-class="{active:$state.includes('home.admin.reactions')}"><a ng-if="(me.kadr || me.admin)"  ui-sref="home.admin.reactions">Тесты</a></li>
                             <li ng-class="{active:$state.includes('home.admin.administration')}"><a ng-if="me.admin" ui-sref="home.admin.users.administration">Группы</a></li>

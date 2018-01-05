@@ -90,10 +90,10 @@
 
                             <p>
                                 <small>
-                                    {{item.sires.name }}<br>
-                                    ДР: {{item.sires.birthday | date: "dd.MM.yyyy"}}<br>
-                                    Рост (см): {{item.sires.growth}}<br>
-                                    Вес (гр): {{item.sires.weight}}
+                                    <strong>{{itemParentSire.getFullName()}}</strong> <br>
+                                    ДР: <span class="pull-right">{{item.sires.birthday | date: "mediumDate" }}</span><br>
+                                    Рост (см): <span class="pull-right">{{item.sires.growth}}</span><br>
+                                    Вес (гр): <span class="pull-right">{{item.sires.weight | number:0}}</span><br>
                                 </small>
                             </p>
                             <!--<p>{{item.sires | json}}</p>-->
@@ -116,10 +116,10 @@
                         <div class="caption">
                             <p>
                                 <small>
-                                    {{item.dams.name }}<br>
-                                    ДР: {{item.dams.birthday | date: "dd.MM.yyyy"}}<br>
-                                    Рост (см): {{item.dams.growth}}<br>
-                                    Вес (гр): {{item.dams.weight}}
+                                    <strong>{{itemParentDams.getFullName()}}</strong> <br>
+                                    ДР: <span class="pull-right">{{item.dams.birthday | date: "mediumDate" }}</span><br>
+                                    Рост (см): <span class="pull-right">{{item.dams.growth}}</span><br>
+                                    Вес (гр): <span class="pull-right">{{item.dams.weight | number:0}}</span><br>
                                 </small>
                             </p>
                             <p class="text-center">

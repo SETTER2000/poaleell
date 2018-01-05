@@ -54,6 +54,7 @@ module.exports.routes = {
     'POST /file/uploadDogs': 'CatalogController.upload',
     'POST /file/uploadTitles': 'PhotoController.uploadTitlePhoto',
     'POST /file/uploadReactions': 'PhotoController.uploadReactionPhoto',
+    'POST /file/uploadPedigrees': 'PhotoController.uploadPedigreePhoto',
 
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
     'POST /users/ldap': 'UserController.searchLDAP',
@@ -237,12 +238,20 @@ module.exports.routes = {
     'GET /photos': 'PhotoController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
     // 'POST /photos': 'PhotoController.create', // создать запись
     // 'DELETE /photos/:id': 'PhotoController.destroy', // удалить
-    // 'PUT /photos/:id': 'PhotoController.update', // обновить
-    
-    
-    
-    
-    
+    'PUT /photos/:id': 'PhotoController.update', // обновить
+
+
+    /**
+     * Pedigrees
+     */
+    'GET    /pedigrees':     'PedigreeController.get',    // получить все записи или одну по http://localhost:1338/catalogs?id=599c4aefc97f011f70a2359b
+    'POST   /pedigrees':     'PedigreeController.create', // создать запись
+    'DELETE /pedigrees/:id': 'PedigreeController.destroy', // удалить
+    'POST   /pedigrees/:id': 'PedigreeController.update', // удалить
+    'PUT    /pedigrees/:id': 'PedigreeController.update', // обновить
+
+
+
     /*************************************************************
      * Server-rendered HTML Pages                                *
      *************************************************************/
@@ -331,7 +340,10 @@ module.exports.routes = {
     'GET /admin/messages/edit/:id': 'PageController.showHomePage',
 
 
-
+    'GET /admin/pedigrees': 'PageController.showHomePage',
+    'GET /admin/pedigree/:id': 'PageController.showHomePage',
+    'GET /admin/pedigrees/create': 'PageController.showHomePage',
+    'GET /admin/pedigrees/edit/:id': 'PageController.showHomePage',
 
 
     'GET /admin/titles': 'PageController.showHomePage',

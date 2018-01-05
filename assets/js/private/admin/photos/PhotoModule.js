@@ -10,15 +10,15 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
                     }
                 }
             })
-            // .state('home.admin.photos.edit', {
-            //     url: '/edit/:photoId',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/admin/photos/tpl/edit.tpl.html',
-            //             controller: 'EditPhotoController'
-            //         }
-            //     }
-            // })
+            .state('home.admin.photos.edit', {
+                url: '/edit/:photoId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/photos/tpl/edit.tpl.html',
+                        controller: 'EditPhotoController'
+                    }
+                }
+            })
             // .state('home.admin.photos.settings', {
             //     url: '/settings',
             //     templateUrl: '/js/private/admin/photos/views/home.admin.photos.settings.html',
@@ -33,15 +33,15 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
                     }
                 }
             })
-            // .state('home.admin.photos.create', {
-            //     url: '/create/:photoId',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/admin/photos/tpl/edit.tpl.html',
-            //             controller: 'EditPhotoController'
-            //         }
-            //     }
-            // })
+            .state('home.admin.photos.create', {
+                url: '/create/:photoId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/photos/tpl/edit.tpl.html',
+                        controller: 'EditPhotoController'
+                    }
+                }
+            })
 
         ;
     })

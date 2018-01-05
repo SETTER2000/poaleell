@@ -122,7 +122,7 @@ module.exports = {
         } else {
             if (req.param('id')) {
                 q.id = req.param('id');
-                console.log('Запрос2: ', q);
+                // console.log('Запрос2: ', q);
                 Catalog.find(q)
                     .populate('titles')
                     .populate('kennels')
@@ -136,12 +136,6 @@ module.exports = {
                     .exec((err, finds) => {
                         if (err) return res.negotiate;
                         if (!finds) return res.notFound();
-                        //console.log('FINDS CATALOG', finds[0].dams.getFullName());
-                        // return res.redirect('/admin/users/edit/' + req.param('id'));
-                        // return res.backToHomePage();
-                        //return res.redirect('/admin/users/edit/' + req.param('id'));
-
-
                         (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
                     });
             } else {
@@ -158,18 +152,10 @@ module.exports = {
                     .exec((err, finds) => {
                         if (err) return res.negotiate;
                         if (!finds) return res.notFound();
-                        // console.log('FINDS CATALOG', finds.name);
-                        // return res.redirect('/admin/users/edit/' + req.param('id'));
-                        // return res.backToHomePage();
-                        //return res.redirect('/admin/users/edit/' + req.param('id'));
-
-
                         (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
                     });
             }
         }
-
-
     },
 
 
@@ -194,8 +180,9 @@ module.exports = {
                 })
                 .join(' ');
         }
+        console.log('req.params all', req.params.all());
 
-            // console.log('KENNELS', req.param('kennels'));
+
 
         obj = {
             action: (req.param('action')) ? req.param('action') : false,
@@ -222,7 +209,6 @@ module.exports = {
             titles: req.param('titles'),
             description: req.param('description'),
             death: req.param('death'),
-            pedigree: req.param('pedigree'),
             rkf: req.param('rkf'),
             pll: req.param('pll'),
             pra: req.param('pra'),
@@ -246,13 +232,15 @@ module.exports = {
             .exec((err, findDepartment) => {
                 "use strict";
                 if (err) return res.serverError(err);
-                // console.log('findDepartment', findDepartment);
                 if (findDepartment.catalogs.length) return res.badRequest('Объект уже существует.');
-                Catalog.create(obj).exec(function (err, createCatalog) {
+                Catalog.create(obj)
+                    .exec(function (err, createCatalog) {
                     if (err) return res.serverError(err);
                     console.log('Собаку создал:', req.session.me);
                     console.log('Собака новая:', createCatalog);
-                    return res.send(createCatalog);
+                    console.log('ALLS', req.params.all());
+
+                        return res.send(createCatalog);
                 });
             });
     },
@@ -331,11 +319,6 @@ module.exports = {
                 })
                 .join(' ');
         }
-        // console.log('KENNELS', req.param('kennels'));
-        // console.log('BREEDER: ', req.param('breeder'));
-        // console.log('OWNER: ', req.param('owner'));
-
-
         let obj = {
             id: req.param('id'),
             action: req.param('action'),
@@ -354,7 +337,6 @@ module.exports = {
             variety: req.param('variety'),
             color: req.param('color'),
             death: req.param('death'),
-            pedigree: req.param('pedigree'),
             rkf: req.param('rkf'),
             pll: req.param('pll'),
             pra: req.param('pra'),
@@ -376,14 +358,53 @@ module.exports = {
             dateWeight: req.param('dateWeight'),
             messages: req.param('messages'),
         };
+        // if(req.param('pedigrees')) {
+        //     Pedigree.create(req.param('pedigrees')['0'])
+        //         .exec(function (err, createPedigree) {
+        //             if (err){
+        //                 Catalog.destroy(createCatalog.id, (err) => {
+        //                     if (err) return next(err);
+        //                     return res.serverError('Pedigree не сохранён!');
+        //                 });
+        //             }else{
+        //                 console.log('Pedigree создал:', req.session.me);
+        //                 console.log('Pedigree новая:', createPedigree);
+        //                 createCatalog.pedigrees.add(createPedigree.id);
+        //                 createCatalog.save(function(err){
+        //                     if (err) { return res.serverError(err); }
+        //                     return res.send(createCatalog);
+        //                 });
+        //             }
+        //
+        //         });
+        // }else{
+        //     return res.send(createCatalog);
+        // }
 
+        // Обновляем объект Pedigree
+        // let pediID= req.param('pedigrees')['id'];
+        // if(pediID) {
+        //     Pedigree.update({id:pediID},req.param('pedigrees'))
+        //         .exec(function (err, pedigreeUpdate) {
+        //             "use strict";
+        //             if (err) console.log('Ошибка! Pedigree update...'); return res.negotiate(err);
+        //         });
+        // }else{
+        //     if(req.param('pedigrees')){
+        //         Pedigree.create(req.param('pedigrees'))
+        //             .exec(function (err, createPedigree) {
+        //                 "use strict";
+        //                 if (err) {console.log('Ошибка! Pedigree create...'); return res.negotiate(err);}
+        //                 obj.pedigrees = createPedigree.id;
+        //             });
+        //     }
+        // }
 
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             // if (err) return res.redirect('/admin/catalogs/edit/' + req.param('id'));
             if (err) return res.negotiate(err);
-            console.log('Каталог обновил:', req.session.me);
-            console.log('Собака обновление:', obj);
-            console.log('inlinePanel: ', req.param('inlinePanel'));
+            // console.log('Каталог обновил:', req.session.me);
+            // console.log('Собака обновление:', obj);
             // console.log('req.body: ', req.body);
             Catalog.findOne(req.param('id'))
                 .populate('titles')
@@ -398,14 +419,11 @@ module.exports = {
                     if (err) return res.negotiate(err);
                     if (!catalog) return res.notFound('Не могу');
 
+
+
                     // console.log('positionRemove:', req.param('positionRemove'));
                     catalog.titles.add(req.param('titles'));
-                    // catalog.kennels.add(req.param('kennels'));
-                    // catalog.furloughs.add(req.param('furloughs'));
 
-                    // if (_.isEmpty(req.param('position'))) {
-                    //     catalog.titles.add({})
-                    // }
                     if (req.param('objRemove')) {
                         catalog.titles.remove(req.param('objRemove'));
                     }

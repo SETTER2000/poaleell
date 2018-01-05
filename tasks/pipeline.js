@@ -51,6 +51,7 @@ var jsFilesToInject = [
     'js/private/admin/employees/EmployeeModule.js',
     'js/private/admin/attendances/AttendanceModule.js',
     'js/private/admin/honors/HonorModule.js',
+    'js/private/admin/pedigrees/PedigreeModule.js',
 
     'js/private/admin/positions/PositionModule.js',
     'js/private/admin/furloughs/FurloughModule.js',
