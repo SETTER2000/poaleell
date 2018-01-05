@@ -62,22 +62,22 @@ angular.module('PedigreeModule', ['ui.router', 'toastr', 'ngResource', 'angularF
                 }
             })
             //
-            // .state('home.admin.pedigree', {
-            //     url: '/pedigree/:pedigreeId',
-            //     views: {
-            //         '@': {
-            //             templateUrl: '/js/private/admin/pedigrees/tpl/show.tpl.html',
-            //             controller: 'PedigreeController'
-            //         },
-            //         // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.pedigrees.
-            //         // <div ui-view='formView'/> внутри /js/private/admin/pedigree/tpl/show.tpl.html
-            //         // "formView@home.admin.pedigree" : { }
-            //         "formView@home.admin.pedigree": {
-            //             templateUrl: '/js/private/admin/messages/views/min.messages.form.html'
-            //         },
-            //
-            //     }
-            // })
+            .state('home.admin.pedigree', {
+                url: '/pedigree/:pedigreeId',
+                views: {
+                    '@': {
+                        templateUrl: '/js/private/admin/pedigrees/tpl/show.tpl.html',
+                        controller: 'PedigreeController'
+                    },
+                    // Абсолютное позиционирование вида 'formView' в  состоянии home.admin.pedigrees.
+                    // <div ui-view='formView'/> внутри /js/private/admin/pedigree/tpl/show.tpl.html
+                    // "formView@home.admin.pedigree" : { }
+                    // "formView@home.admin.pedigree": {
+                    //     templateUrl: '/js/private/admin/messages/views/min.messages.form.html'
+                    // },
+
+                }
+            })
             //
             .state('home.admin.pedigrees.create', {
                 url: '/create/:pedigreeId',
@@ -206,48 +206,48 @@ angular.module('PedigreeModule', ['ui.router', 'toastr', 'ngResource', 'angularF
         Pedigrees.prototype.er = function () {
             return alert('ОШИБКА!!! Сотрудник: ' + this.getFullName() + ' - изменения не приняты!');
         };
-        Pedigrees.prototype.getTimeBirthday = function () {
-            console.log('this.timeBirthday:', this.timeBirthday);
-            return this.timeBirthday;
-        };
+        // Pedigrees.prototype.getTimeBirthday = function () {
+        //     console.log('this.timeBirthday:', this.timeBirthday);
+        //     return this.timeBirthday;
+        // };
 
 
-        Pedigrees.prototype.breederName = function (int) {
-            let t = '';
-            if (int) {
-                this.breeders.forEach(function (item, i, arr) {
-                    t += (i >= 1) ? ', ' : '';
-                    t += item.lastName + ' ' + item.firstName;
-                    t += (item.patronymicName) ? ' ' + item.patronymicName : '';
-
-                });
-            } else {
-                this.breeders.forEach(function (item, i, arr) {
-                    t += (i >= 1) ? ', ' : '';
-                    t += item.lastName + ' ' + item.firstName[0] + '.';
-                    t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
-
-                });
-            }
-            return t;
-        };
-        Pedigrees.prototype.ownerName = function (int) {
-            let t = '';
-            if (int) {
-                this.owners.forEach(function (item, i, arr) {
-                    t += (i >= 1) ? ', ' : '';
-                    t += item.lastName + ' ' + item.firstName;
-                    t += (item.patronymicName) ? ' ' + item.patronymicName : '';
-                });
-            } else {
-                this.owners.forEach(function (item, i, arr) {
-                    t += (i >= 1) ? ', ' : '';
-                    t += item.lastName + ' ' + item.firstName[0] + '.';
-                    t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
-                });
-            }
-            return t;
-        };
+        // Pedigrees.prototype.breederName = function (int) {
+        //     let t = '';
+        //     if (int) {
+        //         this.breeders.forEach(function (item, i, arr) {
+        //             t += (i >= 1) ? ', ' : '';
+        //             t += item.lastName + ' ' + item.firstName;
+        //             t += (item.patronymicName) ? ' ' + item.patronymicName : '';
+        //
+        //         });
+        //     } else {
+        //         this.breeders.forEach(function (item, i, arr) {
+        //             t += (i >= 1) ? ', ' : '';
+        //             t += item.lastName + ' ' + item.firstName[0] + '.';
+        //             t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
+        //
+        //         });
+        //     }
+        //     return t;
+        // };
+        // Pedigrees.prototype.ownerName = function (int) {
+        //     let t = '';
+        //     if (int) {
+        //         this.owners.forEach(function (item, i, arr) {
+        //             t += (i >= 1) ? ', ' : '';
+        //             t += item.lastName + ' ' + item.firstName;
+        //             t += (item.patronymicName) ? ' ' + item.patronymicName : '';
+        //         });
+        //     } else {
+        //         this.owners.forEach(function (item, i, arr) {
+        //             t += (i >= 1) ? ', ' : '';
+        //             t += item.lastName + ' ' + item.firstName[0] + '.';
+        //             t += (item.patronymicName[0]) ? ' ' + item.patronymicName[0] + '.' : '';
+        //         });
+        //     }
+        //     return t;
+        // };
         Pedigrees.prototype.getAvatar = function () {
             return this.avatarUrl;
         };

@@ -54,7 +54,7 @@ module.exports.routes = {
     'POST /file/uploadDogs': 'CatalogController.upload',
     'POST /file/uploadTitles': 'PhotoController.uploadTitlePhoto',
     'POST /file/uploadReactions': 'PhotoController.uploadReactionPhoto',
-    'POST /file/uploadPedigrees': 'PhotoController.uploadPedigreePhoto',
+    'POST /file/uploadPedigrees': 'PedigreeController.upload',
 
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
     'POST /users/ldap': 'UserController.searchLDAP',

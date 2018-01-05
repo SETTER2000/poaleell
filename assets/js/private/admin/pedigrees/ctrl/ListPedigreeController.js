@@ -159,18 +159,10 @@
                     //$scope.countDefaultRows();
                 });
 
-                $scope.debug = true;
+                $scope.debug = false;
                 $scope.nameHeader = {
-                    fioArea: 'Имя',
-                    genderArea: 'Пол',
-                    weightArea: 'Вес',
-                    growthArea: 'Рост',
-                    varietyArea: 'Тип',
-                    colorArea: 'Окрас',
-                    salesArea: 'Продаётся',
-                    breederArea: 'Заводчик',
-                    ownerArea: 'Владелец',
-                    messagesArea: 'Сообщения',
+                    fioArea: 'Номер',
+                    dogArea: 'Собака',
                 };
                 $scope.added = 'Добавить родословную';
                 $scope.showBt = ($scope.me.kadr || $scope.me.admin) ? 1 : 0; // показать кнопку $scope.added

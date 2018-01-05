@@ -1,6 +1,6 @@
-angular.module('CatalogModule')
-    .controller('CatalogController', ['$scope', '$location', '$state', '$http', 'toastr', 'toastrConfig', "$rootScope", 'moment', 'Catalogs', '$stateParams',
-        function ($scope, $location, $state, $http, toastr, toastrConfig, $rootScope, moment, Catalogs, $stateParams) {
+angular.module('PedigreeModule')
+    .controller('PedigreeController', ['$scope', '$location', '$state', '$http', 'toastr', 'toastrConfig', "$rootScope", 'moment', 'Pedigrees', '$stateParams',
+        function ($scope, $location, $state, $http, toastr, toastrConfig, $rootScope, moment, Pedigrees, $stateParams) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             $scope.newMessage = {
@@ -19,7 +19,7 @@ angular.module('CatalogModule')
              * которые используются для взаимодействия с данными на сервере $delete, $get, $remove, $save
              *
              * Так же можно определять свои методы для конструктора в фабрике модуля.
-             * В данном конструкторе добавлен метод Catalogs.getFullName()
+             * В данном конструкторе добавлен метод Pedigrees.getFullName()
              */
             $scope.debug = true;
 
@@ -30,9 +30,9 @@ angular.module('CatalogModule')
 
 
             $scope.refresh = function () {
-                $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
-                    console.log('catalogs', catalogs);
-                    $scope.catalogs = catalogs;
+                $scope.item = Pedigrees.get({id: $stateParams.pedigreeId}, function (pedigrees) {
+                    console.log('pedigrees', pedigrees);
+                    $scope.pedigrees = pedigrees;
                 }, function (err) {
                     toastr.error(err.data.details, 'Ошибка - 889! ' + err.data.message);
                 });
@@ -47,17 +47,17 @@ angular.module('CatalogModule')
 
 
             $scope.getNameSire = function () {
-                $scope.itemParentSire = Catalogs.get({id:  $scope.item.sires.id}, function (catalogs) {
-                    console.log('catalogs 2', catalogs);
-                    $scope.catalogs = catalogs;
+                $scope.itemParentSire = Pedigrees.get({id:  $scope.item.sires.id}, function (pedigrees) {
+                    console.log('pedigrees 2', pedigrees);
+                    $scope.pedigrees = pedigrees;
                 }, function (err) {
                     toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
                 });
             };
             $scope.getNameDams = function () {
-                $scope.itemParentDams = Catalogs.get({id:  $scope.item.dams.id}, function (catalogs) {
-                    console.log('catalogs 2', catalogs);
-                    $scope.catalogs = catalogs;
+                $scope.itemParentDams = Pedigrees.get({id:  $scope.item.dams.id}, function (pedigrees) {
+                    console.log('pedigrees 2', pedigrees);
+                    $scope.pedigrees = pedigrees;
                 }, function (err) {
                     toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
                 });
@@ -93,7 +93,7 @@ angular.module('CatalogModule')
                     $scope.item.messages.push(mess);
                     $scope.item.$update($scope.item, function (success) {
                             toastr.success(mess.message + ' ' + mess.email, 'Ok! Сообщение отправлено555.');
-                            // $state.go($scope.item.getShowUrl($scope.item.id, me), {catalogId: success.id});
+                            // $state.go($scope.item.getShowUrl($scope.item.id, me), {pedigreeId: success.id});
                         },
                         function (err) {
                             toastr.error(err.data, 'Ошибка!');
@@ -134,8 +134,8 @@ angular.module('CatalogModule')
 
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
-            breadcrumb.set('Catalog', 'home.admin.catalogs');
-            breadcrumb.set('Show', 'home.admin.catalogs.show' + $state.current.url);
+            breadcrumb.set('Pedigree', 'home.admin.pedigrees');
+            breadcrumb.set('Show', 'home.admin.pedigrees.show' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
             $scope.refresh();
         }]);

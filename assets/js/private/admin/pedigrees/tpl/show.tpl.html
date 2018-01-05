@@ -186,25 +186,25 @@
                     </li>
                 </ol>
             </div>
-            <div class="row" ng-if="item.titles.length">
-                <h5 class="text-center"> Статистика (победы, заслуги, достижения): </h5>
-                <ol class="breadcrumb text-center">
-                    <li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})"
-                        title="{{sert.description}}">
-                        <a ng-if="me.kadr || me.admin" href="/admin/title/{{sert.id}}">
-                            <span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}
-                        </a>
-                        <a ng-if="!me.kadr && !me.admin" href="#">
-                            <span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}
-                        </a>
-                    </li>
-                </ol>
-            </div>
+            <!--<div class="row" ng-if="item.titles.length">-->
+                <!--<h5 class="text-center"> Статистика (победы, заслуги, достижения): </h5>-->
+                <!--<ol class="breadcrumb text-center">-->
+                    <!--<li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})"-->
+                        <!--title="{{sert.description}}">-->
+                        <!--<a ng-if="me.kadr || me.admin" href="/admin/title/{{sert.id}}">-->
+                            <!--<span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}-->
+                        <!--</a>-->
+                        <!--<a ng-if="!me.kadr && !me.admin" href="#">-->
+                            <!--<span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ol>-->
+            <!--</div>-->
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-group ">
                         <li class="list-group-item list-group-item-success">
-                            Заводчик
+                           <!--Заводчик-->
                         </li>
                         <li class="list-group-item list-group-item-warning" ng-repeat="breeder in item.breeders">
                             <a ng-if="(me.kadr || me.admin)" ng-href="/admin/user/{{breeder.id}}">
@@ -285,7 +285,7 @@
                 <!--<td></td>-->
                 <!--</tr>-->
                 <tr ng-if="item.getFullName()">
-                    <th>Имя</th>
+                    <th>Номер</th>
                     <td>
                         <span ng-if="item.name">
                         {{item.getFullName()}}

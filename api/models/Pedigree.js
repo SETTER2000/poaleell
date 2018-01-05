@@ -40,6 +40,17 @@ module.exports = {
             type: 'string',
             maxLength: 170
         },
+        avatarFd: {
+            type: 'string'
+        },
+
+        fileNameAvatar: {
+            type: 'string'
+        },
+        avatarUrl: {
+            type: 'string'
+        },
+
         lastLoggedIn: {
             type: 'date',
             required: true,

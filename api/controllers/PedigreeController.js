@@ -186,8 +186,8 @@ module.exports = {
             action: req.param('action'),
             sales: req.param('sales'),
             salesDescription: req.param('salesDescription'),
-            section: 'Каталог',
-            sections: 'Каталоги',
+            section: 'Родословная',
+            sections: 'Родословные',
             name: name,
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
@@ -264,9 +264,7 @@ module.exports = {
         Pedigree.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             // if (err) return res.redirect('/admin/catalogs/edit/' + req.param('id'));
             if (err) return res.negotiate(err);
-            // console.log('Каталог обновил:', req.session.me);
-            // console.log('Собака обновление:', obj);
-            // console.log('req.body: ', req.body);
+
 
 
             Pedigree.findOne(req.param('id'))
@@ -348,37 +346,37 @@ module.exports = {
      * @param req
      * @param res
      */
-    // upload: function (req, res) {
-    //     if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-    //     let path = '/images/pedigree/dogs';
-    //     //console.log('formData: ', req.body);
-    //     const dir = require('util').format('%s' + path + '/%s', sails.config.appUrl.rootDir, req.body.id);
-    //     let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
-    //     console.log('fileName', fileName);
-    //     console.log('dir', dir);
-    //     req.file('file').upload({
-    //             dirname: dir,
-    //             saveAs: fileName
-    //         },
-    //         function (err, files) {
-    //             console.log('err', err);
-    //             console.log('files', files);
-    //             if (err) return res.serverError(err);
-    //             if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
-    //
-    //             Pedigree.update(req.body.id, {
-    //                 avatarUrl: require('util').format(path + '/%s/%s', req.body.id, fileName),
-    //                 avatarFd: files[0].fd,
-    //                 fileNameAvatar: fileName
-    //             })
-    //                 .exec(function (err) {
-    //                     if (err) return res.negotiate(err);
-    //                     //console.log(' avatarUrl: ', dir);
-    //                     //console.log(' avatarUrl2: ', require('util').format('/images/pedigree/avatar/%s/%s', req.body.id, fileName));
-    //                     return res.ok();
-    //                 });
-    //         });
-    // },
+    upload: function (req, res) {
+        if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
+        let path = '/images/catalog/pedigrees';
+        //console.log('formData: ', req.body);
+        const dir = require('util').format('%s' + path + '/%s', sails.config.appUrl.rootDir, req.body.id);
+        let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
+        console.log('fileName', fileName);
+        console.log('dir', dir);
+        req.file('file').upload({
+                dirname: dir,
+                saveAs: fileName
+            },
+            function (err, files) {
+                console.log('err', err);
+                console.log('files', files);
+                if (err) return res.serverError(err);
+                if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
+
+                Pedigree.update(req.body.id, {
+                    avatarUrl: require('util').format(path + '/%s/%s', req.body.id, fileName),
+                    avatarFd: files[0].fd,
+                    fileNameAvatar: fileName
+                })
+                    .exec(function (err) {
+                        if (err) return res.negotiate(err);
+                        //console.log(' avatarUrl: ', dir);
+                        //console.log(' avatarUrl2: ', require('util').format('/images/pedigree/avatar/%s/%s', req.body.id, fileName));
+                        return res.ok();
+                    });
+            });
+    },
 
 
 };

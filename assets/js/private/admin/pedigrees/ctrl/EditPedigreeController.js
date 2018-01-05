@@ -152,130 +152,6 @@ angular.module('PedigreeModule')
             };
 
 
-            /**
-             * Загрузка титулов
-             * @type {FileUploader|*}
-             */
-            var uploadTitles = $scope.uploadTitles = new FileUploader({
-                url: '/file/uploadTitles',
-                autoUpload: true,
-                removeAfterUpload: true,
-                queueLimit: 1,
-                withCredentials: true
-            });
-            uploadTitles.filters.push({
-                name: 'syncFilter',
-                fn: function (item /*{File|FileLikeObject}*/, options) {
-                    return this.queue.length < 10;
-                }
-            });
-            uploadTitles.filters.push({
-                name: 'asyncFilter',
-                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
-                    setTimeout(deferred.resolve, 1e3);
-                }
-            });
-
-
-            /**
-             * Фильтр проверяет расширение
-             * Доступны для загрузки только jpg файлы
-             */
-            uploadTitles.filters.push({
-                name: 'expFilter',
-                fn: function (item) {
-                    if (item.name.slice(-3) !== 'jpg') {
-                        toastr.error(info.requiredJpg, info.error);
-                        return false;
-                    }
-                    $scope.uploaderButtonPrice = true;
-                    return true;
-                }
-            });
-            // CALLBACKS
-            uploadTitles.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                //console.info('onWhenAddingFileFailed', item, filter, options);
-            };
-            uploadTitles.onAfterAddingFile = function (fileItem) {
-                //console.info('onAfterAddingFile', fileItem);
-            };
-            uploadTitles.onAfterAddingAll = function (addedFileItems) {
-                //console.info('onAfterAddingAll', addedFileItems);
-            };
-
-            $scope.getTitle = function (obj) {
-                $scope.idTitle = obj.id;
-            };
-
-            uploadTitles.onBeforeUploadItem = function (item) {
-                //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.pedigreeId});
-                item.formData.push({idTitle: $scope.idTitle});
-            };
-            // uploadTitles.onBeforeUploadItem = function (item) {
-            //     //console.info('onBeforeUploadItem', item);
-            //     item.formData.push({id: $stateParams.pedigreeId});
-            //     item.formData.push({idT: $stateParams.pedigreeId});
-            // };
-            uploadTitles.onProgressItem = function (fileItem, progress) {
-                //console.info('onProgressItem', fileItem, progress);
-
-            };
-            uploadTitles.onProgressAll = function (progress) {
-                //console.info('onProgressAll', progress);
-            };
-            uploadTitles.onSuccessItem = function (fileItem, response, status, headers) {
-                //console.info('onSuccessItem', fileItem);
-                //console.info('onSuccessItem2', response);
-                //console.info('onSuccessItem3', status);
-                //console.info('onSuccessItem4', headers);
-            };
-            uploadTitles.onErrorItem = function (fileItem, response, status, headers) {
-                $scope.pathToReport = response.avatarFd;
-                $scope.goReport = response.goReport;
-                $scope.statusErr = 'Отклонено';
-                toastr.error(response.message, info.error + ' Статус ' + status);
-            };
-            uploadTitles.onCancelItem = function (fileItem, response, status, headers) {
-                //console.log('uploader.onCancelItem');
-                //console.log(status);
-                ////console.info('onCancelItem', fileItem, response, status, headers);
-            };
-            uploadTitles.onCompleteItem = function (fileItem, response, status, headers) {
-                ////console.info('onCompleteItem', fileItem, response, status, headers);
-                if (status == 200) {
-                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
-                    fileItem.goReport = response.goReport;
-                    fileItem.dateUpload = response.dateUpload;
-                    toastr.success(response.message, 'Ok! ');
-                    fileItem.progress = response.progress;
-                    fileItem.errorPercent = '0';
-                    fileItem.statusOk = response.message;
-                    $interval(function () {
-                        $scope.refresh();
-                        //location.reload()
-                    }, 2000, 1);
-
-                    // fileItem.allEr = response.allEr;
-                }
-                switch (response.status) {
-                    case 202:
-                        //toastr.success(response.message, ' Статус ' + response.status);
-                        fileItem.progress = response.progress;
-                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
-                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
-                        fileItem.goReport = response.goReport;
-                        fileItem.statusOk = response.message;
-                        fileItem.allEr = response.allEr;
-
-                        break;
-                }
-            };
-            uploadTitles.onCompleteAll = function (fileItem, response, status, headers) {
-                //$scope.getDatePrice();
-                $scope.uploaderButtonPrice = false;
-            };
-
 
             /**
              * Загрузка тестов
@@ -456,6 +332,9 @@ angular.module('PedigreeModule')
             uploadPedigrees.onProgressItem = function (fileItem, progress) {
                 //console.info('onProgressItem', fileItem, progress);
             };
+            uploadPedigrees.onProgressItem = function (fileItem, progress) {
+                //console.info('onProgressItem', fileItem, progress);
+            };
             uploadPedigrees.onProgressAll = function (progress) {
                 //console.info('onProgressAll', progress);
             };
@@ -514,7 +393,7 @@ angular.module('PedigreeModule')
              * @type {FileUploader|*}
              */
             const uploader = $scope.uploader = new FileUploader({
-                url: '/file/uploadDogs',
+                url: '/file/uploadPedigrees',
                 autoUpload: true,
                 removeAfterUpload: true,
                 queueLimit: 1

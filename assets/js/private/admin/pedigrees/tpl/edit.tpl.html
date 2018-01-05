@@ -137,58 +137,6 @@
                         </div>
 
 
-                        <!--< B R E E D E R -->
-
-                        <div ng-controller="ListController" class="form-group ">
-                            <label class="control-label">Заводчик</label>
-                            <span>[ <a href="#" ng-click="addBreederField()">добавить</a> ]</span>
-                            <div class="form-inline" ng-repeat="breeder in item.breeders">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="breeder.id">
-                                        <option ng-repeat="option in items | filter:{action:true} | orderBy:'lastName'"
-                                                value="{{option.id}}">
-                                            {{option.getFullName()}}
-                                        </option>
-                                    </select>
-                                    <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default "
-                                                ng-click="removeBreederItem(breeder)">
-                                            <span class="glyphicon glyphicon-remove"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!--< O W N E R  -->
-
-                        <div ng-controller="ListController" class="form-group ">
-                            <label class="control-label"> Владелец </label>
-                            <span>[ <a href="#" ng-click="addOwnerField()">добавить</a> ]</span>
-                            <!--<span class="glyphicon glyphicon-question-sign" ng-mouseover="ownerNick=true"-->
-                            <!--ng-mouseleave="ownerNick=false"></span>-->
-                            <!--<small ng-if="ownerNick">(название питомника если нет, то имя хозяина)</small>-->
-                            <div class="form-inline" ng-repeat="owner in item.owners">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="owner.id">
-                                        <option ng-repeat="option in items | filter:{action:true} | orderBy:'lastName'"
-                                                value="{{option.id}}">
-                                            {{option.getFullName()}}
-                                        </option>
-                                    </select>
-                                    <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default "
-                                                ng-click="removeOwnerItem(owner)"><span
-                                                class="glyphicon glyphicon-remove"></span></button>
-                                    </div>
-                                    <!--<span id="helpBlock3" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
                         <!-- D E S C R I P T I O N -->
 
                         <div class="form-group">
