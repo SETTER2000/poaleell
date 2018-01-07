@@ -94,6 +94,10 @@ module.exports.routes = {
     'GET /honor/full': 'HonorController.download',
     'GET /honor/date': 'HonorController.date',
 
+    /**
+     * Photo
+     */
+    'POST /photo-show': 'PhotoController.get',
 
     // !!!! НЕ УДАЛЯТЬ РОУТ!
     'POST /user/signup': 'UserController.signup',

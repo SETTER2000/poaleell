@@ -1,0 +1,83 @@
+<div class="col-sm-11  col-md-12  main">
+    <div class="page-header">
+        <h1>
+    <span>Фотографии</span>
+
+
+
+            <div class="btn-group-xs pull-right">
+                <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-list"></span>
+                </a>
+                <a ng-if="me.admin || me.kadr" ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </div>
+        </h1>
+        <ul class="breadcrumb">
+            <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+                <ng-switch on="$last">
+                    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+                    <span ng-switch-default>
+        <a ui-sref="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+        </span>
+                </ng-switch>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12  clearfix animate-if" ng-if="wind">
+            <div ui-view="formView"></div>
+        </div>
+    </div>
+    <!--<td class="position">{{item.breederName(0)}}</td>-->
+    <!--<td class="position">{{item.ownerName(0)}}</td>-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <div style="height: 520px;overflow:hidden;margin: 0 0 20px 0;">
+                    <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+<!--{{slides | json}}-->
+                        <div uib-slide ng-repeat="slide in stringItem=(slides | filter:{action:true})  track by $index" index="$index">
+                            <!--<h2 >{{slide.name}} <br><small>{{slide.description}}</small></h2>-->
+                            <img ng-src="{{slide.photoUrl}}" class="popup-img" >
+                            <div class="carousel-caption">
+
+                                <p>{{slide.description}}</p>
+                            </div>
+                            <!--<img ng-src="{{slide.image}}" style="margin:auto;">-->
+                            <!--<div class="carousel-caption">-->
+                                <!--<h4>Slide {{slide.id}}</h4>-->
+                                <!--<p>{{slide.text}}</p>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-info" ng-click="addSlide()">Добавить слайд</button>
+                        <button type="button" class="btn btn-info" ng-click="randomize()">Случайный слайд</button>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="noWrapSlides">
+                                Остановить слайдер
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        Интервал, в миллисекундах: <input type="number" step="1000" class="form-control" ng-model="myInterval">
+                        <br/>Введите отрицательное число или 0, чтобы остановить интервал.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron" ng-if="me.admin && debug">
+        <pre><p>{{item|json}}</p></pre>
+    </div>
+</div>
+
+
+

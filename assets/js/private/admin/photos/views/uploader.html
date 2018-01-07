@@ -28,8 +28,8 @@
                 <div class="caption">
                     <div class="file-upload ">
                         <label class="text-left">
-                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                            <span ng-if="!item.photoUrl" class="btn btn-default" role="button">Выбрать фото</span>
+                            <input type="file" nv-file-select="" ng-disabled="myForm.$invalid" uploader="uploader" multiple/>
+                            <span ng-if="!item.photoUrl" class="btn btn-default" role="button" ng-disabled="myForm.$invalid">Выбрать фото</span>
                             <span ng-if="item.photoUrl" class="btn btn-default" role="button">Изменить фото</span>
                         </label>
                     </div>
