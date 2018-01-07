@@ -253,62 +253,10 @@ module.exports = {
      */
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        // if (!_.isString(req.param('name'))) {
-        //     console.log(error.date, error.name);
-        //     return res.badRequest(error.name);
-        // }
-        // if (!_.isString(req.param('kennel'))) {
-        //     console.log(error.date, error.kennel);
-        //     return res.badRequest(error.kennel);
-        // }
-        // if (!_.isString(req.param('birthday'))) {
-        //     console.log(error.date, error.birthday);
-        //     return res.badRequest(error.birthday);
-        // }
-        // if (!_.isString(req.param('gender'))) {
-        //     console.log(error.date, error.gender);
-        //     return res.badRequest(error.gender);
-        // }
-        // if (!_.isNumber(req.param('weight'))) {
-        //     console.log('req.paramw', req.param('weight'));
-        //     console.log(error.date, error.weight);
-        //     return res.badRequest(error.weight);
-        // }
-        // if (!_.isNumber(req.param('growth'))) {
-        //     console.log(error.date, error.growth);
-        //     return res.badRequest(error.growth);
-        // }
-        // if (!_.isString(req.param('variety'))) {
-        //     console.log(error.date, error.variety);
-        //     return res.badRequest(error.variety);
-        // }
-        // let i = 0;
-        // if (_.isString(req.param('color'))) {
-        //     _.forEach(objectColor, function (value, key) {
-        //         if (key == req.param('color')) i++;
-        //     });
-        //     if (!i) return res.badRequest(error.colorBad);
-        // } else {
-        //     console.log(error.date, error.color);
-        //     return res.badRequest(error.color);
-        // }
-        // if (!_.isString(req.param('breeder'))) {
-        //     console.log(error.date, error.breeder);
-        //     return res.badRequest(error.breeder);
-        // }
-        // let alias = req.param('alias');
-        // if (!_.isString(alias)) {
-        //     console.log('ALIAS no staring: ', req.param('alias'));
-        //     return res.badRequest(error.owner);
-        //     alias = '"' + req.param('alias') + '"';
-        // }
-        // console.log('UPDATE: ', req.body);
-
 
         /**
          * Поднимаем все первые буквы имени в верхний регистр
          */
-
         let name = '';
         if (_.isString(req.param('name'))) {
             name = req.param('name')
@@ -358,48 +306,6 @@ module.exports = {
             dateWeight: req.param('dateWeight'),
             messages: req.param('messages'),
         };
-        // if(req.param('pedigrees')) {
-        //     Pedigree.create(req.param('pedigrees')['0'])
-        //         .exec(function (err, createPedigree) {
-        //             if (err){
-        //                 Catalog.destroy(createCatalog.id, (err) => {
-        //                     if (err) return next(err);
-        //                     return res.serverError('Pedigree не сохранён!');
-        //                 });
-        //             }else{
-        //                 console.log('Pedigree создал:', req.session.me);
-        //                 console.log('Pedigree новая:', createPedigree);
-        //                 createCatalog.pedigrees.add(createPedigree.id);
-        //                 createCatalog.save(function(err){
-        //                     if (err) { return res.serverError(err); }
-        //                     return res.send(createCatalog);
-        //                 });
-        //             }
-        //
-        //         });
-        // }else{
-        //     return res.send(createCatalog);
-        // }
-
-        // Обновляем объект Pedigree
-        // let pediID= req.param('pedigrees')['id'];
-        // if(pediID) {
-        //     Pedigree.update({id:pediID},req.param('pedigrees'))
-        //         .exec(function (err, pedigreeUpdate) {
-        //             "use strict";
-        //             if (err) console.log('Ошибка! Pedigree update...'); return res.negotiate(err);
-        //         });
-        // }else{
-        //     if(req.param('pedigrees')){
-        //         Pedigree.create(req.param('pedigrees'))
-        //             .exec(function (err, createPedigree) {
-        //                 "use strict";
-        //                 if (err) {console.log('Ошибка! Pedigree create...'); return res.negotiate(err);}
-        //                 obj.pedigrees = createPedigree.id;
-        //             });
-        //     }
-        // }
-
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             // if (err) return res.redirect('/admin/catalogs/edit/' + req.param('id'));
             if (err) return res.negotiate(err);
@@ -501,8 +407,8 @@ module.exports = {
         //console.log('formData: ', req.body);
         const dir = require('util').format('%s' + path + '/%s', sails.config.appUrl.rootDir, req.body.id);
         let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
-        console.log('fileName', fileName);
-        console.log('dir', dir);
+        // console.log('fileName', fileName);
+        // console.log('dir', dir);
         req.file('file').upload({
                 dirname: dir,
                 saveAs: fileName

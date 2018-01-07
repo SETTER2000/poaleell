@@ -43,7 +43,8 @@
         <div class="col-md-6">
             <blockquote class="bs-callout-success">
                 <h4 class="text-uppercase">AVAILABLE FOR SALES</h4>
-                <p>{{item.salesDescription}}</p>
+                <!--<p>{{item.salesDescription}}</p>-->
+                <p ng-bind-html="item.salesDescription"></p>
                 <footer>От питомника <cite title="Source Title">{{item.kennelName()}}</cite></footer>
             </blockquote>
         </div>
@@ -404,5 +405,5 @@
 <div class="jumbotron" ng-if="me.admin && debug">
     <pre><p>{{item|json}}</p></pre>
 </div>
-</div>
+
 

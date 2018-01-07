@@ -129,6 +129,7 @@ module.exports.policies = {
 
     PhotoController: {
         '*': 'isLoggedIn',
+        destroy: ['isLoggedIn', 'isAdmin'],
         uploadTitlePhoto: ['isLoggedIn', 'isAdminOrKadr']
     },
 

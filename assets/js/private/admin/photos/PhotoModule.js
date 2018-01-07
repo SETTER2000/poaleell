@@ -24,8 +24,8 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
             //     templateUrl: '/js/private/admin/photos/views/home.admin.photos.settings.html',
             //     controller: 'ListPhotoController'
             // })
-            .state('home.admin.photos.album', {
-                url: '/album/:photoId',
+            .state('home.admin.photo', {
+                url: '/photo/:photoId',
                 views: {
                     '@': {
                         templateUrl: '/js/private/admin/photos/tpl/show.tpl.html',

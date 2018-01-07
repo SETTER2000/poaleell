@@ -55,6 +55,7 @@ module.exports.routes = {
     'POST /file/uploadTitles': 'PhotoController.uploadTitlePhoto',
     'POST /file/uploadReactions': 'PhotoController.uploadReactionPhoto',
     'POST /file/uploadPedigrees': 'PedigreeController.upload',
+    'POST /file/uploadPhoto': 'PhotoController.update',
 
     'GET /user/getUsersDepartment/:id': 'UserController.getUsersDepartment',
     'POST /users/ldap': 'UserController.searchLDAP',
@@ -236,8 +237,8 @@ module.exports.routes = {
      * Photos
      */
     'GET /photos': 'PhotoController.get', //получить все записи или одну по http://localhost:1338/furloughs?id=599c4aefc97f011f70a2359b
-    // 'POST /photos': 'PhotoController.create', // создать запись
-    // 'DELETE /photos/:id': 'PhotoController.destroy', // удалить
+    'POST /photos': 'PhotoController.create', // создать запись
+    'DELETE /photos/:id': 'PhotoController.destroy', // удалить
     'PUT /photos/:id': 'PhotoController.update', // обновить
 
 
@@ -371,11 +372,19 @@ module.exports.routes = {
     'GET /admin/diarys/create/': 'PageController.showHomePage',
     'GET /admin/diarys/:id': 'PageController.showHomePage',
 
+    'GET /admin/sliders/create': 'PageController.showHomePage',
+    'GET /admin/sliders/edit/:id': 'PageController.showHomePage',
+    'GET /admin/slider/:id': 'PageController.showHomePage',
+    'GET /admin/slider': 'PageController.showHomePage',
+
+
+
     'GET /dog': 'PageController.showHomePage',
     'GET /dog/catalogs': 'PageController.showHomePage',
     'GET /dog/catalog/:id': 'PageController.showHomePage',
     'GET /dog/catalogs/create': 'PageController.showHomePage',
     'GET /dog/catalogs/edit/:id': 'PageController.showHomePage',
+
 
 
 

@@ -153,239 +153,239 @@ angular.module('PedigreeModule')
 
 
 
-            /**
-             * Загрузка тестов
-             * @type {FileUploader|*}
-             */
-            let uploadReactions = $scope.uploadReactions = new FileUploader({
-                url: '/file/uploadReactions',
-                autoUpload: true,
-                removeAfterUpload: true,
-                queueLimit: 1,
-                withCredentials: true
-            });
-            uploadReactions.filters.push({
-                name: 'syncFilter',
-                fn: function (item /*{File|FileLikeObject}*/, options) {
-                    return this.queue.length < 10;
-                }
-            });
-            uploadReactions.filters.push({
-                name: 'asyncFilter',
-                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
-                    setTimeout(deferred.resolve, 1e3);
-                }
-            });
-            /**
-             * Фильтр проверяет расширение
-             * Доступны для загрузки только jpg файлы
-             */
-            uploadReactions.filters.push({
-                name: 'expFilter',
-                fn: function (item) {
-                    if (item.name.slice(-3) !== 'jpg') {
-                        toastr.error(info.requiredJpg, info.error);
-                        return false;
-                    }
-                    $scope.uploaderButtonPrice = true;
-                    return true;
-                }
-            });
-            // CALLBACKS
-            uploadReactions.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                //console.info('onWhenAddingFileFailed', item, filter, options);
-            };
-            uploadReactions.onAfterAddingFile = function (fileItem) {
-                //console.info('onAfterAddingFile', fileItem);
-            };
-            uploadReactions.onAfterAddingAll = function (addedFileItems) {
-                //console.info('onAfterAddingAll', addedFileItems);
-            };
-            $scope.getReaction = function (obj) {
-                $scope.idReaction = obj.id;
-            };
-            uploadReactions.onBeforeUploadItem = function (item) {
-                //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.pedigreeId});
-                item.formData.push({idReaction: $scope.idReaction});
-            };
-            uploadReactions.onProgressItem = function (fileItem, progress) {
-                //console.info('onProgressItem', fileItem, progress);
-            };
-            uploadReactions.onProgressAll = function (progress) {
-                //console.info('onProgressAll', progress);
-            };
-            uploadReactions.onSuccessItem = function (fileItem, response, status, headers) {
-                //console.info('onSuccessItem', fileItem);
-                //console.info('onSuccessItem2', response);
-                //console.info('onSuccessItem3', status);
-                //console.info('onSuccessItem4', headers);
-            };
-            uploadReactions.onErrorItem = function (fileItem, response, status, headers) {
-                $scope.pathToReport = response.avatarFd;
-                $scope.goReport = response.goReport;
-                $scope.statusErr = 'Отклонено';
-                toastr.error(response.message, info.error + ' Статус ' + status);
-            };
-            uploadReactions.onCancelItem = function (fileItem, response, status, headers) {
-                //console.log('uploader.onCancelItem');
-                //console.log(status);
-                ////console.info('onCancelItem', fileItem, response, status, headers);
-            };
-            uploadReactions.onCompleteItem = function (fileItem, response, status, headers) {
-                ////console.info('onCompleteItem', fileItem, response, status, headers);
-                if (status == 200) {
-                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
-                    fileItem.goReport = response.goReport;
-                    fileItem.dateUpload = response.dateUpload;
-                    toastr.success(response.message, 'Ok! ');
-                    fileItem.progress = response.progress;
-                    fileItem.errorPercent = '0';
-                    fileItem.statusOk = response.message;
-                    $interval(function () {
-                        $scope.refresh();
-                        //location.reload()
-                    }, 2000, 1);
-                }
-                switch (response.status) {
-                    case 202:
-                        //toastr.success(response.message, ' Статус ' + response.status);
-                        fileItem.progress = response.progress;
-                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
-                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
-                        fileItem.goReport = response.goReport;
-                        fileItem.statusOk = response.message;
-                        fileItem.allEr = response.allEr;
-                        break;
-                }
-            };
-            uploadReactions.onCompleteAll = function (fileItem, response, status, headers) {
-                //$scope.getDatePrice();
-                $scope.uploaderButtonPrice = false;
-            };
-
-
-
-            /**
-             * Загрузка родословной фото
-             * @type {FileUploader|*}
-             */
-            let uploadPedigrees = $scope.uploadPedigrees = new FileUploader({
-                url: '/file/uploadPedigrees',
-                autoUpload: true,
-                removeAfterUpload: true,
-                queueLimit: 1,
-                withCredentials: true
-            });
-            uploadPedigrees.filters.push({
-                name: 'syncFilter',
-                fn: function (item /*{File|FileLikeObject}*/, options) {
-                    return this.queue.length < 10;
-                }
-            });
-            uploadPedigrees.filters.push({
-                name: 'asyncFilter',
-                fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
-                    setTimeout(deferred.resolve, 1e3);
-                }
-            });
-            /**
-             * Фильтр проверяет расширение
-             * Доступны для загрузки только jpg файлы
-             */
-            uploadPedigrees.filters.push({
-                name: 'expFilter',
-                fn: function (item) {
-                    if (item.name.slice(-3) !== 'jpg') {
-                        toastr.error(info.requiredJpg, info.error);
-                        return false;
-                    }
-                    $scope.uploaderButtonPrice = true;
-                    return true;
-                }
-            });
-            // CALLBACKS
-            uploadPedigrees.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                //console.info('onWhenAddingFileFailed', item, filter, options);
-            };
-            uploadPedigrees.onAfterAddingFile = function (fileItem) {
-                //console.info('onAfterAddingFile', fileItem);
-            };
-            uploadPedigrees.onAfterAddingAll = function (addedFileItems) {
-                //console.info('onAfterAddingAll', addedFileItems);
-            };
-            $scope.getPedigree = function (obj) {
-                $scope.idPedigree = obj.id;
-            };
-            //
-            // $scope.$watch('item.pedigrees',function (val,old) {
-            //     console.log('NEW val', val);
-            //     console.log('NEW old', old);
-            //     if(val) $scope.idPedigree  = val[0].id;
+            // /**
+            //  * Загрузка тестов
+            //  * @type {FileUploader|*}
+            //  */
+            // let uploadReactions = $scope.uploadReactions = new FileUploader({
+            //     url: '/file/uploadReactions',
+            //     autoUpload: true,
+            //     removeAfterUpload: true,
+            //     queueLimit: 1,
+            //     withCredentials: true
             // });
-            console.log('$scope.idPedigree', $scope.idPedigree);
-            uploadPedigrees.onBeforeUploadItem = function (item) {
-                //console.info('onBeforeUploadItem', item);
-                item.formData.push({id: $stateParams.pedigreeId});
-                item.formData.push({idPedigree: $scope.idPedigree});
-            };
-            uploadPedigrees.onProgressItem = function (fileItem, progress) {
-                //console.info('onProgressItem', fileItem, progress);
-            };
-            uploadPedigrees.onProgressItem = function (fileItem, progress) {
-                //console.info('onProgressItem', fileItem, progress);
-            };
-            uploadPedigrees.onProgressAll = function (progress) {
-                //console.info('onProgressAll', progress);
-            };
-            uploadPedigrees.onSuccessItem = function (fileItem, response, status, headers) {
-                //console.info('onSuccessItem', fileItem);
-                //console.info('onSuccessItem2', response);
-                //console.info('onSuccessItem3', status);
-                //console.info('onSuccessItem4', headers);
-            };
-            uploadPedigrees.onErrorItem = function (fileItem, response, status, headers) {
-                $scope.pathToReport = response.avatarFd;
-                $scope.goReport = response.goReport;
-                $scope.statusErr = 'Отклонено';
-                toastr.error(response.message, info.error + ' Статус ' + status);
-            };
-            uploadPedigrees.onCancelItem = function (fileItem, response, status, headers) {
-                //console.log('uploader.onCancelItem');
-                //console.log(status);
-                ////console.info('onCancelItem', fileItem, response, status, headers);
-            };
-            uploadPedigrees.onCompleteItem = function (fileItem, response, status, headers) {
-                ////console.info('onCompleteItem', fileItem, response, status, headers);
-                if (status == 200) {
-                    fileItem.pathToReport = '/images/foto/' + response.avatarFd;
-                    fileItem.goReport = response.goReport;
-                    fileItem.dateUpload = response.dateUpload;
-                    toastr.success(response.message, 'Ok! ');
-                    fileItem.progress = response.progress;
-                    fileItem.errorPercent = '0';
-                    fileItem.statusOk = response.message;
-                    $interval(function () {
-                        $scope.refresh();
-                        //location.reload()
-                    }, 2000, 1);
-                }
-                switch (response.status) {
-                    case 202:
-                        //toastr.success(response.message, ' Статус ' + response.status);
-                        fileItem.progress = response.progress;
-                        fileItem.errorPercent = '(' + response.errorPercent + '%)';
-                        //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
-                        fileItem.goReport = response.goReport;
-                        fileItem.statusOk = response.message;
-                        fileItem.allEr = response.allEr;
-                        break;
-                }
-            };
-            uploadPedigrees.onCompleteAll = function (fileItem, response, status, headers) {
-                //$scope.getDatePrice();
-                $scope.uploaderButtonPrice = false;
-            };
+            // uploadReactions.filters.push({
+            //     name: 'syncFilter',
+            //     fn: function (item /*{File|FileLikeObject}*/, options) {
+            //         return this.queue.length < 10;
+            //     }
+            // });
+            // uploadReactions.filters.push({
+            //     name: 'asyncFilter',
+            //     fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
+            //         setTimeout(deferred.resolve, 1e3);
+            //     }
+            // });
+            // /**
+            //  * Фильтр проверяет расширение
+            //  * Доступны для загрузки только jpg файлы
+            //  */
+            // uploadReactions.filters.push({
+            //     name: 'expFilter',
+            //     fn: function (item) {
+            //         if (item.name.slice(-3) !== 'jpg') {
+            //             toastr.error(info.requiredJpg, info.error);
+            //             return false;
+            //         }
+            //         $scope.uploaderButtonPrice = true;
+            //         return true;
+            //     }
+            // });
+            // // CALLBACKS
+            // uploadReactions.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+            //     //console.info('onWhenAddingFileFailed', item, filter, options);
+            // };
+            // uploadReactions.onAfterAddingFile = function (fileItem) {
+            //     //console.info('onAfterAddingFile', fileItem);
+            // };
+            // uploadReactions.onAfterAddingAll = function (addedFileItems) {
+            //     //console.info('onAfterAddingAll', addedFileItems);
+            // };
+            // $scope.getReaction = function (obj) {
+            //     $scope.idReaction = obj.id;
+            // };
+            // uploadReactions.onBeforeUploadItem = function (item) {
+            //     //console.info('onBeforeUploadItem', item);
+            //     item.formData.push({id: $stateParams.pedigreeId});
+            //     item.formData.push({idReaction: $scope.idReaction});
+            // };
+            // uploadReactions.onProgressItem = function (fileItem, progress) {
+            //     //console.info('onProgressItem', fileItem, progress);
+            // };
+            // uploadReactions.onProgressAll = function (progress) {
+            //     //console.info('onProgressAll', progress);
+            // };
+            // uploadReactions.onSuccessItem = function (fileItem, response, status, headers) {
+            //     //console.info('onSuccessItem', fileItem);
+            //     //console.info('onSuccessItem2', response);
+            //     //console.info('onSuccessItem3', status);
+            //     //console.info('onSuccessItem4', headers);
+            // };
+            // uploadReactions.onErrorItem = function (fileItem, response, status, headers) {
+            //     $scope.pathToReport = response.avatarFd;
+            //     $scope.goReport = response.goReport;
+            //     $scope.statusErr = 'Отклонено';
+            //     toastr.error(response.message, info.error + ' Статус ' + status);
+            // };
+            // uploadReactions.onCancelItem = function (fileItem, response, status, headers) {
+            //     //console.log('uploader.onCancelItem');
+            //     //console.log(status);
+            //     ////console.info('onCancelItem', fileItem, response, status, headers);
+            // };
+            // uploadReactions.onCompleteItem = function (fileItem, response, status, headers) {
+            //     ////console.info('onCompleteItem', fileItem, response, status, headers);
+            //     if (status == 200) {
+            //         fileItem.pathToReport = '/images/foto/' + response.avatarFd;
+            //         fileItem.goReport = response.goReport;
+            //         fileItem.dateUpload = response.dateUpload;
+            //         toastr.success(response.message, 'Ok! ');
+            //         fileItem.progress = response.progress;
+            //         fileItem.errorPercent = '0';
+            //         fileItem.statusOk = response.message;
+            //         $interval(function () {
+            //             $scope.refresh();
+            //             //location.reload()
+            //         }, 2000, 1);
+            //     }
+            //     switch (response.status) {
+            //         case 202:
+            //             //toastr.success(response.message, ' Статус ' + response.status);
+            //             fileItem.progress = response.progress;
+            //             fileItem.errorPercent = '(' + response.errorPercent + '%)';
+            //             //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
+            //             fileItem.goReport = response.goReport;
+            //             fileItem.statusOk = response.message;
+            //             fileItem.allEr = response.allEr;
+            //             break;
+            //     }
+            // };
+            // uploadReactions.onCompleteAll = function (fileItem, response, status, headers) {
+            //     //$scope.getDatePrice();
+            //     $scope.uploaderButtonPrice = false;
+            // };
+            //
+            //
+            //
+            // /**
+            //  * Загрузка родословной фото
+            //  * @type {FileUploader|*}
+            //  */
+            // let uploadPedigrees = $scope.uploadPedigrees = new FileUploader({
+            //     url: '/file/uploadPedigrees',
+            //     autoUpload: true,
+            //     removeAfterUpload: true,
+            //     queueLimit: 1,
+            //     withCredentials: true
+            // });
+            // uploadPedigrees.filters.push({
+            //     name: 'syncFilter',
+            //     fn: function (item /*{File|FileLikeObject}*/, options) {
+            //         return this.queue.length < 10;
+            //     }
+            // });
+            // uploadPedigrees.filters.push({
+            //     name: 'asyncFilter',
+            //     fn: function (item /*{File|FileLikeObject}*/, options, deferred) {
+            //         setTimeout(deferred.resolve, 1e3);
+            //     }
+            // });
+            // /**
+            //  * Фильтр проверяет расширение
+            //  * Доступны для загрузки только jpg файлы
+            //  */
+            // uploadPedigrees.filters.push({
+            //     name: 'expFilter',
+            //     fn: function (item) {
+            //         if (item.name.slice(-3) !== 'jpg') {
+            //             toastr.error(info.requiredJpg, info.error);
+            //             return false;
+            //         }
+            //         $scope.uploaderButtonPrice = true;
+            //         return true;
+            //     }
+            // });
+            // // CALLBACKS
+            // uploadPedigrees.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+            //     //console.info('onWhenAddingFileFailed', item, filter, options);
+            // };
+            // uploadPedigrees.onAfterAddingFile = function (fileItem) {
+            //     //console.info('onAfterAddingFile', fileItem);
+            // };
+            // uploadPedigrees.onAfterAddingAll = function (addedFileItems) {
+            //     //console.info('onAfterAddingAll', addedFileItems);
+            // };
+            // $scope.getPedigree = function (obj) {
+            //     $scope.idPedigree = obj.id;
+            // };
+            // //
+            // // $scope.$watch('item.pedigrees',function (val,old) {
+            // //     console.log('NEW val', val);
+            // //     console.log('NEW old', old);
+            // //     if(val) $scope.idPedigree  = val[0].id;
+            // // });
+            // console.log('$scope.idPedigree', $scope.idPedigree);
+            // uploadPedigrees.onBeforeUploadItem = function (item) {
+            //     //console.info('onBeforeUploadItem', item);
+            //     item.formData.push({id: $stateParams.pedigreeId});
+            //     item.formData.push({idPedigree: $scope.idPedigree});
+            // };
+            // uploadPedigrees.onProgressItem = function (fileItem, progress) {
+            //     //console.info('onProgressItem', fileItem, progress);
+            // };
+            // uploadPedigrees.onProgressItem = function (fileItem, progress) {
+            //     //console.info('onProgressItem', fileItem, progress);
+            // };
+            // uploadPedigrees.onProgressAll = function (progress) {
+            //     //console.info('onProgressAll', progress);
+            // };
+            // uploadPedigrees.onSuccessItem = function (fileItem, response, status, headers) {
+            //     //console.info('onSuccessItem', fileItem);
+            //     //console.info('onSuccessItem2', response);
+            //     //console.info('onSuccessItem3', status);
+            //     //console.info('onSuccessItem4', headers);
+            // };
+            // uploadPedigrees.onErrorItem = function (fileItem, response, status, headers) {
+            //     $scope.pathToReport = response.avatarFd;
+            //     $scope.goReport = response.goReport;
+            //     $scope.statusErr = 'Отклонено';
+            //     toastr.error(response.message, info.error + ' Статус ' + status);
+            // };
+            // uploadPedigrees.onCancelItem = function (fileItem, response, status, headers) {
+            //     //console.log('uploader.onCancelItem');
+            //     //console.log(status);
+            //     ////console.info('onCancelItem', fileItem, response, status, headers);
+            // };
+            // uploadPedigrees.onCompleteItem = function (fileItem, response, status, headers) {
+            //     ////console.info('onCompleteItem', fileItem, response, status, headers);
+            //     if (status == 200) {
+            //         fileItem.pathToReport = '/images/foto/' + response.avatarFd;
+            //         fileItem.goReport = response.goReport;
+            //         fileItem.dateUpload = response.dateUpload;
+            //         toastr.success(response.message, 'Ok! ');
+            //         fileItem.progress = response.progress;
+            //         fileItem.errorPercent = '0';
+            //         fileItem.statusOk = response.message;
+            //         $interval(function () {
+            //             $scope.refresh();
+            //             //location.reload()
+            //         }, 2000, 1);
+            //     }
+            //     switch (response.status) {
+            //         case 202:
+            //             //toastr.success(response.message, ' Статус ' + response.status);
+            //             fileItem.progress = response.progress;
+            //             fileItem.errorPercent = '(' + response.errorPercent + '%)';
+            //             //fileItem.pathToReport = '/images/foto/report/' + response.avatarFd;
+            //             fileItem.goReport = response.goReport;
+            //             fileItem.statusOk = response.message;
+            //             fileItem.allEr = response.allEr;
+            //             break;
+            //     }
+            // };
+            // uploadPedigrees.onCompleteAll = function (fileItem, response, status, headers) {
+            //     //$scope.getDatePrice();
+            //     $scope.uploaderButtonPrice = false;
+            // };
 
 
             /**

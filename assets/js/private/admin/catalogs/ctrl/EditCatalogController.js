@@ -1,7 +1,7 @@
 'use strict';
 angular.module('CatalogModule')
-    .controller('EditCatalogController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Catalogs', 'moment', '$stateParams', 'FileUploader', '$rootScope',
-        function ($scope, $http, toastr, $interval, $state, Catalogs, moment, $stateParams, FileUploader, $rootScope) {
+    .controller('EditCatalogController', ['$scope', '$http', 'toastr', '$interval', '$state', 'Catalogs', '$mdDialog', 'moment', '$stateParams', 'FileUploader', '$rootScope',
+        function ($scope, $http, toastr, $interval, $state, Catalogs, $mdDialog, moment, $stateParams, FileUploader, $rootScope) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             moment.locale('ru');
@@ -84,7 +84,6 @@ angular.module('CatalogModule')
                 {id: 'Чистый', name: 'Чистый'},
                 {id: 'Носитель', name: 'Носитель'},
                 {id: 'Болеет', name: 'Болеет'}];
-
 
 
             $scope.timeOpts = {
@@ -387,7 +386,6 @@ angular.module('CatalogModule')
                 //$scope.getDatePrice();
                 $scope.uploaderButtonPrice = false;
             };
-
 
 
             /**
@@ -776,6 +774,62 @@ angular.module('CatalogModule')
                     $scope.item.contacts = [{type: "телефон", value: ""}];
                 }
             };
+
+            function DialogController($scope, $mdDialog) {
+
+
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+                $scope.popup = {
+                    name:  $mdDialog.getName(),
+                    img: $mdDialog.getImg(),
+                    description: $mdDialog.getDescription()
+                };
+                $scope.showPhoto = function () {
+                    return $scope.photo;
+                };
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function (answer) {
+                    $mdDialog.hide(answer);
+                };
+            }
+
+            $scope.showAdvanced = function (ev, obj) {
+                // console.log('obj', obj.avatarFd);
+                $mdDialog.getImg = function () {
+                    return obj.avatarUrl;
+                };
+
+                $mdDialog.getDescription = function () {
+                    return obj.description;
+                };
+                $mdDialog.getName = function () {
+                    return obj.name;
+                };
+                $mdDialog.show({
+                    controller: DialogController,
+                    templateUrl: '/js/private/admin/catalogs/views/dialog.tmpl.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    photo: obj.avatarFd,
+                    fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                })
+                    .then(function (answer) {
+                        $scope.loginForm = answer;
+                        $scope.submitLoginForm();
+                        $scope.status = '';
+                        console.log($scope.status);
+                    }, function () {
+                        $scope.status = '';
+                        console.log($scope.status);
+                    });
+            };
+
 
             //$scope.addFurlough = function () {
             //    if (angular.isArray($scope.item.fur)) {
@@ -1220,8 +1274,8 @@ angular.module('CatalogModule')
             breadcrumb.set('Home', 'home');
             if ($scope.me.admin) breadcrumb.set('Admin', 'home.admin');
             breadcrumb.set('Catalogs', 'home.admin.catalogs');
-            if ($scope.edit)  breadcrumb.set('Edit', 'home.admin.catalogs.edit' + $state.current.url);
-            if (!$scope.edit)  breadcrumb.set('Create', 'home.admin.catalogs.edit' + $state.current.url);
+            if ($scope.edit) breadcrumb.set('Edit', 'home.admin.catalogs.edit' + $state.current.url);
+            if (!$scope.edit) breadcrumb.set('Create', 'home.admin.catalogs.edit' + $state.current.url);
             $scope.breadcrumbs = breadcrumb;
 
             $scope.refresh();

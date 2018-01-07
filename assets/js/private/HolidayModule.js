@@ -11,6 +11,7 @@ angular.module('Holiday', [
     'DiaryModule',
     'PedigreeModule',
     'FurloughModule',
+    'SliderModule',
     'VacationModule',
     'ReactionModule',
     'DepartmentModule',

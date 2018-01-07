@@ -110,13 +110,11 @@ module.exports = {
             suite: req.param('suite'),
             rightName: req.param('rightName')
         };
-        console.log('createDepartmen222t', req.body);
         Department.create(obj).exec(function (err, finn) {
             if (err) {
                 return res.serverError(err);
             }
             //sails.log('Идентификатор department:', finn.id);
-            console.log('Создан:', finn);
             return res.send({id: finn.id});
 
         });
@@ -146,7 +144,7 @@ module.exports = {
         //var c =  req.param('children');
         //console.log('NAME: ', req.param('name'));
         // console.log('NAME2: ', c[0].id);
-        console.log('BODY: ', req.body);
+
 
 
         Department.find(req.body.children).exec(function (err, child) {
