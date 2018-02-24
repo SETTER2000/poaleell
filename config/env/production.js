@@ -26,8 +26,7 @@ module.exports = {
     connections: {
         productionMongodbServer: {
             adapter: 'sails-mongo',
-            url: process.env.MONGODB_URI,
-            ssl: true
+            url: process.env.MONGODB_URI
         }
     }
     /***************************************************************************
