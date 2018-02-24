@@ -1,4 +1,4 @@
-angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate'])
+angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate','ngSanitize', 'ui.bootstrap'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('home.admin.photos', {
@@ -24,14 +24,21 @@ angular.module('PhotoModule', ['ui.router', 'toastr', 'ngResource', 'ngAnimate']
             //     templateUrl: '/js/private/admin/photos/views/home.admin.photos.settings.html',
             //     controller: 'ListPhotoController'
             // })
-            .state('home.admin.photos.album', {
-                url: '/album/:photoId',
+            .state('home.admin.photo', {
+                url: '/photo/:photoId',
                 views: {
                     '@': {
-                        templateUrl: '/js/private/admin/photos/tpl/show.tpl.html',
+                        templateUrl: '/js/private/admin/photos/views/slider.view.html',
                         controller: 'PhotoController'
+                        // controller: 'SliderController'
                     }
                 }
+                // views: {
+                //     '@': {
+                //         templateUrl: '/js/private/admin/photos/tpl/show.tpl.html',
+                //         controller: 'PhotoController'
+                //     }
+                // }
             })
             .state('home.admin.photos.create', {
                 url: '/create/:photoId',

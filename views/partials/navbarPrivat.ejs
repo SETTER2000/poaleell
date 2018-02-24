@@ -18,6 +18,7 @@
                     <li ng-class="{active:$state.includes('home')}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> </a></li>
                     <li ng-class="{active:$state.includes('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
                     <li ng-class="{active:$state.includes('home.dog.catalogs')}"><a ui-sref="home.dog.catalogs">Собаки</a></li>
+                    <li ng-class="{active:$state.includes('home.dog.slider')}"><a ui-sref="home.dog.slider">Фото</a></li>
 
                 </ul>
 
@@ -26,7 +27,7 @@
                     <li ng-class="{active:$state.includes('home')}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> </a></li>
                     <li ng-class="{active:$state.includes('home.about')}"><a ui-sref="home.about"> О питомнике <span class="sr-only">(current)</span></a></li>
                     <li  ng-class="{active:$state.includes('home.admin.catalogs')}"><a ui-sref="home.admin.catalogs">Собаки</a></li>
-
+                    <li ng-class="{active:$state.includes('home.admin.slider')}"><a ui-sref="home.admin.slider">Фото</a></li>
                     <li class="dropdown">
                         <a ng-if="(me.kadr || me.admin || me.leader)" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Справочники

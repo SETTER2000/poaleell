@@ -11,21 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 moment.locale('ru');
-var error = {
-    date: moment().format('LLLL'),
-    name: 'Имя не заполнено.',
-    kennel: 'Питомник не заполнен. backend',
-    gender: 'Пол не заполнен.',
-    birthday: 'ДР не заполнен.',
-    death: 'Дата смерти не число.',
-    weight: 'Вес не заполнен.',
-    growth: 'Рост не заполнен.',
-    variety: 'Тип не заполнен.',
-    color: 'Окрас не может отсутствовать.',
-    colorBad: 'Окрас не соответствует стандарту.',
-    breeder: 'Заводчик не заполнен.',
-    owner: 'Владелец не заполнен.',
-};
+
 
 var price = [
         {
@@ -65,11 +51,11 @@ module.exports = {
     get: function (req, res) {
         "use strict";
         // if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        // console.log("REQUEST BODY CATALOG:", req.body);
-        // console.log("REQUEST BODY CATALOG:", req.param('char'));
-        // console.log("REQUEST where CATALOG:", req.param('where'));
-        // console.log("REQUEST sort CATALOG:", req.param('sort'));
-        // console.log("REQUEST limit CATALOG:", req.param('limit'));
+        //// console.log("REQUEST BODY CATALOG:", req.body);
+        //// console.log("REQUEST BODY CATALOG:", req.param('char'));
+        //// console.log("REQUEST where CATALOG:", req.param('where'));
+        //// console.log("REQUEST sort CATALOG:", req.param('sort'));
+        //// console.log("REQUEST limit CATALOG:", req.param('limit'));
         let q = {
             limit: req.param('limit'),
             sort: req.param('sort')
@@ -79,24 +65,23 @@ module.exports = {
             let y = {};
             y[req.param('property')] = {'like': req.param('char')};
             q.where = y;
-            console.log('Запрос1: ', q);
+            //console.log('Запрос1: ', q);
 
             Department.find(q)
                 .populate('catalogs')
                 .exec((err, findDepartment) => {
                     if (err) return res.negotiate;
                     if (!findDepartment) return res.notFound();
-                    // console.log('findDepartment:', findDepartment);
+                    //// console.log('findDepartment:', findDepartment);
 
                     let array = [];
                     _.forEach(findDepartment, function (val, key) {
-                        console.log('VALLLLLLLLLLLL: ', val.catalogs[0].id);
                         _.forEach(val.catalogs, function (v, k) {
                             array.push({id: v.id});
                         });
 
                     });
-                    console.log('ARRAY', array);
+                    //console.log('ARRAY', array);
                     Catalog.find(array)
                         .populate('titles')
                         .populate('kennels')
@@ -110,7 +95,7 @@ module.exports = {
                         .exec((err, finds) => {
                             if (err) return res.negotiate;
                             if (!finds) return res.notFound();
-                            console.log('FINDS CATALOG', finds.name);
+                            //console.log('FINDS CATALOG', finds.name);
                             // return res.redirect('/admin/users/edit/' + req.param('id'));
                             // return res.backToHomePage();
                             //return res.redirect('/admin/users/edit/' + req.param('id'));
@@ -122,7 +107,7 @@ module.exports = {
         } else {
             if (req.param('id')) {
                 q.id = req.param('id');
-                // console.log('Запрос2: ', q);
+                //// console.log('Запрос2: ', q);
                 Catalog.find(q)
                     .populate('titles')
                     .populate('kennels')
@@ -180,7 +165,7 @@ module.exports = {
                 })
                 .join(' ');
         }
-        console.log('req.params all', req.params.all());
+        //console.log('req.params all', req.params.all());
 
 
 
@@ -236,9 +221,9 @@ module.exports = {
                 Catalog.create(obj)
                     .exec(function (err, createCatalog) {
                     if (err) return res.serverError(err);
-                    console.log('Собаку создал:', req.session.me);
-                    console.log('Собака новая:', createCatalog);
-                    console.log('ALLS', req.params.all());
+                    //console.log('Собаку создал:', req.session.me);
+                    //console.log('Собака новая:', createCatalog);
+                    //console.log('ALLS', req.params.all());
 
                         return res.send(createCatalog);
                 });
@@ -253,62 +238,10 @@ module.exports = {
      */
     update: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
-        // if (!_.isString(req.param('name'))) {
-        //     console.log(error.date, error.name);
-        //     return res.badRequest(error.name);
-        // }
-        // if (!_.isString(req.param('kennel'))) {
-        //     console.log(error.date, error.kennel);
-        //     return res.badRequest(error.kennel);
-        // }
-        // if (!_.isString(req.param('birthday'))) {
-        //     console.log(error.date, error.birthday);
-        //     return res.badRequest(error.birthday);
-        // }
-        // if (!_.isString(req.param('gender'))) {
-        //     console.log(error.date, error.gender);
-        //     return res.badRequest(error.gender);
-        // }
-        // if (!_.isNumber(req.param('weight'))) {
-        //     console.log('req.paramw', req.param('weight'));
-        //     console.log(error.date, error.weight);
-        //     return res.badRequest(error.weight);
-        // }
-        // if (!_.isNumber(req.param('growth'))) {
-        //     console.log(error.date, error.growth);
-        //     return res.badRequest(error.growth);
-        // }
-        // if (!_.isString(req.param('variety'))) {
-        //     console.log(error.date, error.variety);
-        //     return res.badRequest(error.variety);
-        // }
-        // let i = 0;
-        // if (_.isString(req.param('color'))) {
-        //     _.forEach(objectColor, function (value, key) {
-        //         if (key == req.param('color')) i++;
-        //     });
-        //     if (!i) return res.badRequest(error.colorBad);
-        // } else {
-        //     console.log(error.date, error.color);
-        //     return res.badRequest(error.color);
-        // }
-        // if (!_.isString(req.param('breeder'))) {
-        //     console.log(error.date, error.breeder);
-        //     return res.badRequest(error.breeder);
-        // }
-        // let alias = req.param('alias');
-        // if (!_.isString(alias)) {
-        //     console.log('ALIAS no staring: ', req.param('alias'));
-        //     return res.badRequest(error.owner);
-        //     alias = '"' + req.param('alias') + '"';
-        // }
-        // console.log('UPDATE: ', req.body);
-
 
         /**
          * Поднимаем все первые буквы имени в верхний регистр
          */
-
         let name = '';
         if (_.isString(req.param('name'))) {
             name = req.param('name')
@@ -358,54 +291,12 @@ module.exports = {
             dateWeight: req.param('dateWeight'),
             messages: req.param('messages'),
         };
-        // if(req.param('pedigrees')) {
-        //     Pedigree.create(req.param('pedigrees')['0'])
-        //         .exec(function (err, createPedigree) {
-        //             if (err){
-        //                 Catalog.destroy(createCatalog.id, (err) => {
-        //                     if (err) return next(err);
-        //                     return res.serverError('Pedigree не сохранён!');
-        //                 });
-        //             }else{
-        //                 console.log('Pedigree создал:', req.session.me);
-        //                 console.log('Pedigree новая:', createPedigree);
-        //                 createCatalog.pedigrees.add(createPedigree.id);
-        //                 createCatalog.save(function(err){
-        //                     if (err) { return res.serverError(err); }
-        //                     return res.send(createCatalog);
-        //                 });
-        //             }
-        //
-        //         });
-        // }else{
-        //     return res.send(createCatalog);
-        // }
-
-        // Обновляем объект Pedigree
-        // let pediID= req.param('pedigrees')['id'];
-        // if(pediID) {
-        //     Pedigree.update({id:pediID},req.param('pedigrees'))
-        //         .exec(function (err, pedigreeUpdate) {
-        //             "use strict";
-        //             if (err) console.log('Ошибка! Pedigree update...'); return res.negotiate(err);
-        //         });
-        // }else{
-        //     if(req.param('pedigrees')){
-        //         Pedigree.create(req.param('pedigrees'))
-        //             .exec(function (err, createPedigree) {
-        //                 "use strict";
-        //                 if (err) {console.log('Ошибка! Pedigree create...'); return res.negotiate(err);}
-        //                 obj.pedigrees = createPedigree.id;
-        //             });
-        //     }
-        // }
-
         Catalog.update(req.param('id'), obj).exec(function updateObj(err, objEdit) {
             // if (err) return res.redirect('/admin/catalogs/edit/' + req.param('id'));
             if (err) return res.negotiate(err);
-            // console.log('Каталог обновил:', req.session.me);
-            // console.log('Собака обновление:', obj);
-            // console.log('req.body: ', req.body);
+            //// console.log('Каталог обновил:', req.session.me);
+            //// console.log('Собака обновление:', obj);
+            //// console.log('req.body: ', req.body);
             Catalog.findOne(req.param('id'))
                 .populate('titles')
                 .populate('sires')
@@ -421,7 +312,7 @@ module.exports = {
 
 
 
-                    // console.log('positionRemove:', req.param('positionRemove'));
+                    //// console.log('positionRemove:', req.param('positionRemove'));
                     catalog.titles.add(req.param('titles'));
 
                     if (req.param('objRemove')) {
@@ -478,15 +369,11 @@ module.exports = {
 
             Catalog.destroy(req.param('id'), (err) => {
                 if (err) return next(err);
-                console.log('Собаку удалил:', req.session.me);
-                console.log('Собака удалён:', finds);
+                //console.log('Собаку удалил:', req.session.me);
+                //console.log('Собака удалён:', finds);
                 res.ok();
             });
         });
-
-        // res.redirect('/admin/users');
-
-
     },
 
 
@@ -498,18 +385,18 @@ module.exports = {
     upload: function (req, res) {
         if (!req.session.me) return res.view('public/header', {layout: 'homepage'});
         let path = '/images/catalog/dogs';
-        //console.log('formData: ', req.body);
+        ////console.log('formData: ', req.body);
         const dir = require('util').format('%s' + path + '/%s', sails.config.appUrl.rootDir, req.body.id);
         let fileName = req.file('file')._files[0].stream.headers['content-disposition'].split('"').reverse()[1];
-        console.log('fileName', fileName);
-        console.log('dir', dir);
+        //// console.log('fileName', fileName);
+        //// console.log('dir', dir);
         req.file('file').upload({
                 dirname: dir,
                 saveAs: fileName
             },
             function (err, files) {
-                console.log('err', err);
-                console.log('files', files);
+                //console.log('err', err);
+                //console.log('files', files);
                 if (err) return res.serverError(err);
                 if (_.isUndefined(files[0])) return res.notFound('Нет файла!');
 
@@ -520,8 +407,8 @@ module.exports = {
                 })
                     .exec(function (err) {
                         if (err) return res.negotiate(err);
-                        //console.log(' avatarUrl: ', dir);
-                        //console.log(' avatarUrl2: ', require('util').format('/images/catalog/avatar/%s/%s', req.body.id, fileName));
+                        ////console.log(' avatarUrl: ', dir);
+                        ////console.log(' avatarUrl2: ', require('util').format('/images/catalog/avatar/%s/%s', req.body.id, fileName));
                         return res.ok();
                     });
             });

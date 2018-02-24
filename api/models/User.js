@@ -46,13 +46,13 @@ module.exports = {
         login: {
             type: 'string',
             required: true,
-            unique: true
+            //unique: true
         },
 
         email: {
             type: 'string',
             email: true,
-            unique: true,
+            //unique: true,
             required: true
         },
 

@@ -48,15 +48,13 @@ angular.module('CatalogModule')
 
             $scope.getNameSire = function () {
                 $scope.itemParentSire = Catalogs.get({id:  $scope.item.sires.id}, function (catalogs) {
-                    console.log('catalogs 2', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
-                    toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);
+                    toastr.error(err.data.details, 'Ошибка - 8892! ' + err.data.message);
                 });
             };
             $scope.getNameDams = function () {
                 $scope.itemParentDams = Catalogs.get({id:  $scope.item.dams.id}, function (catalogs) {
-                    console.log('catalogs 2', catalogs);
                     $scope.catalogs = catalogs;
                 }, function (err) {
                     toastr.error(err.data.details, 'Ошибка - 8890! ' + err.data.message);

@@ -18,7 +18,7 @@ module.exports = {
      * @param res
      */
     get: function (req, res) {
-        console.log('REGGG', req.params.all());
+        // console.log('REGGG', req.params.all());
         "use strict";
         let q = {
             limit: req.param('limit'),
@@ -56,7 +56,6 @@ module.exports = {
                     .exec((err, finds) => {
                         if (err) return res.negotiate;
                         if (!finds) return res.notFound();
-                        console.log('ФИНДЫ', finds);
                         (req.param('id')) ? res.ok(finds[0]) : res.ok(finds);
                     });
             }
@@ -74,26 +73,26 @@ module.exports = {
         /**
          * Поднимаем все первые буквы имени в верхний регистр
          */
-        let name = '';
-        if (_.isString(req.param('name'))) {
-            name = req.param('name')
-                .toLowerCase()
-                .split(' ')
-                .map(function (el) {
-                    return el.charAt(0).toUpperCase() + el.slice(1);
-                })
-                .join(' ');
-        }
-        console.log('req.params all', req.params.all());
+        // let name = '';
+        // if (_.isString(req.param('name'))) {
+        //     name = req.param('name')
+        //         .toLowerCase()
+        //         .split(' ')
+        //         .map(function (el) {
+        //             return el.charAt(0).toUpperCase() + el.slice(1);
+        //         })
+        //         .join(' ');
+        // }
+        // console.log('req.params all', req.params.all());
         if(!_.isUndefined(req.param('pedigreeNumber')) && req.param('pedigreeNumber').length <2) return res.badRequest('Pedigree не корректно введён.');
 
-        obj = {
+      let  obj = {
             action: (req.param('action')) ? req.param('action') : false,
             sales: req.param('sales'),
             salesDescription: req.param('salesDescription'),
             section: 'Родословная',
             sections: 'Родословные',
-            name: name,
+            name: req.param('name'),
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
             nickname: req.param('nickname'),
@@ -111,7 +110,6 @@ module.exports = {
             titles: req.param('titles'),
             description: req.param('description'),
             death: req.param('death'),
-            // pedigree: req.param('pedigree'),
             rkf: req.param('rkf'),
             pll: req.param('pll'),
             pra: req.param('pra'),
@@ -130,8 +128,6 @@ module.exports = {
                     if (err) return res.serverError(err);
                     console.log('Собаку создал:', req.session.me);
                     console.log('Собака новая:', createCatalog);
-                    console.log('ALLS', req.params.all());
-                    
                     if(req.param('pedigrees')) {
                         Pedigree.create(req.param('pedigrees'))
                             .exec(function (err, createPedigree) {
@@ -155,7 +151,6 @@ module.exports = {
                         return res.send(createCatalog);
                     }
                 });
-
     },
 
 
@@ -171,16 +166,16 @@ module.exports = {
          * Поднимаем все первые буквы имени в верхний регистр
          */
 
-        let name = '';
-        if (_.isString(req.param('name'))) {
-            name = req.param('name')
-                .toLowerCase()
-                .split(' ')
-                .map(function (el) {
-                    return el.charAt(0).toUpperCase() + el.slice(1);
-                })
-                .join(' ');
-        }
+        // let name = '';
+        // if (_.isString(req.param('name'))) {
+        //     name = req.param('name')
+        //         .toLowerCase()
+        //         .split(' ')
+        //         .map(function (el) {
+        //             return el.charAt(0).toUpperCase() + el.slice(1);
+        //         })
+        //         .join(' ');
+        // }
         let obj = {
             id: req.param('id'),
             action: req.param('action'),
@@ -188,7 +183,7 @@ module.exports = {
             salesDescription: req.param('salesDescription'),
             section: 'Родословная',
             sections: 'Родословные',
-            name: name,
+            name: req.param('name'),
             avatarUrl: req.param('avatarUrl'),
             birthday: req.param('birthday'),
             nickname: req.param('nickname'),

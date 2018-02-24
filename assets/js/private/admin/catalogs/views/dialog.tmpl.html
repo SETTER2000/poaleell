@@ -1,0 +1,46 @@
+<md-dialog class="popup-ell" aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>PEDIGREE SCREEN</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/images/icons/svg/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-content class="md-padding">
+                <div class="md-dialog-content">
+                    <h2>№ {{popup.name}}</h2>
+                    <p>{{popup.description}}</p>
+
+
+                    <img class="popup-img" ng-src="{{popup.img}}" alt="{{popup.name}}" ng-cloak>
+
+                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur expedita in minus-->
+                        <!--necessitatibus ratione! A ab amet autem blanditiis consectetur deleniti distinctio doloremque-->
+                        <!--earum error excepturi fugit harum in incidunt itaque laboriosam maiores nihil nisi nobis odio-->
+                        <!--officia officiis quae quam quas qui quis recusandae, sit tenetur veritatis voluptate,-->
+                        <!--voluptatem!</p>-->
+                    <!--<p>Assumenda autem consectetur deleniti dicta illo laborum maxime molestiae non officia officiis-->
+                        <!--quidem quo, rem repellendus, unde voluptate. Asperiores atque ex hic incidunt nihil. Consequatur-->
+                        <!--culpa cum dolore explicabo fugiat, maiores quos! Aliquid commodi culpa delectus dicta, ducimus-->
+                        <!--earum facere fuga iusto nemo optio praesentium quam rerum sunt tempora, vel.</p>-->
+                    <!--<p>Aliquam at consectetur expedita harum impedit minima molestias. Accusantium aperiam consectetur,-->
+                        <!--id nesciunt nostrum quasi rerum saepe sapiente vitae. Autem distinctio fugit temporibus totam-->
+                        <!--ullam? Adipisci amet consequatur eum minima nobis quas tempore vel vero. Ad atque beatae-->
+                        <!--deserunt dolore doloremque est illum necessitatibus perferendis porro provident sit, voluptate-->
+                        <!--voluptates.</p>-->
+                </div>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+            </md-content>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="center center" layout="row">
+            <md-button ng-click="answer(loginForm)" class="pull-right" md-autofocus>
+                Ok
+            </md-button>
+            <span flex></span>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

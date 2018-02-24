@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserFModule')
-        .controller('ListFController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'UsersF', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, UsersF, Attendances) {
+        .controller('ListFController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'UsersF',  '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, UsersF, Attendances) {
             $scope.me = window.SAILS_LOCALS.me;
 
             //toastr.options = {

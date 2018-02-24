@@ -33,24 +33,51 @@
                     <h3 class="panel-title">Редактировать</h3>
                 </div>
                 <div class="panel-body">
+                    <form name="myForm" novalidate ng-submit="saveEdit(item)" enctype="multipart/form-data">
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" ng-model="item.action">Активность
                         </label>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="input-group">
-                                    <label class="control-label" for="inputSuccess1">Наименование</label>
-                                    <input type="text" required class="form-control" ng-model="item.name">
-                                </div>
+
+
+
+                    <!-- C A T A L O G -->
+
+                    <div ng-controller="ListCatalogController" class="form-group ">
+                        <label class="control-label">Собака</label>
+                        <div class="form-group form-inline">
+                            <select class="form-control" required ng-model="item.catalogs.id">
+                                <option ng-repeat="option in items  | filter:{action:true} | orderBy:'kennels[0].name'"
+                                        value="{{option.id}}">
+                                    {{option.getFullName()}}
+                                </option>
+                            </select>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default " ng-click="removeCatalogItem(item.catalogs)"><span
+                                        class="glyphicon glyphicon-remove"></span></button>
                             </div>
                         </div>
-
-
-                        <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
+
+
+
+                        <!-- N A M E -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <label class="control-label" for="inputSuccess1">Наименование</label>
+                                        <input type="text" required class="form-control" ng-model="item.name">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+
+                    <!-- D E S C R I P T I O N -->
+
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess1">Описание</label>
                         <input type="text" class="form-control" ng-model="item.description">
@@ -59,6 +86,12 @@
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess1">Описание на английском</label>
                         <input type="text" class="form-control" ng-model="item.descriptionEn">
+                        <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    </div>
+
+                        <div class="form-group">
+                        <label class="control-label" for="inputSuccess1">URL photo</label>
+                        <input type="text" class="form-control" ng-model="item.photoUrl">
                         <!--<span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
 
@@ -85,11 +118,11 @@
                             <!--<span id="helpBlock4" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                         </div>
                     </div>
-                    <div class="form-group">
-                        <a ng-click="saveEdit(item)" class="btn  btn-success">
+                    <div  class="form-group">
+                        <button  ng-click="saveEdit(item)" class="btn  btn-success" ng-disabled="myForm.$invalid">
                             <span class="glyphicon glyphicon-check"></span>
                             Сохранить
-                        </a>
+                        </button>
                         <!--<a ng-href="{{item.getListUrl()}}" class="btn  btn-warning">-->
                         <!--<span class="glyphicon glyphicon-list"> </span>-->
                         <!--Список-->
@@ -100,14 +133,21 @@
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </div>
-
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-6" ng-if="me.admin" >
-            <a ng-href="{{item.getEditUrl(item.id)}}">
-                <img width="100%" ng-src="{{item.photoUrl}}" alt="">
-            </a>
+        <!--A V A T A R -->
+
+        <div ng-class="{'col-md-6':!item.inlinePanel, 'col-md-12':item.inlinePanel, 'fx-fade-left':item.inlinePanel, 'fx-fade-right':!item.inlinePanel}">
+            <div ng-switch on="modeSelect.value">
+                <div ng-switch-when="uploader">
+                    <ng-include src="uploaderView"></ng-include>
+                </div>
+            </div>
+
+
+            <!-- I N F O  P A N E L -->
             <div class="panel" ng-class="{'panel-success':item.action, 'panel-default':!item.action}">
                 <div class="panel-heading">
                     <h3 class="panel-title">Информация</h3>
@@ -126,13 +166,11 @@
         </div>
     </div>
 
-    <div class="row">
-        <pre ng-if="debug && me.admin"><h3>{{item | json}}</h3></pre>
-    </div>
-
 </div>
 
-
+<div class="row">
+    <pre ng-if="debug && me.admin"><h3>{{item| json}}</h3></pre>
+</div>
 <!--<div ui-view></div>-->
 <!--<div ui-view="users"></div>-->
 

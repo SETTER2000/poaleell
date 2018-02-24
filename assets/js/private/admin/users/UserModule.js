@@ -1,4 +1,4 @@
-angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule', 'angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
+angular.module('UserModule', ['ui.router', 'toastr', 'ngResource',  'angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
     .config(['$qProvider', function ($qProvider) {
         $qProvider.errorOnUnhandledRejections(false);
     }])
@@ -37,15 +37,7 @@ angular.module('UserModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceMo
             //         }
             //     }
             // })
-            .state('home.admin.users.attendance', {
-                url: '/attendance',
-                views: {
-                    'attendance@home.admin.users': {
-                        templateUrl: '/js/private/admin/attendances/tpl/list.tpl.html',
-                        controller: 'ListAttendanceController'
-                    }
-                }
-            })
+
             .state('home.admin.users.edit', {
                 url: '/edit/:userId',
                 views: {

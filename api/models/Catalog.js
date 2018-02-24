@@ -110,11 +110,6 @@ module.exports = {
             type: 'string'
         },
 
-        // lastLoggedIn: {
-        //     type: 'date',
-        //     // required: true,
-        //     defaultsTo: new Date(0)
-        // },
         death: {
             type: 'date',
             defaultsTo: null
@@ -129,10 +124,7 @@ module.exports = {
             type: 'string',
             maxLength: 500
         },
-        // pedigree: {
-        //     type: 'string'
-        //     // maxLength: 15
-        // },
+
         rkf: {
             type: 'string',
             maxLength: 25
@@ -198,10 +190,6 @@ module.exports = {
             collection: 'title',
             via: 'catalogs'
         },
-        // pedigrees: {
-        //     collection: 'pedigree',
-        //     via: 'catalogs'
-        // },
         pedigrees: {
             model: 'pedigree'
         },

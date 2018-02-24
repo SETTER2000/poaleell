@@ -1,8 +1,8 @@
 (function (angular) {
     'use strict';
     angular.module('PhotoModule')
-        .controller('ListPhotoController', ['$scope', '$state', 'Photos', 'toastr',
-            function ($scope, $state, Photos, toastr) {
+        .controller('ListPhotoController', ['$scope', '$state', 'Photos', 'Catalogs','toastr',
+            function ($scope, $state, Photos, Catalogs,toastr) {
                 $scope.me = window.SAILS_LOCALS.me;
                 if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
 
@@ -11,6 +11,7 @@
                 $scope.descriptionArea = 'Описание';
                 $scope.descriptionEnArea = 'Описание на английском';
                 $scope.photoUrlArea = 'Фото';
+                $scope.objectArea = 'Объект привязки';
 
 
                 /**
@@ -20,13 +21,13 @@
                 $scope.sort = 'name';
 
 
-                $scope.debug = false;
+                $scope.debug = true;
 
                 /**
                  * Название кнопки в интерфейсе
                  * @type {string}
                  */
-                $scope.addNameButton = 'Добавить титул';
+                $scope.addNameButton = 'Добавить фото';
 
                 /**
                  * URL кнопки в интерфейсе
@@ -54,6 +55,16 @@
                         toastr.error(err, 'Ошибка ListPhotoController!');
                     });
                 };
+
+                // $scope.getNameDog = function (id) {
+                //    Catalogs.get({id:  id}, function (catalogs) {
+                //          $scope.catalogs = catalogs;
+                //     }, function (err) {
+                //         toastr.error(err.data.details, 'Ошибка - 8892! ' + err.data.message);
+                //     });
+                // };
+
+
 
 
                 $scope.propertyName = 'name';

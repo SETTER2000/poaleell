@@ -1,0 +1,48 @@
+ <div class="panel panel-default">
+    <div class="panel-header"><h3 class="panel-title"></h3></div>
+    <div class="panel-body">
+        <div class="col-sm-10 col-md-10  col-md-offset-1" ng-class="{'col-md-offset-2':!item.photoUrl}">
+            <!--<div class="row">-->
+            <!--<h5 class="text-center"> ТИТУЛЫ: </h5>-->
+            <!--<ol class="breadcrumb text-center">-->
+                <!--<li ng-repeat="item in filtered=(item.titles | filter:{$:searchText, tip:'титул'})" title="{{item.description}}">-->
+                    <!--<a href="/admin/title/{{item.id}}">-->
+                        <!--<span ng-if="item.multiplicity">{{item.multiplicity + 'x'}}</span>{{item.name}}-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ol>-->
+            <!--</div>-->
+            <!--<div class="row" >-->
+                <!--<h5 class="text-center"> Статистика (победы, заслуги, достижения): </h5>-->
+                <!--<ol class="breadcrumb text-center">-->
+                    <!--<li ng-repeat="sert in filtered2=(item.titles | filter:{$:searchText, tip:'сертификат'})" title="{{sert.description}}">-->
+                        <!--<a href="/admin/title/{{sert.id}}">-->
+                            <!--<span ng-if="sert.multiplicity">{{sert.multiplicity + 'x'}}</span>{{sert.name}}-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ol>-->
+            <!--</div>-->
+            <div class="delete-button" ng-class="{'thumbnail':item.photoUrl}" ng-mouseover="shows=1" ng-mouseleave="shows=0">
+                <a href="#" ng-click="delFoto(item)" ng-if="shows" class="btn btn-default delete-img" role="button">Удалить</a>
+                <img ng-src="{{item.photoUrl}}">
+                <div class="caption">
+                    <div class="file-upload ">
+                        <label class="text-left">
+                            <input type="file" nv-file-select="" ng-disabled="myForm.$invalid" uploader="uploader" multiple/>
+                            <span ng-if="!item.photoUrl" class="btn btn-default" role="button" ng-disabled="myForm.$invalid">Выбрать фото</span>
+                            <span ng-if="item.photoUrl" class="btn btn-default" role="button">Изменить фото</span>
+                        </label>
+                    </div>
+                    <p></p>
+                </div>
+            </div>
+            <!--<h4 class="text-center"><em>-->
+                <!--<small>CLASSES:</small>-->
+            <!--</em> <br> {{item.getClasses().join(', ')}}-->
+            <!--</h4>-->
+        </div>
+    </div>
+</div>
+
+
+

@@ -6,25 +6,25 @@
             <div class="btn-group-xs pull-right">
                 <!--<small>-->
 
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
-                    <!--</label>-->
-                    <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
-                    <!--</label>-->
+                <!--<label class="checkbox-inline">-->
+                <!--<input type="checkbox" ng-model="debug" value="option1"> отладка-->
+                <!--</label>-->
+                <!--<label class="checkbox-inline">-->
+                <!--<input type="checkbox" ng-model="mode" value="option2"> режимы-->
+                <!--</label>-->
 
                 <!--</small>-->
-                <a ng-href="{{item.getListUrl()}}"  class="btn btn-sm btn-warning">
+                <a ng-href="{{item.getListUrl()}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-list"></span>
                 </a>
                 <a ng-href="{{item.getEditUrl(item.id)}}" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
                 <!--<button ui-sref="home.admin.users.settings" type="button" class="btn btn-success">-->
-                    <!--<span class="glyphicon glyphicon-cog"></span>-->
+                <!--<span class="glyphicon glyphicon-cog"></span>-->
                 <!--</button>-->
                 <!--<button ui-sref="home.admin.users.create" type="button" class="btn btn-warning">-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+                <!--<span class="glyphicon glyphicon-plus"></span>-->
                 <!--</button>-->
             </div>
         </h2>
@@ -39,28 +39,40 @@
             </li>
         </ul>
     </div>
+
     <div class="row">
         <div class=" col-md-12">
             <table class="table">
-                <tr> <th>{{nameArea}}</th> <td> <span ng-if="item.multiplicity">{{item.multiplicity}}x</span>{{item.name}}</td></tr>
-                    <tr><th>{{descriptionArea}}</th><td>{{description}}</td></tr>
-                    <tr><th>{{descriptionEnArea}}</th><td>{{item.descriptionEnArea}}</td></tr>
+                <tr>
+                    <th>{{nameHeader.nameArea}}</th>
+                    <td><span ng-if="item.multiplicity">{{item.multiplicity}}x</span>{{item.name}}</td>
+                </tr>
+                <tr>
+                    <th>{{nameHeader.descriptionArea}}</th>
+                    <td>{{description}}</td>
+                </tr>
+                <tr>
+                    <th>{{nameHeader.descriptionEnArea}}</th>
+                    <td>{{item.descriptionEnArea}}</td>
+                </tr>
 
-                    <tr><th colspan="20"></th></tr>
+                <tr>
+                    <th colspan="20"></th>
+                </tr>
 
 
                 <!--<tr ng-cloak>-->
-                    <!--<td>-->
-                        <!--<a ui-sref="home.admin.users" class="btn btn-sm btn-warning">-->
-                            <!--<span class="glyphicon glyphicon-list"></span>-->
-                        <!--</a>-->
+                <!--<td>-->
+                <!--<a ui-sref="home.admin.users" class="btn btn-sm btn-warning">-->
+                <!--<span class="glyphicon glyphicon-list"></span>-->
+                <!--</a>-->
 
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
-                            <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                        <!--</a>-->
-                    <!--</td>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<a ui-sref="home.admin.users.edit({userId:item.id})" class="btn btn-sm btn-warning">-->
+                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                <!--</a>-->
+                <!--</td>-->
                 <!--</tr>-->
 
             </table>
