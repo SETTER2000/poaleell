@@ -164,10 +164,6 @@ module.exports.routes = {
     'GET /structures/:id': 'StructureController.get', //получить все записи
 
 
-    /**
-     * Attendance
-     */
-    'GET /attendance': 'Attendance.timeAll', // для календаря
 
 
     /**
@@ -283,7 +279,6 @@ module.exports.routes = {
 
     'GET /admin/kennels': 'PageController.showHomePage',
 
-    'GET /admin/attendances': 'PageController.showHomePage',
     'GET /admin/positions': 'PageController.showHomePage',
     'GET /admin/employees': 'PageController.showHomePage',
     'GET /admin/furloughs': 'PageController.showHomePage',

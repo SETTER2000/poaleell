@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     angular.module('UserModule')
-        .controller('ListController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Users', 'Attendances', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
+        .controller('ListController', ['$scope', '$location', 'moment', '$http', 'toastr', "$rootScope", '$state', 'Users', '$window', function ($scope, $location, moment, $http, toastr, $rootScope, $state, Users, Attendances) {
             $scope.me = window.SAILS_LOCALS.me;
             if (!$scope.me.kadr && !$scope.me.admin) $state.go('home');
             //toastr.options = {

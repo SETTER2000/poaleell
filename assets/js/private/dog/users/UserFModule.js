@@ -1,4 +1,4 @@
-angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'AttendanceModule', 'angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
+angular.module('UserFModule', ['ui.router', 'toastr', 'ngResource', 'angularFileUpload', 'ngAnimate', 'ng-fx', 'angularMoment'])
     .config(['$qProvider', function ($qProvider) {
         $qProvider.errorOnUnhandledRejections(false);
     }])

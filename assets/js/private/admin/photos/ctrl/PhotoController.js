@@ -51,7 +51,6 @@ angular.module('PhotoModule')
                 // let newWidth = 1140 + slides.length + 1;
                 $http.post('/photo-show', {})
                     .then(function (attendance) {
-                        console.log('attendance^^', attendance.data);
                         for(let key in attendance.data) {
                             slides.push(attendance.data[key]);
                         }
