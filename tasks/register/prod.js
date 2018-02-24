@@ -11,8 +11,9 @@
  *   http://sailsjs.org/documentation/anatomy/my-app/tasks/register/prod-js
  *
  */
+
 module.exports = function(grunt) {
-  // grunt.registerTask('prod', [
+  // grunt.registerTask('prod', ['''
     grunt.registerTask('heroku:production', [
     'compileAssets',
     'concat',
