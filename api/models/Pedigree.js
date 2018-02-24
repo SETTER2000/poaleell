@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-    connection: 'userMongodbServer',
+    //connection: 'userMongodbServer',
     attributes: {
         section: {
             type: 'string',
