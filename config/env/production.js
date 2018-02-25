@@ -28,7 +28,15 @@ module.exports = {
             adapter: 'sails-mongo',
             url: process.env.MONGODB_URI
         }
-    }
+    },
+    session: {
+        adapter: 'redis',
+        url: process.env.REDISTOGO_URL
+    },
+    sockets: {
+        adapter: 'socket.io-redis',
+    url: process.env.REDISTOGO_URL,
+},
     /***************************************************************************
      * Set the port in the production environment to 80                        *
      ***************************************************************************/
