@@ -90,3 +90,7 @@ module.exports.admin = {
         return this.lname + ' ' + this.fname + ' ' + this.pname;
     }
 };
+
+module.exports.appUrl = {
+    rootDir: '/app/assets'
+};
