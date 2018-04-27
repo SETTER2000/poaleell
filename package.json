@@ -1,7 +1,7 @@
 {
   "name": "poaleell",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The system of personnel management and holidays.",
   "keywords": [],
   "dependencies": {
@@ -78,6 +78,7 @@
     "xlsx-populate": "1.8.2"
   },
   "scripts": {
+    "myUpdate": "rm -rf node_modules && rm -rf package-lock.json && npm install",
     "debug": "node debug app.js",
     "start": "node app.js",
     "sails": "sails lift"
