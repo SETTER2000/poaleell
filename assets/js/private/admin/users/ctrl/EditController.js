@@ -175,7 +175,7 @@ angular.module('UserModule')
                         //console.log('sailsResponse: ',sailsResponse);
                         let objectContacts = {};
                         $scope.item.contacts = [];
-                        objectContacts.type = "Внутренний телефон";
+                        objectContacts.type = "муж/жена";
                         objectContacts.value = sailsResponse.data[0].telephoneNumber;
 
                         let patronymic = sailsResponse.data[0].displayName.split(' ')[2];
@@ -187,7 +187,7 @@ angular.module('UserModule')
                         $scope.item.contacts.push(objectContacts);
                         $scope.item.patronymicName = patronymic;
 
-                        //[{"type":"Мобильный","value":"8-985-729-37-74"},{"type":"Телефон","value":"+7 (495) 444-18-61"},{"type":"Внутренний телефон","value":"(050) 4322"}]
+                        //[{"type":"Мобильный","value":"8-985-729-37-74"},{"type":"Телефон","value":"+7 (495) 444-18-61"},{"type":"муж/жена","value":"(050) 4322"}]
                         //$scope.item.patronymicName = patronymic;
                         // $scope.userProfile.properties.gravatarURL = sailsResponse.data.gravatarURL;
                         // window.location = '#/profile/' + $scope.editProfile.properties.id;

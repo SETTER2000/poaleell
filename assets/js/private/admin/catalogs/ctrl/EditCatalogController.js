@@ -7,15 +7,13 @@ angular.module('CatalogModule')
             moment.locale('ru');
             $scope.newObjectName = 'Новая собака';
             $scope.closeInfo = 0; // скрыть панель информации
-            $scope.debug = true;
+            $scope.debug = false;
             $scope.loginAdmin = false;
             $scope.edit = $state.includes('home.admin.catalogs.edit');
 
 
             $scope.inline = function () {
                 $scope.item.inlinePanel = (!$scope.item.inlinePanel);
-                // $scope.closeInfo = (!$scope.closeInfo) ? true : false;
-
                 if (angular.isDefined($scope.item.id)) {
                     $scope.item.$update($scope.item, function (success) {
                             toastr.success(info.changed);
@@ -27,20 +25,6 @@ angular.module('CatalogModule')
                     );
                 }
 
-
-                // $scope.item.$save(
-                // $scope.item, function (success) {
-                //         //console.log(success);
-                //         //location.reload();
-                //         toastr.success(info.newOk);
-                //         // /admin/catalog/
-                //         //$location.path('/profile') ;
-                //         console.log('SAVE - create');
-                //         $state.go('home.admin.catalog', {catalogId: success.id});
-                //     },
-                //     function (err) {
-                //         toastr.error(err.data, 'Ошибка!');
-                //     });
             };
             var info = {
                 changed: 'Изменения сохранены!',
@@ -383,7 +367,6 @@ angular.module('CatalogModule')
                 }
             };
             uploadReactions.onCompleteAll = function (fileItem, response, status, headers) {
-                //$scope.getDatePrice();
                 $scope.uploaderButtonPrice = false;
             };
 

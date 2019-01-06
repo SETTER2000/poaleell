@@ -50,7 +50,7 @@
                 $scope.sortField = 'name'; // поле сортировки
                 $scope.sortTrend = 1; // направление сортировки
                 $scope.param = 'date';
-                $scope.fieldName = 'Внутренний телефон';
+                $scope.fieldName = 'муж/жена';
                 $scope.charText = '';
                 $scope.searchText = '';
                 $scope.page_number = 0;

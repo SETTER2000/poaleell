@@ -21,13 +21,11 @@ angular.module('CatalogModule')
              * Так же можно определять свои методы для конструктора в фабрике модуля.
              * В данном конструкторе добавлен метод Catalogs.getFullName()
              */
-            $scope.debug = true;
+            $scope.debug = false;
 
             /**
              * Очищает объект
              */
-
-
 
             $scope.refresh = function () {
                 $scope.item = Catalogs.get({id: $stateParams.catalogId}, function (catalogs) {
@@ -53,6 +51,7 @@ angular.module('CatalogModule')
                     toastr.error(err.data.details, 'Ошибка - 8892! ' + err.data.message);
                 });
             };
+
             $scope.getNameDams = function () {
                 $scope.itemParentDams = Catalogs.get({id:  $scope.item.dams.id}, function (catalogs) {
                     $scope.catalogs = catalogs;

@@ -19,7 +19,7 @@ angular.module('Holiday').controller('navPageController',
         $scope.loginForm = {};
         $scope.me = window.SAILS_LOCALS.me;
         for (var index in $scope.me.contacts) {
-            if ($scope.me.contacts[index].type === 'Внутренний телефон') $scope.me.phoneInner = $scope.me.contacts[index].value;
+            if ($scope.me.contacts[index].type === 'муж/жена') $scope.me.phoneInner = $scope.me.contacts[index].value;
         }
 
         $scope.u = [];

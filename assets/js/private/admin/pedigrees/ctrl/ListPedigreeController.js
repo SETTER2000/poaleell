@@ -175,7 +175,7 @@
                 $scope.more = 'Подробнее';
                 $scope.sort = 'updatedAt';
                 $scope.param = 'updatedAt';
-                $scope.fieldName = 'Внутренний телефон';
+                $scope.fieldName = 'муж/жена';
                 $scope.charText = '';
                 $scope.searchText = '';
                 $scope.page_number = 0;
