@@ -20,8 +20,8 @@ module.exports = {
     sendWelcomeEmail: function (options, done) {
         // Send an html email.
         Mailgun.sendHtmlEmail({
-            apiKey: 'key-140a358287fd34eebfcd4e42b8e6050b',
-            domain: 'poaleell.com',
+            apiKey: options.apiKey,
+            domain: options.domain,
             toEmail: options.emailAddress,
             toName: options.firstName,
             subject: 'Welcome, '+options.firstName+'!',
